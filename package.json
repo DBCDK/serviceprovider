@@ -1,0 +1,41 @@
+{
+  "name": "pallesgavebod",
+  "version": "0.0.1",
+  "description": "Next generation pallesgavebod.dk",
+  "main": "server.js",
+  "scripts": {
+    "test": "test",
+    "serve": "supervisor -w client,server app.js",
+    "build": "webpack --progress --colors -p",
+    "start:watch": "webpack --progress --colors --watch -d",
+    "dev": "parallelshell \"npm run serve -s\" \"npm run start:watch -s\""
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/DBCDK/pallesgavebod.git"
+  },
+  "keywords": [
+    "pallesgavebod",
+    "dbc"
+  ],
+  "author": "DBCDK",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/DBCDK/pallesgavebod/issues"
+  },
+  "homepage": "https://github.com/DBCDK/pallesgavebod#readme",
+  "dependencies": {
+    "express": "^4.12.3",
+    "jade": "^1.9.2",
+    "react": "^0.13.2"
+  },
+  "devDependencies": {
+    "babel": "^5.2.9",
+    "babel-core": "^5.2.9",
+    "babel-loader": "^5.0.0",
+    "parallelshell": "^1.1.1",
+    "react-tools": "^0.13.2",
+    "wallaby-webpack": "0.0.4",
+    "webpack": "^1.8.11"
+  }
+}
