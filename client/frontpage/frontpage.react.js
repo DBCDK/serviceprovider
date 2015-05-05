@@ -9,5 +9,4 @@ var FrontPage = React.createClass({
   }
 });
 
-
 module.exports = FrontPage;
