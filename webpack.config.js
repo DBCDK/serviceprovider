@@ -6,7 +6,7 @@ var noErrorsPlugin = new webpack.NoErrorsPlugin();
 
 module.exports = {
   entry: {
-    frontpage: './client/frontpage/frontpage.react.js'
+    frontpage: './client/frontpage/index.js'
   },
   output: {
     path: path.join(__dirname, 'public/js'),

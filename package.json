@@ -5,7 +5,7 @@
   "main": "server.js",
   "scripts": {
     "test": "test",
-    "serve": "supervisor -w client,server app.js",
+    "serve": "supervisor -w client,server,app.js app.js",
     "build": "webpack --progress --colors -p",
     "start:watch": "webpack --progress --colors --watch -d",
     "dev": "parallelshell \"npm run serve -s\" \"npm run start:watch -s\""
