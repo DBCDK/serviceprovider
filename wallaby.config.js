@@ -1,12 +1,12 @@
-"use strict";
+'use strict';
 let wallabyWebpack = require('wallaby-webpack');
 let webpackPostprocessor = wallabyWebpack({});
+require('./tests/setup');
 
 module.exports = function() {
   return {
     files: [
       {pattern: 'tests/lib/phantomPolyfill.js', instrument: false},
-      {pattern: 'node_modules/react/dist/react-with-addons.js', instrument: false},
       {pattern: 'client/**/*.js', load: false}
     ],
 
@@ -25,6 +25,8 @@ module.exports = function() {
     bootstrap: function() {
       // required to trigger tests loading
       window.__moduleBundler.loadTests();
-    }
+    },
+
+    testFramework: 'mocha@2.2.4',
   }
 };

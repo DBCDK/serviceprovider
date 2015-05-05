@@ -1,26 +1,22 @@
 'use strict';
+let React = require('react/addons');
+let TestUtils = React.addons.TestUtils;
+let expect = require('chai').expect;
 
-let testUtils = React.addons.TestUtils;
 let FrontPage = require('../client/frontpage/frontpage.react');
 
 describe('Frontpage', () => {
-  let container;
   let instance;
 
   beforeEach(() => {
-    container = document.createElement('div');
-    document.body.appendChild(container);
-    instance = React.render(<FrontPage />, container);
+    let renderedComponent = TestUtils.renderIntoDocument(<FrontPage />);
+    let logo = TestUtils.findRenderedDOMComponentWithTag(renderedComponent, 'img');
+    instance = logo.getDOMNode();
   });
 
-  afterEach(() => {
-    document.body.removeChild(container);
-  });
-
-  describe('Logo', () => {
+  describe('Verify logo', () => {
     it('Logo should be visible', () => {
-      let node = React.findDOMNode(instance);
-      expect(container.innerText).toBe('HEST');
+      expect(instance.innerText).to.equal('HEST');
     });
   });
 });
