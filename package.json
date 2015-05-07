@@ -1,12 +1,12 @@
 {
   "name": "pallesgavebod",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Next generation pallesgavebod.dk",
-  "main": "server.js",
+  "main": "app.js",
   "scripts": {
     "test": "mocha --compilers js:babel/register tests",
     "test:junit": "mocha -R mocha-jenkins-reporter --compilers js:babel/register tests",
-    "serve": "supervisor -w client,server,app.js app.js",
+    "serve": "supervisor --harmony -w client,app.js app.js",
     "build": "webpack --progress --colors -p",
     "start:watch": "webpack --progress --colors --watch -d",
     "dev": "parallelshell \"npm run serve -s\" \"npm run start:watch -s\""
@@ -28,6 +28,7 @@
   "dependencies": {
     "express": "^4.12.3",
     "jade": "^1.9.2",
+    "newrelic": "^1.18.5",
     "react": "^0.13.2"
   },
   "devDependencies": {
