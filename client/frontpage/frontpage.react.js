@@ -1,10 +1,12 @@
 'use strict';
-var React = require('react');
+let React = require('react');
 
-var FrontPage = React.createClass({
-  render: function() {
+let FrontPage = React.createClass({
+  render: () => {
     return (
-      <img src='/logo.png' />
+      <div>
+        <img src='/logo.png'/>
+      </div>
     );
   }
 });
