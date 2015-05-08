@@ -16,7 +16,8 @@ describe('Frontpage', () => {
 
   describe('Verify logo', () => {
     it('Logo should be visible', () => {
-      expect(instance.innerText).to.equal('HEST');
+      expect(instance.outerHTML).to.contain('<img');
+      expect(instance.outerHTML).to.contain('src="/logo.png"');
     });
   });
 });
