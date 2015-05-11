@@ -14,3 +14,4 @@ node_modules
 
 # Configs
 newrelic.config.js
+config.js
