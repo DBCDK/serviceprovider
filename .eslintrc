@@ -3,7 +3,7 @@
     "node": true,
     "es6": true
   },
-  ecmaFeatures: {
+  "ecmaFeatures": {
     "ecmascript": 6,
     "jsx": true
   },
