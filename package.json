@@ -33,6 +33,7 @@
     "jade": "^1.9.2",
     "newrelic": "^1.18.5",
     "react": "^0.13.2",
+    "webpack": "^1.8.11",
     "winston": "^1.0.0",
     "winston-syslog": "^1.1.0"
   },
@@ -49,7 +50,6 @@
     "mocha-jenkins-reporter": "^0.1.8",
     "parallelshell": "^1.1.1",
     "react-tools": "^0.13.2",
-    "wallaby-webpack": "0.0.4",
-    "webpack": "^1.8.11"
+    "wallaby-webpack": "0.0.4"
   }
 }
