@@ -29,6 +29,8 @@
   "homepage": "https://github.com/DBCDK/pallesgavebod#readme",
   "dependencies": {
     "babel": "^5.2.9",
+    "babel-core": "^5.2.9",
+    "babel-loader": "^5.0.0",
     "express": "^4.12.3",
     "jade": "^1.9.2",
     "newrelic": "^1.18.5",
@@ -38,9 +40,7 @@
     "winston-syslog": "^1.1.0"
   },
   "devDependencies": {
-    "babel-core": "^5.2.9",
     "babel-eslint": "^3.1.1",
-    "babel-loader": "^5.0.0",
     "chai": "^2.3.0",
     "eslint": "^0.21.0",
     "eslint-loader": "^0.11.2",
