@@ -1,17 +1,22 @@
 {
+  "parser": "babel-eslint",
   "env": {
+    "browser": true,
     "node": true,
-    "es6": true
+    "es6": true,
+    "mocha": true
   },
   "ecmaFeatures": {
     "ecmascript": 6,
     "jsx": true
   },
   "globals": {},
-  "plugins": [],
+  "plugins": [
+    "react",
+  ],
   "rules": {
     // Possible Errors
-    "comma-dangle": [2, "never"],
+    "comma-dangle": [2],
     "no-cond-assign": 2,
     "no-console": 1,
     "no-constant-condition": 2,
@@ -115,7 +120,7 @@
       "afterColon": true
     }],
     "max-nested-callbacks": 0,
-    "new-cap": 2,
+    "new-cap": 0,
     "new-parens": 2,
     "no-array-constructor": 2,
     "no-inline-comments": 0,
