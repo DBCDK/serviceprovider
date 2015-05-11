@@ -6,6 +6,7 @@ let express = require('express');
 let path = require('path');
 let app = express();
 let server = require('http').Server(app);
+let logger = require('./logger');
 
 // Port config
 app.set('port', process.env.PORT || 8080); // eslint-disable-line no-process-env
@@ -23,6 +24,6 @@ app.get('/', function(req, res) {
 
 // startup server
 server.listen(app.get('port'), function() {
-  console.log('Server listening on ' + app.get('port')); // eslint-disable-line no-console
-  console.log('Versions: ', process.versions); // eslint-disable-line no-console
+  logger.log('info', 'Server listening on ' + app.get('port'));
+  logger.log('info', 'Versions: ', process.versions);
 });
