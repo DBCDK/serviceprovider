@@ -16,7 +16,7 @@ module.exports = function() {
 
     preprocessors: {
       '**/*.js': [
-          file => require('babel').transform(file.content, {sourceMap: true}),
+          file => require('babel').transform(file.content, {sourceMap: true})
       ]
     },
 
@@ -27,6 +27,6 @@ module.exports = function() {
       window.__moduleBundler.loadTests();
     },
 
-    testFramework: 'mocha@2.2.4',
-  }
+    testFramework: 'mocha@2.2.4'
+  };
 };

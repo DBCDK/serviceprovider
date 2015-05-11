@@ -1,7 +1,7 @@
 'use strict';
 let newRelicConfig = require('./newrelic.config');
-const ENV = (process.env.NODE_ENV) ? process.env.NODE_ENV : 'local';
-const NAME = newRelicConfig.palle.app_name  + ' - ' + ENV;
+const ENV = (process.env.NODE_ENV) ? process.env.NODE_ENV : 'local'; // eslint-disable-line no-process-env
+const NAME = newRelicConfig.palle.app_name + ' - ' + ENV;
 /**
  * New Relic agent configuration.
  *

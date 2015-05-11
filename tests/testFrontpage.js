@@ -1,4 +1,5 @@
 'use strict';
+
 let React = require('react/addons');
 let TestUtils = React.addons.TestUtils;
 let expect = require('chai').expect;

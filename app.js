@@ -1,17 +1,14 @@
 'use strict';
-console.log('Environment: ', process.env.NODE_ENV);
 require('babel/register');
 
 let newrelic = require('newrelic');
-let react = require('react');
-let FrontPage = require('./client/frontpage/frontpage.react');
 let express = require('express');
 let path = require('path');
 let app = express();
 let server = require('http').Server(app);
 
 // Port config
-app.set('port', process.env.PORT || 8080);
+app.set('port', process.env.PORT || 8080); // eslint-disable-line no-process-env
 
 // Configure templating
 app.set('views', path.join(__dirname, 'views'));
@@ -26,6 +23,6 @@ app.get('/', function(req, res) {
 
 // startup server
 server.listen(app.get('port'), function() {
-  console.log('Server listening on ' + app.get('port'));
-  console.log('Versions: ', process.versions);
+  console.log('Server listening on ' + app.get('port')); // eslint-disable-line no-console
+  console.log('Versions: ', process.versions); // eslint-disable-line no-console
 });
