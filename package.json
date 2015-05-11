@@ -1,6 +1,6 @@
 {
   "name": "pallesgavebod",
-  "version": "0.0.8",
+  "version": "0.0.9",
   "description": "Next generation pallesgavebod.dk",
   "main": "app.js",
   "scripts": {
@@ -40,6 +40,7 @@
     "babel-loader": "^5.0.0",
     "chai": "^2.3.0",
     "eslint": "^0.21.0",
+    "eslint-loader": "^0.11.2",
     "eslint-plugin-react": "^2.2.0",
     "jsdom": "^5.3.0",
     "mocha": "^2.2.4",
