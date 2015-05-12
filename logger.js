@@ -1,6 +1,7 @@
 'use strict';
 
 let winston = require('winston');
+let os = require('os');
 
 let logger = new (winston.Logger)({
   transports: [
@@ -16,6 +17,7 @@ if (process.env.NODE_ENV === 'production') { // eslint-disable-line
 
   logger.add(winston.transports.Syslog, {
     protocol: 'udp4',
+    localhost: os.hostname(),
     app_name: 'pallesgavebod',
     json: true,
     timestamp: true,
