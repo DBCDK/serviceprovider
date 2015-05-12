@@ -8,7 +8,8 @@ let logger = new (winston.Logger)({
   ]
 });
 
-if (process.env.NODE_ENV === 'production') { // eslint-disable-line no-process-env
+if (process.env.NODE_ENV === 'production' || process.env.NODE_ENV === 'development') { // eslint-disable-line no-process-env
+  winston.log('info', 'adding syslog');
   require('winston-syslog').Syslog; // eslint-disable-line no-unused-expressions
   winston.add(winston.transports.Syslog, {
     protocol: 'udp',
