@@ -9,14 +9,14 @@ let logger = new (winston.Logger)({
 });
 
 if (process.env.NODE_ENV === 'production' || process.env.NODE_ENV === 'development') { // eslint-disable-line no-process-env
-  winston.log('info', 'adding syslog');
+  logger.log('info', 'adding syslog');
   require('winston-syslog').Syslog; // eslint-disable-line no-unused-expressions
-  winston.add(winston.transports.Syslog, {
-    //protocol: 'unix',
-    //path: '/var/log/syslog',
+  logger.add(winston.transports.Syslog, {
+    protocol: 'udp',
+    path: '/var/log/syslog',
     app_name: 'palles_gavebod'
   });
-  winston.setLevels(winston.config.syslog.levels);
+  logger.setLevels(winston.config.syslog.levels);
 }
 
 module.exports = logger;
