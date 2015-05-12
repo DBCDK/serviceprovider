@@ -25,5 +25,13 @@ app.get('/', function(req, res) {
 // startup server
 server.listen(app.get('port'), function() {
   logger.log('info', 'Server listening on ' + app.get('port'));
-  logger.log('info', 'Versions: ', process.versions);
+  logger.log('info', {message: 'Versions: ', data: process.versions});
+  logger.log('debug', 'debug');
+  logger.log('info', 'info');
+  logger.log('notice', 'notice');
+  logger.log('warning', 'warning');
+  logger.log('error', 'error');
+  logger.log('crit', 'crit');
+  logger.log('alert', 'alert');
+  logger.log('emerg', 'emerg');
 });
