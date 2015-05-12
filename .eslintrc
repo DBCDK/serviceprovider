@@ -12,7 +12,7 @@
   },
   "globals": {},
   "plugins": [
-    "react",
+    "react"
   ],
   "rules": {
     // Possible Errors
@@ -91,7 +91,10 @@
     "wrap-iife": 2,
     "yoda": 2,
     // Strict Mode
-    "strict": [2, "global"],
+    "strict": [
+      2,
+      "global"
+    ],
     // Variables
     "no-catch-shadow": 2,
     "no-delete-var": 2,
@@ -104,9 +107,13 @@
     "no-unused-vars": 2,
     "no-use-before-define": 2,
     // Stylistic Issues
-    "indent": [2, 2, {
-      "indentSwitchCase": true
-    }],
+    "indent": [
+      2,
+      2,
+      {
+        "indentSwitchCase": true
+      }
+    ],
     "brace-style": 2,
     "camelcase": 0,
     "comma-spacing": 2,
@@ -115,10 +122,13 @@
     "eol-last": 2,
     "func-names": 0,
     "func-style": 0,
-    "key-spacing": [2, {
-      "beforeColon": false,
-      "afterColon": true
-    }],
+    "key-spacing": [
+      2,
+      {
+        "beforeColon": false,
+        "afterColon": true
+      }
+    ],
     "max-nested-callbacks": 0,
     "new-cap": 0,
     "new-parens": 2,
@@ -128,10 +138,13 @@
     "no-mixed-spaces-and-tabs": 2,
     "no-nested-ternary": 2,
     "no-new-object": 2,
-    "semi-spacing": [2, {
-      "before": false,
-      "after": true
-    }],
+    "semi-spacing": [
+      2,
+      {
+        "before": false,
+        "after": true
+      }
+    ],
     "no-spaced-func": 2,
     "no-ternary": 0,
     "no-trailing-spaces": 2,
@@ -139,12 +152,27 @@
     "no-underscore-dangle": 0,
     "no-wrap-func": 2,
     "one-var": 0,
-    "operator-assignment": [2, "always"],
+    "operator-assignment": [
+      2,
+      "always"
+    ],
     "padded-blocks": 0,
-    "quotes": [2, "single"],
-    "quote-props": [2, "as-needed"],
-    "semi": [2, "always"],
-    "sort-vars": [0, "ignoreCase"],
+    "quotes": [
+      2,
+      "single"
+    ],
+    "quote-props": [
+      2,
+      "as-needed"
+    ],
+    "semi": [
+      2,
+      "always"
+    ],
+    "sort-vars": [
+      0,
+      "ignoreCase"
+    ],
     "space-after-keywords": 2,
     "space-before-blocks": 2,
     "space-in-brackets": 2,
@@ -156,7 +184,10 @@
     "wrap-regex": 0,
     // Legacy
     "max-depth": 0,
-    "max-len": [2, 120],
+    "max-len": [
+      2,
+      180
+    ],
     "max-params": 0,
     "max-statements": 0,
     "no-plusplus": 0
