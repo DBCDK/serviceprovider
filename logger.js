@@ -12,7 +12,7 @@ if (process.env.NODE_ENV === 'production' || process.env.NODE_ENV === 'developme
   winston.log('info', 'adding syslog');
   require('winston-syslog').Syslog; // eslint-disable-line no-unused-expressions
   winston.add(winston.transports.Syslog, {
-    protocol: 'udp',
+    protocol: 'udp4',
     path: '/var/log/syslog',
     app_name: 'palles_gavebod'
   });
