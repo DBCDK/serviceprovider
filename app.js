@@ -7,6 +7,7 @@ let path = require('path');
 let app = express();
 let server = require('http').Server(app);
 let logger = require('./logger');
+let version = require('./package.json').version;
 
 // Port config
 app.set('port', process.env.PORT || 8080); // eslint-disable-line no-process-env
@@ -19,11 +20,12 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.static(path.join(__dirname, 'static')));
 
 app.get('/', function(req, res) {
-  res.render('frontpage', {newrelic: newrelic});
+  res.render('frontpage', {newrelic: newrelic, version: version});
 });
 
 // startup server
 server.listen(app.get('port'), function() {
   logger.info('Server listening on ' + app.get('port'));
   logger.info({message: 'Versions: ', data: process.versions});
+  logger.info(version + ' is up and running');
 });
