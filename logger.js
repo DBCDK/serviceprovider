@@ -10,7 +10,7 @@ let logger = new (winston.Logger)({
 
 logger.setLevels(winston.config.syslog.levels);
 
-if (process.env.NODE_ENV === 'production' || process.env.NODE_ENV === 'development') { // eslint-disable-line
+if (process.env.NODE_ENV === 'production') { // eslint-disable-line
   logger.log('info', 'adding syslog');
   require('winston-syslog').Syslog; // eslint-disable-line no-unused-expressions
 
