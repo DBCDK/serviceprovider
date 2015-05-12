@@ -12,8 +12,8 @@ if (process.env.NODE_ENV === 'production' || process.env.NODE_ENV === 'developme
   winston.log('info', 'adding syslog');
   require('winston-syslog').Syslog; // eslint-disable-line no-unused-expressions
   winston.add(winston.transports.Syslog, {
-    protocol: 'unix',
-    path: '/var/log/syslog',
+    //protocol: 'unix',
+    //path: '/var/log/syslog',
     app_name: 'palles_gavebod'
   });
   winston.setLevels(winston.config.syslog.levels);
