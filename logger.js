@@ -13,7 +13,6 @@ if (process.env.NODE_ENV === 'production' || process.env.NODE_ENV === 'developme
   require('winston-syslog').Syslog; // eslint-disable-line no-unused-expressions
   logger.add(winston.transports.Syslog, {
     protocol: 'udp6',
-    path: '/var/log/syslog',
     app_name: 'palles_gavebod'
   });
   logger.setLevels(winston.config.syslog.levels);
