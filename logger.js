@@ -9,7 +9,7 @@ let logger = new (winston.Logger)({
   ]
 });
 
-if (process.env.NODE_ENV === 'production' || process.env.NODE_ENV === 'development' || process.env.NODE_ENV === undefined) { // eslint-disable-line no-process-env
+if (process.env.NODE_ENV === 'production' || process.env.NODE_ENV === 'development' || process.env.NODE_ENV === undefined) { // eslint-disable-line
   logger.log('info', 'adding syslog');
   require('winston-syslog').Syslog; // eslint-disable-line no-unused-expressions
 
