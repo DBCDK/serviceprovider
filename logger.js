@@ -4,7 +4,7 @@ let winston = require('winston');
 
 let logger = new (winston.Logger)({
   transports: [
-    new (winston.transports.Console)({json: true, timestamp: true, level: 'alert'})
+    new (winston.transports.Console)({json: true, timestamp: true, level: 'emerg'})
   ]
 });
 
@@ -16,10 +16,10 @@ if (process.env.NODE_ENV === 'production' || process.env.NODE_ENV === 'developme
 
   logger.add(winston.transports.Syslog, {
     protocol: 'udp4',
-    app_name: 'palles gavebod',
+    app_name: 'pallesgavebod',
     json: true,
     timestamp: true,
-    level: 'alert'
+    level: 'emerg'
   });
 }
 
