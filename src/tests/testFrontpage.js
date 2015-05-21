@@ -4,7 +4,7 @@ let React = require('react/addons');
 let TestUtils = React.addons.TestUtils;
 let expect = require('chai').expect;
 
-let FrontPage = require('./frontpage/frontpage.react');
+let FrontPage = require('../components/frontpage/frontpage.react');
 
 describe('Frontpage', () => {
   let instance;
