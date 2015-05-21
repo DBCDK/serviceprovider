@@ -2,13 +2,13 @@
   "name": "pallesgavebod",
   "version": "0.0.19",
   "description": "Next generation pallesgavebod.dk",
-  "main": "app.js",
+  "main": "src/app.js",
   "scripts": {
-    "test": "mocha --compilers js:babel/register tests",
-    "test:junit": "mocha -R mocha-jenkins-reporter --compilers js:babel/register tests",
+    "test": "mocha --compilers js:babel/register src/tests",
+    "test:junit": "mocha -R mocha-jenkins-reporter --compilers js:babel/register src/tests",
     "lint:checkstyle": "eslint ./  -o report.xml -f checkstyle",
     "lint": "eslint ./",
-    "serve": "supervisor --harmony -w client,app.js app.js",
+    "serve": "supervisor --harmony -w src/client,src/views,src/app.js src/app.js",
     "build": "webpack --progress --colors -p",
     "start:watch": "webpack --progress --colors --watch -d",
     "dev": "parallelshell \"npm run serve -s\" \"npm run start:watch -s\""
