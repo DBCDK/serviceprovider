@@ -21,6 +21,7 @@ app.use(express.static(path.join(__dirname, '../static')));
 
 app.locals.newrelic = newrelic;
 app.locals.version = version;
+app.locals.env = process.env; // eslint-disable-line no-process-env
 
 app.get('/', function(req, res) {
   res.render('logo');
