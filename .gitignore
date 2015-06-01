@@ -1,17 +1,30 @@
-# Logs
-logs
+# ============
+# LOGS / REPORTS
+# ============
 *.log
+report.xml
+output
 
-# builds
+# ============
+# BUILDS
+# ============
 public/*
 
-# Dependency directory
+# ============
+# NODE_MODULES
+# ============
 node_modules
 
-# Idea
-.idea
-.iml
 
-# Configs
+# ============
+# IDEA
+# ============
+.idea
+*.iml
+
+# ============
+# CONFIG
+# ============
 newrelic.config.js
-config.js
+
+
