@@ -8,7 +8,7 @@ var noErrorsPlugin = new webpack.NoErrorsPlugin();
 
 module.exports = {
   entry: {
-    frontpage: './src/client/frontpage/index.js'
+    frontpage: './src/components/frontpage/index.js'
   },
   output: {
     path: path.join(__dirname, 'public/js'),
