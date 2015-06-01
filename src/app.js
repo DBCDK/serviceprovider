@@ -23,7 +23,11 @@ app.locals.newrelic = newrelic;
 app.locals.version = version;
 
 app.get('/', function(req, res) {
-  res.render('frontpage');
+  res.render('logo');
+});
+
+app.get('/autocomplete', function(req, res) {
+  res.render('autocomplete');
 });
 
 // startup server
