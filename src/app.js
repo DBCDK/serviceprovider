@@ -19,8 +19,16 @@ app.set('view engine', 'jade');
 app.use(express.static(path.join(__dirname, '../public')));
 app.use(express.static(path.join(__dirname, '../static')));
 
+app.locals.newrelic = newrelic;
+app.locals.version = version;
+app.locals.env = process.env; // eslint-disable-line no-process-env
+
 app.get('/', function(req, res) {
-  res.render('frontpage', {newrelic: newrelic, version: version});
+  res.render('logo');
+});
+
+app.get('/autocomplete', function(req, res) {
+  res.render('autocomplete');
 });
 
 app.get('/querysearch', function(req, res) {

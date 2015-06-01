@@ -6,11 +6,14 @@ head
     meta(charset='utf-8')
     meta(name='robots' content='noindex, nofollow')
     meta(name='version' content=version)
+    meta(name='env' content=env)
 
     title Palles Gavebod
 
     block styles
         link(rel="stylesheet", href="/js/style.css")
+        link(rel="stylesheet", href="https://cdnjs.cloudflare.com/ajax/libs/normalize/3.0.3/normalize.min.css")
+        link(rel="stylesheet", href="https://cdnjs.cloudflare.com/ajax/libs/foundation/5.5.2/css/foundation.min.css")
 
     block scripts
         != newrelic.getBrowserTimingHeader()

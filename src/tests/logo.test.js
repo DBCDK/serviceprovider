@@ -4,13 +4,13 @@ let React = require('react/addons');
 let TestUtils = React.addons.TestUtils;
 let expect = require('chai').expect;
 
-let FrontPage = require('../components/frontpage/frontpage.react');
+let Logo = require('../components/logo/logo.react');
 
-describe('Frontpage', () => {
+describe('Logo', () => {
   let instance;
 
   beforeEach(() => {
-    let renderedComponent = TestUtils.renderIntoDocument(<FrontPage />);
+    let renderedComponent = TestUtils.renderIntoDocument(<Logo />);
     let logo = TestUtils.findRenderedDOMComponentWithTag(renderedComponent, 'img');
     instance = logo.getDOMNode();
   });
