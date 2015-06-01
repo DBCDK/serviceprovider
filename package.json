@@ -1,6 +1,6 @@
 {
   "name": "pallesgavebod",
-  "version": "0.0.24",
+  "version": "0.0.25",
   "description": "Next generation pallesgavebod.dk",
   "main": "src/app.js",
   "scripts": {
