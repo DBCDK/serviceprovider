@@ -23,6 +23,10 @@ app.get('/', function(req, res) {
   res.render('frontpage', {newrelic: newrelic, version: version});
 });
 
+app.get('/querysearch', function(req, res) {
+  res.render('querysearch', {newrelic: newrelic, version: version});
+});
+
 // startup server
 server.listen(app.get('port'), function() {
   logger.info('Server listening on ' + app.get('port'));

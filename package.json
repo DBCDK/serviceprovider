@@ -31,6 +31,7 @@
     "babel": "^5.2.9",
     "babel-core": "^5.2.9",
     "babel-loader": "^5.0.0",
+    "dbc-react-querystring": "git://github.com/DBCDK/dbc-react-querystring#develop",
     "express": "^4.12.3",
     "jade": "^1.9.2",
     "newrelic": "^1.18.5",
@@ -57,9 +58,11 @@
     "mocha": "^2.2.4",
     "mocha-jenkins-reporter": "^0.1.8",
     "node-libs-browser": "^0.5.2",
+    "node-sass": "^3.1.2",
     "parallelshell": "^1.1.1",
     "phantomjs": "^1.9.17",
     "react-tools": "^0.13.2",
+    "sass-loader": "^1.0.2",
     "wallaby-webpack": "0.0.4"
   }
 }
