@@ -8,7 +8,8 @@ var noErrorsPlugin = new webpack.NoErrorsPlugin();
 
 module.exports = {
   entry: {
-    logo: './src/components/logo/index.js'
+    logo: './src/components/logo/index.js',
+    autocomplete: './src/components/autocomplete/index.js'
   },
   output: {
     path: path.join(__dirname, 'public/js'),
