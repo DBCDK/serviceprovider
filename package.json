@@ -6,8 +6,8 @@
   "scripts": {
     "test": "karma start --single-run=true",
     "test:watch": "karma start",
-    "lint:checkstyle": "eslint ./  -o report.xml -f checkstyle",
-    "lint": "eslint ./",
+    "lint:checkstyle": "eslint ./src  -o report.xml -f checkstyle",
+    "lint": "eslint ./src",
     "serve": "supervisor --harmony -w src/client,src/views,src/app.js src/app.js",
     "build": "webpack --progress --colors -p",
     "start:watch": "webpack --progress --colors --watch -d",
