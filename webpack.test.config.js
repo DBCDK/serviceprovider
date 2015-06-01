@@ -1,3 +1,4 @@
+'use strict';
 /**
  * Config file for webpack
  */
