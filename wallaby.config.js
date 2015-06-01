@@ -1,17 +1,17 @@
 'use strict';
 let wallabyWebpack = require('wallaby-webpack');
-let webpackPostprocessor = wallabyWebpack({});
-require('.src/tests/setup');
+let webpackConfig = require('./webpack.config');
+let webpackPostprocessor = wallabyWebpack(webpackConfig);
 
 module.exports = function() {
   return {
     files: [
       {pattern: 'src/tests/lib/phantomPolyfill.js', instrument: false},
-      {pattern: 'src/client/**/*.js', load: false}
+      {pattern: 'src/components/**/*.js', load: false}
     ],
 
     tests: [
-      {pattern: 'src/tests/test*.js', load: false}
+      {pattern: 'src/**/*.test.js', load: false}
     ],
 
     preprocessors: {
