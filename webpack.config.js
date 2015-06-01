@@ -12,7 +12,7 @@ var extractCss = new extractTextPlugin('style.css');
 module.exports = {
   entry: {
     frontpage: './src/components/frontpage/index.js',
-    querysearch: './src/components/querySearch/index.js'
+    querysearch: './src/components/querySearch/index.js',
     logo: './src/components/logo/index.js',
     autocomplete: './src/components/autocomplete/index.js'
   },
