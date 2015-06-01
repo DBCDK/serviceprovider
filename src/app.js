@@ -19,8 +19,11 @@ app.set('view engine', 'jade');
 app.use(express.static(path.join(__dirname, '../public')));
 app.use(express.static(path.join(__dirname, '../static')));
 
+app.locals.newrelic = newrelic;
+app.locals.version = version;
+
 app.get('/', function(req, res) {
-  res.render('frontpage', {newrelic: newrelic, version: version});
+  res.render('frontpage');
 });
 
 // startup server
