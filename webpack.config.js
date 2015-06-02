@@ -4,7 +4,6 @@ var webpack = require('webpack');
 var path = require('path');
 var extractTextPlugin = require('extract-text-webpack-plugin');
 
-
 var commonsPlugin = new webpack.optimize.CommonsChunkPlugin('common.js');
 var noErrorsPlugin = new webpack.NoErrorsPlugin();
 var extractCss = new extractTextPlugin('style.css');
