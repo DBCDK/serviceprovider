@@ -1,5 +1,5 @@
 'use strict';
-let React = require('react');
-let AutoComplete = require('./AutoComplete.component');
+import React from 'react';
+import AutoComplete from './AutoComplete.component.js';
 
 React.render(<AutoComplete/>, document.getElementById('content'), null);
