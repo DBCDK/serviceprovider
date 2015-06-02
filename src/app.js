@@ -32,7 +32,7 @@ app.get('/autocomplete', function(req, res) {
 });
 
 app.get('/querysearch', function(req, res) {
-  res.render('querysearch', {newrelic: newrelic, version: version});
+  res.render('querysearch');
 });
 
 // startup server
