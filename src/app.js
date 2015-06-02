@@ -1,6 +1,4 @@
 'use strict';
-require('babel/register');
-
 let newrelic = require('newrelic');
 let express = require('express');
 let path = require('path');
@@ -8,6 +6,9 @@ let app = express();
 let server = require('http').Server(app);
 let logger = require('./logger');
 let version = require('../package.json').version;
+//import QuerySearch from './components/querySearch/querySearch.react';
+import QueryField from 'dbc-react-querystring';
+
 
 // Port config
 app.set('port', process.env.PORT || 8080); // eslint-disable-line no-process-env
@@ -32,7 +33,8 @@ app.get('/autocomplete', function(req, res) {
 });
 
 app.get('/querysearch', function(req, res) {
-  res.render('querysearch');
+  const search = React.renderToString(<QueryField />);
+  res.render('querysearch', {search});
 });
 
 // startup server
