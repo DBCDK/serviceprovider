@@ -35,7 +35,6 @@ app.locals.newrelic = newrelic;
 app.locals.version = version;
 app.locals.env = process.env; // eslint-disable-line no-process-env
 
-
 // setting basic routes -- should be moved elsewhere in the future
 app.get('/', function(req, res) {
   res.render('logo');
