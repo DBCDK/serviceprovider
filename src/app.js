@@ -1,13 +1,13 @@
 'use strict';
 require('babel/register');
 
-let newrelic = require('newrelic');
-let express = require('express');
-let path = require('path');
-let app = express();
-let server = require('http').Server(app);
-let logger = require('./logger');
-let version = require('../package.json').version;
+const newrelic = require('newrelic');
+const express = require('express');
+const path = require('path');
+const app = express();
+const server = require('http').Server(app);
+const logger = require('./logger');
+const version = require('../package.json').version;
 
 // Port config
 app.set('port', process.env.PORT || 8080); // eslint-disable-line no-process-env
