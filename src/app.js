@@ -17,7 +17,7 @@ const logger = require('./logger');
 
 // settings up our provider
 var serviceProvider = require('dbc-node-serviceprovider');
-serviceProvider.init(config, socket);
+serviceProvider.init(config.services, socket);
 
 // Port config
 app.set('port', process.env.PORT || 8080); // eslint-disable-line no-process-env
