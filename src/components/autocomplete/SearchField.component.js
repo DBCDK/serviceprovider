@@ -5,8 +5,10 @@ const socket = Socket.connect();
 
 var SearchField = React.createClass({
   componentDidMount() {
-    // console.log('componentDidMount');
-    socket.emit('getPopSuggestionsRequest', {test: 'hest'});
+    socket.on('getPopSuggestionsResponse', (data) => {
+      console.log(data);
+    });
+    socket.emit('getPopSuggestionsRequest', {index: 'hest', fields: ['a', 'b', 'c']});
   },
 
   getInitialState() {
