@@ -6,7 +6,7 @@ const socket = Socket.connect();
 var SearchField = React.createClass({
   componentDidMount() {
     socket.on('getPopSuggestionsResponse', (data) => {
-      console.log(data);
+      console.log(data); // eslint-disable-line no-console
     });
     socket.emit('getPopSuggestionsRequest', {index: 'hest', fields: ['a', 'b', 'c']});
   },
