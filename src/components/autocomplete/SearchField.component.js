@@ -1,7 +1,16 @@
 'use strict';
 import React from 'react';
+import Socket from 'socket.io-client';
+const socket = Socket.connect();
 
 var SearchField = React.createClass({
+  componentDidMount() {
+    socket.on('getPopSuggestionsResponse', (data) => {
+      console.log(data); // eslint-disable-line no-console
+    });
+    socket.emit('getPopSuggestionsRequest', {index: 'hest', fields: ['a', 'b', 'c']});
+  },
+
   getInitialState() {
     return {text: (this.props.initialValue) ? this.props.initialValue : ''};
   },
