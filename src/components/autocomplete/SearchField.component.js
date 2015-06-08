@@ -63,8 +63,8 @@ const store = Reflux.createStore({
     socket.on('getPopSuggestionsResponse', this.serviceResponse);
   },
 
-  serviceResponse(data) {
-    //console.log('data', data); // eslint-disable-line no-console
+  serviceResponse() {
+    // console.log('data', data); // eslint-disable-line no-console
     this._store.data = dummyData;
     this.trigger(this._store);
   },
