@@ -1,6 +1,6 @@
 'use strict';
 import React from 'react';
-import QueryString from 'dbc-react-querystring';
+import Search from './Search.react';
 
 /**
  * Render component for server use.
@@ -9,7 +9,8 @@ import QueryString from 'dbc-react-querystring';
  * and 'props' is a stringified version of the properties for client side export.
  */
 export default function querySearchServer (props) {
-  const search = React.renderToString(<QueryString query={ props }/>);
+  const {query, elements} = props;
+  const search = React.renderToString(<Search query={query || []} elements={elements || []}/>);
   return {
     search,
     props: JSON.stringify(props)
