@@ -13,13 +13,19 @@ const store = Reflux.createStore({
   listenables: [actions],
 
   _store: {
-    text: '',
     data: {}
   },
 
+  init() {
+    socket.on('getPopSuggestionsResponse', this.serviceResponse);
+  },
+
+  serviceResponse(data) {
+    console.log('data', data);
+  },
+
   onTextfieldUpdated(value) {
-    console.log(value);
-    this.trigger(this._store);
+    socket.emit('getPopSuggestionsRequest', {index: value, fields: ['a', 'b', 'c']});
   },
 
   getInitialState() {
@@ -27,21 +33,16 @@ const store = Reflux.createStore({
   }
 });
 
-/*
- socket.on('getPopSuggestionsResponse', (data) => {
- console.log(data); // eslint-disable-line no-console
- });
- socket.emit('getPopSuggestionsRequest', {index: 'hest', fields: ['a', 'b', 'c']});
- */
-
 var SearchField = React.createClass({
   mixins: [Reflux.connect(store)],
 
   render() {
     const AutoComplete = this.props.autocomplete;
+    const text = this.state.text || '';
+
     return (
       <div>
-        <input type='text' placeholder='Søg og du skal finde' value={this.state.text} onChange={this._onchange}/>
+        <input type='text' placeholder='Søg og du skal finde' value={text} onChange={this._onchange}/>
         <AutoComplete />
       </div>
     );
