@@ -1,0 +1,24 @@
+.filterguide-wrapper {
+  position: absolute;
+  overflow: hidden;
+  width: 100%;
+}
+.filterguide {
+  width: 104%;
+  //height: 60px;
+  white-space: nowrap;
+  overflow-x: scroll;
+  -webkit-overflow-scrolling: touch;
+}
+
+.filterguide-list {
+  margin: 0;
+  width: 100%;
+}
+
+.filterguide-list-element {
+  padding: 20px 30px;
+  display: inline-block;
+  background-color: #222;
+  color: white;
+}
