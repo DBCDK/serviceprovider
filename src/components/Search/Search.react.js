@@ -1,13 +1,9 @@
 'use strict';
 import React from 'react';
 import {SearchField as QueryString, FilterGuide} from 'dbc-react-querystring';
+import * as QueryParser from '../../utils/query.util.js';
 
 
-
-function Query () {
-
-
-}
 
 
 /**
@@ -15,8 +11,10 @@ function Query () {
  */
 const Search = React.createClass({
   getInitialState(){
+    const query = QueryParser.queryToState(this.props.query || {});
+    console.log(query);
     return {
-      query: this.props.query || [],
+      query,
       elements: this.props.elements || []
     };
   },
@@ -30,9 +28,11 @@ const Search = React.createClass({
   },
   updateQuery(query) {
     this.setState({query});
+    //history.pushState(null, null, window.location.pathname +  '?' + QueryParser.stateToQuery(query));
   },
   render() {
     const {elements, query} = this.state;
+    console.log(query, query);
     return (
       <div className='search'>
         <QueryString query={query} update={this.updateQuery} />

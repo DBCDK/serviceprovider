@@ -10,6 +10,8 @@ import '../../styles/app.scss';
  * This component should implemented in the main search field
  *
  */
+
+  //{value, index, type, cql},
 const data = [
   {label: 'hest'},
   {label: 'æble'},
@@ -18,4 +20,6 @@ const data = [
   {label: 'fisk'}
 ];
 
-React.render(<Search query={window.QUERYSTRING_PROPS || []} elements={data}/>, document.getElementById('search'));
+React.render(<Search query={window.QUERYSTRING_PROPS.query || []} elements={data}/>, document.getElementById('search'));
+
+
