@@ -47,6 +47,7 @@ app.get('/autocomplete', function(req, res) {
 });
 
 app.get('/querysearch', function(req, res) {
+  // @TODO Parse properties from url
   res.render('querysearch', querySearchServer([]));
 });
 

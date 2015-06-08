@@ -1,6 +1,10 @@
 'use strict';
 import React from 'react';
-import QueryField from 'dbc-react-querystring';
+import QueryString from 'dbc-react-querystring';
 import '../../styles/app.scss';
 
-React.render(<QueryField query={window.QUERYSTRING_PROPS || []}/>, document.getElementById('search'));
+
+/**
+ * Client side rendering of the QueryString component
+ */
+React.render(<QueryString query={window.QUERYSTRING_PROPS || []}/>, document.getElementById('search'));
