@@ -8,7 +8,7 @@
     "test:watch": "karma start",
     "lint:checkstyle": "eslint ./src  -o report.xml -f checkstyle",
     "lint": "eslint ./src",
-    "serve": "supervisor --harmony -w src/views,src/app.js, node_modules/dbc-node-serviceprovider server.js",
+    "serve": "supervisor --harmony -w src/views,src/app.js, node_modules/dbc-node-serviceprovider src/server.js",
     "build": "webpack --progress --colors -p",
     "start:watch": "webpack --progress --colors --watch -d",
     "dev": "parallelshell \"npm run serve -s\" \"npm run start:watch -s\""

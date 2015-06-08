@@ -15,11 +15,11 @@ const path = require('path');
 const logger = require('./logger');
 
 import React from 'react';
-import QueryField from './components/querySearch/querySearch.react.js';
-console.log(QueryField);
+import querySearchServer from './components/querySearch/querySearch.server.js';
+
 // settings up our provider
-//var serviceProvider = require('dbc-node-serviceprovider');
-//serviceProvider.init(config.services, socket);
+var serviceProvider = require('dbc-node-serviceprovider');
+serviceProvider.init(config.services, socket);
 
 // Port config
 app.set('port', process.env.PORT || 8080); // eslint-disable-line no-process-env
@@ -47,12 +47,7 @@ app.get('/autocomplete', function(req, res) {
 });
 
 app.get('/querysearch', function(req, res) {
-  const props = ['hest', 'kanin'];
-  const search = React.renderToString(<QueryField query={ props }/>);
-  res.render('querysearch', {
-    search,
-    props: JSON.stringify(props)
-  });
+  res.render('querysearch', querySearchServer([]));
 });
 
 // starting server
