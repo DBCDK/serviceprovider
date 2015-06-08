@@ -13,5 +13,5 @@ export default function querySearchServer (props) {
   return {
     search,
     props: JSON.stringify(props)
-  }
+  };
 }

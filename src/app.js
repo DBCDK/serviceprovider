@@ -14,7 +14,7 @@ const socket = io(server);
 const path = require('path');
 const logger = require('./logger');
 
-import React from 'react';
+// Loading components
 import querySearchServer from './components/querySearch/querySearch.server.js';
 
 // settings up our provider
