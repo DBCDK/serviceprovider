@@ -41,32 +41,5 @@ module.exports = [{
     extractCss,
     noErrorsPlugin
   ]
-},
-  {
-    // The configuration for the server-side rendering
-    name: "server-side rendering",
-    entry: "./src/app.js",
-    target: "node",
-    output: {
-      path: __dirname,
-      filename: "src/server.generated.js",
-      libraryTarget: "commonjs2"
-    },
-    externals: /^[a-z\-0-9]+$/,
-    module: {
-      loaders: [
-        {
-          test: /\.js$/,
-          //exclude: /node_modules/,
-          loader: 'babel-loader'
-        },
-        {
-          test: /\.json$/,
-          exclude: /node_modules/,
-          loader: 'json-loader'
-        },
-        { test: /\.scss$/,  loader: path.join(__dirname, "server", "style-collector") + "!css-loader" },
-      ]
-    }
-  }
+}
 ];

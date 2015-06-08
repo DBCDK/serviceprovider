@@ -1,4 +1,4 @@
 'use strict';
 
 require('babel/register');
-require('./src/server.generated');
+require('./src/app');

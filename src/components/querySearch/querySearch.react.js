@@ -1,3 +1,3 @@
 'use strict';
 
-import {queryField} from 'dbc-react-querystring';
+export * from 'dbc-react-querystring';

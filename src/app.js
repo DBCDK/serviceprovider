@@ -1,5 +1,4 @@
 'use strict';
-require('babel/register');
 
 // loading config etc.
 const newrelic = require('newrelic');
@@ -15,9 +14,12 @@ const socket = io(server);
 const path = require('path');
 const logger = require('./logger');
 
+import React from 'react';
+import QueryField from './components/querySearch/querySearch.react.js';
+console.log(QueryField);
 // settings up our provider
-var serviceProvider = require('dbc-node-serviceprovider');
-serviceProvider.init(config.services, socket);
+//var serviceProvider = require('dbc-node-serviceprovider');
+//serviceProvider.init(config.services, socket);
 
 // Port config
 app.set('port', process.env.PORT || 8080); // eslint-disable-line no-process-env
@@ -45,8 +47,12 @@ app.get('/autocomplete', function(req, res) {
 });
 
 app.get('/querysearch', function(req, res) {
-  const search = React.renderToString(<QueryField />);
-  res.render('querysearch', {search});
+  const props = ['hest', 'kanin'];
+  const search = React.renderToString(<QueryField query={ props }/>);
+  res.render('querysearch', {
+    search,
+    props: JSON.stringify(props)
+  });
 });
 
 // starting server
