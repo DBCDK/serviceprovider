@@ -6,4 +6,5 @@ block append footerscripts
     script(src='/js/querysearch.js')
 
 block content
-    #search content
+    #search !{search}
+    script window.QUERYSTRING_PROPS = !{props}

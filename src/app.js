@@ -1,5 +1,4 @@
 'use strict';
-require('babel/register');
 
 // loading config etc.
 const newrelic = require('newrelic');
@@ -14,6 +13,9 @@ const io = require('socket.io');
 const socket = io(server);
 const path = require('path');
 const logger = require('./logger');
+
+import React from 'react';
+import querySearchServer from './components/querySearch/querySearch.server.js';
 
 // settings up our provider
 var serviceProvider = require('dbc-node-serviceprovider');
@@ -45,7 +47,8 @@ app.get('/autocomplete', function(req, res) {
 });
 
 app.get('/querysearch', function(req, res) {
-  res.render('querysearch');
+  // @TODO Parse properties from url
+  res.render('querysearch', querySearchServer([]));
 });
 
 // starting server

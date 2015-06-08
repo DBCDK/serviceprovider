@@ -6,11 +6,12 @@ var extractTextPlugin = require('extract-text-webpack-plugin');
 
 var commonsPlugin = new webpack.optimize.CommonsChunkPlugin('common.js');
 var noErrorsPlugin = new webpack.NoErrorsPlugin();
-var extractCss = new extractTextPlugin('style.css');
+var extractCss = new extractTextPlugin('../styles/style.css');
 
-module.exports = {
+module.exports = [{
+  name: "browser",
   entry: {
-    querysearch: './src/components/querySearch/index.js',
+    querysearch: './src/components/querySearch/querySearch.client',
     logo: './src/components/logo/index.js',
     autocomplete: './src/components/autocomplete/index.js'
   },
@@ -40,4 +41,5 @@ module.exports = {
     extractCss,
     noErrorsPlugin
   ]
-};
+}
+];
