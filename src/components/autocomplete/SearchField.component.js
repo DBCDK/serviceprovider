@@ -9,6 +9,8 @@ const actions = Reflux.createActions(
   ['textfieldUpdated']
 );
 
+let timer = null;
+
 const dummyData = [{
   label: 'Title',
   data: [
@@ -63,14 +65,15 @@ const store = Reflux.createStore({
     socket.on('getPopSuggestionsResponse', this.serviceResponse);
   },
 
-  serviceResponse() {
-    // console.log('data', data); // eslint-disable-line no-console
+  serviceResponse(data) {
+    console.log(data); // eslint-disable-line no-console
+//    console.log(query); // eslint-disable-line no-console
     this._store.data = dummyData;
     this.trigger(this._store);
   },
 
   onTextfieldUpdated(value) {
-    socket.emit('getPopSuggestionsRequest', {index: value, fields: ['a', 'b', 'c']});
+    socket.emit('getPopSuggestionsRequest', [{index: value, fields: ['a', 'b', 'c']}, {index: value, fields: ['a', 'b', 'c']}, {index: value, fields: ['a', 'b', 'c']}]);
   },
 
   getInitialState() {
@@ -89,16 +92,23 @@ var SearchField = React.createClass({
 
     return (
       <div>
-        <input type='text' placeholder='Søg og du skal finde' value={text} onChange={this._onchange} className={'search-input'}/>
+        <input type='text' placeholder='Søg og du skal finde' value={text} onChange={this._handleOnChange} onKeyUp={this._handleOnKeyUp} className={'search-input'}/>
         <AutoComplete data={data} visible={autoCompleteVisible}/>
       </div>
     );
   },
 
-  _onchange(e) {
+  _handleOnChange(e) {
     const txt = e.target.value;
-    actions.textfieldUpdated(txt);
     this.setState({text: txt});
+  },
+
+  _handleOnKeyUp() {
+    clearTimeout(timer);
+
+    timer = setTimeout(() => {
+      actions.textfieldUpdated(this.state.text);
+    }, 250);
   },
 
   propTypes: {
