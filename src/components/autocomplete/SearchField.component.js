@@ -21,7 +21,7 @@ const store = Reflux.createStore({
   },
 
   serviceResponse(data) {
-    console.log('data', data);
+    console.log('data', data); // eslint-disable-line no-console
   },
 
   onTextfieldUpdated(value) {
