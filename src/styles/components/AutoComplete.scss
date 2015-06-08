@@ -1,5 +1,13 @@
+$border-color: #d0d0d0;
+
+input[type=text] {
+  &.search-input {
+    margin-bottom: 0;
+  }
+}
+
 .autocomplete--container {
-  border: 1px solid #d0d0d0;
+  border: 1px solid $border-color;
   border-top: none;
 }
 
@@ -28,8 +36,8 @@
 .autocomplete--category--rows-container {
   width: 80%;
   display: inline-block;
-  border-left: 1px solid #d0d0d0;
-  border-bottom: 1px solid #d0d0d0;
+  border-left: 1px solid $border-color;
+  border-bottom: 1px solid $border-color;
 }
 
 .autocomplete--row {
@@ -46,7 +54,7 @@
   width: 70px;
   padding: 10px;
   vertical-align: middle;
-  img{
+  img {
     max-height: 50px;
     max-width: 50px;
   }
