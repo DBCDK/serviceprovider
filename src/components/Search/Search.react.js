@@ -1,10 +1,7 @@
 'use strict';
 import React from 'react';
-import {SearchField as QueryString, FilterGuide} from 'dbc-react-querystring';
+import {TokenSearchField, FilterGuide} from 'dbc-react-querystring';
 import * as QueryParser from '../../utils/query.util.js';
-
-
-
 
 /**
  * Search field wrapper component
@@ -12,10 +9,9 @@ import * as QueryParser from '../../utils/query.util.js';
 const Search = React.createClass({
   getInitialState(){
     const query = QueryParser.queryToState(this.props.query || {});
-    console.log(query);
     return {
       query,
-      elements: this.props.elements || []
+      filterElements: this.props.elements || []
     };
   },
   propTypes: {
@@ -23,20 +19,21 @@ const Search = React.createClass({
   },
   addElementToQuery(element, event){
     let query = this.state.query;
-    query.push(element.label);
+    query.push(element);
     this.updateQuery(query);
   },
   updateQuery(query) {
     this.setState({query});
-    //history.pushState(null, null, window.location.pathname +  '?' + QueryParser.stateToQuery(query));
+    // this is a simple way of handling updates of the url
+    // we might need to implement a more advanced version at some point e.g. react-router
+    history.pushState(null, null, window.location.pathname +  '?' + QueryParser.stateToQuery(query));
   },
   render() {
-    const {elements, query} = this.state;
-    console.log(query, query);
+    const {filterElements, query} = this.state;
     return (
       <div className='search'>
-        <QueryString query={query} update={this.updateQuery} />
-        <FilterGuide elements={elements} select={this.addElementToQuery}/>
+        <TokenSearchField query={query} update={this.updateQuery} />
+        <FilterGuide elements={filterElements} select={this.addElementToQuery}/>
       </div>
     );
   }

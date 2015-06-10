@@ -13,11 +13,11 @@ import '../../styles/app.scss';
 
   //{value, index, type, cql},
 const data = [
-  {label: 'hest'},
-  {label: 'æble'},
-  {label: 'banan'},
-  {label: 'test'},
-  {label: 'fisk'}
+  {value: 'hest', type: 'term.type'},
+  {value: 'æble', type: 'term.type'},
+  {value: 'banan', type: 'term.type'},
+  {value: 'test', type: 'term.type'},
+  {value: 'fisk', type: 'term.type'}
 ];
 
 React.render(<Search query={window.QUERYSTRING_PROPS.query || []} elements={data}/>, document.getElementById('search'));
