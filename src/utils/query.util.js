@@ -18,11 +18,11 @@ function parseQueryStringElement(values, key) {
 
 function stateToQuery(state) {
   let query = {}
-  state.each((element)=>{
-    query[element.key] = query[element.key] || [];
-    query[element.key].push(value);
+  _.each(state, (element)=>{
+    query[element.type] = query[element.type] || [];
+    query[element.type].push(element.value);
   });
-  return query.map((element) => element.join('|')).join('&');
+  return _.map(query, (element, key) => key + "=" + element.join('|')).join('&');
 }
 
 export default {
