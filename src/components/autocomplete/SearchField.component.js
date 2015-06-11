@@ -67,13 +67,24 @@ const store = Reflux.createStore({
 
   serviceResponse(data) {
     console.log(data); // eslint-disable-line no-console
-//    console.log(query); // eslint-disable-line no-console
+    //    console.log(query); // eslint-disable-line no-console
     this._store.data = dummyData;
     this.trigger(this._store);
   },
 
   onTextfieldUpdated(value) {
-    socket.emit('getPopSuggestionsRequest', [{index: value, fields: ['a', 'b', 'c']}, {index: value, fields: ['a', 'b', 'c']}, {index: value, fields: ['a', 'b', 'c']}]);
+    socket.emit('getPopSuggestionsRequest', [
+      {
+        index: 'term.creator',
+        query: value,
+        fields: ['fedoraPid', 'term.title', 'term.creator']
+      },
+      {
+        index: 'term.title',
+        query: value,
+        fields: ['fedoraPid', 'term.title', 'term.creator']
+      }
+    ]);
   },
 
   getInitialState() {
