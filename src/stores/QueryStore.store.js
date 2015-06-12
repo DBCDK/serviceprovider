@@ -3,8 +3,7 @@ import QueryUtil from '../utils/query.util.js';
 import queryUpdate from '../actions/QueryUpdate.action.js';
 
 // Setup dataobject for query
-// @todo We may need to initialize it with data from the URL or an global object,
-// passed through the html
+// @todo We may need to initialize it with data from the URL or an global object
 let _query = [];
 
 /**

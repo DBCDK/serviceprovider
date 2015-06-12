@@ -11,15 +11,16 @@ import queryStore from '../../stores/QueryStore.store.js';
  * Search field wrapper component
  */
 const Search = React.createClass({
+  propTypes: {
+    query: React.PropTypes.object,
+    filterElements: React.PropTypes.array
+  },
   getInitialState(){
     const query = QueryParser.stringToObject(this.props.query || {});
     return {
       query,
-      filterElements: this.props.elements || []
+      filterElements: this.props.filterElements || []
     };
-  },
-  propTypes: {
-
   },
   addElementToQuery(element, event){
     let query = this.state.query;
@@ -39,12 +40,18 @@ const Search = React.createClass({
   componentWillUnmount: function() {
     this.unsubscribe();
   },
+
   render() {
     const {filterElements, query} = this.state;
+    let filterGuide;
+    if (filterElements.length > 0) {
+      filterGuide = (<FilterGuide elements={filterElements} select={this.addElementToQuery}/>);
+    }
+
     return (
       <div className='search'>
         <TokenSearchField query={query} update={queryAction} />
-        <FilterGuide elements={filterElements} select={this.addElementToQuery}/>
+        {filterGuide}
       </div>
     );
   }

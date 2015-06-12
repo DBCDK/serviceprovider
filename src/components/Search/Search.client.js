@@ -1,6 +1,6 @@
 'use strict';
 import React from 'react';
-import Search from './Search.react';
+import Search from './Search.component';
 import '../../styles/app.scss';
 
 /**
@@ -10,16 +10,6 @@ import '../../styles/app.scss';
  * This component should implemented in the main search field
  *
  */
-
-  //{value, index, type, cql},
-const data = [
-  {value: 'hest', type: 'term.type'},
-  {value: 'æble', type: 'term.type'},
-  {value: 'banan', type: 'term.type'},
-  {value: 'test', type: 'term.type'},
-  {value: 'fisk', type: 'term.type'}
-];
-
-React.render(<Search query={window.QUERYSTRING_PROPS.query || []} elements={data}/>, document.getElementById('search'));
+React.render(<Search query={window.QUERYSTRING_PROPS.query || {}} />, document.getElementById('search'));
 
 

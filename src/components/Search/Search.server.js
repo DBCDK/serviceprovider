@@ -1,6 +1,6 @@
 'use strict';
 import React from 'react';
-import Search from './Search.react';
+import Search from './Search.component';
 
 /**
  * Render component for server use.
