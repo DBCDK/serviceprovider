@@ -12,7 +12,7 @@ import queryStore from '../../stores/QueryStore.store.js';
  */
 const Search = React.createClass({
   getInitialState(){
-    const query = QueryParser.queryToState(this.props.query || {});
+    const query = QueryParser.stringToObject(this.props.query || {});
     return {
       query,
       filterElements: this.props.elements || []
@@ -31,7 +31,7 @@ const Search = React.createClass({
     // this is a simple way of handling updates of the url
     // we might need to implement a more advanced version at some point e.g. react-router
     // but we need to figure out our needs first
-    history.pushState(null, null, window.location.pathname +  '?' + QueryParser.stateToQuery(query));
+    history.pushState(null, null, window.location.pathname +  '?' + QueryParser.objectToString(query));
   },
   componentDidMount: function() {
     this.unsubscribe = queryStore.listen(this.updateQuery);

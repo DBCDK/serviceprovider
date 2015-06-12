@@ -21,8 +21,7 @@ let QueryStore = Reflux.createStore({
   // update the query object and trigger an action
   update(query) {
     _query = query
-    let cql = QueryUtil.queryToCql(query);
-    console.log(cql);
+    let cql = QueryUtil.objectToCql(query);
     this.trigger(_query);
   },
 
