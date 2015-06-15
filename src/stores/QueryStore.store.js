@@ -32,7 +32,7 @@ let QueryStore = Reflux.createStore({
 
   // return the content of the querystore as cql
   getCql() {
-    return QueryParser.queryToCql(_query);
+    return QueryParser.objectToCql(_query);
   }
 });
 
