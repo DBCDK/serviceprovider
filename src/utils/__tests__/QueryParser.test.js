@@ -2,7 +2,7 @@
 
 import {expect} from 'chai';
 
-import * as Query from '../query.util.js';
+import * as Query from '../QueryParser.util.js';
 
 describe('Test Query Util Class', () => {
   it('should convert a query string object to an internal query object', () => {

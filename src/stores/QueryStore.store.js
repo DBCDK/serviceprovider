@@ -1,7 +1,7 @@
 'use strict';
 
 import Reflux from 'reflux';
-import QueryUtil from '../utils/query.util.js';
+import QueryParser from '../utils/QueryParser.util.js';
 import queryUpdate from '../actions/QueryUpdate.action.js';
 
 // Setup dataobject for query

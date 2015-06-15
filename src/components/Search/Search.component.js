@@ -1,7 +1,7 @@
 'use strict';
 import React from 'react';
 import {TokenSearchField, FilterGuide} from 'dbc-react-querystring';
-import * as QueryParser from '../../utils/query.util.js';
+import QueryParser from '../../utils/QueryParser.util.js';
 
 // import reflux actions and stores
 import queryAction from '../../actions/QueryUpdate.action.js';
