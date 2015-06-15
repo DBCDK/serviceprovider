@@ -15,6 +15,7 @@ const Search = React.createClass({
     query: React.PropTypes.object,
     filterElements: React.PropTypes.array
   },
+
   getInitialState() {
     const query = QueryParser.stringToObject(this.props.query || {});
     return {
@@ -22,11 +23,18 @@ const Search = React.createClass({
       filterElements: this.props.filterElements || []
     };
   },
+  /**
+   * Add a single element to the Query array
+   */
   addElementToQuery(element) {
     let query = this.state.query;
     query.push(element);
     queryAction(query);
   },
+
+  /**
+   * Update the Query with a new Query
+   */
   updateQuery(query) {
     this.setState({query});
     // this is a simple way of handling updates of the url
@@ -34,9 +42,11 @@ const Search = React.createClass({
     // but we need to figure out our needs first
     history.pushState(null, null, `${window.location.pathname}?${QueryParser.objectToString(query)}`);
   },
+
   componentDidMount: function() {
     this.unsubscribe = queryStore.listen(this.updateQuery);
   },
+
   componentWillUnmount: function() {
     this.unsubscribe();
   },

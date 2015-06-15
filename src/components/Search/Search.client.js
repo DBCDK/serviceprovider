@@ -4,11 +4,9 @@ import Search from './Search.component';
 import '../../styles/app.scss';
 
 /**
- * Client side rendering of the QueryString component
+ * Client side rendering of the Search component
  *
- * THIS IS A DUMMY IMPLEMENTATION
- * This component should implemented in the main search field
- *
+ * If a querystring from the url exists it is added to the global window object, and should be passed to the client
  */
 React.render(<Search query={window.QUERYSTRING_PROPS.query || {}} />, document.getElementById('search'));
 
