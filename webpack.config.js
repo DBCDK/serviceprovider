@@ -11,7 +11,7 @@ var extractCss = new extractTextPlugin('../styles/style.css');
 module.exports = [{
   name: "browser",
   entry: {
-    querysearch: './src/components/querySearch/querySearch.client',
+    querysearch: './src/components/Search/Search.client',
     logo: './src/components/logo/index.js',
     autocomplete: './src/components/autocomplete/index.js'
   },
