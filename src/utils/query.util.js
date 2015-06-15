@@ -1,4 +1,5 @@
-"use strict";
+'use strict';
+
 /**
  * @file
  * This file contains utility methods for converting between
@@ -28,7 +29,7 @@ import _ from 'lodash';
  *    An object the indexes as keys
  */
 function groupByType(query) {
-  return query.reduce((group, element)=>{
+  return query.reduce((group, element)=> {
     let {type, value} = element;
     group[type] = group[type] || [];
     group[type].push(value);
@@ -67,9 +68,8 @@ function splitGroupToCQL(group, key) {
 
   // If key is text the query if from the default index and no index should be specified. Else the key defines the
   // the index
-  return (key === 'text' ) && `(${values})` || `${key}=(${values})`;
+  return (key === 'text') && `(${values})` || `${key}=(${values})`;
 }
-
 
 
 /**
@@ -89,9 +89,9 @@ function parseQueryStringElement(values, type) {
     return {
       value,
       type,
-      index: type + value + i,
-    }
-  })
+      index: type + value + i
+    };
+  });
 }
 
 /**
@@ -102,7 +102,7 @@ function parseQueryStringElement(values, type) {
  * @returns {Array}
  *    An array of internal query objects
  */
-export function stringToObject (queryStringObject) {
+export function stringToObject(queryStringObject) {
   return _.flatten(_.map(queryStringObject, parseQueryStringElement));
 }
 
@@ -137,4 +137,4 @@ export default {
   stringToObject,
   objectToString,
   objectToCql
-}
+};

@@ -1,3 +1,5 @@
+'use strict';
+
 import Reflux from 'reflux';
 import QueryUtil from '../utils/query.util.js';
 import queryUpdate from '../actions/QueryUpdate.action.js';
@@ -19,8 +21,7 @@ let QueryStore = Reflux.createStore({
 
   // update the query object and trigger an action
   update(query) {
-    _query = query
-    let cql = QueryUtil.objectToCql(query);
+    _query = query;
     this.trigger(_query);
   },
 
@@ -30,7 +31,7 @@ let QueryStore = Reflux.createStore({
   },
 
   // return the content of the querystore as cql
-  getCql(){
+  getCql() {
     return QueryUtil.queryToCql(_query);
   }
 });

@@ -15,14 +15,14 @@ const Search = React.createClass({
     query: React.PropTypes.object,
     filterElements: React.PropTypes.array
   },
-  getInitialState(){
+  getInitialState() {
     const query = QueryParser.stringToObject(this.props.query || {});
     return {
       query,
       filterElements: this.props.filterElements || []
     };
   },
-  addElementToQuery(element, event){
+  addElementToQuery(element) {
     let query = this.state.query;
     query.push(element);
     queryAction(query);
@@ -32,7 +32,7 @@ const Search = React.createClass({
     // this is a simple way of handling updates of the url
     // we might need to implement a more advanced version at some point e.g. react-router
     // but we need to figure out our needs first
-    history.pushState(null, null, window.location.pathname +  '?' + QueryParser.objectToString(query));
+    history.pushState(null, null, `${window.location.pathname}?${QueryParser.objectToString(query)}`);
   },
   componentDidMount: function() {
     this.unsubscribe = queryStore.listen(this.updateQuery);

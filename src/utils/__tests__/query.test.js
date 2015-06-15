@@ -1,6 +1,5 @@
 'use strict';
 
-import {React, TestUtils} from 'react';
 import {expect} from 'chai';
 
 import * as Query from '../query.util.js';
@@ -10,7 +9,7 @@ describe('Test Query Util Class', () => {
     let result = Query.stringToObject({});
     expect(result).to.deep.equal([]);
 
-    let query = { text: 'kanin|fisk', 'term.type': 'æble|banan' };
+    let query = {text: 'kanin|fisk', 'term.type': 'æble|banan'};
     let expectedResult = [
       {value: 'kanin', type: 'text', index: 'textkanin0'},
       {value: 'fisk', type: 'text', index: 'textfisk1'},

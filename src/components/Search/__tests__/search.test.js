@@ -31,7 +31,7 @@ describe('Test the Search component', () => {
     expect(tokenSearchField.props.query).to.have.length(1);
     expect(tokenSearchField.props.query[0]).to.be.deep.equal(filterElements[0]);
 
-    //Click on second element
+    // Click on second element
     TestUtils.Simulate.click(TestUtils.scryRenderedDOMComponentsWithTag(filterGuides[0], 'a')[1]);
     expect(tokenSearchField.props.query).to.have.length(2);
     expect(tokenSearchField.props.query[1]).to.be.deep.equal(filterElements[1]);
@@ -39,9 +39,9 @@ describe('Test the Search component', () => {
   });
   it('should generate default tokens', ()=> {
     let query = {
-      'text': 'text1|text2',
+      text: 'text1|text2',
       'term.type': 'type1|type2'
-    }
+    };
     let element = React.createElement(Search, {query});
     let dom = TestUtils.renderIntoDocument(element);
     let searchField = TestUtils.findRenderedComponentWithType(dom, Search);
@@ -49,5 +49,5 @@ describe('Test the Search component', () => {
     let tokens = TestUtils.scryRenderedDOMComponentsWithClass(tokenSearchField, 'token');
     expect(tokens).to.have.length(4);
     expect(searchField.state.query).to.have.length(4);
- });
+  });
 });
