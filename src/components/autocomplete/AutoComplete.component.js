@@ -2,16 +2,18 @@
 // libs
 import React from 'react';
 
+import AutoCompleteComp from 'dbc-react-autocomplete';
+
 // components
 import Logo from '../logo/logo.react.js';
-import SearchField from './SearchField.component.js';
+import SearchField from './SearchField.component.js'; // dummy search field
 
-var AutoComplete = React.createClass({
+let AutoComplete = React.createClass({
   render() {
     return (
       <div>
         <Logo />
-        <SearchField />
+        <SearchField autocomplete={AutoCompleteComp}/>
       </div>
     );
   }
