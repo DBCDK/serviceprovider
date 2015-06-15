@@ -46,7 +46,7 @@ app.get('/autocomplete', function(req, res) {
   res.render('autocomplete');
 });
 
-app.get(['/querysearch', '/querysearch/*'], function(req, res) {
+app.get(['/search', '/search/*'], function(req, res) {
   const query = req.query || [];
   // @TODO Parse properties from url
   res.render('search', SearchServer({query}));
