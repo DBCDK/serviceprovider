@@ -66,14 +66,21 @@ const store = Reflux.createStore({
   },
 
   serviceResponse(data) {
-    console.log(data); // eslint-disable-line no-console
-    //    console.log(query); // eslint-disable-line no-console
-    this._store.data = dummyData;
+    let _data = null;
+    if (data.error) {
+      console.error('PopSuggest responded with an error: ', data);
+      _data = [];
+    }
+    else {
+      _data = dummyData;
+    }
+
+    this._store.data = _data;
     this.trigger(this._store);
   },
 
   onTextfieldUpdated(value) {
-    // console.log('onTextfieldUpdated');
+    console.log('onTextfieldUpdated');
     socket.emit('getPopSuggestionsRequest', value);
   },
 
