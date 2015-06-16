@@ -18,7 +18,7 @@ const logger = require('./logger');
 //import SearchServer from './components/Search/Search.server.js';
 
 // settings up our provider
-var serviceProvider = require('dbc-node-serviceprovider');
+const serviceProvider = require('dbc-node-serviceprovider');
 serviceProvider.init(config.services, socket);
 
 // Port config
