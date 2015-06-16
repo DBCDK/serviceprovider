@@ -5,7 +5,6 @@ import QueryParser from '../../utils/QueryParser.util.js';
 
 // import reflux actions and stores
 import queryAction from '../../actions/QueryUpdate.action.js';
-import filterAction from '../../actions/Filter.action.js';
 import queryStore from '../../stores/QueryStore.store.js';
 import filterStore from '../../stores/FilterStore.store.js';
 
@@ -46,7 +45,6 @@ const Search = React.createClass({
   },
 
   updateFilters(filterElements) {
-    console.log(filterElements);
     this.setState({filterElements});
   },
 

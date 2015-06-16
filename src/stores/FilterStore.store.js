@@ -33,10 +33,10 @@ let FilterStore = Reflux.createStore({
     this.trigger(_filters);
   },
 
-  // return the query store
+  // return the store data
   getFilters() {
     return _filters;
-  },
+  }
 });
 
 export default FilterStore;
