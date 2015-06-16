@@ -73,7 +73,7 @@ const store = Reflux.createStore({
   },
 
   onTextfieldUpdated(value) {
-    console.log('onTextfieldUpdated');
+    // console.log('onTextfieldUpdated');
     socket.emit('getPopSuggestionsRequest', value);
   },
 
