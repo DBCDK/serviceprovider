@@ -68,10 +68,10 @@ const store = Reflux.createStore({
   serviceResponse(data) {
     let _data = null;
     if (data.error) {
-      console.error('PopSuggest responded with an error: ', data);
+      console.error('PopSuggest responded with an error: ', data); // eslint-disable-line
       _data = [];
     }
-    else {
+    else {  // eslint-disable-line
       _data = dummyData;
     }
 
@@ -80,7 +80,6 @@ const store = Reflux.createStore({
   },
 
   onTextfieldUpdated(value) {
-    console.log('onTextfieldUpdated');
     socket.emit('getPopSuggestionsRequest', value);
   },
 
