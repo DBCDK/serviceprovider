@@ -15,7 +15,7 @@ const path = require('path');
 const logger = require('./logger');
 
 // Loading components
-import SearchServer from './components/Search/Search.server.js';
+//import SearchServer from './components/Search/Search.server.js';
 
 // settings up our provider
 var serviceProvider = require('dbc-node-serviceprovider');
@@ -48,8 +48,8 @@ app.get('/autocomplete', function(req, res) {
 
 app.get(['/search', '/search/*'], function(req, res) {
   const query = req.query || [];
-  // @TODO Parse properties from url
-  res.render('search', SearchServer({query}));
+  res.render('search', {props: JSON.stringify({query})});
+  //res.render('search', SearchServer({query}));
 });
 
 // starting server
