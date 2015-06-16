@@ -5,7 +5,9 @@ import QueryParser from '../../utils/QueryParser.util.js';
 
 // import reflux actions and stores
 import queryAction from '../../actions/QueryUpdate.action.js';
+import filterAction from '../../actions/Filter.action.js';
 import queryStore from '../../stores/QueryStore.store.js';
+import filterStore from '../../stores/FilterStore.store.js';
 
 /**
  * Search field wrapper component
@@ -43,12 +45,17 @@ const Search = React.createClass({
     history.pushState(null, null, `${window.location.pathname}?${QueryParser.objectToString(query)}`);
   },
 
+  updateFilters(filterElements) {
+    console.log(filterElements);
+    this.setState({filterElements});
+  },
+
   componentDidMount: function() {
-    this.unsubscribe = queryStore.listen(this.updateQuery);
+    queryStore.listen(this.updateQuery);
+    filterStore.listen(this.updateFilters);
   },
 
   componentWillUnmount: function() {
-    this.unsubscribe();
   },
 
   render() {
