@@ -73,18 +73,8 @@ const store = Reflux.createStore({
   },
 
   onTextfieldUpdated(value) {
-    socket.emit('getPopSuggestionsRequest', [
-      {
-        index: 'term.creator',
-        query: value,
-        fields: ['fedoraPid', 'term.title', 'term.creator']
-      },
-      {
-        index: 'term.title',
-        query: value,
-        fields: ['fedoraPid', 'term.title', 'term.creator']
-      }
-    ]);
+    console.log('onTextfieldUpdated');
+    socket.emit('getPopSuggestionsRequest', value);
   },
 
   getInitialState() {
