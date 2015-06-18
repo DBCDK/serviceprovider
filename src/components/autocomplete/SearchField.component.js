@@ -2,7 +2,7 @@
 import React from 'react';
 import Socket from 'socket.io-client';
 import Reflux from 'reflux';
-import {isEmpty, sortBy} from 'lodash';
+import {isEmpty} from 'lodash';
 
 const socket = Socket.connect();
 
@@ -24,7 +24,7 @@ const store = Reflux.createStore({
   serviceResponse(response) {
     let data = this._store.data;
     if (response.error) {
-      console.error('PopSuggest responded with an error: ', response);
+      console.error('PopSuggest responded with an error: ', response); // eslint-disable-line
     }
     else if (response.isEmpty) {
       delete data[response.index];
