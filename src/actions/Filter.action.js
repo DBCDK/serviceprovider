@@ -39,7 +39,8 @@ function getFilterElements(query) {
   if (query.length > 0) {
     let q = getQueryTextElements(query).join(' ');
     event.request(q);
-  } else {
+  }
+  else {
     FilterActions.updated([]);
   }
 }
