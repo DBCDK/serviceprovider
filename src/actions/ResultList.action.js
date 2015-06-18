@@ -14,7 +14,7 @@ let ResultListActions = Reflux.createAction({
 QueryStore.listen((query) => {
   if (query.length > 0) {
     let q = QueryParser.objectToCql(query);
-    event.request(q);
+    event.request({query: q, offset: 1, stepValue: 10, sort: 'default'});
   } else {
     ResultListActions.updated([]);
   }
