@@ -8,7 +8,7 @@ import QueryAction from './QueryUpdate.action.js';
 const socket = Socket.connect();
 
 let FilterActions = Reflux.createAction({
-  children: ["updated", "failed"]
+  children: ['updated', 'failed']
 });
 
 function getQueryTextElements(query) {
