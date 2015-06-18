@@ -1,7 +1,7 @@
 'use strict';
 import React from 'react';
 import {TokenSearchField, FilterGuide} from 'dbc-react-querystring';
-// import {ResultDisplay} from 'dbc-react-resultlistview';
+import {ResultDisplay} from 'dbc-react-resultlistview';
 import QueryParser from '../../utils/QueryParser.util.js';
 
 // import reflux actions and stores
@@ -26,7 +26,7 @@ const Search = React.createClass({
     return {
       query,
       filterElements: this.props.filterElements || [],
-      resultList: {}
+      resultList: []
     };
   },
   /**
@@ -54,7 +54,7 @@ const Search = React.createClass({
   },
 
   updateResultList(resultList) {
-    this.setState({resultList});
+    this.setState({resultList: resultList.resultList.result});
   },
 
   componentDidMount: function() {
@@ -67,7 +67,7 @@ const Search = React.createClass({
   },
 
   render() {
-    const {filterElements, query} = this.state;
+    const {filterElements, query, resultList} = this.state;
     let filterGuide;
     if (filterElements.length > 0) {
       filterGuide = (<FilterGuide elements={filterElements} select={this.addElementToQuery}/>);
@@ -77,6 +77,7 @@ const Search = React.createClass({
       <div className='search'>
         <TokenSearchField query={query} update={queryAction} />
         {filterGuide}
+        <ResultDisplay result={resultList} />
       </div>
     );
   }
