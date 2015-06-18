@@ -1,4 +1,5 @@
 'use strict';
+
 import Reflux from 'reflux';
 import Socket from 'socket.io-client';
 import {filter} from 'lodash';
@@ -26,7 +27,7 @@ QueryAction.listen((query) => {
 });
 
 socket.on('getFilterGuidesResponse', (data) => {
-  FilterActions.updated(data)
+  FilterActions.updated(data);
 });
 
 export default FilterActions;
