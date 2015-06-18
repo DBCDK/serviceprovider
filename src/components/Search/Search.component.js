@@ -6,6 +6,7 @@ import QueryParser from '../../utils/QueryParser.util.js';
 // import reflux actions and stores
 import queryAction from '../../actions/QueryUpdate.action.js';
 import queryStore from '../../stores/QueryStore.store.js';
+import filterActions from '../../actions/Filter.action.js';
 import filterStore from '../../stores/FilterStore.store.js';
 
 /**
@@ -18,10 +19,11 @@ const Search = React.createClass({
   },
 
   getInitialState() {
-    const query = QueryParser.stringToObject(this.props.query || {});
+    const query = QueryParser.stringToObject(this.props.query || []);
+    filterActions(query);
     return {
       query,
-      filterElements: this.props.filterElements || []
+      filterElements: []
     };
   },
   /**
