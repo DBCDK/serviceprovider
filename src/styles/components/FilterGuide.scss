@@ -17,8 +17,9 @@
 }
 
 .filterguide-list-element {
-  padding: 20px 30px;
+  margin: 2px;
   display: inline-block;
-  background-color: #222;
-  color: white;
+  .button {
+    margin: 0;
+  }
 }
