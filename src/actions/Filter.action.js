@@ -6,17 +6,23 @@ import QueryAction from './QueryUpdate.action.js';
 
 const socket = Socket.connect();
 
-let FilterActions = Reflux.createAction(
-  {children: ["updated", "failed"]
+let FilterActions = Reflux.createAction({
+  children: ["updated", "failed"]
 });
 
-function getQueryTextElements (query) {
+function getQueryTextElements(query) {
   return filter(query, element => element.type === 'text')
     .map(element => element.value);
 }
 
 QueryAction.listen((query) => {
-  socket.emit('getFilterGuidesRequest', getQueryTextElements(query).join(' '));
+  if (query.length > 0) {
+    let q = getQueryTextElements(query).join(' ');
+    socket.emit('getFilterGuidesRequest', q);
+  } else {
+    FilterActions.updated([]);
+  }
+
 });
 
 socket.on('getFilterGuidesResponse', (data) => {
