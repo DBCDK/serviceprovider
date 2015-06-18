@@ -20,7 +20,7 @@ const Search = React.createClass({
 
   getInitialState() {
     const query = QueryParser.stringToObject(this.props.query || []);
-    filterActions(query);
+    queryAction(query);
     return {
       query,
       filterElements: []
