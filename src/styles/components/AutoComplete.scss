@@ -26,22 +26,22 @@ input[type=text] {
 }
 
 .autocomplete--category--label-container {
-  width: 20%;
-  display: inline-block;
-  vertical-align: top;
-  text-align: center;
-  line-height: 70px;
+  vertical-align: middle;
+  text-align: left;
+  line-height: 40px;
+  padding-left: 12px;
+  color: #FFFFFF;
+  background-color: #000;
 }
 
 .autocomplete--category--rows-container {
-  width: 80%;
-  display: inline-block;
   border-left: 1px solid $border-color;
   border-bottom: 1px solid $border-color;
 }
 
 .autocomplete--row {
   line-height: 70px;
+  padding: 0 10px;
 
   &:hover, &:focus {
     background-color: #f0f0f0;
@@ -51,9 +51,8 @@ input[type=text] {
 .autocomplete--row-image {
   display: table-cell;
   height: 50px;
-  width: 70px;
-  padding: 10px;
   vertical-align: middle;
+  padding-right: 10px;
   img {
     max-height: 50px;
     max-width: 50px;
@@ -61,5 +60,6 @@ input[type=text] {
 }
 
 .autocomplete--row-text {
+  white-space: nowrap;
   display: table-cell;
 }
