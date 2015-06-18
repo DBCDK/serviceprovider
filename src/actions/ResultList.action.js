@@ -1,9 +1,9 @@
 'use strict';
 
 import Reflux from 'reflux';
-import QueryAction from './QueryUpdate.action.js';
 import SocketClient from '../utils/ServiceProviderSocketClient.js';
 import QueryParser from '../utils/QueryParser.util.js';
+import QueryStore from '../stores/QueryStore.store.js';
 
 const event = SocketClient('getOpenSearchResultList');
 

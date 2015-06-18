@@ -1,16 +1,14 @@
 'use strict';
 import React from 'react';
 import {TokenSearchField, FilterGuide} from 'dbc-react-querystring';
-import {ResultDisplay} from 'dbc-react-resultlistview';
+// import {ResultDisplay} from 'dbc-react-resultlistview';
 import QueryParser from '../../utils/QueryParser.util.js';
 
 // import reflux actions and stores
 import queryAction from '../../actions/QueryUpdate.action.js';
 import queryStore from '../../stores/QueryStore.store.js';
-import filterActions from '../../actions/Filter.action.js';
 import filterStore from '../../stores/FilterStore.store.js';
-import queryAction from '../../actions/ResultListUpdate.action.js';
-import queryStore from '../../stores/ResultListStore.store.js';
+import resultListStore from '../../stores/ResultList.store.js';
 
 /**
  * Search field wrapper component
@@ -28,7 +26,7 @@ const Search = React.createClass({
     return {
       query,
       filterElements: this.props.filterElements || [],
-      resultList = {}
+      resultList: {}
     };
   },
   /**
@@ -54,7 +52,7 @@ const Search = React.createClass({
   updateFilters(filterElements) {
     this.setState({filterElements});
   },
-  
+
   updateResultList(resultList) {
     this.setState({resultList});
   },
@@ -69,7 +67,7 @@ const Search = React.createClass({
   },
 
   render() {
-    const {filterElements, query, resultList} = this.state;
+    const {filterElements, query} = this.state;
     let filterGuide;
     if (filterElements.length > 0) {
       filterGuide = (<FilterGuide elements={filterElements} select={this.addElementToQuery}/>);
@@ -79,7 +77,6 @@ const Search = React.createClass({
       <div className='search'>
         <TokenSearchField query={query} update={queryAction} />
         {filterGuide}
-        <SearchResultList items={resultList} />
       </div>
     );
   }
