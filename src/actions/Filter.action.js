@@ -1,11 +1,11 @@
 'use strict';
 
 import Reflux from 'reflux';
-import Socket from 'socket.io-client';
 import {filter} from 'lodash';
 import QueryAction from './QueryUpdate.action.js';
+import SocketClient from '../utils/ServiceProviderSocketClient.js';
 
-const socket = Socket.connect();
+const event = SocketClient('getFilterGuides');
 
 let FilterActions = Reflux.createAction({
   children: ['updated', 'failed']
@@ -19,15 +19,12 @@ function getQueryTextElements(query) {
 QueryAction.listen((query) => {
   if (query.length > 0) {
     let q = getQueryTextElements(query).join(' ');
-    socket.emit('getFilterGuidesRequest', q);
+    event.request(q);
   } else {
     FilterActions.updated([]);
   }
-
 });
 
-socket.on('getFilterGuidesResponse', (data) => {
-  FilterActions.updated(data);
-});
+event.response(FilterActions.updated);
 
 export default FilterActions;
