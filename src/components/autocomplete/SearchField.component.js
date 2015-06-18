@@ -2,6 +2,7 @@
 import React from 'react';
 import Socket from 'socket.io-client';
 import Reflux from 'reflux';
+import {isEmpty, sortBy} from 'lodash';
 
 const socket = Socket.connect();
 
@@ -9,78 +10,104 @@ const actions = Reflux.createActions(
   ['textfieldUpdated']
 );
 
-let timer = null;
-
-const dummyData = [{
-  label: 'Title',
-  data: [
-    {
-      text: 'Test Hest',
-      img: 'http://dummyimage.com/50x50/000/fff'
-    },
-    {
-      text: 'Hest Hest',
-      img: 'http://dummyimage.com/50x50/000/fff'
-    },
-    {
-      text: 'Fest Hest',
-      img: 'http://dummyimage.com/50x50/000/fff'
-    },
-    {
-      text: 'Gæst Hest',
-      img: 'http://dummyimage.com/50x50/000/fff'
-    }
-  ]
-},
-  {
-    label: 'Author',
-    data: [
-      {
-        text: 'Test Hest',
-        img: 'http://dummyimage.com/50x50/000/fff'
-      },
-      {
-        text: 'Hest Hest',
-        img: ''
-      },
-      {
-        text: 'Fest Hest',
-        img: ''
-      },
-      {
-        text: 'Gæst Hest',
-        img: ''
-      }
-    ]
-  }];
-
 const store = Reflux.createStore({
   listenables: [actions],
 
   _store: {
-    data: []
+    data: {}
   },
 
   init() {
     socket.on('getPopSuggestionsResponse', this.serviceResponse);
   },
 
-  serviceResponse(data) {
-    let _data = null;
-    if (data.error) {
-      console.error('PopSuggest responded with an error: ', data); // eslint-disable-line
-      _data = [];
+  serviceResponse(response) {
+    let data = this._store.data;
+    if (response.error) {
+      console.error('PopSuggest responded with an error: ', response);
     }
-    else {  // eslint-disable-line
-      _data = dummyData;
+    else if (response.isEmpty) {
+      delete data[response.index];
+    }
+    else {
+      data = this._parseResponse(response, data);
     }
 
-    this._store.data = _data;
+    this._store.data = data;
     this.trigger(this._store);
   },
 
+  _parseResponse(response, data) {
+    const index = response.index;
+    data[index] = {};
+
+    switch (index) {
+      case 'term.creator':
+        let creators = this._getCreator(response);
+        if (creators.length >= 1) {
+          data[index].label = 'Forfatter';
+          data[index].data = creators;
+          data[index].weight = 1;
+        }
+        break;
+      case 'term.title':
+        let titles = this._getTitles(response);
+        if (titles.length >= 1) {
+          data[index].label = 'Titel';
+          data[index].data = titles;
+          data[index].weight = 0;
+        }
+        break;
+      default:
+        break;
+    }
+
+    return data;
+  },
+
+  _getCreator: function(response) {
+    let creators = [];
+    let counter = 0;
+    response.docs.forEach((value) => {
+      if (value['display.creator'] && counter < 5) {
+        creators.push({
+          text: value['display.creator'].join()
+        });
+        counter++;
+      }
+    });
+
+    return creators;
+  },
+
+  _getTitles: function(response) {
+    let titles = [];
+    let counter = 0;
+    response.docs.forEach((value) => {
+      if (value['display.title'] && counter < 5) {
+        titles.push({
+          text: value['display.title'].join(),
+          img: 'http://dummyimage.com/50x50/000/fff'
+        });
+        counter++;
+      }
+    });
+
+    return titles;
+  },
+
   onTextfieldUpdated(value) {
-    socket.emit('getPopSuggestionsRequest', value);
+    if (value.length >= 1) {
+      socket.emit('getPopSuggestionsRequest', value);
+    }
+    else {
+      this._clearData();
+    }
+  },
+
+  _clearData() {
+    this._store.data = {};
+    this.trigger(this._store);
   },
 
   getInitialState() {
@@ -90,12 +117,13 @@ const store = Reflux.createStore({
 
 var SearchField = React.createClass({
   mixins: [Reflux.connect(store)],
+  timer: null,
 
   render() {
     const AutoComplete = this.props.autocomplete;
     const text = this.state.text || '';
-    const data = this.state.data || [];
-    const autoCompleteVisible = (data.length >= 1 && text.length >= 1);
+    const data = this.state.data || {};
+    const autoCompleteVisible = !isEmpty(data);
 
     return (
       <div>
@@ -111,11 +139,11 @@ var SearchField = React.createClass({
   },
 
   _handleOnKeyUp() {
-    clearTimeout(timer);
+    clearTimeout(this.timer);
 
-    timer = setTimeout(() => {
+    this.timer = setTimeout(() => {
       actions.textfieldUpdated(this.state.text);
-    }, 250);
+    }, 150);
   },
 
   propTypes: {
