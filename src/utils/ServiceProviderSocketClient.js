@@ -18,11 +18,16 @@ export default function ServiceProviderSocketClient(event) {
     socket.emit(event + 'Request', data);
   }
 
+  function addListener(listener) {
+    listener(data => socket.emit(event + 'Request', data));
+  }
+
   function response(cb) {
     socket.on(event + 'Response', (data) => cb(data));
   }
 
   return {
+    addListener,
     request,
     response
   };

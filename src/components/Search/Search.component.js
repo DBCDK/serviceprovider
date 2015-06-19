@@ -6,6 +6,7 @@ import QueryParser from '../../utils/QueryParser.util.js';
 
 // import reflux actions and stores
 import queryAction from '../../actions/QueryUpdate.action.js';
+import recommendationsAction from '../../actions/Recommendations.action.js';
 import queryStore from '../../stores/QueryStore.store.js';
 import filterStore from '../../stores/FilterStore.store.js';
 import resultListStore from '../../stores/ResultList.store.js';
@@ -57,7 +58,10 @@ const Search = React.createClass({
   },
 
   updateResultList(resultList) {
-    this.setState(resultList);
+    if (resultList) {
+      recommendationsAction(resultList.resultList.map(element => element.identifiers[0]));
+      this.setState(resultList);
+    }
   },
 
   updateCoverImages(coverImages) {
