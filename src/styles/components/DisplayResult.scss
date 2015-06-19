@@ -1,0 +1,23 @@
+body {
+    font-family: 'Open Sans', sans-serif;
+}
+.work {
+    float: left;
+    padding: 5px;
+    text-align: center;
+    position: relative;
+    img {
+        max-height: 500px;
+    }
+    .fa {
+        position: absolute;
+        top: 1em;
+        left: 1em;
+        background-color: #ffffff;
+        height: 2em;
+        width: 2em;
+        -moz-border-radius: 1em;
+        border-radius: 1em;
+        line-height: 1.9em;
+    }
+}
