@@ -23,6 +23,7 @@ const store = Reflux.createStore({
 
   serviceResponse(response) {
     let data = this._store.data;
+
     if (response.error) {
       console.error('PopSuggest responded with an error: ', response); // eslint-disable-line
     }
@@ -43,7 +44,7 @@ const store = Reflux.createStore({
 
     switch (index) {
       case 'term.creator':
-        let creators = this._getCreator(response);
+        let creators = response.docs;
         if (creators.length >= 1) {
           data[index].label = 'Forfatter';
           data[index].data = creators;
@@ -51,7 +52,7 @@ const store = Reflux.createStore({
         }
         break;
       case 'term.title':
-        let titles = this._getTitles(response);
+        let titles = response.docs;
         if (titles.length >= 1) {
           data[index].label = 'Titel';
           data[index].data = titles;
@@ -63,37 +64,6 @@ const store = Reflux.createStore({
     }
 
     return data;
-  },
-
-  _getCreator: function(response) {
-    let creators = [];
-    let counter = 0;
-    response.docs.forEach((value) => {
-      if (value['display.creator'] && counter < 5) {
-        creators.push({
-          text: value['display.creator'].join()
-        });
-        counter++;
-      }
-    });
-
-    return creators;
-  },
-
-  _getTitles: function(response) {
-    let titles = [];
-    let counter = 0;
-    response.docs.forEach((value) => {
-      if (value['display.title'] && counter < 5) {
-        titles.push({
-          text: value['display.title'].join(),
-          img: 'http://dummyimage.com/50x50/000/fff'
-        });
-        counter++;
-      }
-    });
-
-    return titles;
   },
 
   onTextfieldUpdated(value) {
