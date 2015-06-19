@@ -64,7 +64,10 @@ function splitGroupToUrlQuery(group, key) {
  *  valid CQL string
  */
 function splitGroupToCQL(group, key) {
-  let values = group.join(' and ');
+  let values = group.map(element => {
+    return element.indexOf(' ') >= 0 && `"${element}"` || element;
+  }).join(' and ');
+
 
   // If key is text the query if from the default index and no index should be specified. Else the key defines the
   // the index
@@ -87,7 +90,7 @@ function splitGroupToCQL(group, key) {
 function parseQueryStringElement(values, type) {
   return values.split('|').map((value, i)=> {
     return {
-      value,
+      value: decodeURIComponent(value),
       type,
       index: type + value + i
     };
