@@ -9,6 +9,7 @@ import queryAction from '../../actions/QueryUpdate.action.js';
 import queryStore from '../../stores/QueryStore.store.js';
 import filterStore from '../../stores/FilterStore.store.js';
 import resultListStore from '../../stores/ResultList.store.js';
+import coverImageStore from '../../stores/CoverImage.store.js';
 
 /**
  * Search field wrapper component
@@ -17,7 +18,8 @@ const Search = React.createClass({
   propTypes: {
     query: React.PropTypes.object,
     filterElements: React.PropTypes.array,
-    resultList: React.PropTypes.object
+    resultList: React.PropTypes.array,
+    coverImages: React.PropTypes.object
   },
 
   getInitialState() {
@@ -26,7 +28,8 @@ const Search = React.createClass({
     return {
       query,
       filterElements: this.props.filterElements || [],
-      resultList: []
+      resultList: [],
+      coverImages: {images: new Map()}
     };
   },
   /**
@@ -54,20 +57,25 @@ const Search = React.createClass({
   },
 
   updateResultList(resultList) {
-    this.setState({resultList: resultList.resultList.result});
+    this.setState(resultList);
+  },
+
+  updateCoverImages(coverImages) {
+    this.setState({coverImages});
   },
 
   componentDidMount: function() {
     queryStore.listen(this.updateQuery);
     filterStore.listen(this.updateFilters);
     resultListStore.listen(this.updateResultList);
+    coverImageStore.listen(this.updateCoverImages);
   },
 
   componentWillUnmount: function() {
   },
 
   render() {
-    const {filterElements, query, resultList} = this.state;
+    const {filterElements, query, resultList, coverImages} = this.state;
     let filterGuide;
     if (filterElements.length > 0) {
       filterGuide = (<FilterGuide elements={filterElements} select={this.addElementToQuery}/>);
@@ -77,7 +85,7 @@ const Search = React.createClass({
       <div className='search'>
         <TokenSearchField query={query} update={queryAction} />
         {filterGuide}
-        <ResultDisplay result={resultList} />
+        <ResultDisplay result={resultList} coverImages={coverImages.images} />
       </div>
     );
   }
