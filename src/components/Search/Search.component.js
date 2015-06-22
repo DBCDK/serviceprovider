@@ -3,10 +3,12 @@ import React from 'react';
 import {TokenSearchField, FilterGuide} from 'dbc-react-querystring';
 import {ResultDisplay} from 'dbc-react-resultlistview';
 import QueryParser from '../../utils/QueryParser.util.js';
+import SearchTabs from './SearchTabs.component.js';
 
 // import reflux actions and stores
 import queryAction from '../../actions/QueryUpdate.action.js';
 import recommendationsAction from '../../actions/Recommendations.action.js';
+import recommendationsStore from '../../stores/Recommendations.store.js';
 import queryStore from '../../stores/QueryStore.store.js';
 import filterStore from '../../stores/FilterStore.store.js';
 import resultListStore from '../../stores/ResultList.store.js';
@@ -20,6 +22,8 @@ const Search = React.createClass({
     query: React.PropTypes.object,
     filterElements: React.PropTypes.array,
     resultList: React.PropTypes.array,
+    recommendations: React.PropTypes.array,
+    selected: React.PropTypes.string,
     coverImages: React.PropTypes.object
   },
 
@@ -30,7 +34,9 @@ const Search = React.createClass({
       query,
       filterElements: this.props.filterElements || [],
       resultList: [],
-      coverImages: {images: new Map()}
+      coverImages: {images: new Map()},
+      recommendations: [],
+      selected: null
     };
   },
   /**
@@ -64,8 +70,16 @@ const Search = React.createClass({
     }
   },
 
+  updateRecommendations(store) {
+    this.setState(store);
+  },
+
   updateCoverImages(coverImages) {
     this.setState({coverImages});
+  },
+
+  updateSelected(selected) {
+    this.setState({selected});
   },
 
   componentDidMount: function() {
@@ -73,23 +87,27 @@ const Search = React.createClass({
     filterStore.listen(this.updateFilters);
     resultListStore.listen(this.updateResultList);
     coverImageStore.listen(this.updateCoverImages);
+    recommendationsStore.listen(this.updateRecommendations);
   },
 
   componentWillUnmount: function() {
   },
 
   render() {
-    const {filterElements, query, resultList, coverImages} = this.state;
+    const {filterElements, query, resultList, recommendations, coverImages, selected} = this.state;
     let filterGuide;
     if (filterElements.length > 0) {
       filterGuide = (<FilterGuide elements={filterElements} select={this.addElementToQuery}/>);
     }
-
+    const results = (selected === 'Anbefalinger') && recommendations || resultList;
     return (
       <div className='search'>
         <TokenSearchField query={query} update={queryAction} />
         {filterGuide}
-        <ResultDisplay result={resultList} coverImages={coverImages.images} />
+        <div className='search-result'>
+          <SearchTabs buttons={['Søgeresultat', 'Anbefalinger']} selected={selected} update={this.updateSelected} />
+          <ResultDisplay result={results} coverImages={coverImages.images} />
+        </div>
       </div>
     );
   }
