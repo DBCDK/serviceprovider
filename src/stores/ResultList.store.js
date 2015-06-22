@@ -21,7 +21,7 @@ let ResultListStore = Reflux.createStore({
 
   // update the query object and trigger an action
   update(result) {
-    let resultList = result.result;
+    let resultList = result.result || [];
     this.callImageActions(resultList);
     _store.resultList = resultList;
     this.trigger(_store);
