@@ -31,6 +31,7 @@
     "babel": "^5.2.9",
     "babel-core": "^5.2.9",
     "babel-loader": "^5.0.0",
+    "css-loader": "^0.14.4",
     "dbc-node-serviceprovider": "git://github.com/DBCDK/dbc-node-serviceprovider#develop",
     "dbc-react-autocomplete": "git://github.com/DBCDK/dbc-react-autocomplete#develop",
     "dbc-react-querystring": "git://github.com/DBCDK/dbc-react-querystring#develop",
@@ -52,7 +53,6 @@
   "devDependencies": {
     "babel-eslint": "^3.1.1",
     "chai": "^2.3.0",
-    "css-loader": "^0.14.4",
     "eslint": "^0.21.0",
     "eslint-loader": "^0.11.2",
     "eslint-plugin-react": "^2.2.0",
