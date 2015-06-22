@@ -16,7 +16,14 @@ var SearchTabs = React.createClass({
       }
       return (
         <li>
-          <a onClick={this.props.update.bind(null, button)} href="#" className={classes.join(' ')}>{button}</a>
+          <a
+            key={button}
+            onClick={this.props.update.bind(null, button)}
+            href="#"
+            className={classes.join(' ')}
+          >
+            {button}
+          </a>
         </li>
       );
     });
