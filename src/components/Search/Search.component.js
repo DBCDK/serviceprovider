@@ -93,6 +93,10 @@ const Search = React.createClass({
   componentWillUnmount: function() {
   },
 
+  _onChange(query) {
+    queryAction(query);
+  },
+
   render() {
     const {filterElements, query, resultList, recommendations, coverImages, selected} = this.state;
     let filterGuide;
@@ -102,7 +106,7 @@ const Search = React.createClass({
     const results = (selected === 'Anbefalinger') && recommendations || resultList;
     return (
       <div className='search'>
-        <TokenSearchField query={query} update={queryAction} />
+        <TokenSearchField query={query} update={this._onChange} />
         {filterGuide}
         <div className='search-result'>
           <SearchTabs buttons={['Søgeresultat', 'Anbefalinger']} selected={selected} update={this.updateSelected} />
