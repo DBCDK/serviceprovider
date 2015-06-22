@@ -107,7 +107,7 @@ const Search = React.createClass({
   /**
    * Callback for the text input (TokenSearchField)
    */
-  _onChange(textFieldValue) {
+    _onChange(textFieldValue) {
     this.setState({textFieldValue: textFieldValue});
     this.requestSuggestions();
   },
@@ -121,25 +121,26 @@ const Search = React.createClass({
   },
 
   render() {
-    const data = this.state.data || {};
+    const autoCompleteData = this.state.autoCompleteData || {};
     const textFieldValue = this.state.textFieldValue || '';
-    const autoCompleteVisible = (!isEmpty(data) && !isEmpty(textFieldValue));
+    const autoCompleteVisible = (!isEmpty(autoCompleteData) && !isEmpty(textFieldValue));
 
     const {filterElements, query, resultList, recommendations, coverImages, selected} = this.state;
     let filterGuide;
     if (filterElements.length > 0) {
       filterGuide = (
-        <FilterGuide elements={filterElements} select={this.addElementToQuery}/>);
+        <FilterGuide elements={filterElements} select={this.addElementToQuery} />
+      );
     }
     const results = (selected === 'Anbefalinger') && recommendations || resultList;
     return (
-      <div className='search'>
-        <TokenSearchField query={query} update={queryAction} change={this._onChange}/>
-        <AutoComplete data={data} visible={autoCompleteVisible}/>
+      <div className='search' >
+        <TokenSearchField query={query} update={queryAction} change={this._onChange} />
+        <AutoComplete data={autoCompleteData} visible={autoCompleteVisible} />
         {filterGuide}
-        <div className='search-result'>
-          <SearchTabs buttons={['Søgeresultat', 'Anbefalinger']} selected={selected} update={this.updateSelected}/>
-          <ResultDisplay result={results} coverImages={coverImages.images}/>
+        <div className='search-result' >
+          <SearchTabs buttons={['Søgeresultat', 'Anbefalinger']} selected={selected} update={this.updateSelected} />
+          <ResultDisplay result={results} coverImages={coverImages.images} />
         </div>
       </div>
     );
