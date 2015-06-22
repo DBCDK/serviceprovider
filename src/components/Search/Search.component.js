@@ -1,11 +1,18 @@
 'use strict';
 import React from 'react';
+import Reflux from 'reflux';
+import QueryParser from '../../utils/QueryParser.util.js';
+import {isEmpty} from 'lodash';
+
+// import components
+import AutoComplete from 'dbc-react-autocomplete';
 import {TokenSearchField, FilterGuide} from 'dbc-react-querystring';
 import {ResultDisplay} from 'dbc-react-resultlistview';
-import QueryParser from '../../utils/QueryParser.util.js';
 import SearchTabs from './SearchTabs.component.js';
 
 // import reflux actions and stores
+import AutoCompleteActions from '../../actions/AutoComplete.action.js';
+import AutoCompleteStore from '../../stores/AutoComplete.store.js';
 import queryAction from '../../actions/QueryUpdate.action.js';
 import recommendationsAction from '../../actions/Recommendations.action.js';
 import recommendationsStore from '../../stores/Recommendations.store.js';
@@ -18,6 +25,8 @@ import coverImageStore from '../../stores/CoverImage.store.js';
  * Search field wrapper component
  */
 const Search = React.createClass({
+  mixins: [Reflux.connect(AutoCompleteStore)],
+  timer: null,
   propTypes: {
     query: React.PropTypes.object,
     filterElements: React.PropTypes.array,
@@ -42,7 +51,7 @@ const Search = React.createClass({
   /**
    * Add a single element to the Query array
    */
-  addElementToQuery(element) {
+    addElementToQuery(element) {
     let query = this.state.query;
     query.push(element);
     queryAction(query);
@@ -51,7 +60,7 @@ const Search = React.createClass({
   /**
    * Update the Query with a new Query
    */
-  updateQuery(query) {
+    updateQuery(query) {
     this.setState({query});
     // this is a simple way of handling updates of the url
     // we might need to implement a more advanced version at some point e.g. react-router
@@ -90,23 +99,39 @@ const Search = React.createClass({
     recommendationsStore.listen(this.updateRecommendations);
   },
 
-  componentWillUnmount: function() {
+  _onChange(textFieldValue) {
+    this.setState({textFieldValue: textFieldValue});
+    this.requestSuggestions();
+  },
+
+  requestSuggestions() {
+    clearTimeout(this.timer);
+
+    this.timer = setTimeout(() => {
+      AutoCompleteActions.textfieldUpdated(this.state.textFieldValue);
+    }, 150);
   },
 
   render() {
+    const data = this.state.data || {};
+    const textFieldValue = this.state.textFieldValue || '';
+    const autoCompleteVisible = (!isEmpty(data) && !isEmpty(textFieldValue));
+
     const {filterElements, query, resultList, recommendations, coverImages, selected} = this.state;
     let filterGuide;
     if (filterElements.length > 0) {
-      filterGuide = (<FilterGuide elements={filterElements} select={this.addElementToQuery}/>);
+      filterGuide = (
+        <FilterGuide elements={filterElements} select={this.addElementToQuery}/>);
     }
     const results = (selected === 'Anbefalinger') && recommendations || resultList;
     return (
       <div className='search'>
-        <TokenSearchField query={query} update={queryAction} />
+        <TokenSearchField query={query} update={queryAction} change={this._onChange}/>
+        <AutoComplete data={data} visible={autoCompleteVisible}/>
         {filterGuide}
         <div className='search-result'>
-          <SearchTabs buttons={['Søgeresultat', 'Anbefalinger']} selected={selected} update={this.updateSelected} />
-          <ResultDisplay result={results} coverImages={coverImages.images} />
+          <SearchTabs buttons={['Søgeresultat', 'Anbefalinger']} selected={selected} update={this.updateSelected}/>
+          <ResultDisplay result={results} coverImages={coverImages.images}/>
         </div>
       </div>
     );
