@@ -71,7 +71,7 @@ const Search = React.createClass({
   /**
    * Add a single element to the Query array
    */
-    addElementToQuery(element) {
+  addElementToQuery(element) {
     let query = this.state.query;
     query.push(element);
     queryAction(query);
@@ -80,8 +80,9 @@ const Search = React.createClass({
   /**
    * Update the Query with a new Query
    */
-    updateQuery(query) {
-    this.setState({query});
+  updateQuery(query) {
+    this.setState({query, textFieldValue: ''});
+
     // this is a simple way of handling updates of the url
     // we might need to implement a more advanced version at some point e.g. react-router
     // but we need to figure out our needs first
@@ -93,10 +94,10 @@ const Search = React.createClass({
   },
 
   updateResultList(resultList) {
-    if (resultList) {
+    if (resultList && resultList.resultList) {
       recommendationsAction(resultList.resultList.map(element => element.identifiers[0]));
-      this.setState(resultList);
     }
+    this.setState(resultList);
   },
 
   updateRecommendations(store) {
@@ -156,7 +157,7 @@ const Search = React.createClass({
         buttons={['Søgeresultat', 'Anbefalinger']}
         selected={selected}
         update={this.updateSelected}
-      />;
+        />;
     }
     else {
       results = recommendations;
