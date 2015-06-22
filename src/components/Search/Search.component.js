@@ -1,4 +1,9 @@
 'use strict';
+/**
+ * @file
+ * Currently the main entrypoint served on /search.
+ * Provides the search functionality result view for the enduser.
+ */
 import React from 'react';
 import Reflux from 'reflux';
 import QueryParser from '../../utils/QueryParser.util.js';
@@ -99,6 +104,9 @@ const Search = React.createClass({
     recommendationsStore.listen(this.updateRecommendations);
   },
 
+  /**
+   * Callback for the text input (TokenSearchField)
+   */
   _onChange(textFieldValue) {
     this.setState({textFieldValue: textFieldValue});
     this.requestSuggestions();
