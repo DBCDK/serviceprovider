@@ -7,7 +7,7 @@ import AutoCompleteActions from '../actions/AutoComplete.action.js';
 const AutoCompleteStore = Reflux.createStore({
   listenables: AutoCompleteActions,
   _store: {
-    data: {}
+    autoCompleteData: {}
   },
 
   _parseResponse(response, data) {
@@ -45,7 +45,7 @@ const AutoCompleteStore = Reflux.createStore({
   },
 
   onTextfieldUpdatedResponse(response) {
-    let data = this._store.data;
+    let data = this._store.autoCompleteData;
 
     if (response.error) {
       console.error('PopSuggest responded with an error: ', response); // eslint-disable-line
@@ -57,12 +57,12 @@ const AutoCompleteStore = Reflux.createStore({
       data = this._parseResponse(response, data);
     }
 
-    this._store.data = data;
+    this._store.autoCompleteData = data;
     this.trigger(this._store);
   },
 
   _clearData() {
-    this._store.data = {};
+    this._store.autoCompleteData = {};
     this.trigger(this._store);
   },
 
