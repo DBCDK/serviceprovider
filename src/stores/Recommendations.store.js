@@ -2,6 +2,7 @@
 
 import Reflux from 'reflux';
 import RecommendationsAction from '../actions/Recommendations.action.js';
+import CoverImageActions from '../actions/CoverImage.action.js';
 
 let _store = {};
 
@@ -16,6 +17,7 @@ let RecommendationsStore = Reflux.createStore({
   },
 
   update(result) {
+    result.forEach(element => CoverImageActions(element.identifiers));
     _store.recommendations = result;
     this.trigger(_store);
   },
