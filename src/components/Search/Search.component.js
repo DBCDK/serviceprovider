@@ -26,6 +26,21 @@ import filterStore from '../../stores/FilterStore.store.js';
 import resultListStore from '../../stores/ResultList.store.js';
 import coverImageStore from '../../stores/CoverImage.store.js';
 
+const defaultRecommendations = [
+  '870970-basis:51263146',
+  '870970-basis:51115155',
+  '870970-basis:28394438',
+  '870970-basis:22629344',
+  '870970-basis:25915690',
+  '870970-basis:24929604',
+  '870970-basis:27796664',
+  '870970-basis:26588707',
+  '870970-basis:23372525',
+  '870970-basis:28280041',
+  '870970-basis:51342860',
+  '870970-basis:28290853'
+];
+
 /**
  * Search field wrapper component
  */
@@ -96,12 +111,15 @@ const Search = React.createClass({
     this.setState({selected});
   },
 
-  componentDidMount: function() {
+  componentDidMount: function () {
     queryStore.listen(this.updateQuery);
     filterStore.listen(this.updateFilters);
     resultListStore.listen(this.updateResultList);
     coverImageStore.listen(this.updateCoverImages);
     recommendationsStore.listen(this.updateRecommendations);
+    if (this.state.query.length === 0) {
+      recommendationsAction(defaultRecommendations);
+    }
   },
 
   /**
@@ -126,20 +144,31 @@ const Search = React.createClass({
     const autoCompleteVisible = (!isEmpty(autoCompleteData) && !isEmpty(textFieldValue));
 
     const {filterElements, query, resultList, recommendations, coverImages, selected} = this.state;
+    let results = (selected === 'Anbefalinger') && recommendations || resultList;
     let filterGuide;
-    if (filterElements.length > 0) {
-      filterGuide = (
-        <FilterGuide elements={filterElements} select={this.addElementToQuery} />
-      );
+    let searchTabs;
+
+    if (filterElements.length) {
+      filterGuide = <FilterGuide elements={filterElements} select={this.addElementToQuery} />;
     }
-    const results = (selected === 'Anbefalinger') && recommendations || resultList;
+    if (resultList.length) {
+      searchTabs = <SearchTabs
+        buttons={['Søgeresultat', 'Anbefalinger']}
+        selected={selected}
+        update={this.updateSelected}
+      />;
+    }
+    else {
+      results = recommendations;
+    }
+
     return (
-      <div className='search' >
+      <div className='search'>
         <TokenSearchField query={query} update={queryAction} change={this._onChange} />
         <AutoComplete data={autoCompleteData} visible={autoCompleteVisible} />
         {filterGuide}
-        <div className='search-result' >
-          <SearchTabs buttons={['Søgeresultat', 'Anbefalinger']} selected={selected} update={this.updateSelected} />
+        <div className='search-result'>
+          {searchTabs}
           <ResultDisplay result={results} coverImages={coverImages.images} />
         </div>
       </div>
