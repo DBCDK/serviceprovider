@@ -8,12 +8,13 @@ import QueryStore from '../stores/QueryStore.store.js';
 const event = SocketClient('getOpenSearchResultList');
 
 let ResultListActions = Reflux.createAction({
-  children: ['updated', 'failed']
+  children: ['pending', 'updated', 'failed']
 });
 
 QueryStore.listen((query) => {
   if (query.length > 0) {
     let q = QueryParser.objectToCql(query);
+    ResultListActions.pending(true);
     event.request({query: q, offset: 1, worksPerPage: 10, sort: 'default'});
   }
   else {

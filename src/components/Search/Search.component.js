@@ -14,7 +14,7 @@ import AutoComplete from 'dbc-react-autocomplete';
 import {TokenSearchField, FilterGuide} from 'dbc-react-querystring';
 import {ResultDisplay} from 'dbc-react-resultlistview';
 import SearchTabs from './SearchTabs.component.js';
-
+import Loader from '../Loader.component.js';
 // import reflux actions and stores
 import AutoCompleteActions from '../../actions/AutoComplete.action.js';
 import AutoCompleteStore from '../../stores/AutoComplete.store.js';
@@ -62,9 +62,9 @@ const Search = React.createClass({
     return {
       query,
       filterElements: this.props.filterElements || [],
-      resultList: [],
+      resultList: resultListStore.getStore(),
       coverImages: {images: new Map()},
-      recommendations: [],
+      recommendations: recommendationsStore.getStore(),
       selected: null
     };
   },
@@ -94,14 +94,14 @@ const Search = React.createClass({
   },
 
   updateResultList(resultList) {
-    if (resultList && resultList.resultList) {
-      recommendationsAction(resultList.resultList.map(element => element.identifiers[0]));
+    if (resultList && resultList.result) {
+      recommendationsAction(resultList.result.map(element => element.identifiers[0]));
     }
-    this.setState(resultList);
+    this.setState({resultList});
   },
 
-  updateRecommendations(store) {
-    this.setState(store);
+  updateRecommendations(recommendations) {
+    this.setState({recommendations});
   },
 
   updateCoverImages(coverImages) {
@@ -139,28 +139,31 @@ const Search = React.createClass({
     }, 150);
   },
 
+  getView() {
+    const {query, selected} = this.state;
+    return query.length === 0 && 'Anbefalinger' || selected;
+  },
+
   render() {
+    const {query, filterElements, resultList, recommendations, coverImages} = this.state;
     const autoCompleteData = this.state.autoCompleteData || {};
     const textFieldValue = this.state.textFieldValue || '';
     const autoCompleteVisible = (!isEmpty(autoCompleteData) && !isEmpty(textFieldValue));
+    const view = this.getView();
+    const results = (view === 'Anbefalinger') && recommendations || resultList;
 
-    const {filterElements, query, resultList, recommendations, coverImages, selected} = this.state;
-    let results = (selected === 'Anbefalinger') && recommendations || resultList;
     let filterGuide;
     let searchTabs;
 
     if (filterElements.length) {
       filterGuide = <FilterGuide elements={filterElements} select={this.addElementToQuery} />;
     }
-    if (resultList.length) {
+    if (resultList.result.length) {
       searchTabs = <SearchTabs
         buttons={['Søgeresultat', 'Anbefalinger']}
-        selected={selected}
+        selected={view}
         update={this.updateSelected}
         />;
-    }
-    else {
-      results = recommendations;
     }
 
     return (
@@ -170,7 +173,9 @@ const Search = React.createClass({
         {filterGuide}
         <div className='search-result'>
           {searchTabs}
-          <ResultDisplay result={results} coverImages={coverImages.images} />
+          <Loader pending={results.pending}>
+            <ResultDisplay result={results.result} coverImages={coverImages.images} />
+          </Loader>
         </div>
       </div>
     );

@@ -11,11 +11,14 @@ const event = SocketClient('getRecommendations');
  * Recommendations is an asyncronous action. It is activated when the ResultList i changed
  */
 const Recommendations = Reflux.createAction({
-  children: ['updated', 'failed']
+  children: ['pending', 'updated', 'failed']
 });
 
 // Listens to actions that should update the Filter elements
-Recommendations.listen(event.request);
+Recommendations.listen((data) => {
+  Recommendations.pending(true);
+  event.request(data);
+});
 
 // Listens for a response with filter elements
 event.response(Recommendations.updated);
