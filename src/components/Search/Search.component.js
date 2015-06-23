@@ -5,7 +5,6 @@
  * Provides the search functionality result view for the enduser.
  */
 import React from 'react';
-import Reflux from 'reflux';
 import QueryParser from '../../utils/QueryParser.util.js';
 import {isEmpty} from 'lodash';
 
@@ -45,8 +44,8 @@ const defaultRecommendations = [
  * Search field wrapper component
  */
 const Search = React.createClass({
-  //mixins: [Reflux.connect(AutoCompleteStore)],
   timer: null,
+
   propTypes: {
     query: React.PropTypes.object,
     filterElements: React.PropTypes.array,
@@ -68,6 +67,7 @@ const Search = React.createClass({
       selected: null
     };
   },
+
   /**
    * Add a single element to the Query array
    */
