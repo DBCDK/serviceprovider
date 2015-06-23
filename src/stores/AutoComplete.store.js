@@ -64,12 +64,12 @@ const AutoCompleteStore = Reflux.createStore({
     this.trigger(this.store);
   },
 
-  onQueryUpdate(){
-    console.log('queryUpdate');
+  onQueryUpdate() {
+    console.log('queryUpdate'); // eslint-disable-line
   },
 
   clearData() {
-    console.log('clearData');
+    console.log('clearData'); // eslint-disable-line
     this.store = {};
     this.trigger(this.store);
   },
