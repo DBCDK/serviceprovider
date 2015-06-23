@@ -36,6 +36,7 @@ $height: 26px;
     height: $height;
     padding: 3px 6px 3px 6px;
     float: left;
+    direction: ltr;
     @extend %unselectable;
   }
   .remove {
