@@ -45,7 +45,7 @@ const defaultRecommendations = [
  * Search field wrapper component
  */
 const Search = React.createClass({
-  mixins: [Reflux.connect(AutoCompleteStore)],
+  //mixins: [Reflux.connect(AutoCompleteStore)],
   timer: null,
   propTypes: {
     query: React.PropTypes.object,
@@ -81,7 +81,7 @@ const Search = React.createClass({
    * Update the Query with a new Query
    */
   updateQuery(query) {
-    this.setState({query, textFieldValue: ''});
+    this.setState({query});
 
     // this is a simple way of handling updates of the url
     // we might need to implement a more advanced version at some point e.g. react-router
@@ -113,6 +113,7 @@ const Search = React.createClass({
   },
 
   componentDidMount: function () {
+    AutoCompleteStore.listen(this.updateAutoComplete);
     queryStore.listen(this.updateQuery);
     filterStore.listen(this.updateFilters);
     resultListStore.listen(this.updateResultList);
@@ -123,10 +124,14 @@ const Search = React.createClass({
     }
   },
 
+  updateAutoComplete(autoCompleteData) {
+    this.setState({autoCompleteData: autoCompleteData});
+  },
+
   /**
    * Callback for the text input (TokenSearchField)
    */
-    _onChange(textFieldValue) {
+    onChange(textFieldValue) {
     this.setState({textFieldValue: textFieldValue});
     this.requestSuggestions();
   },
@@ -168,7 +173,7 @@ const Search = React.createClass({
 
     return (
       <div className='search'>
-        <TokenSearchField query={query} update={queryAction} change={this._onChange} />
+        <TokenSearchField query={query} update={queryAction} change={this.onChange} />
         <AutoComplete data={autoCompleteData} visible={autoCompleteVisible} />
         {filterGuide}
         <div className='search-result'>
