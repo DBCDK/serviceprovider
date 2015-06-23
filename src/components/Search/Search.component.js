@@ -174,7 +174,9 @@ const Search = React.createClass({
         <div className='search-result'>
           {searchTabs}
           <Loader pending={results.pending}>
-            <ResultDisplay result={results.result} coverImages={coverImages.images} />
+            <ResultDisplay result={results.result} coverImages={coverImages.images}>
+              <div className='no-results'>Søgningen gav ingen resultater</div>
+            </ResultDisplay>
           </Loader>
         </div>
       </div>
