@@ -39,9 +39,9 @@ let ResultListStore = Reflux.createStore({
     _store.result = resultList;
     _store.info = info;
     _store.pending = false;
-    if (info.length > 0) { 
-      if (info[0].more == "true") {
-        _store.offset = _store.offset + _store.worksPerPage;
+    if (info.length > 0) {
+      if (info[0].more === 'true') {
+        _store.offset += _store.worksPerPage;
       }
     }
     this.trigger(_store);
