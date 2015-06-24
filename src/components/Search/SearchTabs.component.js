@@ -15,13 +15,8 @@ var SearchTabs = React.createClass({
         classes.push('active');
       }
       return (
-        <li>
-          <a
-            key={button}
-            onClick={this.props.update.bind(null, button)}
-            href="#"
-            className={classes.join(' ')}
-          >
+        <li key={button} >
+          <a onClick={this.props.update.bind(null, button)} href="#" className={classes.join(' ')} >
             {button}
           </a>
         </li>
@@ -29,7 +24,7 @@ var SearchTabs = React.createClass({
     });
 
     return (
-      <ul className="button-group even-2">
+      <ul className="button-group even-2" >
         {buttons}
       </ul>
     );
