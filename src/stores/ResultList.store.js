@@ -8,6 +8,9 @@ import CoverImageActions from '../actions/CoverImage.action.js';
 // @todo We may need to initialize it with data from the URL or an global object
 let _store = {
   result: [],
+  info: [],
+  offset: 1,
+  worksPerPage: 12,
   pending: false
 };
 
@@ -31,9 +34,16 @@ let ResultListStore = Reflux.createStore({
   // update the query object and trigger an action
   update(result) {
     let resultList = result.result || [];
+    let info = result.info || [];
     this.callImageActions(resultList);
     _store.result = resultList;
+    _store.info = info;
     _store.pending = false;
+    if (info.length > 0) {
+      if (info[0].more === 'true') {
+        _store.offset += _store.worksPerPage;
+      }
+    }
     this.trigger(_store);
   },
 

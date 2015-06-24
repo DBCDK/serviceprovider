@@ -3,14 +3,17 @@
 import Reflux from 'reflux';
 
 import AutoCompleteActions from '../actions/AutoComplete.action.js';
+import QueryUpdate from '../actions/QueryUpdate.action.js';
 
 const AutoCompleteStore = Reflux.createStore({
   listenables: AutoCompleteActions,
-  _store: {
-    autoCompleteData: {}
+  store: {},
+
+  init() {
+    this.listenTo(QueryUpdate, this.clearData);
   },
 
-  _parseResponse(response, data) {
+  parseResponse(response, data) {
     const index = response.index;
     data[index] = {};
 
@@ -40,12 +43,12 @@ const AutoCompleteStore = Reflux.createStore({
 
   onTextfieldUpdated(value) {
     if (value.length <= 0) {
-      this._clearData();
+      this.clearData();
     }
   },
 
   onTextfieldUpdatedResponse(response) {
-    let data = this._store.autoCompleteData;
+    let data = this.store;
 
     if (response.error) {
       console.error('PopSuggest responded with an error: ', response); // eslint-disable-line
@@ -54,20 +57,25 @@ const AutoCompleteStore = Reflux.createStore({
       delete data[response.index];
     }
     else {
-      data = this._parseResponse(response, data);
+      data = this.parseResponse(response, data);
     }
 
-    this._store.autoCompleteData = data;
-    this.trigger(this._store);
+    this.store = data;
+    this.trigger(this.store);
   },
 
-  _clearData() {
-    this._store.autoCompleteData = {};
-    this.trigger(this._store);
+  onQueryUpdate() {
+    console.log('queryUpdate'); // eslint-disable-line
+  },
+
+  clearData() {
+    console.log('clearData'); // eslint-disable-line
+    this.store = {};
+    this.trigger(this.store);
   },
 
   getInitialState() {
-    return this._store;
+    return this.store;
   }
 });
 
