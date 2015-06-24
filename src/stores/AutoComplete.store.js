@@ -34,6 +34,14 @@ const AutoCompleteStore = Reflux.createStore({
           data[index].weight = 0;
         }
         break;
+      case 'term.subject':
+        let subjects = response.docs;
+        if (subjects.length >= 1) {
+          data[index].label = 'Emne';
+          data[index].data = subjects;
+          data[index].weight = 2;
+        }
+        break;
       default:
         break;
     }
@@ -42,6 +50,7 @@ const AutoCompleteStore = Reflux.createStore({
   },
 
   onTextfieldUpdated(value) {
+    console.log(value);
     if (value.length <= 0) {
       this.clearData();
     }
@@ -64,12 +73,7 @@ const AutoCompleteStore = Reflux.createStore({
     this.trigger(this.store);
   },
 
-  onQueryUpdate() {
-    console.log('queryUpdate'); // eslint-disable-line
-  },
-
   clearData() {
-    console.log('clearData'); // eslint-disable-line
     this.store = {};
     this.trigger(this.store);
   },
