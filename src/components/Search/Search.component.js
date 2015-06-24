@@ -132,7 +132,6 @@ const Search = React.createClass({
   },
 
   requestSuggestions() {
-    console.log('requestSuggestions'); // eslint-disable-line
     setTimeout(() => {
       AutoCompleteActions.textfieldUpdated(this.state.textFieldValue);
     }, 100);
