@@ -29,8 +29,6 @@ import coverImageStore from '../../stores/CoverImage.store.js';
  * Search field wrapper component
  */
 const Search = React.createClass({
-  timer: null,
-
   propTypes: {
     query: React.PropTypes.object,
     filterElements: React.PropTypes.array,
@@ -52,7 +50,8 @@ const Search = React.createClass({
       resultList: resultListStore.getStore(),
       coverImages: {images: new Map()},
       recommendations: recommendationsStore.getStore(),
-      selected: null
+      selected: null,
+      autoCompleteData: {}
     };
   },
 
@@ -66,7 +65,7 @@ const Search = React.createClass({
   /**
    * Add a single element to the Query array
    */
-  addElementToQuery(element) {
+    addElementToQuery(element) {
     let query = this.state.query;
     query.push(element);
     queryAction(query);
@@ -75,7 +74,7 @@ const Search = React.createClass({
   /**
    * Update the Query with a new Query
    */
-  updateQuery(query) {
+    updateQuery(query) {
     this.setState({query});
     const queryString = query.length && `?${QueryParser.objectToString(query)}` || '';
 
@@ -108,7 +107,7 @@ const Search = React.createClass({
     this.setState({selected});
   },
 
-  componentDidMount: function () {
+  componentDidMount: function() {
     AutoCompleteStore.listen(this.updateAutoComplete);
     queryStore.listen(this.updateQuery);
     filterStore.listen(this.updateFilters);
@@ -121,7 +120,7 @@ const Search = React.createClass({
   },
 
   updateAutoComplete(autoCompleteData) {
-    this.setState({autoCompleteData: autoCompleteData});
+    this.setState({autoCompleteData: autoCompleteData[this.state.textFieldValue]});
   },
 
   /**
@@ -133,11 +132,9 @@ const Search = React.createClass({
   },
 
   requestSuggestions() {
-    clearTimeout(this.timer);
-
-    this.timer = setTimeout(() => {
+    setTimeout(() => {
       AutoCompleteActions.textfieldUpdated(this.state.textFieldValue);
-    }, 150);
+    }, 100);
   },
 
   getView() {
@@ -157,7 +154,8 @@ const Search = React.createClass({
     let noResults = (resultList.hasSearchBeenExecuted) && (<div className='no-results'>Søgningen gav ingen resultater</div>) || '';
 
     if (filterElements.length) {
-      filterGuide = <FilterGuide elements={filterElements} select={this.addElementToQuery} />;
+      filterGuide =
+        <FilterGuide elements={filterElements} select={this.addElementToQuery} />;
     }
     if (resultList.result.length) {
       searchTabs = <SearchTabs
@@ -168,11 +166,11 @@ const Search = React.createClass({
     }
 
     return (
-      <div className='search'>
+      <div className='search' >
         <TokenSearchField query={query} update={queryAction} change={this.onChange} />
         <AutoComplete data={autoCompleteData} visible={autoCompleteVisible} />
         {filterGuide}
-        <div className='search-result'>
+        <div className='search-result' >
           {searchTabs}
           <Loader pending={results.pending}>
             <ResultDisplay result={results.result} coverImages={coverImages.images}>

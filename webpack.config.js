@@ -36,6 +36,7 @@ module.exports = [{
       }
     ]
   },
+
   plugins: [
     commonsPlugin,
     extractCss,

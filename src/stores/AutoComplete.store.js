@@ -15,31 +15,40 @@ const AutoCompleteStore = Reflux.createStore({
 
   parseResponse(response, data) {
     const index = response.index;
-    data[index] = {};
+    if (!data[response.query]) {
+      data[response.query] = {};
+    }
+    data[response.query][index] = {};
 
     switch (index) {
       case 'term.creator':
         let creators = response.docs;
         if (creators.length >= 1) {
-          data[index].label = 'Forfatter';
-          data[index].data = creators;
-          data[index].weight = 1;
+          data[response.query][index] = {
+            label: 'Forfatter',
+            data: creators,
+            weight: 1
+          };
         }
         break;
       case 'term.title':
         let titles = response.docs;
         if (titles.length >= 1) {
-          data[index].label = 'Titel';
-          data[index].data = titles;
-          data[index].weight = 0;
+          data[response.query][index] = {
+            label: 'Titel',
+            data: titles,
+            weight: 0
+          };
         }
         break;
       case 'term.subject':
         let subjects = response.docs;
         if (subjects.length >= 1) {
-          data[index].label = 'Emne';
-          data[index].data = subjects;
-          data[index].weight = 2;
+          data[response.query][index] = {
+            label: 'Emne',
+            data: subjects,
+            weight: 2
+          };
         }
         break;
       default:
@@ -50,7 +59,6 @@ const AutoCompleteStore = Reflux.createStore({
   },
 
   onTextfieldUpdated(value) {
-    console.log(value);
     if (value.length <= 0) {
       this.clearData();
     }
