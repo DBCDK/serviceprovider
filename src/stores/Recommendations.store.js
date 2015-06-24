@@ -1,6 +1,7 @@
 'use strict';
 
 import Reflux from 'reflux';
+import {shuffle} from 'lodash';
 import RecommendationsAction from '../actions/Recommendations.action.js';
 import CoverImageActions from '../actions/CoverImage.action.js';
 
@@ -43,7 +44,7 @@ let RecommendationsStore = Reflux.createStore({
 
   update(result) {
     result.forEach(element => CoverImageActions(element.identifiers));
-    _store.result = result;
+    _store.result = shuffle(result).splice(0, 20);
     _store.pending = false;
     this.trigger(_store);
   },
