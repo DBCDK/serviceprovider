@@ -16,8 +16,10 @@ const Recommendations = Reflux.createAction({
 
 // Listens to actions that should update the Filter elements
 Recommendations.listen((data) => {
-  Recommendations.pending(true);
-  event.request(data);
+  if (data.length > 0) {
+    Recommendations.pending(true);
+    event.request(data);
+  }
 });
 
 // Listens for a response with filter elements

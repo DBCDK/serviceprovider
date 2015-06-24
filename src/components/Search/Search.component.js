@@ -42,15 +42,25 @@ const Search = React.createClass({
 
   getInitialState() {
     const query = QueryParser.stringToObject(this.props.query || []);
-    queryAction(query);
+    if (query.length && this.isClient()) {
+      queryAction(query);
+    }
+
     return {
-      query,
+      query: query,
       filterElements: this.props.filterElements || [],
       resultList: resultListStore.getStore(),
       coverImages: {images: new Map()},
       recommendations: recommendationsStore.getStore(),
       selected: null
     };
+  },
+
+  /**
+   * Get context for rendering
+   */
+  isClient() {
+    return (typeof window !== 'undefined');
   },
 
   /**
@@ -67,11 +77,12 @@ const Search = React.createClass({
    */
   updateQuery(query) {
     this.setState({query});
+    const queryString = query.length && `?${QueryParser.objectToString(query)}` || '';
 
     // this is a simple way of handling updates of the url
     // we might need to implement a more advanced version at some point e.g. react-router
     // but we need to figure out our needs first
-    history.pushState(null, null, `${window.location.pathname}?${QueryParser.objectToString(query)}`);
+    history.pushState(null, null, window.location.pathname + queryString);
   },
 
   updateFilters(filterElements) {
@@ -141,9 +152,9 @@ const Search = React.createClass({
     const autoCompleteVisible = (!isEmpty(autoCompleteData) && !isEmpty(textFieldValue));
     const view = this.getView();
     const results = (view === 'Anbefalinger') && recommendations || resultList;
-
     let filterGuide;
     let searchTabs;
+    let noResults = (resultList.hasSearchBeenExecuted) && (<div className='no-results'>Søgningen gav ingen resultater</div>) || '';
 
     if (filterElements.length) {
       filterGuide = <FilterGuide elements={filterElements} select={this.addElementToQuery} />;
@@ -165,7 +176,7 @@ const Search = React.createClass({
           {searchTabs}
           <Loader pending={results.pending}>
             <ResultDisplay result={results.result} coverImages={coverImages.images}>
-              <div className='no-results'>Søgningen gav ingen resultater</div>
+              {noResults}
             </ResultDisplay>
           </Loader>
         </div>

@@ -11,7 +11,8 @@ let _store = {
   info: [],
   offset: 1,
   worksPerPage: 12,
-  pending: false
+  pending: false,
+  hasSearchBeenExecuted: false
 };
 
 /**
@@ -28,6 +29,7 @@ let ResultListStore = Reflux.createStore({
 
   updatePending(state) {
     _store.pending = state;
+    _store.hasSearchBeenExecuted = true;
     this.trigger(_store);
   },
 
