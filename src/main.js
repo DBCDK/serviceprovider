@@ -6,5 +6,6 @@
 
 'use strict';
 
+require('newrelic');
 require('babel/register');
 require('./app');
