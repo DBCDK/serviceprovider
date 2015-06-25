@@ -26,7 +26,7 @@ const AutoCompleteStore = Reflux.createStore({
         if (creators.length >= 1) {
           data[response.query][index] = {
             label: 'Forfatter',
-            data: creators,
+            data: this.addLinks(creators, index),
             weight: 1
           };
         }
@@ -36,7 +36,7 @@ const AutoCompleteStore = Reflux.createStore({
         if (titles.length >= 1) {
           data[response.query][index] = {
             label: 'Titel',
-            data: titles,
+            data: this.addLinks(titles, index),
             weight: 0
           };
         }
@@ -46,7 +46,7 @@ const AutoCompleteStore = Reflux.createStore({
         if (subjects.length >= 1) {
           data[response.query][index] = {
             label: 'Emne',
-            data: subjects,
+            data: this.addLinks(subjects, index),
             weight: 2
           };
         }
@@ -56,6 +56,19 @@ const AutoCompleteStore = Reflux.createStore({
     }
 
     return data;
+  },
+
+  addLinks(data, index) {
+    return data.map((value) => {
+      console.log(value);
+      if (value.pid) {
+        value.href = '/search?rec.id=' + value.pid;
+      }
+      else {
+        value.href = '/search?' + index + '=' + value.text;
+      }
+      return value;
+    });
   },
 
   onTextfieldUpdated(value) {
