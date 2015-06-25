@@ -2,37 +2,58 @@
 
 import Reflux from 'reflux';
 import QueryParser from '../utils/QueryParser.util.js';
-import queryUpdate from '../actions/QueryUpdate.action.js';
+import QueryActions from '../actions/QueryUpdate.action.js';
 
-// Setup dataobject for query
-// @todo We may need to initialize it with data from the URL or an global object
-let _query = [];
+const defaultStore = {
+  query: [],
+  page: 1,
+  worksPerPage: 12,
+  sort: 'default'
+};
+
+let store = defaultStore;
 
 /**
  * Store containing the current query of the page
  */
 let QueryStore = Reflux.createStore({
+  listenables: QueryActions,
 
-  // Initial setup by reflux
-  init() {
-    // Register statusUpdate action
-    this.listenTo(queryUpdate, this.update);
+  onReset() {
+    store = defaultStore;
+    this.trigger(store);
   },
 
-  // update the query object and trigger an action
-  update(query) {
-    _query = query;
-    this.trigger(_query);
+  onUpdate(query) {
+    store.query = query;
+    store.page = 0;
+    this.trigger(store);
+    QueryActions.queryUpdated();
   },
 
-  // return the query store
-  getQuery() {
-    return _query;
+  onAdd(queryElement) {
+    store.query.push(queryElement);
+    store.page = 0;
+    this.trigger(store);
+    QueryActions.queryUpdated();
   },
 
-  // return the content of the querystore as cql
+  onNextPage() {
+    store.page++;
+    this.trigger(store);
+  },
+
+  onPrevPage() {
+    store.page--;
+    this.trigger(store);
+  },
+
+  getStore() {
+    return store;
+  },
+
   getCql() {
-    return QueryParser.objectToCql(_query);
+    return QueryParser.objectToCql(store.query);
   }
 });
 

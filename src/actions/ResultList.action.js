@@ -7,19 +7,23 @@ import QueryParser from '../utils/QueryParser.util.js';
 const event = SocketClient('getOpenSearchResultList');
 
 let ResultListActions = Reflux.createAction({
-  children: ['pending', 'updated', 'failed']
+  children: ['clear', 'pending', 'updated', 'failed']
 });
 
 ResultListActions.listen((res) => {
-  if (res.query.length > 0) {
-    let q = QueryParser.objectToCql(res.query);
-    event.request({query: q, offset: res.offset, worksPerPage: res.worksPerPage, sort: 'default'});
+  ResultListActions.pending();
+  const {query, page, worksPerPage, sort} = res;
+  const offset = page * worksPerPage;
+  if (query.length > 0) {
+    let q = QueryParser.objectToCql(query);
+    event.request({query: q, offset, worksPerPage, sort});
   }
   else {
     ResultListActions.updated([]);
   }
 });
 
-event.response(ResultListActions.updated);
+event.response((data) => {
+  ResultListActions.updated(data)});
 
 export default ResultListActions;

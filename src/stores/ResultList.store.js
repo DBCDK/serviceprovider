@@ -10,8 +10,6 @@ import CoverImageActions from '../actions/CoverImage.action.js';
 let _store = {
   result: [],
   info: {hits: 0, collections: 0, more: false},
-  offset: 1,
-  worksPerPage: 12,
   pending: false,
   hasSearchBeenExecuted: false
 };
@@ -25,11 +23,11 @@ let ResultListStore = Reflux.createStore({
   init() {
     // Register statusUpdate action
     this.listenTo(ResultListActions.updated, this.update);
+    this.listenTo(QueryActions.queryUpdated, this.empty);
     this.listenTo(ResultListActions.pending, this.updatePending);
-    this.listenTo(QueryActions, this.empty);
   },
 
-  updatePending(state) {
+  updatePending(state = true) {
     _store.pending = state;
     _store.hasSearchBeenExecuted = true;
     this.trigger(_store);

@@ -10,7 +10,7 @@ const AutoCompleteStore = Reflux.createStore({
   store: {},
 
   init() {
-    this.listenTo(QueryUpdate, this.clearData);
+    this.listenTo(QueryUpdate.update, this.clearData);
   },
 
   parseResponse(response, data) {
@@ -79,6 +79,9 @@ const AutoCompleteStore = Reflux.createStore({
 
     this.store = data;
     this.trigger(this.store);
+  },
+  onClear() {
+    this.clearData();
   },
 
   clearData() {

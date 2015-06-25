@@ -1,5 +1,5 @@
 'use strict';
 import Reflux from 'reflux';
 
-let queryUpdate = Reflux.createAction();
-export default queryUpdate;
+const QueryActions = Reflux.createActions(['reset', 'add', 'update', 'nextPage', 'prevousPage', 'queryUpdated']);
+export default QueryActions;
