@@ -35,7 +35,7 @@ app.use(express.static(path.join(__dirname, '../static')));
 // setting local vars that should be availbe to our template engine
 app.locals.newrelic = newrelic;
 app.locals.version = version;
-app.locals.production = (process.env === 'production'); // eslint-disable-line no-process-env
+app.locals.production = (process.env.NODE_ENV === 'production'); // eslint-disable-line no-process-env
 
 // setting basic routes -- should be moved elsewhere in the future
 app.get('/', function(req, res) {
