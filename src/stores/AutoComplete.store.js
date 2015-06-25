@@ -60,7 +60,6 @@ const AutoCompleteStore = Reflux.createStore({
 
   addLinks(data, index) {
     return data.map((value) => {
-      console.log(value);
       if (value.pid) {
         value.href = '/search?rec.id=' + value.pid;
       }
