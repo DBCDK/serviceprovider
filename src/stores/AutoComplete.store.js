@@ -64,6 +64,7 @@ const AutoCompleteStore = Reflux.createStore({
 
   addLinks(data, index) {
     return data.map((value) => {
+      value.image = '/covers/no-cover-image-other.png';
       if (value.pid) {
         CoverImageActions([value.pid]);
         value.href = '/search?rec.id=' + value.pid;
@@ -123,7 +124,7 @@ const AutoCompleteStore = Reflux.createStore({
 
   extractImageUrl(images) {
     const imageArr = images.images;
-    let imageUrl = '/covers/no-cover-image-book.png';
+    let imageUrl = '/covers/no-cover-image-other.png';
     if (images.images.length) {
       imageUrl = imageArr.filter((image) => image.size === 'detail_117').pop().url;
     }
