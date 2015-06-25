@@ -23,7 +23,7 @@ let ResultListStore = Reflux.createStore({
   init() {
     // Register statusUpdate action
     this.listenTo(ResultListActions.updated, this.update);
-    this.listenTo(QueryActions.queryUpdated, this.empty);
+    this.listenTo(ResultListActions.clear, this.empty);
     this.listenTo(ResultListActions.pending, this.updatePending);
   },
 

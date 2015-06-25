@@ -11,10 +11,14 @@ let ResultListActions = Reflux.createAction({
 });
 
 ResultListActions.listen((res) => {
-  ResultListActions.pending();
   const {query, page, worksPerPage, sort} = res;
   const offset = page * worksPerPage;
+
   if (query.length > 0) {
+    if (page === 0) {
+      ResultListActions.clear();
+    }
+    ResultListActions.pending();
     let q = QueryParser.objectToCql(query);
     event.request({query: q, offset, worksPerPage, sort});
   }

@@ -169,6 +169,7 @@ const Search = React.createClass({
         update={this.updateSelected}
         />;
     }
+    const loader = <Loader pending={results.pending} />;
     return (
       <div className='search' >
         <TokenSearchField query={query.query} update={QueryActions.update} change={this.onChange} />
@@ -176,10 +177,10 @@ const Search = React.createClass({
         {filterGuide}
         <div className='search-result' >
           {searchTabs}
-            <ResultDisplay result={results.result} pending={}  coverImages={coverImages.images} more={resultList.info.more} loadmore={QueryActions.nextPage}>
+            <ResultDisplay result={results.result} noResultsText='' pending={results.pending} loader={loader} coverImages={coverImages.images} hasMore={resultList.info.more === 'true'} loadMore={QueryActions.nextPage}>
               {noResults}
+
             </ResultDisplay>
-          <Loader pending={results.pending}><span /></Loader>
         </div>
       </div>
     );
