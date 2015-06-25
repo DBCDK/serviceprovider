@@ -18,6 +18,7 @@ import Loader from '../Loader.component.js';
 import AutoCompleteActions from '../../actions/AutoComplete.action.js';
 import AutoCompleteStore from '../../stores/AutoComplete.store.js';
 import queryAction from '../../actions/QueryUpdate.action.js';
+import resultListActions from '../../actions/ResultList.action.js';
 import recommendationsAction from '../../actions/Recommendations.action.js';
 import recommendationsStore from '../../stores/Recommendations.store.js';
 import queryStore from '../../stores/QueryStore.store.js';
@@ -77,11 +78,20 @@ const Search = React.createClass({
     updateQuery(query) {
     this.setState({query});
     const queryString = query.length && `?${QueryParser.objectToString(query)}` || '';
-
+    this.getResultList(query);
     // this is a simple way of handling updates of the url
     // we might need to implement a more advanced version at some point e.g. react-router
     // but we need to figure out our needs first
     history.pushState(null, null, window.location.pathname + queryString);
+  },
+
+  getResultList(query = null) {
+    let result = {
+      query: query || this.state.query,
+      offset: this.state.resultList.offset,
+      worksPerPage: this.state.resultList.worksPerPage
+    };
+    resultListActions(result);
   },
 
   updateFilters(filterElements) {
@@ -173,7 +183,7 @@ const Search = React.createClass({
         <div className='search-result' >
           {searchTabs}
           <Loader pending={results.pending}>
-            <ResultDisplay result={results.result} coverImages={coverImages.images}>
+            <ResultDisplay result={results.result} coverImages={coverImages.images} more={resultList.info.more} loadmore={this.getResultList}>
               {noResults}
             </ResultDisplay>
           </Loader>

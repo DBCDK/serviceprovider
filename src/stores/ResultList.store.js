@@ -2,13 +2,14 @@
 
 import Reflux from 'reflux';
 import ResultListActions from '../actions/ResultList.action.js';
+import QueryActions from '../actions/QueryUpdate.action.js';
 import CoverImageActions from '../actions/CoverImage.action.js';
 
 // Setup dataobject for query
 // @todo We may need to initialize it with data from the URL or an global object
 let _store = {
   result: [],
-  info: [],
+  info: {hits: 0, collections: 0, more: false},
   offset: 1,
   worksPerPage: 12,
   pending: false,
@@ -25,6 +26,7 @@ let ResultListStore = Reflux.createStore({
     // Register statusUpdate action
     this.listenTo(ResultListActions.updated, this.update);
     this.listenTo(ResultListActions.pending, this.updatePending);
+    this.listenTo(QueryActions, this.empty);
   },
 
   updatePending(state) {
@@ -33,20 +35,21 @@ let ResultListStore = Reflux.createStore({
     this.trigger(_store);
   },
 
-  // update the query object and trigger an action
+  // update the resultList object and trigger an action
   update(result) {
     let resultList = result.result || [];
     let info = result.info || [];
     this.callImageActions(resultList);
-    _store.result = resultList;
+    _store.result = _store.result.concat(resultList);
     _store.info = info;
     _store.pending = false;
-    if (info.length > 0) {
-      if (info[0].more === 'true') {
-        _store.offset += _store.worksPerPage;
-      }
+    if (info.more === 'true') {
+      _store.offset += _store.worksPerPage;
     }
     this.trigger(_store);
+  },
+  empty() {
+    _store.result = [];
   },
 
   callImageActions(resultList) {
