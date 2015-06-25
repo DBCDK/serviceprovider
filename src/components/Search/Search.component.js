@@ -43,14 +43,16 @@ const Search = React.createClass({
     coverImages: React.PropTypes.object
   },
 
-  getInitialState() {
-  let query = extend({}, QueryStore.getStore());
+  getInitialQuery() {
+    let query = QueryStore.getStore();
     query.query = QueryParser.stringToObject(this.props.query || []);
     if (query.query.length && this.isClient()) {
       QueryActions.update(query.query);
     }
+  },
+  getInitialState() {
     return {
-      query,
+      query: this.getInitialQuery(),
       filterElements: this.props.filterElements || [],
       resultList: ResultListStore.getStore(),
       coverImages: {images: new Map()},
