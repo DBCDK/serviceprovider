@@ -1,9 +1,12 @@
 'use strict';
 
 import Reflux from 'reflux';
+import _ from 'lodash';
 
 import AutoCompleteActions from '../actions/AutoComplete.action.js';
 import QueryUpdate from '../actions/QueryUpdate.action.js';
+import CoverImageActions from '../actions/CoverImage.action.js';
+import CoverImageStore from '../stores/CoverImage.store.js';
 
 const AutoCompleteStore = Reflux.createStore({
   listenables: AutoCompleteActions,
@@ -11,6 +14,7 @@ const AutoCompleteStore = Reflux.createStore({
 
   init() {
     this.listenTo(QueryUpdate, this.clearData);
+    CoverImageStore.listen(this.updateCoverImages);
   },
 
   parseResponse(response, data) {
@@ -61,6 +65,7 @@ const AutoCompleteStore = Reflux.createStore({
   addLinks(data, index) {
     return data.map((value) => {
       if (value.pid) {
+        CoverImageActions([value.pid]);
         value.href = '/search?rec.id=' + value.pid;
       }
       else {
@@ -96,6 +101,33 @@ const AutoCompleteStore = Reflux.createStore({
   clearData() {
     this.store = {};
     this.trigger(this.store);
+  },
+
+  updateCoverImages(covers) {
+    let shouldTrigger = false;
+    _.map(this.store, (val) => {
+      _.map(val, (_val) => {
+        _.map(_val.data, (dat) => {
+          if (dat.pid && covers.images.get(dat.pid)) {
+            dat.image = this.extractImageUrl(covers.images.get(dat.pid));
+            shouldTrigger = true;
+          }
+        });
+      });
+    });
+
+    if (shouldTrigger) {
+      this.trigger(this.store);
+    }
+  },
+
+  extractImageUrl(images) {
+    const imageArr = images.images;
+    let imageUrl = '/covers/no-cover-image-book.png';
+    if (images.images.length) {
+      imageUrl = imageArr.filter((image) => image.size === 'detail_117').pop().url;
+    }
+    return imageUrl;
   },
 
   getInitialState() {
