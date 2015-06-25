@@ -37,6 +37,11 @@ module.exports = [{
     ]
   },
 
+  externals: {
+    react: 'React',
+    lodash: '_'
+  },
+
   plugins: [
     commonsPlugin,
     extractCss,
