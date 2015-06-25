@@ -25,7 +25,7 @@ const AutoCompleteStore = Reflux.createStore({
     data[response.query][index] = {};
 
     switch (index) {
-      case 'term.creator':
+      case 'display.creator':
         let creators = response.docs;
         if (creators.length >= 1) {
           data[response.query][index] = {
@@ -35,7 +35,7 @@ const AutoCompleteStore = Reflux.createStore({
           };
         }
         break;
-      case 'term.title':
+      case 'display.title':
         let titles = response.docs;
         if (titles.length >= 1) {
           data[response.query][index] = {
