@@ -9,7 +9,7 @@ const Loader = React.createClass({
   },
 
   render() {
-    return this.props.pending && <span className='loader'>loader...</span> || this.props.children;
+    return this.props.pending && <span className='loader'>loader...</span> || <span className='no-loader'/>;
   }
 });
 
