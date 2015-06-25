@@ -19,7 +19,9 @@ head
 
     block scripts
         != newrelic.getBrowserTimingHeader()
-        script(src='/js/common.js')
+        script(src='https://cdnjs.cloudflare.com/ajax/libs/react/0.13.3/react.min.js', type='text/javascript')
+        script(src='https://cdnjs.cloudflare.com/ajax/libs/lodash-compat/3.9.3/lodash.min.js', type='text/javascript')
+        script(src='/js/common.js', type='text/javascript')
 
     link(rel='shortcut icon', href='/favicon.ico', type='image/x-icon ')
 
