@@ -13,7 +13,8 @@ module.exports = [{
   entry: {
     querysearch: './src/components/Search/Search.client',
     logo: './src/components/logo/index.js',
-    autocomplete: './src/components/autocomplete/index.js'
+    autocomplete: './src/components/autocomplete/index.js',
+    work: './src/components/Work/Work.client'
   },
   output: {
     path: path.join(__dirname, 'public/js'),

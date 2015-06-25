@@ -51,6 +51,12 @@ app.get(['/search', '/search/*'], function(req, res) {
   res.render('search', SearchServer({query}));
 });
 
+app.get(['/work', '/work/*'], function(req, res) {
+  let pid = req.query.pid;
+  pid = '"' + pid + '"';
+  res.render('work', {pid});
+});
+
 // starting server
 server.listen(app.get('port'), function() {
   logger.info('Server listening on ' + app.get('port'));
