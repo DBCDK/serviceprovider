@@ -28,10 +28,10 @@ const Work = React.createClass({
       coverImages: {images: new Map()}
     };
   },
-  
+
   getWork() {
     let result = {
-      pid: this.state.pid,
+      pid: this.state.pid
     };
     workAction(result);
   },
@@ -44,18 +44,18 @@ const Work = React.createClass({
     this.setState({work});
   },
 
-  componentDidMount: function() {
+  componentDidMount: function () {
     this.getWork();
     workStore.listen(this.updateWork);
     coverImageStore.listen(this.updateCoverImages);
   },
 
   render() {
-    const {pid, work, coverImages} = this.state;
+    const {pid, work, coverImages} = this.state; // eslint-disable-line
     return (
       <div className='work' >
-        <div className='general'>{work.result.general}</div>
-        <div className='specific'>{work.result.specific}</div>
+        <div className='general' >{work.result.general}</div>
+        <div className='specific' >{work.result.specific}</div>
       </div>
     );
   }

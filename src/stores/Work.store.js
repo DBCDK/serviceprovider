@@ -7,7 +7,7 @@ import CoverImageActions from '../actions/CoverImage.action.js';
 // Setup dataobject for query
 // @todo We may need to initialize it with data from the URL or an global object
 let _store = {
-  result: [],
+  result: []
 };
 
 /**
