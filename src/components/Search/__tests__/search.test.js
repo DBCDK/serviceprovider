@@ -13,7 +13,7 @@ describe('Test the Search component', () => {
     expect(filterGuides).to.have.length(0);
 
   });
-  it('should generate filter guide and the should be selectable', ()=> {
+  it('should generate filter guide and the should be selectable', (done)=> {
     let filterElements = [
       {value: 'test', type: 'testType'},
       {value: 'test2', type: 'testType2'}
@@ -28,13 +28,11 @@ describe('Test the Search component', () => {
 
     // Click on first element
     TestUtils.Simulate.click(TestUtils.scryRenderedDOMComponentsWithTag(filterGuides[0], 'a')[0]);
-    expect(tokenSearchField.props.query).to.have.length(1);
-    expect(tokenSearchField.props.query[0]).to.be.deep.equal(filterElements[0]);
-
-    // Click on second element
-    TestUtils.Simulate.click(TestUtils.scryRenderedDOMComponentsWithTag(filterGuides[0], 'a')[1]);
-    expect(tokenSearchField.props.query).to.have.length(2);
-    expect(tokenSearchField.props.query[1]).to.be.deep.equal(filterElements[1]);
+    setTimeout(() => {
+      expect(tokenSearchField.props.query).to.have.length(1);
+      expect(tokenSearchField.props.query[0]).to.be.deep.equal(filterElements[0]);
+      done();
+    }, 0);
 
   });
   it('should generate default tokens', ()=> {
@@ -48,6 +46,6 @@ describe('Test the Search component', () => {
     let tokenSearchField = TestUtils.findRenderedComponentWithType(dom, TokenSearchField);
     let tokens = TestUtils.scryRenderedDOMComponentsWithClass(tokenSearchField, 'token');
     expect(tokens).to.have.length(4);
-    expect(searchField.state.query).to.have.length(4);
+    expect(searchField.state.query.query).to.have.length(4);
   });
 });

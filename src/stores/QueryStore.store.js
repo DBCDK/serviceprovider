@@ -11,7 +11,7 @@ const defaultStore = {
   sort: 'default'
 };
 
-let store = defaultStore;
+let store = Object.assign({}, defaultStore);
 
 /**
  * Store containing the current query of the page
@@ -20,7 +20,7 @@ let QueryStore = Reflux.createStore({
   listenables: QueryActions,
 
   onReset() {
-    store = defaultStore;
+    store = Object.assign({}, defaultStore);
     this.trigger(store);
   },
 
