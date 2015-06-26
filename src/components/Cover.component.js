@@ -23,7 +23,6 @@ function _getImage(images, size) {
   return images.filter((image) => image.size === size).pop().url;
 }
 
-
 const Cover = React.createClass({
   propTypes: {
     pids: React.PropTypes.array.isRequired

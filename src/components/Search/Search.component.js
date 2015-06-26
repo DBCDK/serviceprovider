@@ -84,8 +84,8 @@ const Search = React.createClass({
     // this is a simple way of handling updates of the url
     // we might need to implement a more advanced version at some point e.g. react-router
     // but we need to figure out our needs first
-    const queryString = query.query.length && `?${QueryParser.objectToString(query.query)}` || '';
-    history.pushState(null, null, window.location.pathname + queryString);
+    const queryString = query.query.length && `/search?${QueryParser.objectToString(query.query)}` || '';
+    history.pushState(null, null, window.location.origin + queryString);
   },
 
   updateFilters(filterElements) {
@@ -125,7 +125,7 @@ const Search = React.createClass({
     ResultListStore.listen(this.updateResultList);
     CoverImageStore.listen(this.updateCoverImages);
     RecommendationsStore.listen(this.updateRecommendations);
-    if (this.state.query.length === 0) {
+    if (this.state.query.query.length === 0) {
       RecommendationsAction(RecommendationsStore.getDefaultRecommendations());
     }
   },
