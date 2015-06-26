@@ -49,6 +49,7 @@ const Search = React.createClass({
     if (query.query.length && this.isClient()) {
       QueryActions.update(query.query);
     }
+    return query;
   },
   getInitialState() {
     return {
