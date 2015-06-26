@@ -17,7 +17,7 @@ import Covers from '../Cover.component.js';
 const Work = React.createClass({
   propTypes: {
     pid: React.PropTypes.string,
-    work: React.PropTypes.object,
+    work: React.PropTypes.object
   },
 
   getInitialState() {
@@ -93,20 +93,20 @@ const Work = React.createClass({
       {dates}
       </div>);
     });
-  return (
-    <div className='work' >
-      <Covers pids={work.result.specific[0].identifiers} />
-      <div className='general' >
-        <div className='title'>{title}</div>
-        <div className='creators'>{creators}</div>
-        <div className='description'>{description}</div>
-        <div className='series'>{series}</div>
-        <div className='subjects'>{subjects}</div>
-        <div className='languages'>{languages}</div>
+    return (
+      <div className='work' >
+        <Covers pids={work.result.specific[0].identifiers} />
+        <div className='general' >
+          <div className='title'>{title}</div>
+          <div className='creators'>{creators}</div>
+          <div className='description'>{description}</div>
+          <div className='series'>{series}</div>
+          <div className='subjects'>{subjects}</div>
+          <div className='languages'>{languages}</div>
+        </div>
+        {specifics}
       </div>
-      {specifics}
-    </div>
-  );
+    );
   }
 });
 
