@@ -1,6 +1,7 @@
 'use strict';
 
 import Reflux from 'reflux';
+import {extend} from 'lodash';
 import QueryParser from '../utils/QueryParser.util.js';
 import QueryActions from '../actions/QueryUpdate.action.js';
 
@@ -11,7 +12,7 @@ const defaultStore = {
   sort: 'default'
 };
 
-let store = Object.assign({}, defaultStore);
+let store = extend({}, defaultStore);
 
 /**
  * Store containing the current query of the page
@@ -20,7 +21,7 @@ let QueryStore = Reflux.createStore({
   listenables: QueryActions,
 
   onReset() {
-    store = Object.assign({}, defaultStore);
+    store = extend({}, defaultStore);
     this.trigger(store);
   },
 
