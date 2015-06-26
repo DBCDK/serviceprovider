@@ -51,7 +51,7 @@ const Cover = React.createClass({
   render() {
     const {images} = this.state;
     let image;
-    if (typeof images !== 'undefined') {
+    if (typeof images !== 'undefined' && images.images.length) {
       const url = _getImage(images.images, 'detail_500');
       image = <img src={url} />;
     }
