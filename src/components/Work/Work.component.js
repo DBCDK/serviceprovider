@@ -12,20 +12,18 @@ import React from 'react';
 // import reflux actions and stores
 import workAction from '../../actions/Work.action.js';
 import workStore from '../../stores/Work.store.js';
-import coverImageStore from '../../stores/CoverImage.store.js';
+import Covers from '../Cover.component.js';
 
 const Work = React.createClass({
   propTypes: {
     pid: React.PropTypes.string,
-    work: React.PropTypes.array,
-    coverImages: React.PropTypes.object
+    work: React.PropTypes.array
   },
 
   getInitialState() {
     return {
       pid: this.props.pid,
-      work: workStore.getStore(),
-      coverImages: {images: new Map()}
+      work: workStore.getStore()
     };
   },
 
@@ -36,10 +34,6 @@ const Work = React.createClass({
     workAction(result);
   },
 
-  updateCoverImages(coverImages) {
-    this.setState({coverImages});
-  },
-
   updateWork(work) {
     this.setState({work});
   },
@@ -47,17 +41,20 @@ const Work = React.createClass({
   componentDidMount: function () {
     this.getWork();
     workStore.listen(this.updateWork);
-    coverImageStore.listen(this.updateCoverImages);
   },
 
   render() {
     const {pid, work, coverImages} = this.state; // eslint-disable-line
+    if (work.result.length === 0) {
+      return (<div />);
+    }
     let title;
     if (work.result.hasOwnProperty('general')) {
       title = work.result.general.title;
     }
     return (
       <div className='work' >
+        <Covers pids={work.result.specific[0].identifiers} />
         <div className='general' >
           <div className='title'>{title}</div>
         </div>
