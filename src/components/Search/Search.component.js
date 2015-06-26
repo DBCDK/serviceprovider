@@ -158,6 +158,7 @@ const Search = React.createClass({
 
   render() {
     const {query, filterElements, resultList, recommendations, coverImages} = this.state;
+    const placeholder = (query && query.query.length) ? '' : 'Skriv dine søgeord her';
     const autoCompleteData = this.state.autoCompleteData || {};
     const textFieldValue = this.state.textFieldValue || '';
     const autoCompleteVisible = (!isEmpty(autoCompleteData) && !isEmpty(textFieldValue));
@@ -182,7 +183,7 @@ const Search = React.createClass({
     const loader = <Loader pending={results.pending} />;
     return (
       <div className='search' >
-        <TokenSearchField query={query.query} update={QueryActions.update} change={this.onChange} />
+        <TokenSearchField query={query.query} update={QueryActions.update} change={this.onChange} placeholder={placeholder}/>
         <AutoComplete data={autoCompleteData} visible={autoCompleteVisible} />
         {filterGuide}
         <div className='search-result' >
