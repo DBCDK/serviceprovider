@@ -75,9 +75,9 @@ function splitGroupToCQL(group, key) {
 }
 
 
-function QueryStringToObject(queryString) {
+function queryStringToObject(queryString) {
   if (queryString.indexOf('?') === 0) {
-    let queryElements = queryString.subString(1).split('&').map();
+    return queryString.subString(1).split('&').map();
   }
 }
 /**
@@ -143,6 +143,7 @@ export function objectToCql(query) {
 
 export default {
   stringToObject,
+  queryStringToObject,
   objectToString,
   objectToCql
 };

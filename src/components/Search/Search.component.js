@@ -6,7 +6,7 @@
  */
 import React from 'react';
 import QueryParser from '../../utils/QueryParser.util.js';
-import {isEmpty, extend} from 'lodash';
+import {isEmpty} from 'lodash';
 
 // import components
 import AutoComplete from 'dbc-react-autocomplete';
@@ -65,14 +65,14 @@ const Search = React.createClass({
   /**
    * Get context for rendering
    */
-  isClient() {
+    isClient() {
     return (typeof window !== 'undefined');
   },
 
   /**
    * Update the Query with a new Query
    */
-  updateQuery(query) {
+    updateQuery(query) {
     if (this.state.query !== query) {
       ResultListActions.clear();
     }
@@ -110,9 +110,11 @@ const Search = React.createClass({
     this.setState({selected});
   },
 
-  componentDidMount: function() {
-    if (this.isClient()){
-      window.addEventListener("popstate", () => {console.log('hep')});
+  componentDidMount: function () {
+    if (this.isClient()) {
+      window.addEventListener('popstate', () => {
+        // @todo Do something on popstate
+      });
     }
 
     AutoCompleteStore.listen(this.updateAutoComplete);
@@ -158,7 +160,8 @@ const Search = React.createClass({
     const results = (view === 'Anbefalinger') && recommendations || resultList;
     let filterGuide;
     let searchTabs;
-    let noResults = (resultList.hasSearchBeenExecuted) && (<div className='no-results'>Søgningen gav ingen resultater</div>) || '';
+    let noResults = (resultList.hasSearchBeenExecuted) && (
+        <div className='no-results' >Søgningen gav ingen resultater</div>) || '';
 
     if (filterElements.length) {
       filterGuide =
@@ -179,10 +182,18 @@ const Search = React.createClass({
         {filterGuide}
         <div className='search-result' >
           {searchTabs}
-            <ResultDisplay result={results.result} noResultsText='' pending={results.pending} loader={loader} coverImages={coverImages.images} hasMore={resultList.info.more === 'true'} loadMore={QueryActions.nextPage}>
-              {noResults}
+          <ResultDisplay
+            result={results.result}
+            noResultsText=''
+            pending={results.pending}
+            loader={loader}
+            coverImages={coverImages.images}
+            hasMore={resultList.info.more === 'true'}
+            loadMore={QueryActions.nextPage}
+            >
+            {noResults}
 
-            </ResultDisplay>
+          </ResultDisplay>
         </div>
       </div>
     );

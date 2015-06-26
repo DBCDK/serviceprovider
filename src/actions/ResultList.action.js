@@ -28,6 +28,7 @@ ResultListActions.listen((res) => {
 });
 
 event.response((data) => {
-  ResultListActions.updated(data)});
+  ResultListActions.updated(data);
+});
 
 export default ResultListActions;

@@ -2,7 +2,6 @@
 
 import Reflux from 'reflux';
 import ResultListActions from '../actions/ResultList.action.js';
-import QueryActions from '../actions/QueryUpdate.action.js';
 import CoverImageActions from '../actions/CoverImage.action.js';
 
 // Setup dataobject for query
