@@ -7,6 +7,11 @@ var SearchTabs = React.createClass({
     selected: React.PropTypes.string
   },
 
+  update(button, event) {
+    event.preventDefault();
+    this.props.update(button);
+  },
+
   render() {
     const selected = this.props.selected || this.props.buttons[0];
     const buttons = this.props.buttons.map(button => {
@@ -16,7 +21,7 @@ var SearchTabs = React.createClass({
       }
       return (
         <li key={button} >
-          <a onClick={this.props.update.bind(null, button)} href="#" className={classes.join(' ')} >
+          <a onClick={this.update.bind(null, button)} href="#" className={classes.join(' ')} >
             {button}
           </a>
         </li>

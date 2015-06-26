@@ -23,7 +23,6 @@ function _getImage(images, size) {
   return images.filter((image) => image.size === size).pop().url;
 }
 
-
 const Cover = React.createClass({
   propTypes: {
     pids: React.PropTypes.array.isRequired
@@ -51,7 +50,7 @@ const Cover = React.createClass({
   render() {
     const {images} = this.state;
     let image;
-    if (typeof images !== 'undefined') {
+    if (typeof images !== 'undefined' && images.images.length) {
       const url = _getImage(images.images, 'detail_500');
       image = <img src={url} />;
     }

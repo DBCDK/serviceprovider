@@ -37,18 +37,14 @@ app.locals.newrelic = newrelic;
 app.locals.version = version;
 app.locals.production = (process.env.NODE_ENV === 'production'); // eslint-disable-line no-process-env
 
-// setting basic routes -- should be moved elsewhere in the future
-app.get('/', function(req, res) {
-  res.render('logo');
+
+app.get(['/', '/search', '/search/*'], function(req, res) {
+  const query = req.query || [];
+  res.render('search', SearchServer({query}));
 });
 
 app.get('/autocomplete', function(req, res) {
   res.render('autocomplete');
-});
-
-app.get(['/search', '/search/*'], function(req, res) {
-  const query = req.query || [];
-  res.render('search', SearchServer({query}));
 });
 
 app.get(['/work', '/work/*'], function(req, res) {
