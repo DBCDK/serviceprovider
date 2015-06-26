@@ -52,9 +52,15 @@ const Work = React.createClass({
 
   render() {
     const {pid, work, coverImages} = this.state; // eslint-disable-line
+    let title;
+    if (work.result.hasOwnProperty('general')) {
+      title = work.result.general.title;
+    }
     return (
       <div className='work' >
-        <div className='general' >{work.result.general}</div>
+        <div className='general' >
+          <div className='title'>{title}</div>
+        </div>
         <div className='specific' >{work.result.specific}</div>
       </div>
     );
