@@ -106,7 +106,9 @@ const Work = React.createClass({
           <div className='description'>{description}</div>
           <div className='series'>{series}</div>
           <div className='subjects'>{subjects}</div>
+          <div className='clear'></div>
           <div className='languages'>{languages}</div>
+          <div className='clear'></div>
         </div>
         {specifics}
         </div>
