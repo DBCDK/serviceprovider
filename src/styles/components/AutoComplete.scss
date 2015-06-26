@@ -15,6 +15,7 @@ input[type=text] {
   z-index: 1000;
   width: 100%;
   min-height: 100%;
+  overflow: hidden;
 }
 
 .autocomplete--container-hidden {
