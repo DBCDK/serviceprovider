@@ -49,4 +49,18 @@ describe('Test Query Util Class', () => {
     result = Query.objectToCql(objects);
     expect(result).to.deep.equal(expectedResult);
   });
+  it('should convert url query to internal query object', () => {
+    const urlQuery = '?text=kanin|fisk&term.type=æble|banan';
+    let objects = [
+      {value: 'kanin', type: 'text', index: 'textkanin0'},
+      {value: 'fisk', type: 'text', index: 'textfisk1'},
+      {value: 'æble', type: 'term.type', index: 'term.typeæble0'},
+      {value: 'banan', type: 'term.type', index: 'term.typebanan1'}
+    ];
+    let result = Query.urlQueryToObject(urlQuery);
+    expect(result).to.deep.equal(objects);
+
+    result = Query.urlQueryToObject('');
+    expect(result).to.deep.equal([]);
+  });
 });

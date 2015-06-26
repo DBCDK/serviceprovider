@@ -5,19 +5,20 @@ import queryAction from '../../actions/QueryUpdate.action.js';
 
 describe('Test Reflux Query Store', () => {
   it('is empty', ()=> {
-    let store = QueryStore.getQuery();
-    expect(store).to.have.length(0);
+    QueryStore.onReset();
+    let store = QueryStore.getStore();
+    expect(store.query).to.have.length(0);
   });
 
   it('is updated on action', (done)=> {
     let queryData = [{value: 'test', type: 'text'}, {value: 'type', type: 'term.type'}];
-    queryAction(queryData);
+    queryAction.update(queryData);
 
     // reflux actions are handled ayncronous and assertion of the udpated store is therefore wrapped in a timeout
     // function
     setTimeout(() => {
-      let store = QueryStore.getQuery();
-      expect(store).to.equal(queryData);
+      let store = QueryStore.getStore();
+      expect(store.query).to.equal(queryData);
       let cql = QueryStore.getCql();
       expect(cql).to.equal('(test) and term.type=(type)');
       done();

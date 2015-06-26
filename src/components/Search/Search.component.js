@@ -114,7 +114,8 @@ const Search = React.createClass({
   componentDidMount: function () {
     if (this.isClient()) {
       window.addEventListener('popstate', () => {
-        // @todo Do something on popstate
+        let query = QueryParser.urlQueryToObject(window.location.search);
+        QueryActions.update(query);
       });
     }
 

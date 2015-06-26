@@ -75,11 +75,6 @@ function splitGroupToCQL(group, key) {
 }
 
 
-function queryStringToObject(queryString) {
-  if (queryString.indexOf('?') === 0) {
-    return queryString.subString(1).split('&').map();
-  }
-}
 /**
  * Converts a query string object to a internal query object
  *
@@ -115,6 +110,24 @@ export function stringToObject(queryStringObject) {
 }
 
 /**
+ * Converts a url query to an internal query Object
+ * @param queryString
+ * @returns {Array}
+ */
+export function urlQueryToObject(queryString) {
+  let obj = {};
+  if (queryString.indexOf('?') === 0) {
+    queryString.substring(1).split('&').forEach((valuePair) => {
+      let arrayPair = valuePair.split('=');
+      obj[arrayPair[0]] = arrayPair[1];
+    });
+  }
+
+  return stringToObject(obj);
+}
+
+
+/**
  * Converts internal query objects to a query string
  *
  * @param query {Array}
@@ -143,7 +156,7 @@ export function objectToCql(query) {
 
 export default {
   stringToObject,
-  queryStringToObject,
+  urlQueryToObject,
   objectToString,
   objectToCql
 };
