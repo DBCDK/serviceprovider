@@ -5,7 +5,8 @@ import SocketClient from '../utils/ServiceProviderSocketClient.js';
 let socket = SocketClient('getPopSuggestions');
 
 const AutoCompleteActions = Reflux.createActions({
-  textfieldUpdated: {children: ['response']}
+  textfieldUpdated: {children: ['response']},
+  clear: {}
 });
 
 AutoCompleteActions.textfieldUpdated.listen((val) => {

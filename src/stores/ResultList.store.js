@@ -8,9 +8,7 @@ import CoverImageActions from '../actions/CoverImage.action.js';
 // @todo We may need to initialize it with data from the URL or an global object
 let _store = {
   result: [],
-  info: [],
-  offset: 1,
-  worksPerPage: 12,
+  info: {hits: 0, collections: 0, more: false},
   pending: false,
   hasSearchBeenExecuted: false
 };
@@ -24,29 +22,31 @@ let ResultListStore = Reflux.createStore({
   init() {
     // Register statusUpdate action
     this.listenTo(ResultListActions.updated, this.update);
+    this.listenTo(ResultListActions.clear, this.empty);
     this.listenTo(ResultListActions.pending, this.updatePending);
   },
 
-  updatePending(state) {
+  updatePending(state = true) {
     _store.pending = state;
     _store.hasSearchBeenExecuted = true;
     this.trigger(_store);
   },
 
-  // update the query object and trigger an action
+  // update the resultList object and trigger an action
   update(result) {
     let resultList = result.result || [];
     let info = result.info || [];
     this.callImageActions(resultList);
-    _store.result = resultList;
+    _store.result = _store.result.concat(resultList);
     _store.info = info;
     _store.pending = false;
-    if (info.length > 0) {
-      if (info[0].more === 'true') {
-        _store.offset += _store.worksPerPage;
-      }
+    if (info.more === 'true') {
+      _store.offset += _store.worksPerPage;
     }
     this.trigger(_store);
+  },
+  empty() {
+    _store.result = [];
   },
 
   callImageActions(resultList) {

@@ -3,27 +3,32 @@
 import Reflux from 'reflux';
 import SocketClient from '../utils/ServiceProviderSocketClient.js';
 import QueryParser from '../utils/QueryParser.util.js';
-import QueryStore from '../stores/QueryStore.store.js';
-import ResultListStore from '../stores/ResultList.store.js';
 
 const event = SocketClient('getOpenSearchResultList');
 
 let ResultListActions = Reflux.createAction({
-  children: ['pending', 'updated', 'failed']
+  children: ['clear', 'pending', 'updated', 'failed']
 });
 
-QueryStore.listen((query) => {
+ResultListActions.listen((res) => {
+  const {query, page, worksPerPage, sort} = res;
+  const offset = page * worksPerPage;
+
   if (query.length > 0) {
+    if (page === 0) {
+      ResultListActions.clear();
+    }
+    ResultListActions.pending();
     let q = QueryParser.objectToCql(query);
-    ResultListActions.pending(true);
-    let res = ResultListStore.getStore();
-    event.request({query: q, offset: res.offset, worksPerPage: res.worksPerPage, sort: 'default'});
+    event.request({query: q, offset, worksPerPage, sort});
   }
   else {
     ResultListActions.updated([]);
   }
 });
 
-event.response(ResultListActions.updated);
+event.response((data) => {
+  ResultListActions.updated(data);
+});
 
 export default ResultListActions;

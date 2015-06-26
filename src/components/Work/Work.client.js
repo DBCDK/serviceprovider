@@ -1,6 +1,6 @@
 'use strict';
 import React from 'react';
-import Search from './Search.component';
+import Work from './Work.component.js';
 import '../../styles/app.scss';
 
 /**
@@ -9,6 +9,4 @@ import '../../styles/app.scss';
  * If a querystring from the url exists it is added to the global window object, and should be passed to the client
  */
 
-React.render(<Search query={window.QUERYSTRING_PROPS.query || {}} />, document.getElementById('search'));
-
-
+React.render(<Work pid={window.QUERYSTRING_PROPS || {}} />, document.getElementById('work'));

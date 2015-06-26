@@ -2,7 +2,6 @@
 
 import Reflux from 'reflux';
 import {filter} from 'lodash';
-import QueryAction from './QueryUpdate.action.js';
 import SocketClient from '../utils/ServiceProviderSocketClient.js';
 
 // Register an event related to a transform in the serviceprovider
@@ -47,7 +46,6 @@ function getFilterElements(query) {
 
 // Listens to actions that should update the Filter elements
 FilterActions.listen(getFilterElements);
-QueryAction.listen(getFilterElements);
 
 // Listens for a response with filter elements
 event.response(FilterActions.updated);

@@ -14,16 +14,21 @@ import {TokenSearchField, FilterGuide} from 'dbc-react-querystring';
 import {ResultDisplay} from 'dbc-react-resultlistview';
 import SearchTabs from './SearchTabs.component.js';
 import Loader from '../Loader.component.js';
-// import reflux actions and stores
+
+// import actions
 import AutoCompleteActions from '../../actions/AutoComplete.action.js';
+import QueryActions from '../../actions/QueryUpdate.action.js';
+import RecommendationsAction from '../../actions/Recommendations.action.js';
+import ResultListActions from '../../actions/ResultList.action.js';
+import FilterActions from '../../actions/Filter.action.js';
+
+// Import Stores
 import AutoCompleteStore from '../../stores/AutoComplete.store.js';
-import queryAction from '../../actions/QueryUpdate.action.js';
-import recommendationsAction from '../../actions/Recommendations.action.js';
-import recommendationsStore from '../../stores/Recommendations.store.js';
-import queryStore from '../../stores/QueryStore.store.js';
-import filterStore from '../../stores/FilterStore.store.js';
-import resultListStore from '../../stores/ResultList.store.js';
-import coverImageStore from '../../stores/CoverImage.store.js';
+import RecommendationsStore from '../../stores/Recommendations.store.js';
+import QueryStore from '../../stores/QueryStore.store.js';
+import FilterStore from '../../stores/FilterStore.store.js';
+import ResultListStore from '../../stores/ResultList.store.js';
+import CoverImageStore from '../../stores/CoverImage.store.js';
 
 /**
  * Search field wrapper component
@@ -38,18 +43,21 @@ const Search = React.createClass({
     coverImages: React.PropTypes.object
   },
 
-  getInitialState() {
-    const query = QueryParser.stringToObject(this.props.query || []);
-    if (query.length && this.isClient()) {
-      queryAction(query);
+  getInitialQuery() {
+    let query = QueryStore.getStore();
+    query.query = QueryParser.stringToObject(this.props.query || []);
+    if (query.query.length && this.isClient()) {
+      QueryActions.update(query.query);
     }
-
+    return query;
+  },
+  getInitialState() {
     return {
-      query: query,
+      query: this.getInitialQuery(),
       filterElements: this.props.filterElements || [],
-      resultList: resultListStore.getStore(),
+      resultList: ResultListStore.getStore(),
       coverImages: {images: new Map()},
-      recommendations: recommendationsStore.getStore(),
+      recommendations: RecommendationsStore.getStore(),
       selected: null,
       autoCompleteData: {}
     };
@@ -58,29 +66,25 @@ const Search = React.createClass({
   /**
    * Get context for rendering
    */
-  isClient() {
+    isClient() {
     return (typeof window !== 'undefined');
-  },
-
-  /**
-   * Add a single element to the Query array
-   */
-    addElementToQuery(element) {
-    let query = this.state.query;
-    query.push(element);
-    queryAction(query);
   },
 
   /**
    * Update the Query with a new Query
    */
     updateQuery(query) {
-    this.setState({query});
-    const queryString = query.length && `?${QueryParser.objectToString(query)}` || '';
+    if (this.state.query !== query) {
+      ResultListActions.clear();
+    }
+    ResultListActions(query);
+    FilterActions(query.query);
 
+    this.setState({query});
     // this is a simple way of handling updates of the url
     // we might need to implement a more advanced version at some point e.g. react-router
     // but we need to figure out our needs first
+    const queryString = query.query.length && `?${QueryParser.objectToString(query.query)}` || '';
     history.pushState(null, null, window.location.pathname + queryString);
   },
 
@@ -90,7 +94,7 @@ const Search = React.createClass({
 
   updateResultList(resultList) {
     if (resultList && resultList.result) {
-      recommendationsAction(resultList.result.map(element => element.identifiers[0]));
+      RecommendationsAction(resultList.result.map(element => element.identifiers[0]));
     }
     this.setState({resultList});
   },
@@ -107,15 +111,21 @@ const Search = React.createClass({
     this.setState({selected});
   },
 
-  componentDidMount: function() {
+  componentDidMount: function () {
+    if (this.isClient()) {
+      window.addEventListener('popstate', () => {
+        // @todo Do something on popstate
+      });
+    }
+
     AutoCompleteStore.listen(this.updateAutoComplete);
-    queryStore.listen(this.updateQuery);
-    filterStore.listen(this.updateFilters);
-    resultListStore.listen(this.updateResultList);
-    coverImageStore.listen(this.updateCoverImages);
-    recommendationsStore.listen(this.updateRecommendations);
+    QueryStore.listen(this.updateQuery);
+    FilterStore.listen(this.updateFilters);
+    ResultListStore.listen(this.updateResultList);
+    CoverImageStore.listen(this.updateCoverImages);
+    RecommendationsStore.listen(this.updateRecommendations);
     if (this.state.query.length === 0) {
-      recommendationsAction(recommendationsStore.getDefaultRecommendations());
+      RecommendationsAction(RecommendationsStore.getDefaultRecommendations());
     }
   },
 
@@ -142,7 +152,7 @@ const Search = React.createClass({
 
   getView() {
     const {query, selected} = this.state;
-    return query.length === 0 && 'Anbefalinger' || selected;
+    return query.query.length === 0 && 'Anbefalinger' || selected;
   },
 
   render() {
@@ -154,11 +164,12 @@ const Search = React.createClass({
     const results = (view === 'Anbefalinger') && recommendations || resultList;
     let filterGuide;
     let searchTabs;
-    let noResults = (resultList.hasSearchBeenExecuted) && (<div className='no-results'>Søgningen gav ingen resultater</div>) || '';
+    let noResults = (resultList.hasSearchBeenExecuted) && (
+        <div className='no-results' >Søgningen gav ingen resultater</div>) || '';
 
     if (filterElements.length) {
       filterGuide =
-        <FilterGuide elements={filterElements} select={this.addElementToQuery} />;
+        <FilterGuide elements={filterElements} select={QueryActions.add} />;
     }
     if (resultList.result.length) {
       searchTabs = <SearchTabs
@@ -167,19 +178,26 @@ const Search = React.createClass({
         update={this.updateSelected}
         />;
     }
-
+    const loader = <Loader pending={results.pending} />;
     return (
       <div className='search' >
-        <TokenSearchField query={query} update={queryAction} change={this.onChange} />
+        <TokenSearchField query={query.query} update={QueryActions.update} change={this.onChange} />
         <AutoComplete data={autoCompleteData} visible={autoCompleteVisible} />
         {filterGuide}
         <div className='search-result' >
           {searchTabs}
-          <Loader pending={results.pending}>
-            <ResultDisplay result={results.result} coverImages={coverImages.images}>
-              {noResults}
-            </ResultDisplay>
-          </Loader>
+          <ResultDisplay
+            result={results.result}
+            noResultsText=''
+            pending={results.pending}
+            loader={loader}
+            coverImages={coverImages.images}
+            hasMore={resultList.info.more === 'true'}
+            loadMore={QueryActions.nextPage}
+            >
+            {noResults}
+
+          </ResultDisplay>
         </div>
       </div>
     );
