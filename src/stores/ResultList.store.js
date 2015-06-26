@@ -47,6 +47,7 @@ let ResultListStore = Reflux.createStore({
   },
   empty() {
     _store.result = [];
+    _store.info = {hits: 0, collections: 0, more: false};
   },
 
   callImageActions(resultList) {
