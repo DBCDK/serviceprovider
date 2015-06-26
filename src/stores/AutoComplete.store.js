@@ -70,7 +70,7 @@ const AutoCompleteStore = Reflux.createStore({
         value.href = '/search?rec.id=' + value.pid;
       }
       else {
-        value.href = '/search?' + index + '=' + value.text;
+        value.href = '/search?' + index.replace('display', 'term') + '=' + value.text;
       }
       return value;
     });
