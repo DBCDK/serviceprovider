@@ -1,0 +1,91 @@
+.general, .specific {
+  text-align: left;
+}
+
+.title {
+  font-size: 18px;
+  font-weight: bold;
+}
+
+.creators {
+  font-style: italic;
+}
+
+.creator {
+  float: left;
+  margin-right: 5px;
+  font-style: italic;
+}
+.creator:after {
+  content: ", ";
+}
+.creator:nth-last-child(2):after {
+  content: " og ";
+}
+.creator:last-of-type:after {
+  content: "";
+}
+
+.subjects {
+  margin-top: 5px;
+  padding-bottom: 25px;
+}
+.subject {
+  float: left;
+  margin-right: 5px;
+}
+.subject:first-of-type:before {
+  content: "Emner: ";
+}
+.subject:after {
+  content: "; ";
+}
+.subject:last-of-type:after {
+  content: "";
+}
+
+.languages {
+  margin-top: 5px;
+  padding-bottom: 25px;
+}
+.language {
+  float: left;
+  margin-right: 5px;
+}
+.language:first-of-type:before {
+  content: "Sprog: ";
+}
+.language:after {
+  content: "; ";
+}
+.language:last-of-type:after {
+  content: "";
+}
+
+.clear {
+  clear: both;
+}
+
+.type {
+  float: left;
+}
+
+.type:after {
+  content: " (";
+}
+
+.date {
+  float: left;
+}
+
+.date:first-of-type:before {
+  content: "(";
+}
+
+.date:after {
+  content: ";\00a0";
+}
+
+.date:last-of-type:after {
+  content: ")\00a0";
+}

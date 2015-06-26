@@ -94,17 +94,22 @@ const Work = React.createClass({
       </div>);
     });
     return (
-      <div className='work' >
+      <div className='work-container'>
+        <div className='work small-12 medium-6 large-4'>
         <Covers pids={work.result.specific[0].identifiers} />
+        </div>
+        <div className='work small-12 medium-6 large-4'>
         <div className='general' >
           <div className='title'>{title}</div>
           <div className='creators'>{creators}</div>
+          <div className='clear'></div>
           <div className='description'>{description}</div>
           <div className='series'>{series}</div>
           <div className='subjects'>{subjects}</div>
           <div className='languages'>{languages}</div>
         </div>
         {specifics}
+        </div>
       </div>
     );
   }
