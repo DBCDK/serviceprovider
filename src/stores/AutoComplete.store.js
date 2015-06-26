@@ -1,9 +1,12 @@
 'use strict';
 
 import Reflux from 'reflux';
+import _ from 'lodash';
 
 import AutoCompleteActions from '../actions/AutoComplete.action.js';
 import QueryUpdate from '../actions/QueryUpdate.action.js';
+import CoverImageActions from '../actions/CoverImage.action.js';
+import CoverImageStore from '../stores/CoverImage.store.js';
 
 const AutoCompleteStore = Reflux.createStore({
   listenables: AutoCompleteActions,
@@ -11,6 +14,7 @@ const AutoCompleteStore = Reflux.createStore({
 
   init() {
     this.listenTo(QueryUpdate.update, this.clearData);
+    CoverImageStore.listen(this.updateCoverImages);
   },
 
   parseResponse(response, data) {
@@ -21,22 +25,22 @@ const AutoCompleteStore = Reflux.createStore({
     data[response.query][index] = {};
 
     switch (index) {
-      case 'term.creator':
+      case 'display.creator':
         let creators = response.docs;
         if (creators.length >= 1) {
           data[response.query][index] = {
             label: 'Forfatter',
-            data: creators,
+            data: this.addLinks(creators, index),
             weight: 1
           };
         }
         break;
-      case 'term.title':
+      case 'display.title':
         let titles = response.docs;
         if (titles.length >= 1) {
           data[response.query][index] = {
             label: 'Titel',
-            data: titles,
+            data: this.addLinks(titles, index),
             weight: 0
           };
         }
@@ -46,7 +50,7 @@ const AutoCompleteStore = Reflux.createStore({
         if (subjects.length >= 1) {
           data[response.query][index] = {
             label: 'Emne',
-            data: subjects,
+            data: this.addLinks(subjects, index),
             weight: 2
           };
         }
@@ -56,6 +60,20 @@ const AutoCompleteStore = Reflux.createStore({
     }
 
     return data;
+  },
+
+  addLinks(data, index) {
+    return data.map((value) => {
+      value.image = '/covers/no-cover-image-other.png';
+      if (value.pid) {
+        CoverImageActions([value.pid]);
+        value.href = '/search?rec.id=' + value.pid;
+      }
+      else {
+        value.href = '/search?' + index + '=' + value.text;
+      }
+      return value;
+    });
   },
 
   onTextfieldUpdated(value) {
@@ -87,6 +105,33 @@ const AutoCompleteStore = Reflux.createStore({
   clearData() {
     this.store = {};
     this.trigger(this.store);
+  },
+
+  updateCoverImages(covers) {
+    let shouldTrigger = false;
+    _.map(this.store, (val) => {
+      _.map(val, (_val) => {
+        _.map(_val.data, (dat) => {
+          if (dat.pid && covers.images.get(dat.pid)) {
+            dat.image = this.extractImageUrl(covers.images.get(dat.pid));
+            shouldTrigger = true;
+          }
+        });
+      });
+    });
+
+    if (shouldTrigger) {
+      this.trigger(this.store);
+    }
+  },
+
+  extractImageUrl(images) {
+    const imageArr = images.images;
+    let imageUrl = '/covers/no-cover-image-other.png';
+    if (images.images.length) {
+      imageUrl = imageArr.filter((image) => image.size === 'detail_117').pop().url;
+    }
+    return imageUrl;
   },
 
   getInitialState() {

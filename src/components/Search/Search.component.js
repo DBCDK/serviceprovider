@@ -128,6 +128,9 @@ const Search = React.createClass({
     }
   },
 
+  /**
+   * callback for AutoCompleteStore listener
+   */
   updateAutoComplete(autoCompleteData) {
     this.setState({autoCompleteData: autoCompleteData[this.state.textFieldValue]});
   },
