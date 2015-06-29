@@ -13,6 +13,7 @@ const io = require('socket.io');
 const socket = io(server);
 const path = require('path');
 const logger = require('./logger');
+const PRODUCTION = (process.env.NODE_ENV === 'production'); // eslint-disable-line no-process-env
 
 // Loading components
 import SearchServer from './components/Search/Search.server.js';
@@ -28,15 +29,20 @@ app.set('port', process.env.PORT || 8080); // eslint-disable-line no-process-env
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
 
+const FILE_HEADERS = (!PRODUCTION) ? {} : {
+  index: false,
+  dotfiles: 'ignore',
+  maxAge: '1d'
+};
+
 // setting paths
-app.use(express.static(path.join(__dirname, '../public')));
-app.use(express.static(path.join(__dirname, '../static')));
+app.use(express.static(path.join(__dirname, '../public'), FILE_HEADERS));
+app.use(express.static(path.join(__dirname, '../static'), FILE_HEADERS));
 
 // setting local vars that should be availbe to our template engine
 app.locals.newrelic = newrelic;
 app.locals.version = version;
-app.locals.production = (process.env.NODE_ENV === 'production'); // eslint-disable-line no-process-env
-
+app.locals.production = PRODUCTION;
 
 app.get(['/', '/search', '/search/*'], function(req, res) {
   const query = req.query || [];
