@@ -6,8 +6,10 @@
 
 #logo {
   margin-left: 30px;
-  background-size: 85%;
-  background: url('/aakb_logo.png') no-repeat left;
+  background: url('/aakb_logo.png');
+  background-position: left;
+  background-size: 95%;
+  background-repeat: no-repeat;
   height: 100%;
   max-width: 400px;
 }
