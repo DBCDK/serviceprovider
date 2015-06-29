@@ -39,6 +39,11 @@ input[type=text] {
   padding-left: 12px;
   color: #FFFFFF;
   background-color: #000;
+
+  a {
+    color: #FFFFFF;
+    text-decoration: none;
+  }
 }
 
 .autocomplete--category--rows-container {

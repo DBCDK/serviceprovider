@@ -19,6 +19,7 @@ const AutoCompleteStore = Reflux.createStore({
 
   parseResponse(response, data) {
     const index = response.index;
+    const query = response.query || '';
     if (!data[response.query]) {
       data[response.query] = {};
     }
@@ -29,7 +30,7 @@ const AutoCompleteStore = Reflux.createStore({
         let creators = response.docs;
         if (creators.length >= 1) {
           data[response.query][index] = {
-            label: 'Forfatter',
+            label: <a href={'/search?term.creator=' + query}>Forfatter</a>,
             data: this.addLinks(creators, index),
             weight: 1
           };
@@ -39,7 +40,7 @@ const AutoCompleteStore = Reflux.createStore({
         let titles = response.docs;
         if (titles.length >= 1) {
           data[response.query][index] = {
-            label: 'Titel',
+            label: <a href={'/search?term.title=' + query}>Titel</a>,
             data: this.addLinks(titles, index),
             weight: 0
           };
@@ -49,7 +50,7 @@ const AutoCompleteStore = Reflux.createStore({
         let subjects = response.docs;
         if (subjects.length >= 1) {
           data[response.query][index] = {
-            label: 'Emne',
+            label: <a href={'/search?term.subject=' + query}>Emne</a>,
             data: this.addLinks(subjects, index),
             weight: 2
           };
