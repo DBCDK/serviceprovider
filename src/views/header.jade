@@ -4,7 +4,7 @@ doctype html
 
 head
     meta(charset='utf-8')
-    meta(name="viewport" content="width=device-width, initial-scale=1")
+    meta(name='viewport' content='width=device-width, initial-scale=1')
     meta(name='robots' content='noindex, nofollow')
     meta(name='version' content=version)
     meta(name='env' content=env)
@@ -13,20 +13,20 @@ head
     title Palles Gavebod
 
     block styles
-        link(rel="stylesheet" href="http://fonts.googleapis.com/css?family=Source+Sans+Pro:400,700" type="text/css")
-        link(rel="stylesheet" href="http://fonts.googleapis.com/css?family=Open+Sans:400,300,700" type="text/css")
-        link(rel="stylesheet", href="https://cdnjs.cloudflare.com/ajax/libs/normalize/3.0.3/normalize.min.css")
-        link(rel="stylesheet", href="https://cdnjs.cloudflare.com/ajax/libs/foundation/5.5.2/css/foundation.min.css")
-        link(rel="stylesheet", href="/styles/style.css")
+        link(rel='stylesheet' href='//fonts.googleapis.com/css?family=Source+Sans+Pro:400,700' type='text/css')
+        link(rel='stylesheet' href='//fonts.googleapis.com/css?family=Open+Sans:400,300,700' type='text/css')
+        link(rel='stylesheet', href='//cdnjs.cloudflare.com/ajax/libs/normalize/3.0.3/normalize.min.css')
+        link(rel='stylesheet', href='//cdnjs.cloudflare.com/ajax/libs/foundation/5.5.2/css/foundation.min.css')
+        link(rel='stylesheet', href='/styles/style.css')
 
     block scripts
         != newrelic.getBrowserTimingHeader()
         if production
-            script(src='https://cdnjs.cloudflare.com/ajax/libs/react/0.13.3/react.min.js', type='text/javascript')
+            script(src='//cdnjs.cloudflare.com/ajax/libs/react/0.13.3/react.min.js', type='text/javascript')
         else
-            script(src='https://fb.me/react-0.13.3.js', type='text/javascript')
+            script(src='//fb.me/react-0.13.3.js', type='text/javascript')
 
-        script(src='https://cdnjs.cloudflare.com/ajax/libs/lodash-compat/3.9.3/lodash.min.js', type='text/javascript')
+        script(src='//cdnjs.cloudflare.com/ajax/libs/lodash-compat/3.9.3/lodash.min.js', type='text/javascript')
         script(src='/js/common.js', type='text/javascript')
 
     link(rel='shortcut icon', href='/favicon.ico', type='image/x-icon ')
