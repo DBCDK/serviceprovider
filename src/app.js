@@ -29,15 +29,22 @@ app.set('port', process.env.PORT || 8080); // eslint-disable-line no-process-env
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
 
-const FILE_HEADERS = (!PRODUCTION) ? {} : {
-  index: false,
-  dotfiles: 'ignore',
-  maxAge: '1d'
-};
+// setting proxy
+app.enable('trust proxy');
+
+let fileHeaders = {};
+
+// settings production specific options
+if (PRODUCTION) {
+  fileHeaders = {index: false, dotfiles: 'ignore', maxAge: '1d'};
+}
+else {
+  newrelic.agent_enabled = false;
+}
 
 // setting paths
-app.use(express.static(path.join(__dirname, '../public'), FILE_HEADERS));
-app.use(express.static(path.join(__dirname, '../static'), FILE_HEADERS));
+app.use(express.static(path.join(__dirname, '../public'), fileHeaders));
+app.use(express.static(path.join(__dirname, '../static'), fileHeaders));
 
 // setting local vars that should be availbe to our template engine
 app.locals.newrelic = newrelic;
