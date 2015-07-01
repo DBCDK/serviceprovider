@@ -10,7 +10,6 @@ let WorkActions = Reflux.createAction({
 });
 
 WorkActions.listen((res) => {
-  console.log(res);
   if (res.id.length > 0) {
     event.request({pid: res.id, offset: 1, worksPerPage: 1, allManifestations: true});
   }
