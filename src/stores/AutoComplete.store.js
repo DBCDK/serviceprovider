@@ -68,7 +68,7 @@ const AutoCompleteStore = Reflux.createStore({
       value.image = '/covers/no-cover-image-other.png';
       if (value.pid) {
         CoverImageActions([value.pid]);
-        value.href = '/work?pid=' + value.pid;
+        value.href = '/work?id=' + value.pid;
       }
       else {
         value.href = '/search?' + index.replace('display', 'term') + '=' + value.text;
