@@ -85,9 +85,12 @@ const Work = React.createClass({
     specifics = specific.map((tw) => {
       let identifiers = [];
       identifiers.push(tw.identifiers);
-      let dates = tw.dates.map((date) => {
-        return (<div className='date'>{date}</div>);
-      });
+      let dates = (<div></div>);
+      if (tw.dates[0] !== null) {
+        dates = tw.dates.map((date) => {
+          return (<div className='date'>{date}</div>);
+        });
+      }
       return (<div className='specific' data-identifiers={identifiers}>
       <div className='type'>{tw.type}</div>
       {dates}
