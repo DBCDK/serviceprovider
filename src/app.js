@@ -61,9 +61,9 @@ app.get('/autocomplete', function(req, res) {
 });
 
 app.get(['/work', '/work/*'], function(req, res) {
-  let pid = req.query.pid;
-  pid = '"' + pid + '"';
-  res.render('work', {pid});
+  let id = req.query.id;
+  id = '"' + id + '"';
+  res.render('work', {id});
 });
 
 // starting server

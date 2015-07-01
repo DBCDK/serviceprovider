@@ -9,4 +9,4 @@ import '../../styles/app.scss';
  * If a querystring from the url exists it is added to the global window object, and should be passed to the client
  */
 
-React.render(<Work pid={window.QUERYSTRING_PROPS || {}} />, document.getElementById('work'));
+React.render(<Work id={window.QUERYSTRING_PROPS || {}} />, document.getElementById('work'));

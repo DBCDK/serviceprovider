@@ -16,20 +16,20 @@ import Covers from '../Cover.component.js';
 
 const Work = React.createClass({
   propTypes: {
-    pid: React.PropTypes.string,
+    id: React.PropTypes.string,
     work: React.PropTypes.object
   },
 
   getInitialState() {
     return {
-      pid: this.props.pid,
+      id: this.props.id,
       work: workStore.getStore()
     };
   },
 
   getWork() {
     let result = {
-      pid: this.state.pid
+      id: this.state.id
     };
     workAction(result);
   },
@@ -44,7 +44,7 @@ const Work = React.createClass({
   },
 
   render() {
-    const {pid, work, coverImages} = this.state; // eslint-disable-line
+    const {id, work, coverImages} = this.state; // eslint-disable-line
     let general,
       title,
       creators,
