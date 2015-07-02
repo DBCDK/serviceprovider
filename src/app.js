@@ -10,7 +10,6 @@ const express = require('express');
 const app = express();
 const server = require('http').Server(app);
 const socket = require('socket.io').listen(server);
-//const socket = socketio(server);
 const path = require('path');
 const logger = require('./logger');
 const PRODUCTION = (process.env.NODE_ENV === 'production'); // eslint-disable-line no-process-env
