@@ -93,6 +93,12 @@ const Work = React.createClass({
       });
     }
     specific = work.result.specific;
+    let order_button = specific.map((tw) => {
+      let order_ids = [];
+      order_ids.push(tw.identifiers);
+      let order_link = '/order?ids=' + order_ids + '&title=' + title + '&type=' + tw.type;
+      return (<a className='order-button button' href={order_link} data-identifiers={order_ids}>Bestil {tw.type}</a>);
+    });
     specifics = specific.map((tw) => {
       let identifiers = [];
       identifiers.push(tw.identifiers);
@@ -113,6 +119,8 @@ const Work = React.createClass({
         <Covers pids={work.result.specific[0].identifiers} />
         </div>
         <div className='work small-12 medium-6 large-4'>
+        {order_button}
+        <div className='clear'></div>
         <div className='general' >
           <div className='title'>{title}</div>
           <div className='creators'>{creators}</div>
