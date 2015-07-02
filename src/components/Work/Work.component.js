@@ -44,7 +44,7 @@ const Work = React.createClass({
   },
 
   render() {
-    const {id, work, coverImages} = this.state; // eslint-disable-line
+    const {id, work, info} = this.state; // eslint-disable-line
     let general,
       title,
       creators,
@@ -54,6 +54,11 @@ const Work = React.createClass({
       languages,
       specific,
       specifics;
+
+    if (work.info.hits === '0') {
+      return (<div className="work-not-found">Værket blev ikke fundet</div>);
+    }
+
     if (work.result.length === 0) {
       return (<div />);
     }
