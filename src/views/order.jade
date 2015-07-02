@@ -1,0 +1,10 @@
+//- index.jade
+
+extends layout
+
+block prepend footerscripts
+    script(src='/js/order.js')
+
+block content
+    #order !{order}
+    script window.QUERYSTRING_PROPS = !{query}

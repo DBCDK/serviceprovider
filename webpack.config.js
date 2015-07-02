@@ -14,7 +14,8 @@ module.exports = [{
     querysearch: './src/components/Search/Search.client',
     logo: './src/components/logo/index.js',
     autocomplete: './src/components/autocomplete/index.js',
-    work: './src/components/Work/Work.client'
+    work: './src/components/Work/Work.client',
+    order: './src/components/Order/Order.client'
   },
   output: {
     path: path.join(__dirname, 'public/js'),

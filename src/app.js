@@ -65,6 +65,12 @@ app.get(['/work', '/work/*'], function(req, res) {
   res.render('work', {id});
 });
 
+app.get(['/order', '/order/*'], function(req, res) {
+  let query = req.query;
+  query = JSON.stringify(query);
+  res.render('order', {query});
+});
+
 // starting server
 server.listen(app.get('port'), function() {
   logger.info('Server listening on ' + app.get('port'));
