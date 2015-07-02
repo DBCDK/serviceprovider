@@ -67,7 +67,8 @@ const Work = React.createClass({
     title = general.title;
     if (general.hasOwnProperty('creators')) {
       creators = general.creators.map((creator) => {
-        return (<div className='creator'>{creator}</div>);
+        let search_creator = '/search?phrase.creator=' + creator;
+        return (<div className='creator'><a href={search_creator}>{creator}</a></div>);
       });
     }
     if (general.hasOwnProperty('description')) {
@@ -78,7 +79,8 @@ const Work = React.createClass({
     }
     if (general.hasOwnProperty('subjects')) {
       subjects = general.subjects.map((subject) => {
-        return (<div className='subject'>{subject}</div>);
+        let search_subject = '/search?phrase.subject=' + subject;
+        return (<div className='subject'><a href={search_subject}>{subject}</a></div>);
       });
     }
     if (general.hasOwnProperty('languages')) {
