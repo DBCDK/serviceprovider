@@ -22,6 +22,7 @@ let CoverImageStore = Reflux.createStore({
 
   // update the query object and trigger an action
   update(result) {
+    console.log(result); // eslint-disable-line
     _store.images.set(result.identifiers[0], result.result);
     this.trigger(_store);
   },
