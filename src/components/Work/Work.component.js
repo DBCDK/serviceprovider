@@ -75,7 +75,11 @@ const Work = React.createClass({
       description = general.description;
     }
     if (general.hasOwnProperty('series')) {
-      series = general.series;
+      let series_title = general.series.replace(/ ; .*/, '');
+      series_title = series_title.replace(/Samhørende: /, '');
+      series_title = series_title.replace(/.* del af: /, '');
+      let series_link = '/search?phrase.titleSeries=' + series_title;
+      series = <a href={series_link}>{general.series}</a>;
     }
     if (general.hasOwnProperty('subjects')) {
       subjects = general.subjects.map((subject) => {
