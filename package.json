@@ -7,7 +7,7 @@
     "test": "karma start --single-run=true",
     "test:watch": "karma start",
     "selenium": "mocha -t 10000 selenium/selenium_test.js",
-    "selenium:junit": "mocha -t 10000 selenium/selenium_test.js -R mocha-jenkins-reporter",
+    "selenium:xunit": "mocha -t 10000 selenium/selenium_test.js -R xunit",
     "lint:checkstyle": "eslint ./src  -o report.xml -f checkstyle",
     "lint": "eslint ./src",
     "serve": "supervisor --harmony -w src/views,src/app.js,node_modules/dbc-node-serviceprovider src/main.js",
