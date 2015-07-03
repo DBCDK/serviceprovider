@@ -10,6 +10,7 @@ var SearchTabs = React.createClass({
   update(button, event) {
     event.preventDefault();
     this.props.update(button);
+    newrelic.addPageAction('SearchTabClicked', {data: button});
   },
 
   render() {
