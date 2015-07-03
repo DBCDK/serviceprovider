@@ -5,9 +5,9 @@
  * @type {{on: Function, emit: Function}}
  */
 const serverSideSocketDummy = {
-  on: function () {
+  on: function() {
   },
-  emit: function () {
+  emit: function() {
   }
 };
 
@@ -29,7 +29,9 @@ const socket = (typeof window !== 'undefined') && require('socket.io-client').co
  */
 export default function ServiceProviderSocketClient(event) {
   function request(data) {
-    socket.emit(event + 'Request', data);
+    const requestEvent = event + 'Request';
+    newrelic.addPageAction(requestEvent, {request: data});
+    socket.emit(requestEvent, data);
   }
 
   function addListener(listener) {
@@ -37,7 +39,11 @@ export default function ServiceProviderSocketClient(event) {
   }
 
   function response(cb) {
-    socket.on(event + 'Response', (data) => cb(data));
+    const responseEvent = event + 'Response';
+    socket.on(responseEvent, (data) => {
+      newrelic.addPageAction(responseEvent, {response: data});
+      cb(data);
+    });
   }
 
   return {
