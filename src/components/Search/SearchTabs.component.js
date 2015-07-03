@@ -1,5 +1,6 @@
 'use strict';
 import React from 'react';
+import newrelic from 'newrelic';
 
 var SearchTabs = React.createClass({
   propTypes: {

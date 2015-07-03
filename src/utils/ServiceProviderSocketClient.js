@@ -1,5 +1,7 @@
 'use strict';
 
+import newrelic from 'newrelic';
+
 /**
  * A dummy socket client used for server side rendering.
  * @type {{on: Function, emit: Function}}
