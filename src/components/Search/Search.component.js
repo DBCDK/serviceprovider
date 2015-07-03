@@ -111,7 +111,7 @@ const Search = React.createClass({
     this.setState({selected});
   },
 
-  componentDidMount: function () {
+  componentDidMount: function() {
     if (this.isClient()) {
       window.addEventListener('popstate', () => {
         let query = QueryParser.urlQueryToObject(window.location.search);
@@ -133,7 +133,7 @@ const Search = React.createClass({
   /**
    * callback for AutoCompleteStore listener
    */
-  updateAutoComplete(autoCompleteData) {
+    updateAutoComplete(autoCompleteData) {
     this.setState({autoCompleteData: autoCompleteData[this.state.textFieldValue]});
   },
 
@@ -166,7 +166,7 @@ const Search = React.createClass({
     const results = (view === 'Anbefalinger') && recommendations || resultList;
     let filterGuide;
     let searchTabs;
-    let noResults = (resultList.hasSearchBeenExecuted) && (
+    const noResults = (resultList.hasSearchBeenExecuted) && (
         <div className='no-results' >Søgningen gav ingen resultater</div>) || '';
 
     if (filterElements.length) {
@@ -183,9 +183,12 @@ const Search = React.createClass({
     const loader = <Loader pending={results.pending} />;
     return (
       <div className='search' >
-        <TokenSearchField query={query.query} update={QueryActions.update} change={this.onChange} placeholder={placeholder}/>
+        <TokenSearchField query={query.query} update={QueryActions.update} change={this.onChange} placeholder={placeholder} />
+
         <AutoComplete data={autoCompleteData} visible={autoCompleteVisible} />
+
         {filterGuide}
+
         <div className='search-result' >
           {searchTabs}
           <ResultDisplay
@@ -195,8 +198,8 @@ const Search = React.createClass({
             loader={loader}
             coverImages={coverImages.images}
             hasMore={resultList.info.more === 'true'}
-            loadMore={QueryActions.nextPage}
-            >
+            loadMore={QueryActions.nextPage} >
+
             {noResults}
 
           </ResultDisplay>
