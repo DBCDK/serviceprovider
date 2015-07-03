@@ -4,6 +4,7 @@
 *.log
 report.xml
 output
+test-results.xml
 
 # ============
 # BUILDS
