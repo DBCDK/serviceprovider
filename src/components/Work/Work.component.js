@@ -67,7 +67,7 @@ const Work = React.createClass({
     title = general.title;
     if (general.hasOwnProperty('creators')) {
       creators = general.creators.map((creator) => {
-        let search_creator = '/search?phrase.creator=' + creator;
+        let search_creator = '/search?phrase.creator=' + encodeURIComponent(creator);
         return (<div className='creator'><a href={search_creator}>{creator}</a></div>);
       });
     }
@@ -78,12 +78,12 @@ const Work = React.createClass({
       let series_title = general.series.replace(/ ; .*/, '');
       series_title = series_title.replace(/Samhørende: /, '');
       series_title = series_title.replace(/.* del af: /, '');
-      let series_link = '/search?phrase.titleSeries=' + series_title;
+      let series_link = '/search?phrase.titleSeries=' + encodeURIComponent(series_title);
       series = <a href={series_link}>{general.series}</a>;
     }
     if (general.hasOwnProperty('subjects')) {
       subjects = general.subjects.map((subject) => {
-        let search_subject = '/search?phrase.subject=' + subject;
+        let search_subject = '/search?phrase.subject=' + encodeURIComponent(subject);
         return (<div className='subject'><a href={search_subject}>{subject}</a></div>);
       });
     }
@@ -96,7 +96,7 @@ const Work = React.createClass({
     let order_button = specific.map((tw) => {
       let order_ids = [];
       order_ids.push(tw.identifiers);
-      let order_link = '/order?ids=' + order_ids + '&title=' + title + '&type=' + tw.type;
+      let order_link = '/order?ids=' + order_ids + '&title=' + encodeURIComponent(title) + '&type=' + tw.type;
       return (<a className='order-button button' href={order_link} data-identifiers={order_ids}>Bestil {tw.type}</a>);
     });
     specifics = specific.map((tw) => {
