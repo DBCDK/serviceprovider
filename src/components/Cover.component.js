@@ -20,7 +20,9 @@ import CoverActions from '../actions/CoverImage.action.js';
  * @private
  */
 function _getImage(images, size) {
-  return images.filter((image) => image.size === size).pop().url;
+  let url = images.filter((image) => image.size === size).pop().url;
+  // Enforce https on images
+  return url.replace('http', 'https');
 }
 
 const Cover = React.createClass({
