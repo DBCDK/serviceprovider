@@ -6,6 +6,13 @@ body {
     padding: 5px;
     text-align: center;
     position: relative;
+    .title {
+        font-size: 14px;
+    }
+    .creator {
+        float: none;
+        font-size: 14px;
+    }
     img {
         max-height: 500px;
     }
