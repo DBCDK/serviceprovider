@@ -1,11 +1,7 @@
 body {
     font-family: 'Open Sans', sans-serif;
 }
-.work {
-    float: left;
-    padding: 5px;
-    text-align: center;
-    position: relative;
+.row {
     .title {
         font-size: 14px;
     }
@@ -13,6 +9,12 @@ body {
         float: none;
         font-size: 14px;
     }
+}
+.work {
+    float: left;
+    padding: 5px;
+    text-align: center;
+    position: relative;
     img {
         max-height: 500px;
     }
