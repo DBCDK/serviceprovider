@@ -44,6 +44,23 @@
   content: "";
 }
 
+.actors {
+  margin-top: 5px;
+}
+.actor {
+  float: left;
+  margin-right: 5px;
+}
+.actor:first-of-type:before {
+  content: "Medvirkende: ";
+}
+.actor:after {
+  content: "; ";
+}
+.actor:last-of-type:after {
+  content: "";
+}
+
 .languages {
   margin-top: 5px;
   padding-bottom: 25px;
@@ -95,7 +112,12 @@
     padding-top: 20px;
 }
 
-.order-button {
+.order-button,
+.online-link {
     float: left;
     margin-right: 10px;
+}
+
+.online-link {
+    padding: 15px;
 }

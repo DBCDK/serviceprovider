@@ -49,6 +49,7 @@ const Work = React.createClass({
       title,
       creators,
       description,
+      actors,
       series,
       subjects,
       languages,
@@ -74,6 +75,12 @@ const Work = React.createClass({
     if (general.hasOwnProperty('description')) {
       description = general.description;
     }
+    if (general.hasOwnProperty('actors')) {
+      actors = general.actors.map((actor) => {
+        let search_actor = '/search?phrase.creator=' + encodeURIComponent(actor);
+        return (<div className='actor'><a href={search_actor}>{actor}</a></div>);
+      });
+    }
     if (general.hasOwnProperty('series')) {
       let series_title = general.series.replace(/ ; .*/, '');
       series_title = series_title.replace(/Samhørende: /, '');
@@ -94,10 +101,16 @@ const Work = React.createClass({
     }
     specific = work.result.specific;
     let order_button = specific.map((tw) => {
-      let order_ids = [];
-      order_ids.push(tw.identifiers);
-      let order_link = '/order?ids=' + order_ids + '&title=' + encodeURIComponent(title) + '&type=' + tw.type;
-      return (<a className='order-button button' href={order_link} data-identifiers={order_ids}>Bestil {tw.type}</a>);
+      if (tw.accessType === 'physical') {
+        let order_ids = [];
+        order_ids.push(tw.identifiers);
+        let order_link = '/order?ids=' + order_ids + '&title=' + encodeURIComponent(title) + '&type=' + tw.type;
+        return (<a className='order-button button' href={order_link} data-identifiers={order_ids}>Bestil {tw.type}</a>);
+      }
+      if (tw.accessType === 'online') {
+        let online_link = 'Se ' + tw.type + ' online';
+        return (<a className='online-link' href="#">{online_link}</a>);
+      }
     });
     specifics = specific.map((tw) => {
       let identifiers = [];
@@ -126,6 +139,8 @@ const Work = React.createClass({
           <div className='creators'>{creators}</div>
           <div className='clear'></div>
           <div className='description'>{description}</div>
+          <div className='actors'>{actors}</div>
+          <div className='clear'></div>
           <div className='series'>{series}</div>
           <div className='subjects'>{subjects}</div>
           <div className='clear'></div>
