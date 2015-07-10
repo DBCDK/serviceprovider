@@ -34,7 +34,7 @@
     "babel-core": "^5.2.9",
     "babel-loader": "^5.0.0",
     "css-loader": "^0.14.4",
-    "dbc-node-serviceprovider": "git://github.com/DBCDK/dbc-node-serviceprovider#develop",
+    "dbc-node-serviceprovider": "git://github.com/DBCDK/dbc-node-serviceprovider#stable_dist",
     "dbc-react-autocomplete": "git://github.com/DBCDK/dbc-react-autocomplete#develop",
     "dbc-react-querystring": "git://github.com/DBCDK/dbc-react-querystring#develop",
     "dbc-react-resultlistview": "git://github.com/DBCDK/dbc-react-resultlistview#develop",
