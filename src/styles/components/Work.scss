@@ -60,8 +60,9 @@
 .actor:last-of-type:after {
   content: "";
 }
-.tracks:before {
-  content: "Trackliste: ";
+.track:first-of-type:before {
+  content: "Trackliste: \A\00a0\00a0\00a0\00a0";
+  white-space: pre;
   font-weight: bold;
 }
 .track:before {
