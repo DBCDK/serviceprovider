@@ -1,7 +1,6 @@
 'use strict';
 import React from 'react';
 import Work from './Work.component.js';
-import '../../styles/app.scss';
 
 /**
  * Client side rendering of the Search component
