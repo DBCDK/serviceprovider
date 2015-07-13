@@ -1,7 +1,6 @@
 'use strict';
 import React from 'react';
 import Order from './Order.component.js';
-import '../../styles/app.scss';
 
 /**
  * Client side rendering of the Order component

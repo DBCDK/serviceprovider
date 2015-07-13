@@ -15,7 +15,8 @@ module.exports = [{
     logo: './src/components/logo/index.js',
     autocomplete: './src/components/autocomplete/index.js',
     work: './src/components/Work/Work.client',
-    order: './src/components/Order/Order.client'
+    order: './src/components/Order/Order.client',
+    styles: process.env.NODE_APPLICATION === 'ddbmobil' && './src/styles/ddb.scss' || './src/styles/pg.scss' // eslint-disable-line no-process-env
   },
   output: {
     path: path.join(__dirname, 'public/js'),
