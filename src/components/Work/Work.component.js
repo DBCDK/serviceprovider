@@ -52,6 +52,7 @@ const Work = React.createClass({
       actors,
       series,
       subjects,
+      tracks,
       languages,
       specific,
       specifics;
@@ -92,6 +93,11 @@ const Work = React.createClass({
       subjects = general.subjects.map((subject) => {
         let search_subject = '/search?phrase.subject=' + encodeURIComponent(subject);
         return (<div className='subject'><a href={search_subject}>{subject}</a></div>);
+      });
+    }
+    if (general.hasOwnProperty('tracks')) {
+      tracks = general.tracks.map((track) => {
+        return (<div className='track'>{track}</div>);
       });
     }
     if (general.hasOwnProperty('languages')) {
@@ -143,6 +149,8 @@ const Work = React.createClass({
           <div className='clear'></div>
           <div className='series'>{series}</div>
           <div className='subjects'>{subjects}</div>
+          <div className='clear'></div>
+          <div className='tracks'>{tracks}</div>
           <div className='clear'></div>
           <div className='languages'>{languages}</div>
           <div className='clear'></div>
