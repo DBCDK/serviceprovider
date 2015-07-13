@@ -1,6 +1,6 @@
 'use strict';
 
-import newrelic from 'newrelic';
+// import newrelic from 'newrelic';
 
 /**
  * A dummy socket client used for server side rendering.
@@ -32,7 +32,7 @@ const socket = (typeof window !== 'undefined') && require('socket.io-client').co
 export default function ServiceProviderSocketClient(event) {
   function request(data) {
     const requestEvent = event + 'Request';
-    newrelic.addPageAction(requestEvent, {request: data});
+    // newrelic.addPageAction(requestEvent, {request: data});
     socket.emit(requestEvent, data);
   }
 
@@ -43,7 +43,7 @@ export default function ServiceProviderSocketClient(event) {
   function response(cb) {
     const responseEvent = event + 'Response';
     socket.on(responseEvent, (data) => {
-      newrelic.addPageAction(responseEvent, {response: data});
+      // newrelic.addPageAction(responseEvent, {response: data});
       cb(data);
     });
   }

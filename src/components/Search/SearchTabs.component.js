@@ -1,6 +1,6 @@
 'use strict';
 import React from 'react';
-import newrelic from 'newrelic';
+// import newrelic from 'newrelic';
 
 var SearchTabs = React.createClass({
   propTypes: {
@@ -11,7 +11,7 @@ var SearchTabs = React.createClass({
   update(button, event) {
     event.preventDefault();
     this.props.update(button);
-    newrelic.addPageAction('SearchTabClicked', {data: button});
+    // newrelic.addPageAction('SearchTabClicked', {data: button});
   },
 
   render() {
