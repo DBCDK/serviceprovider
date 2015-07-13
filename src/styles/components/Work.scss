@@ -60,7 +60,13 @@
 .actor:last-of-type:after {
   content: "";
 }
-
+.tracks:before {
+  content: "Trackliste: ";
+  font-weight: bold;
+}
+.track:before {
+    content: "\00a0\00a0\00a0\00a0";
+}
 .languages {
   margin-top: 5px;
   padding-bottom: 25px;
