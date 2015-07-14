@@ -26,6 +26,10 @@
   content: "";
 }
 
+.description span:after {
+  content: ". ";
+}
+
 .subjects {
   margin-top: 5px;
   padding-bottom: 25px;
