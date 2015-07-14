@@ -83,7 +83,7 @@ const Work = React.createClass({
       });
     }
     if (general.hasOwnProperty('series')) {
-      let series_title = general.series.replace(/ ; .*/, '');
+      let series_title = general.series[0].replace(/ ; .*/, '');
       series_title = series_title.replace(/Samhørende: /, '');
       series_title = series_title.replace(/.* del af: /, '');
       let series_link = '/search?phrase.titleSeries=' + encodeURIComponent(series_title);
