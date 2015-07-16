@@ -19,7 +19,7 @@ import SearchServer from './components/Search/Search.server.js';
 
 // settings up our provider
 const serviceProvider = require('dbc-node-serviceprovider');
-serviceProvider.init(config.provider).sockets(socket);
+serviceProvider(config.provider).setupSockets(socket);
 
 // Port config
 app.set('port', process.env.PORT || 8080); // eslint-disable-line no-process-env
