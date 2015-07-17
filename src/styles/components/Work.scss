@@ -30,6 +30,13 @@
   content: ". ";
 }
 
+.part:first-of-type:before {
+  content: "I: ";
+}
+.issn:first-of-type:before {
+  content: "ISSN: ";
+}
+
 .subjects {
   margin-top: 5px;
   padding-bottom: 25px;

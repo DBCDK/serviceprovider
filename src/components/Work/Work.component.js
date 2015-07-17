@@ -49,6 +49,9 @@ const Work = React.createClass({
       title,
       creators,
       description,
+      parts,
+      issns,
+      extents,
       actors,
       series,
       subjects,
@@ -105,6 +108,21 @@ const Work = React.createClass({
         return (<div className='language'>{language}</div>);
       });
     }
+    if (general.hasOwnProperty('partOf')) {
+      parts = general.partOf.map((partOf) => {
+        return (<div className='part'>{partOf}</div>);
+      });
+    }
+    if (general.hasOwnProperty('issn')) {
+      issns = general.issn.map((issn) => {
+        return (<div className='issn'>{issn}</div>);
+      });
+    }
+    if (general.hasOwnProperty('extent')) {
+      extents = general.extent.map((extent) => {
+        return (<div className='extent'>{extent}</div>);
+      });
+    }
     specific = work.result.specific;
     let order_button = specific.map((tw) => {
       if (tw.accessType === 'physical') {
@@ -145,6 +163,9 @@ const Work = React.createClass({
           <div className='creators'>{creators}</div>
           <div className='clear'></div>
           <div className='description'>{description}</div>
+          <div className='partof'>{parts}</div>
+          <div className='issns'>{issns}</div>
+          <div className='extents'>{extents}</div>
           <div className='actors'>{actors}</div>
           <div className='clear'></div>
           <div className='series'>{series}</div>
