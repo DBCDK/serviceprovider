@@ -33,7 +33,7 @@
     "babel": "^5.2.9",
     "babel-core": "^5.2.9",
     "babel-loader": "^5.0.0",
-    "css-loader": "^0.14.4",
+    "css-loader": "^0.15.5",
     "dbc-node-serviceprovider": "git://github.com/DBCDK/dbc-node-serviceprovider#stable_dist",
     "dbc-react-autocomplete": "git://github.com/DBCDK/dbc-react-autocomplete#stable_dist",
     "dbc-react-querystring": "git://github.com/DBCDK/dbc-react-querystring#stable_dist",
