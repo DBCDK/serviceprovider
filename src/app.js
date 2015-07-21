@@ -1,25 +1,33 @@
 'use strict';
 
+/**
+ * @file
+ * Configure and start our server
+ */
+
 // loading config etc.
-const newrelic = require('newrelic');
-const config = require('../config');
-const version = require('../package.json').version;
+import newrelic from 'newrelic';
+import config from '../config.js';
+import {version} from '../package.json';
 
 // loading libraries
-const express = require('express');
-const app = express();
-const server = require('http').Server(app);
-const socket = require('socket.io').listen(server);
-const path = require('path');
-const logger = require('./logger');
-const PRODUCTION = (process.env.NODE_ENV === 'production'); // eslint-disable-line no-process-env
+import express from 'express';
+import http from 'http';
+import socketio from 'socket.io';
+import path from 'path';
+import logger from './logger.js';
+import ServiceProvider from 'dbc-node-serviceprovider';
 
-// Loading components
+// loading components
 import SearchServer from './components/Search/Search.server.js';
 
+const app = express();
+const server = http.Server(app);
+const socket = socketio.listen(server);
+const PRODUCTION = (process.env.NODE_ENV === 'production'); // eslint-disable-line no-process-env
+
 // settings up our provider
-const serviceProvider = require('dbc-node-serviceprovider');
-serviceProvider(config.provider).setupSockets(socket);
+ServiceProvider(config.provider).setupSockets(socket);
 
 // Port config
 app.set('port', process.env.PORT || 8080); // eslint-disable-line no-process-env
@@ -50,29 +58,29 @@ app.locals.newrelic = newrelic;
 app.locals.version = version;
 app.locals.production = PRODUCTION;
 
-app.get(['/', '/search', '/search/*'], function(req, res) {
+app.get(['/', '/search', '/search/*'], (req, res) => {
   const query = req.query || [];
   res.render('search', SearchServer({query}));
 });
 
-app.get('/autocomplete', function(req, res) {
+app.get('/autocomplete', (req, res) => {
   res.render('autocomplete');
 });
 
-app.get(['/work', '/work/*'], function(req, res) {
+app.get(['/work', '/work/*'], (req, res) => {
   let id = req.query.id;
   id = '"' + id + '"';
   res.render('work', {id});
 });
 
-app.get(['/order', '/order/*'], function(req, res) {
+app.get(['/order', '/order/*'], (req, res) => {
   let query = req.query;
   query = JSON.stringify(query);
   res.render('order', {query});
 });
 
 // starting server
-server.listen(app.get('port'), function() {
+server.listen(app.get('port'), () => {
   logger.info('Server listening on ' + app.get('port'));
   logger.info({message: 'Versions: ', data: process.versions});
   logger.info(version + ' is up and running');
