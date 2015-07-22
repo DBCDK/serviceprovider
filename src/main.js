@@ -5,7 +5,9 @@
  */
 
 'use strict';
-
-require('newrelic');
+var config = require('../config');
+if (config.newrelic) {
+  require('newrelic');
+}
 require('babel/register');
 require('./app');

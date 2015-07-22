@@ -6,8 +6,9 @@
  */
 
 // loading config etc.
-import newrelic from 'newrelic';
 import config from '../config.js';
+// newrelic needs to be required the es5 way because we only wants to load new relic if specified in config.js
+const newrelic = (config.newrelic) && require('newrelic') || null;
 import {version} from '../package.json';
 
 // loading libraries
@@ -45,7 +46,7 @@ let fileHeaders = {};
 if (PRODUCTION) {
   fileHeaders = {index: false, dotfiles: 'ignore', maxAge: '1d'};
 }
-else {
+else if (newrelic) {
   newrelic.agent_enabled = false;
 }
 
