@@ -20,7 +20,8 @@ head
         link(rel='stylesheet', href='/styles/style.css')
 
     block scripts
-        != newrelic.getBrowserTimingHeader()
+        if newrelic
+            != newrelic.getBrowserTimingHeader()
         if production
             script(src='//cdnjs.cloudflare.com/ajax/libs/react/0.13.3/react.min.js', type='text/javascript')
         else
