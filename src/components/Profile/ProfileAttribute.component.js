@@ -22,7 +22,7 @@ const ProfileAttribute = React.createClass({
   },
 
   handleChange: function () {
-    //  TODO: create changeName action
+
   },
 
   render: function () {

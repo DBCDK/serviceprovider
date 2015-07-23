@@ -14,7 +14,7 @@ import React from 'react';
 const ProfileHeader = React.createClass({
 
   toggleEdit: function () {
-    // TODO: toggle edit action
+
   },
 
   render: function () {
