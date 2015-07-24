@@ -13,22 +13,20 @@ import ProfileAttribute from './ProfileAttribute.component.js';
 import ProfileHeader from './ProfileHeader.component.js';
 import ProfileSocialSummary from './ProfileSocialSummary.component.js';
 
-import ProfileStore from "../../stores/Profile.store.js";
-
-
+import ProfileStore from '../../stores/Profile.store.js';
 
 
 const Profile = React.createClass({
 
-  getInitialState: function(){
+  getInitialState: function () {
     return {profile: ProfileStore.getProfile()};
   },
 
-  componentDidMount: function(){
+  componentDidMount: function () {
     ProfileStore.listen(this.updateProfile);
   },
 
-  updateProfile:function(profile){
+  updateProfile: function (profile) {
     this.setState({profile: profile});
   },
 
