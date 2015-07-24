@@ -9,12 +9,13 @@
  */
 
 import React from 'react';
+import ProfileActions from '../../actions/Profile.action.js';
 
 
 const ProfileHeader = React.createClass({
 
   toggleEdit: function () {
-
+    ProfileActions.toggleEdit();
   },
 
   render: function () {

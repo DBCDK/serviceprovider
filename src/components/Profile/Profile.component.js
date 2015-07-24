@@ -13,18 +13,28 @@ import ProfileAttribute from './ProfileAttribute.component.js';
 import ProfileHeader from './ProfileHeader.component.js';
 import ProfileSocialSummary from './ProfileSocialSummary.component.js';
 
+import ProfileStore from "../../stores/Profile.store.js";
 
-const dummyProfile = {
-  name: 'I-Love-Ponys',
-  imageUrl: 'http://www.saintsfc.co.uk/images/common/bg_player_profile_default_big.png',
-  followingCount: 16,
-  groupsCount: 7,
-  followersCount: 35
-};
+
+
 
 const Profile = React.createClass({
+
+  getInitialState: function(){
+    return {profile: ProfileStore.getProfile()};
+  },
+
+  componentDidMount: function(){
+    ProfileStore.listen(this.updateProfile);
+  },
+
+  updateProfile:function(profile){
+    this.setState({profile: profile});
+  },
+
   render: function () {
-    let profile = dummyProfile;
+    let profile = this.state.profile;
+    let editable = profile.editEnabled;
     let groupsCount = profile.groupsCount;
     let followingCount = profile.followingCount;
     let followersCount = profile.followersCount;
@@ -32,7 +42,7 @@ const Profile = React.createClass({
       <div>
         <ProfileHeader/>
         <ProfileImage url={profile.imageUrl}/>
-        <ProfileAttribute name='Name' type='string' value={profile.name} editable={false}/>
+        <ProfileAttribute name='Name' type='string' value={profile.name} editable={editable}/>
         <ProfileSocialSummary followerCount={followersCount} followingCount={followingCount}
                               groupsCount={groupsCount}/>
       </div>

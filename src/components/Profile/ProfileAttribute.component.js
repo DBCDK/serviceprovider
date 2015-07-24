@@ -9,7 +9,7 @@
  */
 
 import React from 'react';
-
+import ProfileActions from '../../actions/Profile.action.js';
 
 const ProfileAttribute = React.createClass({
 
@@ -21,8 +21,9 @@ const ProfileAttribute = React.createClass({
     };
   },
 
-  handleChange: function () {
-
+  handleTextChange: function (e) {
+    let text = e.target.value;
+    ProfileActions.updateAttribute(text);
   },
 
   render: function () {
@@ -31,7 +32,7 @@ const ProfileAttribute = React.createClass({
     let component = <h3 className={'profile--displayname'}>{value}</h3>;
     if (isEditable === true) {
       component = <input type='text' className={'profile--displayname'} defaultValue={value}
-                         onChange={this.handleChange}></input>;
+                         onChange={this.handleTextChange}></input>;
     }
     return (<div>{component}</div>);
   }
