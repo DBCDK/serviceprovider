@@ -68,6 +68,10 @@ app.get('/autocomplete', (req, res) => {
   res.render('autocomplete');
 });
 
+app.get('/profile', (req, res) => {
+  res.render('profile');
+});
+
 app.get(['/work', '/work/*'], (req, res) => {
   let id = req.query.id;
   id = '"' + id + '"';
