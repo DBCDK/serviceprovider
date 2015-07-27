@@ -7,6 +7,7 @@
 
 // loading config etc.
 import config from '../config.js';
+import uiconfig from '../uiconfig.js';
 // newrelic needs to be required the es5 way because we only wants to load new relic if specified in config.js
 const newrelic = (config.newrelic) && require('newrelic') || null;
 import {version} from '../package.json';
@@ -61,7 +62,9 @@ app.locals.production = PRODUCTION;
 
 app.get(['/', '/search', '/search/*'], (req, res) => {
   const query = req.query || [];
-  res.render('search', SearchServer({query}));
+  let properties = SearchServer({query, config: uiconfig});
+  properties.config = JSON.stringify(uiconfig);
+  res.render('search', properties);
 });
 
 app.get('/autocomplete', (req, res) => {

@@ -40,7 +40,8 @@ const Search = React.createClass({
     resultList: React.PropTypes.array,
     recommendations: React.PropTypes.array,
     selected: React.PropTypes.string,
-    coverImages: React.PropTypes.object
+    coverImages: React.PropTypes.object,
+    noOfWorks: React.PropTypes.number
   },
 
   getInitialQuery() {
@@ -133,14 +134,14 @@ const Search = React.createClass({
   /**
    * callback for AutoCompleteStore listener
    */
-    updateAutoComplete(autoCompleteData) {
+  updateAutoComplete(autoCompleteData) {
     this.setState({autoCompleteData: autoCompleteData[this.state.textFieldValue]});
   },
 
   /**
    * Callback for the text input (TokenSearchField)
    */
-    onChange(textFieldValue) {
+  onChange(textFieldValue) {
     this.setState({textFieldValue: textFieldValue});
     this.requestSuggestions();
   },
@@ -158,6 +159,7 @@ const Search = React.createClass({
 
   render() {
     const {query, filterElements, resultList, recommendations, coverImages} = this.state;
+    const noOfWorks = this.props.config.noOfWorks;
     const placeholder = (query && query.query.length) ? '' : 'Skriv dine søgeord her';
     const autoCompleteData = this.state.autoCompleteData || {};
     const textFieldValue = this.state.textFieldValue || '';
@@ -197,6 +199,7 @@ const Search = React.createClass({
             pending={results.pending}
             loader={loader}
             coverImages={coverImages.images}
+            noOfWorks={noOfWorks}
             hasMore={resultList.info.more === 'true'}
             loadMore={QueryActions.nextPage} >
 

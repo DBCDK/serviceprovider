@@ -7,7 +7,8 @@ import {FilterGuide, TokenSearchField} from 'dbc-react-querystring';
 
 describe('Test the Search component', () => {
   it('should only generate a search field and button when no properties', ()=> {
-    let element = React.createElement(Search);
+    let config = {noOfWorks: 3};
+    let element = React.createElement(Search, {config});
     let dom = TestUtils.renderIntoDocument(element);
     let filterGuides = TestUtils.scryRenderedComponentsWithType(dom, FilterGuide);
     expect(filterGuides).to.have.length(0);
@@ -18,9 +19,9 @@ describe('Test the Search component', () => {
       {value: 'test', type: 'testType'},
       {value: 'test2', type: 'testType2'}
     ];
-
     // Check if filterguide is rendered
-    let element = React.createElement(Search, {filterElements});
+    let config = {noOfWorks: 3};
+    let element = React.createElement(Search, {config, filterElements});
     let dom = TestUtils.renderIntoDocument(element);
     let filterGuides = TestUtils.scryRenderedComponentsWithType(dom, FilterGuide);
     expect(filterGuides).to.have.length(1);
@@ -40,7 +41,8 @@ describe('Test the Search component', () => {
       text: 'text1|text2',
       'term.type': 'type1|type2'
     };
-    let element = React.createElement(Search, {query});
+    let config = {noOfWorks: 3};
+    let element = React.createElement(Search, {config, query});
     let dom = TestUtils.renderIntoDocument(element);
     let searchField = TestUtils.findRenderedComponentWithType(dom, Search);
     let tokenSearchField = TestUtils.findRenderedComponentWithType(dom, TokenSearchField);
