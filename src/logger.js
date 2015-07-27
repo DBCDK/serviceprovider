@@ -5,7 +5,15 @@ let os = require('os');
 
 let logger = new (winston.Logger)({
   transports: [
-    new (winston.transports.Console)({json: true, timestamp: true, level: 'emerg'})
+    new (winston.transports.Console)(
+      {
+        json: true,
+        timestamp: true,
+        level: 'emerg',
+        colorize: true,
+        prettyPrint: true
+      }
+    )
   ]
 });
 
@@ -26,3 +34,26 @@ if (process.env.NODE_ENV === 'production') { // eslint-disable-line
 }
 
 module.exports = logger;
+
+
+/*
+
+ app.use(expressWinston.logger({
+ transports: [
+ new winston.transports.Console({
+ json: true,
+ colorize: true
+ })
+ ]
+ }));
+
+ app.use(expressWinston.errorLogger({
+ transports: [
+ new winston.transports.Console({
+ json: true,
+ colorize: true
+ })
+ ]
+ }));
+
+ */
