@@ -25,6 +25,10 @@ mv config.example.js config.js
  npm run serve
 ```
 
+### New Relic
+As New Relic is used by DBC A/S this application requires New Relic to be configured.  
+If you want to run the application but can't provide a New Relic configuration you can start the application with `NEW_RELIC_NO_CONFIG_FILE=true` which will throw an error but wont crash your application.
+
 
 ## Testing
 

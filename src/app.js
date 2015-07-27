@@ -16,7 +16,7 @@ import express from 'express';
 import http from 'http';
 import socketio from 'socket.io';
 import path from 'path';
-import logger from './logger.js';
+import Logger from 'dbc-node-logger';
 import ServiceProvider from 'dbc-node-serviceprovider';
 
 // loading components
@@ -26,6 +26,8 @@ const app = express();
 const server = http.Server(app);
 const socket = socketio.listen(server);
 const PRODUCTION = (process.env.NODE_ENV === 'production'); // eslint-disable-line no-process-env
+const logger = new Logger({appNmae: 'pallesgavebod', handleExceptions: true});
+const expressLoggers = logger.getExpressLoggers();
 
 // settings up our provider
 ServiceProvider(config.provider).setupSockets(socket);
@@ -46,7 +48,7 @@ let fileHeaders = {};
 if (PRODUCTION) {
   fileHeaders = {index: false, dotfiles: 'ignore', maxAge: '1d'};
 }
-else if (newrelic) {
+else {
   newrelic.agent_enabled = false;
 }
 
@@ -58,6 +60,9 @@ app.use(express.static(path.join(__dirname, '../static'), fileHeaders));
 app.locals.newrelic = newrelic;
 app.locals.version = version;
 app.locals.production = PRODUCTION;
+
+app.use(expressLoggers.logger);
+app.use(expressLoggers.errorLogger);
 
 app.get(['/', '/search', '/search/*'], (req, res) => {
   const query = req.query || [];
@@ -86,7 +91,7 @@ app.get(['/order', '/order/*'], (req, res) => {
 
 // starting server
 server.listen(app.get('port'), () => {
-  logger.info('Server listening on ' + app.get('port'));
-  logger.info({message: 'Versions: ', data: process.versions});
-  logger.info(version + ' is up and running');
+  logger.log('info', 'Server listening on ' + app.get('port'));
+  logger.log('info', 'Versions: ', process.versions);
+  logger.log('info', version + ' is up and running');
 });
