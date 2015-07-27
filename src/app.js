@@ -49,7 +49,7 @@ let fileHeaders = {};
 if (PRODUCTION) {
   fileHeaders = {index: false, dotfiles: 'ignore', maxAge: '1d'};
 }
-else {
+else if (newrelic) {
   newrelic.agent_enabled = false;
 }
 

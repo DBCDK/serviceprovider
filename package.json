@@ -35,6 +35,7 @@
     "babel-loader": "^5.0.0",
     "css-loader": "^0.15.5",
     "dbc-node-logger": "git://github.com/DBCDK/dbc-node-logger#stable_dist",
+    "dbc-node-newrelic-wrapper": "git://github.com/DBCDK/dbc-node-newrelic-wrapper#stable_dist",
     "dbc-node-serviceprovider": "git://github.com/DBCDK/dbc-node-serviceprovider#stable_dist",
     "dbc-react-autocomplete": "git://github.com/DBCDK/dbc-react-autocomplete#stable_dist",
     "dbc-react-querystring": "git://github.com/DBCDK/dbc-react-querystring#stable_dist",
