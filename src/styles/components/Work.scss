@@ -72,7 +72,7 @@
   content: "";
 }
 .track:first-of-type:before {
-  content: "Trackliste: \A\00a0\00a0\00a0\00a0";
+  content: "Trackliste: ";
   white-space: pre;
   font-weight: bold;
 }
@@ -101,30 +101,33 @@
   clear: both;
 }
 
-.type {
-  float: left;
-}
+/* Specific material type */
 
-.type:after {
-  content: "\00a0";
-}
+.specific {
+    .type {
+      float: left;
+    }
 
-.date {
-  float: left;
-}
+    .type:after {
+      content: "\00a0";
+    }
 
-.specific .date:nth-child(2):before {
-  content: "(";
-}
+    .date {
+      float: left;
+    }
 
-.date:after {
-  content: ";\00a0";
-}
+    .date:nth-child(2):before {
+      content: "(";
+    }
 
-.date:last-of-type:after {
-  content: ")\00a0";
-}
+    .date:after {
+      content: ";\00a0";
+    }
 
+    .date:last-of-type:after {
+      content: ")\00a0";
+    }
+}
 .work-not-found {
     text-align: center;
     padding-top: 20px;
@@ -138,4 +141,33 @@
 
 .online-link {
     padding: 15px;
+}
+
+/* Publication Details */
+.editions {
+    margin-top: 20px;
+    text-align: left;
+}
+.editions:before {
+    content: 'Udgaver';
+    font-weight: bold;
+}
+.publication-details {
+    padding: 20px;
+    text-align: left;
+    border-top: 1px solid;
+    .publisher,
+    .edition {
+        float: left;
+    }
+    .publisher:after,
+    .edition::after{
+        content: ',\00a0';
+    }
+    .date {
+        float: none;
+    }
+    .date:after {
+        content: '';
+    }
 }
