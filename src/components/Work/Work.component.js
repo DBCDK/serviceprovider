@@ -58,7 +58,10 @@ const Work = React.createClass({
       tracks,
       languages,
       specific,
-      specifics;
+      specifics,
+      types,
+      publishers,
+      dates;
 
     if (work.info.hits === '0') {
       return (<div className="work-not-found">Værket blev ikke fundet</div>);
@@ -67,7 +70,6 @@ const Work = React.createClass({
     if (work.result.length === 0) {
       return (<div />);
     }
-
     general = work.result.general;
     title = general.title;
     if (general.hasOwnProperty('creators')) {
@@ -139,7 +141,6 @@ const Work = React.createClass({
     specifics = specific.map((tw) => {
       let identifiers = [];
       identifiers.push(tw.identifiers);
-      let dates = (<div></div>);
       if (tw.dates[0] !== null) {
         dates = tw.dates.map((date) => {
           return (<div className='date'>{date}</div>);
@@ -148,6 +149,44 @@ const Work = React.createClass({
       return (<div className='specific' data-identifiers={identifiers}>
       <div className='type'>{tw.type}</div>
       {dates}
+      </div>);
+    });
+    const publications = work.result.publications;
+    let editions = publications.map((publ) => {
+      let className = 'publication-details';
+      if (publ.hasOwnProperty('types')) {
+        types = publ.types.map((t) => {
+          className += ' ' + t.toLowerCase().replace(/ .*/, '');
+          return (<div className='type'>{t}</div>);
+        });
+      }
+      if (publ.hasOwnProperty('publishers')) {
+        publishers = publ.publishers.map((p) => {
+          return (<div className='publisher'>{p}</div>);
+        });
+      }
+      if (publ.hasOwnProperty('dates')) {
+        dates = publ.dates.map((d) => {
+          return (<div className='date'>{d}</div>);
+        });
+      }
+      if (publ.hasOwnProperty('editions')) {
+        editions = publ.editions.map((ed) => {
+          return (<div className='edition'>{ed}</div>);
+        });
+      }
+      if (publ.hasOwnProperty('extents')) {
+        extents = publ.extents.map((e) => {
+          return (<div className='extent'>{e}</div>);
+        });
+      }
+      return (<div className={className} data-identifiers={publ.identifier}>
+      {types}
+      <div className='clear'></div>
+      {publishers}
+      {editions}
+      {dates}
+      {extents}
       </div>);
     });
     return (
@@ -177,6 +216,8 @@ const Work = React.createClass({
           <div className='clear'></div>
         </div>
         {specifics}
+        <div className='clear'></div>
+        <div className='editions'>{editions}</div>
         </div>
       </div>
     );
