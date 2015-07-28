@@ -27,7 +27,8 @@ const app = express();
 const server = http.Server(app);
 const socket = socketio.listen(server);
 const PRODUCTION = (process.env.NODE_ENV === 'production'); // eslint-disable-line no-process-env
-const logger = new Logger({app_name: 'pallesgavebod', handleExceptions: true});
+const APP_NAME = process.env.NEW_RELIC_APP_NAME || 'app_name'; // eslint-disable-line no-process-env
+const logger = new Logger({app_name: APP_NAME, handleExceptions: true});
 const expressLoggers = logger.getExpressLoggers();
 
 // settings up our provider
