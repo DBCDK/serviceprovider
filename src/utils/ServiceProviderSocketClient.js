@@ -32,8 +32,8 @@ const socket = (typeof window !== 'undefined') && require('socket.io-client').co
 export default function ServiceProviderSocketClient(event) {
   function request(data) {
     const requestEvent = event + 'Request';
-    dbcrelic.addPageAction(requestEvent, {request: data});
     socket.emit(requestEvent, data);
+    dbcrelic.addPageAction(requestEvent, {request: data});
   }
 
   function addListener(listener) {
@@ -43,8 +43,8 @@ export default function ServiceProviderSocketClient(event) {
   function response(cb) {
     const responseEvent = event + 'Response';
     socket.on(responseEvent, (data) => {
-      dbcrelic.addPageAction(responseEvent, {response: data});
       cb(data);
+      dbcrelic.addPageAction(responseEvent, {response: data});
     });
   }
 
