@@ -21,7 +21,7 @@ import Logger from 'dbc-node-logger';
 import ServiceProvider from 'dbc-node-serviceprovider';
 
 // loading components
-import SearchServer from './components/Search/Search.server.js';
+import SearchServer from './components/searchpage/Search.server.js';
 
 const app = express();
 const server = http.Server(app);

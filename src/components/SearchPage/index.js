@@ -1,6 +1,11 @@
 'use strict';
+/**
+ * @file
+ * entry point for the search page
+ */
+
 import React from 'react';
-import Search from './Search.component';
+import Search from '../searchpage/SearchPageLayout.component.js';
 
 /**
  * Client side rendering of the Search component
@@ -9,5 +14,4 @@ import Search from './Search.component';
  */
 
 React.render(<Search query={window.QUERYSTRING_PROPS.query || {}} config={window.UI_CONFIG} />, document.getElementById('search'));
-
 

@@ -1,6 +1,13 @@
 'use strict';
+
+/**
+ * @file
+ * Serverside entry point for the search page
+ */
+
+
 import React from 'react';
-import Search from './Search.component';
+import Search from '../searchpage/SearchPageLayout.component.js';
 
 /**
  * Render component for server use.
@@ -12,7 +19,7 @@ export default function querySearchServer(props) {
   const {query, elements, config} = props;
   const search = React.renderToString(<Search query={query || []} config={config || {}} elements={elements || []}/>);
   return {
-    search,
+    search: search,
     props: JSON.stringify(props)
   };
 }

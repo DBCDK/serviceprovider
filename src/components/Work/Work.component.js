@@ -146,10 +146,14 @@ const Work = React.createClass({
           return (<div className='date'>{date}</div>);
         });
       }
-      return (<div className='specific' data-identifiers={identifiers}>
-      <div className='type'>{tw.type}</div>
-      {dates}
-      </div>);
+      return (
+        <div className='specific' data-identifiers={identifiers}>
+          <div className='type'>
+            {tw.type}
+          </div>
+          {dates}
+        </div>
+      );
     });
     const publications = work.result.publications;
     let editions = publications.map((publ) => {
