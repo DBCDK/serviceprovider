@@ -13,7 +13,6 @@ module.exports = [{
   entry: {
     querysearch: './src/components/Search/Search.client',
     logo: './src/components/logo/index.js',
-    autocomplete: './src/components/autocomplete/index.js',
     profile: './src/components/Profile/index.js',
     work: './src/components/Work/Work.client',
     order: './src/components/Order/Order.client',
