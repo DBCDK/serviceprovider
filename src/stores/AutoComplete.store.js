@@ -4,16 +4,16 @@ import Reflux from 'reflux';
 import _ from 'lodash';
 
 import AutoCompleteActions from '../actions/AutoComplete.action.js';
-import QueryUpdate from '../actions/QueryUpdate.action.js';
 import CoverImageActions from '../actions/CoverImage.action.js';
 import CoverImageStore from '../stores/CoverImage.store.js';
+import QueryActions from '../actions/QueryUpdate.action.js';
 
 const AutoCompleteStore = Reflux.createStore({
   listenables: AutoCompleteActions,
   store: {},
 
   init() {
-    this.listenTo(QueryUpdate.update, this.clearData);
+    this.listenTo(QueryActions.update, this.clearData);
     CoverImageStore.listen(this.updateCoverImages);
   },
 

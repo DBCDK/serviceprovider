@@ -11,8 +11,7 @@ var extractCss = new extractTextPlugin('../styles/style.css');
 module.exports = [{
   name: 'browser',
   entry: {
-    querysearch: './src/components/Search/Search.client',
-    logo: './src/components/logo/index.js',
+    querysearch: './src/components/searchpage/index.js',
     profile: './src/components/Profile/index.js',
     work: './src/components/Work/Work.client',
     order: './src/components/Order/Order.client',

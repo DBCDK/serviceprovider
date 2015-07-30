@@ -2,6 +2,6 @@
 
 import Reflux from 'reflux';
 
-const Recommendations = Reflux.createActions(['request', 'default']);
+const Recommendations = Reflux.createActions(['focus', 'change']);
 
 export default Recommendations;

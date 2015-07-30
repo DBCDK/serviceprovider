@@ -14,6 +14,10 @@ let _store = {
  */
 let CoverImageStore = Reflux.createStore({
 
+  getInitialState() {
+    return _store;
+  },
+
   // Initial setup by reflux
   init() {
     // Register statusUpdate action
