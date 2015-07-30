@@ -73,10 +73,6 @@ app.get(['/', '/search', '/search/*'], (req, res) => {
   res.render('search', properties);
 });
 
-app.get('/autocomplete', (req, res) => {
-  res.render('autocomplete');
-});
-
 app.get('/profile', (req, res) => {
   res.render('profile');
 });
