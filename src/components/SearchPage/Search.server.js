@@ -7,7 +7,7 @@
 
 
 import React from 'react';
-import Search from '../searchpage/SearchPageLayout.component.js';
+import Search from './SearchPageLayout.component.js';
 
 /**
  * Render component for server use.
