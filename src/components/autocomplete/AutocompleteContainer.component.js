@@ -8,7 +8,6 @@ import React from 'react';
 import {isEmpty, debounce} from 'lodash';
 import AutoComplete from 'dbc-react-autocomplete';
 
-
 export default React.createClass({
 
   getInitialState() {
@@ -38,6 +37,8 @@ export default React.createClass({
   },
   shouldComponentUpdate() {
     if (this.state.focus !== this.props.input.focus) {
+      // This is a small hack. The inputfield looses focus, when a link on the autocomplete is pressed
+      // which makes the autocomplete hide, before link is pressed. This timeout, delays the hiding process
       setTimeout(() => this.setState({focus: this.props.input.focus}), 100);
       return false;
     }
