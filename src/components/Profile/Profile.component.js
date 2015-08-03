@@ -1,12 +1,10 @@
-/**
- * Created by matias on 22-07-15.
- */
-
 'use strict';
+
 /**
  * @file
- * Comment
+ * Profile component displays the user attributes and allows editing.
  */
+
 import React from 'react';
 import ProfileImage from './ProfileImage.component.js';
 import ProfileAttribute from './ProfileAttribute.component.js';
@@ -38,7 +36,7 @@ const Profile = React.createClass({
     let followersCount = profile.followersCount;
     return (
       <div>
-        <ProfileHeader editable={editable}/>
+        <ProfileHeader ref='header' editable={editable}/>
         <ProfileImage url={profile.imageUrl} editable={editable} />
         <ProfileAttribute name='Name' type='string' value={profile.name} editable={editable} />
         <ProfileSocialSummary followerCount={followersCount} followingCount={followingCount}

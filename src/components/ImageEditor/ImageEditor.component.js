@@ -1,11 +1,8 @@
-/**
- * Created by matias on 27-07-15.
- */
-
 'use strict';
 /**
  * @file
- * Comment
+ * ImageEditor is used to upload and crop an image.
+ *
  */
 
 import React from 'react';
@@ -38,7 +35,7 @@ const ImageEditor = React.createClass({
 
   componentDidMount: function () {
     window.addEventListener('resize', this._handleResize);
-    this._loadImage(this.props.initialImageUrl, this._drawImage);
+    this.loadImage(this.props.initialImageUrl, this.drawImage);
   },
 
   componentWillUnmount: function () {
@@ -46,10 +43,10 @@ const ImageEditor = React.createClass({
   },
 
   componentDidUpdate: function () {
-    this._drawImage();
+    this.drawImage();
   },
 
-  _drawImage: function () {
+  drawImage: function () {
     let self = this;
 
     if (typeof this.state.image !== 'undefined') {
@@ -73,7 +70,7 @@ const ImageEditor = React.createClass({
     }
   },
 
-  _loadImage: function (url, callback) {
+  loadImage: function (url, callback) {
     let self = this;
     let image = new Image();
     image.onload = function () {
@@ -100,7 +97,7 @@ const ImageEditor = React.createClass({
     image.src = url;
   },
 
-  _handleFileChanged: function (e) {
+  handleFileChanged: function (e) {
 
     let files;
     files = e.target.files;
@@ -109,29 +106,29 @@ const ImageEditor = React.createClass({
       let reader = new FileReader();
       reader.onload = () => {
         let imageUrl = reader.result;
-        this._loadImage(imageUrl);
+        this.loadImage(imageUrl);
         this.props.onSave(imageUrl);
       };
       reader.readAsDataURL(files[0]);
     }
   },
 
-  _handleSave: function () {
+  handleSave: function () {
     // create new image from crop selection
     let canvas = React.findDOMNode(this.refs.cvs);
     let croppedImageUrl = canvas.toDataURL('image/png').replace('image/png', 'image/octet-stream');
 
-    this._loadImage(croppedImageUrl, this._handleResize);
+    this.loadImage(croppedImageUrl, this._handleResize);
 
     // call save function passed as prop with image url
     this.props.onSave(croppedImageUrl);
   },
 
   _handleResize: function () {
-    this._drawImage();
+    this.drawImage();
   },
 
-  _handleDragStart: function (e) {
+  handleDragStart: function (e) {
     // mouse position inside crop frame
     let mouseX = e.clientX - e.target.getBoundingClientRect().left;
     let mouseY = e.clientY - e.target.getBoundingClientRect().top;
@@ -147,7 +144,7 @@ const ImageEditor = React.createClass({
     });
   },
 
-  _handleDrag: function (e) {
+  handleDrag: function (e) {
     if (this.state.cropDragEnabled) {
       // mouse position inside crop frame
       let mouseX = e.clientX - e.target.getBoundingClientRect().left;
@@ -213,7 +210,7 @@ const ImageEditor = React.createClass({
     }
   },
 
-  _handleDragEnd: function () {
+  handleDragEnd: function () {
     // This state must be changed
     let fixedX = this.state.positionX;
     let fixedY = this.state.positionY;
@@ -232,11 +229,11 @@ const ImageEditor = React.createClass({
       <div>
         <canvas
           ref='cvs'
-          onMouseDown={this._handleDragStart}
-          onMouseUp={this._handleDragEnd}
-          onMouseMove={this._handleDrag}/>
-        <input type='file' onChange={this._handleFileChanged}/>
-        <input type='button' value='Beskær' onClick={this._handleSave} disabled={!isCroppable}/>
+          onMouseDown={this.handleDragStart}
+          onMouseUp={this.handleDragEnd}
+          onMouseMove={this.handleDrag}/>
+        <input type='file' onChange={this.handleFileChanged}/>
+        <input type='button' ref='cropButton' value='Beskær' onClick={this.handleSave} disabled={!isCroppable}/>
       </div>
     );
   }

@@ -1,8 +1,10 @@
+'use strict';
+
 /**
- * Created by matias on 23-07-15.
+ * @file
+ * Profile Store
  */
 
-'use strict';
 
 import Reflux from 'reflux';
 import ProfileActions from '../actions/Profile.action.js';
@@ -13,13 +15,7 @@ let _profile = {
   followingCount: 16,
   groupsCount: 7,
   followersCount: 35,
-  editEnabled: false,
-  crop: {
-    x: 0,
-    y: 0,
-    w: 100,
-    h: 100
-  }
+  editEnabled: false
 };
 
 let profileStore = Reflux.createStore({

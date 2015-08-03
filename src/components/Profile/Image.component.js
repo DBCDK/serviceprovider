@@ -1,11 +1,8 @@
-/**
- * Created by matias on 27-07-15.
- */
-
 'use strict';
+
 /**
  * @file
- * Comment
+ * A round image component
  */
 
 import React from 'react';

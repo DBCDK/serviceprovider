@@ -1,11 +1,8 @@
-/**
- * Created by matias on 22-07-15.
- */
-
 'use strict';
+
 /**
  * @file
- * Comment
+ * Header for Profile Component
  */
 
 import React from 'react';
@@ -25,7 +22,7 @@ const ProfileHeader = React.createClass({
         <div className='row'>
           <div className='small-4 columns'><p></p></div>
           <div className='small-4 columns'><h2>Profil</h2></div>
-          <div className='small-4 columns'><a onClick={this.toggleEdit}>{buttonText}</a></div>
+          <div className='small-4 columns'><a ref='toggleButton' onClick={this.toggleEdit}>{buttonText}</a></div>
         </div>
       </div>
     );
