@@ -9,7 +9,7 @@
 import config from '../config.js';
 import uiconfig from '../uiconfig.js';
 // newrelic needs to be required the es5 way because we only wants to load new relic if specified in config.js
-const newrelic = (config.newrelic) && require('newrelic') || null;
+const newrelic = config.newrelic && require('newrelic') || null;
 import {version} from '../package.json';
 
 // loading libraries
@@ -26,7 +26,7 @@ import SearchServer from './components/searchpage/Search.server.js';
 const app = express();
 const server = http.Server(app);
 const socket = socketio.listen(server);
-const PRODUCTION = (process.env.NODE_ENV === 'production'); // eslint-disable-line no-process-env
+const PRODUCTION = process.env.NODE_ENV === 'production'; // eslint-disable-line no-process-env
 const APP_NAME = process.env.NEW_RELIC_APP_NAME || 'app_name'; // eslint-disable-line no-process-env
 const logger = new Logger({app_name: APP_NAME, handleExceptions: true});
 const expressLoggers = logger.getExpressLoggers();

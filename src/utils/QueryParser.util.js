@@ -71,7 +71,7 @@ function splitGroupToCQL(group, key) {
 
   // If key is text the query if from the default index and no index should be specified. Else the key defines the
   // the index
-  return (key === 'text') && `(${values})` || `${key}=(${values})`;
+  return key === 'text' && `(${values})` || `${key}=(${values})`;
 }
 
 
