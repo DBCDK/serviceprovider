@@ -29,7 +29,7 @@
     "no-empty-character-class": 2,
     "no-ex-assign": 2,
     "no-extra-boolean-cast": 2,
-    "no-extra-parens": "all",
+    "no-extra-parens": [2, "functions"],
     "no-extra-semi": 2,
     "no-func-assign": 2,
     "no-inner-declarations": 2,
@@ -149,7 +149,6 @@
     "no-trailing-spaces": 2,
     "no-multiple-empty-lines": 2,
     "no-underscore-dangle": 0,
-    "no-extra-parens": 2,
     "one-var": 0,
     "operator-assignment": [
       2,
