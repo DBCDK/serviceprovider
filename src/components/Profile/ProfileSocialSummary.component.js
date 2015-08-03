@@ -1,11 +1,8 @@
-/**
- * Created by matias on 22-07-15.
- */
-
 'use strict';
+
 /**
  * @file
- * Comment
+ * ProfileSocialSummary displays the users social statistics.
  */
 
 import React from 'react';

@@ -1,8 +1,9 @@
-/**
- * Created by matias on 23-07-15.
- */
-
 'use strict';
+
+/**
+ * @file
+ * Profile Actions
+ */
 
 import Reflux from 'reflux';
 

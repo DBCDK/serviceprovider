@@ -1,11 +1,8 @@
-/**
- * Created by matias on 22-07-15.
- */
-
 'use strict';
+
 /**
  * @file
- * Comment
+ * ProfileImage displays either a round profile image or and image editor.
  */
 
 import React from 'react';

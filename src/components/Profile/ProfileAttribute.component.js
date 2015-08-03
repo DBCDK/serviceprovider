@@ -1,11 +1,8 @@
-/**
- * Created by matias on 22-07-15.
- */
-
 'use strict';
+
 /**
  * @file
- * Comment
+ * The ProfileAttribute component show user attributes and allows editing.
  */
 
 import React from 'react';
