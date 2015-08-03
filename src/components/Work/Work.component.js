@@ -1,5 +1,4 @@
 'use strict';
-/*eslint-disable no-extra-parens*/
 /**
  * @file
  * Currently the main entrypoint served on /work.
