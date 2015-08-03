@@ -74,8 +74,7 @@ const Work = React.createClass({
     title = general.title;
     if (general.hasOwnProperty('creators')) {
       creators = general.creators.map((creator) => {
-        let search_creator = '/search?phrase.creator=' + encodeURIComponent(creator);
-        return (<div className='creator'><a href={search_creator}>{creator}</a></div>);
+        return (<div className='creator'><a href={creator.search_link}>{creator.value}</a></div>);
       });
     }
     if (general.hasOwnProperty('description')) {
@@ -83,21 +82,15 @@ const Work = React.createClass({
     }
     if (general.hasOwnProperty('actors')) {
       actors = general.actors.map((actor) => {
-        let search_actor = '/search?phrase.creator=' + encodeURIComponent(actor);
-        return (<div className='actor'><a href={search_actor}>{actor}</a></div>);
+        return (<div className='actor'><a href={actor.search_link}>{actor.value}</a></div>);
       });
     }
     if (general.hasOwnProperty('series')) {
-      let series_title = general.series[0].replace(/ ; .*/, '');
-      series_title = series_title.replace(/Samhørende: /, '');
-      series_title = series_title.replace(/.* del af: /, '');
-      let series_link = '/search?phrase.titleSeries=' + encodeURIComponent(series_title);
-      series = <a href={series_link}>{general.series}</a>;
+      series = <a href={general.series.search_link}>{general.series.value}</a>;
     }
     if (general.hasOwnProperty('subjects')) {
       subjects = general.subjects.map((subject) => {
-        let search_subject = '/search?phrase.subject=' + encodeURIComponent(subject);
-        return (<div className='subject'><a href={search_subject}>{subject}</a></div>);
+        return (<div className='subject'><a href={subject.search_link}>{subject.value}</a></div>);
       });
     }
     if (general.hasOwnProperty('tracks')) {
