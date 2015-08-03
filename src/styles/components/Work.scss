@@ -46,13 +46,30 @@
   margin-right: 5px;
 }
 .subject:first-of-type:before {
-  content: "Emner: ";
+  content: "Emner:\00a0";
 }
 .subject:after {
-  content: "; ";
+  content: ";\00a0";
 }
 .subject:last-of-type:after {
   content: "";
+}
+
+.dk5:before {
+    content: 'Opstilling:\00a0';
+}
+.dk5 {
+    float: left;
+}
+.dk5text {
+    margin-left: 5px;
+    float: right;
+}
+.dk5text:before {
+    content: '(';
+}
+.dk5text:after {
+    content: ')';
 }
 
 .actors {
@@ -63,7 +80,7 @@
   margin-right: 5px;
 }
 .actor:first-of-type:before {
-  content: "Medvirkende: ";
+  content: "Medvirkende:\00a0";
 }
 .actor:after {
   content: "; ";
@@ -72,7 +89,7 @@
   content: "";
 }
 .track:first-of-type:before {
-  content: "Trackliste: ";
+  content: "Trackliste:\00a0";
   white-space: pre;
   font-weight: bold;
 }
@@ -88,7 +105,7 @@
   margin-right: 5px;
 }
 .language:first-of-type:before {
-  content: "Sprog: ";
+  content: "Sprog:\00a0";
 }
 .language:after {
   content: "; ";
