@@ -61,7 +61,9 @@ const Work = React.createClass({
       specifics,
       types,
       publishers,
-      dates;
+      dates,
+      isbns,
+      links;
 
     if (work.info.hits === '0') {
       return (<div className="work-not-found">Værket blev ikke fundet</div>);
@@ -177,6 +179,16 @@ const Work = React.createClass({
           return (<div className='extent'>{e}</div>);
         });
       }
+      if (publ.hasOwnProperty('isbns')) {
+        isbns = publ.isbns.map((i) => {
+          return (<div className='isbn'>{i}</div>);
+        });
+      }
+      if (publ.hasOwnProperty('links')) {
+        links = publ.links.map((l) => {
+          return (<div className='link'><a href={l} target='_blank'>Se online</a></div>);
+        });
+      }
       return (<div className={className} data-identifiers={publ.identifier}>
       {types}
       <div className='clear'></div>
@@ -184,6 +196,8 @@ const Work = React.createClass({
       {editions}
       {dates}
       {extents}
+      {isbns}
+      {links}
       </div>);
     });
     return (
