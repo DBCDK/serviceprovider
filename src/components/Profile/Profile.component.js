@@ -38,11 +38,11 @@ const Profile = React.createClass({
     let followersCount = profile.followersCount;
     return (
       <div>
-        <ProfileHeader/>
-        <ProfileImage url={profile.imageUrl}/>
-        <ProfileAttribute name='Name' type='string' value={profile.name} editable={editable}/>
+        <ProfileHeader editable={editable}/>
+        <ProfileImage url={profile.imageUrl} editable={editable} />
+        <ProfileAttribute name='Name' type='string' value={profile.name} editable={editable} />
         <ProfileSocialSummary followerCount={followersCount} followingCount={followingCount}
-                              groupsCount={groupsCount}/>
+                              groupsCount={groupsCount} />
       </div>
     );
   }

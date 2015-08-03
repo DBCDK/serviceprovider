@@ -19,12 +19,13 @@ const ProfileHeader = React.createClass({
   },
 
   render: function () {
+    let buttonText = (this.props.editable === true) ? 'Gem' : 'Rediger';
     return (
       <div className={'profile--header'}>
         <div className='row'>
           <div className='small-4 columns'><p></p></div>
           <div className='small-4 columns'><h2>Profil</h2></div>
-          <div className='small-4 columns'><a onClick={this.toggleEdit}>Rediger</a></div>
+          <div className='small-4 columns'><a onClick={this.toggleEdit}>{buttonText}</a></div>
         </div>
       </div>
     );

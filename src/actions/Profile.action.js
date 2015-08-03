@@ -6,6 +6,6 @@
 
 import Reflux from 'reflux';
 
-const ProfileActions = Reflux.createActions(['toggleEdit', 'updateAttribute']);
+const ProfileActions = Reflux.createActions(['toggleEdit', 'updateAttribute', 'updateImageUrl']);
 
 export default ProfileActions;
