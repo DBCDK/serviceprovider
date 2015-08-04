@@ -131,8 +131,7 @@ const Work = React.createClass({
       if (tw.accessType === 'physical') {
         let order_ids = [];
         order_ids.push(tw.identifiers);
-        let order_link = '/order?ids=' + order_ids + '&title=' + encodeURIComponent(title) + '&type=' + tw.type;
-        return (<a className='order-button button' href={order_link} data-identifiers={order_ids}>Bestil {tw.type}</a>);
+        return (<a className='order-button button' href={tw.order} data-identifiers={order_ids}>Bestil {tw.type}</a>);
       }
       if (tw.accessType === 'online') {
         let online_link = 'Se ' + tw.type + ' online';
