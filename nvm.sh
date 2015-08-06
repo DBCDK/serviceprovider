@@ -62,7 +62,7 @@ nvm_has_system_iojs() {
 
 nvm_print_npm_version() {
   if nvm_has "npm"; then
-    echo " (npm v$(npm --version 2>/dev/null))"
+    npm --version 2>/dev/null | command xargs printf " (npm v%s)"
   fi
 }
 
@@ -90,6 +90,9 @@ fi
 
 if [ -z "$NVM_IOJS_ORG_MIRROR" ]; then
   export NVM_IOJS_ORG_MIRROR="https://iojs.org/dist"
+fi
+if [ -z "$NVM_IOJS_ORG_VERSION_LISTING" ]; then
+  export NVM_IOJS_ORG_VERSION_LISTING="$NVM_IOJS_ORG_MIRROR/index.tab"
 fi
 
 nvm_tree_contains_path() {
@@ -198,14 +201,10 @@ nvm_ensure_version_installed() {
   local PROVIDED_VERSION
   PROVIDED_VERSION="$1"
   local LOCAL_VERSION
-  local EXIT_CODE
   LOCAL_VERSION="$(nvm_version "$PROVIDED_VERSION")"
-  EXIT_CODE="$?"
   local NVM_VERSION_DIR
-  if [ "_$EXIT_CODE" = "_0" ]; then
-    NVM_VERSION_DIR="$(nvm_version_path "$LOCAL_VERSION")"
-  fi
-  if [ "_$EXIT_CODE" != "_0" ] || [ ! -d "$NVM_VERSION_DIR" ]; then
+  NVM_VERSION_DIR="$(nvm_version_path "$LOCAL_VERSION")"
+  if [ ! -d "$NVM_VERSION_DIR" ]; then
     VERSION="$(nvm_resolve_alias "$PROVIDED_VERSION")"
     if [ $? -eq 0 ]; then
       echo "N/A: version \"$PROVIDED_VERSION -> $VERSION\" is not yet installed" >&2
@@ -689,7 +688,7 @@ nvm_ls_remote_iojs() {
   else
     PATTERN=".*"
   fi
-  VERSIONS="$(nvm_download -L -s "$NVM_IOJS_ORG_MIRROR/index.tab" -o - \
+  VERSIONS="$(nvm_download -L -s $NVM_IOJS_ORG_VERSION_LISTING -o - \
     | command sed "
         1d;
         s/^/$(nvm_iojs_prefix)-/;
@@ -1026,12 +1025,6 @@ nvm_install_node_source() {
   local ADDITIONAL_PARAMETERS
   ADDITIONAL_PARAMETERS="$2"
 
-  local NVM_ARCH
-  NVM_ARCH="$(nvm_get_arch)"
-  if [ $NVM_ARCH = "armv6l" ] || [ $NVM_ARCH = "armv7l" ]; then
-    ADDITIONAL_PARAMETERS="--without-snapshot $ADDITIONAL_PARAMETERS"
-  fi
-
   if [ -n "$ADDITIONAL_PARAMETERS" ]; then
     echo "Additional options while compiling: $ADDITIONAL_PARAMETERS"
   fi
@@ -1098,43 +1091,6 @@ nvm_install_node_source() {
   return $?
 }
 
-nvm_match_version() {
-  local NVM_IOJS_PREFIX
-  NVM_IOJS_PREFIX="$(nvm_iojs_prefix)"
-  local PROVIDED_VERSION
-  PROVIDED_VERSION="$1"
-  case "_$PROVIDED_VERSION" in
-    "_$NVM_IOJS_PREFIX" | "_io.js")
-      echo "$(nvm_version $NVM_IOJS_PREFIX)"
-    ;;
-    "_system")
-      echo "system"
-    ;;
-    *)
-      echo "$(nvm_version "$PROVIDED_VERSION")"
-    ;;
-  esac
-}
-
-nvm_npm_global_modules() {
-  local NPMLIST
-  local VERSION
-  VERSION="$1"
-  if [ "_$VERSION" = "_system" ]; then
-    NPMLIST=$(nvm use system > /dev/null && npm list -g --depth=0 | command tail -n +2)
-  else
-    NPMLIST=$(nvm use "$VERSION" > /dev/null && npm list -g --depth=0 | command tail -n +2)
-  fi
-
-  local INSTALLS
-  INSTALLS=$(echo "$NPMLIST" | command sed -e '/ -> / d' -e '/\(empty\)/ d' -e 's/^.* \(.*@[^ ]*\).*/\1/' -e '/^npm@[^ ]*.*$/ d' | command xargs)
-
-  local LINKS
-  LINKS="$(echo "$NPMLIST" | command sed -n 's/.* -> \(.*\)/\1/ p')"
-
-  echo "$INSTALLS //// $LINKS"
-}
-
 nvm() {
   if [ $# -lt 1 ]; then
     nvm help
@@ -1186,22 +1142,13 @@ nvm() {
     ;;
 
     "debug" )
-      local ZHS_HAS_SHWORDSPLIT_UNSET
-      if nvm_has "setopt"; then
-        ZHS_HAS_SHWORDSPLIT_UNSET=$(setopt | command grep shwordsplit > /dev/null ; echo $?)
-        setopt shwordsplit
-      fi
       echo >&2 "\$SHELL: $SHELL"
       echo >&2 "\$NVM_DIR: $(echo $NVM_DIR | sed "s#$HOME#\$HOME#g")"
-      local NVM_DEBUG_OUTPUT
       for NVM_DEBUG_COMMAND in 'nvm current' 'which node' 'which iojs' 'which npm' 'npm config get prefix' 'npm root -g'
       do
-        NVM_DEBUG_OUTPUT="$($NVM_DEBUG_COMMAND 2>&1 | sed "s#$NVM_DIR#\$NVM_DIR#g")"
-        echo >&2 "$NVM_DEBUG_COMMAND: $NVM_DEBUG_OUTPUT"
+        local NVM_DEBUG_OUTPUT="$($NVM_DEBUG_COMMAND | sed "s#$NVM_DIR#\$NVM_DIR#g")"
+        echo >&2 "$NVM_DEBUG_COMMAND: ${NVM_DEBUG_OUTPUT}"
       done
-      if [ "_$ZHS_HAS_SHWORDSPLIT_UNSET" = "_1" ] && nvm_has "unsetopt"; then
-        unsetopt shwordsplit
-      fi
       return 42
     ;;
 
@@ -1424,8 +1371,22 @@ nvm() {
           VERSION="$(nvm_version "$PROVIDED_VERSION")"
         fi
       else
+        local NVM_IOJS_PREFIX
+        NVM_IOJS_PREFIX="$(nvm_iojs_prefix)"
+        local NVM_NODE_PREFIX
+        NVM_NODE_PREFIX="$(nvm_node_prefix)"
         PROVIDED_VERSION="$2"
-        VERSION="$(nvm_match_version "$PROVIDED_VERSION")"
+        case "_$PROVIDED_VERSION" in
+          "_$NVM_IOJS_PREFIX" | "_io.js")
+            VERSION="$(nvm_version $NVM_IOJS_PREFIX)"
+          ;;
+          "_system")
+            VERSION="system"
+          ;;
+          *)
+            VERSION="$(nvm_version "$PROVIDED_VERSION")"
+          ;;
+        esac
       fi
 
       if [ -z "$VERSION" ]; then
@@ -1763,6 +1724,7 @@ $NVM_LS_REMOTE_IOJS_OUTPUT" | command grep -v "N/A" | sed '/^$/d')"
         return 2
       fi
 
+      local NPMLIST
       local VERSION
       if [ "_$PROVIDED_VERSION" = "_system" ]; then
         if ! nvm_has_system_node && ! nvm_has_system_iojs; then
@@ -1770,30 +1732,25 @@ $NVM_LS_REMOTE_IOJS_OUTPUT" | command grep -v "N/A" | sed '/^$/d')"
           return 3
         fi
         VERSION="system"
+        NPMLIST=$(nvm deactivate > /dev/null && npm list -g --depth=0 | command tail -n +2)
       else
         VERSION="$(nvm_version "$PROVIDED_VERSION")"
+        NPMLIST=$(nvm use "$VERSION" > /dev/null && npm list -g --depth=0 | command tail -n +2)
       fi
 
-      local NPMLIST
-      NPMLIST="$(nvm_npm_global_modules "$VERSION")"
       local INSTALLS
-      local LINKS
-      INSTALLS="${NPMLIST%% //// *}"
-      LINKS="${NPMLIST##* //// }"
+      INSTALLS=$(echo "$NPMLIST" | command sed -e '/ -> / d' -e '/\(empty\)/ d' -e 's/^.* \(.*\)@.*/\1/' -e '/^npm$/ d' | command xargs)
 
-      echo "Reinstalling global packages from $VERSION..."
+      echo "Copying global packages from $VERSION..."
       echo "$INSTALLS" | command xargs npm install -g --quiet
 
+      local LINKS
+      LINKS=$(echo "$NPMLIST" | command sed -n 's/.* -> \(.*\)/\1/ p')
+
       echo "Linking global packages from $VERSION..."
-      set -f; IFS='
-' # necessary to turn off variable expansion except for newlines
       for LINK in $LINKS; do
-        set +f; unset IFS # restore variable expansion
-        if [ -n "$LINK" ]; then
-          (cd "$LINK" && npm link)
-        fi
+        (cd "$LINK" && npm link)
       done
-      set +f; unset IFS # restore variable expansion in case $LINKS was empty
     ;;
     "clear-cache" )
       command rm -f $NVM_DIR/v* "$(nvm_version_dir)" 2>/dev/null
@@ -1813,7 +1770,6 @@ $NVM_LS_REMOTE_IOJS_OUTPUT" | command grep -v "N/A" | sed '/^$/d')"
         nvm_ls_remote nvm_ls nvm_remote_version nvm_remote_versions \
         nvm_version nvm_rc_version \
         nvm_version_greater nvm_version_greater_than_or_equal_to \
-        nvm_npm_global_modules \
         nvm_supports_source_options > /dev/null 2>&1
       unset RC_VERSION NVM_NODEJS_ORG_MIRROR NVM_DIR NVM_CD_FLAGS > /dev/null 2>&1
     ;;
