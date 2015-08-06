@@ -1,13 +1,14 @@
 'use strict';
 
 import Reflux from 'reflux';
-import {extend} from 'lodash';
+import {extend, isString} from 'lodash';
 import QueryParser from '../utils/QueryParser.util.js';
 import QueryActions from '../actions/QueryUpdate.action.js';
 
 const defaultStore = {
+  queryHasChanged: false,
   query: [],
-  page: 1,
+  page: 0,
   worksPerPage: 12,
   sort: 'default'
 };
@@ -20,37 +21,58 @@ let store = extend({}, defaultStore);
 let QueryStore = Reflux.createStore({
   listenables: QueryActions,
 
+  triggerOnQueryChange() {
+    store.search = store.query.length && `?${QueryParser.objectToString(store.query)}` || '';
+    store.queryHasChanged = true;
+    this.trigger(store);
+    return store;
+  },
+
+  setStore(newStore) {
+    store = newStore;
+  },
+
+  getInitialState() {
+    return store;
+  },
+  init() {
+    if (typeof window !== 'undefined') {
+      store.query = QueryParser.urlQueryToObject(window.location.search);
+      return this.triggerOnQueryChange(store);
+    }
+  },
+
   onReset() {
     store = extend({}, defaultStore);
-    this.trigger(store);
+    this.triggerOnQueryChange(store);
   },
 
   onUpdate(query) {
-    store.query = query;
+    store.query = isString(query) && QueryParser.urlQueryToObject(query) || query;
     store.page = 0;
-    this.trigger(store);
-    QueryActions.queryUpdated();
+    this.triggerOnQueryChange(store);
   },
 
   onAdd(queryElement) {
     store.query.push(queryElement);
     store.page = 0;
-    this.trigger(store);
-    QueryActions.queryUpdated();
+    this.triggerOnQueryChange(store);
   },
 
   onNextPage() {
     store.page++;
-    this.trigger(store);
+    this.triggerOnQueryChange();
   },
 
   onPrevPage() {
     store.page--;
-    this.trigger(store);
+    this.triggerOnQueryChange();
   },
 
-  getStore() {
-    return store;
+  onChangedInput(inputValue) {
+    store.queryHasChanged = false;
+    store.inputValue = inputValue;
+    this.trigger(store);
   },
 
   getCql() {

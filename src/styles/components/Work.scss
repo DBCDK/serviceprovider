@@ -46,13 +46,30 @@
   margin-right: 5px;
 }
 .subject:first-of-type:before {
-  content: "Emner: ";
+  content: "Emner:\00a0";
 }
 .subject:after {
-  content: "; ";
+  content: ";\00a0";
 }
 .subject:last-of-type:after {
   content: "";
+}
+
+.dk5:before {
+    content: 'Opstilling:\00a0';
+}
+.dk5 {
+    float: left;
+}
+.dk5text {
+    margin-left: 5px;
+    float: right;
+}
+.dk5text:before {
+    content: '(';
+}
+.dk5text:after {
+    content: ')';
 }
 
 .actors {
@@ -63,7 +80,7 @@
   margin-right: 5px;
 }
 .actor:first-of-type:before {
-  content: "Medvirkende: ";
+  content: "Medvirkende:\00a0";
 }
 .actor:after {
   content: "; ";
@@ -72,7 +89,7 @@
   content: "";
 }
 .track:first-of-type:before {
-  content: "Trackliste: \A\00a0\00a0\00a0\00a0";
+  content: "Trackliste:\00a0";
   white-space: pre;
   font-weight: bold;
 }
@@ -88,7 +105,7 @@
   margin-right: 5px;
 }
 .language:first-of-type:before {
-  content: "Sprog: ";
+  content: "Sprog:\00a0";
 }
 .language:after {
   content: "; ";
@@ -101,30 +118,33 @@
   clear: both;
 }
 
-.type {
-  float: left;
-}
+/* Specific material type */
 
-.type:after {
-  content: "\00a0";
-}
+.specific {
+    .type {
+      float: left;
+    }
 
-.date {
-  float: left;
-}
+    .type:after {
+      content: "\00a0";
+    }
 
-.specific .date:nth-child(2):before {
-  content: "(";
-}
+    .date {
+      float: left;
+    }
 
-.date:after {
-  content: ";\00a0";
-}
+    .date:nth-child(2):before {
+      content: "(";
+    }
 
-.date:last-of-type:after {
-  content: ")\00a0";
-}
+    .date:after {
+      content: ";\00a0";
+    }
 
+    .date:last-of-type:after {
+      content: ")\00a0";
+    }
+}
 .work-not-found {
     text-align: center;
     padding-top: 20px;
@@ -138,4 +158,36 @@
 
 .online-link {
     padding: 15px;
+}
+
+/* Publication Details */
+.editions {
+    margin-top: 20px;
+    text-align: left;
+}
+.editions:before {
+    content: 'Udgaver';
+    font-weight: bold;
+}
+.publication-details {
+    padding: 20px;
+    text-align: left;
+    border-top: 1px solid;
+    .publisher,
+    .edition {
+        float: left;
+    }
+    .publisher:after,
+    .edition::after{
+        content: ',\00a0';
+    }
+    .date {
+        float: none;
+    }
+    .date:after {
+        content: '';
+    }
+    .isbn:before {
+        content: 'ISBN:\00a0';
+    }
 }

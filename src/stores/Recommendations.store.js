@@ -2,7 +2,8 @@
 
 import Reflux from 'reflux';
 import {shuffle} from 'lodash';
-import RecommendationsAction from '../actions/Recommendations.action.js';
+import SocketClient from '../utils/ServiceProviderSocketClient.js';
+import RecommendationsActions from '../actions/Recommendations.action.js';
 import CoverImageActions from '../actions/CoverImage.action.js';
 
 
@@ -23,19 +24,43 @@ const defaultRecommendations = [
 
 let _store = {
   result: [],
-  pending: false
+  pending: false,
+  info: {more: false}
 };
 
 /**
  * Store containing the recommendations related to the search query
  */
 let RecommendationsStore = Reflux.createStore({
+  mixins: [SocketClient('getRecommendations')],
+  listenables: RecommendationsActions,
+
+  getInitialState() {
+    return _store;
+  },
 
   init() {
+    this.response(this.onResponse);
     // Register statusUpdate action
-    this.listenTo(RecommendationsAction.updated, this.update);
-    this.listenTo(RecommendationsAction.pending, this.updatePending);
   },
+
+  onDefault() {
+    this.onRequest(defaultRecommendations);
+  },
+  onRequest(data) {
+    if (data.length > 0) {
+      this.updatePending(true);
+      this.request(data);
+    }
+  },
+
+  onResponse(result) {
+    result.forEach(element => CoverImageActions(element.identifiers));
+    _store.result = shuffle(result).splice(0, 20);
+    _store.pending = false;
+    this.trigger(_store);
+  },
+
 
   updatePending(state) {
     _store.pending = state;

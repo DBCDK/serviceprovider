@@ -5,7 +5,7 @@ let FrontPage = React.createClass({
   render: () => {
     return (
       <div>
-        <img src='/logo.png'/>
+        <img src='/logo.png' />
       </div>
     );
   }

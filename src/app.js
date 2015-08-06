@@ -7,8 +7,9 @@
 
 // loading config etc.
 import config from '../config.js';
+import uiconfig from '../uiconfig.js';
 // newrelic needs to be required the es5 way because we only wants to load new relic if specified in config.js
-const newrelic = (config.newrelic) && require('newrelic') || null;
+const newrelic = config.newrelic && require('newrelic') || null;
 import {version} from '../package.json';
 
 // loading libraries
@@ -16,16 +17,19 @@ import express from 'express';
 import http from 'http';
 import socketio from 'socket.io';
 import path from 'path';
-import logger from './logger.js';
+import Logger from 'dbc-node-logger';
 import ServiceProvider from 'dbc-node-serviceprovider';
 
 // loading components
-import SearchServer from './components/Search/Search.server.js';
+import SearchServer from './components/searchpage/Search.server.js';
 
 const app = express();
 const server = http.Server(app);
 const socket = socketio.listen(server);
-const PRODUCTION = (process.env.NODE_ENV === 'production'); // eslint-disable-line no-process-env
+const PRODUCTION = process.env.NODE_ENV === 'production'; // eslint-disable-line no-process-env
+const APP_NAME = process.env.NEW_RELIC_APP_NAME || 'app_name'; // eslint-disable-line no-process-env
+const logger = new Logger({app_name: APP_NAME, handleExceptions: true});
+const expressLoggers = logger.getExpressLoggers();
 
 // settings up our provider
 ServiceProvider(config.provider).setupSockets(socket);
@@ -59,13 +63,14 @@ app.locals.newrelic = newrelic;
 app.locals.version = version;
 app.locals.production = PRODUCTION;
 
+app.use(expressLoggers.logger);
+app.use(expressLoggers.errorLogger);
+
 app.get(['/', '/search', '/search/*'], (req, res) => {
   const query = req.query || [];
-  res.render('search', SearchServer({query}));
-});
-
-app.get('/autocomplete', (req, res) => {
-  res.render('autocomplete');
+  let properties = SearchServer({query, config: uiconfig});
+  properties.config = JSON.stringify(uiconfig);
+  res.render('search', properties);
 });
 
 app.get('/profile', (req, res) => {
@@ -90,7 +95,7 @@ app.get(['/order', '/order/*'], (req, res) => {
 
 // starting server
 server.listen(app.get('port'), () => {
-  logger.info('Server listening on ' + app.get('port'));
-  logger.info({message: 'Versions: ', data: process.versions});
-  logger.info(version + ' is up and running');
+  logger.log('info', 'Server listening on ' + app.get('port'));
+  logger.log('info', 'Versions: ', process.versions);
+  logger.log('info', version + ' is up and running');
 });

@@ -1,11 +1,11 @@
 'use strict';
 
 import Reflux from 'reflux';
-import ResultListActions from '../actions/ResultList.action.js';
+import SocketClient from '../utils/ServiceProviderSocketClient.js';
+import QueryParser from '../utils/QueryParser.util.js';
+import QueryStore from './QueryStore.store.js';
 import CoverImageActions from '../actions/CoverImage.action.js';
 
-// Setup dataobject for query
-// @todo We may need to initialize it with data from the URL or an global object
 let _store = {
   result: [],
   info: {hits: 0, collections: 0, more: false},
@@ -13,27 +13,47 @@ let _store = {
   hasSearchBeenExecuted: false
 };
 
-/**
- * Store containing the current query of the page
- */
 let ResultListStore = Reflux.createStore({
+  mixins: [SocketClient('getOpenSearchResultList')],
 
-  // Initial setup by reflux
-  init() {
-    // Register statusUpdate action
-    this.listenTo(ResultListActions.updated, this.update);
-    this.listenTo(ResultListActions.clear, this.empty);
-    this.listenTo(ResultListActions.pending, this.updatePending);
+  getInitialState() {
+    return _store;
   },
 
-  updatePending(state = true) {
+  init() {
+    this.listenTo(QueryStore, this.onQueryUpdated);
+    this.onQueryUpdated(QueryStore.getInitialState());
+    this.response(this.onResponse);
+  },
+
+  onQueryUpdated(store) {
+    if (!store.queryHasChanged) {
+      return;
+    }
+    const {query, page, worksPerPage, sort} = store;
+    const offset = page * worksPerPage;
+
+    if (query.length > 0) {
+      if (page === 0) {
+        this.empty();
+      }
+      this.pending();
+      let q = QueryParser.objectToCql(query);
+      this.request({query: q, offset, worksPerPage, sort});
+    }
+    else {
+      this.empty();
+      this.onResponse([]);
+    }
+  },
+
+  pending(state = true) {
     _store.pending = state;
     _store.hasSearchBeenExecuted = true;
     this.trigger(_store);
   },
 
-  // update the resultList object and trigger an action
-  update(result) {
+  onResponse(result) {
     let resultList = result.result || [];
     let info = result.info || [];
     this.callImageActions(resultList);
@@ -45,6 +65,7 @@ let ResultListStore = Reflux.createStore({
     }
     this.trigger(_store);
   },
+
   empty() {
     _store.result = [];
     _store.info = {hits: 0, collections: 0, more: false};

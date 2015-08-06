@@ -1,6 +1,6 @@
 'use strict';
 
-// import newrelic from 'newrelic';
+import * as dbcrelic from 'dbc-node-newrelic-wrapper';
 
 /**
  * A dummy socket client used for server side rendering.
@@ -17,7 +17,7 @@ const serverSideSocketDummy = {
  * socket.io-client cannot be loaded on the server, so if window object
  * @type {boolean|{on: Function, emit: Function}}
  */
-const socket = (typeof window !== 'undefined') && require('socket.io-client').connect() || serverSideSocketDummy;
+const socket = typeof window !== 'undefined' && require('socket.io-client').connect() || serverSideSocketDummy;
 
 /**
  * Reqistrer an event for the ServiceProvider
@@ -32,8 +32,8 @@ const socket = (typeof window !== 'undefined') && require('socket.io-client').co
 export default function ServiceProviderSocketClient(event) {
   function request(data) {
     const requestEvent = event + 'Request';
-    // newrelic.addPageAction(requestEvent, {request: data});
     socket.emit(requestEvent, data);
+    dbcrelic.addPageAction(requestEvent, {request: data});
   }
 
   function addListener(listener) {
@@ -43,8 +43,8 @@ export default function ServiceProviderSocketClient(event) {
   function response(cb) {
     const responseEvent = event + 'Response';
     socket.on(responseEvent, (data) => {
-      // newrelic.addPageAction(responseEvent, {response: data});
       cb(data);
+      dbcrelic.addPageAction(responseEvent, {response: data});
     });
   }
 
