@@ -46,7 +46,7 @@ export default React.createClass({
           placeholder={placeholder}
           focus={InputFieldActions.focus}
           />
-        <AutoCompleteContainer data={this.state.autocomplete} input={this.state.input} actions={AutoCompleteActions}/>
+        <AutoCompleteContainer data={this.state.autocomplete} input={this.state.input} actions={AutoCompleteActions} />
       </div>
     );
   }
