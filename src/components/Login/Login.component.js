@@ -26,7 +26,7 @@ const Login = React.createClass({
 
         <div className='row'>
           <div className='small-6 columns'><a href='/signup'>Ny Profil?</a></div>
-          <div className='small-6 columns'><a href='/password-reset'>Glemt password?</a></div>
+          <div className='small-6 columns'><a href='/resetpassword'>Glemt password?</a></div>
         </div>
       </div>
     );
