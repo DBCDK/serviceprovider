@@ -14,6 +14,7 @@ module.exports = [{
     querysearch: './src/components/searchpage/index.js',
     profile: './src/components/Profile/index.js',
     login: './src/components/Login/index.js',
+    signup: './src/components/Signup/index.js',
     work: './src/components/Work/Work.client',
     order: './src/components/Order/Order.client',
     styles: process.env.NODE_APPLICATION === 'ddbmobil' && './src/styles/ddb.scss' || './src/styles/pg.scss' // eslint-disable-line no-process-env

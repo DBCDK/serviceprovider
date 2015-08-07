@@ -81,6 +81,10 @@ app.get('/login', (req, res) => {
   res.render('login');
 });
 
+app.get('/signup', (req, res) => {
+  res.render('signup');
+});
+
 app.get(['/work', '/work/*'], (req, res) => {
   let id = req.query.id;
   id = '"' + id + '"';
