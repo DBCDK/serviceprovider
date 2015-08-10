@@ -23,13 +23,18 @@ import QueryStore from '../../stores/QueryStore.store.js';
 import InputFieldStore from '../../stores/InputField.store.js';
 import AutoCompleteStore from '../../stores/AutoComplete.store.js';
 
+const SearchFieldContainerComponent = React.createClass({
+  displayName: 'SearchFieldContainerComponent',
 
-export default React.createClass({
   mixins: [
     Reflux.connect(AutoCompleteStore, 'autocomplete'),
     Reflux.connect(InputFieldStore, 'input'),
     Reflux.connect(QueryStore, 'query')
   ],
+
+  propTypes: {
+    placeholder: React.PropTypes.string
+  },
 
   showPlaceholder() {
     return !(this.state.query.query && this.state.query.query.length);
@@ -51,3 +56,5 @@ export default React.createClass({
     );
   }
 });
+
+export default SearchFieldContainerComponent;
