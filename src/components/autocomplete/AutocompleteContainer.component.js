@@ -36,9 +36,9 @@ const AutoCompleteContainer = React.createClass({
   },
 
   componentDidMount() {
-    // the debounce function ensures the function is max called once every 100 milliseconds
+    // the debounce function ensures the function is max called once every 100 milliseconds - @mmj might drop this delay
     // @todo cancel calls to debounce on query update
-    this.debouncedTextfieldUpdated = debounce(this.props.actions.textfieldUpdated, 100);
+    this.debouncedTextfieldUpdated = debounce(this.props.actions.textfieldUpdated, 0);
   },
   shouldComponentUpdate() {
     if (this.state.focus !== this.props.input.focus) {
