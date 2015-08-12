@@ -19,6 +19,7 @@ import socketio from 'socket.io';
 import path from 'path';
 import Logger from 'dbc-node-logger';
 import ServiceProvider from 'dbc-node-serviceprovider';
+import bodyParser from 'body-parser';
 
 // loading components
 import SearchServer from './components/searchpage/Search.server.js';
@@ -32,7 +33,7 @@ const logger = new Logger({app_name: APP_NAME, handleExceptions: true});
 const expressLoggers = logger.getExpressLoggers();
 
 // settings up our provider
-ServiceProvider(config.provider).setupSockets(socket);
+const serviceProvider = ServiceProvider(config.provider).setupSockets(socket);
 
 // Port config
 app.set('port', process.env.PORT || 8080); // eslint-disable-line no-process-env
@@ -66,6 +67,9 @@ app.locals.production = PRODUCTION;
 app.use(expressLoggers.logger);
 app.use(expressLoggers.errorLogger);
 
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({extended: true}));
+
 app.get(['/', '/search', '/search/*'], (req, res) => {
   const query = req.query || [];
   let properties = SearchServer({query, config: uiconfig});
@@ -83,6 +87,35 @@ app.get('/login', (req, res) => {
 
 app.get('/signup', (req, res) => {
   res.render('signup');
+});
+
+app.post('/signup', (req, res) => {
+
+  const email = req.body.email;
+  const password = req.body.password;
+  const repeatedPassword = req.body.repeatedPassword;
+
+  // validate arguments
+  if (email && password && repeatedPassword && (password === repeatedPassword)) {
+    let resp = serviceProvider.trigger(
+      'createUser',
+      {
+        email: email,
+        password: password
+      }
+    );
+
+    Promise.all(resp).then(function() {
+      res.render('signup');
+    }, function() {
+      throw new Error('Promise rejected');
+    });
+
+  }
+  else {
+    // something went wrong..
+    res.status(400).send('Invalid input');
+  }
 });
 
 app.get('/resetpassword', (req, res) => {

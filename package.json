@@ -33,6 +33,7 @@
     "babel": "^5.2.9",
     "babel-core": "^5.2.9",
     "babel-loader": "^5.0.0",
+    "body-parser": "^1.13.3",
     "css-loader": "^0.15.5",
     "dbc-node-logger": "git://github.com/DBCDK/dbc-node-logger#stable_dist",
     "dbc-node-newrelic-wrapper": "git://github.com/DBCDK/dbc-node-newrelic-wrapper#stable_dist",
