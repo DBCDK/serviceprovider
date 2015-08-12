@@ -75,6 +75,7 @@ const Work = React.createClass({
     }
     general = work.result.general;
     title = general.title;
+    let audience = general.audience;
     if (general.hasOwnProperty('creators')) {
       creators = general.creators.map((creator) => {
         return (<div className='creator' >
@@ -103,7 +104,6 @@ const Work = React.createClass({
     if (general.hasOwnProperty('dk5s')) {
       dk5s = general.dk5s.map((dk5) => {
         return (<div className='dk5' ><a href={dk5.search_link} >{dk5.value}</a>
-
           <div className='dk5text' >{dk5.text}</div>
         </div>);
       });
@@ -237,6 +237,12 @@ const Work = React.createClass({
             <div className='subjects' >{subjects}</div>
             <div className='clear' ></div>
             <div className='dk5s' >{dk5s}</div>
+            <div className='clear' ></div>
+            <div className='audience' >
+              <div className='age'>{audience.age}</div>
+              <div className='pegi'>{audience.pegi}</div>
+              <div className='medieraad'>{audience.medieraad}</div>
+            </div>
             <div className='clear' ></div>
             <div className='tracks' >{tracks}</div>
             <div className='clear' ></div>
