@@ -45,9 +45,7 @@ const Work = React.createClass({
 
   render() {
     const {id, work, info} = this.state; // eslint-disable-line
-    let general,
-        title,
-        creators,
+    let creators,
         description,
         parts,
         issns,
@@ -73,9 +71,9 @@ const Work = React.createClass({
     if (work.result.length === 0) {
       return (<div />);
     }
-    general = work.result.general;
-    title = general.title;
-    let audience = general.audience;
+    const general = work.result.general;
+    const title = general.title;
+    const audience = general.audience;
     if (general.hasOwnProperty('creators')) {
       creators = general.creators.map((creator) => {
         return (<div className='creator' >
