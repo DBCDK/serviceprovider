@@ -98,16 +98,15 @@ app.post('/signup', (req, res) => {
   // validate arguments
   if (email && password && repeatedPassword && (password === repeatedPassword)) {
     let resp = serviceProvider.trigger(
-      'createUser',
-      {
+      'createUser', {
         email: email,
         password: password
       }
     );
 
-    Promise.all(resp).then(function() {
+    Promise.all(resp).then(function () {
       res.render('signup');
-    }, function() {
+    }, function () {
       throw new Error('Promise rejected');
     });
 
