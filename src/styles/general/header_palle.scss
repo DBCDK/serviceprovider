@@ -1,11 +1,27 @@
 body {
-    font-family: "Lucida Sans Unicode","Lucida Sans",Arial,sans-serif;
+  font-family: "Lucida Sans Unicode", "Lucida Sans", Arial, sans-serif;
 }
 
 #header {
   background-color: #ffffff;
   display: block;
   height: 100px;
+}
+
+#message {
+  p {
+    text-align: center;
+    font-weight: 900;
+    border: 1px solid #ddd;
+  }
+
+  .info {
+    background-color: lightgreen;
+  }
+
+  .warning {
+    background-color: indianred;
+  }
 }
 
 #logo {
@@ -27,11 +43,11 @@ a:hover {
   color: #2971A7;
 }
 
-button:hover, 
-button:focus, 
+button:hover,
+button:focus,
 .button:hover,
 .button:focus {
-    background-color: #2971A7;
+  background-color: #2971A7;
 }
 
 .token-searchfield {
@@ -88,6 +104,7 @@ button:focus,
     padding-left: 2px;
   }
 }
+
 .button.secondary {
   color: #000000;
   background-color: #ffffff;
