@@ -105,15 +105,14 @@ app.post('/signup', (req, res) => {
     );
 
     Promise.all(resp).then(function () {
-      res.render('signup');
+      res.render('signup', {message: {text: 'Vi har sendt en bekræftelse-email til dig', error: false}});
     }, function () {
       throw new Error('Promise rejected');
     });
-
   }
   else {
     // something went wrong..
-    res.status(400).send('Invalid input');
+    res.render('signup', {message: {text: 'Noget gik galt!', error: true}});
   }
 });
 
