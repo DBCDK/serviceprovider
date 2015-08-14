@@ -2,40 +2,65 @@ $height: 32px;
 $line-height: 20px;
 
 .searchfield-wrapper {
-  border:1px solid #cccccc;
+  border: 1px solid #cccccc;
   margin: 20px;
   border-radius: 3px;
   position: relative;
+
   input {
     height: $height;
     line-height: $line-height;
     margin: 0;
     padding: 0;
   }
+
   .searchfield {
     border: none;
-    background-color: transparent;
+    background-color: #ffffff;
+    padding: 10px 100px 10px 10px;
     width: 100%;
     overflow: hidden;
     box-shadow: none;
   }
+
   .button {
-    padding: 0px 20px;
+    padding: 0 20px;
     border-radius: 0 3px 3px 0;
   }
-  .submit{
+
+  .submit {
     position: absolute;
     right: 0;
   }
+
   .inputfield {
     width: 100%;
-    padding: 0 10px;
+    padding: 0;
   }
+
   li {
     height: $height;
     vertical-align: middle;
     display: inline-block;
     list-style: none;
     padding: 0;
+  }
+}
+
+.token-searchfield--spinner {
+  position: absolute;
+  display: none;
+
+  &.pending {
+    display: block;
+    width: 20px;
+    height: 20px;
+    position: absolute;
+    background-image: url("/loader.gif");
+    background-size: 20px;
+    background-repeat: no-repeat;
+    right: 70px;
+    background-position: center;
+    top: 6px;
   }
 }

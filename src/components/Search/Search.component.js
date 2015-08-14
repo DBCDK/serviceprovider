@@ -10,7 +10,7 @@ import {isEmpty} from 'lodash';
 
 // import components
 import AutoComplete from 'dbc-react-autocomplete';
-import {TokenSearchField, FilterGuide} from 'dbc-react-querystring';
+import {TokenSearchField, FilterGuide} from 'dbc-react-components';
 import {ResultDisplay} from 'dbc-react-resultlistview';
 import SearchTabs from './SearchTabs.component.js';
 import Loader from '../Loader.component.js';

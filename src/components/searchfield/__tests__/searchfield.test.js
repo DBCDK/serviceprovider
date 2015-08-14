@@ -8,7 +8,7 @@ import {expect} from 'chai';
 import React from 'react';
 import TestUtils from 'react/lib/ReactTestUtils';
 import Search from '../../searchfield/SearchFieldContainer.component.js';
-import {TokenSearchField} from 'dbc-react-querystring';
+import {TokenSearchField} from 'dbc-react-components';
 import QueryStore from '../../../stores/QueryStore.store.js';
 
 describe('Test the Search component', () => {

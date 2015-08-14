@@ -8,7 +8,7 @@ import React from 'react';
 import Reflux from 'reflux';
 
 // Components
-import {FilterGuide} from 'dbc-react-querystring';
+import {FilterGuide} from 'dbc-react-components';
 
 // Actions
 import QueryActions from '../../actions/QueryUpdate.action.js';
