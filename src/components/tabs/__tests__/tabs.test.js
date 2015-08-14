@@ -35,12 +35,9 @@ describe('Test the Tabs component', () => {
     TestUtils.Simulate.click(TestUtils.scryRenderedDOMComponentsWithTag(dom, 'a')[1]);
   });
 
-  it('second tab is selected', (done)=> {
+  it('second tab is selected', ()=> {
     TestUtils.Simulate.click(TestUtils.scryRenderedDOMComponentsWithTag(dom, 'a')[1]);
-    setTimeout(() => {
-      expect(TestUtils.scryRenderedDOMComponentsWithClass(dom, 'test1')).to.have.length(0);
-      expect(TestUtils.scryRenderedDOMComponentsWithClass(dom, 'test2')).to.have.length(1);
-      done();
-    }, 0);
+    expect(TestUtils.scryRenderedDOMComponentsWithClass(dom, 'test1')).to.have.length(0);
+    expect(TestUtils.scryRenderedDOMComponentsWithClass(dom, 'test2')).to.have.length(1);
   });
 });

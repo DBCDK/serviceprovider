@@ -18,6 +18,7 @@ describe('Test the Search component', () => {
     let tokenSearchField = TestUtils.scryRenderedComponentsWithType(dom, TokenSearchField);
     expect(tokenSearchField).to.have.length(1);
   });
+
   it('no query in querystore should generate 0 tokens', ()=> {
     QueryStore.onReset();
     let element = React.createElement(Search);
@@ -37,19 +38,18 @@ describe('Test the Search component', () => {
     expect(tokens).to.have.length(2);
   });
 
-  it('Remove token from searchfield', (done)=> {
+  it('Remove token from searchfield', ()=> {
     QueryStore.getInitialState().query = [
       {value: 'test', type: 'testType'},
       {value: 'test2', type: 'testType2'}
     ];
+
     let element = React.createElement(Search);
     let dom = TestUtils.renderIntoDocument(element);
     let tokens = TestUtils.scryRenderedDOMComponentsWithClass(dom, 'token');
     TestUtils.Simulate.click(TestUtils.findRenderedDOMComponentWithClass(tokens[0], 'remove'));
-    setTimeout(() => {
-      let store = QueryStore.getInitialState();
-      expect(store.query).to.have.length(1);
-      done();
-    }, 0);
+
+    let store = QueryStore.getInitialState();
+    expect(store.query).to.have.length(1);
   });
 });

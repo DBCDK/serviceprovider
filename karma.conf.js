@@ -11,7 +11,7 @@ module.exports = function(config) {
     preprocessors: {
       'tests.webpack.js': ['webpack']
     },
-    reporters: ['mocha', 'dots', 'junit'],
+    reporters: ['mocha', 'junit'],
     junitReporter: {
       outputDir: 'output'
     },

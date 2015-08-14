@@ -25,14 +25,19 @@ describe('Test the Filter component', () => {
       {value: 'test', type: 'testType'},
       {value: 'test2', type: 'testType2'}
     ];
+
     FilterStore.setStore(filterElements);
+
     let element = React.createElement(Filter);
     let dom = TestUtils.renderIntoDocument(element);
     let filterGuides = TestUtils.scryRenderedComponentsWithType(dom, FilterGuide);
+
     expect(filterGuides).to.have.length(1);
     // Click on first element
+
     TestUtils.Simulate.click(TestUtils.scryRenderedDOMComponentsWithTag(filterGuides[0], 'a')[0]);
     TestUtils.Simulate.click(TestUtils.scryRenderedDOMComponentsWithTag(filterGuides[0], 'a')[1]);
+
     setTimeout(() => {
       let store = QueryStore.getInitialState();
       expect(store.query).to.have.length(2);
