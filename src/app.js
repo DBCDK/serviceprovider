@@ -85,6 +85,26 @@ app.get('/login', (req, res) => {
   res.render('login');
 });
 
+app.get('/confirm', (req, res) => {
+  // for email verification flow
+  const uid = req.query.uid;
+  const token = req.query.token;
+  const redirectUrl = req.query.redirect;
+
+  let verifyResponse = serviceProvider.trigger(
+    'verifyEmail', {
+      uid: uid,
+      token: token
+    }
+  );
+
+  Promise.all(verifyResponse).then(function () {
+    res.redirect(redirectUrl);
+  }, function () {
+    throw new Error('Promise rejected');
+  });
+});
+
 app.get('/signup', (req, res) => {
   res.render('signup');
 });
