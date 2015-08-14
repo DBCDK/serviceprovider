@@ -5,13 +5,17 @@ module.exports = function(config) {
     basePath: '',
     frameworks: ['mocha'],
     files: [
-      'tests.webpack.js'
+      'tests.utils.webpack.js',
+      'tests.stores.webpack.js',
+      'tests.components.webpack.js'
     ],
     exclude: [],
     preprocessors: {
-      'tests.webpack.js': ['webpack']
+      'tests.utils.webpack.js': ['webpack'],
+      'tests.stores.webpack.js': ['webpack'],
+      'tests.components.webpack.js': ['webpack']
     },
-    reporters: ['mocha', 'dots', 'junit'],
+    reporters: ['mocha', 'junit'],
     junitReporter: {
       outputDir: 'output'
     },

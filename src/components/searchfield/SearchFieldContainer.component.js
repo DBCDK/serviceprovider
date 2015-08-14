@@ -11,7 +11,7 @@ import Reflux from 'reflux';
 
 // Components
 import AutoCompleteContainer from '../autocomplete/AutocompleteContainer.component.js';
-import {TokenSearchField} from 'dbc-react-querystring';
+import {TokenSearchField} from 'dbc-react-components';
 
 // Actions
 import AutoCompleteActions from '../../actions/AutoComplete.action.js';
@@ -24,17 +24,17 @@ import InputFieldStore from '../../stores/InputField.store.js';
 import AutoCompleteStore from '../../stores/AutoComplete.store.js';
 
 const SearchFieldContainerComponent = React.createClass({
-  displayName: 'SearchFieldContainerComponent',
+  displayName: 'SearchFieldContainer.component',
+
+  propTypes: {
+    placeholder: React.PropTypes.string
+  },
 
   mixins: [
     Reflux.connect(AutoCompleteStore, 'autocomplete'),
     Reflux.connect(InputFieldStore, 'input'),
     Reflux.connect(QueryStore, 'query')
   ],
-
-  propTypes: {
-    placeholder: React.PropTypes.string
-  },
 
   showPlaceholder() {
     return !(this.state.query.query && this.state.query.query.length);
@@ -45,13 +45,14 @@ const SearchFieldContainerComponent = React.createClass({
     return (
       <div className='searchfield' >
         <TokenSearchField
+          change={InputFieldActions.change}
+          focus={InputFieldActions.focus}
+          pending={this.state.autocomplete.pending}
+          placeholder={placeholder}
           query={this.state.query.query}
           update={QueryActions.update}
-          change={InputFieldActions.change}
-          placeholder={placeholder}
-          focus={InputFieldActions.focus}
           />
-        <AutoCompleteContainer data={this.state.autocomplete} input={this.state.input} actions={AutoCompleteActions} />
+        <AutoCompleteContainer actions={AutoCompleteActions} store={this.state.autocomplete} input={this.state.input} />
       </div>
     );
   }

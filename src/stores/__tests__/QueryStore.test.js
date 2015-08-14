@@ -1,11 +1,16 @@
 'use strict';
+
 import {expect} from 'chai';
 import QueryStore from '../QueryStore.store.js';
 import queryAction from '../../actions/QueryUpdate.action.js';
 
 describe('Test Reflux Query Store', () => {
-  it('is empty', ()=> {
+
+  beforeEach(() => {
     QueryStore.onReset();
+  });
+
+  it('is empty', ()=> {
     let store = QueryStore.getInitialState();
     expect(store.query).to.have.length(0);
   });
@@ -23,7 +28,5 @@ describe('Test Reflux Query Store', () => {
       expect(cql).to.equal('(test) and term.type=(type)');
       done();
     }, 0);
-
   });
-
 });

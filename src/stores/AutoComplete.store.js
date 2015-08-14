@@ -8,7 +8,10 @@ import {CoverImage} from 'dbc-react-components';
 
 const AutoCompleteStore = Reflux.createStore({
   listenables: AutoCompleteActions,
-  store: {},
+  store: {
+    data: {},
+    pending: false
+  },
 
   init() {
     this.listenTo(QueryActions.update, this.clearData);
@@ -17,6 +20,11 @@ const AutoCompleteStore = Reflux.createStore({
   parseResponse(response, data) {
     const index = response.index;
     const query = response.query || '';
+
+    if (query === '') {
+      return data;
+    }
+
     if (!data[response.query]) {
       data[response.query] = {};
     }
@@ -62,26 +70,31 @@ const AutoCompleteStore = Reflux.createStore({
 
   addLinks(data, index) {
     return data.map((value) => {
+      let item = {};
+
       const pids = value.pid ? [value.pid] : null;
-      value.imageComp = (<CoverImage pids={pids} prefSize={'detail_117'} noCoverUrl={'/covers/no-cover-image-other.png'}/>);
+      item.imageComp = (
+        <CoverImage pids={pids} prefSize={'detail_117'} noCoverUrl={'/covers/no-cover-image-other.png'} />
+      );
+
+      item.text = value.text;
       if (value.pid) {
-        value.href = '/work?id=' + value.pid;
+        item.href = '/work?id=' + value.pid;
       }
       else {
-        value.href = '/search?' + index.replace('display', 'term') + '=' + value.text;
+        item.href = '/search?' + index.replace('display', 'term') + '=' + value.text;
       }
-      return value;
+      return item;
     });
   },
 
-  onTextfieldUpdated(value) {
-    if (value.length <= 0) {
-      this.clearData();
-    }
+  onTextfieldUpdated(value) { // eslint-disable-line no-unused-vars
+    this.store.pending = true;
+    this.trigger(this.store);
   },
 
   onTextfieldUpdatedResponse(response) {
-    let data = this.store;
+    let data = this.store.data;
 
     if (response.error) {
       console.error('PopSuggest responded with an error: ', response); // eslint-disable-line
@@ -93,15 +106,8 @@ const AutoCompleteStore = Reflux.createStore({
       data = this.parseResponse(response, data);
     }
 
-    this.store = data;
-    this.trigger(this.store);
-  },
-  onClear() {
-    this.clearData();
-  },
-
-  clearData() {
-    this.store = {};
+    this.store.data = data;
+    this.store.pending = false;
     this.trigger(this.store);
   },
 
