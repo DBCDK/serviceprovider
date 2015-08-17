@@ -5,16 +5,12 @@
  * Provides the work view for the enduser.
  */
 import React from 'react';
-
-// import components
-// import {WorkDisplay} from 'dbc-react-workview';
-// import Loader from '../Loader.component.js';
-// import reflux actions and stores
 import workAction from '../../actions/Work.action.js';
 import workStore from '../../stores/Work.store.js';
 import {CoverImage} from 'dbc-react-components';
 
 const Work = React.createClass({
+  displayName: 'Work.component',
   propTypes: {
     id: React.PropTypes.string,
     work: React.PropTypes.object
@@ -25,6 +21,11 @@ const Work = React.createClass({
       id: this.props.id,
       work: workStore.getStore()
     };
+  },
+
+  componentDidMount() {
+    this.getWork();
+    workStore.listen(this.updateWork);
   },
 
   getWork() {
@@ -38,58 +39,55 @@ const Work = React.createClass({
     this.setState({work});
   },
 
-  componentDidMount() {
-    this.getWork();
-    workStore.listen(this.updateWork);
-  },
-
   getPublications: function(publications) {
     let types, publishers, dates, edition, extents, isbns, links;
     publications.map((publ) => {
       let className = 'publication-details';
       if (publ.hasOwnProperty('types')) {
-        types = publ.types.map((t) => {
+        types = publ.types.map((t, index) => {
           className += ' ' + t.toLowerCase().replace(/ .*/, '');
-          return (<div className='type' key={publ.identifier} >{t}</div>);
+          return (<div className='type' key={index} >{t}</div>);
         });
       }
       if (publ.hasOwnProperty('dates')) {
-        dates = publ.dates.map((d) => {
-          return (<div className='date' key={publ.identifier} >{d}</div>);
+        dates = publ.dates.map((d, index) => {
+          return (<div className='date' key={index} >{d}</div>);
         });
       }
       if (publ.hasOwnProperty('editions')) {
-        edition = publ.editions.map((ed) => {
-          return (<div className='edition' key={publ.identifier} >{ed}</div>);
+        edition = publ.editions.map((ed, index) => {
+          return (<div className='edition' key={index} >{ed}</div>);
         });
       }
       if (publ.hasOwnProperty('extents')) {
-        extents = publ.extents.map((e) => {
-          return (<div className='extent' key={publ.identifier} >{e}</div>);
+        extents = publ.extents.map((e, index) => {
+          return (<div className='extent' key={index} >{e}</div>);
         });
       }
       if (publ.hasOwnProperty('isbns')) {
-        isbns = publ.isbns.map((i) => {
-          return (<div className='isbn' key={publ.identifier} >{i}</div>);
+        isbns = publ.isbns.map((i, index) => {
+          return (<div className='isbn' key={index} >{i}</div>);
         });
       }
       if (publ.hasOwnProperty('links')) {
-        links = publ.links.map((l) => {
+        links = publ.links.map((l, index) => {
           return (
-            <div className='link' key={publ.identifier} ><a href={l} target='_blank' >Se online</a>
+            <div className='link' key={index} >
+              <a href={l} target='_blank' >Se online</a>
             </div>);
         });
       }
-      return (<div className={className} data-identifiers={publ.identifier} key={publ.identifier} >
-        {types}
-        <div className='clear' ></div>
-        {publishers}
-        {edition}
-        {dates}
-        {extents}
-        {isbns}
-        {links}
-      </div>);
+      return (
+        <div className={className} data-identifiers={publ.identifier} key={publ.identifier} >
+          {types}
+          <div className='clear' ></div>
+          {publishers}
+          {edition}
+          {dates}
+          {extents}
+          {isbns}
+          {links}
+        </div>);
     });
   },
 
@@ -119,11 +117,11 @@ const Work = React.createClass({
     }
     const general = work.result.general;
     const title = general.title;
-    const audience = general.audience ||{};
+    const audience = general.audience || {};
     if (general.hasOwnProperty('creators')) {
       creators = general.creators.map((creator, index) => {
-        return (<div className='creator' >
-          <a href={creator.search_link} key={index} >{creator.value}</a></div>);
+        return (<div className='creator' key={index} >
+          <a href={creator.search_link} >{creator.value}</a></div>);
       });
     }
     if (general.hasOwnProperty('description')) {
@@ -132,7 +130,8 @@ const Work = React.createClass({
     if (general.hasOwnProperty('actors')) {
       actors = general.actors.map((actor, index) => {
         return (
-          <div className='actor' key={index} ><a href={actor.search_link} >{actor.value}</a>
+          <div className='actor' key={index} >
+            <a href={actor.search_link} >{actor.value}</a>
           </div>);
       });
     }
@@ -147,7 +146,9 @@ const Work = React.createClass({
     }
     if (general.hasOwnProperty('dk5s')) {
       dk5s = general.dk5s.map((dk5, index) => {
-        return (<div className='dk5' key={index} ><a href={dk5.search_link} >{dk5.value}</a>
+        return (<div className='dk5' key={index} >
+          <a href={dk5.search_link} >{dk5.value}</a>
+
           <div className='dk5text' >{dk5.text}</div>
         </div>);
       });
@@ -187,7 +188,8 @@ const Work = React.createClass({
       }
       if (tw.accessType === 'online') {
         let online_link = 'Se ' + tw.type + ' online';
-        return (<a className='online-link' href="#" key={index} >{online_link}</a>);
+        return (
+          <a className='online-link' href="#" key={index} >{online_link}</a>);
       }
     });
     specifics = specific.map((tw, index) => {
@@ -233,9 +235,9 @@ const Work = React.createClass({
             <div className='dk5s' >{dk5s}</div>
             <div className='clear' ></div>
             <div className='audience' >
-              <div className='age'>{audience.age}</div>
-              <div className='pegi'>{audience.pegi}</div>
-              <div className='medieraad'>{audience.medieraad}</div>
+              <div className='age' >{audience.age}</div>
+              <div className='pegi' >{audience.pegi}</div>
+              <div className='medieraad' >{audience.medieraad}</div>
             </div>
             <div className='clear' ></div>
             <div className='tracks' >{tracks}</div>
