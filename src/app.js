@@ -100,9 +100,6 @@ app.post('/login', (req, res) => {
   Promise.all(loginResponse).then(function (response) {
 
     const result = response[0];
-
-    console.log('got result', typeof result.error);
-
     const isLoginSuccesful = typeof result.error === 'undefined';
     if (isLoginSuccesful) {
       const accessToken = result.id;
