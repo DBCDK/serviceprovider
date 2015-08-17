@@ -5,11 +5,6 @@
  * Provides the work view for the enduser.
  */
 import React from 'react';
-
-// import components
-// import {WorkDisplay} from 'dbc-react-workview';
-// import Loader from '../Loader.component.js';
-// import reflux actions and stores
 import workAction from '../../actions/Work.action.js';
 import workStore from '../../stores/Work.store.js';
 import {CoverImage} from 'dbc-react-components';
