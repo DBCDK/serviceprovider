@@ -85,6 +85,43 @@ app.get('/login', (req, res) => {
   res.render('login');
 });
 
+app.post('/login', (req, res) => {
+
+  const email = req.body.email;
+  const password = req.body.password;
+
+  let loginResponse = serviceProvider.trigger(
+    'loginUser', {
+      email: email,
+      password: password
+    }
+  );
+
+  Promise.all(loginResponse).then(function (response) {
+
+    const result = response[0];
+
+    console.log('got result', typeof result.error);
+
+    const isLoginSuccesful = typeof result.error === 'undefined';
+    if (isLoginSuccesful) {
+      const accessToken = result.id;
+      const ttl = result.ttl;
+      const uid = result.userId;
+      const redirectUrl = req.body.redirect ? req.body.redirect : '/profile';
+      res.cookie('accessToken', accessToken, {maxAge: ttl});
+      res.cookie('uid', uid, {maxAge: ttl});
+      res.redirect(redirectUrl);
+    }
+    else {
+      res.render('login', {message: {text: 'Din email eller dit password er ikke korrekt', error: true}});
+    }
+  }, function () {
+    throw new Error('Promise rejected');
+  });
+
+});
+
 app.get('/confirm', (req, res) => {
   // for email verification flow
   const uid = req.query.uid;

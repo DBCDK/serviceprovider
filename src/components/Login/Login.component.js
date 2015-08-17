@@ -20,11 +20,14 @@ const Login = React.createClass({
     return (
       <div>
         <h2>Log ind</h2>
-        <label>Email</label>
-        <input type='text' ref='email'></input>
-        <label>Password</label>
-        <input type='password' ref='password'></input>
-        <input className='button' type='button' value='Log ind' onClick={this.handleSubmit}></input>
+
+        <form method='POST' action='/login'>
+          <label>Email</label>
+          <input type='text' name='email' ref='email'></input>
+          <label>Password</label>
+          <input type='password' name='password' ref='password'></input>
+          <input className='button' type='submit' value='Log ind' onClick={this.handleSubmit}></input>
+        </form>
 
         <div className='row'>
           <div className='small-6 columns'><a href='/signup'>Ny Bruger?</a></div>
