@@ -22,13 +22,19 @@ const AutoCompleteContainer = React.createClass({
     };
   },
 
+  componentDidMount() {
+    // the debounce function ensures the function is max called once every 10 milliseconds
+    this.debouncedTextfieldUpdated = debounce(this.props.actions.textfieldUpdated, 10);
+  },
+
   shouldComponentUpdate() {
     if (this.state.focus !== this.props.input.focus) {
       // This is a small hack. The inputfield looses focus, when a link on the autocomplete is pressed
       // which makes the autocomplete hide, before link is pressed. Wrapping this in a sends the event to the back of the eventqueue
-      setTimeout(() => this.setState({focus: this.props.input.focus}), 1);
+      setTimeout(() => this.setState({focus: this.props.input.focus}), 50);
       return false;
     }
+
     return true;
   },
 
@@ -45,11 +51,6 @@ const AutoCompleteContainer = React.createClass({
       this.debouncedTextfieldUpdated.cancel();
     }
     this.lastInputValue = inputValue;
-  },
-
-  componentDidMount() {
-    // the debounce function ensures the function is max called once every 10 milliseconds
-    this.debouncedTextfieldUpdated = debounce(this.props.actions.textfieldUpdated, 10);
   },
 
   shouldAutoCompleteBeVisible() {
