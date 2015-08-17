@@ -9,22 +9,9 @@ import React from 'react';
 
 const ImageEditor = React.createClass({
 
-  getInitialState: function () {
-    return {
-      dragEndX: null,
-      dragEndY: null,
-      positionX: 0,
-      positionY: 0,
-      fixedX: 0,
-      fixedY: 0,
-      image: null,
-      isCroppable: false,
-      cvsImageWidth: null,
-      cvsImageHeight: null,
-      cropDragEnabled: false
-    };
+  displayName: function() {
+    return 'ReactImageEditor';
   },
-
 
   propTypes: function () {
     return {
@@ -33,17 +20,33 @@ const ImageEditor = React.createClass({
     };
   },
 
+  getInitialState: function () {
+    return {
+      cvsImageWidth: null,
+      cvsImageHeight: null,
+      cropDragEnabled: false,
+      dragEndX: null,
+      dragEndY: null,
+      fixedX: 0,
+      fixedY: 0,
+      image: null,
+      isCroppable: false,
+      positionX: 0,
+      positionY: 0
+    };
+  },
+
   componentDidMount: function () {
     window.addEventListener('resize', this._handleResize);
     this.loadImage(this.props.initialImageUrl, this.drawImage);
   },
 
-  componentWillUnmount: function () {
-    window.removeEventListener('resize', this._handleResize);
-  },
-
   componentDidUpdate: function () {
     this.drawImage();
+  },
+
+  componentWillUnmount: function () {
+    window.removeEventListener('resize', this._handleResize);
   },
 
   drawImage: function () {
@@ -228,12 +231,12 @@ const ImageEditor = React.createClass({
     return (
       <div>
         <canvas
-          ref='cvs'
           onMouseDown={this.handleDragStart}
+          onMouseMove={this.handleDrag}
           onMouseUp={this.handleDragEnd}
-          onMouseMove={this.handleDrag}/>
-        <input type='file' onChange={this.handleFileChanged}/>
-        <input type='button' ref='cropButton' value='Beskær' onClick={this.handleSave} disabled={!isCroppable}/>
+          ref='cvs'/>
+        <input onChange={this.handleFileChanged} type='file'/>
+        <input disabled={!isCroppable} onClick={this.handleSave} ref='cropButton' type='button' value='Beskær'/>
       </div>
     );
   }

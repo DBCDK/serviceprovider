@@ -10,6 +10,10 @@ import React from 'react';
 
 const Login = React.createClass({
 
+  displayName: function() {
+    return 'ReactLogin';
+  },
+
   componentDidMount: function () {
   },
 
@@ -21,12 +25,12 @@ const Login = React.createClass({
       <div>
         <h2>Log ind</h2>
 
-        <form method='POST' action='/login'>
+        <form action='/login' method='POST'>
           <label>Email</label>
-          <input type='text' name='email' ref='email'></input>
+          <input name='email' ref='email 'type='text'></input>
           <label>Password</label>
-          <input type='password' name='password' ref='password'></input>
-          <input className='button' type='submit' value='Log ind' onClick={this.handleSubmit}></input>
+          <input name='password' ref='password' type='password'></input>
+          <input className='button' onClick={this.handleSubmit} type='submit' value='Log ind'></input>
         </form>
 
         <div className='row'>

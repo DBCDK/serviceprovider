@@ -34,14 +34,19 @@ import CoverImageStore from '../../stores/CoverImage.store.js';
  * Search field wrapper component
  */
 const Search = React.createClass({
+
+  displayName: function() {
+    return 'ReactSearch';
+  },
+
   propTypes: {
-    query: React.PropTypes.object,
-    filterElements: React.PropTypes.array,
-    resultList: React.PropTypes.array,
-    recommendations: React.PropTypes.array,
-    selected: React.PropTypes.string,
     coverImages: React.PropTypes.object,
-    noOfWorks: React.PropTypes.number
+    filterElements: React.PropTypes.array,
+    noOfWorks: React.PropTypes.number,
+    query: React.PropTypes.object,
+    recommendations: React.PropTypes.array,
+    resultList: React.PropTypes.array,
+    selected: React.PropTypes.string
   },
 
   getInitialQuery() {
@@ -185,7 +190,7 @@ const Search = React.createClass({
     const loader = <Loader pending={results.pending} />;
     return (
       <div className='search' >
-        <TokenSearchField query={query.query} update={QueryActions.update} change={this.onChange} placeholder={placeholder} />
+        <TokenSearchField change={this.onChange} placeholder={placeholder} query={query.query} update={QueryActions.update} />
 
         <AutoComplete data={autoCompleteData} visible={autoCompleteVisible} />
 
@@ -194,14 +199,15 @@ const Search = React.createClass({
         <div className='search-result' >
           {searchTabs}
           <ResultDisplay
-            result={results.result}
+            coverImages={coverImages.images}
+            hasMore={resultList.info.more === 'true'}
+            loader={loader}
+            loadMore={QueryActions.nextPage}
+            noOfWorks={noOfWorks}
             noResultsText=''
             pending={results.pending}
-            loader={loader}
-            coverImages={coverImages.images}
-            noOfWorks={noOfWorks}
-            hasMore={resultList.info.more === 'true'}
-            loadMore={QueryActions.nextPage} >
+            result={results.result}
+            >
 
             {noResults}
 

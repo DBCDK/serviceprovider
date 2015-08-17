@@ -16,6 +16,10 @@ import ProfileStore from '../../stores/Profile.store.js';
 
 const Profile = React.createClass({
 
+  displayName: function() {
+    return 'ReactProfile';
+  },
+
   getInitialState: function () {
     return {profile: ProfileStore.getProfile()};
   },
@@ -36,9 +40,9 @@ const Profile = React.createClass({
     let followersCount = profile.followersCount;
     return (
       <div>
-        <ProfileHeader ref='header' editable={editable}/>
-        <ProfileImage url={profile.imageUrl} editable={editable} />
-        <ProfileAttribute name='Name' type='string' value={profile.name} editable={editable} />
+        <ProfileHeader editable={editable} ref='header'/>
+        <ProfileImage editable={editable} url={profile.imageUrl} />
+        <ProfileAttribute editable={editable} name='Name' type='string' value={profile.name}/>
         <ProfileSocialSummary followerCount={followersCount} followingCount={followingCount}
                               groupsCount={groupsCount} />
       </div>

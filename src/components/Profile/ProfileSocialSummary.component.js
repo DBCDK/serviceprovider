@@ -9,6 +9,19 @@ import React from 'react';
 
 
 const ProfileSocialSummary = React.createClass({
+
+  displayName: function() {
+    return 'ReactProfileSocialSummary';
+  },
+
+  propTypes: function () {
+    return {
+      followerCount: React.PropTypes.number,
+      followingCount: React.PropTypes.number,
+      groupsCount: React.PropTypes.number
+    };
+  },
+
   render: function () {
     let followerCount = this.props.followerCount;
     let followingCount = this.props.followingCount;

@@ -11,6 +11,11 @@ import React from 'react';
 // import orderStore from '../../stores/Order.store.js';
 
 const Order = React.createClass({
+
+  displayName: function() {
+    return 'ReactOrder';
+  },
+
   propTypes: {
     ids: React.PropTypes.array,
     title: React.PropTypes.string,
