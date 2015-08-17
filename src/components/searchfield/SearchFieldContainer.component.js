@@ -52,7 +52,7 @@ const SearchFieldContainerComponent = React.createClass({
           query={this.state.query.query}
           update={QueryActions.update}
           />
-        <AutoCompleteContainer actions={AutoCompleteActions} store={this.state.autocomplete} input={this.state.input} />
+        <AutoCompleteContainer actions={AutoCompleteActions} input={this.state.input} store={this.state.autocomplete} />
       </div>
     );
   }
