@@ -10,6 +10,10 @@ import ProfileActions from '../../actions/Profile.action.js';
 
 const ProfileAttribute = React.createClass({
 
+  displayName: function() {
+    return 'ReactProfileAttribute';
+  },
+
   propTypes: function () {
     return {
       name: React.PropTypes.string,
@@ -28,8 +32,15 @@ const ProfileAttribute = React.createClass({
     let isEditable = this.props.editable;
     let component = <h3 className={'profile--displayname'}>{value}</h3>;
     if (isEditable === true) {
-      component = <input type='text' className={'profile--displayname'} defaultValue={value}
-                         onChange={this.handleTextChange}></input>;
+      component = (
+        <input
+          className={'profile--displayname'}
+          defaultValue={value}
+          onChange={this.handleTextChange}
+          type='text'
+          >
+        </input>
+      );
     }
     return (<div>{component}</div>);
   }

@@ -10,6 +10,10 @@ import React from 'react';
 
 const Image = React.createClass({
 
+  displayName: function() {
+    return 'ReactImage';
+  },
+
   propTypes: function () {
     return {
       url: React.PropTypes.string
@@ -19,7 +23,7 @@ const Image = React.createClass({
   render: function () {
     let url = this.props.url;
     return (
-      <img src={url} className={"profile--image-round"}></img>
+      <img className={"profile--image-round"} src={url}></img>
     );
   }
 });

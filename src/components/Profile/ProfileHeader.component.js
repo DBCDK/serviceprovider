@@ -11,6 +11,16 @@ import ProfileActions from '../../actions/Profile.action.js';
 
 const ProfileHeader = React.createClass({
 
+  displayName: function() {
+    return 'ReactProfileHeader';
+  },
+
+  propTypes: function() {
+    return {
+      editable: React.PropTypes.bool
+    };
+  },
+
   toggleEdit: function () {
     ProfileActions.toggleEdit();
   },
@@ -22,7 +32,7 @@ const ProfileHeader = React.createClass({
         <div className='row'>
           <div className='small-4 columns'><p></p></div>
           <div className='small-4 columns'><h2>Profil</h2></div>
-          <div className='small-4 columns'><a ref='toggleButton' onClick={this.toggleEdit}>{buttonText}</a></div>
+          <div className='small-4 columns'><a onClick={this.toggleEdit} ref='toggleButton'>{buttonText}</a></div>
         </div>
       </div>
     );

@@ -12,6 +12,10 @@ import ProfileStore from '../../stores/Profile.store.js';
 
 const Signup = React.createClass({
 
+  displayName: function() {
+    return 'ReactSignup';
+  },
+
   getInitialState: function() {
     return {
       isPasswordMatching: false,
@@ -47,37 +51,41 @@ const Signup = React.createClass({
     const emailColor = this.state.isEmailFormatted ? 'green' : 'orange';
     return (
       <div>
-        <form method='post' action='/signup'>
+        <form action='/signup' method='post'>
           <h2>Opret Profil</h2>
           <label>email</label>
           <input
             name='email'
-            type='text'
+            onChange={this.handleEmailTyping}
             ref='email'
             style={{borderColor: emailColor}}
-            onChange={this.handleEmailTyping}>
+            type='text'
+            >
           </input>
           <label>password</label>
           <input
             name='password'
-            type='password'
+            onChange={this.handlePasswordTyping}
             ref='password'
             style={{borderColor: passwordColor}}
-            onChange={this.handlePasswordTyping}>
+            type='password'
+            >
           </input>
           <label>gentag password</label>
           <input
             name='repeatedPassword'
-            type='password'
+            onChange={this.handlePasswordTyping}
             ref='repeatedPassword'
             style={{borderColor: passwordColor}}
-            onChange={this.handlePasswordTyping}>
+            type='password'
+            >
           </input>
           <input
             className='button'
+            onKeyUp={this.handleSubmit}
             type='submit'
             value='Opret profil'
-            onKeyUp={this.handleSubmit}>
+            >
           </input>
         </form>
       </div>

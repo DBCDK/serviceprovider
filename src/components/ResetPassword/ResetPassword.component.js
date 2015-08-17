@@ -10,6 +10,10 @@ import React from 'react';
 
 const ResetPassword = React.createClass({
 
+  displayName: function() {
+    return 'ReactResetPassword';
+  },
+
   componentDidMount: function () {
   },
 
@@ -20,9 +24,9 @@ const ResetPassword = React.createClass({
     return (
       <div>
         <h2>Nulstil password</h2>
-        <input type='password' ref='password'>password</input>
-        <input type='password' ref='repeatedPassword'>password</input>
-        <input type='button' value='Nulstil password' onClick={this.handleSubmit}></input>
+        <input ref='password' type='password' >password</input>
+        <input ref='repeatedPassword' type='password' >password</input>
+        <input onClick={this.handleSubmit} type='button' value='Nulstil password' ></input>
       </div>
     );
   }

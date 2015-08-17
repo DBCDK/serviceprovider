@@ -4,6 +4,11 @@ import React from 'react';
 
 
 const Loader = React.createClass({
+
+  displayName: function() {
+    return 'ReactLoader';
+  },
+
   propTypes: {
     pending: React.PropTypes.bool.isRequired
   },

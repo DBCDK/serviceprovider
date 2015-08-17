@@ -26,6 +26,11 @@ function _getImage(images, size) {
 }
 
 const Cover = React.createClass({
+
+  displayName: function() {
+    return 'ReactCover';
+  },
+
   propTypes: {
     pids: React.PropTypes.array.isRequired
   },
@@ -40,16 +45,16 @@ const Cover = React.createClass({
       pids: this.props.pids
     };
   },
-  updateImage(coverStore) {
-    const images = coverStore.images.get(this.props.pids[0]);
-    this.setState({images});
-  },
 
   componentDidMount() {
     CoverStore.listen(this.updateImage);
   },
 
-  render() {
+  updateImage(coverStore) {
+    const images = coverStore.images.get(this.props.pids[0]);
+    this.setState({images});
+  },
+  render: function() {
     const {images} = this.state;
     let image;
     if (typeof images !== 'undefined' && images.images.length) {
