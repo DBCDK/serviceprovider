@@ -38,9 +38,59 @@ const Work = React.createClass({
     this.setState({work});
   },
 
-  componentDidMount: function() {
+  componentDidMount() {
     this.getWork();
     workStore.listen(this.updateWork);
+  },
+
+  getPublications: function(publications) {
+    let types, publishers, dates, edition, extents, isbns, links;
+    publications.map((publ) => {
+      let className = 'publication-details';
+      if (publ.hasOwnProperty('types')) {
+        types = publ.types.map((t) => {
+          className += ' ' + t.toLowerCase().replace(/ .*/, '');
+          return (<div className='type' key={publ.identifier} >{t}</div>);
+        });
+      }
+      if (publ.hasOwnProperty('dates')) {
+        dates = publ.dates.map((d) => {
+          return (<div className='date' key={publ.identifier} >{d}</div>);
+        });
+      }
+      if (publ.hasOwnProperty('editions')) {
+        edition = publ.editions.map((ed) => {
+          return (<div className='edition' key={publ.identifier} >{ed}</div>);
+        });
+      }
+      if (publ.hasOwnProperty('extents')) {
+        extents = publ.extents.map((e) => {
+          return (<div className='extent' key={publ.identifier} >{e}</div>);
+        });
+      }
+      if (publ.hasOwnProperty('isbns')) {
+        isbns = publ.isbns.map((i) => {
+          return (<div className='isbn' key={publ.identifier} >{i}</div>);
+        });
+      }
+      if (publ.hasOwnProperty('links')) {
+        links = publ.links.map((l) => {
+          return (
+            <div className='link' key={publ.identifier} ><a href={l} target='_blank' >Se online</a>
+            </div>);
+        });
+      }
+      return (<div className={className} data-identifiers={publ.identifier} key={publ.identifier} >
+        {types}
+        <div className='clear' ></div>
+        {publishers}
+        {edition}
+        {dates}
+        {extents}
+        {isbns}
+        {links}
+      </div>);
+    });
   },
 
   render() {
@@ -58,11 +108,7 @@ const Work = React.createClass({
         languages,
         specific,
         specifics,
-        types,
-        publishers,
-        dates,
-        isbns,
-        links;
+        dates;
 
     if (work.info.hits === '0') {
       return (<div className="work-not-found" >Værket blev ikke fundet</div>);
@@ -73,20 +119,20 @@ const Work = React.createClass({
     }
     const general = work.result.general;
     const title = general.title;
-    const audience = general.audience;
+    const audience = general.audience ||{};
     if (general.hasOwnProperty('creators')) {
-      creators = general.creators.map((creator) => {
+      creators = general.creators.map((creator, index) => {
         return (<div className='creator' >
-          <a href={creator.search_link} >{creator.value}</a></div>);
+          <a href={creator.search_link} key={index} >{creator.value}</a></div>);
       });
     }
     if (general.hasOwnProperty('description')) {
       description = general.description;
     }
     if (general.hasOwnProperty('actors')) {
-      actors = general.actors.map((actor) => {
+      actors = general.actors.map((actor, index) => {
         return (
-          <div className='actor' ><a href={actor.search_link} >{actor.value}</a>
+          <div className='actor' key={index} ><a href={actor.search_link} >{actor.value}</a>
           </div>);
       });
     }
@@ -94,66 +140,66 @@ const Work = React.createClass({
       series = <a href={general.series.search_link} >{general.series.value}</a>;
     }
     if (general.hasOwnProperty('subjects')) {
-      subjects = general.subjects.map((subject) => {
+      subjects = general.subjects.map((subject, index) => {
         return (<div className='subject' >
-          <a href={subject.search_link} >{subject.value}</a></div>);
+          <a href={subject.search_link} key={index} >{subject.value}</a></div>);
       });
     }
     if (general.hasOwnProperty('dk5s')) {
-      dk5s = general.dk5s.map((dk5) => {
-        return (<div className='dk5' ><a href={dk5.search_link} >{dk5.value}</a>
+      dk5s = general.dk5s.map((dk5, index) => {
+        return (<div className='dk5' key={index} ><a href={dk5.search_link} >{dk5.value}</a>
           <div className='dk5text' >{dk5.text}</div>
         </div>);
       });
     }
     if (general.hasOwnProperty('tracks')) {
-      tracks = general.tracks.map((track) => {
-        return (<div className='track' >{track}</div>);
+      tracks = general.tracks.map((track, index) => {
+        return (<div className='track' key={index} >{track}</div>);
       });
     }
     if (general.hasOwnProperty('languages')) {
-      languages = general.languages.map((language) => {
-        return (<div className='language' >{language}</div>);
+      languages = general.languages.map((language, index) => {
+        return (<div className='language' key={index} >{language}</div>);
       });
     }
     if (general.hasOwnProperty('partOf')) {
-      parts = general.partOf.map((partOf) => {
-        return (<div className='part' >{partOf}</div>);
+      parts = general.partOf.map((partOf, index) => {
+        return (<div className='part' key={index} >{partOf}</div>);
       });
     }
     if (general.hasOwnProperty('issn')) {
-      issns = general.issn.map((issn) => {
-        return (<div className='issn' >{issn}</div>);
+      issns = general.issn.map((issn, index) => {
+        return (<div className='issn' key={index} >{issn}</div>);
       });
     }
     if (general.hasOwnProperty('extent')) {
-      extents = general.extent.map((extent) => {
-        return (<div className='extent' >{extent}</div>);
+      extents = general.extent.map((extent, index) => {
+        return (<div className='extent' key={index} >{extent}</div>);
       });
     }
     specific = work.result.specific;
-    let order_button = specific.map((tw) => {
+    const order_button = specific.map((tw, index) => {
       if (tw.accessType === 'physical') {
         let order_ids = [];
         order_ids.push(tw.identifiers);
         return (
-          <a className='order-button button' href={tw.order} data-identifiers={order_ids} >Bestil {tw.type}</a>);
+          <a className='order-button button' data-identifiers={order_ids} href={tw.order} key={index} >Bestil {tw.type}</a>);
       }
       if (tw.accessType === 'online') {
         let online_link = 'Se ' + tw.type + ' online';
-        return (<a className='online-link' href="#" >{online_link}</a>);
+        return (<a className='online-link' href="#" key={index} >{online_link}</a>);
       }
     });
-    specifics = specific.map((tw) => {
+    specifics = specific.map((tw, index) => {
       let identifiers = [];
       identifiers.push(tw.identifiers);
       if (tw.dates[0] !== null) {
-        dates = tw.dates.map((date) => {
-          return (<div className='date' >{date}</div>);
+        dates = tw.dates.map((date, indx) => {
+          return (<div className='date' key={indx} >{date}</div>);
         });
       }
       return (
-        <div className='specific' data-identifiers={identifiers} >
+        <div className='specific' data-identifiers={identifiers} key={index} >
           <div className='type' >
             {tw.type}
           </div>
@@ -162,57 +208,7 @@ const Work = React.createClass({
       );
     });
     const publications = work.result.publications;
-    let editions = publications.map((publ) => {
-      let className = 'publication-details';
-      if (publ.hasOwnProperty('types')) {
-        types = publ.types.map((t) => {
-          className += ' ' + t.toLowerCase().replace(/ .*/, '');
-          return (<div className='type' >{t}</div>);
-        });
-      }
-      if (publ.hasOwnProperty('publishers')) {
-        publishers = publ.publishers.map((p) => {
-          return (<div className='publisher' >{p}</div>);
-        });
-      }
-      if (publ.hasOwnProperty('dates')) {
-        dates = publ.dates.map((d) => {
-          return (<div className='date' >{d}</div>);
-        });
-      }
-      if (publ.hasOwnProperty('editions')) {
-        editions = publ.editions.map((ed) => {
-          return (<div className='edition' >{ed}</div>);
-        });
-      }
-      if (publ.hasOwnProperty('extents')) {
-        extents = publ.extents.map((e) => {
-          return (<div className='extent' >{e}</div>);
-        });
-      }
-      if (publ.hasOwnProperty('isbns')) {
-        isbns = publ.isbns.map((i) => {
-          return (<div className='isbn' >{i}</div>);
-        });
-      }
-      if (publ.hasOwnProperty('links')) {
-        links = publ.links.map((l) => {
-          return (
-            <div className='link' ><a href={l} target='_blank' >Se online</a>
-            </div>);
-        });
-      }
-      return (<div className={className} data-identifiers={publ.identifier} >
-        {types}
-        <div className='clear' ></div>
-        {publishers}
-        {editions}
-        {dates}
-        {extents}
-        {isbns}
-        {links}
-      </div>);
-    });
+    const editions = this.getPublications(publications);
     return (
       <div className='work-container' >
         <div className='work small-12 medium-6 large-4' >
