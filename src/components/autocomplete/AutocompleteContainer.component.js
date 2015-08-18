@@ -64,7 +64,7 @@ const AutoCompleteContainer = React.createClass({
       this.onInputValueChange(this.props.input.value);
     }
     const visible = this.shouldAutoCompleteBeVisible();
-    return <AutoComplete data={this.props.store.data[this.props.input.value]} visible={visible} />;
+    return <AutoComplete data={this.props.store.data[this.props.input.value]} errormessage="Ingen resultater fundet" visible={visible} />;
   }
 });
 
