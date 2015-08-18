@@ -20,6 +20,7 @@ import path from 'path';
 import Logger from 'dbc-node-logger';
 import ServiceProvider from 'dbc-node-serviceprovider';
 import bodyParser from 'body-parser';
+import compression from 'compression';
 
 // loading components
 import SearchServer from './components/searchpage/Search.server.js';
@@ -54,6 +55,9 @@ if (PRODUCTION) {
 else if (newrelic) {
   newrelic.agent_enabled = false;
 }
+
+// adding gzip'ing
+app.use(compression());
 
 // setting paths
 app.use(express.static(path.join(__dirname, '../public'), fileHeaders));
