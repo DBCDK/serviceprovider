@@ -63,7 +63,7 @@ app.use(compression());
 app.use(express.static(path.join(__dirname, '../public'), fileHeaders));
 app.use(express.static(path.join(__dirname, '../static'), fileHeaders));
 
-// setting local vars that should be availbe to our template engine
+// setting local vars that should be available to our template engine
 app.locals.newrelic = newrelic;
 app.locals.version = version;
 app.locals.production = PRODUCTION;
