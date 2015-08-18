@@ -41,7 +41,7 @@ const Work = React.createClass({
 
   getPublications: function(publications) {
     let types, publishers, dates, edition, extents, isbns, links;
-    publications.map((publ) => {
+    return publications.map((publ) => {
       let className = 'publication-details';
       if (publ.hasOwnProperty('types')) {
         types = publ.types.map((t, index) => {
