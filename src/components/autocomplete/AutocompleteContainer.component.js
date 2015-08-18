@@ -18,7 +18,8 @@ const AutoCompleteContainer = React.createClass({
 
   getInitialState() {
     return {
-      focus: false
+      focus: false,
+      hasSearched: false
     };
   },
 
@@ -51,10 +52,11 @@ const AutoCompleteContainer = React.createClass({
       this.debouncedTextfieldUpdated.cancel();
     }
     this.lastInputValue = inputValue;
+    this.state.hasSearched = true;
   },
 
   shouldAutoCompleteBeVisible() {
-    return this.state.focus && !isEmpty(this.props.store.data[this.props.input.value]) && this.props.input.focus;
+    return !this.props.store.pending && !isEmpty(this.props.input.value) && this.props.input.focus && this.state.hasSearched && this.state.focus;
   },
 
   render() {
