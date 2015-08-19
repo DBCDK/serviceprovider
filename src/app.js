@@ -81,6 +81,13 @@ app.get(['/', '/search', '/search/*'], (req, res) => {
   res.render('search', properties);
 });
 
+app.get('/moreinfo/:restOfPath*', (req, res) => {
+  http.get('http://moreinfo.addi.dk/' + req.params.restOfPath, function(response) {
+    res.set('Cache-Control', 'max-age=86400,s-maxage=86400');
+    response.pipe(res);
+  });
+});
+
 app.get('/profile', (req, res) => {
   res.render('profile');
 });
