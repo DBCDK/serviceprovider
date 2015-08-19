@@ -8,6 +8,7 @@ import React from 'react';
 import workAction from '../../actions/Work.action.js';
 import workStore from '../../stores/Work.store.js';
 import {CoverImage} from 'dbc-react-components';
+import {rewriteCoverImageUrl} from '../../utils/CoverImage.util.js';
 
 const Work = React.createClass({
   displayName: 'Work.component',
@@ -214,7 +215,7 @@ const Work = React.createClass({
     return (
       <div className='work-container' >
         <div className='work small-12 medium-6 large-4' >
-          <CoverImage pids={work.result.specific[0].identifiers} prefSize={'detail_500'} />
+          <CoverImage pids={work.result.specific[0].identifiers} prefSize={'detail_500'} rewriteImgUrl={rewriteCoverImageUrl}/>
         </div>
         <div className='work small-12 medium-6 large-4' >
           {order_button}

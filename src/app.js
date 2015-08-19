@@ -69,6 +69,7 @@ app.locals.version = version;
 app.locals.production = PRODUCTION;
 
 app.use(expressLoggers.logger);
+app.use(expressLoggers.errorLogger);
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
@@ -78,6 +79,13 @@ app.get(['/', '/search', '/search/*'], (req, res) => {
   let properties = SearchServer({query, config: uiconfig});
   properties.config = JSON.stringify(uiconfig);
   res.render('search', properties);
+});
+
+app.get('/moreinfo/:restOfPath*', (req, res) => {
+  http.get('http://moreinfo.addi.dk/' + req.params.restOfPath, function(response) {
+    res.set('Cache-Control', 'max-age=86400, s-maxage=86400, public');
+    response.pipe(res);
+  });
 });
 
 app.get('/profile', (req, res) => {
@@ -99,34 +107,25 @@ app.post('/login', (req, res) => {
       password: password
     }
   );
-  logger.log('info', 'loginUser event triggered');
 
-  Promise.all(loginResponse).then(function (response) {
-    logger.log('info', 'login promise resolved');
+  Promise.all(loginResponse).then(function(response) {
+
     const result = response[0];
-    logger.log('info', 'got response', response);
     const isLoginSuccesful = typeof result.error === 'undefined';
     if (isLoginSuccesful) {
-      logger.log('info', 'login succesful');
       const accessToken = result.id;
       const ttl = result.ttl;
       const uid = result.userId;
       const redirectUrl = req.body.redirect ? req.body.redirect : '/profile';
-      logger.log('info', 'before cookies', [accessToken, ttl, uid, redirectUrl]);
       res.cookie('accessToken', accessToken, {maxAge: ttl});
       res.cookie('uid', uid, {maxAge: ttl});
-      logger.log('info', 'login - cookies set');
       res.redirect(redirectUrl);
-      logger.log('info', 'login - redirected to ', redirectUrl);
     }
     else {
-      logger.log('info', 'login failed');
       res.render('login', {message: {text: 'Din email eller dit password er ikke korrekt', error: true}});
     }
-  }, function (err) {
-    logger.log('info', 'login promise rejected', err);
-    // return 500 Internal Error status code
-    res.status(500).send('Internal Error');
+  }, function() {
+    throw new Error('Promise rejected');
   });
 
 });
@@ -143,14 +142,11 @@ app.get('/confirm', (req, res) => {
       token: token
     }
   );
-  logger.log('info', 'verifyEmail event triggered');
 
-  Promise.all(verifyResponse).then(function () {
-    logger.log('info', 'verifyEmail promise resolved');
+  Promise.all(verifyResponse).then(function() {
     res.redirect(redirectUrl);
-  }, function () {
-    logger.log('info', 'verifyEmail promise rejected');
-    res.status(500).send('Internal Error');
+  }, function() {
+    throw new Error('Promise rejected');
   });
 });
 
@@ -172,20 +168,16 @@ app.post('/signup', (req, res) => {
         password: password
       }
     );
-    logger.log('info', 'createUser event triggered');
 
-    Promise.all(resp).then(function (response) {
-      logger.log('info', 'createUser promise resolved', response.error);
+    Promise.all(resp).then(function() {
       res.render('signup', {message: {text: 'Vi har sendt en bekræftelse-email til dig', error: false}});
-    }, function () {
-      logger.log('info', 'createUser promise rejected');
-      res.status(500).send('Internal Error');
+    }, function() {
+      throw new Error('Promise rejected');
     });
   }
   else {
-    // input was not valid
-    logger.log('info', 'createUser - form data invalid..');
-    res.render('signup', {message: {text: 'Input fejl', error: true}});
+    // something went wrong..
+    res.render('signup', {message: {text: 'Noget gik galt!', error: true}});
   }
 });
 
@@ -204,8 +196,6 @@ app.get(['/order', '/order/*'], (req, res) => {
   query = JSON.stringify(query);
   res.render('order', {query});
 });
-
-app.use(expressLoggers.errorLogger);
 
 // starting server
 server.listen(app.get('port'), () => {
