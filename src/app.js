@@ -99,7 +99,7 @@ app.post('/login', (req, res) => {
   logger.log('info', 'loginUser event triggered');
 
   Promise.all(loginResponse).then(function (response) {
-    logger.log('info', 'login promise rejected');
+    logger.log('info', 'login promise resolved');
     const result = response[0];
     const isLoginSuccesful = typeof result.error === 'undefined';
     if (isLoginSuccesful) {
@@ -110,7 +110,9 @@ app.post('/login', (req, res) => {
       const redirectUrl = req.body.redirect ? req.body.redirect : '/profile';
       res.cookie('accessToken', accessToken, {maxAge: ttl});
       res.cookie('uid', uid, {maxAge: ttl});
+      logger.log('info', 'login - cookies set');
       res.redirect(redirectUrl);
+      logger.log('info', 'login - redirected to ', redirectUrl);
     }
     else {
       logger.log('info', 'login failed');
