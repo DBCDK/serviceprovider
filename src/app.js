@@ -101,6 +101,7 @@ app.post('/login', (req, res) => {
   Promise.all(loginResponse).then(function (response) {
     logger.log('info', 'login promise resolved');
     const result = response[0];
+    logger.log('info', 'got response', result);
     const isLoginSuccesful = typeof result.error === 'undefined';
     if (isLoginSuccesful) {
       logger.log('info', 'login succesful');
