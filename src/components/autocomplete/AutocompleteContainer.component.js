@@ -5,7 +5,7 @@
  */
 
 import React from 'react';
-import {isEmpty, debounce} from 'lodash';
+import {isEmpty} from 'lodash';
 import {AutoComplete} from 'dbc-react-components';
 
 const AutoCompleteContainer = React.createClass({
@@ -21,11 +21,6 @@ const AutoCompleteContainer = React.createClass({
       focus: false,
       hasSearched: false
     };
-  },
-
-  componentDidMount() {
-    // the debounce function ensures the function is max called once every 10 milliseconds
-    this.debouncedTextfieldUpdated = debounce(this.props.actions.textfieldUpdated, 10);
   },
 
   shouldComponentUpdate() {
@@ -46,10 +41,7 @@ const AutoCompleteContainer = React.createClass({
     }
 
     if (this.lastInputValue !== inputValue) {
-      this.debouncedTextfieldUpdated(inputValue);
-    }
-    else if (this.debouncedTextfieldUpdated) {
-      this.debouncedTextfieldUpdated.cancel();
+      this.props.actions.textfieldUpdated(inputValue);
     }
     this.lastInputValue = inputValue;
     this.state.hasSearched = true;
@@ -64,7 +56,7 @@ const AutoCompleteContainer = React.createClass({
       this.onInputValueChange(this.props.input.value);
     }
     const visible = this.shouldAutoCompleteBeVisible();
-    return <AutoComplete data={this.props.store.data[this.props.input.value]} errormessage="Ingen resultater fundet" visible={visible} />;
+    return <AutoComplete data={this.props.store.data[this.props.input.value]} errormessage={'Ingen resultater fundet'} visible={visible} />;
   }
 });
 

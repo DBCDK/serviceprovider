@@ -69,7 +69,6 @@ app.locals.version = version;
 app.locals.production = PRODUCTION;
 
 app.use(expressLoggers.logger);
-app.use(expressLoggers.errorLogger);
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
@@ -203,6 +202,8 @@ app.get(['/order', '/order/*'], (req, res) => {
   query = JSON.stringify(query);
   res.render('order', {query});
 });
+
+app.use(expressLoggers.errorLogger);
 
 // starting server
 server.listen(app.get('port'), () => {
