@@ -108,6 +108,7 @@ app.post('/login', (req, res) => {
       const ttl = result.ttl;
       const uid = result.userId;
       const redirectUrl = req.body.redirect ? req.body.redirect : '/profile';
+      logger.log('info', 'before cookies', [accessToken, ttl, uid, redirectUrl]);
       res.cookie('accessToken', accessToken, {maxAge: ttl});
       res.cookie('uid', uid, {maxAge: ttl});
       logger.log('info', 'login - cookies set');
@@ -145,7 +146,7 @@ app.get('/confirm', (req, res) => {
     res.redirect(redirectUrl);
   }, function () {
     logger.log('info', 'verifyEmail promise rejected');
-    throw new Error('Promise rejected');
+    res.status(500).send('Internal Error');
   });
 });
 
@@ -169,18 +170,18 @@ app.post('/signup', (req, res) => {
     );
     logger.log('info', 'createUser event triggered');
 
-    Promise.all(resp).then(function () {
-      logger.log('info', 'createUser promise resolved');
+    Promise.all(resp).then(function (response) {
+      logger.log('info', 'createUser promise resolved', response.error);
       res.render('signup', {message: {text: 'Vi har sendt en bekræftelse-email til dig', error: false}});
     }, function () {
       logger.log('info', 'createUser promise rejected');
-      throw new Error('Promise rejected');
+      res.status(500).send('Internal Error');
     });
   }
   else {
-    // something went wrong..
-    logger.log('info', 'createUser - something went wrong..');
-    res.render('signup', {message: {text: 'Noget gik galt!', error: true}});
+    // input was not valid
+    logger.log('info', 'createUser - form data invalid..');
+    res.render('signup', {message: {text: 'Input fejl', error: true}});
   }
 });
 
