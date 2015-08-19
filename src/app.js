@@ -116,9 +116,10 @@ app.post('/login', (req, res) => {
       logger.log('info', 'login failed');
       res.render('login', {message: {text: 'Din email eller dit password er ikke korrekt', error: true}});
     }
-  }, function () {
-    logger.log('info', 'login promise rejected');
-    throw new Error('Promise rejected');
+  }, function (err) {
+    logger.log('info', 'login promise rejected', err);
+    // return 500 Internal Error status code
+    res.status(500);
   });
 
 });
@@ -170,7 +171,7 @@ app.post('/signup', (req, res) => {
       logger.log('info', 'createUser promise resolved');
       res.render('signup', {message: {text: 'Vi har sendt en bekræftelse-email til dig', error: false}});
     }, function () {
-      logger.log('info', 'createUser promise resolved');
+      logger.log('info', 'createUser promise rejected');
       throw new Error('Promise rejected');
     });
   }
