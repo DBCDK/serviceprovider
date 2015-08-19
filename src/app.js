@@ -119,7 +119,7 @@ app.post('/login', (req, res) => {
   }, function (err) {
     logger.log('info', 'login promise rejected', err);
     // return 500 Internal Error status code
-    res.status(500);
+    res.status(500).send('Internal Error');
   });
 
 });
