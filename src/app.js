@@ -100,14 +100,14 @@ app.post('/login', (req, res) => {
       password: password
     }
   );
-  logger.info('loginUser event triggered');
+  logger.log('info', 'loginUser event triggered');
 
   Promise.all(loginResponse).then(function (response) {
-    logger.info('login promise rejected');
+    logger.log('info', 'login promise rejected');
     const result = response[0];
     const isLoginSuccesful = typeof result.error === 'undefined';
     if (isLoginSuccesful) {
-      logger.info('login succesful');
+      logger.log('info', 'login succesful');
       const accessToken = result.id;
       const ttl = result.ttl;
       const uid = result.userId;
@@ -117,11 +117,11 @@ app.post('/login', (req, res) => {
       res.redirect(redirectUrl);
     }
     else {
-      logger.info('login failed');
+      logger.log('info', 'login failed');
       res.render('login', {message: {text: 'Din email eller dit password er ikke korrekt', error: true}});
     }
   }, function () {
-    logger.info('login promise rejected');
+    logger.log('info', 'login promise rejected');
     throw new Error('Promise rejected');
   });
 
@@ -139,13 +139,13 @@ app.get('/confirm', (req, res) => {
       token: token
     }
   );
-  logger.info('verifyEmail event triggered');
+  logger.log('info', 'verifyEmail event triggered');
 
   Promise.all(verifyResponse).then(function () {
-    logger.info('verifyEmail promise resolved');
+    logger.log('info', 'verifyEmail promise resolved');
     res.redirect(redirectUrl);
   }, function () {
-    logger.info('verifyEmail promise rejected');
+    logger.log('info', 'verifyEmail promise rejected');
     throw new Error('Promise rejected');
   });
 });
@@ -168,19 +168,19 @@ app.post('/signup', (req, res) => {
         password: password
       }
     );
-    logger.info('createUser event triggered');
+    logger.log('info', 'createUser event triggered');
 
     Promise.all(resp).then(function () {
-      logger.info('createUser promise resolved');
+      logger.log('info', 'createUser promise resolved');
       res.render('signup', {message: {text: 'Vi har sendt en bekræftelse-email til dig', error: false}});
     }, function () {
-      logger.info('createUser promise resolved');
+      logger.log('info', 'createUser promise resolved');
       throw new Error('Promise rejected');
     });
   }
   else {
     // something went wrong..
-    logger.info('createUser - something went wrong..');
+    logger.log('info', 'createUser - something went wrong..');
     res.render('signup', {message: {text: 'Noget gik galt!', error: true}});
   }
 });
