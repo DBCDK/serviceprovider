@@ -1,5 +1,10 @@
 'use strict';
 
+/**
+ * @File
+ * Actions for the CoverImage component
+ */
+
 import Reflux from 'reflux';
 import SocketClient from '../utils/ServiceProviderSocketClient.js';
 
