@@ -115,7 +115,7 @@ app.post('/login', (req, res) => {
       logger.log('info', 'login failed');
       res.render('login', {message: {text: 'Din email eller dit password er ikke korrekt', error: true}});
     }
-  }, function (err) {
+  }, function () {
     // return 500 Internal Error status code
     res.status(500).send('Internal Error');
   });
@@ -163,7 +163,7 @@ app.post('/signup', (req, res) => {
     );
     logger.log('info', 'createUser event triggered');
 
-    Promise.all(resp).then(function (response) {
+    Promise.all(resp).then(function () {
       res.render('signup', {message: {text: 'Vi har sendt en bekræftelse-email til dig', error: false}});
     }, function () {
       res.status(500).send('Internal Error');
