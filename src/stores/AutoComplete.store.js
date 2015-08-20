@@ -1,20 +1,18 @@
 'use strict';
 
 import Reflux from 'reflux';
+import React from 'react';
 
 import AutoCompleteActions from '../actions/AutoComplete.action.js';
-import QueryActions from '../actions/QueryUpdate.action.js';
 import {CoverImage} from 'dbc-react-components';
+
+import {rewriteCoverImageUrl} from '../utils/CoverImage.util.js';
 
 const AutoCompleteStore = Reflux.createStore({
   listenables: AutoCompleteActions,
   store: {
     data: {},
     pending: false
-  },
-
-  init() {
-    this.listenTo(QueryActions.update, this.clearData);
   },
 
   parseResponse(response, data) {
@@ -74,7 +72,7 @@ const AutoCompleteStore = Reflux.createStore({
 
       const pids = value.pid ? [value.pid] : null;
       item.imageComp = (
-        <CoverImage pids={pids} prefSize={'detail_117'} noCoverUrl={'/covers/no-cover-image-other.png'} />
+        <CoverImage noCoverUrl={'/covers/no-cover-image-other.png'} pids={pids} prefSize={'detail_117'} rewriteImgUrl={rewriteCoverImageUrl} />
       );
 
       item.text = value.text;

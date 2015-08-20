@@ -20,6 +20,7 @@ import path from 'path';
 import Logger from 'dbc-node-logger';
 import ServiceProvider from 'dbc-node-serviceprovider';
 import bodyParser from 'body-parser';
+import compression from 'compression';
 
 // loading components
 import SearchServer from './components/searchpage/Search.server.js';
@@ -55,11 +56,14 @@ else if (newrelic) {
   newrelic.agent_enabled = false;
 }
 
+// adding gzip'ing
+app.use(compression());
+
 // setting paths
 app.use(express.static(path.join(__dirname, '../public'), fileHeaders));
 app.use(express.static(path.join(__dirname, '../static'), fileHeaders));
 
-// setting local vars that should be availbe to our template engine
+// setting local vars that should be available to our template engine
 app.locals.newrelic = newrelic;
 app.locals.version = version;
 app.locals.production = PRODUCTION;
@@ -75,6 +79,13 @@ app.get(['/', '/search', '/search/*'], (req, res) => {
   let properties = SearchServer({query, config: uiconfig});
   properties.config = JSON.stringify(uiconfig);
   res.render('search', properties);
+});
+
+app.get('/moreinfo/:restOfPath*', (req, res) => {
+  http.get('http://moreinfo.addi.dk/' + req.params.restOfPath, function(response) {
+    res.set('Cache-Control', 'max-age=86400, s-maxage=86400, public');
+    response.pipe(res);
+  });
 });
 
 app.get('/profile', (req, res) => {
@@ -96,13 +107,11 @@ app.post('/login', (req, res) => {
       password: password
     }
   );
-  logger.log('info', 'loginUser event triggered');
 
   Promise.all(loginResponse).then(function (response) {
     const result = response[0];
     const isLoginSuccesful = typeof result.error === 'undefined';
     if (isLoginSuccesful) {
-      logger.log('info', 'login succesful');
       const accessToken = result.id;
       const ttl = result.ttl;
       const uid = result.userId;
@@ -112,7 +121,6 @@ app.post('/login', (req, res) => {
       res.redirect(redirectUrl);
     }
     else {
-      logger.log('info', 'login failed');
       res.render('login', {message: {text: 'Din email eller dit password er ikke korrekt', error: true}});
     }
   }, function () {
@@ -161,7 +169,6 @@ app.post('/signup', (req, res) => {
         password: password
       }
     );
-    logger.log('info', 'createUser event triggered');
 
     Promise.all(resp).then(function () {
       res.render('signup', {message: {text: 'Vi har sendt en bekræftelse-email til dig', error: false}});
