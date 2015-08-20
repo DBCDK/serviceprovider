@@ -79,6 +79,7 @@ app.get(['/', '/search', '/search/*'], (req, res) => {
 
 app.get('/profile', (req, res) => {
   res.render('profile');
+  logger.log('info', 'accessToken', res.cookie.uid);
 });
 
 app.get('/login', (req, res) => {
@@ -86,7 +87,6 @@ app.get('/login', (req, res) => {
 });
 
 app.post('/login', (req, res) => {
-
   const email = req.body.email;
   const password = req.body.password;
 
@@ -99,9 +99,7 @@ app.post('/login', (req, res) => {
   logger.log('info', 'loginUser event triggered');
 
   Promise.all(loginResponse).then(function (response) {
-    logger.log('info', 'login promise resolved');
     const result = response[0];
-    logger.log('info', 'got response', response);
     const isLoginSuccesful = typeof result.error === 'undefined';
     if (isLoginSuccesful) {
       logger.log('info', 'login succesful');
@@ -109,23 +107,18 @@ app.post('/login', (req, res) => {
       const ttl = result.ttl;
       const uid = result.userId;
       const redirectUrl = req.body.redirect ? req.body.redirect : '/profile';
-      logger.log('info', 'before cookies', [accessToken, ttl, uid, redirectUrl]);
       res.cookie('accessToken', accessToken, {maxAge: ttl});
       res.cookie('uid', uid, {maxAge: ttl});
-      logger.log('info', 'login - cookies set');
       res.redirect(redirectUrl);
-      logger.log('info', 'login - redirected to ', redirectUrl);
     }
     else {
       logger.log('info', 'login failed');
       res.render('login', {message: {text: 'Din email eller dit password er ikke korrekt', error: true}});
     }
   }, function (err) {
-    logger.log('info', 'login promise rejected', err);
     // return 500 Internal Error status code
     res.status(500).send('Internal Error');
   });
-
 });
 
 app.get('/confirm', (req, res) => {
@@ -140,13 +133,10 @@ app.get('/confirm', (req, res) => {
       token: token
     }
   );
-  logger.log('info', 'verifyEmail event triggered');
 
   Promise.all(verifyResponse).then(function () {
-    logger.log('info', 'verifyEmail promise resolved');
     res.redirect(redirectUrl);
   }, function () {
-    logger.log('info', 'verifyEmail promise rejected');
     res.status(500).send('Internal Error');
   });
 });
@@ -157,12 +147,14 @@ app.get('/signup', (req, res) => {
 
 app.post('/signup', (req, res) => {
 
+  const emailRegex = /^([\w-]+(?:\.[\w-]+)*)@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$/i;
+
   const email = req.body.email;
   const password = req.body.password;
   const repeatedPassword = req.body.repeatedPassword;
 
   // validate arguments
-  if (email && password && repeatedPassword && (password === repeatedPassword)) {
+  if (email && password && repeatedPassword && (password === repeatedPassword) && emailRegex.test(email)) {
     let resp = serviceProvider.trigger(
       'createUser', {
         email: email,
@@ -172,17 +164,27 @@ app.post('/signup', (req, res) => {
     logger.log('info', 'createUser event triggered');
 
     Promise.all(resp).then(function (response) {
-      logger.log('info', 'createUser promise resolved', response.error);
       res.render('signup', {message: {text: 'Vi har sendt en bekræftelse-email til dig', error: false}});
     }, function () {
-      logger.log('info', 'createUser promise rejected');
       res.status(500).send('Internal Error');
     });
   }
   else {
     // input was not valid
-    logger.log('info', 'createUser - form data invalid..');
-    res.render('signup', {message: {text: 'Input fejl', error: true}});
+    let errorMessage = 'De indtastede værdier er ikke gyldige';
+    if (email === '') {
+      errorMessage = 'Email skal udfyldes';
+    }
+    else if (!emailRegex.test(email)) {
+      errorMessage = 'Email er ikke gyldig';
+    }
+    else if (password === '') {
+      errorMessage = 'Password skal udfyldes';
+    }
+    else if (password !== repeatedPassword) {
+      errorMessage = 'De 2 passwords er ikke identiske';
+    }
+    res.render('signup', {message: {text: errorMessage, error: true}});
   }
 });
 
