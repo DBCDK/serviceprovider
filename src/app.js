@@ -21,7 +21,6 @@ import Logger from 'dbc-node-logger';
 import ServiceProvider from 'dbc-node-serviceprovider';
 import bodyParser from 'body-parser';
 import compression from 'compression';
-import vhost from 'vhost';
 
 // loading components
 import SearchServer from './components/searchpage/Search.server.js';
@@ -74,8 +73,6 @@ app.use(expressLoggers.errorLogger);
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
-
-app.use(vhost('dbc.hyatt03.dk', app)); // Til test af cloudflare...
 
 app.get(['/', '/search', '/search/*'], (req, res) => {
   const query = req.query || [];
