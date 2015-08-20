@@ -83,7 +83,7 @@ app.get(['/', '/search', '/search/*'], (req, res) => {
 
 app.get('/moreinfo/:restOfPath*', (req, res) => {
   http.get('http://moreinfo.addi.dk/' + req.params.restOfPath, function(response) {
-    res.set('Cache-Control', 'max-age=86400,s-maxage=86400');
+    res.set('Cache-Control', 'max-age=86400, s-maxage=86400, public');
     response.pipe(res);
   });
 });
@@ -108,7 +108,7 @@ app.post('/login', (req, res) => {
     }
   );
 
-  Promise.all(loginResponse).then(function (response) {
+  Promise.all(loginResponse).then(function(response) {
 
     const result = response[0];
     const isLoginSuccesful = typeof result.error === 'undefined';
@@ -124,7 +124,7 @@ app.post('/login', (req, res) => {
     else {
       res.render('login', {message: {text: 'Din email eller dit password er ikke korrekt', error: true}});
     }
-  }, function () {
+  }, function() {
     throw new Error('Promise rejected');
   });
 
@@ -143,9 +143,9 @@ app.get('/confirm', (req, res) => {
     }
   );
 
-  Promise.all(verifyResponse).then(function () {
+  Promise.all(verifyResponse).then(function() {
     res.redirect(redirectUrl);
-  }, function () {
+  }, function() {
     throw new Error('Promise rejected');
   });
 });
@@ -169,9 +169,9 @@ app.post('/signup', (req, res) => {
       }
     );
 
-    Promise.all(resp).then(function () {
+    Promise.all(resp).then(function() {
       res.render('signup', {message: {text: 'Vi har sendt en bekræftelse-email til dig', error: false}});
-    }, function () {
+    }, function() {
       throw new Error('Promise rejected');
     });
   }
