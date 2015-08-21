@@ -42,6 +42,12 @@ const SearchFieldContainerComponent = React.createClass({
 
   render() {
     const placeholder = this.showPlaceholder() ? (this.props.placeholder || 'Skriv dine søgeord her') : '';
+    const translations = {
+      Music: 'Musik',
+      Movie: 'Film',
+      Literature: 'Bog',
+      Game: 'Spil'
+    };
     return (
       <div className='searchfield' >
         <TokenSearchField
@@ -51,6 +57,7 @@ const SearchFieldContainerComponent = React.createClass({
           placeholder={placeholder}
           query={this.state.query.query}
           update={QueryActions.update}
+          translations={translations}
           />
         <AutoCompleteContainer actions={AutoCompleteActions} input={this.state.input} store={this.state.autocomplete} />
       </div>
