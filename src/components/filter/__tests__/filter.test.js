@@ -41,7 +41,6 @@ describe('Test the Filter component', () => {
     setTimeout(() => {
       let store = QueryStore.getInitialState();
       expect(store.query).to.have.length(2);
-      console.log(store.query);
       expect(store.query[0]).to.be.deep.equal(filterElements[0]);
       done();
     }, 0);
