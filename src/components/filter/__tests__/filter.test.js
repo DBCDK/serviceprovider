@@ -33,14 +33,15 @@ describe('Test the Filter component', () => {
     let filterGuides = TestUtils.scryRenderedComponentsWithType(dom, FilterGuide);
 
     expect(filterGuides).to.have.length(1);
-    // Click on first element
+    // The first elements are materialtype filters, click on first element which isn't
 
-    TestUtils.Simulate.click(TestUtils.scryRenderedDOMComponentsWithTag(filterGuides[0], 'a')[0]);
-    TestUtils.Simulate.click(TestUtils.scryRenderedDOMComponentsWithTag(filterGuides[0], 'a')[1]);
+    TestUtils.Simulate.click(TestUtils.scryRenderedDOMComponentsWithTag(filterGuides[0], 'a')[5]);
+    TestUtils.Simulate.click(TestUtils.scryRenderedDOMComponentsWithTag(filterGuides[0], 'a')[6]);
 
     setTimeout(() => {
       let store = QueryStore.getInitialState();
       expect(store.query).to.have.length(2);
+      console.log(store.query);
       expect(store.query[0]).to.be.deep.equal(filterElements[0]);
       done();
     }, 0);
