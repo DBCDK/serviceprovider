@@ -160,6 +160,12 @@
     padding: 15px;
 }
 
+.can-order-false {
+    background-color: #aeaeae !important;
+    pointer-events: none;
+    cursor: default;
+}
+
 /* Publication Details */
 .editions {
     margin-top: 20px;
