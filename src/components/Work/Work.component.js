@@ -7,7 +7,7 @@
 import React from 'react';
 import workAction from '../../actions/Work.action.js';
 import workStore from '../../stores/Work.store.js';
-import {CoverImage} from 'dbc-react-components';
+import {CoverImage, OrderLink} from 'dbc-react-components';
 import {rewriteCoverImageUrl} from '../../utils/CoverImage.util.js';
 
 const Work = React.createClass({
@@ -185,7 +185,7 @@ const Work = React.createClass({
         let order_ids = [];
         order_ids.push(tw.identifiers);
         return (
-          <a className='order-button button' data-identifiers={order_ids} href={tw.order} key={index} >Bestil {tw.type}</a>);
+          <OrderLink agencyId={'772700'} pids={order_ids} orderUrl={tw.order} linkText={'Bestil ' + tw.type} />);
       }
       if (tw.accessType === 'online') {
         let online_link = 'Se ' + tw.type + ' online';
