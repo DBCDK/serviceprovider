@@ -83,13 +83,14 @@ app.get(['/', '/search', '/search/*'], (req, res) => {
 
 app.get('/moreinfo/:restOfPath*', (req, res) => {
   http.get('http://moreinfo.addi.dk/' + req.params.restOfPath, function(response) {
-    res.set('Cache-Control', 'max-age=86400,s-maxage=86400');
+    res.set('Cache-Control', 'max-age=86400, s-maxage=86400, public');
     response.pipe(res);
   });
 });
 
 app.get('/profile', (req, res) => {
   res.render('profile');
+  logger.log('info', 'accessToken', res.cookie.uid);
 });
 
 app.get('/login', (req, res) => {
@@ -97,7 +98,6 @@ app.get('/login', (req, res) => {
 });
 
 app.post('/login', (req, res) => {
-
   const email = req.body.email;
   const password = req.body.password;
 
@@ -109,7 +109,6 @@ app.post('/login', (req, res) => {
   );
 
   Promise.all(loginResponse).then(function (response) {
-
     const result = response[0];
     const isLoginSuccesful = typeof result.error === 'undefined';
     if (isLoginSuccesful) {
@@ -125,9 +124,9 @@ app.post('/login', (req, res) => {
       res.render('login', {message: {text: 'Din email eller dit password er ikke korrekt', error: true}});
     }
   }, function () {
-    throw new Error('Promise rejected');
+    // return 500 Internal Error status code
+    res.status(500).send('Internal Error');
   });
-
 });
 
 app.get('/confirm', (req, res) => {
@@ -146,7 +145,7 @@ app.get('/confirm', (req, res) => {
   Promise.all(verifyResponse).then(function () {
     res.redirect(redirectUrl);
   }, function () {
-    throw new Error('Promise rejected');
+    res.status(500).send('Internal Error');
   });
 });
 
@@ -156,12 +155,14 @@ app.get('/signup', (req, res) => {
 
 app.post('/signup', (req, res) => {
 
+  const emailRegex = /^([\w-]+(?:\.[\w-]+)*)@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$/i;
+
   const email = req.body.email;
   const password = req.body.password;
   const repeatedPassword = req.body.repeatedPassword;
 
   // validate arguments
-  if (email && password && repeatedPassword && (password === repeatedPassword)) {
+  if (email && password && repeatedPassword && (password === repeatedPassword) && emailRegex.test(email)) {
     let resp = serviceProvider.trigger(
       'createUser', {
         email: email,
@@ -172,12 +173,25 @@ app.post('/signup', (req, res) => {
     Promise.all(resp).then(function () {
       res.render('signup', {message: {text: 'Vi har sendt en bekræftelse-email til dig', error: false}});
     }, function () {
-      throw new Error('Promise rejected');
+      res.status(500).send('Internal Error');
     });
   }
   else {
-    // something went wrong..
-    res.render('signup', {message: {text: 'Noget gik galt!', error: true}});
+    // input was not valid
+    let errorMessage = 'De indtastede værdier er ikke gyldige';
+    if (email === '') {
+      errorMessage = 'Email skal udfyldes';
+    }
+    else if (!emailRegex.test(email)) {
+      errorMessage = 'Email er ikke gyldig';
+    }
+    else if (password === '') {
+      errorMessage = 'Password skal udfyldes';
+    }
+    else if (password !== repeatedPassword) {
+      errorMessage = 'De 2 passwords er ikke identiske';
+    }
+    res.render('signup', {message: {text: errorMessage, error: true}});
   }
 });
 

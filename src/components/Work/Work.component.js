@@ -7,7 +7,8 @@
 import React from 'react';
 import workAction from '../../actions/Work.action.js';
 import workStore from '../../stores/Work.store.js';
-import {CoverImage} from 'dbc-react-components';
+import {CoverImage, OrderLink} from 'dbc-react-components';
+import {rewriteCoverImageUrl} from '../../utils/CoverImage.util.js';
 
 const Work = React.createClass({
   displayName: 'Work.component',
@@ -184,7 +185,7 @@ const Work = React.createClass({
         let order_ids = [];
         order_ids.push(tw.identifiers);
         return (
-          <a className='order-button button' data-identifiers={order_ids} href={tw.order} key={index} >Bestil {tw.type}</a>);
+          <OrderLink agencyId={'772700'} linkText={'Bestil ' + tw.type} orderUrl={tw.order} pids={order_ids} />);
       }
       if (tw.accessType === 'online') {
         let online_link = 'Se ' + tw.type + ' online';
@@ -214,7 +215,7 @@ const Work = React.createClass({
     return (
       <div className='work-container' >
         <div className='work small-12 medium-6 large-4' >
-          <CoverImage pids={work.result.specific[0].identifiers} prefSize={'detail_500'} />
+          <CoverImage pids={work.result.specific[0].identifiers} prefSize={'detail_500'} rewriteImgUrl={rewriteCoverImageUrl}/>
         </div>
         <div className='work small-12 medium-6 large-4' >
           {order_button}
