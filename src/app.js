@@ -25,7 +25,7 @@ import passport from 'passport';
 import {Strategy as LocalStrategy} from 'passport-local';
 import session from 'express-session';
 import redis from 'redis';
-import format from 'util';
+
 
 // loading components
 import SearchServer from './components/searchpage/Search.server.js';
@@ -107,7 +107,6 @@ app.get('/moreinfo/:restOfPath*', (req, res) => {
 
 passport.use('local', new LocalStrategy({},
   function (username, password, done) {
-    console.log('got:', username, password);
     let loginResponse = serviceProvider.trigger(
       'loginUser', {
         email: username,
@@ -124,17 +123,13 @@ passport.use('local', new LocalStrategy({},
           uid: result.userId,
           ttl: result.ttl
         };
-        console.log('yei');
         done(null, user);
       }
       else {
-        console.log('ups1', result.error.code, result.error.status, result.error.message);
         done(null, false);
       }
     }, function () {
       // return 500 Internal Error status code
-      console.log('ups1');
-      console.error('Error in local login strategy, promise rejected');
       done(null, false);
     });
   }
@@ -146,9 +141,8 @@ passport.serializeUser(function (user, done) {
   const uid = user.uid.toString();
   const ttl = user.ttl;
 
-  redisClient.set('accessToken:' + accessToken, uid, function (err, reply) {
-    console.log('REDIS SET:', reply);
-    redisClient.expire('accessToken:' + accessToken, 30);
+  redisClient.set('accessToken:' + accessToken, uid, function (err, reply) { // eslint-disable-line no-unused-vars
+    redisClient.expire('accessToken:' + accessToken, ttl);
   });
   done(null, user.id);
 });
@@ -157,8 +151,7 @@ passport.serializeUser(function (user, done) {
 passport.deserializeUser(function (id, done) {
   const accessToken = id;
 
-  redisClient.get('accessToken:' + accessToken, function (err, reply) {
-    console.log('REDIS GET:', reply);
+  redisClient.get('accessToken:' + accessToken, function (err, reply) { // eslint-disable-line no-unused-vars
     if (err) {
       done(err, false);
     }
