@@ -43,10 +43,10 @@ const SearchFieldContainerComponent = React.createClass({
   render() {
     const placeholder = this.showPlaceholder() ? (this.props.placeholder || 'Skriv dine søgeord her') : '';
     const translations = {
-      Music: 'Musik',
-      Movie: 'Film',
-      Literature: 'Bog',
-      Game: 'Spil'
+      music: 'Musik',
+      movie: 'Film',
+      literature: 'Bog',
+      game: 'Spil'
     };
     return (
       <div className='searchfield' >
