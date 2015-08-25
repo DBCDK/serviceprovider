@@ -23,6 +23,20 @@ import QueryStore from '../../stores/QueryStore.store.js';
 import InputFieldStore from '../../stores/InputField.store.js';
 import AutoCompleteStore from '../../stores/AutoComplete.store.js';
 
+const translations = {
+  music: 'Musik',
+  movie: 'Film',
+  literature: 'Bog',
+  game: 'Spil',
+  periodica: 'Tidsskrift',
+  track: 'Spor',
+  article: 'Artikel',
+  sheetmusic: 'Noder',
+  map: 'Kort',
+  review: 'Anmeldelse',
+  bookdescription: 'Bog Beskrivelse'
+};
+
 const SearchFieldContainerComponent = React.createClass({
   displayName: 'SearchFieldContainer.component',
 
@@ -42,12 +56,6 @@ const SearchFieldContainerComponent = React.createClass({
 
   render() {
     const placeholder = this.showPlaceholder() ? (this.props.placeholder || 'Skriv dine søgeord her') : '';
-    const translations = {
-      music: 'Musik',
-      movie: 'Film',
-      literature: 'Bog',
-      game: 'Spil'
-    };
     return (
       <div className='searchfield' >
         <TokenSearchField
