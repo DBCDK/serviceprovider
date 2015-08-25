@@ -17,9 +17,7 @@ const Order = React.createClass({
   },
 
   propTypes: {
-    ids: React.PropTypes.array,
-    title: React.PropTypes.string,
-    type: React.PropTypes.string
+    order: React.PropTypes.object
   },
 
   getInitialState() {
