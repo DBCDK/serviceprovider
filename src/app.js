@@ -21,6 +21,11 @@ import Logger from 'dbc-node-logger';
 import ServiceProvider from 'dbc-node-serviceprovider';
 import bodyParser from 'body-parser';
 import compression from 'compression';
+import passport from 'passport';
+import {Strategy as LocalStrategy} from 'passport-local';
+import session from 'express-session';
+import redis from 'redis';
+
 
 // loading components
 import SearchServer from './components/searchpage/Search.server.js';
@@ -35,6 +40,9 @@ const expressLoggers = logger.getExpressLoggers();
 
 // settings up our provider
 const serviceProvider = ServiceProvider(config.provider).setupSockets(socket);
+
+// setup REDIS
+const redisClient = redis.createClient(6379, '127.0.0.7');
 
 // Port config
 app.set('port', process.env.PORT || 8080); // eslint-disable-line no-process-env
@@ -74,6 +82,13 @@ app.use(expressLoggers.errorLogger);
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
 
+app.use(session({
+  secret: 'MegetHemmeligKodeord'
+}));
+app.use(passport.initialize());
+app.use(passport.session());
+
+
 app.get(['/', '/search', '/search/*'], (req, res) => {
   const query = req.query || [];
   let properties = SearchServer({query, config: uiconfig});
@@ -81,53 +96,134 @@ app.get(['/', '/search', '/search/*'], (req, res) => {
   res.render('search', properties);
 });
 
+
 app.get('/moreinfo/:restOfPath*', (req, res) => {
-  http.get('http://moreinfo.addi.dk/' + req.params.restOfPath, function(response) {
+  http.get('http://moreinfo.addi.dk/' + req.params.restOfPath, function (response) {
     res.set('Cache-Control', 'max-age=86400, s-maxage=86400, public');
     response.pipe(res);
   });
 });
 
-app.get('/profile', (req, res) => {
-  res.render('profile');
-  logger.log('info', 'accessToken', res.cookie.uid);
+
+passport.use('local', new LocalStrategy({},
+  function (username, password, done) {
+    let loginResponse = serviceProvider.trigger(
+      'loginUser', {
+        email: username,
+        password: password
+      }
+    );
+
+    Promise.all(loginResponse).then(function (response) {
+      const result = response[0];
+      const isLoginSuccesful = typeof result.error === 'undefined';
+      if (isLoginSuccesful) {
+        const user = {
+          id: result.id,
+          uid: result.userId,
+          ttl: result.ttl
+        };
+        done(null, user);
+      }
+      else {
+        done(null, false);
+      }
+    }, function () {
+      // return 500 Internal Error status code
+      done(null, false);
+    });
+  }
+));
+
+
+passport.serializeUser(function (user, done) {
+  const accessToken = user.id.toString();
+  const uid = user.uid.toString();
+  const ttl = user.ttl;
+
+  redisClient.set('accessToken:' + accessToken, uid, function (err, reply) { // eslint-disable-line no-unused-vars
+    redisClient.expire('accessToken:' + accessToken, ttl);
+  });
+  done(null, user.id);
 });
+
+
+passport.deserializeUser(function (id, done) {
+  const accessToken = id;
+
+  redisClient.get('accessToken:' + accessToken, function (err, reply) { // eslint-disable-line no-unused-vars
+    if (err) {
+      done(err, false);
+    }
+    else {
+      done(null, id);
+    }
+  });
+});
+
+
+function ensureAuthenticated(req, res, next) {
+  if (req.isAuthenticated()) {
+    // the user is logged in
+    return next();
+  }
+  // send user to login otherwise
+  res.redirect('/login');
+}
+
+
+app.get('/profile', ensureAuthenticated, function (req, res) {
+  res.render('profile');
+});
+
 
 app.get('/login', (req, res) => {
   res.render('login');
 });
 
-app.post('/login', (req, res) => {
-  const email = req.body.email;
-  const password = req.body.password;
 
-  let loginResponse = serviceProvider.trigger(
-    'loginUser', {
-      email: email,
-      password: password
-    }
-  );
+app.post('/login',
+  passport.authenticate('local'),
+  function (req, res) {
+    res.redirect('/profile');
+  }
+);
 
-  Promise.all(loginResponse).then(function (response) {
-    const result = response[0];
-    const isLoginSuccesful = typeof result.error === 'undefined';
-    if (isLoginSuccesful) {
-      const accessToken = result.id;
-      const ttl = result.ttl;
-      const uid = result.userId;
-      const redirectUrl = req.body.redirect ? req.body.redirect : '/profile';
-      res.cookie('accessToken', accessToken, {maxAge: ttl});
-      res.cookie('uid', uid, {maxAge: ttl});
-      res.redirect(redirectUrl);
-    }
-    else {
-      res.render('login', {message: {text: 'Din email eller dit password er ikke korrekt', error: true}});
-    }
-  }, function () {
-    // return 500 Internal Error status code
-    res.status(500).send('Internal Error');
-  });
-});
+
+/*
+ app.post('/login', (req, res) => {
+ const email = req.body.email;
+ const password = req.body.password;
+
+ let loginResponse = serviceProvider.trigger(
+ 'loginUser', {
+ email: email,
+ password: password
+ }
+ );
+
+ Promise.all(loginResponse).then(function (response) {
+ const result = response[0];
+ const isLoginSuccesful = typeof result.error === 'undefined';
+ if (isLoginSuccesful) {
+ const accessToken = result.id;
+ const ttl = result.ttl;
+ const uid = result.userId;
+ const redirectUrl = req.body.redirect ? req.body.redirect : '/profile';
+ res.cookie('accessToken', accessToken, {maxAge: ttl});
+ res.cookie('uid', uid, {maxAge: ttl});
+ res.redirect(redirectUrl);
+ }
+ else {
+ res.render('login', {message: {text: 'Din email eller dit password er ikke korrekt', error: true}});
+ }
+ }, function () {
+ // return 500 Internal Error status code
+ res.status(500).send('Internal Error');
+ });
+ });
+ */
+
 
 app.get('/confirm', (req, res) => {
   // for email verification flow
