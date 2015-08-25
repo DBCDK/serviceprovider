@@ -185,7 +185,7 @@ const Work = React.createClass({
         let order_ids = [];
         order_ids.push(tw.identifiers);
         return (
-          <OrderLink agencyId={'772700'} pids={order_ids} orderUrl={tw.order} linkText={'Bestil ' + tw.type} />);
+          <OrderLink agencyId={'772700'} linkText={'Bestil ' + tw.type} orderUrl={tw.order} pids={order_ids} />);
       }
       if (tw.accessType === 'online') {
         let online_link = 'Se ' + tw.type + ' online';
