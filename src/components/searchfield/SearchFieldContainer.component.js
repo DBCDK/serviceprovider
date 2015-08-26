@@ -45,7 +45,6 @@ const SearchFieldContainerComponent = React.createClass({
 
   render() {
     const placeholder = this.showPlaceholder() ? (this.props.placeholder || 'Skriv dine søgeord her') : '';
-    console.log(this.state);
     return (
       <div className='searchfield' >
         <TokenSearchField
