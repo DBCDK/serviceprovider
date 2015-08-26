@@ -27,7 +27,7 @@ const Login = React.createClass({
 
         <form action='/login' method='POST'>
           <label>Email</label>
-          <input name='username' ref='email 'type='text'></input>
+          <input name='username' ref='email 'type='email'></input>
           <label>Password</label>
           <input name='password' ref='password' type='password'></input>
           <input className='button' onClick={this.handleSubmit} type='submit' value='Log ind'></input>
