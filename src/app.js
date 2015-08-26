@@ -151,7 +151,7 @@ passport.serializeUser((loopbackSession, done) => {
   const uid = loopbackSession.uid.toString();
   const ttl = loopbackSession.ttl;
 
-  redisClient.set('accessToken:' + accessToken, uid, (err, reply) => {
+  redisClient.set('accessToken:' + accessToken, uid, (err, reply) => { // eslint-disable-line no-unused-vars
 
     redisClient.expire('accessToken:' + accessToken, ttl);
   });
@@ -162,7 +162,7 @@ passport.serializeUser((loopbackSession, done) => {
 passport.deserializeUser((id, done) => {
   const accessToken = id;
 
-  redisClient.get('accessToken:' + accessToken, (err, reply) => {
+  redisClient.get('accessToken:' + accessToken, (err, reply) => { // eslint-disable-line no-unused-vars
 
     if (err) {
       done(err, false);
