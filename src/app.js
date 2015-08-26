@@ -21,6 +21,11 @@ import Logger from 'dbc-node-logger';
 import ServiceProvider from 'dbc-node-serviceprovider';
 import bodyParser from 'body-parser';
 import compression from 'compression';
+import passport from 'passport';
+import {Strategy as LocalStrategy} from 'passport-local';
+import expressSession from 'express-session';
+import RedisStore from 'connect-redis';
+import redis from 'redis';
 
 // loading components
 import SearchServer from './components/searchpage/Search.server.js';
@@ -35,6 +40,10 @@ const expressLoggers = logger.getExpressLoggers();
 
 // settings up our provider
 const serviceProvider = ServiceProvider(config.provider).setupSockets(socket);
+
+// setup REDIS
+const redisClient = redis.createClient(6379, 'localhost');
+let redisStore = RedisStore(expressSession);
 
 // Port config
 app.set('port', process.env.PORT || 8080); // eslint-disable-line no-process-env
@@ -74,6 +83,24 @@ app.use(expressLoggers.errorLogger);
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
 
+let sessionMiddleware = expressSession({
+  store: new redisStore({
+    client: redisClient,
+    prefix: 'session_'
+  }),
+  secret: 'MegetHemmeligKodeord',
+  name: APP_NAME
+});
+
+socket.use(function(_socket, next) {
+  sessionMiddleware(_socket.request, _socket.request.res, next);
+});
+
+app.use(sessionMiddleware);
+
+app.use(passport.initialize());
+app.use(passport.session());
+
 app.get(['/', '/search', '/search/*'], (req, res) => {
   const query = req.query || [];
   let properties = SearchServer({query, config: uiconfig});
@@ -88,45 +115,83 @@ app.get('/moreinfo/:restOfPath*', (req, res) => {
   });
 });
 
-app.get('/profile', (req, res) => {
+passport.use('local', new LocalStrategy({},
+  (username, password, done) => {
+    let loginResponse = serviceProvider.trigger(
+      'loginUser', {
+        email: username,
+        password: password
+      }
+    );
+
+    Promise.all(loginResponse).then((response) => {
+      const result = response[0];
+      const isLoginSuccesful = typeof result.error === 'undefined';
+      if (isLoginSuccesful) {
+        const user = {
+          id: result.id,
+          uid: result.userId,
+          ttl: result.ttl
+        };
+        done(null, user);
+      }
+      else {
+        done(null, false);
+      }
+    }, function() {
+      // return 500 Internal Error status code
+      console.error('Error in local login strategy, promise rejected');
+      done(null, false);
+    });
+  }
+));
+
+passport.serializeUser((loopbackSession, done) => {
+  const accessToken = loopbackSession.id.toString();
+  const uid = loopbackSession.uid.toString();
+  const ttl = loopbackSession.ttl;
+
+  redisClient.set('accessToken:' + accessToken, uid, (err, reply) => { // eslint-disable-line no-unused-vars
+
+    redisClient.expire('accessToken:' + accessToken, ttl);
+  });
+
+  done(null, loopbackSession);
+});
+
+passport.deserializeUser((id, done) => {
+  const accessToken = id;
+
+  redisClient.get('accessToken:' + accessToken, (err, reply) => { // eslint-disable-line no-unused-vars
+
+    if (err) {
+      done(err, false);
+    }
+    else {
+      done(null, id);
+    }
+  });
+});
+
+function ensureAuthenticated(req, res, next) {
+  if (req.isAuthenticated()) {
+    // the user is logged in
+    return next();
+  }
+  // send user to login otherwise
+  res.redirect('/login');
+}
+
+app.get('/profile', ensureAuthenticated, (req, res) => {
   res.render('profile');
-  logger.log('info', 'accessToken', res.cookie.uid);
 });
 
 app.get('/login', (req, res) => {
   res.render('login');
 });
 
-app.post('/login', (req, res) => {
-  const email = req.body.email;
-  const password = req.body.password;
-
-  let loginResponse = serviceProvider.trigger(
-    'loginUser', {
-      email: email,
-      password: password
-    }
-  );
-
-  Promise.all(loginResponse).then(function (response) {
-    const result = response[0];
-    const isLoginSuccesful = typeof result.error === 'undefined';
-    if (isLoginSuccesful) {
-      const accessToken = result.id;
-      const ttl = result.ttl;
-      const uid = result.userId;
-      const redirectUrl = req.body.redirect ? req.body.redirect : '/profile';
-      res.cookie('accessToken', accessToken, {maxAge: ttl});
-      res.cookie('uid', uid, {maxAge: ttl});
-      res.redirect(redirectUrl);
-    }
-    else {
-      res.render('login', {message: {text: 'Din email eller dit password er ikke korrekt', error: true}});
-    }
-  }, function () {
-    // return 500 Internal Error status code
-    res.status(500).send('Internal Error');
-  });
+app.post('/login', passport.authenticate('local'), (req, res) => {
+  res.redirect('/profile');
 });
 
 app.get('/confirm', (req, res) => {
@@ -142,9 +207,9 @@ app.get('/confirm', (req, res) => {
     }
   );
 
-  Promise.all(verifyResponse).then(function () {
+  Promise.all(verifyResponse).then(() => {
     res.redirect(redirectUrl);
-  }, function () {
+  }, () => {
     res.status(500).send('Internal Error');
   });
 });
@@ -170,9 +235,9 @@ app.post('/signup', (req, res) => {
       }
     );
 
-    Promise.all(resp).then(function () {
+    Promise.all(resp).then(() => {
       res.render('signup', {message: {text: 'Vi har sendt en bekræftelse-email til dig', error: false}});
-    }, function () {
+    }, () => {
       res.status(500).send('Internal Error');
     });
   }
