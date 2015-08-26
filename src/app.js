@@ -23,9 +23,9 @@ import bodyParser from 'body-parser';
 import compression from 'compression';
 import passport from 'passport';
 import {Strategy as LocalStrategy} from 'passport-local';
-import session from 'express-session';
+import expressSession from 'express-session';
+import RedisStore from 'connect-redis';
 import redis from 'redis';
-
 
 // loading components
 import SearchServer from './components/searchpage/Search.server.js';
@@ -42,7 +42,8 @@ const expressLoggers = logger.getExpressLoggers();
 const serviceProvider = ServiceProvider(config.provider).setupSockets(socket);
 
 // setup REDIS
-const redisClient = redis.createClient(6379, '127.0.0.7');
+const redisClient = redis.createClient(6379, 'localhost');
+let redisStore = RedisStore(expressSession);
 
 // Port config
 app.set('port', process.env.PORT || 8080); // eslint-disable-line no-process-env
@@ -82,12 +83,23 @@ app.use(expressLoggers.errorLogger);
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
 
-app.use(session({
-  secret: 'MegetHemmeligKodeord'
-}));
+let sessionMiddleware = expressSession({
+  store: new redisStore({
+    client: redisClient,
+    prefix: 'session_'
+  }),
+  secret: 'MegetHemmeligKodeord',
+  name: APP_NAME
+});
+
+socket.use(function(_socket, next) {
+  sessionMiddleware(_socket.request, _socket.request.res, next);
+});
+
+app.use(sessionMiddleware);
+
 app.use(passport.initialize());
 app.use(passport.session());
-
 
 app.get(['/', '/search', '/search/*'], (req, res) => {
   const query = req.query || [];
@@ -96,17 +108,15 @@ app.get(['/', '/search', '/search/*'], (req, res) => {
   res.render('search', properties);
 });
 
-
 app.get('/moreinfo/:restOfPath*', (req, res) => {
-  http.get('http://moreinfo.addi.dk/' + req.params.restOfPath, function (response) {
+  http.get('http://moreinfo.addi.dk/' + req.params.restOfPath, function(response) {
     res.set('Cache-Control', 'max-age=86400, s-maxage=86400, public');
     response.pipe(res);
   });
 });
 
-
 passport.use('local', new LocalStrategy({},
-  function (username, password, done) {
+  (username, password, done) => {
     let loginResponse = serviceProvider.trigger(
       'loginUser', {
         email: username,
@@ -114,7 +124,7 @@ passport.use('local', new LocalStrategy({},
       }
     );
 
-    Promise.all(loginResponse).then(function (response) {
+    Promise.all(loginResponse).then((response) => {
       const result = response[0];
       const isLoginSuccesful = typeof result.error === 'undefined';
       if (isLoginSuccesful) {
@@ -128,27 +138,28 @@ passport.use('local', new LocalStrategy({},
       else {
         done(null, false);
       }
-    }, function () {
+    }, function() {
       // return 500 Internal Error status code
+      console.error('Error in local login strategy, promise rejected');
       done(null, false);
     });
   }
 ));
 
+passport.serializeUser((loopbackSession, done) => {
+  const accessToken = loopbackSession.id.toString();
+  const uid = loopbackSession.uid.toString();
+  const ttl = loopbackSession.ttl;
 
-passport.serializeUser(function (user, done) {
-  const accessToken = user.id.toString();
-  const uid = user.uid.toString();
-  const ttl = user.ttl;
+  redisClient.set('accessToken:' + accessToken, uid, (err, reply) => { // eslint-disable-line no-unused-vars
 
-  redisClient.set('accessToken:' + accessToken, uid, function (err, reply) { // eslint-disable-line no-unused-vars
     redisClient.expire('accessToken:' + accessToken, ttl);
   });
-  done(null, user.id);
+
+  done(null, loopbackSession);
 });
 
-
-passport.deserializeUser(function (id, done) {
+passport.deserializeUser((id, done) => {
   const accessToken = id;
 
   redisClient.get('accessToken:' + accessToken, function (err, reply) { // eslint-disable-line no-unused-vars
@@ -161,7 +172,6 @@ passport.deserializeUser(function (id, done) {
   });
 });
 
-
 function ensureAuthenticated(req, res, next) {
   if (req.isAuthenticated()) {
     // the user is logged in
@@ -171,8 +181,7 @@ function ensureAuthenticated(req, res, next) {
   res.redirect('/login');
 }
 
-
-app.get('/profile', ensureAuthenticated, function (req, res) {
+app.get('/profile', ensureAuthenticated, (req, res) => {
   res.render('profile');
 });
 
@@ -180,12 +189,6 @@ app.get('/login', (req, res) => {
   res.render('login');
 });
 
-app.post('/login',
-  passport.authenticate('local'),
-  function (req, res) {
-    res.redirect('/profile');
-  }
-);
 
 app.get('/logout', (req, res) => {
   req.session.destroy(function() {
@@ -193,6 +196,9 @@ app.get('/logout', (req, res) => {
   });
 });
 
+app.post('/login', passport.authenticate('local'), (req, res) => {
+  res.redirect('/profile');
+});
 
 app.get('/confirm', (req, res) => {
   // for email verification flow
@@ -207,9 +213,9 @@ app.get('/confirm', (req, res) => {
     }
   );
 
-  Promise.all(verifyResponse).then(function () {
+  Promise.all(verifyResponse).then(() => {
     res.redirect(redirectUrl);
-  }, function () {
+  }, () => {
     res.status(500).send('Internal Error');
   });
 });
@@ -235,9 +241,9 @@ app.post('/signup', (req, res) => {
       }
     );
 
-    Promise.all(resp).then(function () {
+    Promise.all(resp).then(() => {
       res.render('signup', {message: {text: 'Vi har sendt en bekræftelse-email til dig', error: false}});
-    }, function () {
+    }, () => {
       res.status(500).send('Internal Error');
     });
   }
