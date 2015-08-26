@@ -150,30 +150,10 @@ passport.use('local', new LocalStrategy({},
 ));
 
 passport.serializeUser((loopbackSession, done) => {
-  const accessToken = loopbackSession.id.toString();
-  const uid = loopbackSession.uid.toString();
-  const ttl = loopbackSession.ttl;
-
-  /*redisClient.set('accessToken:' + accessToken, uid, (err, reply) => { // eslint-disable-line no-unused-vars
-   redisClient.expire('accessToken:' + accessToken, ttl);
-   });*/
-
   done(null, loopbackSession);
 });
 
 passport.deserializeUser((id, done) => {
-  const accessToken = id;
-  //console.log(id);
-
-  /*redisClient.get('accessToken:' + accessToken, function (err, reply) { // eslint-disable-line no-unused-vars
-   console.log(err, reply);
-   if (err) {
-   done(err, false);
-   }
-   else {
-   done(null, id);
-   }
-   });*/
   done(null, id);
 });
 
