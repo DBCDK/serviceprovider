@@ -88,7 +88,7 @@ let sessionMiddleware = expressSession({
     client: redisClient,
     prefix: 'session_'
   }),
-  secret: 'MegetHemmeligKodeord',
+  secret: 'MegetHemmeligKoodeord',
   name: APP_NAME
 });
 
