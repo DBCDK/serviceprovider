@@ -88,7 +88,7 @@ let sessionMiddleware = expressSession({
     client: redisClient,
     prefix: APP_NAME + '_session_'
   }),
-  secret: 'MegetHemmeligKodeord',
+  secret: 'MegetHemmeligKoodeord',
   name: APP_NAME
 });
 
@@ -162,9 +162,8 @@ passport.serializeUser((loopbackSession, done) => {
 passport.deserializeUser((id, done) => {
   const accessToken = id;
 
-  redisClient.get('accessToken:' + accessToken, (err, reply) => { // eslint-disable-line no-unused-vars
-
-    if (err) {
+  redisClient.get('accessToken:' + accessToken, function (err, reply) { // eslint-disable-line no-unused-vars
+    if (err || !reply) {
       done(err, false);
     }
     else {
@@ -188,6 +187,13 @@ app.get('/profile', ensureAuthenticated, (req, res) => {
 
 app.get('/login', (req, res) => {
   res.render('login');
+});
+
+
+app.get('/logout', (req, res) => {
+  req.session.destroy(function() {
+    res.redirect('/login');
+  });
 });
 
 app.post('/login', passport.authenticate('local'), (req, res) => {
