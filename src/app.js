@@ -89,7 +89,10 @@ let sessionMiddleware = expressSession({
     prefix: APP_NAME + '_session_'
   }),
   secret: 'MegetHemmeligKoodeord',
-  name: APP_NAME
+  name: APP_NAME,
+  rolling: true,
+  resave: false,
+  saveUninitialized: false
 });
 
 socket.use(function(_socket, next) {
@@ -138,7 +141,7 @@ passport.use('local', new LocalStrategy({},
       else {
         done(null, false);
       }
-    }, function() {
+    }, () => {
       // return 500 Internal Error status code
       console.error('Error in local login strategy, promise rejected');
       done(null, false);
@@ -151,25 +154,27 @@ passport.serializeUser((loopbackSession, done) => {
   const uid = loopbackSession.uid.toString();
   const ttl = loopbackSession.ttl;
 
-  redisClient.set('accessToken:' + accessToken, uid, (err, reply) => { // eslint-disable-line no-unused-vars
-
-    redisClient.expire('accessToken:' + accessToken, ttl);
-  });
+  /*redisClient.set('accessToken:' + accessToken, uid, (err, reply) => { // eslint-disable-line no-unused-vars
+   redisClient.expire('accessToken:' + accessToken, ttl);
+   });*/
 
   done(null, loopbackSession);
 });
 
 passport.deserializeUser((id, done) => {
   const accessToken = id;
+  //console.log(id);
 
-  redisClient.get('accessToken:' + accessToken, function (err, reply) { // eslint-disable-line no-unused-vars
-    if (err || !reply) {
-      done(err, false);
-    }
-    else {
-      done(null, id);
-    }
-  });
+  /*redisClient.get('accessToken:' + accessToken, function (err, reply) { // eslint-disable-line no-unused-vars
+   console.log(err, reply);
+   if (err) {
+   done(err, false);
+   }
+   else {
+   done(null, id);
+   }
+   });*/
+  done(null, id);
 });
 
 function ensureAuthenticated(req, res, next) {
@@ -188,7 +193,6 @@ app.get('/profile', ensureAuthenticated, (req, res) => {
 app.get('/login', (req, res) => {
   res.render('login');
 });
-
 
 app.get('/logout', (req, res) => {
   req.session.destroy(function() {
