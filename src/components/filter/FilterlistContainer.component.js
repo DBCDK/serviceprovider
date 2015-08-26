@@ -26,7 +26,7 @@ export default React.createClass({
   render() {
     return (
       <div className='filterguide--wrapper' >
-        {this.state.filter.length && (<FilterGuide categories={this.state.categories} elements={this.state.filter} select={QueryActions.add} />) || ''}
+        {this.state.filter.length && (<FilterGuide categories={this.state.categories.categories} elements={this.state.filter} select={QueryActions.add} />) || ''}
       </div>
     );
   }
