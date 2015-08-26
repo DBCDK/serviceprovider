@@ -22,20 +22,8 @@ import InputFieldActions from '../../actions/InputField.actions.js';
 import QueryStore from '../../stores/QueryStore.store.js';
 import InputFieldStore from '../../stores/InputField.store.js';
 import AutoCompleteStore from '../../stores/AutoComplete.store.js';
+import MaterialTypeStore from '../../stores/MaterialType.store.js';
 
-const translations = {
-  music: 'Musik',
-  movie: 'Film',
-  literature: 'Bog',
-  game: 'Spil',
-  periodica: 'Tidsskrift',
-  track: 'Spor',
-  article: 'Artikel',
-  sheetmusic: 'Noder',
-  map: 'Kort',
-  review: 'Anmeldelse',
-  bookdescription: 'Bog Beskrivelse'
-};
 
 const SearchFieldContainerComponent = React.createClass({
   displayName: 'SearchFieldContainer.component',
@@ -47,7 +35,8 @@ const SearchFieldContainerComponent = React.createClass({
   mixins: [
     Reflux.connect(AutoCompleteStore, 'autocomplete'),
     Reflux.connect(InputFieldStore, 'input'),
-    Reflux.connect(QueryStore, 'query')
+    Reflux.connect(QueryStore, 'query'),
+    Reflux.connect(MaterialTypeStore, 'categories')
   ],
 
   showPlaceholder() {
@@ -56,6 +45,7 @@ const SearchFieldContainerComponent = React.createClass({
 
   render() {
     const placeholder = this.showPlaceholder() ? (this.props.placeholder || 'Skriv dine søgeord her') : '';
+    console.log(this.state);
     return (
       <div className='searchfield' >
         <TokenSearchField
@@ -64,7 +54,7 @@ const SearchFieldContainerComponent = React.createClass({
           pending={this.state.autocomplete.pending}
           placeholder={placeholder}
           query={this.state.query.query}
-          translations={translations}
+          translations={this.state.categories.translations}
           update={QueryActions.update}
           />
         <AutoCompleteContainer actions={AutoCompleteActions} input={this.state.input} store={this.state.autocomplete} />
