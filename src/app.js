@@ -188,7 +188,7 @@ app.post('/login',
 );
 
 app.get('/logout', (req, res) => {
-  req.session.destroy(function(err){
+  req.session.destroy(function() {
     res.redirect('/login');
   });
 });
