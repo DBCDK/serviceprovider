@@ -86,7 +86,7 @@ app.use(bodyParser.urlencoded({extended: true}));
 let sessionMiddleware = expressSession({
   store: new redisStore({
     client: redisClient,
-    prefix: 'session_'
+    prefix: APP_NAME + '_session_'
   }),
   secret: 'MegetHemmeligKodeord',
   name: APP_NAME
