@@ -288,6 +288,12 @@ app.get(['/order', '/order/*'], (req, res) => {
   res.render('order', {query});
 });
 
+app.get(['/receipt', '/receipt/*'], (req, res) => {
+  let query = req.query;
+  query = JSON.stringify(query);
+  res.render('receipt', {query});
+});
+
 // starting server
 server.listen(app.get('port'), () => {
   logger.log('info', 'Server listening on ' + app.get('port'));
