@@ -25,7 +25,6 @@ import passport from 'passport';
 import {Strategy as LocalStrategy} from 'passport-local';
 import expressSession from 'express-session';
 import RedisStore from 'connect-redis';
-import redis from 'redis';
 
 // loading components
 import SearchServer from './components/searchpage/Search.server.js';
@@ -42,7 +41,6 @@ const expressLoggers = logger.getExpressLoggers();
 const serviceProvider = ServiceProvider(config.provider).setupSockets(socket);
 
 // setup REDIS
-const redisClient = redis.createClient(6379, 'localhost');
 let redisStore = RedisStore(expressSession);
 
 // Port config
@@ -85,7 +83,8 @@ app.use(bodyParser.urlencoded({extended: true}));
 
 let sessionMiddleware = expressSession({
   store: new redisStore({
-    client: redisClient,
+    host: 'localhost',
+    port: 6379,
     prefix: APP_NAME + '_session_'
   }),
   secret: 'MegetHemmeligKoodeord',
