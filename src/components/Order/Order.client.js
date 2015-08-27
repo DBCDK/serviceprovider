@@ -1,6 +1,6 @@
 'use strict';
 import React from 'react';
-import Order from './Order.component.js';
+import {Order} from 'dbc-react-components';
 
 /**
  * Client side rendering of the Order component

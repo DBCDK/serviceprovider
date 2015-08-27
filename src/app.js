@@ -25,7 +25,6 @@ import passport from 'passport';
 import {Strategy as LocalStrategy} from 'passport-local';
 import expressSession from 'express-session';
 import RedisStore from 'connect-redis';
-import redis from 'redis';
 
 // loading components
 import SearchServer from './components/searchpage/Search.server.js';
@@ -97,7 +96,8 @@ let redisStore = RedisStore(expressSession);
 
 let sessionMiddleware = expressSession({
   store: new redisStore({
-    client: redisClient,
+    host: 'localhost',
+    port: 6379,
     prefix: APP_NAME + '_session_'
   }),
   secret: redisConfig.secret,
@@ -107,7 +107,7 @@ let sessionMiddleware = expressSession({
   saveUninitialized: false
 });
 
-socket.use(function(_socket, next) {
+socket.use((_socket, next) => {
   sessionMiddleware(_socket.request, _socket.request.res, next);
 });
 
@@ -124,7 +124,7 @@ app.get(['/', '/search', '/search/*'], (req, res) => {
 });
 
 app.get('/moreinfo/:restOfPath*', (req, res) => {
-  http.get('http://moreinfo.addi.dk/' + req.params.restOfPath, function(response) {
+  http.get('http://moreinfo.addi.dk/' + req.params.restOfPath, (response) => {
     res.set('Cache-Control', 'max-age=86400, s-maxage=86400, public');
     response.pipe(res);
   });
@@ -155,7 +155,7 @@ passport.use('local', new LocalStrategy({},
       }
     }, () => {
       // return 500 Internal Error status code
-      console.error('Error in local login strategy, promise rejected');
+      logger.error('Error in local login strategy, promise rejected');
       done(null, false);
     });
   }
@@ -187,7 +187,7 @@ app.get('/login', (req, res) => {
 });
 
 app.get('/logout', (req, res) => {
-  req.session.destroy(function() {
+  req.session.destroy(() => {
     res.redirect('/login');
   });
 });
@@ -284,3 +284,4 @@ server.listen(app.get('port'), () => {
   logger.log('info', 'Versions: ', process.versions);
   logger.log('info', version + ' is up and running');
 });
+
