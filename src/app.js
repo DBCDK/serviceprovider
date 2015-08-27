@@ -187,6 +187,16 @@ app.get('/login', (req, res) => {
 });
 
 app.get('/logout', (req, res) => {
+
+  if (typeof req.user !== 'undefined') {
+    const params = {
+      accessToken: req.user.id,
+      id: req.user.uid
+    };
+    serviceProvider.trigger('logoutUser', params);
+  }
+  //
+
   req.session.destroy(() => {
     res.redirect('/login');
   });
