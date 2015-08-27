@@ -91,13 +91,13 @@ switch (process.env.NODE_ENV) { // eslint-disable-line no-process-env
   default:
     break;
 }
-const redisClient = redis.createClient(redisConfig.port, redisConfig.host);
+
 let redisStore = RedisStore(expressSession);
 
 let sessionMiddleware = expressSession({
   store: new redisStore({
-    host: 'localhost',
-    port: 6379,
+    host: redisConfig.host,
+    port: redisConfig.port,
     prefix: APP_NAME + '_session_'
   }),
   secret: redisConfig.secret,
