@@ -40,9 +40,6 @@ const expressLoggers = logger.getExpressLoggers();
 // settings up our provider
 const serviceProvider = ServiceProvider(config.provider).setupSockets(socket);
 
-// setup REDIS
-let redisStore = RedisStore(expressSession);
-
 // Port config
 app.set('port', process.env.PORT || 8080); // eslint-disable-line no-process-env
 
@@ -81,13 +78,29 @@ app.use(expressLoggers.errorLogger);
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
 
+
+// setup REDIS
+let redisConfig = config.services.redis.local;
+switch (process.env.NODE_ENV) { // eslint-disable-line no-process-env
+  case 'development':
+    redisConfig = config.services.redis.development;
+    break;
+  case 'production':
+    redisConfig = config.services.redis.production;
+    break;
+  default:
+    break;
+}
+
+let redisStore = RedisStore(expressSession);
+
 let sessionMiddleware = expressSession({
   store: new redisStore({
-    host: 'localhost',
-    port: 6379,
+    host: redisConfig.host,
+    port: redisConfig.port,
     prefix: APP_NAME + '_session_'
   }),
-  secret: 'MegetHemmeligKoodeord',
+  secret: redisConfig.secret,
   name: APP_NAME,
   rolling: true,
   resave: false,
