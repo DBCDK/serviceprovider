@@ -30,10 +30,7 @@ const Work = React.createClass({
   },
 
   getWork() {
-    let result = {
-      id: this.state.id
-    };
-    workAction(result);
+    workAction({id: this.state.id});
   },
 
   updateWork(work) {
@@ -41,9 +38,11 @@ const Work = React.createClass({
   },
 
   getPublications: function(publications) {
-    let types, publishers, dates, edition, extents, isbns, links;
-    return publications.map((publ) => {
-      let className = 'publication-details';
+    let types, publishers, links;
+    let edition, dates;
+    const editions = publications.map((publ, key) => {
+      let className = 'work-container--work--editions--publication-details';
+
       if (publ.hasOwnProperty('types')) {
         types = publ.types.map((t, index) => {
           className += ' ' + t.toLowerCase().replace(/ .*/, '');
@@ -60,132 +59,99 @@ const Work = React.createClass({
           return (<div className='edition' key={index} >{ed}</div>);
         });
       }
-      if (publ.hasOwnProperty('extents')) {
-        extents = publ.extents.map((e, index) => {
-          return (<div className='extent' key={index} >{e}</div>);
-        });
-      }
-      if (publ.hasOwnProperty('isbns')) {
-        isbns = publ.isbns.map((i, index) => {
-          return (<div className='isbn' key={index} >{i}</div>);
-        });
-      }
+
+      const isbns = this.getMetaData(publ, 'isbns', 'isbn', 'ISBN: ', false, false);
+      const extents = this.getMetaData(publ, 'extents', 'extent', '', false, false);
+
       if (publ.hasOwnProperty('links')) {
         links = publ.links.map((l, index) => {
           return (
-            <div className='link' key={index} >
+            <div className='sub-publication link' key={index} >
               <a href={l} target='_blank' >Se online</a>
             </div>);
         });
       }
       return (
-        <div className={className} data-identifiers={publ.identifier} key={publ.identifier} >
+        <div className={className} data-identifiers={publ.identifier} key={key} >
           {types}
-          <div className='clear' ></div>
           {publishers}
-          {edition}
-          {dates}
+          <div className='inline' >
+            {edition}
+            <span>,&nbsp;</span>
+            {dates}
+          </div>
           {extents}
           {isbns}
           {links}
-        </div>);
+        </div>
+      );
     });
+
+    return (
+      <div className='work-container--work--editions-container' >
+        <span className='work-container--work--editions--label clearfix' >Udgaver: </span>
+        {editions}
+      </div>
+    );
   },
 
-  render() {
-    const {id, work, info} = this.state; // eslint-disable-line
-    let creators,
-        description,
-        parts,
-        issns,
-        extents,
-        actors,
-        series,
-        subjects,
-        dk5s,
-        tracks,
-        languages,
-        specific,
-        specifics,
-        dates;
+  getMetaData(general, property, className = '', prefix = '', wrapInLink = false, clearfix = true) {
+    let items = null;
+    let result = null;
 
-    if (work.info.hits === '0') {
-      return (<div className="work-not-found" >Værket blev ikke fundet</div>);
-    }
+    if (general.hasOwnProperty(property)) {
+      items = general[property].map((item, index) => {
+        let content = '';
+        const value = item.value || item;
 
-    if (work.result.length === 0) {
-      return (<div />);
-    }
-    const general = work.result.general;
-    const title = general.title;
-    const audience = general.audience || {};
-    if (general.hasOwnProperty('creators')) {
-      creators = general.creators.map((creator, index) => {
-        return (<div className='creator' key={index} >
-          <a href={creator.search_link} >{creator.value}</a></div>);
-      });
-    }
-    if (general.hasOwnProperty('description')) {
-      description = general.description;
-    }
-    if (general.hasOwnProperty('actors')) {
-      actors = general.actors.map((actor, index) => {
+        if (wrapInLink) {
+          content = <a href={item.search_link} >{value}</a>;
+        }
+        else {
+          content = value;
+        }
+
         return (
-          <div className='actor' key={index} >
-            <a href={actor.search_link} >{actor.value}</a>
-          </div>);
+          <div className={className} key={index} >
+            {content}
+          </div>
+        );
       });
+
+      const classes = clearfix ? property + ' clearfix' : property;
+      result = <div className={classes} ><span>{prefix}</span>{items}</div>;
     }
-    if (general.hasOwnProperty('series')) {
-      series = <a href={general.series.search_link} >{general.series.value}</a>;
-    }
-    if (general.hasOwnProperty('subjects')) {
-      subjects = general.subjects.map((subject, index) => {
-        return (<div className='subject' >
-          <a href={subject.search_link} key={index} >{subject.value}</a></div>);
-      });
-    }
+
+    return result;
+  },
+
+  getDk5s(general) {
+    let dk5s = null;
+    let result = null;
     if (general.hasOwnProperty('dk5s')) {
       dk5s = general.dk5s.map((dk5, index) => {
-        return (<div className='dk5' key={index} >
-          <a href={dk5.search_link} >{dk5.value}</a>
+        return (
+          <div className='dk5' key={index} >
+            <a href={dk5.search_link} >{dk5.text}</a>
+          </div>
+        );
+      });
+      result = (
+        <div className='dk5s clearfix' >
+          <span>Opstilling: </span>{dk5s}
+        </div>
+      );
+    }
+    return result;
+  },
 
-          <div className='dk5text' >{dk5.text}</div>
-        </div>);
-      });
-    }
-    if (general.hasOwnProperty('tracks')) {
-      tracks = general.tracks.map((track, index) => {
-        return (<div className='track' key={index} >{track}</div>);
-      });
-    }
-    if (general.hasOwnProperty('languages')) {
-      languages = general.languages.map((language, index) => {
-        return (<div className='language' key={index} >{language}</div>);
-      });
-    }
-    if (general.hasOwnProperty('partOf')) {
-      parts = general.partOf.map((partOf, index) => {
-        return (<div className='part' key={index} >{partOf}</div>);
-      });
-    }
-    if (general.hasOwnProperty('issn')) {
-      issns = general.issn.map((issn, index) => {
-        return (<div className='issn' key={index} >{issn}</div>);
-      });
-    }
-    if (general.hasOwnProperty('extent')) {
-      extents = general.extent.map((extent, index) => {
-        return (<div className='extent' key={index} >{extent}</div>);
-      });
-    }
-    specific = work.result.specific;
-    const order_button = specific.map((tw, index) => {
+  getOrderButtons(specific) {
+    return specific.map((tw, index) => {
       if (tw.accessType === 'physical') {
         let order_ids = [];
         order_ids.push(tw.identifiers);
         return (
-          <OrderLink agencyId={'710100'} linkText={'Bestil ' + tw.type} orderUrl={tw.order} pids={order_ids} />);
+          <OrderLink agencyId={'710100'} key={index} linkText={'Bestil ' + tw.type} orderUrl={tw.order} pids={order_ids} />);
       }
       if (tw.accessType === 'online') {
         let online_link = 'Se ' + tw.type + ' online';
@@ -193,7 +159,11 @@ const Work = React.createClass({
           <a className='online-link' href="#" key={index} >{online_link}</a>);
       }
     });
-    specifics = specific.map((tw, index) => {
+  },
+
+  getSpecifics(specific) {
+    let dates;
+    const specifics = specific.map((tw, index) => {
       let identifiers = [];
       identifiers.push(tw.identifiers);
       if (tw.dates[0] !== null) {
@@ -210,45 +180,95 @@ const Work = React.createClass({
         </div>
       );
     });
+    return (
+      <div className='specifics clearfix' >{specifics}</div>
+    );
+  },
+
+  getSeries(general) {
+    let series = '';
+    if (general.hasOwnProperty('series')) {
+      series = (
+        <div className='series' >
+          <a href={general.series.search_link} >{general.series.value}</a>
+        </div>
+      );
+    }
+    return series;
+  },
+
+  getTitle(title) {
+    return <div className='title' >{title}</div>;
+  },
+
+  getDescription(general) {
+    return general.hasOwnProperty('series') ?
+      <div className='description clearfix' >{general.description}.</div> : '';
+  },
+
+  render() {
+    const {id, work} = this.state;
+
+    if (work.info.hits === '0') {
+      return (<div className="work-not-found" >Værket blev ikke fundet</div>);
+    }
+
+    if (work.result.length === 0) {
+      return (<div />);
+    }
+
+    const general = work.result.general;
+    const title = this.getTitle(general.title);
+    const description = this.getDescription(general);
+    const audience = general.audience || {};
     const publications = work.result.publications;
     const editions = this.getPublications(publications);
+
+    const orderButtons = this.getOrderButtons(work.result.specific);
+    const specifics = this.getSpecifics(work.result.specific);
+
+    const parts = this.getMetaData(work.result.general, 'partOf', 'part', 'I: ');
+    const subjects = this.getMetaData(work.result.general, 'subjects', 'subject', 'Emner: ', true);
+    const creators = this.getMetaData(work.result.general, 'creators', 'creator', '', true);
+    const actors = this.getMetaData(work.result.general, 'actors', 'actor', 'Medvirkende: ', true);
+    const tracks = this.getMetaData(work.result.general, 'tracks', 'track', 'Trackliste: ');
+    const languages = this.getMetaData(work.result.general, 'languages', 'language', 'Sprog: ');
+    const issns = this.getMetaData(work.result.general, 'issn', 'issn', 'ISBN: ');
+    const extents = this.getMetaData(work.result.general, 'extent', 'extent');
+
+    const dk5s = this.getDk5s(general);
+    const series = this.getSeries(general);
+
     return (
-      <div className='work-container' >
+      <div className='work-container' data-pid={id} >
         <div className='work small-12 medium-6 large-4' >
-          <CoverImage pids={work.result.specific[0].identifiers} prefSize={'detail_500'} rewriteImgUrl={rewriteCoverImageUrl}/>
+          <CoverImage pids={work.result.specific[0].identifiers} prefSize={'detail_500'} rewriteImgUrl={rewriteCoverImageUrl} />
         </div>
         <div className='work small-12 medium-6 large-4' >
-          {order_button}
-          <div className='clear' ></div>
+          <div className='work-conatiner--order-buttons clearfix' >
+            {orderButtons}
+          </div>
           <div className='general' >
-            <div className='title' >{title}</div>
-            <div className='creators' >{creators}</div>
-            <div className='clear' ></div>
-            <div className='description' >{description}</div>
-            <div className='partof' >{parts}</div>
-            <div className='issns' >{issns}</div>
-            <div className='extents' >{extents}</div>
-            <div className='actors' >{actors}</div>
-            <div className='clear' ></div>
-            <div className='series' >{series}</div>
-            <div className='subjects' >{subjects}</div>
-            <div className='clear' ></div>
-            <div className='dk5s' >{dk5s}</div>
-            <div className='clear' ></div>
-            <div className='audience' >
+            {title}
+            {creators}
+            {description}
+            {parts}
+            {issns}
+            {extents}
+            {actors}
+            {series}
+            {subjects}
+            {dk5s}
+            <div className='audience clearfix' >
               <div className='age' >{audience.age}</div>
               <div className='pegi' >{audience.pegi}</div>
               <div className='medieraad' >{audience.medieraad}</div>
             </div>
-            <div className='clear' ></div>
-            <div className='tracks' >{tracks}</div>
-            <div className='clear' ></div>
-            <div className='languages' >{languages}</div>
-            <div className='clear' ></div>
+            {tracks}
+            {languages}
           </div>
           {specifics}
-          <div className='clear' ></div>
-          <div className='editions' >{editions}</div>
+          {editions}
         </div>
       </div>
     );
