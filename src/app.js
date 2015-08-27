@@ -300,4 +300,3 @@ server.listen(app.get('port'), () => {
   logger.log('info', 'Versions: ', process.versions);
   logger.log('info', version + ' is up and running');
 });
-

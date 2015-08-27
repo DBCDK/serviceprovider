@@ -9,8 +9,9 @@ import Work from './Work.component';
  * and 'props' is a stringified version of the properties for client side export.
  */
 export default function workServer(props) {
-  const {elements, id} = props;
-  const work = React.renderToString(<Work elements={elements || []} id={id || []} />);
+  const work = React.renderToString(
+    <Work elements={props.elements || []} id={props.id || []} />
+  );
   return {
     work,
     props: JSON.stringify(props)
