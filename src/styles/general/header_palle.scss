@@ -174,5 +174,12 @@ button:focus,
   margin: 10px;
 }
 
+.order--container .image,
+.order--container .order,
+.receipt--container .image,
+.receipt--container .receipt {
+    float: left;
+}
+
 
 
