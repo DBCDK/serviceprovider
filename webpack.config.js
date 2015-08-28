@@ -17,8 +17,8 @@ module.exports = [{
     signup: './src/components/Signup/index.js',
     resetpassword: './src/components/ResetPassword/index.js',
     work: './src/components/Work/Work.client',
-    order: './src/components/Order/Order.client',
-    receipt: './src/components/Receipt/Receipt.client',
+    order: './src/components/Order/index.js',
+    receipt: './src/components/Receipt/index.js',
     styles: process.env.NODE_APPLICATION === 'ddbmobil' && './src/styles/ddb.scss' || './src/styles/pg.scss' // eslint-disable-line no-process-env
   },
   output: {
