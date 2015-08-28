@@ -1,6 +1,8 @@
 'use strict';
 import React from 'react';
 import {Order} from 'dbc-react-components';
+import {CoverImage} from 'dbc-react-components';
+import {rewriteCoverImageUrl} from '../../utils/CoverImage.util.js';
 
 /**
  * Entry point for Order
@@ -8,4 +10,6 @@ import {Order} from 'dbc-react-components';
  * If a querystring from the url exists it is added to the global window object, and should be passed to the client
  */
 
-React.render(<Order order={window.ORDER_PROPS || {}} />, document.getElementById('order'));
+const image = <CoverImage pids={window.ORDER_PROPS.coverImageIds.split(',')} prefSize={'detail_500'} rewriteImgUrl={rewriteCoverImageUrl} />;
+
+React.render(<Order coverImage={image} order={window.ORDER_PROPS || {}} />, document.getElementById('order'));
