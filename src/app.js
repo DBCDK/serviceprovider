@@ -288,6 +288,12 @@ app.get(['/order', '/order/*'], (req, res) => {
   res.render('order', {query});
 });
 
+app.get(['/librarysuggest', '/librarysuggest/*'], (req, res) => {
+  let id = req.query.id;
+  id = '"' + id + '"';
+  res.render('library_suggest', {id});
+});
+
 app.get(['/receipt', '/receipt/*'], (req, res) => {
   let query = req.query;
   query = JSON.stringify(query);
