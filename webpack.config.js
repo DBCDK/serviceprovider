@@ -13,6 +13,8 @@ module.exports = [{
   entry: {
     querysearch: './src/components/searchpage/index.js',
     profile: './src/components/Profile/index.js',
+    library: ['./src/components/Library/Library.component.js'],
+    librarysuggest: './src/components/LibrarySuggest/index.js',
     login: './src/components/Login/index.js',
     signup: './src/components/Signup/index.js',
     resetpassword: './src/components/ResetPassword/index.js',
