@@ -44,7 +44,7 @@ let MaterialTypeStore = Reflux.createStore({
 
   onQueryUpdated(self) {
     // Return closure function in order to get correct "this" context from action
-    return function (store) {
+    return (store) => {
       self.categories = self.checkForQueryContent(self.categories, store).map(translateCategories);
       self.trigger({
         categories: self.categories,
@@ -54,7 +54,7 @@ let MaterialTypeStore = Reflux.createStore({
   },
 
   onResponse(self) {
-    return function(result) {
+    return (result) => {
       if (!result.pending && result.info.facets) {
         self.categories = self.checkForQueryContent(result.info.facets).map(translateCategories);
         self.trigger({
