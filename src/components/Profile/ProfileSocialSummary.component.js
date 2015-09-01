@@ -7,7 +7,6 @@
 
 import React from 'react';
 
-
 const ProfileSocialSummary = React.createClass({
 
   displayName: function() {

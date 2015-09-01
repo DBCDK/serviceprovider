@@ -133,7 +133,7 @@ app.get('/moreinfo/:restOfPath*', (req, res) => {
 passport.use('local', new LocalStrategy({},
   (username, password, done) => {
     let loginResponse = serviceProvider.trigger(
-      'loginUser', {
+      'loginProfile', {
         email: username,
         password: password
       }
@@ -193,7 +193,7 @@ app.get('/logout', (req, res) => {
       accessToken: req.user.id,
       id: req.user.uid
     };
-    serviceProvider.trigger('logoutUser', params);
+    serviceProvider.trigger('logoutProfile', params);
   }
   //
 
@@ -241,7 +241,7 @@ app.post('/signup', (req, res) => {
   // validate arguments
   if (email && password && repeatedPassword && (password === repeatedPassword) && emailRegex.test(email)) {
     let resp = serviceProvider.trigger(
-      'createUser', {
+      'createProfile', {
         email: email,
         password: password
       }
