@@ -12,6 +12,7 @@ import ProfileHeader from './ProfileHeader.component.js';
 import ProfileSocialSummary from './ProfileSocialSummary.component.js';
 
 import ProfileStore from '../../stores/Profile.store.js';
+import ProfileActions from '../../actions/Profile.action.js';
 
 const Profile = React.createClass({
 
@@ -25,6 +26,7 @@ const Profile = React.createClass({
 
   componentDidMount: function() {
     ProfileStore.listen(this.updateProfile);
+    ProfileActions.fetchProfile();
   },
 
   updateProfile: function(profile) {

@@ -26,7 +26,25 @@ let profileStore = Reflux.createStore({
 
   onToggleEdit: function () {
     _profile.editEnabled = !_profile.editEnabled;
+    // edit mode was disabled
+    if (!_profile.editEnabled) {
+      ProfileActions.saveProfile(_profile);
+    }
     this.trigger(_profile);
+  },
+
+  onUpdateProfile: function (profile) {
+    _profile.name = profile.name;
+    this.trigger(_profile);
+  },
+
+  onConfirmSaveProfile: function (str) { // eslint-disable-line no-unused-vars
+  },
+
+  onSaveProfile: function (str) { // eslint-disable-line no-unused-vars
+  },
+
+  onFetchProfile: function (str) { // eslint-disable-line no-unused-vars
   },
 
   onUpdateAttribute: function (str) {

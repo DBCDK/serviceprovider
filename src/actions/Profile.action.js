@@ -6,7 +6,17 @@
  */
 
 import Reflux from 'reflux';
+import SocketClient from '../utils/ServiceProviderSocketClient.js';
 
-const ProfileActions = Reflux.createActions(['toggleEdit', 'updateAttribute', 'updateImageUrl']);
+const fetchEvent = SocketClient('getProfile');
+const saveEvent = SocketClient('updateProfile');
+
+const ProfileActions = Reflux.createActions(['toggleEdit', 'updateAttribute', 'updateImageUrl', 'saveProfile', 'updateProfile', 'fetchProfile', 'confirmSaveProfile']);
+
+ProfileActions.saveProfile.listen(saveEvent.request);
+saveEvent.response(ProfileActions.confirmSaveProfile);
+
+ProfileActions.fetchProfile.listen(fetchEvent.request);
+fetchEvent.response(ProfileActions.updateProfile);
 
 export default ProfileActions;
