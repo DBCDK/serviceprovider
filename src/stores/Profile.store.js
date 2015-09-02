@@ -5,7 +5,6 @@
  * Profile Store
  */
 
-
 import Reflux from 'reflux';
 import ProfileActions from '../actions/Profile.action.js';
 
@@ -34,7 +33,11 @@ let profileStore = Reflux.createStore({
   },
 
   onUpdateProfile: function (profile) {
-    _profile.name = profile.name;
+    for (let attr in profile) {
+      if (profile.hasOwnProperty(attr)) {
+        _profile[attr] = profile[attr];
+      }
+    }
     this.trigger(_profile);
   },
 
@@ -49,11 +52,6 @@ let profileStore = Reflux.createStore({
 
   onUpdateAttribute: function (str) {
     _profile.name = str;
-    this.trigger(_profile);
-  },
-
-  onUpdateImageUrl: function (str) {
-    _profile.imageUrl = str;
     this.trigger(_profile);
   },
 

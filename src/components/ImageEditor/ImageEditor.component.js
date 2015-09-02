@@ -165,14 +165,11 @@ const ImageEditor = React.createClass({
       let isLandscape = this.state.cvsImageWidth > this.state.cvsImageHeight;
 
       if (isSquare) {
-
         // no panning - image is already as square as it can be.
         positionX = this.state.fixedX;
         positionY = this.state.fixedY;
-
       }
       else if (isLandscape) {
-
 
         // compute canvas image dimensions
         let canvas = React.findDOMNode(this.refs.cvs);
@@ -228,6 +225,7 @@ const ImageEditor = React.createClass({
 
   render: function () {
     let isCroppable = this.state.isCroppable;
+    // const hasImageUrl = !!this.props.initialImageUrl;
     return (
       <div>
         <canvas
