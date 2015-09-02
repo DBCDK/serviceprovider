@@ -172,14 +172,21 @@ passport.deserializeUser((id, done) => {
 function ensureAuthenticated(req, res, next) {
   if (req.isAuthenticated()) {
     // the user is logged in
+    req.session.returnTo = req.originalUrl;
     return next();
   }
+  req.session.returnTo = req.originalUrl;
   // send user to login otherwise
   res.redirect('/login');
 }
 
 app.get('/profile', ensureAuthenticated, (req, res) => {
-  res.render('profile');
+  if (req.session.returnTo === '/profile') {
+    res.render('profile');
+  }
+  else {
+    res.redirect(req.session.returnTo);
+  }
 });
 
 app.get('/login', (req, res) => {
@@ -203,7 +210,12 @@ app.get('/logout', (req, res) => {
 });
 
 app.post('/login', passport.authenticate('local'), (req, res) => {
-  res.redirect('/profile');
+  if (req.session.hasOwnProperty('returnTo')) {
+    res.redirect(req.session.returnTo);
+  }
+  else {
+    res.redirect('/profile');
+  }
 });
 
 app.get('/confirm', (req, res) => {
@@ -282,7 +294,7 @@ app.get(['/work', '/work/*'], (req, res) => {
   res.render('work', {id});
 });
 
-app.get(['/order', '/order/*'], ensureAuthenticated, (req, res) => {
+app.get(['/order', '/order*'], ensureAuthenticated, (req, res) => {
   let query = req.query;
   query = JSON.stringify(query);
   res.render('order', {query});
