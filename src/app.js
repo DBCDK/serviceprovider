@@ -289,9 +289,15 @@ app.get(['/order', '/order/*'], (req, res) => {
 });
 
 app.get(['/librarysuggest', '/librarysuggest/*'], (req, res) => {
+  let query = req.query;
+  query = JSON.stringify(query);
+  res.render('library_suggest', {query});
+});
+
+app.get(['/library', '/library/*'], (req, res) => {
   let id = req.query.id;
   id = '"' + id + '"';
-  res.render('library_suggest', {id});
+  res.render('library', {id});
 });
 
 app.get(['/receipt', '/receipt/*'], (req, res) => {

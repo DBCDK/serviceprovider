@@ -1,6 +1,6 @@
 'use strict';
 
 import React from 'react';
-import LibrarySearch from './LibrarySuggest.component.js';
+import LibrarySuggestContainerComponent from './LibrarySuggestContainer.component.js';
 
-React.render(<LibrarySearch />, document.getElementById('search'), null);
+React.render(<LibrarySuggestContainerComponent />, document.getElementById('search'), null);

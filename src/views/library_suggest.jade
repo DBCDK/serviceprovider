@@ -3,5 +3,4 @@ block prepend footerscripts
   script(src='/js/librarysuggest.js')
 block content
   #search !{LibrarySuggest}
-  #library-container !{Library}
-  script window.LIBRARY_ID = !{id};
+  script window.QUERYSTRING_PROPS = !{query};

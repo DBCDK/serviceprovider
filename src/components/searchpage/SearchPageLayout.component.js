@@ -21,7 +21,7 @@ export default React.createClass({
   render() {
     return (
       <div className='search'>
-        <Query />
+        <Query queryLocation='/search' />
         <SearchFieldContainer />
         <FilterGuideContainer />
         <SearchResultContainer config={this.props.config} />
