@@ -282,7 +282,7 @@ app.get(['/work', '/work/*'], (req, res) => {
   res.render('work', {id});
 });
 
-app.get(['/order', '/order/*'], (req, res) => {
+app.get(['/order', '/order/*'], ensureAuthenticated, (req, res) => {
   let query = req.query;
   query = JSON.stringify(query);
   res.render('order', {query});
