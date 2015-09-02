@@ -1,0 +1,6 @@
+extends layout
+block prepend footerscripts
+   script(src='/js/library.js')
+block content
+   #library-container !{Library}
+   script window.LIBRARY_ID = !{id};

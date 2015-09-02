@@ -13,13 +13,16 @@ import QueryActions from '../../actions/QueryUpdate.action.js';
 import ComponentUtils from '../../utils/ComponentHelpers.util.js';
 
 const Query = React.createClass({
+  propTypes: {
+    queryLocation: React.PropTypes.string.isRequired
+  },
   mixins: [
     Reflux.connect(QueryStore, 'query'),
     ComponentUtils
   ],
   updateHistoryState(query) {
     if (this.isClient() && window.location.search !== query.search) {
-      const queryString = `/search${query.search}`;
+      const queryString = `${this.props.queryLocation + query.search}`;
       history.pushState(null, null, window.location.origin + queryString);
     }
   },

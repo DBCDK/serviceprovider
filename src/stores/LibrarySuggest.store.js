@@ -4,14 +4,12 @@ import Reflux from 'reflux';
 import React from 'react';
 
 import LibrarySuggestAction from '../actions/LibrarySuggest.action.js';
-import Library from '../components/Library/Library.component.js';
 
 const LibrarySuggestStore = Reflux.createStore({
   listenables: LibrarySuggestAction,
   store: {
     data: {},
-    pending: false,
-    library: {}
+    pending: false
   },
 
   parseResponse(response, data) {
@@ -29,7 +27,7 @@ const LibrarySuggestStore = Reflux.createStore({
 
     if (response.docs.length > 0) {
       data[response.query][response.index] = {
-        label: <a href={'/librarysearch?query=' + query} >Biblioteker</a>,
+        label: <a href={'/librarysuggest?text=' + query} >Biblioteker</a>,
         weight: 0,
         data: this.addLinks(response.docs)
       };
@@ -52,7 +50,7 @@ const LibrarySuggestStore = Reflux.createStore({
           </h6>
         </div>
       );
-      item.href = '/librarysuggest?id=' + value.library.id;
+      item.href = '/library?id=' + value.library.id;
       return item;
     });
   },
@@ -81,9 +79,6 @@ const LibrarySuggestStore = Reflux.createStore({
   },
 
   getInitialState() {
-    if (window.LIBRARY_ID && window.LIBRARY_ID !== 'undefined') {
-      React.render(<Library id={window.LIBRARY_ID} />, document.getElementById('library-container'));
-    }
     return this.store;
   }
 });

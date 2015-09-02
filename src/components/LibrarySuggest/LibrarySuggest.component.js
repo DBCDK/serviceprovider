@@ -20,7 +20,9 @@ import LibrarySuggestStore from '../../stores/LibrarySuggest.store.js';
 const LibrarySuggestComponent = React.createClass({
   displayName: 'LibrarySuggest.component',
 
-  propTypes: {},
+  propTypes: {
+    placeholder: React.PropTypes.string
+  },
 
   mixins: [
     Reflux.connect(LibrarySuggestStore, 'suggest'),
@@ -28,17 +30,20 @@ const LibrarySuggestComponent = React.createClass({
     Reflux.connect(QueryStore, 'query')
   ],
 
-  render() {
-    let query = [];
+  showPlaceholder() {
+    return !(this.state.query.query && this.state.query.query.length);
+  },
 
+  render() {
+    const placeholder = this.showPlaceholder() ? (this.props.placeholder || 'Søg efter biblioteker her') : '';
     return (
       <div className='searchfield' >
         <TokenSearchField
           change={InputFieldActions.change}
           focus={InputFieldActions.focus}
           pending={this.state.suggest.pending}
-          placeholder='Søg efter bibliotek'
-          query={query}
+          placeholder={placeholder}
+          query={this.state.query.query}
           update={QueryActions.update}
           />
         <AutoCompleteContainer actions={LibrarySuggestAction} input={this.state.input} store={this.state.suggest} />
