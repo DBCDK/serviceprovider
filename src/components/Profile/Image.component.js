@@ -21,7 +21,7 @@ const Image = React.createClass({
   },
 
   render: function () {
-    let url = this.props.url;
+    let url = (!this.props.url) ? '/dummy.jpg' : this.props.url;
     return (
       <img className={"profile--image-round"} src={url}></img>
     );
