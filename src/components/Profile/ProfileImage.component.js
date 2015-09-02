@@ -25,7 +25,7 @@ const ProfileImage = React.createClass({
   },
 
   _handleSaveImageUrl: function(imageUrl) {
-    ProfileActions.updateImageUrl(imageUrl);
+    ProfileActions.updateProfile({imageUrl: imageUrl});
   },
 
   render: function () {
