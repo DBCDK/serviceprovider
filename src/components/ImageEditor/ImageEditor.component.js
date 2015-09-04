@@ -131,6 +131,64 @@ const ImageEditor = React.createClass({
     this.drawImage();
   },
 
+  updateImagePosition: function(mouseX, mouseY) {
+
+    // where is mouse relative to start drag
+    let dX = this.state.dragStartX - mouseX;
+    let dY = this.state.dragStartY - mouseY;
+
+    // This state must be changed
+    let positionX = this.state.fixedX + dX;
+    let positionY = this.state.fixedY + dY;
+
+    let isSquare = this.state.cvsImageWidth === this.state.cvsImageHeight;
+    let isLandscape = this.state.cvsImageWidth > this.state.cvsImageHeight;
+
+    if (isSquare) {
+      // no panning - image is already as square as it can be.
+      positionX = this.state.fixedX;
+      positionY = this.state.fixedY;
+    }
+    else if (isLandscape) {
+
+      // compute canvas image dimensions
+      let canvas = React.findDOMNode(this.refs.cvs);
+      let ctx = canvas.getContext('2d');
+      let ratio = this.state.image.height / this.state.image.width;
+      let cvsImageWidth = (1 / ratio) * ctx.canvas.width;
+      let maxPositionX = cvsImageWidth - ctx.canvas.width;
+
+      // limit panning by image height
+      positionX = (positionX > maxPositionX) ? maxPositionX : positionX;
+      positionX = (positionX < 0) ? 0 : positionX;
+
+      // restrict vertical panning
+      positionY = this.state.fixedY;
+
+    }
+    else {
+
+      // compute canvas image dimensions
+      let canvas = React.findDOMNode(this.refs.cvs);
+      let ctx = canvas.getContext('2d');
+      let ratio = this.state.image.height / this.state.image.width;
+      let cvsImageHeight = ratio * ctx.canvas.height;
+      let maxPositionY = cvsImageHeight - ctx.canvas.height;
+
+      // limit panning by image height
+      positionY = (positionY > maxPositionY) ? maxPositionY : positionY;
+      positionY = (positionY < 0) ? 0 : positionY;
+
+      // restrict vertical panning
+      positionX = this.state.fixedX;
+    }
+
+    this.setState({
+      positionX: positionX,
+      positionY: positionY
+    });
+  },
+
   handleDragStart: function (e) {
     // mouse position inside crop frame
     let mouseX = e.clientX - e.target.getBoundingClientRect().left;
@@ -153,60 +211,7 @@ const ImageEditor = React.createClass({
       let mouseX = e.clientX - e.target.getBoundingClientRect().left;
       let mouseY = e.clientY - e.target.getBoundingClientRect().top;
 
-      // where is mouse relative to start drag
-      let dX = this.state.dragStartX - mouseX;
-      let dY = this.state.dragStartY - mouseY;
-
-      // This state must be changed
-      let positionX = this.state.fixedX + dX;
-      let positionY = this.state.fixedY + dY;
-
-      let isSquare = this.state.cvsImageWidth === this.state.cvsImageHeight;
-      let isLandscape = this.state.cvsImageWidth > this.state.cvsImageHeight;
-
-      if (isSquare) {
-        // no panning - image is already as square as it can be.
-        positionX = this.state.fixedX;
-        positionY = this.state.fixedY;
-      }
-      else if (isLandscape) {
-
-        // compute canvas image dimensions
-        let canvas = React.findDOMNode(this.refs.cvs);
-        let ctx = canvas.getContext('2d');
-        let ratio = this.state.image.height / this.state.image.width;
-        let cvsImageWidth = (1 / ratio) * ctx.canvas.width;
-        let maxPositionX = cvsImageWidth - ctx.canvas.width;
-
-        // limit panning by image height
-        positionX = (positionX > maxPositionX) ? maxPositionX : positionX;
-        positionX = (positionX < 0) ? 0 : positionX;
-
-        // restrict vertical panning
-        positionY = this.state.fixedY;
-
-      }
-      else {
-
-        // compute canvas image dimensions
-        let canvas = React.findDOMNode(this.refs.cvs);
-        let ctx = canvas.getContext('2d');
-        let ratio = this.state.image.height / this.state.image.width;
-        let cvsImageHeight = ratio * ctx.canvas.height;
-        let maxPositionY = cvsImageHeight - ctx.canvas.height;
-
-        // limit panning by image height
-        positionY = (positionY > maxPositionY) ? maxPositionY : positionY;
-        positionY = (positionY < 0) ? 0 : positionY;
-
-        // restrict vertical panning
-        positionX = this.state.fixedX;
-      }
-
-      this.setState({
-        positionX: positionX,
-        positionY: positionY
-      });
+      this.updateImagePosition(mouseX, mouseY);
     }
   },
 
@@ -222,6 +227,34 @@ const ImageEditor = React.createClass({
     });
   },
 
+  handleTouchStart: function(e) {
+    // mouse position inside crop frame
+    let mouseX = e.changedTouches[0].clientX - e.changedTouches[0].target.getBoundingClientRect().left;
+    let mouseY = e.changedTouches[0].clientY - e.changedTouches[0].target.getBoundingClientRect().top;
+    // position in crop frame when drag initiated
+    let dragStartX = mouseX;
+    let dragStartY = mouseY;
+
+    this.setState({
+      cropDragEnabled: true,
+      dragStartX: dragStartX,
+      dragStartY: dragStartY
+    });
+  },
+
+  handleTouchMove: function(e) {
+
+    // do not scroll window
+    e.preventDefault();
+
+    if (this.state.cropDragEnabled) {
+      // mouse position inside crop frame
+      let mouseX = e.changedTouches[0].clientX - e.changedTouches[0].target.getBoundingClientRect().left;
+      let mouseY = e.changedTouches[0].clientY - e.changedTouches[0].target.getBoundingClientRect().top;
+
+      this.updateImagePosition(mouseX, mouseY);
+    }
+  },
 
   render: function () {
     let isCroppable = this.state.isCroppable;
@@ -232,6 +265,9 @@ const ImageEditor = React.createClass({
           onMouseDown={this.handleDragStart}
           onMouseMove={this.handleDrag}
           onMouseUp={this.handleDragEnd}
+          onTouchEndCapture={this.handleDragEnd}
+          onTouchMove={this.handleTouchMove}
+          onTouchStartCapture={this.handleTouchStart}
           ref='cvs'/>
         <input onChange={this.handleFileChanged} type='file'/>
         <input disabled={!isCroppable} onClick={this.handleSave} ref='cropButton' type='button' value='Beskær'/>
