@@ -19,7 +19,8 @@ const ProfileActions = Reflux.createActions([
   'updateProfile',
   'fetchProfile',
   'confirmSaveProfile',
-  'addLibraryToFavorites'
+  'addLibraryToFavorites',
+  'updateBorrowerIDForLibrary'
 ]);
 
 ProfileActions.saveProfile.listen(saveEvent.request);
