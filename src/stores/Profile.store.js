@@ -4,7 +4,7 @@
  * @file
  * Profile Store
  */
-import {contains} from 'lodash';
+import {findIndex} from 'lodash';
 
 import Reflux from 'reflux';
 import ProfileActions from '../actions/Profile.action.js';
@@ -62,12 +62,31 @@ let profileStore = Reflux.createStore({
     return _profile;
   },
 
-  onAddLibraryToFavorites: function(agencyID) {
-    if (!_profile.favoriteLibraries) {
-      _profile.favoriteLibraries = [agencyID];
+  onUpdateBorrowerIDForLibrary: function(agencyID, borrowerID) {
+    const libraryIndex = findIndex(_profile.favoriteLibraries, 'agencyID', agencyID);
+    if (agencyID >= 0) {
+      _profile.favoriteLibraries[libraryIndex] = {
+        agencyID: agencyID,
+        borrowerID: borrowerID
+      };
     }
-    else if (!contains(_profile.favoriteLibraries, agencyID)) {
-      _profile.favoriteLibraries.push(agencyID);
+    else {
+      this.onAddLibraryToFavorites(agencyID);
+      this.onUpdateBorrowerIDForLibrary(agencyID, borrowerID);
+    }
+  },
+
+  onAddLibraryToFavorites: function(agencyID) {
+    let favoriteModel = {
+      agencyID: agencyID,
+      borrowerID: ''
+    };
+
+    if (!_profile.favoriteLibraries) {
+      _profile.favoriteLibraries = [favoriteModel];
+    }
+    else if (findIndex(_profile.favoriteLibraries, 'agencyID', agencyID) < 0) {
+      _profile.favoriteLibraries.push(favoriteModel);
     }
 
     ProfileActions.saveProfile({
