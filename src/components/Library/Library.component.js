@@ -7,8 +7,13 @@
 import React from 'react';
 import Reflux from 'reflux';
 
+// Stores
 import LibraryStore from '../../stores/Library.store.js';
+import ProfileStore from '../../stores/Profile.store.js';
+
+// Actions
 import LibraryActions from '../../actions/Library.action.js';
+import ProfileActions from '../../actions/Profile.action.js';
 
 const Library = React.createClass({
   displayName: 'Library.component',
@@ -16,11 +21,16 @@ const Library = React.createClass({
     id: React.PropTypes.string.isRequired
   },
   mixins: [
-    Reflux.connect(LibraryStore, 'library')
+    Reflux.connect(LibraryStore, 'library'),
+    Reflux.connect(ProfileStore, 'profile')
   ],
 
   componentDidMount() {
     LibraryActions.libraryIdUpdated.trigger(this.props.id);
+  },
+
+  addToFavorites() {
+    ProfileActions.addLibraryToFavorites(this.state.library.data.branchId);
   },
 
   render() {
@@ -36,6 +46,9 @@ const Library = React.createClass({
         <p>{this.state.library.data.openingHoursDan}</p>
         <p>{this.state.library.data.postalAddress}</p>
         <p>{this.state.library.data.postalCode}</p>
+        <a className="button" onClick={this.addToFavorites}>
+          Tilføj bibliotek til favoritter!
+        </a>
       </div>
     );
   }
