@@ -4,6 +4,7 @@
  * @file
  * Profile Store
  */
+import {contains} from 'lodash';
 
 import Reflux from 'reflux';
 import ProfileActions from '../actions/Profile.action.js';
@@ -14,13 +15,15 @@ let _profile = {
   followingCount: 16,
   groupsCount: 7,
   followersCount: 35,
-  editEnabled: false
+  editEnabled: false,
+  favoriteLibraries: []
 };
 
 let profileStore = Reflux.createStore({
   listenables: [ProfileActions],
 
   init: function () {
+    ProfileActions.fetchProfile();
   },
 
   onToggleEdit: function () {
@@ -57,6 +60,19 @@ let profileStore = Reflux.createStore({
 
   getProfile: function () {
     return _profile;
+  },
+
+  onAddLibraryToFavorites: function(agencyID) {
+    if (!_profile.favoriteLibraries) {
+      _profile.favoriteLibraries = [agencyID];
+    }
+    else if (!contains(_profile.favoriteLibraries, agencyID)) {
+      _profile.favoriteLibraries.push(agencyID);
+    }
+
+    ProfileActions.saveProfile({
+      favoriteLibraries: _profile.favoriteLibraries
+    });
   }
 
 });
