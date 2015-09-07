@@ -26,6 +26,10 @@ let profileStore = Reflux.createStore({
     ProfileActions.fetchProfile();
   },
 
+  getInitialState: function () {
+    return _profile;
+  },
+
   onToggleEdit: function () {
     _profile.editEnabled = !_profile.editEnabled;
     // edit mode was disabled
@@ -74,6 +78,8 @@ let profileStore = Reflux.createStore({
       this.onAddLibraryToFavorites(agencyID);
       this.onUpdateBorrowerIDForLibrary(agencyID, borrowerID);
     }
+
+    this.trigger(_profile);
   },
 
   onAddLibraryToFavorites: function(agencyID) {
@@ -85,13 +91,15 @@ let profileStore = Reflux.createStore({
     if (!_profile.favoriteLibraries) {
       _profile.favoriteLibraries = [favoriteModel];
     }
-    else if (findIndex(_profile.favoriteLibraries, 'agencyID', agencyID) < 0) {
+    else if (findIndex(_profile.favoriteLibraries, 'agencyID', agencyID) === -1) {
       _profile.favoriteLibraries.push(favoriteModel);
     }
 
     ProfileActions.saveProfile({
       favoriteLibraries: _profile.favoriteLibraries
     });
+
+    this.trigger(_profile);
   }
 
 });

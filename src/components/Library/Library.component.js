@@ -7,6 +7,8 @@
 import React from 'react';
 import Reflux from 'reflux';
 
+import {find} from 'lodash';
+
 // Stores
 import LibraryStore from '../../stores/Library.store.js';
 import ProfileStore from '../../stores/Profile.store.js';
@@ -33,7 +35,13 @@ const Library = React.createClass({
     ProfileActions.addLibraryToFavorites(this.state.library.data.branchId);
   },
 
+  shouldDisableFavoriteButton() {
+    return (find(this.state.profile.favoriteLibraries, 'agencyID', this.state.library.data.branchId));
+  },
+
   render() {
+    const shouldDisableFavoriteButton = this.shouldDisableFavoriteButton();
+
     return (
       <div className='library'>
         <p>{this.state.library.data.agencyName}</p>
@@ -46,8 +54,8 @@ const Library = React.createClass({
         <p>{this.state.library.data.openingHoursDan}</p>
         <p>{this.state.library.data.postalAddress}</p>
         <p>{this.state.library.data.postalCode}</p>
-        <a className="button" onClick={this.addToFavorites}>
-          Tilføj bibliotek til favoritter!
+        <a className={shouldDisableFavoriteButton ? 'button disabled secondary' : 'button'} onClick={this.addToFavorites}>
+          {shouldDisableFavoriteButton ? 'Biblioteket er et favoritbibliotek' : 'Tilføj bibliotek til favoritter!'}
         </a>
       </div>
     );
