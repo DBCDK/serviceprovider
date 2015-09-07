@@ -4,7 +4,7 @@
  * @file
  * Profile Store
  */
-import {contains, findIndex} from 'lodash';
+import {findIndex} from 'lodash';
 
 import Reflux from 'reflux';
 import ProfileActions from '../actions/Profile.action.js';
