@@ -16,7 +16,8 @@ let _profile = {
   groupsCount: 7,
   followersCount: 35,
   editEnabled: false,
-  favoriteLibraries: []
+  favoriteLibraries: [],
+  likes: []
 };
 
 let profileStore = Reflux.createStore({
