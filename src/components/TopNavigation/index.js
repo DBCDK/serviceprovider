@@ -8,4 +8,4 @@
 import React from 'react';
 import TopNavigation from './TopNavigation.component.js';
 
-React.render(<TopNavigation/>, document.getElementById('topNavigation'), null);
+React.render(<TopNavigation/>, document.getElementById('topnavigation'), null);
