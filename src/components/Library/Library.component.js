@@ -31,8 +31,13 @@ const Library = React.createClass({
     LibraryActions.libraryIdUpdated.trigger(this.props.id);
   },
 
-  addToFavorites() {
-    ProfileActions.addLibraryToFavorites(this.state.library.data.branchId);
+  addOrRemoveFromFavorites() {
+    if (this.shouldDisableFavoriteButton()) {
+      ProfileActions.removeLibraryFromFavorites(this.state.library.data.branchId);
+    }
+    else {
+      ProfileActions.addLibraryToFavorites(this.state.library.data.branchId);
+    }
   },
 
   shouldDisableFavoriteButton() {
@@ -54,8 +59,8 @@ const Library = React.createClass({
         <p>{this.state.library.data.openingHoursDan}</p>
         <p>{this.state.library.data.postalAddress}</p>
         <p>{this.state.library.data.postalCode}</p>
-        <a className={shouldDisableFavoriteButton ? 'button disabled secondary' : 'button'} onClick={this.addToFavorites}>
-          {shouldDisableFavoriteButton ? 'Biblioteket er et favoritbibliotek' : 'Tilføj bibliotek til favoritter!'}
+        <a className={shouldDisableFavoriteButton ? 'button alert' : 'button'} onClick={this.addOrRemoveFromFavorites}>
+          {shouldDisableFavoriteButton ? 'Fjern biblioteket som favoritbibliotek' : 'Tilføj bibliotek til favoritter!'}
         </a>
       </div>
     );

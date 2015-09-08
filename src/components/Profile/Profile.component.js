@@ -6,32 +6,23 @@
  */
 
 import React from 'react';
+import Reflux from 'reflux';
+
 import ProfileImage from './ProfileImage.component.js';
 import ProfileAttribute from './ProfileAttribute.component.js';
 import ProfileHeader from './ProfileHeader.component.js';
 import ProfileSocialSummary from './ProfileSocialSummary.component.js';
+import ProfileLibraries from './ProfileLibraries.component.js';
 
 import ProfileStore from '../../stores/Profile.store.js';
-import ProfileActions from '../../actions/Profile.action.js';
 
 const Profile = React.createClass({
 
-  displayName: function() {
-    return 'ReactProfile';
-  },
+  displayName: 'ReactProfile',
 
-  getInitialState: function() {
-    return {profile: ProfileStore.getProfile()};
-  },
-
-  componentDidMount: function() {
-    ProfileStore.listen(this.updateProfile);
-    ProfileActions.fetchProfile();
-  },
-
-  updateProfile: function(profile) {
-    this.setState({profile: profile});
-  },
+  mixins: [
+    Reflux.connect(ProfileStore, 'profile')
+  ],
 
   render: function() {
     const profile = this.state.profile;
@@ -42,13 +33,14 @@ const Profile = React.createClass({
     return (
       <div>
         <ProfileHeader editable={editable} ref='header' />
-        <ProfileImage editable={editable} url={profile.imageUrl} />
-        <ProfileAttribute editable={editable} name='Name' type='string' value={profile.name} />
+        <ProfileImage editable={editable} url={this.state.profile.imageUrl} />
+        <ProfileAttribute editable={editable} name='Name' type='string' value={this.state.profile.name} />
         <ProfileSocialSummary
           followerCount={followersCount}
           followingCount={followingCount}
           groupsCount={groupsCount}
           />
+        <ProfileLibraries editable={editable} libraries={this.state.profile.favoriteLibraries} profileStore={this.state.profile} />
       </div>
     );
   }
