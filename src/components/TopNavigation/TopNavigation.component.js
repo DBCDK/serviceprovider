@@ -19,7 +19,7 @@ const TopNavigation = React.createClass({
   componentDidMount: function() {
   },
 
-  updateProfile: function(profile) {
+  updateProfile: function() {
   },
 
   render: function() {
