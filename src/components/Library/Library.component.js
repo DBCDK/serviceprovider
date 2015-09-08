@@ -44,11 +44,16 @@ const Library = React.createClass({
     return (find(this.state.profile.favoriteLibraries, 'agencyID', this.state.library.data.branchId));
   },
 
+  goBack() {
+    window.history.back();
+  },
+
   render() {
     const shouldDisableFavoriteButton = this.shouldDisableFavoriteButton();
 
     return (
       <div className='library'>
+        <a className='button tiny' onClick={this.goBack}>Tilbage!</a>
         <p>{this.state.library.data.agencyName}</p>
         <p>{this.state.library.data.branchEmail}</p>
         <p>{this.state.library.data.branchId}</p>
