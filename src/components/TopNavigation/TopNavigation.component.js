@@ -28,21 +28,27 @@ const TopNavigation = React.createClass({
   },
 
   updateProfile: function(profile) {
-    this.setState({isLoggedIn: profile.userIsLoggedIn});
+    this.setState({
+      isLoggedIn: profile.userIsLoggedIn,
+      username: profile.name
+    });
   },
 
   render: function() {
-    const buttonData = this.state.isLoggedIn ? {url: '/logout', text: 'Log Ud'} : {url: '/login', text: 'Log Ind'};
+    const isLoggedIn = this.state.isLoggedIn;
+    const username = this.state.username;
+    const buttonData = isLoggedIn ? {url: '/logout', text: 'Log Ud'} : {url: '/login', text: 'Log Ind'};
     let button = null;
-    if (this.state.isLoggedIn !== null) {
-      button = <a href={buttonData.url}>{buttonData.text}</a>;
+    const linkText = isLoggedIn ? <a href='/profile'>{username}</a> : null;
+    if (isLoggedIn !== null) {
+      const profileLink = <p className='link'>{linkText}</p>;
+      button = <div>{profileLink}<a className='button tiny' href={buttonData.url}>{buttonData.text}</a></div>;
     }
     return (
       <nav className='topnavigation--header' role="navigation">
         <div className='row'>
-          <div className='small-4 columns'><a href='/'><image src='/palle_logo.png'></image></a></div>
-          <div className='small-4 columns'><p></p></div>
-          <div className='small-4 columns right'>{button}</div>
+          <div className='small-4 columns logo'><a href='/'><image src='/logo.png'></image></a></div>
+          <div className='small-8 columns right'>{button}</div>
         </div>
       </nav>
     );

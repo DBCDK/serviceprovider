@@ -5,6 +5,20 @@
   padding-bottom: 1vh;
 
   .right{
+
     text-align: right;
+    .link{
+      display: inline;
+      font-size:0.8em;
+      margin-left: 1vw;
+      margin-right: 1vw;
+    }
+  }
+
+  .button{
+    background-color:white;
+    color:black;
+    border: 1px darkgrey solid;
+    padding:3vw 4vw 3vw 4vw;
   }
 }
