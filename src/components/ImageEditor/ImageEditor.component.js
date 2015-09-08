@@ -9,7 +9,7 @@ import React from 'react';
 
 const ImageEditor = React.createClass({
 
-  displayName: function() {
+  displayName: function () {
     return 'ReactImageEditor';
   },
 
@@ -58,7 +58,6 @@ const ImageEditor = React.createClass({
       let ctx = canvas.getContext('2d');
 
       let image = this.state.image;
-
       // resize canvas dynamically
       ctx.canvas.width = window.innerWidth;
       ctx.canvas.height = window.innerWidth;
@@ -77,6 +76,7 @@ const ImageEditor = React.createClass({
     let self = this;
     let image = new Image();
     image.onload = function () {
+
       // set new image and reset all other state
       let isCroppable = image.width !== image.height;
       self.setState({
@@ -100,6 +100,7 @@ const ImageEditor = React.createClass({
     image.src = url;
   },
 
+
   handleFileChanged: function (e) {
 
     let files;
@@ -116,22 +117,47 @@ const ImageEditor = React.createClass({
     }
   },
 
+
   handleSave: function () {
+    const self = this;
     // create new image from crop selection
     let canvas = React.findDOMNode(this.refs.cvs);
-    let croppedImageUrl = canvas.toDataURL('image/png').replace('image/png', 'image/octet-stream');
 
-    this.loadImage(croppedImageUrl, this._handleResize);
+    let croppedImageUrl = canvas.toDataURL('image/png');
 
-    // call save function passed as prop with image url
-    this.props.onSave(croppedImageUrl);
+    // reduce large images to 200 x 200 image
+    const imageSize = 200;
+    const newImage = document.createElement('img');
+    newImage.src = croppedImageUrl;
+
+    newImage.onload = function () {
+
+      // draw new image on canvas
+      let newCanvas = document.createElement('canvas');
+      newCanvas.width = imageSize;
+      newCanvas.height = imageSize;
+      let newCtx = newCanvas.getContext('2d');
+      newCtx.drawImage(newImage, 0, 0, imageSize, imageSize);
+
+      // get dataUrl from canvas
+      let newDataUrl = newCanvas.toDataURL('image/png');
+      croppedImageUrl = newDataUrl;
+
+      self.loadImage(croppedImageUrl, self._handleResize);
+
+      // call save function passed as prop with image url
+      self.props.onSave(croppedImageUrl);
+
+    };
   },
+
 
   _handleResize: function () {
     this.drawImage();
   },
 
-  updateImagePosition: function(mouseX, mouseY) {
+
+  updateImagePosition: function (mouseX, mouseY) {
 
     // where is mouse relative to start drag
     let dX = this.state.dragStartX - mouseX;
@@ -227,7 +253,7 @@ const ImageEditor = React.createClass({
     });
   },
 
-  handleTouchStart: function(e) {
+  handleTouchStart: function (e) {
     // mouse position inside crop frame
     let mouseX = e.changedTouches[0].clientX - e.changedTouches[0].target.getBoundingClientRect().left;
     let mouseY = e.changedTouches[0].clientY - e.changedTouches[0].target.getBoundingClientRect().top;
@@ -242,7 +268,7 @@ const ImageEditor = React.createClass({
     });
   },
 
-  handleTouchMove: function(e) {
+  handleTouchMove: function (e) {
 
     // do not scroll window
     e.preventDefault();
