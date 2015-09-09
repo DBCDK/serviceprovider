@@ -284,7 +284,6 @@ const ImageEditor = React.createClass({
 
   render: function () {
     let isCroppable = this.state.isCroppable;
-    // const hasImageUrl = !!this.props.initialImageUrl;
     return (
       <div>
         <canvas
