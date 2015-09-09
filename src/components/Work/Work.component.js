@@ -5,13 +5,16 @@
  * Provides the work view for the enduser.
  */
 import React from 'react';
+import Reflux from 'reflux';
+
+import {findIndex} from 'lodash';
+
 import workAction from '../../actions/Work.action.js';
-import workStore from '../../stores/Work.store.js';
+import WorkStore from '../../stores/Work.store.js';
 import {CoverImage, OrderLink} from 'dbc-react-components';
 import {rewriteCoverImageUrl} from '../../utils/CoverImage.util.js';
 import LikeContainer from '../LikeDislike/LikeContainer.component.js';
 import DislikeContainer from '../LikeDislike/DislikeContainer.component.js';
-
 import ProfileStore from '../../stores/Profile.store.js';
 
 const Work = React.createClass({
@@ -20,26 +23,17 @@ const Work = React.createClass({
     id: React.PropTypes.string,
     work: React.PropTypes.object
   },
-
-  getInitialState() {
-    return {
-      id: this.props.id,
-      profile: ProfileStore.getProfile(),
-      work: workStore.getStore()
-    };
-  },
+  mixins: [
+    Reflux.connect(WorkStore, 'work'),
+    Reflux.connect(ProfileStore, 'profile')
+  ],
 
   componentDidMount() {
     this.getWork();
-    workStore.listen(this.updateWork);
   },
 
   getWork() {
-    workAction({id: this.state.id});
-  },
-
-  updateWork(work) {
-    this.setState({work});
+    workAction({id: this.props.id});
   },
 
   getPublications: function(publications) {
@@ -150,13 +144,20 @@ const Work = React.createClass({
     return result;
   },
 
-  getOrderButtons(specific) {
+  getOrderButtons(specific, agencyId, userIsLoggedIn) {
     return specific.map((tw, index) => {
       if (tw.accessType === 'physical') {
         let order_ids = [];
         order_ids.push(tw.identifiers);
         return (
-          <OrderLink agencyId={'710100'} coverImagePids={specific[0].identifiers} linkText={'Bestil ' + tw.type} orderUrl={tw.order} pids={order_ids} />);
+          <OrderLink
+            agencyId={agencyId}
+            coverImagePids={specific[0].identifiers}
+            linkText={'Bestil ' + tw.type}
+            orderUrl={tw.order}
+            pids={order_ids}
+            userIsLoggedIn={userIsLoggedIn}
+          />);
       }
       if (tw.accessType === 'online') {
         let online_link = 'Se ' + tw.type + ' online';
@@ -225,7 +226,8 @@ const Work = React.createClass({
   },
 
   render() {
-    const {id, work} = this.state;
+    const {work, profile} = this.state;
+    const id = this.props.id;
 
     if (work.info.hits === '0') {
       return (<div className="work-not-found" >Værket blev ikke fundet</div>);
@@ -241,7 +243,25 @@ const Work = React.createClass({
     const publications = work.result.publications;
     const editions = this.getPublications(publications);
 
-    const orderButtons = this.getOrderButtons(work.result.specific);
+    let agencyId = '';
+
+    if (this.state.profile.userIsLoggedIn === true) {
+      if (profile.favoriteLibraries.length === 1) {
+        agencyId = profile.favoriteLibraries[0].agencyID;
+      }
+      else if (profile.favoriteLibraries.length > 1) {
+        const agencies = profile.favoriteLibraries;
+        const index = findIndex(agencies, 'default', 1);
+        if (index > -1) {
+          agencyId = profile.favoriteLibraries[index].agencyID;
+        }
+        else {
+          agencyId = profile.favoriteLibraries[0].agencyID;
+        }
+      }
+    }
+
+    const orderButtons = this.getOrderButtons(work.result.specific, agencyId, this.state.profile.userIsLoggedIn);
     const specifics = this.getSpecifics(work.result.specific);
 
     const parts = this.getMetaData(work.result.general, 'partOf', 'part', 'I: ');
