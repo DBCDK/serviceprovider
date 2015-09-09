@@ -19,10 +19,12 @@ import ProfileStore from '../../stores/Profile.store.js';
 
 const Work = React.createClass({
   displayName: 'Work.component',
+
   propTypes: {
     id: React.PropTypes.string,
     work: React.PropTypes.object
   },
+
   mixins: [
     Reflux.connect(WorkStore, 'work'),
     Reflux.connect(ProfileStore, 'profile')
@@ -157,7 +159,8 @@ const Work = React.createClass({
             orderUrl={tw.order}
             pids={order_ids}
             userIsLoggedIn={userIsLoggedIn}
-          />);
+            />
+        );
       }
       if (tw.accessType === 'online') {
         let online_link = 'Se ' + tw.type + ' online';
