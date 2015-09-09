@@ -76,9 +76,10 @@ let profileStore = Reflux.createStore({
     }
   },
 
-  onAddLibraryToFavorites(agencyID) {
+  onAddLibraryToFavorites(agencyID, libraryID) {
     let favoriteModel = {
       agencyID: agencyID,
+      libraryID: libraryID,
       borrowerID: '',
       default: 0
     };
