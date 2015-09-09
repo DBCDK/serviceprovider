@@ -10,7 +10,7 @@ import Reflux from 'reflux';
 import ProfileActions from '../actions/Profile.action.js';
 
 let _profile = {
-  name: 'I-Love-Ponys',
+  name: '',
   imageUrl: '/dummy.jpg',
   followingCount: 16,
   groupsCount: 7,
