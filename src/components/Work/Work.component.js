@@ -146,7 +146,7 @@ const Work = React.createClass({
     return result;
   },
 
-  getOrderButtons(specific, agencyId, userIsLoggedIn) {
+  getOrderButtons(specific, agencyId, borrowerId, userIsLoggedIn) {
     return specific.map((tw, index) => {
       if (tw.accessType === 'physical') {
         let order_ids = [];
@@ -154,6 +154,7 @@ const Work = React.createClass({
         return (
           <OrderLink
             agencyId={agencyId}
+            borrowerId={borrowerId}
             coverImagePids={specific[0].identifiers}
             linkText={'Bestil ' + tw.type}
             orderUrl={tw.order}
@@ -247,24 +248,28 @@ const Work = React.createClass({
     const editions = this.getPublications(publications);
 
     let agencyId = '';
+    let borrowerId = '';
 
     if (this.state.profile.userIsLoggedIn === true) {
       if (profile.favoriteLibraries.length === 1) {
         agencyId = profile.favoriteLibraries[0].agencyID;
+        borrowerId = profile.favoriteLibraries[0].borrowerID;
       }
       else if (profile.favoriteLibraries.length > 1) {
         const agencies = profile.favoriteLibraries;
         const index = findIndex(agencies, 'default', 1);
         if (index > -1) {
           agencyId = profile.favoriteLibraries[index].agencyID;
+          borrowerId = profile.favoriteLibraries[index].borrowerID;
         }
         else {
           agencyId = profile.favoriteLibraries[0].agencyID;
+          borrowerId = profile.favoriteLibraries[0].borrowerID;
         }
       }
     }
 
-    const orderButtons = this.getOrderButtons(work.result.specific, agencyId, this.state.profile.userIsLoggedIn);
+    const orderButtons = this.getOrderButtons(work.result.specific, agencyId, borrowerId, this.state.profile.userIsLoggedIn);
     const specifics = this.getSpecifics(work.result.specific);
 
     const parts = this.getMetaData(work.result.general, 'partOf', 'part', 'I: ');
