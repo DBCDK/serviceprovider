@@ -11,7 +11,6 @@ import Reflux from 'reflux';
 import ProfileImage from './ProfileImage.component.js';
 import ProfileAttribute from './ProfileAttribute.component.js';
 import ProfileHeader from './ProfileHeader.component.js';
-import ProfileSocialSummary from './ProfileSocialSummary.component.js';
 import ProfileLibraries from './ProfileLibraries.component.js';
 
 import ProfileStore from '../../stores/Profile.store.js';
@@ -28,19 +27,11 @@ const Profile = React.createClass({
   render: function() {
     const profile = this.state.profile;
     const editable = profile.editEnabled;
-    const groupsCount = profile.groupsCount;
-    const followingCount = profile.followingCount;
-    const followersCount = profile.followersCount;
     return (
       <div>
         <ProfileHeader editable={editable} ref='header' />
         <ProfileImage editable={editable} url={this.state.profile.imageUrl} />
-        <ProfileAttribute editable={editable} name='Name' type='string' value={this.state.profile.name} />
-        <ProfileSocialSummary
-          followerCount={followersCount}
-          followingCount={followingCount}
-          groupsCount={groupsCount}
-          />
+        <ProfileAttribute editable={editable} name='Email' type='string' value={this.state.profile.name} />
         <ProfileLibraries
           actions={ProfileActions}
           addLibraryLabel={'Tilføj bibliotek'}
