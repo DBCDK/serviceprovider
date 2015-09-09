@@ -23,6 +23,10 @@ let WorkStore = Reflux.createStore({
     this.listenTo(WorkActions.updated, this.update);
   },
 
+  getInitialState() {
+    return _store;
+  },
+
   // update the work object and trigger an action
   update(result) {
     let work = result.result || [];
