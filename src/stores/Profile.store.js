@@ -23,9 +23,9 @@ let _profile = {
 };
 
 let profileStore = Reflux.createStore({
-  listenables: [ProfileActions],
 
   init() {
+    this.listenToMany(ProfileActions);
     ProfileActions.fetchProfile();
   },
 
@@ -166,9 +166,7 @@ let profileStore = Reflux.createStore({
       console.error('Some error occured when saving a like/dislike'); // eslint-disable-line no-console
     }
 
-    setTimeout(() => {
-      ProfileActions.fetchProfile();
-    }, 200);
+    ProfileActions.fetchProfile();
   },
 
   onDislikeObject(workId) {
