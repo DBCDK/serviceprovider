@@ -174,8 +174,7 @@ function ensureAuthenticated(req, res, next) {
     req.session.returnTo = req.originalUrl;
     return next();
   }
-  const returnTo = req.query.ids;
-  let rt = req.query.ids.split(',');
+  const rt = req.query.ids.split(',');
   req.session.returnTo = '/work?id=' + rt[0];
   // send user to login otherwise
   res.redirect('/login');
