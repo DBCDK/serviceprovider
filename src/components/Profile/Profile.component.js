@@ -15,6 +15,7 @@ import ProfileSocialSummary from './ProfileSocialSummary.component.js';
 import ProfileLibraries from './ProfileLibraries.component.js';
 
 import ProfileStore from '../../stores/Profile.store.js';
+import ProfileActions from '../../actions/Profile.action.js';
 
 const Profile = React.createClass({
 
@@ -40,7 +41,16 @@ const Profile = React.createClass({
           followingCount={followingCount}
           groupsCount={groupsCount}
           />
-        <ProfileLibraries editable={editable} libraries={this.state.profile.favoriteLibraries} profileStore={this.state.profile} />
+        <ProfileLibraries
+          actions={ProfileActions}
+          addLibraryLabel={'Tilføj bibliotek'}
+          editable={editable}
+          libraries={this.state.profile.favoriteLibraries}
+          pickupLocationText={'afhentningssted'}
+          placeholder={'Låner ID'}
+          setAsText={'Vælg som'}
+          store={this.state.profile}
+          />
       </div>
     );
   }
