@@ -7,8 +7,6 @@
 
 import React from 'react';
 
-import ProfileStore from '../../stores/Profile.store.js';
-
 
 const Signup = React.createClass({
 
@@ -24,7 +22,6 @@ const Signup = React.createClass({
   },
 
   componentDidMount: function () {
-    ProfileStore.listen(this.updateProfile);
   },
 
   handleSubmit: function () {
@@ -35,7 +32,6 @@ const Signup = React.createClass({
     const repeatedPassword = this.refs.repeatedPassword.getDOMNode().value;
     const isPasswordMatching = (password !== '' && repeatedPassword !== '' && password === repeatedPassword);
     this.setState({isPasswordMatching: isPasswordMatching});
-
   },
 
   handleEmailTyping: function () {

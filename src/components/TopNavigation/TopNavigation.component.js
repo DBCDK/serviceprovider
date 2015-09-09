@@ -18,7 +18,8 @@ const TopNavigation = React.createClass({
 
   getInitialState() {
     return {
-      isLoggedIn: null
+      isLoggedIn: null,
+      username: ''
     };
   },
 
