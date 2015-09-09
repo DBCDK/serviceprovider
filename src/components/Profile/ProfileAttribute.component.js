@@ -33,13 +33,16 @@ const ProfileAttribute = React.createClass({
     let component = <h3 className={'profile--displayname'}>{value}</h3>;
     if (isEditable === true) {
       component = (
-        <input
-          className={'profile--displayname'}
-          defaultValue={value}
-          onChange={this.handleTextChange}
-          type='text'
-          >
-        </input>
+        <div>
+          <label>{this.props.name}</label>
+          <input
+            className={'profile--displayname'}
+            defaultValue={value}
+            onChange={this.handleTextChange}
+            type='text'
+            >
+          </input>
+        </div>
       );
     }
     return (<div>{component}</div>);
