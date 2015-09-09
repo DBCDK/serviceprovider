@@ -60,6 +60,7 @@ const Library = React.createClass({
       <div className='library'>
         <a className='button tiny' onClick={this.goBack}>Tilbage!</a>
         <p>{this.state.library.data.agencyName}</p>
+        <p>{this.state.library.data.agencyId}</p>
         <p>{this.state.library.data.branchEmail}</p>
         <p>{this.state.library.data.branchId}</p>
         <p>{this.state.library.data.branchNameDan}</p>
