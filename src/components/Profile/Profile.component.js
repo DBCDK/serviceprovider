@@ -11,7 +11,6 @@ import Reflux from 'reflux';
 import ProfileImage from './ProfileImage.component.js';
 import ProfileAttribute from './ProfileAttribute.component.js';
 import ProfileHeader from './ProfileHeader.component.js';
-import ProfileSocialSummary from './ProfileSocialSummary.component.js';
 import ProfileLibraries from './ProfileLibraries.component.js';
 
 import ProfileStore from '../../stores/Profile.store.js';
