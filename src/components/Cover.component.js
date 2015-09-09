@@ -9,6 +9,8 @@ import React from 'react';
 import CoverStore from '../stores/CoverImage.store.js';
 import CoverActions from '../actions/CoverImage.action.js';
 
+import rewriteCoverImageUrl from '../utils/CoverImage.util.js';
+
 /**
  * Get image with size
  *
@@ -22,7 +24,7 @@ import CoverActions from '../actions/CoverImage.action.js';
 function _getImage(images, size) {
   let url = images.filter((image) => image.size === size).pop().url;
   // Enforce https on images
-  return url.replace('http', 'https');
+  return rewriteCoverImageUrl(url.replace('http', 'https'));
 }
 
 const Cover = React.createClass({

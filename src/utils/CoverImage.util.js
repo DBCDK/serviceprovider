@@ -17,5 +17,8 @@ export function rewriteCoverImageUrl(url) {
   if (url.indexOf('http://moreinfo.addi.dk/') === 0) {
     newUrl = '/moreinfo/' + encodeURIComponent(url.replace('http://moreinfo.addi.dk/', ''));
   }
+  else if (url.indexOf('https://moreinfo.addi.dk/') === 0) {
+    newUrl = '/moreinfo/' + encodeURIComponent(url.replace('https://moreinfo.addi.dk/', ''));
+  }
   return newUrl;
 }
