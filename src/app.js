@@ -99,7 +99,7 @@ let sessionMiddleware = expressSession({
     port: redisConfig.port,
     prefix: APP_NAME + '_session_'
   }),
-  secret: redisConfig.secret,
+  secret: redisConfig.secret + APP_NAME,
   name: APP_NAME,
   rolling: true,
   resave: false,
