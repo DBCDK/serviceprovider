@@ -7,7 +7,13 @@ html(lang='da')
         #message
             include message
         block top
-            #topnavigation
+            #header.clearfix
+                #topbar
+                    .logo--container
+                        a(href='/')
+                            #logo
+                #topnavigation.clearfix
+
         block content
 
     include footer

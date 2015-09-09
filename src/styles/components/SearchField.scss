@@ -1,6 +1,11 @@
 $height: 32px;
 $line-height: 20px;
 
+.searchfield--container {
+  margin: 0 5px;
+
+}
+
 .searchfield-wrapper {
   border: 1px solid #cccccc;
   margin: 20px;
@@ -30,7 +35,7 @@ $line-height: 20px;
 
   .submit {
     position: absolute;
-    right: 0;
+    right: 5px;
   }
 
   .inputfield {

@@ -6,6 +6,6 @@ block prepend footerscripts
     script(src='/js/querysearch.js')
 
 block content
-    #search !{search}
+    #search.clearfix !{search}
     script window.QUERYSTRING_PROPS = !{props}
     script window.UI_CONFIG = !{config}

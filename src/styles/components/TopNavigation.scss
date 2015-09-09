@@ -1,24 +1,18 @@
 
-
-.topnavigation--header{
-  padding-top: 1vh;
-  padding-bottom: 1vh;
-
-  .right{
-
-    text-align: right;
-    .link{
-      display: inline;
-      font-size:0.8em;
-      margin-left: 1vw;
-      margin-right: 1vw;
+.topnavigation--header--buttons {
+  .topnavigation--header--buttons--profilelink {
+    padding-top: 15px;
+    a {
+      color: #2F4F4F;
     }
   }
 
-  .button{
-    background-color:white;
-    color:black;
-    border: 1px darkgrey solid;
-    padding:3vw 4vw 3vw 4vw;
+  .button {
+    margin: 10px 0;
+    padding: 10px;
+    background-color: #7a7a7a;
+    &:hover {
+      background-color: black;
+    }
   }
 }

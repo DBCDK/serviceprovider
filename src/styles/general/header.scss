@@ -4,6 +4,26 @@
   height: 50px;
 }
 
+#search {
+  clear: both;
+}
+
+#message {
+  p {
+    text-align: center;
+    font-weight: 900;
+    border: 1px solid #ddd;
+  }
+
+  .info {
+    background-color: lightgreen;
+  }
+
+  .warning {
+    background-color: indianred;
+  }
+}
+
 #logo {
   margin-left: 10px;
   background: url('/aakb_logo.png');
@@ -23,10 +43,8 @@
   border: none;
   margin-left: 0;
   margin-right: 0;
-
-  li {
-    padding-left: 10px;
-  }
+  padding-left: 3px;
+  padding-right: 10px;
 }
 
 .submit {
@@ -91,4 +109,8 @@
   img {
     max-height: 330px;
   }
+}
+
+.topnavigation--header--buttons {
+  padding: 0 5px;
 }

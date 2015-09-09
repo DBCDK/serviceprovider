@@ -8,6 +8,8 @@ var commonsPlugin = new webpack.optimize.CommonsChunkPlugin('common.js');
 var noErrorsPlugin = new webpack.NoErrorsPlugin();
 var extractCss = new extractTextPlugin('../styles/style.css');
 
+console.log(process.env.NODE_APPLICATION);
+
 module.exports = [{
   name: 'browser',
   entry: {

@@ -2,10 +2,8 @@ body {
   font-family: "Lucida Sans Unicode", "Lucida Sans", Arial, sans-serif;
 }
 
-#header {
-  background-color: #ffffff;
-  display: block;
-  height: 100px;
+#search {
+  clear: both;
 }
 
 #message {
@@ -28,11 +26,13 @@ body {
   margin-left: 10px;
   background: url('/palle_logo.png');
   background-position: left;
-  background-size: 35%;
+  background-size: 100%;
   background-repeat: no-repeat;
-  height: 100%;
-  width: auto;
-  max-width: 400px;
+  height: 60px;
+}
+
+.logo--container {
+  width: 100px;
 }
 
 a {
@@ -68,6 +68,10 @@ button:focus,
 
   li {
     padding-left: 10px;
+  }
+
+  .submit {
+    right: 0;
   }
 }
 
