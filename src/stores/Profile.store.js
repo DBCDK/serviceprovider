@@ -23,7 +23,7 @@ let _profile = {
 };
 
 let profileStore = Reflux.createStore({
-  
+
   init() {
     this.listenToMany(ProfileActions);
     ProfileActions.fetchProfile();
