@@ -7,6 +7,7 @@ let webpackPostprocessor = wallabyWebpack(webpackConfig);
 module.exports = function(wallaby) {
   return {
     files: [
+      {pattern: 'node_modules/sinon/pkg/sinon.js', instrument: false},
       {pattern: 'src/tests/lib/phantomPolyfill.js', instrument: false},
       {pattern: 'node_modules/babel-core/browser-polyfill.js', instrument: false}, // seen in this issue: https://github.com/wallabyjs/public/issues/109 -- https://babeljs.io/docs/learn-es2015/#map-set-weak-map-weak-set
       {pattern: 'src/components/**/*.scss', instrument: false, load: false},

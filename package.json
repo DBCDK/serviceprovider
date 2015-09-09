@@ -24,7 +24,7 @@
     "dbc"
   ],
   "author": "dbcdk",
-  "license": "GNU GPL v3",
+  "license": "GPL-3.0",
   "bugs": {
     "url": "https://github.com/DBCDK/pallesgavebod/issues"
   },
@@ -74,6 +74,7 @@
     "karma-mocha": "^0.2.0",
     "karma-mocha-reporter": "^1.0.2",
     "karma-phantomjs-launcher": "^0.2.0",
+    "karma-sinon": "^1.0.4",
     "karma-webpack": "^1.5.1",
     "mocha": "^2.2.4",
     "mocha-jenkins-reporter": "^0.1.9",
@@ -82,6 +83,7 @@
     "phantomjs": "^1.9.17",
     "react-tools": "^0.13.2",
     "selenium-webdriver": "^2.46.1",
+    "sinon": "^1.16.1",
     "wallaby-webpack": "0.0.5"
   }
 }
