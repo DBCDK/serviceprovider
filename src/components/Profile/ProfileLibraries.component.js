@@ -34,8 +34,8 @@ const ProfileLibraries = React.createClass({
           library={val}
           pickupLocationText={this.props.pickupLocationText}
           placeholder={this.props.placeholder}
-          store={this.props.store}
           setAsText={this.props.setAsText}
+          store={this.props.store}
           />
       );
     });
