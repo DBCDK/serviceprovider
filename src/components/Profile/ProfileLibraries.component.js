@@ -13,6 +13,7 @@ const ProfileLibraries = React.createClass({
   displayName: 'ProfileLibraries',
 
   propTypes: {
+    addLibraryLabel: React.PropTypes.string,
     editable: React.PropTypes.bool.isRequired,
     libraries: React.PropTypes.array.isRequired,
     profileStore: React.PropTypes.object.isRequired
@@ -27,7 +28,10 @@ const ProfileLibraries = React.createClass({
     return (
       <div className={'profile--libraries'}>
         <hr />
-        {libraries[0]}
+        {libraries}
+        <div className='row'>
+          <a className="button expand" href="/librarysuggest">{this.props.addLibraryLabel || 'Tilføj bibliotek'}</a>
+        </div>
       </div>
     );
   }

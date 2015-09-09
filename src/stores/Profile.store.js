@@ -17,6 +17,7 @@ let _profile = {
   followersCount: 35,
   editEnabled: false,
   favoriteLibraries: [],
+  favoriteLibrariesResolved: [],
   likes: []
 };
 
@@ -70,17 +71,15 @@ let profileStore = Reflux.createStore({
   onUpdateBorrowerIDForLibrary: function(agencyID, borrowerID) {
     const libraryIndex = findIndex(_profile.favoriteLibraries, 'agencyID', agencyID);
     if (libraryIndex >= 0) {
-      _profile.favoriteLibraries[libraryIndex] = {
-        agencyID: agencyID,
-        borrowerID: borrowerID
-      };
+      _profile.favoriteLibraries[libraryIndex].borrowerID = borrowerID;
     }
   },
 
   onAddLibraryToFavorites: function(agencyID) {
     let favoriteModel = {
       agencyID: agencyID,
-      borrowerID: ''
+      borrowerID: '',
+      default: 0
     };
 
     if (!_profile.favoriteLibraries) {
@@ -111,8 +110,22 @@ let profileStore = Reflux.createStore({
     this.trigger(_profile);
   },
 
-  onResolveFavoriteLibraries(library) {
-    _profile.favoriteLibrariesResolved.push(library);
+  onLibraryIdUpdatedResponse(agency) {
+    _profile.favoriteLibrariesResolved.push(agency);
+    this.trigger(_profile);
+  },
+
+  setLibraryAsDefault(agencyID) {
+    const defaultLibraryIndex = findIndex(_profile.favoriteLibraries, 'default', 1);
+    if (defaultLibraryIndex > -1) {
+      _profile.favoriteLibraries[defaultLibraryIndex].default = 0;
+    }
+
+    const libraryIndex = findIndex(_profile.favoriteLibraries, 'agencyID', agencyID);
+    if (libraryIndex >= 0) {
+      _profile.favoriteLibraries[libraryIndex].default = 1;
+    }
+
     this.trigger(_profile);
   }
 });

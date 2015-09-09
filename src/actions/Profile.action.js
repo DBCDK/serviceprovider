@@ -23,7 +23,9 @@ const ProfileActions = Reflux.createActions([
   'addLibraryToFavorites',
   'removeLibraryFromFavorites',
   'updateBorrowerIDForLibrary',
-  'resolveFavoriteLibraries'
+  'libraryIdUpdated',
+  'libraryIdUpdatedResponse',
+  'setLibraryAsDefault'
 ]);
 
 ProfileActions.saveProfile.listen(saveEvent.request);
@@ -32,7 +34,9 @@ saveEvent.response(ProfileActions.confirmSaveProfile);
 ProfileActions.fetchProfile.listen(fetchEvent.request);
 fetchEvent.response(ProfileActions.updateProfile);
 
-ProfileActions.resolveFavoriteLibraries.listen(openAgency.request);
-openAgency.response(ProfileActions.resolveFavoriteLibraries);
+ProfileActions.libraryIdUpdated.listen((val) => {
+  openAgency.request(val);
+});
+openAgency.response(ProfileActions.libraryIdUpdatedResponse);
 
 export default ProfileActions;
