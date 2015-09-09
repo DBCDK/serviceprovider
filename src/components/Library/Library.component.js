@@ -50,6 +50,11 @@ const Library = React.createClass({
 
   render() {
     const shouldDisableFavoriteButton = this.shouldDisableFavoriteButton();
+    const favoriteButton = this.state.profile.userIsLoggedIn ? (
+      <a className={shouldDisableFavoriteButton ? 'button alert' : 'button'} onClick={this.addOrRemoveFromFavorites}>
+        {shouldDisableFavoriteButton ? 'Fjern biblioteket som favoritbibliotek' : 'Tilføj bibliotek til favoritter!'}
+      </a>
+    ) : ''; // Show favorite button if user is logged in, otherwise don't show.
 
     return (
       <div className='library'>
@@ -64,9 +69,7 @@ const Library = React.createClass({
         <p>{this.state.library.data.openingHoursDan}</p>
         <p>{this.state.library.data.postalAddress}</p>
         <p>{this.state.library.data.postalCode}</p>
-        <a className={shouldDisableFavoriteButton ? 'button alert' : 'button'} onClick={this.addOrRemoveFromFavorites}>
-          {shouldDisableFavoriteButton ? 'Fjern biblioteket som favoritbibliotek' : 'Tilføj bibliotek til favoritter!'}
-        </a>
+        {favoriteButton}
       </div>
     );
   }
