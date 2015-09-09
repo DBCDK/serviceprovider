@@ -13,16 +13,31 @@ const ProfileLibraries = React.createClass({
   displayName: 'ProfileLibraries',
 
   propTypes: {
-    addLibraryLabel: React.PropTypes.string,
+    actions: React.PropTypes.object.isRequired,
+    addLibraryLabel: React.PropTypes.string.isRequired,
     editable: React.PropTypes.bool.isRequired,
     libraries: React.PropTypes.array.isRequired,
-    profileStore: React.PropTypes.object.isRequired
+    pickupLocationText: React.PropTypes.string.isRequired,
+    placeholder: React.PropTypes.string.isRequired,
+    setAsText: React.PropTypes.string.isRequired,
+    store: React.PropTypes.object.isRequired
   },
 
   render: function () {
     let libraries = [];
     this.props.libraries.forEach((val, key) => {
-      libraries.push(<ProfileLibrary editable={this.props.editable} key={key} library={val} profileStore={this.props.profileStore} />);
+      libraries.push(
+        <ProfileLibrary
+          actions={this.props.actions}
+          editable={this.props.editable}
+          key={key}
+          library={val}
+          pickupLocationText={this.props.pickupLocationText}
+          placeholder={this.props.placeholder}
+          store={this.props.store}
+          setAsText={this.props.setAsText}
+          />
+      );
     });
 
     return (
@@ -30,7 +45,7 @@ const ProfileLibraries = React.createClass({
         <hr />
         {libraries}
         <div className='row'>
-          <a className="button expand" href="/librarysuggest">{this.props.addLibraryLabel || 'Tilføj bibliotek'}</a>
+          <a className="button expand" href="/librarysuggest">{this.props.addLibraryLabel}</a>
         </div>
       </div>
     );
