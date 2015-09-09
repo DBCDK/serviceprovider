@@ -9,6 +9,10 @@ import workAction from '../../actions/Work.action.js';
 import workStore from '../../stores/Work.store.js';
 import {CoverImage, OrderLink} from 'dbc-react-components';
 import {rewriteCoverImageUrl} from '../../utils/CoverImage.util.js';
+import LikeContainer from '../LikeDislike/LikeContainer.component.js';
+import DislikeContainer from '../LikeDislike/DislikeContainer.component.js';
+
+import ProfileStore from '../../stores/Profile.store.js';
 
 const Work = React.createClass({
   displayName: 'Work.component',
@@ -20,6 +24,7 @@ const Work = React.createClass({
   getInitialState() {
     return {
       id: this.props.id,
+      profile: ProfileStore.getProfile(),
       work: workStore.getStore()
     };
   },
@@ -151,7 +156,7 @@ const Work = React.createClass({
         let order_ids = [];
         order_ids.push(tw.identifiers);
         return (
-          <OrderLink agencyId={'710100'} linkText={'Bestil ' + tw.type} orderUrl={tw.order} pids={order_ids} coverImagePids={specific[0].identifiers} />);
+          <OrderLink agencyId={'710100'} coverImagePids={specific[0].identifiers} linkText={'Bestil ' + tw.type} orderUrl={tw.order} pids={order_ids} />);
       }
       if (tw.accessType === 'online') {
         let online_link = 'Se ' + tw.type + ' online';
@@ -166,7 +171,7 @@ const Work = React.createClass({
     const specifics = specific.map((tw, index) => {
       let identifiers = [];
       identifiers.push(tw.identifiers);
-      if (tw.dates[0] !== null) {
+      if (tw.dates && tw.dates[0] !== null) {
         dates = tw.dates.map((date, indx) => {
           return (<div className='date' key={indx} >{date}</div>);
         });
@@ -206,13 +211,25 @@ const Work = React.createClass({
       <div className='description clearfix' >{general.description}.</div> : '';
   },
 
+  getLikeDislikeContainers(id) {
+    return (
+      <div className='work--like-buttons' >
+        <div className='work--like-buttons--like-container' >
+          <LikeContainer objectId={id} />
+        </div>
+        <div className='work--like-buttons--dislike-container' >
+          <DislikeContainer objectId={id} />
+        </div>
+      </div>
+    );
+  },
+
   render() {
     const {id, work} = this.state;
 
     if (work.info.hits === '0') {
       return (<div className="work-not-found" >Værket blev ikke fundet</div>);
     }
-
     if (work.result.length === 0) {
       return (<div />);
     }
@@ -239,15 +256,21 @@ const Work = React.createClass({
     const dk5s = this.getDk5s(general);
     const series = this.getSeries(general);
 
+    const likeContainers = this.state.profile.userIsLoggedIn ? this.getLikeDislikeContainers(id) : ' ';
+
     return (
       <div className='work-container' data-pid={id} >
-        <div className='work small-12 medium-6 large-4' >
+        <div className='work work--cover-image small-12 medium-6 large-4' >
           <CoverImage pids={work.result.specific[0].identifiers} prefSize={'detail_500'} rewriteImgUrl={rewriteCoverImageUrl} />
         </div>
+
         <div className='work small-12 medium-6 large-4' >
           <div className='work-conatiner--order-buttons clearfix' >
             {orderButtons}
           </div>
+
+          {likeContainers}
+
           <div className='general' >
             {title}
             {creators}

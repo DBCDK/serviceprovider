@@ -11,6 +11,7 @@ import SocketClient from '../utils/ServiceProviderSocketClient.js';
 const fetchEvent = SocketClient('getProfile');
 const saveEvent = SocketClient('updateProfile');
 const openAgency = SocketClient('getMultiOpenAgency');
+const saveLike = SocketClient('saveLike');
 
 const ProfileActions = Reflux.createActions([
   'toggleEdit',
@@ -23,16 +24,28 @@ const ProfileActions = Reflux.createActions([
   'addLibraryToFavorites',
   'removeLibraryFromFavorites',
   'updateBorrowerIDForLibrary',
-  'resolveFavoriteLibraries'
+  'libraryIdUpdated',
+  'libraryIdUpdatedResponse',
+  'setLibraryAsDefault',
+  'resolveFavoriteLibraries',
+  'likeObject',
+  'dislikeObject',
+  'saveLike',
+  'likeSaved'
 ]);
 
 ProfileActions.saveProfile.listen(saveEvent.request);
 saveEvent.response(ProfileActions.confirmSaveProfile);
 
+ProfileActions.saveLike.listen(saveLike.request);
+saveLike.response(ProfileActions.likeSaved);
+
 ProfileActions.fetchProfile.listen(fetchEvent.request);
 fetchEvent.response(ProfileActions.updateProfile);
 
-ProfileActions.resolveFavoriteLibraries.listen(openAgency.request);
-openAgency.response(ProfileActions.resolveFavoriteLibraries);
+ProfileActions.libraryIdUpdated.listen((val) => {
+  openAgency.request(val);
+});
+openAgency.response(ProfileActions.libraryIdUpdatedResponse);
 
 export default ProfileActions;

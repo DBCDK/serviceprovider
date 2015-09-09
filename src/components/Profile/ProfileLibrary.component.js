@@ -6,54 +6,61 @@
  */
 
 import React from 'react';
-import Reflux from 'reflux';
-
-import ProfileActions from '../../actions/Profile.action.js';
-
-import LibraryStore from '../../stores/Library.store.js';
-import LibraryActions from '../../actions/Library.action.js';
+import {find} from 'lodash';
 
 const ProfileLibrary = React.createClass({
   displayName: 'ProfileLibrary',
 
   propTypes: {
+    actions: React.PropTypes.object.isRequired,
     editable: React.PropTypes.bool.isRequired,
     library: React.PropTypes.object.isRequired,
-    placeholder: React.PropTypes.string,
-    profileStore: React.PropTypes.object.isRequired
+    pickupLocationText: React.PropTypes.string.isRequired,
+    placeholder: React.PropTypes.string.isRequired,
+    setAsText: React.PropTypes.string.isRequired,
+    store: React.PropTypes.object.isRequired
   },
 
-  mixins: [
-    Reflux.connect(LibraryStore, 'library')
-  ],
-
   componentDidMount() {
-    LibraryActions.libraryIdUpdated.trigger(this.props.library.agencyID);
+    this.props.actions.libraryIdUpdated.trigger(this.props.library.agencyID);
   },
 
   handleTextChange(e) {
-    ProfileActions.updateBorrowerIDForLibrary(this.props.library.agencyID, e.target.value);
+    this.props.actions.updateBorrowerIDForLibrary(this.props.library.agencyID, e.target.value);
+  },
+
+  setDefaultLibrary() {
+    this.props.actions.toggleEdit();
+    this.props.actions.setLibraryAsDefault(this.props.library.agencyID);
   },
 
   render: function () {
-    let libContent = !this.props.editable ? (
-      <a href={'/library?id=' + this.state.library.data.branchId}>
+    let library = find(this.props.store.favoriteLibrariesResolved, {branchId: this.props.library.agencyID});
+    let libContent = (<div></div>);
+
+    if (library) {
+      libContent = !this.props.editable ? (
+        <a href={'/library?id=' + library.branchId}>
+          <div className='row'>
+            <h3>{library.branchNameDan}</h3>
+            <h5>{library.agencyName}</h5>
+            <p>{this.props.placeholder || 'Låner ID:'} {this.props.library.borrowerID}</p>
+          </div>
+        </a>) : (
         <div className='row'>
-          <h3>{this.state.library.data.branchNameDan}</h3>
-          <h5>{this.state.library.data.agencyName}</h5>
-          <p>{this.props.placeholder || 'Låner ID:'} {this.props.library.borrowerID}</p>
+          <h3>{library.branchNameDan}</h3>
+          <h5>{library.agencyName}</h5>
+          <input
+            defaultValue={this.props.library.borrowerID}
+            onChange={this.handleTextChange}
+            placeholder={this.props.placeholder}
+            />
+          <a className={this.props.library.default === 1 ? 'button disabled secondary tiny' : 'button tiny'} onClick={this.setDefaultLibrary}>
+            {this.props.library.default === 1 ? '' : this.props.setAsText} {this.props.pickupLocationText}
+          </a>
         </div>
-      </a>) : (
-      <div className='row'>
-        <h3>{this.state.library.data.branchNameDan}</h3>
-        <h5>{this.state.library.data.agencyName}</h5>
-        <input
-          defaultValue={this.props.library.borrowerID}
-          onChange={this.handleTextChange}
-          placeholder={this.props.placeholder || 'Låner ID'}
-          />
-      </div>
-    );
+      );
+    }
 
     return (
       <div className={'profile--library'}>

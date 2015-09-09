@@ -17,11 +17,11 @@ body {
 .work {
   float: left;
   padding: 5px;
-  text-align: center;
   position: relative;
   img {
     max-height: 500px;
   }
+
   .fa {
     position: absolute;
     top: 1em;
@@ -33,6 +33,10 @@ body {
     border-radius: 1em;
     line-height: 1.9em;
   }
+}
+
+.work--cover-image {
+  text-align: center;
 }
 
 .no-results {

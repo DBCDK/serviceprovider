@@ -78,7 +78,6 @@ app.use(expressLoggers.errorLogger);
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
 
-
 // setup REDIS
 let redisConfig = config.services.redis.local;
 switch (process.env.NODE_ENV) { // eslint-disable-line no-process-env
