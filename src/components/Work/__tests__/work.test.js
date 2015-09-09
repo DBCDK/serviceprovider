@@ -4,13 +4,12 @@
  * Test of work component
  */
 
-import {expect} from 'chai';
-// import {expect, assert} from 'chai';
+import {expect, assert} from 'chai';
 import React from 'react';
 import TestUtils from 'react/lib/ReactTestUtils';
 import Work from '../Work.component';
-// import LikeContainer from '../../LikeDislike/LikeContainer.component.js';
-// import DislikeContainer from '../../LikeDislike/DislikeContainer.component.js';
+import LikeContainer from '../../LikeDislike/LikeContainer.component.js';
+import DislikeContainer from '../../LikeDislike/DislikeContainer.component.js';
 
 describe('Test the Work component with data', () => {
   const info = {hits: 1, collections: 1};
@@ -62,7 +61,7 @@ describe('Test the Work component without data', () => {
   });
 });
 
-/* describe('Test that Like/Dislike containers are rendered correctly as part of the Work component', () => {
+describe('Test that Like/Dislike containers are rendered correctly as part of the Work component', () => {
   let component;
   const info = {hits: 1, collections: 1};
   const result = {general: {title: 'Force majeure'}, publications: [], specific: [{identifiers: []}]};
@@ -78,17 +77,25 @@ describe('Test the Work component without data', () => {
   });
 
   it('Should not be visible to not logged in users', () => {
-    component.updateWork(work);
+    const profile = {
+      favoriteLibraries: [],
+      userIsLoggedIn: false
+    };
+    component.setState({profile: profile, work: work});
 
     assert.equal(TestUtils.scryRenderedComponentsWithType(component, LikeContainer).length, 0, 'No like-containers was found');
     assert.equal(TestUtils.scryRenderedComponentsWithType(component, DislikeContainer).length, 0, 'No dislike-containers was found');
   });
 
   it('Should be visible to logged in users', () => {
-    component.state.profile.userIsLoggedIn = true; // this have to happen before component.updateWork is invoked
-    component.updateWork(work);
+    const profile = {
+      favoriteLibraries: [],
+      userIsLoggedIn: true
+    };
+
+    component.setState({profile: profile, work: work});
 
     assert.equal(TestUtils.scryRenderedComponentsWithType(component, LikeContainer).length, 1, 'The like-containers was found');
     assert.equal(TestUtils.scryRenderedComponentsWithType(component, DislikeContainer).length, 1, 'The dislike-containers was found');
   });
-});*/
+});
