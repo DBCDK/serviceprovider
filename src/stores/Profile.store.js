@@ -18,21 +18,22 @@ let _profile = {
   editEnabled: false,
   favoriteLibraries: [],
   favoriteLibrariesResolved: [],
-  likes: []
+  likes: [],
+  userIsLoggedIn: false
 };
 
 let profileStore = Reflux.createStore({
   listenables: [ProfileActions],
 
-  init: function () {
+  init() {
     ProfileActions.fetchProfile();
   },
 
-  getInitialState: function () {
+  getInitialState() {
     return _profile;
   },
 
-  onToggleEdit: function () {
+  onToggleEdit() {
     _profile.editEnabled = !_profile.editEnabled;
     // edit mode was disabled
     if (!_profile.editEnabled) {
@@ -41,7 +42,7 @@ let profileStore = Reflux.createStore({
     this.trigger(_profile);
   },
 
-  onUpdateProfile: function (profile) {
+  onUpdateProfile(profile) {
     for (let attr in profile) {
       if (profile.hasOwnProperty(attr)) {
         _profile[attr] = profile[attr];
@@ -50,32 +51,32 @@ let profileStore = Reflux.createStore({
     this.trigger(_profile);
   },
 
-  onConfirmSaveProfile: function (str) { // eslint-disable-line no-unused-vars
+  onConfirmSaveProfile(str) { // eslint-disable-line no-unused-vars
   },
 
-  onSaveProfile: function (str) { // eslint-disable-line no-unused-vars
+  onSaveProfile(str) { // eslint-disable-line no-unused-vars
   },
 
-  onFetchProfile: function (str) { // eslint-disable-line no-unused-vars
+  onFetchProfile(str) { // eslint-disable-line no-unused-vars
   },
 
-  onUpdateAttribute: function (str) {
+  onUpdateAttribute(str) {
     _profile.name = str;
     this.trigger(_profile);
   },
 
-  getProfile: function () {
+  getProfile() {
     return _profile;
   },
 
-  onUpdateBorrowerIDForLibrary: function(agencyID, borrowerID) {
+  onUpdateBorrowerIDForLibrary(agencyID, borrowerID) {
     const libraryIndex = findIndex(_profile.favoriteLibraries, 'agencyID', agencyID);
     if (libraryIndex >= 0) {
       _profile.favoriteLibraries[libraryIndex].borrowerID = borrowerID;
     }
   },
 
-  onAddLibraryToFavorites: function(agencyID) {
+  onAddLibraryToFavorites(agencyID) {
     let favoriteModel = {
       agencyID: agencyID,
       borrowerID: '',
@@ -96,7 +97,7 @@ let profileStore = Reflux.createStore({
     this.trigger(_profile);
   },
 
-  onRemoveLibraryFromFavorites: function(agencyID) {
+  onRemoveLibraryFromFavorites(agencyID) {
     let index = findIndex(_profile.favoriteLibraries, 'agencyID', agencyID);
 
     if (index > -1) {
@@ -127,6 +128,72 @@ let profileStore = Reflux.createStore({
     }
 
     this.trigger(_profile);
+  },
+
+  /**
+   * @param {string} workId
+   */
+  onLikeObject(workId) {
+    let request = {item_id: workId, action: null};
+
+    const index = findIndex(_profile.likes, 'item_id', workId);
+    if (index < 0) {
+      request.action = 'like';
+      _profile.likes.push({item_id: workId, value: 1});
+    }
+    else if (_profile.likes[index].value === '-1') {
+      const like = _profile.likes[index];
+      request.id = like.id || null;
+      request.uid = like.profileId || null;
+      request.action = 'like';
+      _profile.likes[index].value = 1;
+    }
+    else {
+      const like = _profile.likes[index];
+      request.id = like.id || null;
+      request.uid = like.profileId || null;
+      request.action = 'remove';
+      _profile.likes.splice(index, 1);
+    }
+
+    this.trigger(_profile);
+
+    ProfileActions.saveLike(request);
+  },
+
+  onLikeSaved(response) {
+    if (!response) {
+      console.error('Some error occured when saving a like/dislike'); // eslint-disable-line no-console
+    }
+    ProfileActions.fetchProfile();
+  },
+
+  onDislikeObject(workId) {
+    let request = {item_id: workId, action: null};
+
+    const index = findIndex(_profile.likes, 'item_id', workId);
+    if (index < 0) {
+      request.action = 'dislike';
+      _profile.likes.push({item_id: workId, value: -1});
+    }
+    else if (_profile.likes[index].value === '1') {
+      const like = _profile.likes[index];
+      request.id = like.id || null;
+      request.uid = like.profileId || null;
+      request.action = 'dislike';
+      _profile.likes[index].value = -1;
+    }
+    else {
+      const like = _profile.likes[index];
+      request.id = like.id || null;
+      request.uid = like.profileId || null;
+      request.action = 'remove';
+      _profile.likes.splice(index, 1);
+    }
+
+    this.trigger(_profile);
+
+    ProfileActions.saveLike(request);
   }
 });
 

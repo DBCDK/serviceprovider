@@ -135,3 +135,18 @@
     display: inline-block;
   }
 }
+
+/* LIKE BUTTONS */
+
+.work--like-buttons {
+  margin-bottom: 5px;
+  img {
+    width: 30px;
+  }
+}
+
+.work--like-buttons--like-container,
+.work--like-buttons--dislike-container {
+  display: inline;
+  margin-left: 5px;
+}
