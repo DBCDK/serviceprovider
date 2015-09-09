@@ -146,7 +146,7 @@ const Work = React.createClass({
     return result;
   },
 
-  getOrderButtons(specific, agencyId, borrowerId, userIsLoggedIn) {
+  getOrderButtons(specific, agencyId, borrowerId, pickupAgencyId, userIsLoggedIn) {
     return specific.map((tw, index) => {
       if (tw.accessType === 'physical') {
         let order_ids = [];
@@ -158,6 +158,7 @@ const Work = React.createClass({
             coverImagePids={specific[0].identifiers}
             linkText={'Bestil ' + tw.type}
             orderUrl={tw.order}
+            pickupAgencyId={pickupAgencyId}
             pids={order_ids}
             userIsLoggedIn={userIsLoggedIn}
             />
@@ -248,28 +249,32 @@ const Work = React.createClass({
     const editions = this.getPublications(publications);
 
     let agencyId = '';
+    let pickupAgency = '';
     let borrowerId = '';
 
     if (this.state.profile.userIsLoggedIn === true) {
       if (profile.favoriteLibraries.length === 1) {
-        agencyId = profile.favoriteLibraries[0].agencyID;
+        agencyId = profile.favoriteLibraries[0].libraryID;
+        pickupAgency = profile.favoriteLibraries[0].branchId;
         borrowerId = profile.favoriteLibraries[0].borrowerID;
       }
       else if (profile.favoriteLibraries.length > 1) {
         const agencies = profile.favoriteLibraries;
         const index = findIndex(agencies, 'default', 1);
         if (index > -1) {
-          agencyId = profile.favoriteLibraries[index].agencyID;
+          agencyId = profile.favoriteLibraries[index].libraryID;
+          pickupAgency = profile.favoriteLibraries[index].branchId;
           borrowerId = profile.favoriteLibraries[index].borrowerID;
         }
         else {
-          agencyId = profile.favoriteLibraries[0].agencyID;
+          agencyId = profile.favoriteLibraries[0].libraryID;
+          pickupAgency = profile.favoriteLibraries[0].branchId;
           borrowerId = profile.favoriteLibraries[0].borrowerID;
         }
       }
     }
 
-    const orderButtons = this.getOrderButtons(work.result.specific, agencyId, borrowerId, this.state.profile.userIsLoggedIn);
+    const orderButtons = this.getOrderButtons(work.result.specific, agencyId, borrowerId, pickupAgency, this.state.profile.userIsLoggedIn);
     const specifics = this.getSpecifics(work.result.specific);
 
     const parts = this.getMetaData(work.result.general, 'partOf', 'part', 'I: ');

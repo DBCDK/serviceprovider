@@ -36,7 +36,7 @@ const Library = React.createClass({
       ProfileActions.removeLibraryFromFavorites(this.state.library.data.branchId);
     }
     else {
-      ProfileActions.addLibraryToFavorites(this.state.library.data.branchId);
+      ProfileActions.addLibraryToFavorites(this.state.library.data.branchId, this.state.library.data.agencyId);
     }
   },
 
