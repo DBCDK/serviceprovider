@@ -42,6 +42,7 @@ const serviceProvider = ServiceProvider(config.provider).setupSockets(socket);
 
 // Port config
 app.set('port', process.env.PORT || 8080); // eslint-disable-line no-process-env
+const HOST = process.env.EMAIL_REDIRECT ? process.env.EMAIL_REDIRECT + ':' + app.get('port') : 'localhost:' + app.get('port'); // eslint-disable-line no-process-env
 
 // Configure templating
 app.set('views', path.join(__dirname, 'views'));
@@ -255,7 +256,8 @@ app.post('/signup', (req, res) => {
     let resp = serviceProvider.trigger(
       'createProfile', {
         email: email,
-        password: password
+        password: password,
+        basePath: HOST
       }
     );
 
@@ -321,6 +323,7 @@ app.get(['/receipt', '/receipt/*'], (req, res) => {
 // starting server
 server.listen(app.get('port'), () => {
   logger.log('info', 'Server listening on ' + app.get('port'));
+  logger.log('info', 'Host: ' + HOST);
   logger.log('info', 'Versions: ', process.versions);
   logger.log('info', version + ' is up and running');
 });

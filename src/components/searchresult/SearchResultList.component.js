@@ -14,18 +14,16 @@ import Loader from '../Loader.component.js';
 export default React.createClass({
   render() {
     return (
-        <ResultDisplay
-          result={this.props.data.results.result}
-          noResultsText=''
-          pending={this.props.data.results.pending}
-          loader={<Loader pending={this.props.data.results.pending} />}
-          coverImages={this.props.data.covers.images}
-          hasMore={this.props.data.results.info.more === 'true'}
-          loadMore={this.props.actions.nextPage}
-          noOfWorks={this.props.config.noOfWorks || 2}
-          >
-        </ResultDisplay>
-
+      <ResultDisplay
+        coverImages={this.props.data.covers.images}
+        hasMore={this.props.data.results.info.more === 'true'}
+        loadMore={this.props.actions.nextPage}
+        loader={<Loader pending={this.props.data.results.pending} />}
+        noOfWorks={this.props.config.noOfWorks || 2}
+        noResultsText=''
+        pending={this.props.data.results.pending}
+        result={this.props.data.results.result}
+        />
     );
   }
 });
