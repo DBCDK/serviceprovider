@@ -42,7 +42,7 @@ const serviceProvider = ServiceProvider(config.provider).setupSockets(socket);
 
 // Port config
 app.set('port', process.env.PORT || 8080); // eslint-disable-line no-process-env
-const HOST = process.env.EMAIL_REDIRECT ? process.env.EMAIL_REDIRECT + ':' + app.get('port') : 'localhost:' + app.get('port'); // eslint-disable-line no-process-env
+const EMAIL_REDIRECT = process.env.EMAIL_REDIRECT || 'localhost:' + app.get('port'); // eslint-disable-line no-process-env
 
 // Configure templating
 app.set('views', path.join(__dirname, 'views'));
@@ -257,14 +257,15 @@ app.post('/signup', (req, res) => {
       'createProfile', {
         email: email,
         password: password,
-        basePath: HOST
+        basePath: EMAIL_REDIRECT
       }
     );
 
     Promise.all(resp).then(() => {
       res.render('signup', {message: {text: 'Vi har sendt en bekræftelse-email til dig', error: false}});
-    }, () => {
+    }, (error) => {
       res.status(500).send('Internal Error');
+      logger.log('error', 'Internal Error on signup', error);
     });
   }
   else {
@@ -323,7 +324,7 @@ app.get(['/receipt', '/receipt/*'], (req, res) => {
 // starting server
 server.listen(app.get('port'), () => {
   logger.log('info', 'Server listening on ' + app.get('port'));
-  logger.log('info', 'Host: ' + HOST);
+  logger.log('info', 'EMAIL_REDIRECT: ' + EMAIL_REDIRECT);
   logger.log('info', 'Config - provider: ', config.provider);
   logger.log('info', 'Config - redis: ', config.services);
   logger.log('info', 'Versions: ', process.versions);
