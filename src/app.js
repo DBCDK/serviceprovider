@@ -324,6 +324,8 @@ app.get(['/receipt', '/receipt/*'], (req, res) => {
 server.listen(app.get('port'), () => {
   logger.log('info', 'Server listening on ' + app.get('port'));
   logger.log('info', 'Host: ' + HOST);
+  logger.log('info', 'Config - provider: ', config.provider);
+  logger.log('info', 'Config - redis: ', config.services);
   logger.log('info', 'Versions: ', process.versions);
   logger.log('info', version + ' is up and running');
 });
