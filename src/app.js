@@ -7,7 +7,6 @@
 
 // loading config etc.
 import config from '../config.js';
-import uiconfig from '../uiconfig.js';
 // newrelic needs to be required the es5 way because we only wants to load new relic if specified in config.js
 const newrelic = config.newrelic && require('newrelic') || null;
 import {version} from '../package.json';
@@ -21,13 +20,16 @@ import Logger from 'dbc-node-logger';
 import ServiceProvider from 'dbc-node-serviceprovider';
 import bodyParser from 'body-parser';
 import compression from 'compression';
-import passport from 'passport';
-import {Strategy as LocalStrategy} from 'passport-local';
 import expressSession from 'express-session';
 import RedisStore from 'connect-redis';
 
-// loading components
-import SearchServer from './components/searchpage/Search.server.js';
+// loading routes
+import MainRoutes from './routes/main.routes.js';
+import LibraryRoutes from './routes/library.routes.js';
+import PassportRoutes from './routes/passport.routes.js';
+import WorkRoutes from './routes/work.routes.js';
+
+import passportConfig from './passport.config.js';
 
 const app = express();
 const server = http.Server(app);
@@ -36,13 +38,18 @@ const PRODUCTION = process.env.NODE_ENV === 'production'; // eslint-disable-line
 const APP_NAME = process.env.NEW_RELIC_APP_NAME || 'app_name'; // eslint-disable-line no-process-env
 const logger = new Logger({app_name: APP_NAME, handleExceptions: true});
 const expressLoggers = logger.getExpressLoggers();
+const EMAIL_REDIRECT = process.env.EMAIL_REDIRECT || 'localhost:' + app.get('port'); // eslint-disable-line no-process-env
 
 // settings up our provider
 const serviceProvider = ServiceProvider(config.provider).setupSockets(socket);
 
+// Configure to use routes
+app.set('serviceProvider', serviceProvider);
+app.set('logger', logger);
+app.set('EMAIL_REDIRECT', EMAIL_REDIRECT);
+
 // Port config
 app.set('port', process.env.PORT || 8080); // eslint-disable-line no-process-env
-const EMAIL_REDIRECT = process.env.EMAIL_REDIRECT || 'localhost:' + app.get('port'); // eslint-disable-line no-process-env
 
 // Configure templating
 app.set('views', path.join(__dirname, 'views'));
@@ -113,216 +120,14 @@ socket.use((_socket, next) => {
 
 app.use(sessionMiddleware);
 
-app.use(passport.initialize());
-app.use(passport.session());
+// Setup passport
+passportConfig(app);
 
-app.get(['/', '/search', '/search/*'], (req, res) => {
-  const query = req.query || [];
-  let properties = SearchServer({query, config: uiconfig});
-  properties.config = JSON.stringify(uiconfig);
-  res.render('search', properties);
-});
-
-app.get('/moreinfo/:restOfPath*', (req, res) => {
-  http.get('http://moreinfo.addi.dk/' + req.params.restOfPath, (response) => {
-    res.set('Cache-Control', 'max-age=86400, s-maxage=86400, public');
-    response.pipe(res);
-  });
-});
-
-passport.use('local', new LocalStrategy({},
-  (username, password, done) => {
-    let loginResponse = serviceProvider.trigger(
-      'loginProfile', {
-        email: username,
-        password: password
-      }
-    );
-
-    Promise.all(loginResponse).then((response) => {
-      const result = response[0];
-      const isLoginSuccesful = typeof result.error === 'undefined';
-      if (isLoginSuccesful) {
-        const user = {
-          id: result.id,
-          uid: result.userId,
-          ttl: result.ttl
-        };
-        done(null, user);
-      }
-      else {
-        done(null, false);
-      }
-    }, () => {
-      // return 500 Internal Error status code
-      logger.error('Error in local login strategy, promise rejected');
-      done(null, false);
-    });
-  }
-));
-
-passport.serializeUser((loopbackSession, done) => {
-  done(null, loopbackSession);
-});
-
-passport.deserializeUser((id, done) => {
-  done(null, id);
-});
-
-function ensureAuthenticated(req, res, next) {
-  if (req.isAuthenticated()) {
-    // the user is logged in
-    req.session.returnTo = req.originalUrl;
-    return next();
-  }
-
-  if (req.query.ids) {
-    const rt = req.query.ids.split(',');
-    req.session.returnTo = '/work?id=' + rt[0];
-  }
-  // send user to login otherwise
-  res.redirect('/login');
-}
-
-app.get('/profile', ensureAuthenticated, (req, res) => {
-  if (req.session.returnTo === '/profile') {
-    res.render('profile');
-  }
-  else {
-    res.redirect(req.session.returnTo);
-  }
-});
-
-app.get('/login', (req, res) => {
-  res.render('login');
-});
-
-app.get('/logout', (req, res) => {
-
-  if (typeof req.user !== 'undefined') {
-    const params = {
-      accessToken: req.user.id,
-      id: req.user.uid
-    };
-    serviceProvider.trigger('logoutProfile', params);
-  }
-  //
-
-  req.session.destroy(() => {
-    res.redirect('/login');
-  });
-});
-
-app.post('/login', passport.authenticate('local'), (req, res) => {
-  if (req.session.hasOwnProperty('returnTo')) {
-    res.redirect(req.session.returnTo);
-  }
-  else {
-    res.redirect('/profile');
-  }
-});
-
-app.get('/confirm', (req, res) => {
-  // for email verification flow
-  const uid = req.query.uid;
-  const token = req.query.token;
-  const redirectUrl = req.query.redirect;
-
-  let verifyResponse = serviceProvider.trigger(
-    'verifyEmail', {
-      uid: uid,
-      token: token
-    }
-  );
-
-  Promise.all(verifyResponse).then(() => {
-    res.redirect(redirectUrl);
-  }, () => {
-    res.status(500).send('Internal Error');
-  });
-});
-
-app.get('/signup', (req, res) => {
-  res.render('signup');
-});
-
-app.post('/signup', (req, res) => {
-
-  const emailRegex = /^([\w-]+(?:\.[\w-]+)*)@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$/i;
-
-  const email = req.body.email;
-  const password = req.body.password;
-  const repeatedPassword = req.body.repeatedPassword;
-
-  // validate arguments
-  if (email && password && repeatedPassword && (password === repeatedPassword) && emailRegex.test(email)) {
-    let resp = serviceProvider.trigger(
-      'createProfile', {
-        email: email,
-        password: password,
-        basePath: EMAIL_REDIRECT
-      }
-    );
-
-    Promise.all(resp).then(() => {
-      res.render('signup', {message: {text: 'Vi har sendt en bekræftelse-email til dig', error: false}});
-    }, (error) => {
-      res.status(500).send('Internal Error');
-      logger.log('error', 'Internal Error on signup', error);
-    });
-  }
-  else {
-    // input was not valid
-    let errorMessage = 'De indtastede værdier er ikke gyldige';
-    if (email === '') {
-      errorMessage = 'Email skal udfyldes';
-    }
-    else if (!emailRegex.test(email)) {
-      errorMessage = 'Email er ikke gyldig';
-    }
-    else if (password === '') {
-      errorMessage = 'Password skal udfyldes';
-    }
-    else if (password !== repeatedPassword) {
-      errorMessage = 'De 2 passwords er ikke identiske';
-    }
-    res.render('signup', {message: {text: errorMessage, error: true}});
-  }
-});
-
-app.get('/resetpassword', (req, res) => {
-  res.render('resetpassword');
-});
-
-app.get(['/work', '/work/*'], (req, res) => {
-  let id = req.query.id;
-  id = '"' + id + '"';
-  res.render('work', {id});
-});
-
-app.get(['/order', '/order*'], ensureAuthenticated, (req, res) => {
-  let query = req.query;
-  query = JSON.stringify(query);
-  res.render('order', {query});
-});
-
-app.get(['/librarysuggest', '/librarysuggest/*'], (req, res) => {
-  let query = req.query;
-  query = JSON.stringify(query);
-  res.render('library_suggest', {query});
-});
-
-app.get(['/library', '/library/*'], (req, res) => {
-  let id = req.query.id;
-  id = '"' + id + '"';
-  res.render('library', {id});
-});
-
-app.get(['/receipt', '/receipt/*'], (req, res) => {
-  let query = req.query;
-  query = JSON.stringify(query);
-  res.render('receipt', {query});
-});
+// Setup Routes
+app.use('/', MainRoutes);
+app.use('/library', LibraryRoutes);
+app.use('/profile', PassportRoutes);
+app.use('/work', WorkRoutes);
 
 // starting server
 server.listen(app.get('port'), () => {

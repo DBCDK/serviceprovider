@@ -36,7 +36,7 @@ const TopNavigation = React.createClass({
 
   render: function() {
     const isLoggedIn = this.state.isLoggedIn;
-    const buttonData = isLoggedIn ? {url: '/logout', text: 'Log Ud'} : {url: '/login', text: 'Log Ind'};
+    const buttonData = isLoggedIn ? {url: '/profile/logout', text: 'Log Ud'} : {url: '/profile/login', text: 'Log Ind'};
 
     const profileLink = isLoggedIn ? <a href='/profile' >{this.state.username}</a> : '';
 

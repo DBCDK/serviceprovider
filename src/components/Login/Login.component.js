@@ -25,7 +25,7 @@ const Login = React.createClass({
       <div>
         <h2>Log ind</h2>
 
-        <form action='/login' method='POST'>
+        <form action='/profile/login' method='POST'>
           <label>Email</label>
           <input name='username' ref='email 'type='email'></input>
           <label>Password</label>
@@ -34,8 +34,8 @@ const Login = React.createClass({
         </form>
 
         <div className='row'>
-          <div className='small-6 columns'><a href='/signup'>Ny Bruger?</a></div>
-          <div className='small-6 columns'><a href='/resetpassword'>Glemt password?</a></div>
+          <div className='small-6 columns'><a href='/profile/signup'>Ny Bruger?</a></div>
+          <div className='small-6 columns'><a href='/profile/resetpassword'>Glemt password?</a></div>
         </div>
       </div>
     );

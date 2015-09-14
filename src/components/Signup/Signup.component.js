@@ -47,7 +47,7 @@ const Signup = React.createClass({
     const emailColor = this.state.isEmailFormatted ? 'green' : 'orange';
     return (
       <div>
-        <form action='/signup' method='post'>
+        <form action='/profile/signup' method='post'>
           <h2>Opret Profil</h2>
           <label>email</label>
           <input
