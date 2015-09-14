@@ -21,7 +21,7 @@ const LibrarySuggestContainerComponent = React.createClass({
   render() {
     return (
       <div className='search' >
-        <Query queryLocation='/librarysuggest'/>
+        <Query queryLocation='/library/suggest'/>
         <LibrarySearch />
         <LibrarySearchResults
           data={this.state.librarysearch.data}

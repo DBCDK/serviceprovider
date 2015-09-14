@@ -45,7 +45,7 @@ const ProfileLibraries = React.createClass({
         <hr />
         {libraries}
         <div className='row'>
-          <a className="button expand" href="/librarysuggest">{this.props.addLibraryLabel}</a>
+          <a className="button expand" href="/library/suggest">{this.props.addLibraryLabel}</a>
         </div>
       </div>
     );

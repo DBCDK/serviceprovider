@@ -27,7 +27,7 @@ const LibrarySuggestStore = Reflux.createStore({
 
     if (response.docs.length > 0) {
       data[response.query][response.index] = {
-        label: <a href={'/librarysuggest?text=' + query} >Biblioteker</a>,
+        label: <a href={'/library/suggest?text=' + query} >Biblioteker</a>,
         weight: 0,
         data: this.addLinks(response.docs)
       };
