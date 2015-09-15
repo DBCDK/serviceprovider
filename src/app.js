@@ -40,7 +40,6 @@ const PRODUCTION = ENV === 'production';
 const APP_NAME = process.env.NEW_RELIC_APP_NAME || 'app_name'; // eslint-disable-line no-process-env
 const logger = new Logger({app_name: APP_NAME, handleExceptions: true});
 const expressLoggers = logger.getExpressLoggers();
-const EMAIL_REDIRECT = process.env.EMAIL_REDIRECT || 'localhost:' + app.get('port'); // eslint-disable-line no-process-env
 
 // Configure app variables
 app.set('serviceProvider', ServiceProvider(config.provider).setupSockets(socket));
@@ -49,6 +48,9 @@ app.set('EMAIL_REDIRECT', EMAIL_REDIRECT);
 
 // Port config
 app.set('port', process.env.PORT || 8080); // eslint-disable-line no-process-env
+
+// EMAIL Redirect requires port to be defined therefore it must come after
+const EMAIL_REDIRECT = process.env.EMAIL_REDIRECT || 'localhost:' + app.get('port'); // eslint-disable-line no-process-env
 
 // Configure templating
 app.set('views', path.join(__dirname, 'views'));
