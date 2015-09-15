@@ -42,7 +42,6 @@
     "dbc-node-newrelic-wrapper": "git://github.com/DBCDK/dbc-node-newrelic-wrapper#stable_dist",
     "dbc-node-serviceprovider": "git://github.com/DBCDK/dbc-node-serviceprovider#stable_dist",
     "dbc-react-components": "git://github.com/DBCDK/dbc-react-components#stable_dist",
-    "dbc-react-resultlistview": "git://github.com/DBCDK/dbc-react-resultlistview#stable_dist",
     "express": "^4.12.3",
     "express-session": "^1.11.3",
     "extract-text-webpack-plugin": "^0.8.1",

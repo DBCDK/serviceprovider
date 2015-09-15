@@ -2,7 +2,6 @@
 
 import Reflux from 'reflux';
 import WorkActions from '../actions/Work.action.js';
-import CoverImageActions from '../actions/CoverImage.action.js';
 
 // Setup dataobject for query
 // @todo We may need to initialize it with data from the URL or an global object
@@ -37,10 +36,6 @@ let WorkStore = Reflux.createStore({
     _store.info = info;
     _store.error = error;
     this.trigger(_store);
-  },
-
-  callImageActions(work) {
-    work.forEach(result => CoverImageActions(result.identifiers));
   },
 
   // return the store data

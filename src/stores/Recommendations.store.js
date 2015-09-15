@@ -4,8 +4,6 @@ import Reflux from 'reflux';
 import {shuffle} from 'lodash';
 import SocketClient from '../utils/ServiceProviderSocketClient.js';
 import RecommendationsActions from '../actions/Recommendations.action.js';
-import CoverImageActions from '../actions/CoverImage.action.js';
-
 
 const defaultRecommendations = [
   '870970-basis:51263146',
@@ -41,7 +39,6 @@ let RecommendationsStore = Reflux.createStore({
 
   init() {
     this.response(this.onResponse);
-    // Register statusUpdate action
   },
 
   onDefault() {
@@ -55,7 +52,6 @@ let RecommendationsStore = Reflux.createStore({
   },
 
   onResponse(result) {
-    result.forEach(element => CoverImageActions(element.identifiers));
     _store.result = shuffle(result).splice(0, 20);
     _store.pending = false;
     this.trigger(_store);
@@ -68,7 +64,6 @@ let RecommendationsStore = Reflux.createStore({
   },
 
   update(result) {
-    result.forEach(element => CoverImageActions(element.identifiers));
     _store.result = shuffle(result).splice(0, 20);
     _store.pending = false;
     this.trigger(_store);
@@ -77,6 +72,7 @@ let RecommendationsStore = Reflux.createStore({
   getStore() {
     return _store;
   },
+
   getDefaultRecommendations() {
     return defaultRecommendations;
   }

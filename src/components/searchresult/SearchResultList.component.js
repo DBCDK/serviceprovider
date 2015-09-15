@@ -6,16 +6,34 @@
  */
 
 import React from 'react';
+import {rewriteCoverImageUrl} from '../../utils/CoverImage.util.js';
 
 // Components
-import {ResultDisplay} from 'dbc-react-resultlistview';
+import {CoverImage, ResultDisplay} from 'dbc-react-components';
 import Loader from '../Loader.component.js';
 
 export default React.createClass({
+  displayName: 'SearchResultList.component',
+  propTypes: {
+    actions: React.PropTypes.object.isRequired,
+    config: React.PropTypes.object.isRequired,
+    data: React.PropTypes.object.isRequired
+  },
+
   render() {
+    const coverImage = {
+      component: CoverImage,
+      noCoverUrl: {
+        appendWorkType: true,
+        url: `/covers/no-cover-image-[WORKTYPE].png`
+      },
+      prefSize: 'detail_500',
+      rewriteImgUrl: rewriteCoverImageUrl
+    };
+
     return (
       <ResultDisplay
-        coverImages={this.props.data.covers.images}
+        coverImage={coverImage}
         hasMore={this.props.data.results.info.more === 'true'}
         loadMore={this.props.actions.nextPage}
         loader={<Loader pending={this.props.data.results.pending} />}
