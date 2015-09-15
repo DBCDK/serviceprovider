@@ -93,6 +93,7 @@ test.describe('Login page', function () {
     var driver = new webdriver.Builder()
       .withCapabilities(webdriver.Capabilities.chrome())
       .build();
+
     driver.get(BASE_URL + endpoint);
     driver.wait(webdriver.until.elementIsVisible(driver.findElement({tagName: 'input', name: 'username'})), 5000);
     var emailInput = driver.findElement({tagName: 'input', name: 'username'});
@@ -101,6 +102,7 @@ test.describe('Login page', function () {
     chrome.stop();
   });
 });
+
 
 test.describe('Signup page', function () {
   test.it('is rendered', function () {
@@ -117,5 +119,5 @@ test.describe('Signup page', function () {
     chrome.stop();
 
   });
-
 });
+
