@@ -4,7 +4,6 @@ import Reflux from 'reflux';
 import SocketClient from '../utils/ServiceProviderSocketClient.js';
 import QueryParser from '../utils/QueryParser.util.js';
 import QueryStore from './QueryStore.store.js';
-import CoverImageActions from '../actions/CoverImage.action.js';
 
 let _store = {
   result: [],
@@ -56,7 +55,6 @@ let ResultListStore = Reflux.createStore({
   onResponse(result) {
     let resultList = result.result || [];
     let info = result.info || [];
-    this.callImageActions(resultList);
     _store.result = _store.result.concat(resultList);
     _store.info = info;
     _store.pending = false;
@@ -69,10 +67,6 @@ let ResultListStore = Reflux.createStore({
   empty() {
     _store.result = [];
     _store.info = {hits: 0, collections: 0, more: false};
-  },
-
-  callImageActions(resultList) {
-    resultList.forEach(result => CoverImageActions(result.identifiers));
   },
 
   // return the store data
