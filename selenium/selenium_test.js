@@ -19,7 +19,6 @@ function writeScreenshot(data, name) {
 test.describe('Title assertion', function () {
   chrome.start();
 
-
   test.it('Title is Palles Gavebod', function () {
     var driver = new webdriver.Builder()
       .withCapabilities(webdriver.Capabilities.chrome())
@@ -30,6 +29,12 @@ test.describe('Title assertion', function () {
     driver.getTitle().then(function (title) {
       assert.equal(title, 'Palles Gavebod', 'Title is Palles Gavebod');
     });
+
+
+    driver.takeScreenshot().then(function(data) {
+      writeScreenshot(data, 'output.png');
+    })
+
     driver.quit();
     chrome.stop();
   });
