@@ -29,22 +29,21 @@ import LibraryRoutes from './routes/library.routes.js';
 import PassportRoutes from './routes/passport.routes.js';
 import WorkRoutes from './routes/work.routes.js';
 
+// loading configurations
 import passportConfig from './passport.config.js';
 
 const app = express();
 const server = http.Server(app);
 const socket = socketio.listen(server);
-const PRODUCTION = process.env.NODE_ENV === 'production'; // eslint-disable-line no-process-env
+const ENV = app.get('env');
+const PRODUCTION = ENV === 'production';
 const APP_NAME = process.env.NEW_RELIC_APP_NAME || 'app_name'; // eslint-disable-line no-process-env
 const logger = new Logger({app_name: APP_NAME, handleExceptions: true});
 const expressLoggers = logger.getExpressLoggers();
 const EMAIL_REDIRECT = process.env.EMAIL_REDIRECT || 'localhost:' + app.get('port'); // eslint-disable-line no-process-env
 
-// settings up our provider
-const serviceProvider = ServiceProvider(config.provider).setupSockets(socket);
-
-// Configure to use routes
-app.set('serviceProvider', serviceProvider);
+// Configure app variables
+app.set('serviceProvider', ServiceProvider(config.provider).setupSockets(socket));
 app.set('logger', logger);
 app.set('EMAIL_REDIRECT', EMAIL_REDIRECT);
 
@@ -58,44 +57,30 @@ app.set('view engine', 'jade');
 // setting proxy
 app.enable('trust proxy');
 
-let fileHeaders = {};
-
 // settings production specific options
-if (PRODUCTION) {
-  fileHeaders = {index: false, dotfiles: 'ignore', maxAge: '1d'};
-}
-else if (newrelic) {
+if (!PRODUCTION && newrelic) {
   newrelic.agent_enabled = false;
 }
-
-// adding gzip'ing
-app.use(compression());
-
-// setting paths
-app.use(express.static(path.join(__dirname, '../public'), fileHeaders));
-app.use(express.static(path.join(__dirname, '../static'), fileHeaders));
 
 // setting local vars that should be available to our template engine
 app.locals.newrelic = newrelic;
 app.locals.version = version;
 app.locals.production = PRODUCTION;
 
-app.use(expressLoggers.logger);
-app.use(expressLoggers.errorLogger);
+// setup environments
+let redisConfig;
+let fileHeaders = {};
 
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({extended: true}));
-
-// setup REDIS
-let redisConfig = config.services.redis.local;
-switch (process.env.NODE_ENV) { // eslint-disable-line no-process-env
+switch (ENV) {
   case 'development':
     redisConfig = config.services.redis.development;
     break;
   case 'production':
+    fileHeaders = {index: false, dotfiles: 'ignore', maxAge: '1d'};
     redisConfig = config.services.redis.production;
     break;
   default:
+    redisConfig = config.services.redis.local;
     break;
 }
 
@@ -114,6 +99,22 @@ let sessionMiddleware = expressSession({
   saveUninitialized: false
 });
 
+// adding gzip'ing
+app.use(compression());
+
+// setting paths
+app.use(express.static(path.join(__dirname, '../public'), fileHeaders));
+app.use(express.static(path.join(__dirname, '../static'), fileHeaders));
+
+// Setting logger
+app.use(expressLoggers.logger);
+app.use(expressLoggers.errorLogger);
+
+// Setting bodyparser
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({extended: true}));
+
+// Setting sessions
 socket.use((_socket, next) => {
   sessionMiddleware(_socket.request, _socket.request.res, next);
 });
