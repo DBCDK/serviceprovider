@@ -3,6 +3,8 @@ var fs = require('fs');
 var assert = require('assert');
 var test = require('selenium-webdriver/testing');
 var webdriver = require('selenium-webdriver');
+var chrome = require('chromedriver');
+
 
 var BASE_URL = process.env.SELENIUM_URL || 'http://localhost:8080';
 
@@ -15,6 +17,9 @@ function writeScreenshot(data, name) {
 
 
 test.describe('Title assertion', function () {
+  chrome.start();
+
+
   test.it('Title is Palles Gavebod', function () {
     var driver = new webdriver.Builder()
       .withCapabilities(webdriver.Capabilities.chrome())
@@ -26,12 +31,14 @@ test.describe('Title assertion', function () {
       assert.equal(title, 'Palles Gavebod', 'Title is Palles Gavebod');
     });
     driver.quit();
+    chrome.stop();
   });
 });
 
 
 test.describe('Express endpoint', function () {
   test.it('/profile/login can be reached', function () {
+    chrome.start();
     var endpoint = '/profile/login';
     var driver = new webdriver.Builder()
       .withCapabilities(webdriver.Capabilities.chrome())
@@ -48,10 +55,12 @@ test.describe('Express endpoint', function () {
       });
 
     driver.quit();
+    chrome.stop();
 
   });
 
   test.it('/profile/signup can be reached', function () {
+    chrome.start();
     var endpoint = '/profile/signup';
     var driver = new webdriver.Builder()
       .withCapabilities(webdriver.Capabilities.chrome())
@@ -68,11 +77,13 @@ test.describe('Express endpoint', function () {
       });
 
     driver.quit();
+    chrome.stop();
   });
 });
 
 test.describe('Login page', function () {
   test.it('is rendered', function () {
+    chrome.start();
     var endpoint = '/profile/login';
     var driver = new webdriver.Builder()
       .withCapabilities(webdriver.Capabilities.chrome())
@@ -82,11 +93,13 @@ test.describe('Login page', function () {
     var emailInput = driver.findElement({tagName: 'input', name: 'username'});
     emailInput.sendKeys('rasmussen.matias@gmail.com');
     driver.quit();
+    chrome.stop();
   });
 });
 
 test.describe('Signup page', function () {
   test.it('is rendered', function () {
+    chrome.start();
     var endpoint = '/profile/signup';
     var driver = new webdriver.Builder()
       .withCapabilities(webdriver.Capabilities.chrome())
@@ -96,19 +109,8 @@ test.describe('Signup page', function () {
     driver.wait(webdriver.until.elementIsVisible(driver.findElement({tagName: 'input', name: 'username'})), 5000);
 
     driver.quit();
+    chrome.stop();
+
   });
 
-  /*
-  test.it('can register new user', function () {
-    var endpoint = '/profile/signup';
-    var driver = new webdriver.Builder()
-      .withCapabilities(webdriver.Capabilities.chrome())
-      .build();
-    driver.get(BASE_URL + endpoint);
-    driver.wait(webdriver.until.elementIsVisible(driver.findElement({tagName: 'input', name: 'username'})), 5000);
-    var emailInput = driver.findElement({tagName: 'input', name: 'username'});
-    emailInput.sendKeys('rasmussen.matias@gmail.com');
-    driver.quit();
-  });
-*/
 });
