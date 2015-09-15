@@ -1,21 +1,114 @@
 'use strict';
+var fs = require('fs');
 var assert = require('assert');
 var test = require('selenium-webdriver/testing');
 var webdriver = require('selenium-webdriver');
 
 var BASE_URL = process.env.SELENIUM_URL || 'http://localhost:8080';
 
-test.describe('Title assertion', function() {
-  test.it('Title is Palles Gavebod', function() {
+
+function writeScreenshot(data, name) {
+  name = name || 'ss.png';
+  var screenshotPath = '';
+  fs.writeFileSync(screenshotPath + name, data, 'base64');
+}
+
+
+test.describe('Title assertion', function () {
+  test.it('Title is Palles Gavebod', function () {
     var driver = new webdriver.Builder()
-      .withCapabilities(webdriver.Capabilities.phantomjs())
+      .withCapabilities(webdriver.Capabilities.chrome())
       .build();
 
     driver.get(BASE_URL);
 
-    driver.getTitle().then(function(title) {
+    driver.getTitle().then(function (title) {
       assert.equal(title, 'Palles Gavebod', 'Title is Palles Gavebod');
     });
     driver.quit();
   });
+});
+
+
+test.describe('Express endpoint', function () {
+  test.it('/profile/login can be reached', function () {
+    var endpoint = '/profile/login';
+    var driver = new webdriver.Builder()
+      .withCapabilities(webdriver.Capabilities.chrome())
+      .build();
+
+    driver.get(BASE_URL + endpoint);
+    driver.wait(webdriver.until.elementIsVisible(driver.findElement({tagName: 'body'})), 12000);
+    var body = driver.findElement({tagName: 'body'});
+    var header = body.findElement({id: 'header'});
+
+    header.getId()
+      .then(function(id) {
+        assert.notEqual(typeof id, 'undefined');
+      });
+
+    driver.quit();
+
+  });
+
+  test.it('/profile/signup can be reached', function () {
+    var endpoint = '/profile/signup';
+    var driver = new webdriver.Builder()
+      .withCapabilities(webdriver.Capabilities.chrome())
+      .build();
+
+    driver.get(BASE_URL + endpoint);
+    driver.wait(webdriver.until.elementIsVisible(driver.findElement({tagName: 'body'})), 12000);
+    var body = driver.findElement({tagName: 'body'});
+    var header = body.findElement({id: 'header'});
+
+    header.getId()
+      .then(function(id) {
+        assert.notEqual(typeof id, 'undefined');
+      });
+
+    driver.quit();
+  });
+});
+
+test.describe('Login page', function () {
+  test.it('is rendered', function () {
+    var endpoint = '/profile/login';
+    var driver = new webdriver.Builder()
+      .withCapabilities(webdriver.Capabilities.chrome())
+      .build();
+    driver.get(BASE_URL + endpoint);
+    driver.wait(webdriver.until.elementIsVisible(driver.findElement({tagName: 'input', name: 'username'})), 5000);
+    var emailInput = driver.findElement({tagName: 'input', name: 'username'});
+    emailInput.sendKeys('rasmussen.matias@gmail.com');
+    driver.quit();
+  });
+});
+
+test.describe('Signup page', function () {
+  test.it('is rendered', function () {
+    var endpoint = '/profile/signup';
+    var driver = new webdriver.Builder()
+      .withCapabilities(webdriver.Capabilities.chrome())
+      .build();
+
+    driver.get(BASE_URL + endpoint);
+    driver.wait(webdriver.until.elementIsVisible(driver.findElement({tagName: 'input', name: 'username'})), 5000);
+
+    driver.quit();
+  });
+
+  /*
+  test.it('can register new user', function () {
+    var endpoint = '/profile/signup';
+    var driver = new webdriver.Builder()
+      .withCapabilities(webdriver.Capabilities.chrome())
+      .build();
+    driver.get(BASE_URL + endpoint);
+    driver.wait(webdriver.until.elementIsVisible(driver.findElement({tagName: 'input', name: 'username'})), 5000);
+    var emailInput = driver.findElement({tagName: 'input', name: 'username'});
+    emailInput.sendKeys('rasmussen.matias@gmail.com');
+    driver.quit();
+  });
+*/
 });
