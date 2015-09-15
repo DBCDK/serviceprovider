@@ -120,12 +120,7 @@ PassportRoutes.get('/login', (req, res) => {
 });
 
 PassportRoutes.get('/', dbcMiddleware.ensureAuthenticated, (req, res) => {
-  if (req.session.returnTo === '/profile') {
-    res.render('profile');
-  }
-  else {
-    res.redirect(req.session.returnTo);
-  }
+  res.render('profile');
 });
 
 export default PassportRoutes;
