@@ -37,5 +37,6 @@ Unit tests are placed with the modules and components in a __tests__ folder
 to run the tests: `npm run test`
 
 ### Selenium tests
-The selenium tests (found in the /selenium directory) are integration tests, and mainly run in an phantomjs instance.
+The selenium tests (found in the /selenium directory) are integration tests, and mainly run in a chrome instance using ChromeDriver.
 to run tests: `npm run selenium`
+
