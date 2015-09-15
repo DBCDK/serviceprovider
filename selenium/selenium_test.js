@@ -16,6 +16,7 @@ function writeScreenshot(data, name) {
 }
 
 
+
 test.describe('Title assertion', function () {
   chrome.start();
 
@@ -36,14 +37,14 @@ test.describe('Title assertion', function () {
     })
 
     driver.quit();
-    chrome.stop();
+    // chrome.stop();
   });
 });
 
 
 test.describe('Express endpoint', function () {
   test.it('/profile/login can be reached', function () {
-    chrome.start();
+    // chrome.start();
     var endpoint = '/profile/login';
     var driver = new webdriver.Builder()
       .withCapabilities(webdriver.Capabilities.chrome())
@@ -60,7 +61,7 @@ test.describe('Express endpoint', function () {
       });
 
     driver.quit();
-    chrome.stop();
+    // chrome.stop();
 
   });
 
@@ -82,7 +83,7 @@ test.describe('Express endpoint', function () {
       });
 
     driver.quit();
-    chrome.stop();
+    // chrome.stop();
   });
 });
 
@@ -99,7 +100,7 @@ test.describe('Login page', function () {
     var emailInput = driver.findElement({tagName: 'input', name: 'username'});
     emailInput.sendKeys('rasmussen.matias@gmail.com');
     driver.quit();
-    chrome.stop();
+    // chrome.stop();
   });
 });
 
@@ -116,7 +117,7 @@ test.describe('Signup page', function () {
     driver.wait(webdriver.until.elementIsVisible(driver.findElement({tagName: 'input', name: 'username'})), 5000);
 
     driver.quit();
-    chrome.stop();
+    // chrome.stop();
 
   });
 });
