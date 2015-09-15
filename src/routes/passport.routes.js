@@ -48,7 +48,8 @@ PassportRoutes.get('/confirm', (req, res) => {
   let verifyResponse = serviceProvider.trigger(
     'verifyEmail', {
       uid: uid,
-      token: token
+      token: token,
+      redirect: '/email_confirm'
     }
   );
 
