@@ -15,11 +15,27 @@ function writeScreenshot(data, name) {
   fs.writeFileSync(screenshotPath + name, data, 'base64');
 }
 
+test.describe('Title assertion', function () {
+  test.it('Title is Palles Gavebod', function () {
+    var driver = new webdriver.Builder()
+      .withCapabilities(webdriver.Capabilities.phantomjs())
+      .build();
 
+    driver.get(BASE_URL);
+
+    driver.getTitle().then(function (title) {
+      assert.equal(title, 'Palles Gavebod', 'Title is Palles Gavebod');
+    });
+
+    driver.takeScreenshot().then(function(data) {
+      writeScreenshot(data, 'output_phantom.png');
+    });
+
+    driver.quit();
+  });
+});
 
 test.describe('Title assertion', function () {
-  chrome.start();
-
   test.it('Title is Palles Gavebod', function () {
     var driver = new webdriver.Builder()
       .withCapabilities(webdriver.Capabilities.chrome())
@@ -31,18 +47,16 @@ test.describe('Title assertion', function () {
       assert.equal(title, 'Palles Gavebod', 'Title is Palles Gavebod');
     });
 
-
     driver.takeScreenshot().then(function(data) {
-      writeScreenshot(data, 'output.png');
-    })
+      writeScreenshot(data, 'output_chrome.png');
+    });
 
     driver.quit();
-    // chrome.stop();
   });
 });
 
 
-test.describe('Express endpoint', function () {
+/* test.describe('Express endpoint', function () {
   test.it('/profile/login can be reached', function () {
     // chrome.start();
     var endpoint = '/profile/login';
@@ -120,5 +134,5 @@ test.describe('Signup page', function () {
     // chrome.stop();
 
   });
-});
+}); */
 
