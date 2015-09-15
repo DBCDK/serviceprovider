@@ -6,24 +6,10 @@
  */
 
 import express from 'express';
-const PassportRoutes = express.Router();
-
 import passport from 'passport';
+import dbcMiddleware from './middleware.js';
 
-function ensureAuthenticated(req, res, next) {
-  if (req.isAuthenticated()) {
-    // the user is logged in
-    req.session.returnTo = req.originalUrl;
-    return next();
-  }
-
-  if (req.query.ids) {
-    const rt = req.query.ids.split(',');
-    req.session.returnTo = '/work?id=' + rt[0];
-  }
-  // send user to login otherwise
-  res.redirect('/profile/login');
-}
+const PassportRoutes = express.Router();
 
 PassportRoutes.get('/logout', (req, res) => {
   const serviceProvider = req.app.get('serviceProvider');
@@ -132,7 +118,7 @@ PassportRoutes.get('/login', (req, res) => {
   res.render('login');
 });
 
-PassportRoutes.get('/', ensureAuthenticated, (req, res) => {
+PassportRoutes.get('/', dbcMiddleware.ensureAuthenticated, (req, res) => {
   if (req.session.returnTo === '/profile') {
     res.render('profile');
   }
