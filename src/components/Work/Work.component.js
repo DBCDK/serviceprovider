@@ -7,8 +7,6 @@
 import React from 'react';
 import Reflux from 'reflux';
 
-// import {findIndex} from 'lodash';
-
 import workAction from '../../actions/Work.action.js';
 import WorkStore from '../../stores/Work.store.js';
 import {CoverImage, OrderButton} from 'dbc-react-components';
