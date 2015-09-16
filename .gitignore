@@ -5,6 +5,7 @@
 report.xml
 output
 test-results.xml
+coverage/*
 
 # ============
 # BUILDS
