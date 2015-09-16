@@ -34,6 +34,13 @@ module.exports = {
           'sass?sourceMap'
         )
       }
+    ],
+    postLoaders: [
+      {
+        test: /\.js$/,
+        exclude: /(test|node_modules|bower|__tests__)\//,
+        loader: 'istanbul-instrumenter'
+      }
     ]
   },
   plugins: [
