@@ -27,10 +27,6 @@ test.describe('Title assertion', function () {
       assert.equal(title, 'Palles Gavebod', 'Title is Palles Gavebod');
     });
 
-    driver.takeScreenshot().then(function(data) {
-      writeScreenshot(data, 'output_phantom.png');
-    });
-
     driver.quit();
   });
 });
@@ -47,16 +43,13 @@ test.describe('Title assertion', function () {
       assert.equal(title, 'Palles Gavebod', 'Title is Palles Gavebod');
     });
 
-    driver.takeScreenshot().then(function(data) {
-      writeScreenshot(data, 'output_chrome.png');
-    });
 
     driver.quit();
   });
 });
 
 
-/* test.describe('Express endpoint', function () {
+ test.describe('Express endpoint', function () {
   test.it('/profile/login can be reached', function () {
     // chrome.start();
     var endpoint = '/profile/login';
@@ -134,5 +127,4 @@ test.describe('Signup page', function () {
     // chrome.stop();
 
   });
-}); */
-
+});
