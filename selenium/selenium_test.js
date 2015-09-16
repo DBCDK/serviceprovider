@@ -49,9 +49,8 @@ test.describe('Title assertion', function () {
 });
 
 
- test.describe('Express endpoint', function () {
+test.describe('Express endpoint', function () {
   test.it('/profile/login can be reached', function () {
-    // chrome.start();
     var endpoint = '/profile/login';
     var driver = new webdriver.Builder()
       .withCapabilities(webdriver.Capabilities.chrome())
@@ -68,12 +67,9 @@ test.describe('Title assertion', function () {
       });
 
     driver.quit();
-    // chrome.stop();
-
   });
 
   test.it('/profile/signup can be reached', function () {
-    chrome.start();
     var endpoint = '/profile/signup';
     var driver = new webdriver.Builder()
       .withCapabilities(webdriver.Capabilities.chrome())
@@ -90,13 +86,11 @@ test.describe('Title assertion', function () {
       });
 
     driver.quit();
-    // chrome.stop();
   });
 });
 
 test.describe('Login page', function () {
   test.it('is rendered', function () {
-    chrome.start();
     var endpoint = '/profile/login';
     var driver = new webdriver.Builder()
       .withCapabilities(webdriver.Capabilities.chrome())
@@ -107,14 +101,12 @@ test.describe('Login page', function () {
     var emailInput = driver.findElement({tagName: 'input', name: 'username'});
     emailInput.sendKeys('rasmussen.matias@gmail.com');
     driver.quit();
-    // chrome.stop();
   });
 });
 
 
 test.describe('Signup page', function () {
   test.it('is rendered', function () {
-    chrome.start();
     var endpoint = '/profile/signup';
     var driver = new webdriver.Builder()
       .withCapabilities(webdriver.Capabilities.chrome())
@@ -124,7 +116,5 @@ test.describe('Signup page', function () {
     driver.wait(webdriver.until.elementIsVisible(driver.findElement({tagName: 'input', name: 'username'})), 5000);
 
     driver.quit();
-    // chrome.stop();
-
   });
 });
