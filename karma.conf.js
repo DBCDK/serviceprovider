@@ -15,7 +15,7 @@ module.exports = function(config) {
       'tests.stores.webpack.js': ['webpack'],
       'tests.components.webpack.js': ['webpack']
     },
-    reporters: ['mocha', 'junit'],
+    reporters: ['mocha', 'junit', 'coverage'],
     junitReporter: {
       outputDir: 'output'
     },
@@ -28,6 +28,10 @@ module.exports = function(config) {
     webpack: require('./webpack.test.config'),
     webpackMiddleware: {
       noInfo: true
+    },
+    coverageReporter: {
+      type: 'cobertura',
+      dir: 'coverage/'
     }
   });
 };
