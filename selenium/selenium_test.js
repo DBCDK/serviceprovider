@@ -1,130 +1,127 @@
 'use strict';
-var fs = require('fs');
+var config = require('./saucelabs.config');
 var assert = require('assert');
 var test = require('selenium-webdriver/testing');
 var webdriver = require('selenium-webdriver');
 var chrome = require('chromedriver');
 
 
-var BASE_URL = process.env.SELENIUM_URL || 'http://localhost:8080';
+var isSauceLabsTest = false;
+var sauceLabsCaps = config.saucelabs.browserCaps;
+
+var SAUCE_URL = 'http://ondemand.saucelabs.com:80/wd/hub';
+var BASE_URL = isSauceLabsTest ? 'https://pg.demo.dbc.dk' : process.env.SELENIUM_URL || 'http://localhost:8080'; // eslint-disable-line
 
 
-function writeScreenshot(data, name) {
-  name = name || 'ss.png';
-  var screenshotPath = '';
-  fs.writeFileSync(screenshotPath + name, data, 'base64');
+function runAllTests(driverCaps) {
+
+  test.describe('Title assertion', function () {
+    test.it('Title is Palles Gavebod', function () {
+      var driver = driverCaps.build();
+
+      driver.get(BASE_URL);
+
+      driver.getTitle().then(function (title) {
+        assert.equal(title, 'Palles Gavebod', 'Title is Palles Gavebod');
+      });
+      driver.quit();
+    });
+  });
+
+
+  test.describe('Express endpoint', function () {
+    test.it('/profile/login can be reached', function () {
+      // chrome.start();
+      var endpoint = '/profile/login';
+      var driver = driverCaps.build();
+
+      driver.get(BASE_URL + endpoint);
+      driver.wait(webdriver.until.elementIsVisible(driver.findElement({tagName: 'body'})), 12000);
+      var body = driver.findElement({tagName: 'body'});
+      var header = body.findElement({id: 'header'});
+
+      header.getId()
+        .then(function (id) {
+          assert.notEqual(typeof id, 'undefined');
+        });
+
+      driver.quit();
+      // chrome.stop();
+
+    });
+
+    test.it('/profile/signup can be reached', function () {
+      chrome.start();
+      var endpoint = '/profile/signup';
+      var driver = driverCaps.build();
+
+      driver.get(BASE_URL + endpoint);
+      driver.wait(webdriver.until.elementIsVisible(driver.findElement({tagName: 'body'})), 12000);
+      var body = driver.findElement({tagName: 'body'});
+      var header = body.findElement({id: 'header'});
+
+      header.getId()
+        .then(function (id) {
+          assert.notEqual(typeof id, 'undefined');
+        });
+
+      driver.quit();
+      // chrome.stop();
+    });
+  });
+
+  test.describe('Login page', function () {
+    test.it('is rendered', function () {
+      chrome.start();
+      var endpoint = '/profile/login';
+      var driver = driverCaps.build();
+
+      driver.get(BASE_URL + endpoint);
+      driver.wait(webdriver.until.elementIsVisible(driver.findElement({tagName: 'input', name: 'username'})), 5000);
+      var emailInput = driver.findElement({tagName: 'input', name: 'username'});
+      emailInput.sendKeys('rasmussen.matias@gmail.com');
+      driver.quit();
+      // chrome.stop();
+    });
+  });
+
+
+  test.describe('Signup page', function () {
+    test.it('is rendered', function () {
+      chrome.start();
+      var endpoint = '/profile/signup';
+      var driver = driverCaps.build();
+
+      driver.get(BASE_URL + endpoint);
+      driver.wait(webdriver.until.elementIsVisible(driver.findElement({tagName: 'input', name: 'username'})), 5000);
+
+      driver.quit();
+      // chrome.stop();
+
+    });
+  });
 }
 
-test.describe('Title assertion', function () {
-  test.it('Title is Palles Gavebod', function () {
-    var driver = new webdriver.Builder()
-      .withCapabilities(webdriver.Capabilities.phantomjs())
-      .build();
 
-    driver.get(BASE_URL);
+if (isSauceLabsTest) {
+  for (var k in sauceLabsCaps) {
+    if (sauceLabsCaps.hasOwnProperty(k)) {
+      var caps = sauceLabsCaps[k];
+      caps.username = config.saucelabs.username;
+      caps.accessKey = config.saucelabs.accessKey;
 
-    driver.getTitle().then(function (title) {
-      assert.equal(title, 'Palles Gavebod', 'Title is Palles Gavebod');
-    });
+      var sauceDriverCaps = new webdriver.Builder().
+        usingServer(SAUCE_URL).
+        withCapabilities(caps);
 
-    driver.quit();
-  });
-});
+      runAllTests(sauceDriverCaps);
+    }
+  }
+}
+else {
+  var chromeCaps = new webdriver.Builder()
+    .withCapabilities(webdriver.Capabilities.chrome());
 
-test.describe('Title assertion', function () {
-  test.it('Title is Palles Gavebod', function () {
-    var driver = new webdriver.Builder()
-      .withCapabilities(webdriver.Capabilities.chrome())
-      .build();
+  runAllTests(chromeCaps);
+}
 
-    driver.get(BASE_URL);
-
-    driver.getTitle().then(function (title) {
-      assert.equal(title, 'Palles Gavebod', 'Title is Palles Gavebod');
-    });
-
-
-    driver.quit();
-  });
-});
-
-
- test.describe('Express endpoint', function () {
-  test.it('/profile/login can be reached', function () {
-    // chrome.start();
-    var endpoint = '/profile/login';
-    var driver = new webdriver.Builder()
-      .withCapabilities(webdriver.Capabilities.chrome())
-      .build();
-
-    driver.get(BASE_URL + endpoint);
-    driver.wait(webdriver.until.elementIsVisible(driver.findElement({tagName: 'body'})), 12000);
-    var body = driver.findElement({tagName: 'body'});
-    var header = body.findElement({id: 'header'});
-
-    header.getId()
-      .then(function(id) {
-        assert.notEqual(typeof id, 'undefined');
-      });
-
-    driver.quit();
-    // chrome.stop();
-
-  });
-
-  test.it('/profile/signup can be reached', function () {
-    chrome.start();
-    var endpoint = '/profile/signup';
-    var driver = new webdriver.Builder()
-      .withCapabilities(webdriver.Capabilities.chrome())
-      .build();
-
-    driver.get(BASE_URL + endpoint);
-    driver.wait(webdriver.until.elementIsVisible(driver.findElement({tagName: 'body'})), 12000);
-    var body = driver.findElement({tagName: 'body'});
-    var header = body.findElement({id: 'header'});
-
-    header.getId()
-      .then(function(id) {
-        assert.notEqual(typeof id, 'undefined');
-      });
-
-    driver.quit();
-    // chrome.stop();
-  });
-});
-
-test.describe('Login page', function () {
-  test.it('is rendered', function () {
-    chrome.start();
-    var endpoint = '/profile/login';
-    var driver = new webdriver.Builder()
-      .withCapabilities(webdriver.Capabilities.chrome())
-      .build();
-
-    driver.get(BASE_URL + endpoint);
-    driver.wait(webdriver.until.elementIsVisible(driver.findElement({tagName: 'input', name: 'username'})), 5000);
-    var emailInput = driver.findElement({tagName: 'input', name: 'username'});
-    emailInput.sendKeys('rasmussen.matias@gmail.com');
-    driver.quit();
-    // chrome.stop();
-  });
-});
-
-
-test.describe('Signup page', function () {
-  test.it('is rendered', function () {
-    chrome.start();
-    var endpoint = '/profile/signup';
-    var driver = new webdriver.Builder()
-      .withCapabilities(webdriver.Capabilities.chrome())
-      .build();
-
-    driver.get(BASE_URL + endpoint);
-    driver.wait(webdriver.until.elementIsVisible(driver.findElement({tagName: 'input', name: 'username'})), 5000);
-
-    driver.quit();
-    // chrome.stop();
-
-  });
-});
