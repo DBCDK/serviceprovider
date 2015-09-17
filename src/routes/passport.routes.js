@@ -69,14 +69,14 @@ PassportRoutes.post('/signup', (req, res) => {
   const EMAIL_REDIRECT = req.app.get('EMAIL_REDIRECT');
   const logger = req.app.get('logger');
 
-  const emailRegex = /^([\w-]+(?:\.[\w-]+)*)@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$/i;
+  req.checkBody('email', 'Invalid email').isEmail();
+  req.checkBody('password', 'Password should contain 8-30 characters').notEmpty().len(8, 30);
 
   const email = req.body.email;
   const password = req.body.password;
-  const repeatedPassword = req.body.repeatedPassword;
 
   // validate arguments
-  if (email && password && repeatedPassword && (password === repeatedPassword) && emailRegex.test(email)) {
+  if (!req.validationErrors()) {
     let resp = serviceProvider.trigger(
       'createProfile', {
         email: email,
@@ -93,20 +93,8 @@ PassportRoutes.post('/signup', (req, res) => {
     });
   }
   else {
-    // input was not valid
-    let errorMessage = 'De indtastede værdier er ikke gyldige';
-    if (email === '') {
-      errorMessage = 'Email skal udfyldes';
-    }
-    else if (!emailRegex.test(email)) {
-      errorMessage = 'Email er ikke gyldig';
-    }
-    else if (password === '') {
-      errorMessage = 'Password skal udfyldes';
-    }
-    else if (password !== repeatedPassword) {
-      errorMessage = 'De 2 passwords er ikke identiske';
-    }
+    // we have validation errors!
+    const errorMessage = req.validationErrors()[0].msg;
     res.render('signup', {message: {text: errorMessage, error: true}});
   }
 });

@@ -19,6 +19,7 @@ import path from 'path';
 import Logger from 'dbc-node-logger';
 import ServiceProvider from 'dbc-node-serviceprovider';
 import bodyParser from 'body-parser';
+import expressValidator from 'express-validator';
 import compression from 'compression';
 import expressSession from 'express-session';
 import RedisStore from 'connect-redis';
@@ -115,6 +116,10 @@ app.use(expressLoggers.errorLogger);
 // Setting bodyparser
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
+
+// Setting Input Validation
+const validatorOptions = {};
+app.use(expressValidator([validatorOptions]));
 
 // Setting sessions
 socket.use((_socket, next) => {
