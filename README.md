@@ -40,3 +40,5 @@ to run the tests: `npm run test`
 The selenium tests (found in the /selenium directory) are integration tests, and mainly run in a chrome instance using ChromeDriver.
 to run tests: `npm run selenium`
 
+If a SauceLabs account is available, you can set ENV variables `SAUCE_USERNAME` and `SAUCE_ACCESS_KEY` and then enable it in `selenium_test.js`
+
