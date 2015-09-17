@@ -34,7 +34,6 @@ function runAllTests(driverCaps) {
       // chrome.start();
       var endpoint = '/profile/login';
       var driver = driverCaps.build();
-
       driver.get(BASE_URL + endpoint);
       driver.wait(webdriver.until.elementIsVisible(driver.findElement({tagName: 'body'})), 12000);
       var body = driver.findElement({tagName: 'body'});
@@ -54,7 +53,6 @@ function runAllTests(driverCaps) {
       chrome.start();
       var endpoint = '/profile/signup';
       var driver = driverCaps.build();
-
       driver.get(BASE_URL + endpoint);
       driver.wait(webdriver.until.elementIsVisible(driver.findElement({tagName: 'body'})), 12000);
       var body = driver.findElement({tagName: 'body'});
@@ -75,7 +73,6 @@ function runAllTests(driverCaps) {
       chrome.start();
       var endpoint = '/profile/login';
       var driver = driverCaps.build();
-
       driver.get(BASE_URL + endpoint);
       driver.wait(webdriver.until.elementIsVisible(driver.findElement({tagName: 'input', name: 'username'})), 5000);
       var emailInput = driver.findElement({tagName: 'input', name: 'username'});
@@ -91,10 +88,8 @@ function runAllTests(driverCaps) {
       chrome.start();
       var endpoint = '/profile/signup';
       var driver = driverCaps.build();
-
       driver.get(BASE_URL + endpoint);
       driver.wait(webdriver.until.elementIsVisible(driver.findElement({tagName: 'input', name: 'username'})), 5000);
-
       driver.quit();
       // chrome.stop();
 
@@ -109,7 +104,6 @@ if (isSauceLabsTest) {
       var caps = sauceLabsCaps[k];
       caps.username = config.saucelabs.username;
       caps.accessKey = config.saucelabs.accessKey;
-
       var sauceDriverCaps = new webdriver.Builder().
         usingServer(SAUCE_URL).
         withCapabilities(caps);
@@ -124,4 +118,3 @@ else {
 
   runAllTests(chromeCaps);
 }
-
