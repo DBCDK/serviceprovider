@@ -42,16 +42,16 @@ const APP_NAME = process.env.NEW_RELIC_APP_NAME || 'app_name'; // eslint-disable
 const logger = new Logger({app_name: APP_NAME, handleExceptions: true});
 const expressLoggers = logger.getExpressLoggers();
 
-// Configure app variables
-app.set('serviceProvider', ServiceProvider(config.provider).setupSockets(socket));
-app.set('logger', logger);
-app.set('EMAIL_REDIRECT', EMAIL_REDIRECT);
-
 // Port config
 app.set('port', process.env.PORT || 8080); // eslint-disable-line no-process-env
 
 // EMAIL Redirect requires port to be defined therefore it must come after
 const EMAIL_REDIRECT = process.env.EMAIL_REDIRECT || 'localhost:' + app.get('port'); // eslint-disable-line no-process-env
+
+// Configure app variables
+app.set('serviceProvider', ServiceProvider(config.provider).setupSockets(socket));
+app.set('logger', logger);
+app.set('EMAIL_REDIRECT', EMAIL_REDIRECT);
 
 // Configure templating
 app.set('views', path.join(__dirname, 'views'));
@@ -141,8 +141,6 @@ app.use('/work', WorkRoutes);
 server.listen(app.get('port'), () => {
   logger.log('info', 'Server listening on ' + app.get('port'));
   logger.log('info', 'EMAIL_REDIRECT: ' + EMAIL_REDIRECT);
-  logger.log('info', 'Config - provider: ', config.provider);
-  logger.log('info', 'Config - redis: ', config.services);
   logger.log('info', 'Versions: ', process.versions);
   logger.log('info', version + ' is up and running');
 });
