@@ -95,6 +95,33 @@ function runAllTests(driverCaps) {
 
     });
   });
+
+  test.describe('Library Suggest - Autocomplete', function () {
+    test.it('returns suggestions', function () {
+      var driver = driverCaps.build();
+
+      driver.get(BASE_URL + '/library/suggest');
+
+      driver.wait(webdriver.until.elementIsVisible(driver.findElement({tagName: 'input'})), 5000);
+
+      var searchField = driver.findElement({tagName: 'input'});
+
+      searchField.sendKeys('køb');
+
+      driver.wait(webdriver.until.elementLocated(webdriver.By.className('autocomplete--row-text')), 5000);
+
+      var acRow = driver.findElement(webdriver.By.className('autocomplete--row-text'));
+
+      acRow.getInnerHtml().then(function(html) {
+        assert.notEqual(typeof html, 'undefined');
+      });
+
+      acRow.click();
+
+      driver.quit();
+    });
+  });
+
 }
 
 
