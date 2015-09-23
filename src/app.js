@@ -6,9 +6,10 @@
  */
 
 // loading config etc.
-import config from '../config.js';
+// import config from '../config.js';
+import dbcConfig from '@dbcdk/dbc-config';
 // newrelic needs to be required the es5 way because we only wants to load new relic if specified in config.js
-const newrelic = config.newrelic && require('newrelic') || null;
+const newrelic = dbcConfig.palle.newrelic && require('newrelic') || null;
 import {version} from '../package.json';
 
 // loading libraries
@@ -49,7 +50,7 @@ app.set('port', process.env.PORT || 8080); // eslint-disable-line no-process-env
 const EMAIL_REDIRECT = process.env.EMAIL_REDIRECT || 'localhost:' + app.get('port'); // eslint-disable-line no-process-env
 
 // Configure app variables
-app.set('serviceProvider', ServiceProvider(config.provider).setupSockets(socket));
+app.set('serviceProvider', ServiceProvider(dbcConfig.palle.provider).setupSockets(socket));
 app.set('logger', logger);
 app.set('EMAIL_REDIRECT', EMAIL_REDIRECT);
 
@@ -76,14 +77,14 @@ let fileHeaders = {};
 
 switch (ENV) {
   case 'development':
-    redisConfig = config.services.redis.development;
+    redisConfig = dbcConfig.palle.services.redis.development;
     break;
   case 'production':
     fileHeaders = {index: false, dotfiles: 'ignore', maxAge: '1d'};
-    redisConfig = config.services.redis.production;
+    redisConfig = dbcConfig.palle.services.redis.production;
     break;
   default:
-    redisConfig = config.services.redis.local;
+    redisConfig = dbcConfig.palle.services.redis.local;
     break;
 }
 
