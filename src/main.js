@@ -5,7 +5,7 @@
  */
 
 'use strict';
-var config = require('../config');
+var config = require('@dbcdk/dbc-config').palle;
 if (config.newrelic) {
   require('newrelic');
 }
