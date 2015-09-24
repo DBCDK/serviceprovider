@@ -40,7 +40,7 @@ const socket = socketio.listen(server);
 const ENV = app.get('env');
 const PRODUCTION = ENV === 'production';
 const APP_NAME = process.env.NEW_RELIC_APP_NAME || 'app_name'; // eslint-disable-line no-process-env
-const logger = new Logger({app_name: APP_NAME, handleExceptions: true});
+const logger = new Logger({app_name: APP_NAME});
 const expressLoggers = logger.getExpressLoggers();
 
 // Port config
@@ -50,7 +50,7 @@ app.set('port', process.env.PORT || 8080); // eslint-disable-line no-process-env
 const EMAIL_REDIRECT = process.env.EMAIL_REDIRECT || 'localhost:' + app.get('port'); // eslint-disable-line no-process-env
 
 // Configure app variables
-app.set('serviceProvider', ServiceProvider(dbcConfig.palle.provider).setupSockets(socket));
+app.set('serviceProvider', ServiceProvider(dbcConfig.palle.provider, logger).setupSockets(socket));
 app.set('logger', logger);
 app.set('EMAIL_REDIRECT', EMAIL_REDIRECT);
 
@@ -140,8 +140,9 @@ app.use('/work', WorkRoutes);
 
 // starting server
 server.listen(app.get('port'), () => {
-  logger.log('info', 'Server listening on ' + app.get('port'));
-  logger.log('info', 'EMAIL_REDIRECT: ' + EMAIL_REDIRECT);
+  logger.log('debug', 'Server listening on port ' + app.get('port'));
+  logger.log('debug', 'NEW_RELIC_APP_NAME: ' + APP_NAME);
+  logger.log('debug', 'EMAIL_REDIRECT: ' + EMAIL_REDIRECT);
   logger.log('info', 'Versions: ', process.versions);
   logger.log('info', version + ' is up and running');
 });
