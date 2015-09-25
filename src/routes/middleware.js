@@ -84,7 +84,7 @@ function ssrPromiseFunction(res, promiseResponse, cb) {
 }
 
 function setupSSR(req, res, promiseResponse, cb) {
-  setupTimeouts(res, 5000, cb);
+  setupTimeouts(res, 50, cb);
   ssrPromiseFunction(res, promiseResponse, cb);
 }
 
