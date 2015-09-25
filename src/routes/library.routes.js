@@ -11,6 +11,7 @@ const LibraryRoutes = express.Router();
 import React from 'react';
 
 import dbcMiddleware from './middleware.js';
+import {stringToObject} from '../utils/QueryParser.util.js';
 
 import Library from '../components/Library/Library.component.js';
 import LibrarySuggestContainerComponent from '../components/LibrarySuggest/LibrarySuggestContainer.component.js';
@@ -19,9 +20,7 @@ LibraryRoutes.get(['/suggest', '/suggest/*'], (req, res) => {
   let query = req.query;
   query = JSON.stringify(query);
 
-  let qObj = req.query.text ? req.query.text.split('|').map((val) => {
-    return {value: val, type: 'text'};
-  }) : [];
+  let qObj = req.query.text ? stringToObject(req.query) : [];
 
   let promiseResponse = req.app.get('serviceProvider').trigger(
     'searchOpenAgency', qObj.map((val) => {

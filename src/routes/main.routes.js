@@ -11,6 +11,8 @@ import http from 'http';
 import express from 'express';
 const MainRoutes = express.Router();
 
+import {stringToObject} from '../utils/QueryParser.util.js';
+
 // loading components
 import SearchServer from '../components/searchpage/Search.server.js';
 import {defaultRecommendations} from '../stores/Recommendations.store.js';
@@ -19,9 +21,7 @@ import dbcMiddleware from './middleware.js';
 
 MainRoutes.get(['/', '/search', '/search/*'], (req, res) => {
   let query = req.query || [];
-  query = query.text ? query.text.split('|').map((val) => {
-    return {value: val, type: 'text'};
-  }) : [];
+  query = query.text ? stringToObject(query) : [];
 
   let recommendations = {
     result: [],
