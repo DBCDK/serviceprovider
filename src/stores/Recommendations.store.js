@@ -5,7 +5,7 @@ import {shuffle} from 'lodash';
 import SocketClient from '../utils/ServiceProviderSocketClient.js';
 import RecommendationsActions from '../actions/Recommendations.action.js';
 
-const defaultRecommendations = [
+export const defaultRecommendations = [
   '870970-basis:51263146',
   '870970-basis:51115155',
   '870970-basis:28394438',
@@ -32,10 +32,6 @@ let _store = {
 let RecommendationsStore = Reflux.createStore({
   mixins: [SocketClient('getRecommendations')],
   listenables: RecommendationsActions,
-
-  getInitialState() {
-    return _store;
-  },
 
   init() {
     this.response(this.onResponse);

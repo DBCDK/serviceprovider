@@ -16,8 +16,13 @@ import Search from './SearchPageLayout.component.js';
  * and 'props' is a stringified version of the properties for client side export.
  */
 export default function querySearchServer(props) {
-  const {query, elements, config} = props;
-  const search = React.renderToString(<Search query={query || []} config={config || {}} elements={elements || []}/>);
+  const {elements, query, recommendations} = props;
+  const search = React.renderToString(
+    <Search
+      elements={elements || []}
+      query={query || []}
+      recommendations={recommendations} />
+  );
   return {
     search: search,
     props: JSON.stringify(props)

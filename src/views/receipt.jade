@@ -3,8 +3,8 @@
 extends layout
 
 block prepend footerscripts
-    script(src='/js/receipt.js')
+    script(src='/js/receipt.js' defer=true)
 
 block content
-    #receipt !{receipt}
+    #receipt !{receiptString}
     script window.RECEIPT_PROPS = !{query}

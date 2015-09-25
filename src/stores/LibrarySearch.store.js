@@ -33,7 +33,7 @@ const LibrarySearchStore = Reflux.createStore({
   },
 
   getInitialState() {
-    if (window.QUERYSTRING_PROPS && window.QUERYSTRING_PROPS !== 'undefined') {
+    if (typeof window !== 'undefined' && window.QUERYSTRING_PROPS && window.QUERYSTRING_PROPS !== 'undefined') {
       LibrarySearchAction.libraryQueryUpdated.trigger(window.QUERYSTRING_PROPS.text);
       this.store.pending = true;
     }

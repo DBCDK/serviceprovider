@@ -19,9 +19,12 @@ import ProfileActions from '../../actions/Profile.action.js';
 
 const Library = React.createClass({
   displayName: 'Library.component',
+
   propTypes: {
-    id: React.PropTypes.string.isRequired
+    id: React.PropTypes.string.isRequired,
+    libData: React.PropTypes.object
   },
+
   mixins: [
     Reflux.connect(LibraryStore, 'library'),
     Reflux.connect(ProfileStore, 'profile')
@@ -49,6 +52,7 @@ const Library = React.createClass({
   },
 
   render() {
+    const libData = this.props.libData || this.state.library.data;
     const shouldDisableFavoriteButton = this.shouldDisableFavoriteButton();
     const favoriteButton = this.state.profile.userIsLoggedIn ? (
       <a className={shouldDisableFavoriteButton ? 'button alert' : 'button'} onClick={this.addOrRemoveFromFavorites}>
@@ -59,17 +63,17 @@ const Library = React.createClass({
     return (
       <div className='library'>
         <a className='button tiny' onClick={this.goBack}>Tilbage!</a>
-        <p>{this.state.library.data.agencyName}</p>
-        <p>{this.state.library.data.agencyId}</p>
-        <p>{this.state.library.data.branchEmail}</p>
-        <p>{this.state.library.data.branchId}</p>
-        <p>{this.state.library.data.branchNameDan}</p>
-        <p>{this.state.library.data.branchPhone}</p>
-        <p>{this.state.library.data.branchWebsiteUrl}</p>
-        <p>{this.state.library.data.city}</p>
-        <p>{this.state.library.data.openingHoursDan}</p>
-        <p>{this.state.library.data.postalAddress}</p>
-        <p>{this.state.library.data.postalCode}</p>
+        <p>{libData.agencyName}</p>
+        <p>{libData.agencyId}</p>
+        <p>{libData.branchEmail}</p>
+        <p>{libData.branchId}</p>
+        <p>{libData.branchNameDan}</p>
+        <p>{libData.branchPhone}</p>
+        <p>{libData.branchWebsiteUrl}</p>
+        <p>{libData.city}</p>
+        <p>{libData.openingHoursDan}</p>
+        <p>{libData.postalAddress}</p>
+        <p>{libData.postalCode}</p>
         {favoriteButton}
       </div>
     );

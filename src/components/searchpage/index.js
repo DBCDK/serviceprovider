@@ -13,5 +13,11 @@ import Search from './SearchPageLayout.component.js';
  * If a querystring from the url exists it is added to the global window object, and should be passed to the client
  */
 
-React.render(<Search query={window.QUERYSTRING_PROPS.query || {}} config={window.UI_CONFIG} />, document.getElementById('search'));
+React.render(
+  <Search
+    query={window.QUERYSTRING_PROPS.query || {}}
+    recommendations={window.QUERYSTRING_PROPS.recommendations || {}}
+    />,
+  document.getElementById('search')
+);
 

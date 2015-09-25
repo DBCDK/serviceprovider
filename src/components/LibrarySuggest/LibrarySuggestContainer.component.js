@@ -14,6 +14,11 @@ import LibrarySearchStore from '../../stores/LibrarySearch.store.js';
 const LibrarySuggestContainerComponent = React.createClass({
   displayName: 'LibrarySuggestContainer.component',
 
+  propTypes: {
+    libraryData: React.PropTypes.array,
+    query: React.PropTypes.array
+  },
+
   mixins: [
     Reflux.connect(LibrarySearchStore, 'librarysearch')
   ],
@@ -22,9 +27,9 @@ const LibrarySuggestContainerComponent = React.createClass({
     return (
       <div className='search' >
         <Query queryLocation='/library/suggest'/>
-        <LibrarySearch />
+        <LibrarySearch query={this.props.query} />
         <LibrarySearchResults
-          data={this.state.librarysearch.data}
+          data={this.props.libraryData ? this.props.libraryData : this.state.librarysearch.data}
           pending={this.state.librarysearch.pending} />
       </div>
     );

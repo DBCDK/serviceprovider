@@ -21,7 +21,8 @@ const LibrarySuggestComponent = React.createClass({
   displayName: 'LibrarySuggest.component',
 
   propTypes: {
-    placeholder: React.PropTypes.string
+    placeholder: React.PropTypes.string,
+    query: React.PropTypes.array
   },
 
   mixins: [
@@ -31,6 +32,10 @@ const LibrarySuggestComponent = React.createClass({
   ],
 
   showPlaceholder() {
+    if (typeof window === 'undefined') {
+      return true;
+    }
+
     return !(this.state.query.query && this.state.query.query.length);
   },
 
@@ -43,7 +48,7 @@ const LibrarySuggestComponent = React.createClass({
           focus={InputFieldActions.focus}
           pending={this.state.suggest.pending}
           placeholder={placeholder}
-          query={this.state.query.query}
+          query={typeof window !== 'undefined' ? this.state.query.query : this.props.query}
           update={QueryActions.update}
           />
         <AutoCompleteContainer actions={LibrarySuggestAction} input={this.state.input} store={this.state.suggest} />

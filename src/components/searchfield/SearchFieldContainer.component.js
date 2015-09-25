@@ -29,7 +29,8 @@ const SearchFieldContainerComponent = React.createClass({
   displayName: 'SearchFieldContainer.component',
 
   propTypes: {
-    placeholder: React.PropTypes.string
+    placeholder: React.PropTypes.string,
+    query: React.PropTypes.array
   },
 
   mixins: [
@@ -40,6 +41,10 @@ const SearchFieldContainerComponent = React.createClass({
   ],
 
   showPlaceholder() {
+    if (typeof window === 'undefined') {
+      return !(this.props.query && this.props.query.length);
+    }
+
     return !(this.state.query.query && this.state.query.query.length);
   },
 
@@ -52,7 +57,7 @@ const SearchFieldContainerComponent = React.createClass({
           focus={InputFieldActions.focus}
           pending={this.state.autocomplete.pending}
           placeholder={placeholder}
-          query={this.state.query.query}
+          query={typeof window !== 'undefined' ? this.state.query.query : this.props.query}
           translations={this.state.categories.translations}
           update={QueryActions.update}
           />

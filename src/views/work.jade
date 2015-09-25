@@ -3,8 +3,8 @@
 extends layout
 
 block prepend footerscripts
-    script(src='/js/work.js')
+    script(src='/js/work.js' defer=true)
 
 block content
-    #work !{work}
+    #work !{workString}
     script window.QUERYSTRING_PROPS = !{id}

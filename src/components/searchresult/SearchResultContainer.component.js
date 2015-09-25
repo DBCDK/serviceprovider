@@ -19,22 +19,36 @@ import QueryActions from '../../actions/QueryUpdate.action.js';
 
 // Stores
 import ResultListStore from '../../stores/ResultList.store.js';
-import RecommendationStore from '../../stores/Recommendations.store.js';
+import RecommendationsStore from '../../stores/Recommendations.store.js';
 import QueryStore from '../../stores/QueryStore.store.js';
 
 export default React.createClass({
   displayName: 'SearchResultContainer.component',
 
   propTypes: {
-    config: React.PropTypes.object
+    recommendations: React.PropTypes.object
   },
 
   mixins: [
     Reflux.listenTo(ResultListStore, 'updateRecommendations'),
     Reflux.connect(ResultListStore, 'results'),
-    Reflux.connect(RecommendationStore, 'recommendations'),
+    Reflux.connect(RecommendationsStore, 'recommendations'),
     Reflux.connect(QueryStore, 'query')
   ],
+
+  getInitialState() {
+    let _recommendationsStore = {
+      result: [],
+      pending: false,
+      info: {more: false}
+    };
+
+    if (this.props.recommendations) {
+      _recommendationsStore.recommendations = this.props.recommendations;
+    }
+
+    return _recommendationsStore;
+  },
 
   updateRecommendations(data) {
     RecommendationActions.request(data.result.map(element => element.identifiers[0]));
@@ -45,13 +59,13 @@ export default React.createClass({
     tabs.push({
       label: 'Søgeresultat',
       component:
-        <SearchResultList actions={QueryActions} config={this.props.config} data={{results: this.state.results}} />,
+        <SearchResultList actions={QueryActions} data={{results: this.state.results}} />,
       active: true
     });
     tabs.push({
       label: 'Anbefalinger',
       component:
-        <SearchResultList actions={QueryActions} config={this.props.config} data={{results: this.state.recommendations}} />,
+        <SearchResultList actions={QueryActions} data={{results: this.state.recommendations}} />,
       active: false
     });
 
@@ -62,7 +76,7 @@ export default React.createClass({
 
   renderDefaultRecommendations() {
     return (
-      <DefaultRecommendations actions={QueryActions} config={this.props.config} data={{recommendations: this.state.recommendations}} />
+      <DefaultRecommendations actions={QueryActions} data={{recommendations: this.state.recommendations}} />
     );
   },
 

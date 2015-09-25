@@ -7,6 +7,8 @@
 import React from 'react';
 import Reflux from 'reflux';
 
+import {isEmpty} from 'lodash';
+
 import workAction from '../../actions/Work.action.js';
 import WorkStore from '../../stores/Work.store.js';
 import {CoverImage, OrderButton} from 'dbc-react-components';
@@ -28,11 +30,20 @@ const Work = React.createClass({
     Reflux.connect(ProfileStore, 'profile')
   ],
 
+  getInitialState() {
+    if (typeof window === 'undefined') {
+      this.getWork();
+    }
+  },
+
   componentDidMount() {
     this.getWork();
   },
 
   getWork() {
+    if (this.props.work) {
+      workAction.updated([this.props.work]);
+    }
     workAction({id: this.props.id});
   },
 
@@ -180,8 +191,8 @@ const Work = React.createClass({
     return series;
   },
 
-  getTitle(title) {
-    return <div className='title' >{title}</div>;
+  getTitle(titel) {
+    return (<div className='title' >{titel}</div>);
   },
 
   getDescription(general) {
@@ -203,13 +214,14 @@ const Work = React.createClass({
   },
 
   render() {
-    const {work, profile} = this.state;
+    const profile = this.state.profile;
+    const work = this.props.work ? this.props.work : this.state.work;
     const id = this.props.id;
 
     if (work.info.hits === '0') {
       return (<div className="work-not-found" >Værket blev ikke fundet</div>);
     }
-    if (work.result.length === 0) {
+    if (isEmpty(work.result)) {
       return (<div />);
     }
 

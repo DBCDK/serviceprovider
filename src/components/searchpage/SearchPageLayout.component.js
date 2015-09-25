@@ -15,16 +15,17 @@ import Query from '../query/Query.component.js';
 export default React.createClass({
   displayName: 'SearchPageLayout',
   propTypes: {
-    config: React.PropTypes.object
+    query: React.PropTypes.array,
+    recommendations: React.PropTypes.object
   },
 
   render() {
     return (
       <div className='search'>
         <Query queryLocation='/search' />
-        <SearchFieldContainer />
+        <SearchFieldContainer query={this.props.query} />
         <FilterGuideContainer />
-        <SearchResultContainer config={this.props.config} />
+        <SearchResultContainer recommendations={this.props.recommendations} />
       </div>
     );
   }

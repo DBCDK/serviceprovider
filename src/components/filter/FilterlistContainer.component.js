@@ -18,6 +18,7 @@ import FilterStore from '../../stores/FilterStore.store.js';
 import MaterialTypeStore from '../../stores/MaterialType.store.js';
 
 export default React.createClass({
+  displayName: 'FilterListContainer',
   mixins: [
     Reflux.connect(FilterStore, 'filter'),
     Reflux.connect(MaterialTypeStore, 'categories')
