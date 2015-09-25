@@ -6,8 +6,6 @@
  * Includes utility routes (example: /moreinfo)
  */
 
-import uiconfig from '../../uiconfig.js';
-
 import {isEmpty} from 'lodash';
 import http from 'http';
 import express from 'express';
@@ -36,8 +34,7 @@ MainRoutes.get(['/', '/search', '/search/*'], (req, res) => {
       recommendations.result = result[0];
     }
 
-    let properties = SearchServer({query, config: {}, recommendations});
-    properties.config = JSON.stringify(uiconfig);
+    let properties = SearchServer({query, recommendations});
     res.render('search', properties);
   }
 
