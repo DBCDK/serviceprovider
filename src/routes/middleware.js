@@ -61,10 +61,38 @@ function redirectToCallbackWhenLoggedIn (cb, alwaysRedirect) {
   };
 }
 
+function setupTimeouts(res, timeout, cb) {
+  setTimeout(() => { // If we cant respond within the timeout, just send what we have
+    if (!res.headersSent) {
+      cb('Couldn\'t respond in time', null);
+    }
+  }, timeout);
+}
+
+function ssrPromiseFunction(res, promiseResponse, cb) {
+  Promise.all(promiseResponse).then((result) => { // If the promise is resolved, render the react component with the data
+    if (!res.headersSent) {
+      // Callback only gets called if the response isn't already underway
+      // cb (error, response)
+      cb(null, result);
+    }
+  }, (err) => { // If the promise is rejected, render the template without data and send it
+    if (!res.headersSent) { // _httpMessage becomes null when request is sent
+      cb(err, null);
+    }
+  });
+}
+
+function setupSSR(req, res, promiseResponse, cb) {
+  setupTimeouts(res, 5000, cb);
+  ssrPromiseFunction(res, promiseResponse, cb);
+}
+
 const dbcMiddleware = {
   ensureAuthenticated: ensureAuthenticated,
   redirectWhenLoggedIn: redirectWhenLoggedIn,
-  redirectToCallbackWhenLoggedIn: redirectToCallbackWhenLoggedIn
+  redirectToCallbackWhenLoggedIn: redirectToCallbackWhenLoggedIn,
+  setupSSR: setupSSR
 };
 
 export default dbcMiddleware;

@@ -16,7 +16,6 @@ export default React.createClass({
   displayName: 'SearchResultList.component',
   propTypes: {
     actions: React.PropTypes.object.isRequired,
-    config: React.PropTypes.object.isRequired,
     data: React.PropTypes.object.isRequired
   },
 
@@ -37,7 +36,6 @@ export default React.createClass({
         hasMore={this.props.data.results.info.more === 'true'}
         loadMore={this.props.actions.nextPage}
         loader={<Loader pending={this.props.data.results.pending} />}
-        noOfWorks={this.props.config.noOfWorks || 2}
         noResultsText=''
         pending={this.props.data.results.pending}
         result={this.props.data.results.result}

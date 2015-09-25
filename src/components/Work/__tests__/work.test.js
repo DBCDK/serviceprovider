@@ -10,10 +10,11 @@ import TestUtils from 'react/lib/ReactTestUtils';
 import Work from '../Work.component';
 import LikeContainer from '../../LikeDislike/LikeContainer.component.js';
 import DislikeContainer from '../../LikeDislike/DislikeContainer.component.js';
+import forceMajureMockWork from './work.mock.js';
 
 describe('Test the Work component with data', () => {
   const info = {hits: 1, collections: 1};
-  const result = {general: {title: 'Force majeure'}};
+  const result = forceMajureMockWork;
   const work = {result: result, info: info, error: []};
   let element = React.createElement(Work, {id: '870970-basis:50822311', work: work});
   let dom = TestUtils.renderIntoDocument(element);
@@ -64,8 +65,7 @@ describe('Test the Work component without data', () => {
 describe('Test that Like/Dislike containers are rendered correctly as part of the Work component', () => {
   let component;
   const info = {hits: 1, collections: 1};
-  const result = {general: {title: 'Force majeure'}, publications: [], specific: [{identifiers: []}]};
-  const work = {result: result, info: info, error: []};
+  const work = {result: forceMajureMockWork, info: info, error: []};
 
   beforeEach(() => {
     const workComponent = React.createElement(Work, {id: '870970-basis:50822312', work: work});

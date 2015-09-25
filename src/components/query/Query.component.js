@@ -13,6 +13,7 @@ import QueryActions from '../../actions/QueryUpdate.action.js';
 import ComponentUtils from '../../utils/ComponentHelpers.util.js';
 
 const Query = React.createClass({
+  displayName: 'QueryComponent',
   propTypes: {
     queryLocation: React.PropTypes.string.isRequired
   },
@@ -20,6 +21,13 @@ const Query = React.createClass({
     Reflux.connect(QueryStore, 'query'),
     ComponentUtils
   ],
+
+  componentDidMount() {
+    if (this.isClient()) {
+      window.addEventListener('popstate', () => QueryActions.update(window.location.search));
+    }
+  },
+
   updateHistoryState(query) {
     if (this.isClient() && window.location.search !== query.search) {
       const queryString = `${this.props.queryLocation + query.search}`;
@@ -27,11 +35,6 @@ const Query = React.createClass({
     }
   },
 
-  componentDidMount() {
-    if (this.isClient()) {
-      window.addEventListener('popstate', () => QueryActions.update(window.location.search));
-    }
-  },
   render() {
     this.updateHistoryState(this.state.query);
     return false;

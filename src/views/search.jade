@@ -3,7 +3,7 @@
 extends layout
 
 block prepend footerscripts
-    script(src='/js/querysearch.js')
+    script(src='/js/querysearch.js' defer=true)
 
 block content
     #search.clearfix !{search}

@@ -13,7 +13,7 @@ import QueryStore from '../../../stores/QueryStore.store.js';
 
 describe('Test the Search component', () => {
   it('Generates a search field no properties', ()=> {
-    let element = React.createElement(Search);
+    let element = React.createElement(Search, {query: []});
     let dom = TestUtils.renderIntoDocument(element);
     let tokenSearchField = TestUtils.scryRenderedComponentsWithType(dom, TokenSearchField);
     expect(tokenSearchField).to.have.length(1);

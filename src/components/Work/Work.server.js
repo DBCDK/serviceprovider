@@ -10,7 +10,7 @@ import Work from './Work.component';
  */
 export default function workServer(props) {
   const work = React.renderToString(
-    <Work elements={props.elements || []} id={props.id || []} />
+    <Work id={props.id || []} work={props.work} />
   );
   return {
     work,

@@ -8,6 +8,12 @@
 import express from 'express';
 import passport from 'passport';
 import dbcMiddleware from './middleware.js';
+import React from 'react';
+
+import Profile from '../components/Profile/Profile.component.js';
+import Login from '../components/Login/Login.component.js';
+import ResetPassword from '../components/ResetPassword/ResetPassword.component.js';
+import Signup from '../components/Signup/Signup.component.js';
 
 const PassportRoutes = express.Router();
 
@@ -21,7 +27,6 @@ PassportRoutes.get('/logout', (req, res) => {
     };
     serviceProvider.trigger('logoutProfile', params);
   }
-  //
 
   req.session.destroy(() => {
     res.redirect('/profile/login');
@@ -61,7 +66,9 @@ PassportRoutes.get('/confirm', (req, res) => {
 });
 
 PassportRoutes.get('/signup', (req, res) => {
-  res.render('signup');
+  res.render('signup', {
+    signUpString: React.renderToString(<Signup />)
+  });
 });
 
 PassportRoutes.post('/signup', (req, res) => {
@@ -86,7 +93,13 @@ PassportRoutes.post('/signup', (req, res) => {
     );
 
     Promise.all(resp).then(() => {
-      res.render('signup', {message: {text: 'Vi har sendt en bekræftelse-email til dig', error: false}});
+      res.render('signup', {
+        signUpString: React.renderToString(<Signup />),
+        message: {
+          text: 'Vi har sendt en bekræftelse-email til dig',
+          error: false
+        }
+      });
     }, (error) => {
       res.status(500).send('Internal Error');
       logger.log('error', 'Internal Error on signup', error);
@@ -95,20 +108,32 @@ PassportRoutes.post('/signup', (req, res) => {
   else {
     // we have validation errors!
     const errorMessage = req.validationErrors()[0].msg;
-    res.render('signup', {message: {text: errorMessage, error: true}});
+    res.render('signup', {
+      signUpString: React.renderToString(<Signup />),
+      message: {
+        text: errorMessage,
+        error: true
+      }
+    });
   }
 });
 
 PassportRoutes.get('/resetpassword', (req, res) => {
-  res.render('resetpassword');
+  res.render('resetpassword', {
+    resetString: React.renderToString(<ResetPassword />)
+  });
 });
 
 PassportRoutes.get('/login', (req, res) => {
-  res.render('login');
+  res.render('login', {
+    loginString: React.renderToString(<Login />)
+  });
 });
 
 PassportRoutes.get('/', dbcMiddleware.ensureAuthenticated, (req, res) => {
-  res.render('profile');
+  res.render('profile', {
+    profileString: React.renderToString(<Profile />)
+  });
 });
 
 export default PassportRoutes;
