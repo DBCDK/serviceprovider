@@ -28,8 +28,9 @@ LibraryRoutes.get(['/suggest', '/suggest/*'], (req, res) => {
     }).join(' '));
 
   dbcMiddleware.setupSSR(req, res, promiseResponse, (err, result) => {
-    let libSuggestString = React.renderToString(<LibrarySuggestContainerComponent libraryData={result ? result[0].agencies : []} query={qObj} />);
-    res.render('library_suggest', {query, libSuggestString});
+    let libraryData = result ? result[0].agencies : [];
+    let libSuggestString = React.renderToString(<LibrarySuggestContainerComponent libraryData={libraryData} query={qObj} />);
+    res.render('library_suggest', {query, libSuggestString, libSuggestProps: JSON.stringify({libraryData, qObj})});
   });
 });
 
