@@ -3,8 +3,6 @@ var config = require('./saucelabs.config');
 var assert = require('assert');
 var test = require('selenium-webdriver/testing');
 var webdriver = require('selenium-webdriver');
-var chrome = require('chromedriver');
-
 
 var isSauceLabsTest = false;
 var sauceLabsCaps = config.saucelabs.browserCaps;
@@ -31,7 +29,6 @@ function runAllTests(driverCaps) {
 
   test.describe('Express endpoint', function () {
     test.it('/profile/login can be reached', function () {
-      // chrome.start();
       var endpoint = '/profile/login';
       var driver = driverCaps.build();
       driver.get(BASE_URL + endpoint);
@@ -45,12 +42,9 @@ function runAllTests(driverCaps) {
         });
 
       driver.quit();
-      // chrome.stop();
-
     });
 
     test.it('/profile/signup can be reached', function () {
-      chrome.start();
       var endpoint = '/profile/signup';
       var driver = driverCaps.build();
       driver.get(BASE_URL + endpoint);
@@ -64,13 +58,11 @@ function runAllTests(driverCaps) {
         });
 
       driver.quit();
-      // chrome.stop();
     });
   });
 
   test.describe('Login page', function () {
     test.it('is rendered', function () {
-      chrome.start();
       var endpoint = '/profile/login';
       var driver = driverCaps.build();
       driver.get(BASE_URL + endpoint);
@@ -78,21 +70,17 @@ function runAllTests(driverCaps) {
       var emailInput = driver.findElement({tagName: 'input', name: 'username'});
       emailInput.sendKeys('rasmussen.matias@gmail.com');
       driver.quit();
-      // chrome.stop();
     });
   });
 
 
   test.describe('Signup page', function () {
     test.it('is rendered', function () {
-      chrome.start();
       var endpoint = '/profile/signup';
       var driver = driverCaps.build();
       driver.get(BASE_URL + endpoint);
       driver.wait(webdriver.until.elementIsVisible(driver.findElement({tagName: 'input', name: 'username'})), 5000);
       driver.quit();
-      // chrome.stop();
-
     });
   });
 
@@ -122,6 +110,26 @@ function runAllTests(driverCaps) {
     });
   });
 
+  test.describe('Library', function () {
+    test.it('SSR rendering of library', function () {
+      var driver = driverCaps.build();
+      var libraryId = '786008';
+      var agencyTitle = 'Hjørring Bibliotekerne';
+
+      // ssrTimeout url param sets how many milliseconds to wait for data
+      // Test times out before the ssrTimeout to ensure whats sent is rendered server side
+      // If this test functions it SSR must work
+      driver.get(BASE_URL + '/library?id=' + libraryId + '&ssrTimeout=900000');
+      driver.wait(webdriver.until.elementIsVisible(driver.findElement({tagName: 'p'})), 5000);
+
+      var libraryTitle = driver.findElement({tagName: 'p'});
+      libraryTitle.getInnerHtml().then(function (html) {
+        assert.equal(html, agencyTitle);
+      });
+
+      driver.quit();
+    });
+  });
 }
 
 

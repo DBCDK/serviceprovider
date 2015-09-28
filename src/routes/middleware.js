@@ -61,7 +61,11 @@ function redirectToCallbackWhenLoggedIn (cb, alwaysRedirect) {
   };
 }
 
-function setupTimeouts(res, timeout, cb) {
+function setupTimeouts(req, res, timeout, cb) {
+  if (req.query.ssrTimeout) {
+    timeout = req.query.ssrTimeout;
+  }
+
   setTimeout(() => { // If we cant respond within the timeout, just send what we have
     if (!res.headersSent) {
       cb('Couldn\'t respond in time', null);
@@ -84,7 +88,7 @@ function ssrPromiseFunction(res, promiseResponse, cb) {
 }
 
 function setupSSR(req, res, promiseResponse, cb) {
-  setupTimeouts(res, 50, cb);
+  setupTimeouts(req, res, 50, cb);
   ssrPromiseFunction(res, promiseResponse, cb);
 }
 
