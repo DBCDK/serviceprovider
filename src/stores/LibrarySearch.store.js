@@ -18,8 +18,8 @@ const LibrarySearchStore = Reflux.createStore({
 
   libraryQueryUpdatedResponse(data) {
     this.store.pending = false;
-    if (!data.isEmpty && !data.error) {
-      this.store.data = data.agencies;
+    if (!data.error) {
+      this.store.data = data.agencies ? data.agencies : [];
     }
     this.trigger(this.store);
   },
