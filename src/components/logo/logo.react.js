@@ -2,6 +2,7 @@
 let React = require('react');
 
 let FrontPage = React.createClass({
+  displayName: 'LogoContainer',
   render: () => {
     return (
       <div>

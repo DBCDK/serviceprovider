@@ -1,6 +1,6 @@
 extends layout
 block prepend footerscripts
-  script(src='/js/librarysuggest.js')
+  script(src='/js/librarysuggest.js' defer=true)
 block content
-  #search !{LibrarySuggest}
+  #search !{libSuggestString}
   script window.QUERYSTRING_PROPS = !{query};

@@ -25,10 +25,30 @@ mv config.example.js config.js
  npm run serve
 ```
 
-### New Relic
+## Environment Varibles
+The following environment variables can be used to override default settings in the application
+
+### EMAIL_REDIRECT
+Used when a user creates a new account. The value given in `EMAIL_REDIRECT` will be used as basepath in the link that'll appear in the confirmation email sent to the user.
+Typically you'll want the value in `EMAIL_REDIRECT` to be the same as the basepath for the given site the user is signing up at. I.e pg.demo.dbc.dk.
+
+The default value is `localhost`
+
+### NEW_RELIC_APP_NAME
+This variable is used to configure the name with which the application should appear in New Relic but also elsewhere.
+Currently this value is also used to identify the application in logs and appended to secrets used in Redis
+
+The default value is `app_name`
+
+### PORT
+Defines which portnumber the application should use when bootinh up.
+If `PORT` is undefined the application will be accecsible at port 8080 (i.e. localhost:8080)
+ 
+The default value is `8080`
+
+## New Relic
 As New Relic is used by DBC A/S this application requires New Relic to be configured.  
 If you want to run the application but can't provide a New Relic configuration you can start the application with `NEW_RELIC_NO_CONFIG_FILE=true` which will throw an error but wont crash your application.
-
 
 ## Testing
 

@@ -2,7 +2,7 @@
 extends layout
 
 block prepend footerscripts
-   script(src='/js/signup.js')
+   script(src='/js/signup.js' defer=true)
 
 block content
-   #signup
+   #signup !{signUpString}

@@ -9,9 +9,10 @@ import React from 'react';
 import TabsButton from './TabsButton.component.js';
 
 var Tabs = React.createClass({
+  displayName: 'TabsContainer',
   propTypes: {
-    tabs: React.PropTypes.array.isRequired,
-    defaultSelected: React.PropTypes.number
+    defaultSelected: React.PropTypes.number,
+    tabs: React.PropTypes.array.isRequired
   },
 
   getInitialState() {
@@ -27,7 +28,7 @@ var Tabs = React.createClass({
   render() {
     const activeComponent = this.props.tabs[this.state.selected].component;
     const buttons = this.props.tabs.map((button, key)=> {
-      return (<TabsButton key={key} label={button.label} index={key} active={key === this.state.selected} update={this.update} />);
+      return (<TabsButton active={key === this.state.selected} index={key} key={key} label={button.label} update={this.update} />);
     });
     return (
       <div tabs >

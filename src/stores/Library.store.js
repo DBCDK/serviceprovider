@@ -7,7 +7,20 @@ import LibraryAction from '../actions/Library.action.js';
 const LibraryStore = Reflux.createStore({
   listenables: LibraryAction,
   store: {
-    data: {},
+    data: {
+      agencyName: '',
+      agencyId: '',
+      branchId: '',
+      branchNameDan: '',
+      branchPhone: {},
+      branchEmail: {},
+      postalAddress: '',
+      postalCode: '',
+      city: '',
+      openingHoursDan: '',
+      branchWebsiteUrl: '',
+      query: ''
+    },
     pending: false,
     library: {}
   },

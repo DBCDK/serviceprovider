@@ -6,20 +6,45 @@
  * Includes utility routes (example: /moreinfo)
  */
 
-import uiconfig from '../../uiconfig.js';
-
+import {isEmpty} from 'lodash';
 import http from 'http';
 import express from 'express';
 const MainRoutes = express.Router();
 
+import {stringToObject} from '../utils/QueryParser.util.js';
+
 // loading components
 import SearchServer from '../components/searchpage/Search.server.js';
+import {defaultRecommendations} from '../stores/Recommendations.store.js';
+
+import dbcMiddleware from './middleware.js';
 
 MainRoutes.get(['/', '/search', '/search/*'], (req, res) => {
-  const query = req.query || [];
-  let properties = SearchServer({query, config: uiconfig});
-  properties.config = JSON.stringify(uiconfig);
-  res.render('search', properties);
+  let query = req.query || [];
+  query = query.text ? stringToObject(query) : [];
+
+  let recommendations = {
+    result: [],
+    pending: false,
+    info: {more: false}
+  };
+
+  function cbFunc(err, result) {
+    if (result) {
+      recommendations.result = result[0];
+    }
+
+    let properties = SearchServer({query, recommendations});
+    res.render('search', properties);
+  }
+
+  if (!isEmpty(query)) {
+    cbFunc(null, null);
+  }
+  else {
+    let promiseResponse = req.app.get('serviceProvider').trigger('getRecommendations', defaultRecommendations);
+    dbcMiddleware.setupSSR(req, res, promiseResponse, cbFunc);
+  }
 });
 
 MainRoutes.get('/moreinfo/:restOfPath*', (req, res) => {

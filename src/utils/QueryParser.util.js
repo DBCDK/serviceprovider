@@ -100,7 +100,7 @@ function parseQueryStringElement(values, type) {
 /**
  * Converts a query string object to a internal query object
  *
- * @param QueryStringObject {Array}
+ * @param queryStringObject {Array}
  *    @see type one in the file description
  * @returns {Array}
  *    An array of internal query objects
