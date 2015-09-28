@@ -100,7 +100,12 @@ let sessionMiddleware = expressSession({
   name: APP_NAME,
   rolling: true,
   resave: false,
-  saveUninitialized: false
+  saveUninitialized: false,
+  cookie: {
+    path: '/',
+    httpOnly: true,
+    secure: PRODUCTION
+  }
 });
 
 // adding gzip'ing
