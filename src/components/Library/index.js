@@ -4,7 +4,7 @@ import React from 'react';
 import Library from './Library.component.js';
 
 if (window.LIBRARY_ID && window.LIBRARY_ID !== 'undefined') {
-  React.render(<Library id={window.LIBRARY_ID} />, document.getElementById('library-container'));
+  React.render(<Library id={window.LIBRARY_ID} libData={window.LIBDATA} />, document.getElementById('library-container'));
 }
 else {
   // Render error
