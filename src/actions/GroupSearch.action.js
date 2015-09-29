@@ -5,7 +5,7 @@ import Reflux from 'reflux';
 // let socket = SocketClient('searchOpenAgency');
 
 const GroupSearchActions = Reflux.createActions({
-  libraryQueryUpdated: {children: ['response']},
+  groupQueryUpdated: {children: ['response']},
   clear: {}
 });
 
