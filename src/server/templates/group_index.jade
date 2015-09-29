@@ -1,7 +1,7 @@
 extends layout
 block prepend footerscripts
-   // script(src='/js/librarysuggest.js' defer=true)
+   script(src='/js/groupsearch.js' defer=true)
 block content
-   #search !{libSuggestString}
+   #search !{groupSearchString}
    // script window.QUERYSTRING_PROPS = !{query};
-   // script window.libSuggestProps = !{libSuggestProps};
+   script window.groupSearchProps = !{groupSearchProps};
