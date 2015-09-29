@@ -30,6 +30,7 @@ import MainRoutes from './routes/main.routes.js';
 import LibraryRoutes from './routes/library.routes.js';
 import PassportRoutes from './routes/passport.routes.js';
 import WorkRoutes from './routes/work.routes.js';
+import GroupRoutes from './routes/group.routes.js';
 
 // loading configurations
 import passportConfig from './passport.config.js';
@@ -142,6 +143,7 @@ app.use('/', MainRoutes);
 app.use('/library', LibraryRoutes);
 app.use('/profile', PassportRoutes);
 app.use('/work', WorkRoutes);
+app.use('/groups', GroupRoutes);
 
 // starting server
 server.listen(app.get('port'), () => {
