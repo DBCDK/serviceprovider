@@ -10,7 +10,7 @@
     "selenium:junit": "mocha -t 20000 selenium/selenium_test.js -R mocha-jenkins-reporter",
     "lint:checkstyle": "eslint ./src  -o report.xml -f checkstyle",
     "lint": "eslint ./src",
-    "serve": "supervisor --harmony -w src/views,src/routes,src/app.js,node_modules src/main.js",
+    "serve": "supervisor --harmony -w src/app.js,src/server,node_modules src/main.js",
     "build": "webpack --progress --colors -p",
     "start:watch": "webpack --progress --colors --watch -d",
     "dev": "parallelshell \"npm run serve -s\" \"npm run start:watch -s\""
@@ -38,7 +38,7 @@
     "chromedriver": "^2.19.0",
     "compression": "^1.5.2",
     "connect-redis": "^2.4.1",
-    "css-loader": "^0.16.0",
+    "css-loader": "^0.19.0",
     "dbc-node-logger": "git://github.com/DBCDK/dbc-node-logger#stable_dist",
     "dbc-node-newrelic-wrapper": "git://github.com/DBCDK/dbc-node-newrelic-wrapper#stable_dist",
     "dbc-node-serviceprovider": "git://github.com/DBCDK/dbc-node-serviceprovider#stable_dist",
