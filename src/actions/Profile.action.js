@@ -6,7 +6,7 @@
  */
 
 import Reflux from 'reflux';
-import SocketClient from '../utils/ServiceProviderSocketClient.js';
+import SocketClient from 'dbc-node-serviceprovider-socketclient';
 
 const fetchEvent = SocketClient('getProfile');
 const saveEvent = SocketClient('updateProfile');

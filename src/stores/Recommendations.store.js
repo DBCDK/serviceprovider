@@ -2,7 +2,7 @@
 
 import Reflux from 'reflux';
 import {shuffle} from 'lodash';
-import SocketClient from '../utils/ServiceProviderSocketClient.js';
+import SocketClient from 'dbc-node-serviceprovider-socketclient';
 import RecommendationsActions from '../actions/Recommendations.action.js';
 
 export const defaultRecommendations = [

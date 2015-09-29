@@ -1,7 +1,7 @@
 'use strict';
 
 import Reflux from 'reflux';
-import SocketClient from '../utils/ServiceProviderSocketClient.js';
+import SocketClient from 'dbc-node-serviceprovider-socketclient';
 let socket = SocketClient('getOpenAgency');
 
 const LibraryActions = Reflux.createActions({

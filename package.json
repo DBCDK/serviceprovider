@@ -42,6 +42,7 @@
     "dbc-node-logger": "git://github.com/DBCDK/dbc-node-logger#stable_dist",
     "dbc-node-newrelic-wrapper": "git://github.com/DBCDK/dbc-node-newrelic-wrapper#stable_dist",
     "dbc-node-serviceprovider": "git://github.com/DBCDK/dbc-node-serviceprovider#stable_dist",
+    "dbc-node-serviceprovider-socketclient": "git://github.com/DBCDK/dbc-node-serviceprovider-socketclient#stable_dist",
     "dbc-react-components": "git://github.com/DBCDK/dbc-react-components#stable_dist",
     "express": "^4.12.3",
     "express-session": "^1.11.3",
