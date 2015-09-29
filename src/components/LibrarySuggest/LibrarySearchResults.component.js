@@ -1,25 +1,24 @@
 'use strict';
 
-import React from 'react';
-import Reflux from 'reflux';
+import React, {PropTypes} from 'react';
 
 import LibrarySearchResultsItem from './LibrarySearchResultsItem.component.js';
 import {isEmpty} from 'lodash';
 
-import QueryStore from '../../stores/QueryStore.store.js';
+class LibrarySearchResultsComponent extends React.Component {
+  static displayName() {
+    return 'LibrarySearchResults.component';
+  }
 
-const LibrarySearchResultsComponent = React.createClass({
-  displayName: 'LibrarySearchResults.component',
-
-  propTypes: {
-    data: React.PropTypes.array.isRequired,
-    emptyMessage: React.PropTypes.string,
-    pending: React.PropTypes.bool
-  },
-
-  mixins: [
-    Reflux.connect(QueryStore, 'query')
-  ],
+  static propTypes() {
+    return {
+      data: PropTypes.array.isRequired,
+      emptyMessage: PropTypes.string,
+      pending: PropTypes.bool,
+      query: PropTypes.array.isRequired,
+      searchingPlaceholder: PropTypes.string
+    };
+  }
 
   render() {
     let rows = [];
@@ -27,20 +26,27 @@ const LibrarySearchResultsComponent = React.createClass({
       rows.push(<LibrarySearchResultsItem key={index} libraryData={val} />);
     });
 
-    let showEmpty = !this.props.pending && (isEmpty(rows) && this.state.query.query.length > 0);
-    let emptyMessage = (
+    let message = '';
+    if (this.props.pending) {
+      message = this.props.searchingPlaceholder || 'Søger, vent veligst';
+    }
+    else if (isEmpty(rows) && this.props.query.length > 0) {
+      message = this.props.emptyMessage || 'Vi kunne desværre ikke finde nogle resultater';
+    }
+
+    message = (
       <div className='row'>
-        <p>{this.props.emptyMessage || 'Vi kunne desværre ikke finde nogle resultater'}</p>
+        <p>{message}</p>
       </div>
     );
 
     return (
       <div className='results' >
         <hr />
-        {showEmpty ? emptyMessage : rows}
+        {this.props.pending || (isEmpty(rows) && this.props.query.length > 0) ? message : rows}
       </div>
     );
   }
-});
+}
 
 export default LibrarySearchResultsComponent;
