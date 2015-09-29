@@ -2,7 +2,7 @@
 
 import Reflux from 'reflux';
 import SocketClient from 'dbc-node-serviceprovider-socketclient';
-import QueryParser from '../utils/QueryParser.util.js';
+import QueryParser from '../../utils/QueryParser.util.js';
 import QueryStore from './QueryStore.store.js';
 
 let _store = {

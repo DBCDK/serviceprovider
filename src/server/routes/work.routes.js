@@ -12,7 +12,7 @@ const WorkRoutes = express.Router();
 
 import dbcMiddleware from './middleware.js';
 
-import workServer from '../../components/Work/Work.server.js';
+import workServer from '../../client/components/Work/Work.server.js';
 import {CoverImage, Order, Receipt} from 'dbc-react-components';
 import {rewriteCoverImageUrl} from '../../utils/CoverImage.util.js';
 

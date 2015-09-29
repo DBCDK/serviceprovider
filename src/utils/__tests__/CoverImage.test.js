@@ -1,7 +1,7 @@
 'use strict';
 
 import {assert} from 'chai';
-import {rewriteCoverImageUrl} from '../../utils/CoverImage.util.js';
+import {rewriteCoverImageUrl} from '../CoverImage.util.js';
 
 describe('Test the CoverImage.util file', () => {
   it('Should replace http://moreinfo.addi.dk/ when present in url', () => {

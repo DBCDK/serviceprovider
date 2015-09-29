@@ -7,7 +7,7 @@
 import {expect, assert} from 'chai';
 import React from 'react';
 import TestUtils from 'react/lib/ReactTestUtils';
-import Work from '../Work.component';
+import Work from '../Work.component.js';
 import LikeContainer from '../../LikeDislike/LikeContainer.component.js';
 import DislikeContainer from '../../LikeDislike/DislikeContainer.component.js';
 import forceMajureMockWork from './work.mock.js';

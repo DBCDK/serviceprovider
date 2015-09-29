@@ -6,7 +6,7 @@ import React from 'react';
 import AutoCompleteActions from '../actions/AutoComplete.action.js';
 import {CoverImage} from 'dbc-react-components';
 
-import {rewriteCoverImageUrl} from '../utils/CoverImage.util.js';
+import {rewriteCoverImageUrl} from '../../utils/CoverImage.util.js';
 
 const AutoCompleteStore = Reflux.createStore({
   listenables: AutoCompleteActions,

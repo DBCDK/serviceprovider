@@ -10,7 +10,7 @@ import React from 'react';
 import Reflux from 'reflux';
 import QueryStore from '../../stores/QueryStore.store.js';
 import QueryActions from '../../actions/QueryUpdate.action.js';
-import ComponentUtils from '../../utils/ComponentHelpers.util.js';
+import ComponentUtils from '../../../utils/ComponentHelpers.util.js';
 
 const Query = React.createClass({
   displayName: 'QueryComponent',

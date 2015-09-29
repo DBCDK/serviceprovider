@@ -1,6 +1,6 @@
 'use strict';
 import React from 'react';
-import Work from './Work.component';
+import Work from './Work.component.js';
 
 /**
  * Render component for server use.

@@ -14,8 +14,8 @@ const MainRoutes = express.Router();
 import {stringToObject} from '../../utils/QueryParser.util.js';
 
 // loading components
-import SearchServer from '../../components/searchpage/Search.server.js';
-import {defaultRecommendations} from '../../stores/Recommendations.store.js';
+import SearchServer from '../../client/components/searchpage/Search.server.js';
+import {defaultRecommendations} from '../../client/stores/Recommendations.store.js';
 
 import dbcMiddleware from './middleware.js';
 

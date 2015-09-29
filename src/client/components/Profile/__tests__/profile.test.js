@@ -3,9 +3,9 @@
 import {assert, expect} from 'chai';
 import React from 'react';
 import TestUtils from 'react/lib/ReactTestUtils';
-import Profile from '../Profile.component';
-import ProfileHeader from '../ProfileHeader.component';
-import Image from '../ProfileImage.component';
+import Profile from '../Profile.component.js';
+import ProfileHeader from '../ProfileHeader.component.js';
+import Image from '../ProfileImage.component.js';
 
 let testProfile = {
   name: 'I-Love-Ponys',
