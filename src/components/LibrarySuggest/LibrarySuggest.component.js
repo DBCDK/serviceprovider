@@ -1,7 +1,6 @@
 'use strict';
 
-import React from 'react';
-import Reflux from 'reflux';
+import React, {PropTypes} from 'react';
 
 // Components
 import AutoCompleteContainer from '../autocomplete/AutocompleteContainer.component.js';
@@ -16,22 +15,51 @@ import InputFieldActions from '../../actions/InputField.actions.js';
 import InputFieldStore from '../../stores/InputField.store.js';
 import LibrarySuggestStore from '../../stores/LibrarySuggest.store.js';
 
-const LibrarySuggestComponent = React.createClass({
-  displayName: 'LibrarySuggest.component',
+class LibrarySuggestComponent extends React.Component {
+  static displayName() {
+    return 'LibrarySuggest.component';
+  }
 
-  propTypes: {
-    placeholder: React.PropTypes.string,
-    query: React.PropTypes.array.isRequired
-  },
+  static propTypes() {
+    return {
+      placeholder: PropTypes.string,
+      query: PropTypes.array.isRequired
+    };
+  }
 
-  mixins: [
-    Reflux.connect(LibrarySuggestStore, 'suggest'),
-    Reflux.connect(InputFieldStore, 'input')
-  ],
+  constructor() {
+    super();
+
+    this.state = {
+      input: InputFieldStore.store,
+      suggest: LibrarySuggestStore.store
+    };
+
+    this.unsubscribe = [
+      InputFieldStore.listen(
+        () => this.setState({
+          input: InputFieldStore.store
+        })
+      ),
+      LibrarySuggestStore.listen(
+        () => this.setState({
+          suggest: LibrarySuggestStore.store
+        })
+      )
+    ];
+  }
+
+  componentWillUnmount() {
+    this.unsubscribe.forEach(
+      (unsubscriber) => {
+        unsubscriber();
+      }
+    );
+  }
 
   showPlaceholder() {
     return !(this.props.query && this.props.query.length);
-  },
+  }
 
   render() {
     const placeholder = this.showPlaceholder() ? (this.props.placeholder || 'Søg efter biblioteker her') : '';
@@ -49,6 +77,6 @@ const LibrarySuggestComponent = React.createClass({
       </div>
     );
   }
-});
+}
 
 export default LibrarySuggestComponent;
