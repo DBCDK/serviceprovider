@@ -2,7 +2,7 @@
 
 import Reflux from 'reflux';
 import {filter} from 'lodash';
-import SocketClient from '../utils/ServiceProviderSocketClient.js';
+import SocketClient from 'dbc-node-serviceprovider-socketclient';
 import QueryStore from './QueryStore.store.js';
 
 // Setup dataobject for query

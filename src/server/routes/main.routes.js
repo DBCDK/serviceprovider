@@ -11,11 +11,11 @@ import http from 'http';
 import express from 'express';
 const MainRoutes = express.Router();
 
-import {stringToObject} from '../utils/QueryParser.util.js';
+import {stringToObject} from '../../utils/QueryParser.util.js';
 
 // loading components
-import SearchServer from '../components/searchpage/Search.server.js';
-import {defaultRecommendations} from '../stores/Recommendations.store.js';
+import SearchServer from '../../components/searchpage/Search.server.js';
+import {defaultRecommendations} from '../../stores/Recommendations.store.js';
 
 import dbcMiddleware from './middleware.js';
 

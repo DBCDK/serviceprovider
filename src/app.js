@@ -26,11 +26,11 @@ import expressSession from 'express-session';
 import RedisStore from 'connect-redis';
 
 // loading routes
-import MainRoutes from './routes/main.routes.js';
-import LibraryRoutes from './routes/library.routes.js';
-import PassportRoutes from './routes/passport.routes.js';
-import WorkRoutes from './routes/work.routes.js';
-import GroupRoutes from './routes/group.routes.js';
+import MainRoutes from './server/routes/main.routes.js';
+import LibraryRoutes from './server/routes/library.routes.js';
+import PassportRoutes from './server/routes/passport.routes.js';
+import WorkRoutes from './server/routes/work.routes.js';
+import GroupRoutes from './server/routes/group.routes.js';
 
 // loading configurations
 import passportConfig from './passport.config.js';
@@ -56,7 +56,7 @@ app.set('logger', logger);
 app.set('EMAIL_REDIRECT', EMAIL_REDIRECT);
 
 // Configure templating
-app.set('views', path.join(__dirname, 'views'));
+app.set('views', path.join(__dirname, 'server/templates'));
 app.set('view engine', 'jade');
 
 // setting proxy
