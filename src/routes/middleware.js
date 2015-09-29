@@ -29,8 +29,8 @@ function ensureAuthenticated (req, res, next) {
 function redirectWhenLoggedIn (destination) {
   return (req, res, next) => {
     if (req.isAuthenticated()) {
-      if (destination) {
-        res.redirect(destination);
+      if (destination && destination !== req.originalUrl) {
+        return res.redirect(destination);
       }
 
       return next();
