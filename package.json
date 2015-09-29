@@ -30,7 +30,7 @@
   },
   "homepage": "https://github.com/DBCDK/pallesgavebod#readme",
   "dependencies": {
-    "@dbcdk/dbc-config": "^1.0.0",
+    "@dbcdk/dbc-config": "^1.0.5",
     "babel": "^5.4.7",
     "babel-core": "^5.4.7",
     "babel-loader": "^5.1.3",

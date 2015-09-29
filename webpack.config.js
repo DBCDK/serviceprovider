@@ -17,6 +17,7 @@ module.exports = [{
     library: './src/components/Library/index.js',
     librarysuggest: './src/components/LibrarySuggest/index.js',
     login: './src/components/Login/index.js',
+    group: './src/components/Group/index.js',
     signup: './src/components/Signup/index.js',
     resetpassword: './src/components/ResetPassword/index.js',
     work: './src/components/Work/Work.client',

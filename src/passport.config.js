@@ -38,9 +38,9 @@ function passportConfig(app) {
         else {
           done(null, false);
         }
-      }, () => {
+      }, (err) => {
         // return 500 Internal Error status code
-        logger.error('Error in local login strategy, promise rejected');
+        logger.error('Error in local login strategy, promise rejected', err);
         done(null, false);
       });
     }
