@@ -13,70 +13,70 @@ const defaultStore = {
   sort: 'default'
 };
 
-let store = extend({}, defaultStore);
-
 /**
  * Store containing the current query of the page
  */
 let QueryStore = Reflux.createStore({
+  store: extend({}, defaultStore),
+
   listenables: QueryActions,
 
   triggerOnQueryChange() {
-    store.search = store.query.length && `?${QueryParser.objectToString(store.query)}` || '';
-    store.queryHasChanged = true;
-    this.trigger(store);
-    return store;
+    this.store.search = this.store.query.length && `?${QueryParser.objectToString(this.store.query)}` || '';
+    this.store.queryHasChanged = true;
+    this.trigger(this.store);
+    return this.store;
   },
 
   setStore(newStore) {
-    store = newStore;
+    this.store = newStore;
   },
 
   getInitialState() {
-    return store;
+    return this.store;
   },
   init() {
     if (typeof window !== 'undefined') {
-      store.query = QueryParser.urlQueryToObject(window.location.search);
-      return this.triggerOnQueryChange(store);
+      this.store.query = QueryParser.urlQueryToObject(window.location.search);
+      return this.triggerOnQueryChange(this.store);
     }
   },
 
   onReset() {
-    store = extend({}, defaultStore);
-    this.triggerOnQueryChange(store);
+    this.store = extend({}, defaultStore);
+    this.triggerOnQueryChange(this.store);
   },
 
   onUpdate(query) {
-    store.query = isString(query) && QueryParser.urlQueryToObject(query) || query;
-    store.page = 0;
-    this.triggerOnQueryChange(store);
+    this.store.query = isString(query) && QueryParser.urlQueryToObject(query) || query;
+    this.store.page = 0;
+    this.triggerOnQueryChange(this.store);
   },
 
   onAdd(queryElement) {
-    store.query.push(queryElement);
-    store.page = 0;
-    this.triggerOnQueryChange(store);
+    this.store.query.push(queryElement);
+    this.store.page = 0;
+    this.triggerOnQueryChange(this.store);
   },
 
   onNextPage() {
-    store.page++;
+    this.store.page++;
     this.triggerOnQueryChange();
   },
 
   onPrevPage() {
-    store.page--;
+    this.store.page--;
     this.triggerOnQueryChange();
   },
 
   onChangedInput(inputValue) {
-    store.queryHasChanged = false;
-    store.inputValue = inputValue;
-    this.trigger(store);
+    this.store.queryHasChanged = false;
+    this.store.inputValue = inputValue;
+    this.trigger(this.store);
   },
 
   getCql() {
-    return QueryParser.objectToCql(store.query);
+    return QueryParser.objectToCql(this.store.query);
   }
 });
 
