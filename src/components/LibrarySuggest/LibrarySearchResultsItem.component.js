@@ -1,13 +1,17 @@
 'use strict';
 
-import React from 'react';
+import React, {PropTypes} from 'react';
 
-const LibrarySearchResultsItemComponent = React.createClass({
-  displayName: 'LibrarySearchResultsItem.component',
+class LibrarySearchResultsItemComponent extends React.Component {
+  static displayName() {
+    return 'LibrarySearchResultsItem.component';
+  }
 
-  propTypes: {
-    libraryData: React.PropTypes.object.isRequired
-  },
+  static propTypes() {
+    return {
+      libraryData: PropTypes.object.isRequired
+    };
+  }
 
   render() {
     return (
@@ -20,6 +24,6 @@ const LibrarySearchResultsItemComponent = React.createClass({
       </div>
     );
   }
-});
+}
 
 export default LibrarySearchResultsItemComponent;

@@ -1,7 +1,7 @@
 'use strict';
 
 import React from 'react';
-import Reflux from 'reflux';
+import {isEmpty} from 'lodash';
 
 // Components
 import LibrarySearch from './LibrarySuggest.component.js';
@@ -10,30 +10,73 @@ import Query from '../query/Query.component.js';
 
 // Stores
 import LibrarySearchStore from '../../stores/LibrarySearch.store.js';
+import QueryStore from '../../stores/QueryStore.store.js';
 
-const LibrarySuggestContainerComponent = React.createClass({
-  displayName: 'LibrarySuggestContainer.component',
+class LibrarySuggestContainerComponent extends React.Component {
+  static displayName() {
+    return 'LibrarySuggestContainer.component';
+  }
 
-  propTypes: {
-    libraryData: React.PropTypes.array,
-    query: React.PropTypes.array
-  },
+  static propTypes() {
+    return {
+      libraryData: React.PropTypes.array,
+      query: React.PropTypes.array
+    };
+  }
 
-  mixins: [
-    Reflux.connect(LibrarySearchStore, 'librarysearch')
-  ],
+  constructor() {
+    super();
+
+    this.state = {
+      librarysearch: LibrarySearchStore.store,
+      query: QueryStore.store
+    };
+
+    this.unsubscribe = [
+      LibrarySearchStore.listen(
+        () => this.setState({
+          librarysearch: LibrarySearchStore.store
+        })
+      ),
+      QueryStore.listen(
+        () => this.setState({
+          query: QueryStore.store
+        })
+      )
+    ];
+  }
+
+  componentWillMount() {
+    this.state.librarysearch.data = this.props.libraryData ? this.props.libraryData : this.state.librarysearch.data;
+    this.state.query.query = this.props.query ? this.props.query : this.state.query.query;
+  }
+
+  componentDidMount() {
+    if (this.state.query.query.length > 0 && isEmpty(this.state.librarysearch.data)) {
+      LibrarySearchStore.onQueryUpdated(this.state.query);
+    }
+  }
+
+  componentWillUnmount() {
+    this.unsubscribe.forEach(
+      (unsubscriber) => {
+        unsubscriber();
+      }
+    );
+  }
 
   render() {
     return (
       <div className='search' >
         <Query queryLocation='/library/suggest'/>
-        <LibrarySearch query={this.props.query} />
+        <LibrarySearch query={this.state.query.query} />
         <LibrarySearchResults
-          data={this.props.libraryData ? this.props.libraryData : this.state.librarysearch.data}
-          pending={this.state.librarysearch.pending} />
+          data={this.state.librarysearch.data}
+          pending={this.state.librarysearch.pending}
+          query={this.state.query.query} />
       </div>
     );
   }
-});
+}
 
 export default LibrarySuggestContainerComponent;

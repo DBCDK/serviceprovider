@@ -28,8 +28,9 @@ LibraryRoutes.get(['/suggest', '/suggest/*'], (req, res) => {
     }).join(' '));
 
   dbcMiddleware.setupSSR(req, res, promiseResponse, (err, result) => {
-    let libSuggestString = React.renderToString(<LibrarySuggestContainerComponent libraryData={result ? result[0].agencies : []} query={qObj} />);
-    res.render('library_suggest', {query, libSuggestString});
+    let libraryData = result ? result[0].agencies : [];
+    let libSuggestString = React.renderToString(<LibrarySuggestContainerComponent libraryData={libraryData} query={qObj} />);
+    res.render('library_suggest', {query, libSuggestString, libSuggestProps: JSON.stringify({libraryData, qObj})});
   });
 });
 
@@ -40,8 +41,9 @@ LibraryRoutes.get(['/', '/*'], (req, res) => {
   let promiseResponse = req.app.get('serviceProvider').trigger('getOpenAgency', req.query.id);
 
   dbcMiddleware.setupSSR(req, res, promiseResponse, (err, result) => {
-    let libString = React.renderToString(<Library id={id} libData={result ? result[0] : null} />);
-    res.render('library', {id, libString});
+    let libData = result ? result[0] : null;
+    let libString = React.renderToString(<Library id={id} libData={libData} />);
+    res.render('library', {id, libString, libData: JSON.stringify(libData)});
   });
 });
 
