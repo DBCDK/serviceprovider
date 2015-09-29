@@ -5,6 +5,8 @@
  * Configure group routes
  */
 
+import dbcMiddleware from './middleware.js';
+
 import express from 'express';
 const GroupRoutes = express.Router();
 

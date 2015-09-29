@@ -37,7 +37,7 @@ function redirectWhenLoggedIn (destination) {
     }
 
     req.session.returnTo = destination ? destination : req.originalUrl;
-    res.redirect(loginUrl);
+    return res.redirect(loginUrl);
   };
 }
 
