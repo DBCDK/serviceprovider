@@ -12,7 +12,7 @@ import {isEmpty} from 'lodash';
 import workAction from '../../actions/Work.action.js';
 import WorkStore from '../../stores/Work.store.js';
 import {CoverImage, OrderButton} from 'dbc-react-components';
-import {rewriteCoverImageUrl} from '../../utils/CoverImage.util.js';
+import {rewriteCoverImageUrl} from '../../../utils/CoverImage.util.js';
 import LikeContainer from '../LikeDislike/LikeContainer.component.js';
 import DislikeContainer from '../LikeDislike/DislikeContainer.component.js';
 import ProfileStore from '../../stores/Profile.store.js';

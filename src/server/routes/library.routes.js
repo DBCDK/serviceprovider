@@ -13,8 +13,8 @@ import React from 'react';
 import dbcMiddleware from './middleware.js';
 import {stringToObject} from '../../utils/QueryParser.util.js';
 
-import Library from '../../components/Library/Library.component.js';
-import LibrarySuggestContainerComponent from '../../components/LibrarySuggest/LibrarySuggestContainer.component.js';
+import Library from '../../client/components/Library/Library.component.js';
+import LibrarySuggestContainerComponent from '../../client/components/LibrarySuggest/LibrarySuggestContainer.component.js';
 
 LibraryRoutes.get(['/suggest', '/suggest/*'], (req, res) => {
   let query = req.query;

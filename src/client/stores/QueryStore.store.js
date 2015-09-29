@@ -2,7 +2,7 @@
 
 import Reflux from 'reflux';
 import {extend, isString} from 'lodash';
-import QueryParser from '../utils/QueryParser.util.js';
+import QueryParser from '../../utils/QueryParser.util.js';
 import QueryActions from '../actions/QueryUpdate.action.js';
 
 const defaultStore = {

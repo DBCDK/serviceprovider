@@ -2,7 +2,7 @@
 import React from 'react';
 import {Order} from 'dbc-react-components';
 import {CoverImage} from 'dbc-react-components';
-import {rewriteCoverImageUrl} from '../../utils/CoverImage.util.js';
+import {rewriteCoverImageUrl} from '../../../utils/CoverImage.util.js';
 
 /**
  * Entry point for Order

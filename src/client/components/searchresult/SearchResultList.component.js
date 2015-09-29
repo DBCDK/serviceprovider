@@ -6,7 +6,7 @@
  */
 
 import React from 'react';
-import {rewriteCoverImageUrl} from '../../utils/CoverImage.util.js';
+import {rewriteCoverImageUrl} from '../../../utils/CoverImage.util.js';
 
 // Components
 import {CoverImage, ResultDisplay} from 'dbc-react-components';

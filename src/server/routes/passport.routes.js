@@ -10,10 +10,10 @@ import passport from 'passport';
 import dbcMiddleware from './middleware.js';
 import React from 'react';
 
-import Profile from '../../components/Profile/Profile.component.js';
-import Login from '../../components/Login/Login.component.js';
-import ResetPassword from '../../components/ResetPassword/ResetPassword.component.js';
-import Signup from '../../components/Signup/Signup.component.js';
+import Profile from '../../client/components/Profile/Profile.component.js';
+import Login from '../../client/components/Login/Login.component.js';
+import ResetPassword from '../../client/components/ResetPassword/ResetPassword.component.js';
+import Signup from '../../client/components/Signup/Signup.component.js';
 
 const PassportRoutes = express.Router();
 
