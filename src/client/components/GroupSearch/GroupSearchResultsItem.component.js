@@ -12,7 +12,7 @@ class GroupSearchResultsItemComponent extends React.Component {
           </div>
           <div className="large-10 medium-10 small-8 columns">
             <h2>{this.props.groupData.name}</h2>
-            <h6>Følgere: {this.props.groupData.followers}</h6>
+            <h6>Følgere: {this.props.groupData.members.length}</h6>
           </div>
         </a>
         <hr />
