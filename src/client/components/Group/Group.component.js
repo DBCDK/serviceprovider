@@ -9,7 +9,10 @@ class Group extends React.Component {
 
   static propTypes() {
     return {
-      blabla: PropTypes.string
+      name: PropTypes.string.isRequired(),
+      description: PropTypes.string.isRequired(),
+      posts: PropTypes.array.isRequired(),
+      members: PropTypes.array.isRequired()
     };
   }
 
@@ -18,11 +21,7 @@ class Group extends React.Component {
   }
 
   render() {
-    return (
-      <div>
-        <p>lol</p>
-      </div>
-    );
+    return (<p>I'm a Group</p>);
   }
 }
 

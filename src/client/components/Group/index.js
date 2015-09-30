@@ -6,6 +6,6 @@
  */
 
 import React from 'react';
-import Group from './Group.component.js';
+import GroupContainer from './GroupContainer.component.js';
 
-React.render(<Group/>, document.getElementById('group'), null);
+React.render(<GroupContainer/>, document.getElementById('group'), null);
