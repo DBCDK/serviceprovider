@@ -69,6 +69,7 @@ if (!PRODUCTION && newrelic) {
 
 // setting local vars that should be available to our template engine
 app.locals.newrelic = newrelic;
+app.locals.env = ENV;
 app.locals.version = version;
 app.locals.production = PRODUCTION;
 
