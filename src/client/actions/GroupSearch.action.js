@@ -1,18 +1,18 @@
 'use strict';
 
 import Reflux from 'reflux';
-// import SocketClient from '../utils/ServiceProviderSocketClient.js';
-// let socket = SocketClient('searchOpenAgency');
+import SocketClient from 'dbc-node-serviceprovider-socketclient';
+let socket = SocketClient('queryGroups');
 
 const GroupSearchActions = Reflux.createActions({
   groupQueryUpdated: {children: ['response']},
   clear: {}
 });
 
-// LibrarySearchActions.libraryQueryUpdated.listen((val) => {
-//  socket.request(val);
-// });
+GroupSearchActions.groupQueryUpdated.listen((val) => {
+  socket.request(val);
+});
 
-// socket.response(LibrarySearchActions.libraryQueryUpdated.response);
+socket.response(GroupSearchActions.groupQueryUpdated.response);
 
 export default GroupSearchActions;

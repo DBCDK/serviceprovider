@@ -6,6 +6,7 @@ import {isEmpty} from 'lodash';
 // Components
 import Query from '../query/Query.component.js';
 import GroupSearchComponent from './groupsearch.component.js';
+import GroupSearchResultsComponent from './GroupSearchResults.component.js';
 
 // Stores
 import QueryStore from '../../stores/QueryStore.store.js';
@@ -56,6 +57,10 @@ class GroupSearchContainerComponent extends React.Component {
       <div className='search' >
         <Query queryLocation='/groups/search' />
         <GroupSearchComponent query={this.state.query.query} />
+        <GroupSearchResultsComponent
+          data={this.state.groups.data}
+          query={this.state.query.query}
+          />
       </div>
     );
   }
