@@ -68,9 +68,9 @@ class Library extends React.Component {
     return (find(this.state.profile.favoriteLibraries, 'agencyID', this.state.library.data.branchId));
   }
 
-  addOrRemoveFromFavorites(self) {
+  addOrRemoveFromFavorites() {
     return () => {
-      if (self.shouldDisableFavoriteButton()) {
+      if (this.shouldDisableFavoriteButton()) {
         ProfileActions.removeLibraryFromFavorites(this.state.library.data.branchId);
       }
       else {
@@ -86,7 +86,7 @@ class Library extends React.Component {
   render() {
     const shouldDisableFavoriteButton = this.shouldDisableFavoriteButton();
     const favoriteButton = this.state.profile.userIsLoggedIn ? (
-      <a className={shouldDisableFavoriteButton ? 'button alert' : 'button'} onClick={this.addOrRemoveFromFavorites(this)}>
+      <a className={shouldDisableFavoriteButton ? 'button alert' : 'button'} onClick={this.addOrRemoveFromFavorites()}>
         {shouldDisableFavoriteButton ? 'Fjern biblioteket som favoritbibliotek' : 'Tilføj bibliotek til favoritter!'}
       </a>
     ) : ''; // Show favorite button if user is logged in, otherwise don't show.
