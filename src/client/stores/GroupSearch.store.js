@@ -15,7 +15,6 @@ const GroupSearchStore = Reflux.createStore({
 
   init() {
     this.listenTo(QueryStore, this.onQueryUpdated);
-    this.onQueryUpdated({query: []});
   },
 
   groupQueryUpdatedResponse(data) {
