@@ -40,7 +40,7 @@ GroupRoutes.get(['/search*'], (req, res) => {
 });
 
 GroupRoutes.get(['/post/:id'], (req, res) => {
-
+  res.end('hello');
 });
 
 GroupRoutes.get('/:id?', (req, res) => {
