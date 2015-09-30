@@ -68,13 +68,15 @@ class Library extends React.Component {
     return (find(this.state.profile.favoriteLibraries, 'agencyID', this.state.library.data.branchId));
   }
 
-  addOrRemoveFromFavorites() {
-    if (this.shouldDisableFavoriteButton()) {
-      ProfileActions.removeLibraryFromFavorites(this.state.library.data.branchId);
-    }
-    else {
-      ProfileActions.addLibraryToFavorites(this.state.library.data.branchId, this.state.library.data.agencyId);
-    }
+  addOrRemoveFromFavorites(self) {
+    return () => {
+      if (self.shouldDisableFavoriteButton()) {
+        ProfileActions.removeLibraryFromFavorites(this.state.library.data.branchId);
+      }
+      else {
+        ProfileActions.addLibraryToFavorites(this.state.library.data.branchId, this.state.library.data.agencyId);
+      }
+    };
   }
 
   goBack() {
@@ -84,7 +86,7 @@ class Library extends React.Component {
   render() {
     const shouldDisableFavoriteButton = this.shouldDisableFavoriteButton();
     const favoriteButton = this.state.profile.userIsLoggedIn ? (
-      <a className={shouldDisableFavoriteButton ? 'button alert' : 'button'} onClick={this.addOrRemoveFromFavorites}>
+      <a className={shouldDisableFavoriteButton ? 'button alert' : 'button'} onClick={this.addOrRemoveFromFavorites(this)}>
         {shouldDisableFavoriteButton ? 'Fjern biblioteket som favoritbibliotek' : 'Tilføj bibliotek til favoritter!'}
       </a>
     ) : ''; // Show favorite button if user is logged in, otherwise don't show.
