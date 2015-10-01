@@ -1,11 +1,13 @@
 'use strict';
 
 import Reflux from 'reflux';
-import {shuffle} from 'lodash';
+import {isArray} from 'lodash';
 import SocketClient from 'dbc-node-serviceprovider-socketclient';
+
+// Actions
 import RecommendationsActions from '../actions/Recommendations.action.js';
 
-export const defaultRecommendations = [
+export const defaultLikes = [
   '870970-basis:51263146',
   '870970-basis:51115155',
   '870970-basis:28394438',
@@ -20,12 +22,6 @@ export const defaultRecommendations = [
   '870970-basis:28290853'
 ];
 
-let _store = {
-  result: [],
-  pending: false,
-  info: {more: false}
-};
-
 /**
  * Store containing the recommendations related to the search query
  */
@@ -33,44 +29,55 @@ let RecommendationsStore = Reflux.createStore({
   mixins: [SocketClient('getRecommendations')],
   listenables: RecommendationsActions,
 
+  store: {
+    result: [],
+    pending: false,
+    info: {more: false}
+  },
+
   init() {
     this.response(this.onResponse);
   },
 
   onDefault() {
-    this.onRequest(defaultRecommendations);
+    this.onRequest({likes: defaultLikes, dislikes: []});
   },
+
   onRequest(data) {
-    if (data.length > 0) {
+    if (isArray(data.likes) && isArray(data.dislikes) && data.likes.length > 0 || data.dislikes.length > 0) {
       this.updatePending(true);
       this.request(data);
     }
   },
 
   onResponse(result) {
-    _store.result = shuffle(result).splice(0, 20);
-    _store.pending = false;
-    this.trigger(_store);
+    this.store.pending = false;
+    if (result.error) {
+      throw new Error(result.error.statusMessage, result.error);
+    }
+    else {
+      this.store.result = result.splice(0, 20);
+      this.trigger(this.store);
+    }
   },
 
-
   updatePending(state) {
-    _store.pending = state;
-    this.trigger(_store);
+    this.store.pending = state;
+    this.trigger(this.store);
   },
 
   update(result) {
-    _store.result = shuffle(result).splice(0, 20);
-    _store.pending = false;
-    this.trigger(_store);
+    this.store.result = result.splice(0, 20);
+    this.store.pending = false;
+    this.trigger(this.store);
   },
 
   getStore() {
-    return _store;
+    return this.store;
   },
 
   getDefaultRecommendations() {
-    return defaultRecommendations;
+    return defaultLikes;
   }
 });
 

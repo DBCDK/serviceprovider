@@ -9,20 +9,20 @@ import {findIndex} from 'lodash';
 import Reflux from 'reflux';
 import ProfileActions from '../actions/Profile.action.js';
 
-let _profile = {
-  name: '',
-  imageUrl: '/dummy.jpg',
-  followingCount: 16,
-  groupsCount: 7,
-  followersCount: 35,
-  editEnabled: false,
-  favoriteLibraries: [],
-  favoriteLibrariesResolved: [],
-  likes: [],
-  userIsLoggedIn: false
-};
-
 let profileStore = Reflux.createStore({
+
+  store: {
+    name: '',
+    imageUrl: '/dummy.jpg',
+    followingCount: 16,
+    groupsCount: 7,
+    followersCount: 35,
+    editEnabled: false,
+    favoriteLibraries: [],
+    favoriteLibrariesResolved: [],
+    likes: [],
+    userIsLoggedIn: false
+  },
 
   init() {
     this.listenToMany(ProfileActions);
@@ -30,49 +30,40 @@ let profileStore = Reflux.createStore({
   },
 
   getInitialState() {
-    return _profile;
+    return this.store;
   },
 
   onToggleEdit() {
-    _profile.editEnabled = !_profile.editEnabled;
+    this.store.editEnabled = !this.store.editEnabled;
     // edit mode was disabled
-    if (!_profile.editEnabled) {
-      ProfileActions.saveProfile(_profile);
+    if (!this.store.editEnabled) {
+      ProfileActions.saveProfile(this.store);
     }
-    this.trigger(_profile);
+    this.trigger(this.store);
   },
 
   onUpdateProfile(profile) {
     for (let attr in profile) {
       if (profile.hasOwnProperty(attr)) {
-        _profile[attr] = profile[attr];
+        this.store[attr] = profile[attr];
       }
     }
-    this.trigger(_profile);
-  },
-
-  onConfirmSaveProfile(str) { // eslint-disable-line no-unused-vars
-  },
-
-  onSaveProfile(str) { // eslint-disable-line no-unused-vars
-  },
-
-  onFetchProfile(str) { // eslint-disable-line no-unused-vars
+    this.trigger(this.store);
   },
 
   onUpdateAttribute(str) {
-    _profile.name = str;
-    this.trigger(_profile);
+    this.store.name = str;
+    this.trigger(this.store);
   },
 
   getProfile() {
-    return _profile;
+    return this.store;
   },
 
   onUpdateBorrowerIDForLibrary(agencyID, borrowerID) {
-    const libraryIndex = findIndex(_profile.favoriteLibraries, 'agencyID', agencyID);
+    const libraryIndex = findIndex(this.store.favoriteLibraries, 'agencyID', agencyID);
     if (libraryIndex >= 0) {
-      _profile.favoriteLibraries[libraryIndex].borrowerID = borrowerID;
+      this.store.favoriteLibraries[libraryIndex].borrowerID = borrowerID;
     }
   },
 
@@ -84,51 +75,51 @@ let profileStore = Reflux.createStore({
       default: 0
     };
 
-    if (!_profile.favoriteLibraries) {
-      _profile.favoriteLibraries = [favoriteModel];
+    if (!this.store.favoriteLibraries) {
+      this.store.favoriteLibraries = [favoriteModel];
     }
-    else if (findIndex(_profile.favoriteLibraries, 'agencyID', agencyID) === -1) {
-      _profile.favoriteLibraries.push(favoriteModel);
+    else if (findIndex(this.store.favoriteLibraries, 'agencyID', agencyID) === -1) {
+      this.store.favoriteLibraries.push(favoriteModel);
     }
 
     ProfileActions.saveProfile({
-      favoriteLibraries: _profile.favoriteLibraries
+      favoriteLibraries: this.store.favoriteLibraries
     });
 
-    this.trigger(_profile);
+    this.trigger(this.store);
   },
 
   onRemoveLibraryFromFavorites(agencyID) {
-    let index = findIndex(_profile.favoriteLibraries, 'agencyID', agencyID);
+    let index = findIndex(this.store.favoriteLibraries, 'agencyID', agencyID);
 
     if (index > -1) {
-      _profile.favoriteLibraries.splice(index, 1);
+      this.store.favoriteLibraries.splice(index, 1);
     }
 
     ProfileActions.saveProfile({
-      favoriteLibraries: _profile.favoriteLibraries
+      favoriteLibraries: this.store.favoriteLibraries
     });
 
-    this.trigger(_profile);
+    this.trigger(this.store);
   },
 
   onLibraryIdUpdatedResponse(agency) {
-    _profile.favoriteLibrariesResolved.push(agency);
-    this.trigger(_profile);
+    this.store.favoriteLibrariesResolved.push(agency);
+    this.trigger(this.store);
   },
 
   setLibraryAsDefault(agencyID) {
-    const defaultLibraryIndex = findIndex(_profile.favoriteLibraries, 'default', 1);
+    const defaultLibraryIndex = findIndex(this.store.favoriteLibraries, 'default', 1);
     if (defaultLibraryIndex > -1) {
-      _profile.favoriteLibraries[defaultLibraryIndex].default = 0;
+      this.store.favoriteLibraries[defaultLibraryIndex].default = 0;
     }
 
-    const libraryIndex = findIndex(_profile.favoriteLibraries, 'agencyID', agencyID);
+    const libraryIndex = findIndex(this.store.favoriteLibraries, 'agencyID', agencyID);
     if (libraryIndex >= 0) {
-      _profile.favoriteLibraries[libraryIndex].default = 1;
+      this.store.favoriteLibraries[libraryIndex].default = 1;
     }
 
-    this.trigger(_profile);
+    this.trigger(this.store);
   },
 
   /**
@@ -137,27 +128,27 @@ let profileStore = Reflux.createStore({
   onLikeObject(workId) {
     let request = {item_id: workId, action: null};
 
-    const index = findIndex(_profile.likes, 'item_id', workId);
+    const index = findIndex(this.store.likes, 'item_id', workId);
     if (index < 0) {
       request.action = 'like';
-      _profile.likes.push({item_id: workId, value: 1});
+      this.store.likes.push({item_id: workId, value: 1});
     }
-    else if (_profile.likes[index].value === '-1') {
-      const like = _profile.likes[index];
+    else if (this.store.likes[index].value === '-1') {
+      const like = this.store.likes[index];
       request.id = like.id || null;
       request.uid = like.profileId || null;
       request.action = 'like';
-      _profile.likes[index].value = 1;
+      this.store.likes[index].value = 1;
     }
     else {
-      const like = _profile.likes[index];
+      const like = this.store.likes[index];
       request.id = like.id || null;
       request.uid = like.profileId || null;
       request.action = 'remove';
-      _profile.likes.splice(index, 1);
+      this.store.likes.splice(index, 1);
     }
 
-    this.trigger(_profile);
+    this.trigger(this.store);
 
     ProfileActions.saveLike(request);
   },
@@ -173,27 +164,27 @@ let profileStore = Reflux.createStore({
   onDislikeObject(workId) {
     let request = {item_id: workId, action: null};
 
-    const index = findIndex(_profile.likes, 'item_id', workId);
+    const index = findIndex(this.store.likes, 'item_id', workId);
     if (index < 0) {
       request.action = 'dislike';
-      _profile.likes.push({item_id: workId, value: -1});
+      this.store.likes.push({item_id: workId, value: -1});
     }
-    else if (_profile.likes[index].value === '1') {
-      const like = _profile.likes[index];
+    else if (this.store.likes[index].value === '1') {
+      const like = this.store.likes[index];
       request.id = like.id || null;
       request.uid = like.profileId || null;
       request.action = 'dislike';
-      _profile.likes[index].value = -1;
+      this.store.likes[index].value = -1;
     }
     else {
-      const like = _profile.likes[index];
+      const like = this.store.likes[index];
       request.id = like.id || null;
       request.uid = like.profileId || null;
       request.action = 'remove';
-      _profile.likes.splice(index, 1);
+      this.store.likes.splice(index, 1);
     }
 
-    this.trigger(_profile);
+    this.trigger(this.store);
 
     ProfileActions.saveLike(request);
   }

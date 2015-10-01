@@ -10,7 +10,7 @@ import Reflux from 'reflux';
 
 // Components
 import SearchResultList from './SearchResultList.component.js';
-import DefaultRecommendations from '../recommendations/DefaultRecommendationsContainer.component.js';
+import RecommendationContainer from '../Recommend/RecommendationContainer.component';
 import Tabs from '../tabs/Tabs.component.js';
 
 // Actions
@@ -37,11 +37,7 @@ export default React.createClass({
   ],
 
   getInitialState() {
-    let _recommendationsStore = {
-      result: [],
-      pending: false,
-      info: {more: false}
-    };
+    let _recommendationsStore = RecommendationsStore.store;
 
     if (this.props.recommendations) {
       _recommendationsStore.recommendations = this.props.recommendations;
@@ -76,7 +72,7 @@ export default React.createClass({
 
   renderDefaultRecommendations() {
     return (
-      <DefaultRecommendations actions={QueryActions} data={{recommendations: this.state.recommendations}} />
+      <RecommendationContainer actions={QueryActions} data={{recommendations: this.state.recommendations}} />
     );
   },
 
