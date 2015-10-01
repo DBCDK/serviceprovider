@@ -10,7 +10,7 @@ import express from 'express';
 const GroupRoutes = express.Router();
 
 import React from 'react';
-import GroupSearchContainerComponent from '../../client/components/GroupSearch/GroupSearchContainer.component.js';
+import GroupSearchContainerComponent from '../../client/components/Group/Search/GroupSearchContainer.component.js';
 
 import {stringToObject} from '../../utils/QueryParser.util.js';
 import dbcMiddleware from './middleware.js';
@@ -39,8 +39,18 @@ GroupRoutes.get(['/search*'], (req, res) => {
   });
 });
 
-GroupRoutes.get(['/post/:id'], (req, res) => {
-  res.end('hello');
+GroupRoutes.get(['/:groupId/post/:id'], (req, res) => {
+  let promiseResponse = req.app.get('serviceProvider').trigger('getGroupPost', req.params.id, {request: req});
+
+  dbcMiddleware.setupSSR(req, res, promiseResponse, (err, result) => {
+    let groupPostData = result ? result[0] : {};
+    // let groupPostString = React.renderToString(<GroupSearchContainerComponent groupData={groupData} query={qObj} />);
+    res.render('group_post_view', {
+      groupId: req.params.groupId,
+      id: req.params.id,
+      groupPostData: JSON.stringify(groupPostData)
+    });
+  });
 });
 
 GroupRoutes.get('/:id?', (req, res) => {
