@@ -2,8 +2,7 @@ extends layout
 block prepend footerscripts
     script(src='/js/grouppost.js' defer=true)
 block content
-    #post
-       p this is a post!
+    #post !{groupPostString}
     script window.groupId = [!{groupId}];
     script window.postId = [!{id}];
     script window.groupPostData = [!{groupPostData}];
