@@ -1,7 +1,7 @@
 'use strict';
 
 import Reflux from 'reflux';
-import {isUndefined, isArray} from 'lodash';
+import {isArray} from 'lodash';
 import SocketClient from 'dbc-node-serviceprovider-socketclient';
 
 // Actions

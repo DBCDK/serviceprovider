@@ -7,7 +7,6 @@
 import React from 'react';
 
 // Actions
-import ProfileActions from '../../actions/Profile.action';
 import RecommendationActions from '../../actions/Recommendations.action';
 
 // Stores
@@ -32,6 +31,14 @@ class RecommendationContainer extends React.Component {
     RecommendationActions.default();
   }
 
+  componentWillUnmount() {
+    this.unsubscribe.forEach(
+      (unsubscriber) => {
+        unsubscriber();
+      }
+    );
+  }
+
   gotProfile() {
     const profileLikes = ProfileStore.store.likes;
     let likes = [];
@@ -47,14 +54,6 @@ class RecommendationContainer extends React.Component {
 
       RecommendationActions.request({likes: likes, dislikes: dislikes});
     });
-  }
-
-  componentWillUnmount() {
-    this.unsubscribe.forEach(
-      (unsubscriber) => {
-        unsubscriber();
-      }
-    );
   }
 
   render() {
