@@ -62,6 +62,9 @@ app.set('view engine', 'jade');
 // setting proxy
 app.enable('trust proxy');
 
+// disabling 'X-Powered-By:Express' in response header
+app.disable('x-powered-by');
+
 // settings production specific options
 if (!PRODUCTION && newrelic) {
   newrelic.agent_enabled = false;

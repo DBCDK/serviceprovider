@@ -5,6 +5,7 @@
  * Collection of middleware functions
  */
 const loginUrl = '/profile/login';
+import * as logger from 'dbc-node-logger';
 
 /*
  * @function
@@ -81,6 +82,7 @@ function ssrPromiseFunction(res, promiseResponse, cb) {
       cb(null, result);
     }
   }, (err) => { // If the promise is rejected, render the template without data and send it
+    logger.error('Error in SSR: Promise was rejected', err);
     if (!res.headersSent) { // _httpMessage becomes null when request is sent
       cb(err, null);
     }

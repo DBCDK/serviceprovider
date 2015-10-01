@@ -15,7 +15,7 @@ import {stringToObject} from '../../utils/QueryParser.util.js';
 
 // loading components
 import SearchServer from '../../client/components/searchpage/Search.server.js';
-import {defaultRecommendations} from '../../client/stores/Recommendations.store.js';
+import {defaultLikes} from '../../client/stores/Recommendations.store.js';
 
 import dbcMiddleware from './middleware.js';
 
@@ -42,7 +42,7 @@ MainRoutes.get(['/', '/search', '/search/*'], (req, res) => {
     cbFunc(null, null);
   }
   else {
-    let promiseResponse = req.app.get('serviceProvider').trigger('getRecommendations', defaultRecommendations);
+    let promiseResponse = req.app.get('serviceProvider').trigger('getRecommendations', {likes: defaultLikes, dislikes: []});
     dbcMiddleware.setupSSR(req, res, promiseResponse, cbFunc);
   }
 });
