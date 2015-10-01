@@ -6,11 +6,11 @@ import React, {PropTypes} from 'react';
 import {TokenSearchField} from 'dbc-react-components';
 
 // Actions
-import QueryActions from '../../actions/QueryUpdate.action.js';
-import InputFieldActions from '../../actions/InputField.actions.js';
+import QueryActions from '../../../actions/QueryUpdate.action.js';
+import InputFieldActions from '../../../actions/InputField.actions.js';
 
 // Stores
-import InputFieldStore from '../../stores/InputField.store.js';
+import InputFieldStore from '../../../stores/InputField.store.js';
 
 class GroupSearchComponent extends React.Component {
   constructor() {

@@ -23,7 +23,8 @@ module.exports = [{
     work: './src/client/components/Work/Work.client',
     order: './src/client/components/Order/index.js',
     receipt: './src/client/components/Receipt/index.js',
-    groupsearch: './src/client/components/GroupSearch/index.js',
+    groupsearch: './src/client/components/Group/Search/index.js',
+    grouppost: './src/client/components/Group/Post/index.js',
     styles: process.env.NODE_APPLICATION === 'ddbmobil' && './src/client/styles/ddb.scss' || './src/client/styles/pg.scss' // eslint-disable-line no-process-env
   },
   output: {

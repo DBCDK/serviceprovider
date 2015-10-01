@@ -4,13 +4,13 @@ import React from 'react';
 import {isEmpty} from 'lodash';
 
 // Components
-import Query from '../query/Query.component.js';
+import Query from '../../query/Query.component.js';
 import GroupSearchComponent from './groupsearch.component.js';
 import GroupSearchResultsComponent from './GroupSearchResults.component.js';
 
 // Stores
-import QueryStore from '../../stores/QueryStore.store.js';
-import GroupSearchStore from '../../stores/GroupSearch.store.js';
+import QueryStore from '../../../stores/QueryStore.store.js';
+import GroupSearchStore from '../../../stores/GroupSearch.store.js';
 
 class GroupSearchContainerComponent extends React.Component {
   constructor() {
