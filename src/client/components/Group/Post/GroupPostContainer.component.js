@@ -18,8 +18,8 @@ class GroupPostContainerComponent extends React.Component {
     super();
 
     this.state = {
-      profile: ProfileStore.getProfile(),
-      groupPost: GroupPostStore.store
+      profile: ProfileStore.getInitialState(),
+      groupPost: GroupPostStore.getInitialState()
     };
 
     this.unsubscribe = [
