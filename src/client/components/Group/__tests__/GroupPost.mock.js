@@ -1,6 +1,7 @@
+'use strict';
+
 /**
  * Mock for groupPost
- * @type {{groupId: number, groupPostId: number, groupPostData: {title: string, content: string, timeCreated: string, id: number, postownerid: number, postid: number, groupid: number, owner: {imageUrl: string, favoriteLibraries: Array, realm: null, email: string, id: number}, comments: *[]}}}
  */
 
 export const groupPost = {
