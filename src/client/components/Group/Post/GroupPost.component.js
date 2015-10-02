@@ -16,8 +16,8 @@ class GroupPostComponent extends React.Component {
     let comments = this.props.groupPostData.comments ? this.props.groupPostData.comments.map((val) => {
       return (
         <div className="row" key={val.id}>
-          <div className="large-1 medium-2 small-2 columns"><img src={val.owner.imageUrl ? val.owner.imageUrl : '/dummy.jpg'} /> <p></p></div>
-          <div className="large-11 medium-10 small-10 columns"><p><strong>{val.owner.email}:</strong> {val.content}</p></div>
+          <div className="large-1 medium-2 hide-for-small-only columns"><img src={val.owner.imageUrl ? val.owner.imageUrl : '/dummy.jpg'} /> <p></p></div>
+          <div className="large-11 medium-10 small-12 columns"><p><strong>{val.owner.email}:</strong> {val.content}</p></div>
           <hr />
         </div>);
     }) : [];
@@ -28,7 +28,7 @@ class GroupPostComponent extends React.Component {
         <h1>{this.props.groupPostData.title}</h1>
         <p>{this.props.groupPostData.content}</p>
         <div>
-          <h4>Kommentarer</h4>
+          <h4>{comments.length} Kommentarer</h4>
           <hr />
           {comments}
           <div className='row'>
