@@ -30,7 +30,7 @@ module.exports = function(config) {
       noInfo: true
     },
     coverageReporter: {
-      type: 'html',
+      type: 'cobertura',
       dir: 'coverage/'
     }
   });
