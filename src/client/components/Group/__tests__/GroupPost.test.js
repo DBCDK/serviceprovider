@@ -115,6 +115,30 @@ describe('Test the group post components', () => {
     expect(commentText).to.equal('');
   });
 
+  it('create GroupPost and comment on it whilst not logged in', () => {
+    let commentText = '';
+
+    let element = React.createElement(GroupPostComponent, {
+      loggedIn: false,
+      groupId: groupPost.groupId,
+      groupPostData: groupPost.groupPostData,
+      groupPostId: groupPost.groupPostId,
+      commentCb: (text) => {
+        commentText = text;
+      }
+    });
+
+    let dom = TestUtils.renderIntoDocument(element);
+    let GPost = TestUtils.findRenderedComponentWithType(dom, GroupPostComponent);
+    let commentField = React.findDOMNode(GPost.refs.commentField);
+    let commentButton = React.findDOMNode(GPost.refs.commentButton);
+    commentField.value = 'per er sej';
+    TestUtils.Simulate.change(commentField);
+    TestUtils.Simulate.click(commentButton);
+
+    expect(commentText).to.equal('');
+  });
+
   it('Create GroupPost and comment on it without a commentcb', () => {
     let commentText = '';
 

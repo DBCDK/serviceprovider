@@ -18,7 +18,6 @@ export const groupPost = {
     owner: {
       imageUrl: 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMgAAADICAYAAACtWK6eAAAgAElEQ…qKcqX5UEJbzyATS8Kd51J6gRrE/MyC7xDpMPHGNBo9Ifr5/y5yjHyVLRgeAAAAAElFTkSuQmCC',
       favoriteLibraries: [],
-      realm: null,
       email: 'asd@mailinator.com',
       id: 1
     },
@@ -41,7 +40,6 @@ export const groupPost = {
       commentownerid: 1,
       postid: 1,
       owner: {
-        imageUrl: 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMgAAADICAYAAACtWK6eAAAgAElEQ…qKcqX5UEJbzyATS8Kd51J6gRrE/MyC7xDpMPHGNBo9Ifr5/y5yjHyVLRgeAAAAAElFTkSuQmCC',
         favoriteLibraries: [],
         email: 'asd@mailinator.com',
         id: 1
