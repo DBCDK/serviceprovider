@@ -30,8 +30,13 @@ module.exports = function(config) {
       noInfo: true
     },
     coverageReporter: {
-      type: 'cobertura',
-      dir: 'coverage/'
+      includeAllSources: true,
+      dir: 'coverage/',
+      reporters: [{
+        type: 'html'
+      }, {
+        type: 'cobertura'
+      }]
     }
   });
 };
