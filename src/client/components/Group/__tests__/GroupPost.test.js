@@ -7,7 +7,6 @@ import TestUtils from 'react/lib/ReactTestUtils';
 import {groupPost} from './GroupPost.mock.js';
 
 import GroupPostStore from '../../../stores/GroupPost.store.js';
-import ProfileStore from '../../../stores/Profile.store.js';
 
 import GroupPostActions from '../../../actions/GroupPost.action.js';
 
