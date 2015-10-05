@@ -39,6 +39,7 @@ describe('Test the group post components', () => {
     let GPost = React.findDOMNode(TestUtils.findRenderedComponentWithType(dom, GroupPostComponent));
     expect(GPost.innerHTML).to.contain('Dette er en kommentar');
     mock.verify();
+    mock.restore();
   });
 
   it('Tests GroupPostActions get called', () => {
@@ -57,5 +58,30 @@ describe('Test the group post components', () => {
 
     expect(GroupPostActions.fetchGroupPost.calledOnce).to.equal(true);
     GroupPostActions.fetchGroupPost.calledWith(groupPost.groupPostId);
+    sandbox.restore();
+  });
+
+  it('Tests GroupPost conditionals', () => {
+    let commentText = '';
+
+    let element = React.createElement(GroupPostComponent, {
+      loggedIn: true,
+      groupId: groupPost.groupId,
+      groupPostData: groupPost.groupPostData,
+      groupPostId: groupPost.groupPostId,
+      commentCb: (text) => {
+        commentText = text;
+      }
+    });
+
+    let dom = TestUtils.renderIntoDocument(element);
+    let GPost = TestUtils.findRenderedComponentWithType(dom, GroupPostComponent);
+    let commentField = React.findDOMNode(GPost.refs.commentField);
+    let commentButton = React.findDOMNode(GPost.refs.commentButton);
+    commentField.value = 'commenting is fun';
+    TestUtils.Simulate.change(commentField);
+    TestUtils.Simulate.click(commentButton);
+
+    expect(commentText).to.equal('commenting is fun');
   });
 });
