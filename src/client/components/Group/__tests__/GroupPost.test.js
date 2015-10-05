@@ -14,6 +14,12 @@ import GroupPostContainer from '../Post/GroupPostContainer.component.js';
 import GroupPostComponent from '../Post/GroupPost.component.js';
 
 describe('Test the group post components', () => {
+  it('Create GroupPostContainer without data', () => {
+    let element = React.createElement(GroupPostContainer, {groupPostData: {}});
+    let dom = TestUtils.renderIntoDocument(element);
+    React.findDOMNode(TestUtils.findRenderedComponentWithType(dom, GroupPostComponent));
+  });
+
   it('Create GroupPostContainer with props', () => {
     let element = React.createElement(GroupPostContainer, {
       groupId: groupPost.groupId,
@@ -83,5 +89,59 @@ describe('Test the group post components', () => {
     TestUtils.Simulate.click(commentButton);
 
     expect(commentText).to.equal('commenting is fun');
+  });
+
+  it('create GroupPost and comment on it', () => {
+    let commentText = '';
+
+    let element = React.createElement(GroupPostComponent, {
+      loggedIn: true,
+      groupId: groupPost.groupId,
+      groupPostData: groupPost.groupPostData,
+      groupPostId: groupPost.groupPostId,
+      commentCb: (text) => {
+        commentText = text;
+      }
+    });
+
+    let dom = TestUtils.renderIntoDocument(element);
+    let GPost = TestUtils.findRenderedComponentWithType(dom, GroupPostComponent);
+    let commentField = React.findDOMNode(GPost.refs.commentField);
+    let commentButton = React.findDOMNode(GPost.refs.commentButton);
+    commentField.value = '';
+    TestUtils.Simulate.change(commentField);
+    TestUtils.Simulate.click(commentButton);
+
+    expect(commentText).to.equal('');
+  });
+
+  it('Create GroupPost and comment on it without a commentcb', () => {
+    let commentText = '';
+
+    let element = React.createElement(GroupPostComponent, {
+      loggedIn: true,
+      groupId: groupPost.groupId,
+      groupPostData: groupPost.groupPostData,
+      groupPostId: groupPost.groupPostId
+    });
+
+    let dom = TestUtils.renderIntoDocument(element);
+    let GPost = TestUtils.findRenderedComponentWithType(dom, GroupPostComponent);
+    let commentField = React.findDOMNode(GPost.refs.commentField);
+    let commentButton = React.findDOMNode(GPost.refs.commentButton);
+    commentField.value = 'this comment won\'t display';
+    TestUtils.Simulate.change(commentField);
+    TestUtils.Simulate.click(commentButton);
+
+    expect(commentText).to.equal('');
+  });
+
+  it('Create grouppost with grouppost data', () => {
+    let element = React.createElement(GroupPostComponent, {
+      groupPostData: groupPost.groupPostData
+    });
+
+    let dom = TestUtils.renderIntoDocument(element);
+    TestUtils.findRenderedComponentWithType(dom, GroupPostComponent);
   });
 });
