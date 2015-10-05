@@ -5,6 +5,7 @@ import React from 'react';
 import TestUtils from 'react/lib/ReactTestUtils';
 
 import GroupSearchResultsComponent from '../Search/GroupSearchResults.component.js';
+import {groupSearchMock} from './GroupSearch.mock.js';
 
 describe('Test the group search components', () => {
   it('Create GroupSearchResultsComponent with a pending search', () => {
@@ -76,5 +77,16 @@ describe('Test the group search components', () => {
     let dom = TestUtils.renderIntoDocument(element);
     let dmn = React.findDOMNode(TestUtils.findRenderedComponentWithType(dom, GroupSearchResultsComponent));
     expect(dmn.innerHTML).to.contain(emptyPlaceholder);
+  });
+
+  it('Create GroupSearchResultsComponent with data and query', () => {
+    let element = React.createElement(GroupSearchResultsComponent, {
+      data: groupSearchMock,
+      pending: false,
+      query: [groupSearchMock[3].name]
+    });
+    let dom = TestUtils.renderIntoDocument(element);
+    let dmn = React.findDOMNode(TestUtils.findRenderedComponentWithType(dom, GroupSearchResultsComponent));
+    expect(dmn.innerHTML).to.contain('search-item');
   });
 });
