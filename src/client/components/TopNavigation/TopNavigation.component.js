@@ -7,7 +7,6 @@
 
 import React from 'react';
 import ProfileStore from '../../stores/Profile.store.js';
-import ProfileActions from '../../actions/Profile.action.js';
 
 const TopNavigation = React.createClass({
 
