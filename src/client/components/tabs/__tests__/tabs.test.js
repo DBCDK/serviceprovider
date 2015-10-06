@@ -30,14 +30,21 @@ describe('Test the Tabs component', () => {
   });
 
   it('first tab is selected', ()=> {
+    expect(TestUtils.scryRenderedDOMComponentsWithClass(dom, 'tabs')).to.have.length(1);
+    expect(TestUtils.scryRenderedDOMComponentsWithClass(dom, 'tabs')[0].props.children).to.have.length(2);
+    expect(TestUtils.scryRenderedDOMComponentsWithClass(dom, 'hide')).to.have.length(1);
     expect(TestUtils.scryRenderedDOMComponentsWithClass(dom, 'test1')).to.have.length(1);
-    expect(TestUtils.scryRenderedDOMComponentsWithClass(dom, 'test2')).to.have.length(0);
-    TestUtils.Simulate.click(TestUtils.scryRenderedDOMComponentsWithTag(dom, 'a')[1]);
+    expect(TestUtils.scryRenderedDOMComponentsWithClass(dom, 'test2')).to.have.length(1);
+    expect(TestUtils.scryRenderedDOMComponentsWithClass(dom, 'hide')[0].props.children.props.className).to.equal('test2');
   });
 
   it('second tab is selected', ()=> {
     TestUtils.Simulate.click(TestUtils.scryRenderedDOMComponentsWithTag(dom, 'a')[1]);
-    expect(TestUtils.scryRenderedDOMComponentsWithClass(dom, 'test1')).to.have.length(0);
+    expect(TestUtils.scryRenderedDOMComponentsWithClass(dom, 'tabs')).to.have.length(1);
+    expect(TestUtils.scryRenderedDOMComponentsWithClass(dom, 'tabs')[0].props.children).to.have.length(2);
+    expect(TestUtils.scryRenderedDOMComponentsWithClass(dom, 'hide')).to.have.length(1);
+    expect(TestUtils.scryRenderedDOMComponentsWithClass(dom, 'test1')).to.have.length(1);
     expect(TestUtils.scryRenderedDOMComponentsWithClass(dom, 'test2')).to.have.length(1);
+    expect(TestUtils.scryRenderedDOMComponentsWithClass(dom, 'hide')[0].props.children.props.className).to.equal('test1');
   });
 });

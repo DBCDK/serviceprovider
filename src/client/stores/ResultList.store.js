@@ -5,18 +5,18 @@ import SocketClient from 'dbc-node-serviceprovider-socketclient';
 import QueryParser from '../../utils/QueryParser.util.js';
 import QueryStore from './QueryStore.store.js';
 
-let _store = {
-  result: [],
-  info: {hits: 0, collections: 0, more: false},
-  pending: false,
-  hasSearchBeenExecuted: false
-};
-
 let ResultListStore = Reflux.createStore({
   mixins: [SocketClient('getOpenSearchResultList')],
 
+  store: {
+    result: [],
+    info: {hits: 0, collections: 0, more: false},
+    pending: false,
+    hasSearchBeenExecuted: false
+  },
+
   getInitialState() {
-    return _store;
+    return this.store;
   },
 
   init() {
@@ -47,31 +47,31 @@ let ResultListStore = Reflux.createStore({
   },
 
   pending(state = true) {
-    _store.pending = state;
-    _store.hasSearchBeenExecuted = true;
-    this.trigger(_store);
+    this.store.pending = state;
+    this.store.hasSearchBeenExecuted = true;
+    this.trigger(this.store);
   },
 
   onResponse(result) {
     let resultList = result.result || [];
     let info = result.info || [];
-    _store.result = _store.result.concat(resultList);
-    _store.info = info;
-    _store.pending = false;
+    this.store.result = this.store.result.concat(resultList);
+    this.store.info = info;
+    this.store.pending = false;
     if (info.more === 'true') {
-      _store.offset += _store.worksPerPage;
+      this.store.offset += this.store.worksPerPage;
     }
-    this.trigger(_store);
+    this.trigger(this.store);
   },
 
   empty() {
-    _store.result = [];
-    _store.info = {hits: 0, collections: 0, more: false};
+    this.store.result = [];
+    this.store.info = {hits: 0, collections: 0, more: false};
   },
 
   // return the store data
   getStore() {
-    return _store;
+    return this.store;
   }
 });
 

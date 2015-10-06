@@ -1,11 +1,11 @@
 'use strict';
 
 import Reflux from 'reflux';
-import {isArray} from 'lodash';
+import {isArray, isUndefined} from 'lodash';
 import SocketClient from 'dbc-node-serviceprovider-socketclient';
 
 // Actions
-import RecommendationsActions from '../actions/Recommendations.action.js';
+import RecommendationsActions from './Recommendations.action';
 
 export const defaultLikes = [
   '870970-basis:51263146',
@@ -27,7 +27,6 @@ export const defaultLikes = [
  */
 let RecommendationsStore = Reflux.createStore({
   mixins: [SocketClient('getRecommendations')],
-  listenables: RecommendationsActions,
 
   store: {
     result: [],
@@ -37,6 +36,7 @@ let RecommendationsStore = Reflux.createStore({
 
   init() {
     this.response(this.onResponse);
+    this.listenToMany(RecommendationsActions);
   },
 
   onDefault() {
@@ -44,9 +44,12 @@ let RecommendationsStore = Reflux.createStore({
   },
 
   onRequest(data) {
-    if (isArray(data.likes) && isArray(data.dislikes) && data.likes.length > 0 || data.dislikes.length > 0) {
+    if (!isUndefined(data) && isArray(data.likes) && isArray(data.dislikes) && data.likes.length) {
       this.updatePending(true);
       this.request(data);
+    }
+    else {
+      this.onDefault();
     }
   },
 
@@ -70,10 +73,6 @@ let RecommendationsStore = Reflux.createStore({
     this.store.result = result.splice(0, 20);
     this.store.pending = false;
     this.trigger(this.store);
-  },
-
-  getStore() {
-    return this.store;
   },
 
   getDefaultRecommendations() {
