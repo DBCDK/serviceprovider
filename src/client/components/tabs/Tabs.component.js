@@ -38,7 +38,7 @@ class Tabs extends React.Component {
     });
 
     return (
-      <div>
+      <div className="tabs">
         <ul className="button-group even-2" >
           {buttons}
         </ul>
