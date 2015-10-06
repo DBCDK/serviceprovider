@@ -1,5 +1,4 @@
 'use strict';
-import React from 'react/addons';
 import {assert} from 'chai';
 
 import RecommendationContainer from '../RecommendationContainer.component';
@@ -10,7 +9,7 @@ describe('Test the RecommendationContainer.component', () => {
   let component;
 
   beforeEach(() => {
-    sandbox = sinon.sandbox.create();
+    sandbox = sinon.sandbox.create(); // eslint-disable-line
     component = new RecommendationContainer();
   });
 
