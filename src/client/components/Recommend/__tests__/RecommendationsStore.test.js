@@ -1,5 +1,4 @@
 'use strict';
-import React from 'react/addons';
 import {assert} from 'chai';
 
 import RecommendationStore from '../Recommendations.store';
@@ -9,7 +8,7 @@ describe('Test methods on the Recommendations Store object', () => {
   let sandbox;
 
   beforeEach(() => {
-    sandbox = sinon.sandbox.create();
+    sandbox = sinon.sandbox.create(); // eslint-disable-line
   });
 
   afterEach(() => {
