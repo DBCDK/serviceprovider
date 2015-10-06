@@ -40,16 +40,16 @@ class RecommendationContainer extends React.Component {
     ];
   }
 
+  shouldComponentUpdate(nextProps, nextState) {
+    return JSON.stringify(this.state.result) !== JSON.stringify(nextState.result);
+  }
+
   componentWillUnmount() {
     this.unsubscribe.forEach(
       (unsubscriber) => {
         unsubscriber();
       }
     );
-  }
-
-  shouldComponentUpdate(nextProps, nextState) {
-    return JSON.stringify(this.state.result) !== JSON.stringify(nextState.result);
   }
 
   gotProfile() {
