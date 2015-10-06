@@ -17,7 +17,13 @@ const defaultStore = {
  * Store containing the current query of the page
  */
 let QueryStore = Reflux.createStore({
-  store: extend({}, defaultStore),
+  store: {
+    queryHasChanged: false,
+    query: [],
+    page: 0,
+    worksPerPage: 12,
+    sort: 'default'
+  },
 
   listenables: QueryActions,
 

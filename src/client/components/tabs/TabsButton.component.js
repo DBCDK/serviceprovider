@@ -7,16 +7,18 @@
 import React from 'react';
 
 const TabsButton = React.createClass({
-  displayName: 'TabButton',
+  displayName: 'TabsButton',
 
   propTypes: {
-    active() {
-      return React.PropTypes.boolean;
-    },
+    active: React.PropTypes.bool,
     index: React.PropTypes.number,
     label: React.PropTypes.string,
     update: React.PropTypes.func,
     'update.bind': React.PropTypes.func
+  },
+
+  update() {
+    this.props.update(this.props.index);
   },
 
   render() {
@@ -26,7 +28,7 @@ const TabsButton = React.createClass({
     }
     return (
       <li>
-        <a className={classes.join(' ')} href="#" onClick={this.props.update.bind(null, this.props.index)} >
+        <a className={classes.join(' ')} href="#" onClick={this.update} >
           {this.props.label}
         </a>
       </li>

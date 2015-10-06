@@ -11,9 +11,7 @@ import ProfileActions from '../../actions/Profile.action.js';
 
 const TopNavigation = React.createClass({
 
-  displayName: function() {
-    return 'ReactTopNavigation';
-  },
+  displayName: 'ReactTopNavigation',
 
   getInitialState() {
     return {
@@ -22,19 +20,18 @@ const TopNavigation = React.createClass({
     };
   },
 
-  componentDidMount: function() {
+  componentDidMount() {
     ProfileStore.listen(this.updateProfile);
-    ProfileActions.fetchProfile();
   },
 
-  updateProfile: function(profile) {
+  updateProfile(profile) {
     this.setState({
       isLoggedIn: profile.userIsLoggedIn,
       username: profile.name
     });
   },
 
-  render: function() {
+  render() {
     const isLoggedIn = this.state.isLoggedIn;
     const buttonData = isLoggedIn ? {url: '/profile/logout', text: 'Log Ud'} : {url: '/profile/login', text: 'Log Ind'};
 

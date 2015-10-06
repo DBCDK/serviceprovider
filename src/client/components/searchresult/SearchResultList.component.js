@@ -15,8 +15,8 @@ import Loader from '../Loader.component.js';
 export default React.createClass({
   displayName: 'SearchResultList.component',
   propTypes: {
-    actions: React.PropTypes.object.isRequired,
-    data: React.PropTypes.object.isRequired
+    data: React.PropTypes.object.isRequired,
+    loadMore: React.PropTypes.func
   },
 
   render() {
@@ -34,7 +34,7 @@ export default React.createClass({
       <ResultDisplay
         coverImage={coverImage}
         hasMore={this.props.data.results.info.more === 'true'}
-        loadMore={this.props.actions.nextPage}
+        loadMore={this.props.loadMore}
         loader={<Loader pending={this.props.data.results.pending} />}
         noResultsText=''
         pending={this.props.data.results.pending}
