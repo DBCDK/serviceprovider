@@ -14,12 +14,12 @@ import RecommendationContainer from '../Recommend/RecommendationContainer.compon
 import Tabs from '../tabs/Tabs.component.js';
 
 // Actions
-import RecommendationActions from '../../actions/Recommendations.action.js';
+import RecommendationActions from '../Recommend/Recommendations.action';
 import QueryActions from '../../actions/QueryUpdate.action.js';
 
 // Stores
 import ResultListStore from '../../stores/ResultList.store.js';
-import RecommendationsStore from '../../stores/Recommendations.store.js';
+import RecommendationsStore from '../Recommend/Recommendations.store';
 import QueryStore from '../../stores/QueryStore.store.js';
 
 export default React.createClass({
@@ -53,15 +53,15 @@ export default React.createClass({
   renderSearchResult() {
     const tabs = [];
     tabs.push({
-      label: 'Søgeresultat',
+      label: 'Mest poluære',
       component:
-        <SearchResultList actions={QueryActions} data={{results: this.state.results}} />,
+        <SearchResultList data={{results: this.state.results}} loadMore={QueryActions.loadMore} />,
       active: true
     });
     tabs.push({
       label: 'Anbefalinger',
       component:
-        <SearchResultList actions={QueryActions} data={{results: this.state.recommendations}} />,
+        <SearchResultList data={{results: this.state.recommendations}} loadMore={QueryActions.loadMore} />,
       active: false
     });
 
@@ -72,7 +72,7 @@ export default React.createClass({
 
   renderDefaultRecommendations() {
     return (
-      <RecommendationContainer actions={QueryActions} data={{recommendations: this.state.recommendations}} />
+      <RecommendationContainer />
     );
   },
 

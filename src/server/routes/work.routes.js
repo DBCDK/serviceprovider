@@ -79,6 +79,7 @@ WorkRoutes.get(['/', '/*'], (req, res) => {
       work: result[0]
     }).work;
 
+    res.set('Cache-Control', 'max-age=86400, s-maxage=86400, public');
     res.render('work', {
       id,
       workString: workStr

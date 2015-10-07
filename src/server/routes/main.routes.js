@@ -15,7 +15,7 @@ import {stringToObject} from '../../utils/QueryParser.util.js';
 
 // loading components
 import SearchServer from '../../client/components/searchpage/Search.server.js';
-import {defaultLikes} from '../../client/stores/Recommendations.store.js';
+import {defaultLikes} from '../../client/components/Recommend/Recommendations.store.js';
 
 import dbcMiddleware from './middleware.js';
 
@@ -35,6 +35,7 @@ MainRoutes.get(['/', '/search', '/search/*'], (req, res) => {
     }
 
     let properties = SearchServer({query, recommendations});
+    res.set('Cache-Control', 'max-age=86400, s-maxage=86400, public');
     res.render('search', properties);
   }
 

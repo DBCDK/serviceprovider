@@ -7,13 +7,14 @@
 import React from 'react';
 
 // Actions
-import RecommendationActions from '../../actions/Recommendations.action';
+import RecommendationActions from './Recommendations.action';
 
 // Stores
 import ProfileStore from '../../stores/Profile.store';
+import RecommendationStore from './Recommendations.store';
 
 // Components
-import SearchResultList from '../searchresult/SearchResultList.component.js';
+import SearchResultList from '../searchresult/SearchResultList.component';
 
 /**
  * Renders a container for Recommendations
@@ -22,13 +23,25 @@ class RecommendationContainer extends React.Component {
   constructor() {
     super();
 
-    this.unsubscribe = [
-      ProfileStore.listen(() => this.gotProfile())
-    ];
+    this.state = {
+      recommendations: {
+        result: [],
+        pending: false,
+        info: {more: false}
+      },
+      result: []
+    };
   }
 
   componentDidMount() {
-    RecommendationActions.default();
+    this.unsubscribe = [
+      ProfileStore.listen(() => this.gotProfile()),
+      RecommendationStore.listen(() => this.gotRecommendations())
+    ];
+  }
+
+  shouldComponentUpdate(nextProps, nextState) {
+    return JSON.stringify(this.state.result) !== JSON.stringify(nextState.result);
   }
 
   componentWillUnmount() {
@@ -41,6 +54,10 @@ class RecommendationContainer extends React.Component {
 
   gotProfile() {
     const profileLikes = ProfileStore.store.likes;
+    this.requestRecommendations(profileLikes);
+  }
+
+  requestRecommendations(profileLikes) {
     let likes = [];
     let dislikes = [];
 
@@ -51,22 +68,22 @@ class RecommendationContainer extends React.Component {
       else {
         dislikes.push(like.item_id);
       }
-
-      RecommendationActions.request({likes: likes, dislikes: dislikes});
     });
+
+    RecommendationActions.request({likes: likes, dislikes: dislikes});
+  }
+
+  gotRecommendations() {
+    this.setState({recommendations: RecommendationStore.store, result: RecommendationStore.store.result});
   }
 
   render() {
     return (
-      <SearchResultList actions={this.props.actions} data={{results: this.props.data.recommendations}} />
+      <SearchResultList data={{results: this.state.recommendations}} />
     );
   }
 }
 
 RecommendationContainer.displayName = 'RecommendationContainer';
-RecommendationContainer.propTypes = {
-  actions: React.PropTypes.object,
-  data: React.PropTypes.object
-};
 
 export default RecommendationContainer;
