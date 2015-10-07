@@ -71,7 +71,7 @@ const ImageEditor = React.createClass({
   loadImage: function (url, callback) {
     let self = this;
     let image = new Image();
-    image.onload = function () {
+    image.onload = function() {
 
       // set new image and reset all other state
       let isCroppable = image.width !== image.height;
@@ -101,7 +101,6 @@ const ImageEditor = React.createClass({
 
     let files;
     files = e.target.files;
-
     if (files[0]) { // if file has been selected
       let reader = new FileReader();
       reader.onload = () => {
@@ -290,7 +289,7 @@ const ImageEditor = React.createClass({
           onTouchMove={this.handleTouchMove}
           onTouchStartCapture={this.handleTouchStart}
           ref='cvs'/>
-        <input onChange={this.handleFileChanged} type='file'/>
+        <input onChange={this.handleFileChanged} ref='fileUpload' type='file'/>
         <input disabled={!isCroppable} onClick={this.handleSave} ref='cropButton' type='button' value='Beskær'/>
       </div>
     );
