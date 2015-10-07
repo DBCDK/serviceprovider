@@ -7,23 +7,18 @@
 
 import React from 'react';
 
-
 const Image = React.createClass({
 
-  displayName: function() {
-    return 'ReactImage';
+  displayName: 'ReactImage',
+
+  propTypes: {
+    url: React.PropTypes.string
   },
 
-  propTypes: function () {
-    return {
-      url: React.PropTypes.string
-    };
-  },
-
-  render: function () {
+  render: function() {
     let url = (!this.props.url) ? '/dummy.jpg' : this.props.url;
     return (
-      <img className={"profile--image-round"} src={url}></img>
+      <img className={"profile--image-round"} src={url} ></img>
     );
   }
 });
