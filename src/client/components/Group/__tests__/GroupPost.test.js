@@ -14,11 +14,11 @@ import GroupPostContainer from '../Post/GroupPostContainer.component.js';
 import GroupPostComponent from '../Post/GroupPost.component.js';
 
 describe('Test the group post components', () => {
-  it('Create GroupPostContainer without data', () => {
+  /*it('Create GroupPostContainer without data', () => {
     let element = React.createElement(GroupPostContainer, {groupPostData: {}});
     let dom = TestUtils.renderIntoDocument(element);
     React.findDOMNode(TestUtils.findRenderedComponentWithType(dom, GroupPostComponent));
-  });
+  });*/
 
   it('Create GroupPostContainer with props', () => {
     let element = React.createElement(GroupPostContainer, {

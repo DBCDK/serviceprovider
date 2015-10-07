@@ -46,8 +46,8 @@ GroupRoutes.get(['/:groupId/post/:id'], (req, res) => {
   dbcMiddleware.setupSSR(req, res, promiseResponse, (err, result) => {
     let groupPostData = result ? result[0] : {};
     let groupPostString = React.renderToString(<GroupPostComponent groupId={parseInt(req.params.groupId, 10)}
-                                                                   groupPostData={groupPostData}
-                                                                   groupPostId={parseInt(req.params.id, 10)} />);
+                                                                  groupPostData={groupPostData}
+                                                                  groupPostId={parseInt(req.params.id, 10)} />);
     res.render('group_post_view', {
       groupId: req.params.groupId,
       id: req.params.id,
