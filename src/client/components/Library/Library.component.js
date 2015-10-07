@@ -17,22 +17,11 @@ import LibraryActions from '../../actions/Library.action.js';
 import ProfileActions from '../../actions/Profile.action.js';
 
 class Library extends React.Component {
-  static displayName() {
-    return 'Library.component';
-  }
-
-  static propTypes() {
-    return {
-      id: PropTypes.string.isRequired,
-      libData: PropTypes.object
-    };
-  }
-
-  constructor() {
-    super();
+  constructor(props, ctx) {
+    super(props, ctx);
 
     this.state = {
-      library: LibraryStore.store,
+      library: LibraryStore.getInitialState(),
       profile: ProfileStore.getProfile()
     };
 
@@ -69,14 +58,12 @@ class Library extends React.Component {
   }
 
   addOrRemoveFromFavorites() {
-    return () => {
-      if (this.shouldDisableFavoriteButton()) {
-        ProfileActions.removeLibraryFromFavorites(this.state.library.data.branchId);
-      }
-      else {
-        ProfileActions.addLibraryToFavorites(this.state.library.data.branchId, this.state.library.data.agencyId);
-      }
-    };
+    if (this.shouldDisableFavoriteButton()) {
+      ProfileActions.removeLibraryFromFavorites(this.state.library.data.branchId);
+    }
+    else {
+      ProfileActions.addLibraryToFavorites(this.state.library.data.branchId, this.state.library.data.agencyId);
+    }
   }
 
   goBack() {
@@ -85,15 +72,19 @@ class Library extends React.Component {
 
   render() {
     const shouldDisableFavoriteButton = this.shouldDisableFavoriteButton();
-    const favoriteButton = this.state.profile.userIsLoggedIn ? (
-      <a className={shouldDisableFavoriteButton ? 'button alert' : 'button'} onClick={this.addOrRemoveFromFavorites()}>
-        {shouldDisableFavoriteButton ? 'Fjern biblioteket som favoritbibliotek' : 'Tilføj bibliotek til favoritter!'}
-      </a>
-    ) : ''; // Show favorite button if user is logged in, otherwise don't show.
+    let favoriteButton = '';
+
+    if (this.state.profile.userIsLoggedIn) {
+      favoriteButton = (
+        <a className={shouldDisableFavoriteButton ? 'button alert' : 'button'} onClick={this.addOrRemoveFromFavorites.bind(this)} ref='favoriteButton'>
+          {shouldDisableFavoriteButton ? 'Fjern biblioteket som favoritbibliotek' : 'Tilføj bibliotek til favoritter!'}
+        </a>
+      );
+    }
 
     return (
       <div className='library'>
-        <a className='button tiny' onClick={this.goBack}>Tilbage!</a>
+        <a className='button tiny' onClick={this.goBack} ref='backButton'>Tilbage!</a>
         <p>{this.state.library.data.agencyName}</p>
         <p>{this.state.library.data.agencyId}</p>
         <p>{this.state.library.data.branchEmail}</p>
@@ -110,5 +101,11 @@ class Library extends React.Component {
     );
   }
 }
+
+Library.displayName = 'Library.component';
+Library.propTypes = {
+  id: PropTypes.string.isRequired,
+  libData: PropTypes.object
+};
 
 export default Library;
