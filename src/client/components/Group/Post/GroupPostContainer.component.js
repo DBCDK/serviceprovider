@@ -14,8 +14,8 @@ import GroupPostStore from '../../../stores/GroupPost.store.js';
 import GroupPostActions from '../../../actions/GroupPost.action.js';
 
 class GroupPostContainerComponent extends React.Component {
-  constructor() {
-    super();
+  constructor(props, context) {
+    super(props, context);
 
     this.state = {
       profile: ProfileStore.getInitialState(),
@@ -63,7 +63,7 @@ class GroupPostContainerComponent extends React.Component {
         commentCb={this.commentOnGroupPost()}
         groupId={this.props.groupId}
         groupPostData={this.state.groupPost.data}
-        groupPostId={this.state.groupPost.data.id}
+        groupPostId={this.props.groupPostId}
         loggedIn={this.state.profile.userIsLoggedIn} />
     );
   }
