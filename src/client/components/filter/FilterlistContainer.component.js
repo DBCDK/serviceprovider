@@ -25,9 +25,10 @@ export default React.createClass({
   ],
 
   render() {
+    const filterGuide = this.state.filter.length && (<FilterGuide categories={this.state.categories.categories} elements={this.state.filter} select={QueryActions.add} />) || '';
     return (
       <div className='filterguide--wrapper' >
-        {this.state.filter.length && (<FilterGuide categories={this.state.categories.categories} elements={this.state.filter} select={QueryActions.add} />) || ''}
+        {filterGuide}
       </div>
     );
   }
