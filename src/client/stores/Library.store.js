@@ -21,8 +21,7 @@ const LibraryStore = Reflux.createStore({
       branchWebsiteUrl: '',
       query: ''
     },
-    pending: false,
-    library: {}
+    pending: false
   },
 
   getInitialState() {
