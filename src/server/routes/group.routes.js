@@ -57,6 +57,10 @@ GroupRoutes.get(['/:groupId/post/:id'], (req, res) => {
   });
 });
 
+GroupRoutes.get('/create', (req, res) => {
+  res.render('group', {});
+});
+
 GroupRoutes.get('/:id?', (req, res) => {
   var id = req.params.id;
   res.render('group', {id});
