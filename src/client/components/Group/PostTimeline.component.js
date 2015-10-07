@@ -25,6 +25,7 @@ class PostTimeline extends React.Component {
   }
 
   render() {
+    console.log(this.props.posts);
     return (
       <ul className='group--post-list'>
         {this.props.posts.map(function(post) {
@@ -32,8 +33,8 @@ class PostTimeline extends React.Component {
             <li key={post.id}>
               <Post
                 title={post.title}
-                authorName={post.author.email}
-                authorImageUrl={post.author.imageUrl}
+                authorName={post.owner.email}
+                authorImageUrl={post.owner.imageUrl}
                 comments={post.comments}
                 text={post.content}
                 timeCreated={post.timeCreated}
