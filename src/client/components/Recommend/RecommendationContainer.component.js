@@ -79,7 +79,7 @@ class RecommendationContainer extends React.Component {
 
   render() {
     return (
-      <SearchResultList data={{results: this.state.recommendations}} />
+        <SearchResultList data={{results: this.state.recommendations}} />
     );
   }
 }

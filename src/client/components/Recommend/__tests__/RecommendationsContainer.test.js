@@ -1,12 +1,21 @@
 'use strict';
+
+/**
+ * @file
+ * Testing the RecommendationsContainer component
+ */
+
+import React from 'react/addons';
 import {assert} from 'chai';
 
 import RecommendationContainer from '../RecommendationContainer.component';
 import RecommendationActions from '../Recommendations.action';
+import SearchResultList from '../../searchresult/SearchResultList.component';
 
 describe('Test the RecommendationContainer.component', () => {
   let sandbox;
   let component;
+  const TestUtils = React.addons.TestUtils;
 
   beforeEach(() => {
     sandbox = sinon.sandbox.create(); // eslint-disable-line
@@ -39,5 +48,11 @@ describe('Test the RecommendationContainer.component', () => {
     const args = RecommendationActions.request.args[0][0];
     const expected = {likes: ['1'], dislikes: ['2']};
     assert.equal(JSON.stringify(args), JSON.stringify(expected));
+  });
+
+  it('Should render a SearchResultList component', () => {
+    let element = React.createElement(RecommendationContainer);
+    let dom = TestUtils.renderIntoDocument(element);
+    assert.lengthOf(TestUtils.scryRenderedComponentsWithType(dom, SearchResultList), 1, 'RecommendationContainer rendered one SearchResultListComponent');
   });
 });
