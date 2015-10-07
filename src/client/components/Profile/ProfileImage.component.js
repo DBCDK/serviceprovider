@@ -12,23 +12,18 @@ import ProfileActions from '../../actions/Profile.action.js';
 
 
 const ProfileImage = React.createClass({
+  displayName: 'ReactProfileImage',
 
-  displayName: function() {
-    return 'ReactProfileImage';
+  propTypes: {
+    url: React.PropTypes.string,
+    editable: React.PropTypes.bool
   },
 
-  propTypes: function () {
-    return {
-      url: React.PropTypes.string,
-      editable: React.PropTypes.bool
-    };
-  },
-
-  _handleSaveImageUrl: function(imageUrl) {
+  _handleSaveImageUrl(imageUrl) {
     ProfileActions.updateProfile({imageUrl: imageUrl});
   },
 
-  render: function () {
+  render() {
     let url = this.props.url;
     let editable = this.props.editable;
     let imgComponent = editable ? <ImageEditor

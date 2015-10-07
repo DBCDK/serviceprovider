@@ -9,15 +9,11 @@ import React from 'react';
 
 const ImageEditor = React.createClass({
 
-  displayName: function () {
-    return 'ReactImageEditor';
-  },
+  displayName: 'ReactImageEditor',
 
-  propTypes: function () {
-    return {
-      initialImageUrl: React.PropTypes.string(),
-      onSave: React.PropTypes.func()
-    };
+  propTypes: {
+    initialImageUrl: React.PropTypes.string,
+    onSave: React.PropTypes.func
   },
 
   getInitialState: function () {
