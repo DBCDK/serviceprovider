@@ -12,7 +12,7 @@ import {rewriteCoverImageUrl} from '../../../utils/CoverImage.util.js';
 import {CoverImage, ResultDisplay} from 'dbc-react-components';
 import Loader from '../Loader.component.js';
 
-export default React.createClass({
+const SearchResultList = React.createClass({
   displayName: 'SearchResultList.component',
   propTypes: {
     data: React.PropTypes.object.isRequired,
@@ -43,3 +43,5 @@ export default React.createClass({
     );
   }
 });
+
+export default SearchResultList;
