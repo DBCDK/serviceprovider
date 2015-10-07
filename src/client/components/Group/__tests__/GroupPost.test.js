@@ -7,6 +7,7 @@ import TestUtils from 'react/lib/ReactTestUtils';
 import {groupPost} from './GroupPost.mock.js';
 
 import GroupPostStore from '../../../stores/GroupPost.store.js';
+import ProfileStore from '../../../stores/Profile.store.js';
 
 import GroupPostActions from '../../../actions/GroupPost.action.js';
 
@@ -46,6 +47,42 @@ describe('Test the group post components', () => {
     let GPost = React.findDOMNode(TestUtils.findRenderedComponentWithType(dom, GroupPostComponent));
     expect(GPost.innerHTML).to.contain('Dette er en kommentar');
     mock.verify();
+    mock.restore();
+  });
+
+  it('Create GroupPostContainer with props and data in state, and logged in user, send comment to check action is called', () => {
+    let sandbox = sinon.sandbox.create(); // eslint-disable-line
+    sandbox.spy(GroupPostActions, 'commentsUpdated');
+
+    let mock = sinon.mock(ProfileStore); // eslint-disable-line
+    mock.expects('getInitialState').returns({userIsLoggedIn: true});
+
+    let element = React.createElement(GroupPostContainer, {
+      groupId: groupPost.groupId,
+      groupPostData: groupPost.groupPostData,
+      groupPostId: groupPost.groupPostId
+    });
+
+    let dom = TestUtils.renderIntoDocument(element);
+    let GPost = React.findDOMNode(TestUtils.findRenderedComponentWithType(dom, GroupPostContainer));
+    expect(GPost.innerHTML).to.contain('Dette er en kommentar');
+
+    dom.state.profile.userIsLoggedIn = true;
+
+    let CForm = TestUtils.findRenderedComponentWithType(dom, CommentForm);
+    let commentField = React.findDOMNode(CForm.refs.commentField);
+    let commentButton = React.findDOMNode(CForm.refs.commentButton);
+
+    commentField.value = 'kommentaren som skal sendes';
+    TestUtils.Simulate.change(commentField);
+    TestUtils.Simulate.click(commentButton);
+
+    expect(GroupPostActions.commentsUpdated.calledWith({
+      postId: groupPost.groupPostId,
+      commentText: 'kommentaren som skal sendes'
+    }));
+
+    sandbox.restore();
     mock.restore();
   });
 
@@ -161,12 +198,13 @@ describe('Test the group post components', () => {
     expect(commentText).to.equal('');
   });
 
-  it('Create grouppost with grouppost data', () => {
-    let element = React.createElement(GroupPostComponent, {
+  it('Create grouppost with grouppost data (Test componentWillUnmount)', () => {
+    let element = React.createElement(GroupPostContainer, {
       groupPostData: groupPost.groupPostData
     });
 
     let dom = TestUtils.renderIntoDocument(element);
-    TestUtils.findRenderedComponentWithType(dom, GroupPostComponent);
+    const parentNode = React.findDOMNode(TestUtils.findRenderedComponentWithType(dom, GroupPostComponent)).parentNode;
+    React.unmountComponentAtNode(parentNode);
   });
 });
