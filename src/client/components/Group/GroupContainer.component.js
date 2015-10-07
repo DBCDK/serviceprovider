@@ -11,11 +11,6 @@ class GroupContainer extends React.Component {
     return 'GroupContainer.component';
   }
 
-  create(group) {
-    GroupActions.createGroup(group);
-    console.log('create group', group);
-  }
-
   constructor() {
     super();
 
@@ -38,8 +33,11 @@ class GroupContainer extends React.Component {
     GroupStore.unlisten(this.onUpdateGroup);
   }
 
+  create(group) {
+    GroupActions.createGroup(group);
+  }
+
   onUpdateGroup(group) {
-    console.log('got from store', group);
     this.setState(group);
   }
 

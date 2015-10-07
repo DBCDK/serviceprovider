@@ -23,12 +23,11 @@ class MemberSummary extends React.Component {
 
   render() {
     const memberCount = this.props.members.length;
-    console.log(this.props.members);
     return (
       <div className='row group--member-summary'>
         <ul className='group--member-horizontal-list small-10'>
           {this.props.members.map(function(member) {
-            return <li key={member.id}><img className='small-1 group--member-image' src={ member.imageUrl || '/dummy.jpg'} alt={member.email}></img></li>;
+            return <li key={member.id}><img alt={member.email} className='small-1 group--member-image' src={member.imageUrl || '/dummy.jpg'}></img></li>;
           })}
         </ul>
         <span className='group--member-counter small-2'>{memberCount} medlemmer</span>

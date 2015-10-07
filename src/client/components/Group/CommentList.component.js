@@ -32,9 +32,9 @@ class CommentList extends React.Component {
             return (
               <li key={comment.id}>
                 <Comment
-                  text={comment.content}
-                  authorName={'123'}
                   authorImageUrl={'/dummy.jpg'}
+                  authorName={'123'}
+                  text={comment.content}
                   timeCreated={123123123222222}
                   />
               </li>

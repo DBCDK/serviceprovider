@@ -16,20 +16,18 @@ const GroupStore = Reflux.createStore({
   },
 
   onUpdateGroup(newGroup) {
-    console.log('in store', newGroup);
 
     this.store.group = {
       name: newGroup.name,
       description: newGroup.description,
       members: newGroup.members,
       posts: newGroup.posts
-    }
+    };
 
     this.trigger(this.store.group);
   },
 
-  onConfirmCreateGroup(isSuccesful) {
-    console.log('group created', isSuccesful);
+  onConfirmCreateGroup() {
   }
 
 });

@@ -34,14 +34,14 @@ class Post extends React.Component {
     return (
       <div className='row'>
         <div>
-          <img src={this.props.authorImageUrl || '/dummy.jpg'} className='small-2 group--member-image' />
+          <img className='small-2 group--member-image' src={this.props.authorImageUrl || '/dummy.jpg'}/>
           <span className='small-8 group--post-author'>{this.props.authorName}</span>
           <span className='small-2 group--post-time'>{this.props.timeCreated}</span>
         </div>
         <div className='group--post-content small-12'>
           <h4>{this.props.title}</h4>
           <p>{this.props.text}</p>
-          <CommentList comments={this.props.comments}></CommentList>
+          <CommentList comments={this.props.comments}/>
         </div>
       </div>
     );

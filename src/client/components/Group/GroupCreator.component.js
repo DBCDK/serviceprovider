@@ -25,13 +25,11 @@ class GroupCreator extends React.Component {
         name: name,
         description: description
       };
-      console.log(this);
       this.props.onCreate(group);
     };
   }
 
   render() {
-    console.log(this);
     return (
       <div className='row'>
         <h4>Opret ny gruppe</h4>
@@ -39,7 +37,7 @@ class GroupCreator extends React.Component {
           <label>Gruppenavn</label>
           <input ref="groupName" type='text'></input>
           <label>Beskrivelse</label>
-          <textarea ref="groupDescription" placeholder='Skriv lidt om gruppen'></textarea>
+          <textarea placeholder='Skriv lidt om gruppen' ref="groupDescription"></textarea>
           <button onClick={this.createGroup()}>opret</button>
         </div>
         <div className='hide-for-small-only medium-8'>
