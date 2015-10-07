@@ -20,7 +20,6 @@ describe('Test the ImageEditor', () => {
     let dom = TestUtils.renderIntoDocument(element);
     let imageEditor = React.findDOMNode(TestUtils.findRenderedComponentWithType(dom, ImageEditor));
     let uploadButton = TestUtils.findRenderedComponentWithType(dom, ImageEditor).refs.fileUpload;
-    console.log(uploadButton);
     TestUtils.Simulate.change(uploadButton,
       {
         target: {

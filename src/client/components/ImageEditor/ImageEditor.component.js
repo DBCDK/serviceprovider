@@ -105,7 +105,6 @@ const ImageEditor = React.createClass({
 
     let files;
     files = e.target.files;
-    console.log(e.target.files);
     if (files[0]) { // if file has been selected
       let reader = new FileReader();
       reader.onload = () => {
