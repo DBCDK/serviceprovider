@@ -50,7 +50,6 @@ describe('Testing the AutoComplete Store', () => {
 
     const result = AutoCompleteStore.parseResponse(response, {});
     assert.isObject(result, 'Got object');
-    console.log(result);
     assert.equal(JSON.stringify(result), JSON.stringify(expected), 'Result matches expectations');
   });
 
