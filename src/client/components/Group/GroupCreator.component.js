@@ -20,7 +20,7 @@ class GroupCreator extends React.Component {
   createGroup() {
     return () => {
       let name = React.findDOMNode(this.refs.groupName).value.trim();
-      let description = React.findDOMNode(this.refs.groupName).value.trim();
+      let description = React.findDOMNode(this.refs.groupDescription).value.trim();
       const group = {
         name: name,
         description: description
