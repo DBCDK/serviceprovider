@@ -24,7 +24,7 @@ describe('Testing the ProfileImage Component', () => {
 
   it('Should render a ReactImageEditor component', () => {
     render = TestUtils.createRenderer();
-    render.render(<ProfileImage editable={true} />);
+    render.render(<ProfileImage editable={true} />); // eslint-disable-line react/jsx-boolean-value
     const rendered = render.getRenderOutput();
     assert.equal(rendered.type, 'div', 'Found div');
     assert.equal(rendered._store.props.children.type.displayName, 'ReactImageEditor', 'Found ReactImageEditor');
