@@ -6,7 +6,7 @@
 
 import {expect} from 'chai';
 import React from 'react';
-import TestUtils from 'react/lib/ReactTestUtils';
+import TestUtils from 'react-addons-test-utils';
 import Search from '../SearchFieldContainer.component.js';
 import {TokenSearchField} from 'dbc-react-components';
 import QueryStore from '../../../stores/QueryStore.store.js';
@@ -46,8 +46,8 @@ describe('Test the Search component', () => {
 
     let element = React.createElement(Search);
     let dom = TestUtils.renderIntoDocument(element);
-    let tokens = TestUtils.scryRenderedDOMComponentsWithClass(dom, 'token');
-    TestUtils.Simulate.click(TestUtils.findRenderedDOMComponentWithClass(tokens[0], 'remove'));
+    const domElement = TestUtils.scryRenderedDOMComponentsWithClass(dom, 'remove');
+    TestUtils.Simulate.click(domElement[0]);
 
     let store = QueryStore.getInitialState();
     expect(store.query).to.have.length(1);

@@ -4,7 +4,7 @@ import {expect} from 'chai';
 import QueryStore from '../QueryStore.store.js';
 import queryAction from '../../actions/QueryUpdate.action.js';
 
-describe('Test Reflux Query Store', () => {
+describe('Test the QueryStore', () => {
 
   beforeEach(() => {
     QueryStore.onReset();

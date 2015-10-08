@@ -6,7 +6,7 @@
 
 import {expect} from 'chai';
 import React from 'react';
-import TestUtils from 'react/lib/ReactTestUtils';
+import TestUtils from 'react-addons-test-utils';
 import Filter from '../FilterlistContainer.component.js';
 import {FilterGuide} from 'dbc-react-components';
 import FilterStore from '../../../stores/FilterStore.store.js';
