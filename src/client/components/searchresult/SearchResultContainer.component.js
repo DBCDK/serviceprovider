@@ -53,7 +53,7 @@ export default React.createClass({
   renderSearchResult() {
     const tabs = [];
     tabs.push({
-      label: 'Mest poluære',
+      label: 'Søgeresultat',
       component:
         <SearchResultList data={{results: this.state.results}} loadMore={QueryActions.loadMore} />,
       active: true
