@@ -2,7 +2,7 @@
 
 import {expect} from 'chai';
 import React from 'react';
-import TestUtils from 'react/lib/ReactTestUtils';
+import TestUtils from 'react-addons-test-utils';
 
 import Library from '../Library.component.js';
 import {libraryMock} from './library.mock.js';
@@ -14,7 +14,7 @@ import ProfileActions from '../../../actions/Profile.action.js';
 
 describe('Test the library component', () => {
   it('Create library without props', () => {
-    let element = React.createElement(Library, {});
+    let element = React.createElement(Library, {id: ''});
     let dom = TestUtils.renderIntoDocument(element);
     let dmn = React.findDOMNode(TestUtils.findRenderedComponentWithType(dom, Library));
     expect(dmn.innerHTML).to.contain('Tilbage!');
