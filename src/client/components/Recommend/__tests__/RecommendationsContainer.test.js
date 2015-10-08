@@ -5,7 +5,8 @@
  * Testing the RecommendationsContainer component
  */
 
-import React from 'react/addons';
+import React from 'react';
+import TestUtils from 'react-addons-test-utils';
 import {assert} from 'chai';
 
 import RecommendationContainer from '../RecommendationContainer.component';
@@ -15,7 +16,6 @@ import SearchResultList from '../../searchresult/SearchResultList.component';
 describe('Test the RecommendationContainer.component', () => {
   let sandbox;
   let component;
-  const TestUtils = React.addons.TestUtils;
 
   beforeEach(() => {
     sandbox = sinon.sandbox.create(); // eslint-disable-line
