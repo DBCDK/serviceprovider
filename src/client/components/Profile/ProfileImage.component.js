@@ -15,8 +15,8 @@ const ProfileImage = React.createClass({
   displayName: 'ReactProfileImage',
 
   propTypes: {
-    url: React.PropTypes.string,
-    editable: React.PropTypes.bool
+    editable: React.PropTypes.bool,
+    url: React.PropTypes.string
   },
 
   _handleSaveImageUrl(imageUrl) {

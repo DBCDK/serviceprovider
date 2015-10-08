@@ -6,7 +6,6 @@ import TestUtils from 'react/lib/ReactTestUtils';
 
 import GroupActions from '../../../actions/Group.action.js';
 
-import GroupContainer from '../GroupContainer.component.js';
 import Group from '../Group.component.js';
 import Post from '../Post.component.js';
 
