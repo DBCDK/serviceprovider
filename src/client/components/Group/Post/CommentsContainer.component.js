@@ -36,7 +36,7 @@ class CommentsContainerComponent extends React.Component {
 
     return (
       <div>
-        <h4>{comments.length} Kommentarer</h4>
+        <h4>{allComments.length} Kommentarer</h4>
         <button className='tiny' onClick={this.toggleExpand}>{expandButtonText}</button>
         <hr />
         {comments}
