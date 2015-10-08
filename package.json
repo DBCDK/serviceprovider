@@ -56,6 +56,7 @@
     "passport-local": "^1.0.0",
     "react": "^0.14.0",
     "react-addons-test-utils": "^0.14.0",
+    "react-dom": "^0.14.0",
     "reflux": "https://github.com/DBCDK/refluxjs/archive/v0.2.13-dbc.tar.gz",
     "sass-loader": "^3.0.0",
     "socket.io": "^1.3.5",

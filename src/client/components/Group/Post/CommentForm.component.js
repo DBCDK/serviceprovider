@@ -1,10 +1,11 @@
 'use strict';
 
 import React, {PropTypes} from 'react';
+import ReactDom from 'react-dom';
 
 class CommentFormComponent extends React.Component {
   sendComment() {
-    const commentText = React.findDOMNode(this.refs.commentField).value.trim();
+    const commentText = ReactDom.findDOMNode(this.refs.commentField).value.trim();
     if (this.props.loggedIn && commentText !== '' && this.props.commentCb) {
       this.props.commentCb(commentText);
     }

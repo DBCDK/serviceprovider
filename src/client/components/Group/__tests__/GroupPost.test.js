@@ -2,7 +2,8 @@
 
 import {expect} from 'chai';
 import React from 'react';
-import TestUtils from 'react/lib/ReactTestUtils';
+import ReactDom from 'react-dom';
+import TestUtils from 'react-addons-test-utils';
 
 import {groupPost} from './GroupPost.mock.js';
 
@@ -19,7 +20,7 @@ describe('Test the group post components', () => {
   it('Create GroupPostContainer without data', () => {
     let element = React.createElement(GroupPostContainer, {groupPostData: {}});
     let dom = TestUtils.renderIntoDocument(element);
-    React.findDOMNode(TestUtils.findRenderedComponentWithType(dom, GroupPostComponent));
+    ReactDom.findDOMNode(TestUtils.findRenderedComponentWithType(dom, GroupPostComponent));
   });
 
   it('Create GroupPostContainer with props', () => {
@@ -29,7 +30,7 @@ describe('Test the group post components', () => {
       groupPostId: groupPost.groupPostId
     });
     let dom = TestUtils.renderIntoDocument(element);
-    let GPost = React.findDOMNode(TestUtils.findRenderedComponentWithType(dom, GroupPostComponent));
+    let GPost = ReactDom.findDOMNode(TestUtils.findRenderedComponentWithType(dom, GroupPostComponent));
     expect(GPost.innerHTML).to.contain('Dette er en kommentar');
   });
 
@@ -44,7 +45,7 @@ describe('Test the group post components', () => {
     });
 
     let dom = TestUtils.renderIntoDocument(element);
-    let GPost = React.findDOMNode(TestUtils.findRenderedComponentWithType(dom, GroupPostComponent));
+    let GPost = ReactDom.findDOMNode(TestUtils.findRenderedComponentWithType(dom, GroupPostComponent));
     expect(GPost.innerHTML).to.contain('Dette er en kommentar');
     mock.verify();
     mock.restore();
@@ -64,14 +65,14 @@ describe('Test the group post components', () => {
     });
 
     let dom = TestUtils.renderIntoDocument(element);
-    let GPost = React.findDOMNode(TestUtils.findRenderedComponentWithType(dom, GroupPostContainer));
+    let GPost = ReactDom.findDOMNode(TestUtils.findRenderedComponentWithType(dom, GroupPostContainer));
     expect(GPost.innerHTML).to.contain('Dette er en kommentar');
 
     dom.state.profile.userIsLoggedIn = true;
 
     let CForm = TestUtils.findRenderedComponentWithType(dom, CommentForm);
-    let commentField = React.findDOMNode(CForm.refs.commentField);
-    let commentButton = React.findDOMNode(CForm.refs.commentButton);
+    let commentField = ReactDom.findDOMNode(CForm.refs.commentField);
+    let commentButton = ReactDom.findDOMNode(CForm.refs.commentButton);
 
     commentField.value = 'kommentaren som skal sendes';
     TestUtils.Simulate.change(commentField);
@@ -97,7 +98,7 @@ describe('Test the group post components', () => {
     });
 
     let dom = TestUtils.renderIntoDocument(element);
-    let GPost = React.findDOMNode(TestUtils.findRenderedComponentWithType(dom, GroupPostComponent));
+    let GPost = ReactDom.findDOMNode(TestUtils.findRenderedComponentWithType(dom, GroupPostComponent));
     expect(GPost.innerHTML).to.contain('Dette er en kommentar');
 
     expect(GroupPostActions.fetchGroupPost.calledOnce).to.equal(true);
@@ -120,8 +121,8 @@ describe('Test the group post components', () => {
 
     let dom = TestUtils.renderIntoDocument(element);
     let CForm = TestUtils.findRenderedComponentWithType(dom, CommentForm);
-    let commentField = React.findDOMNode(CForm.refs.commentField);
-    let commentButton = React.findDOMNode(CForm.refs.commentButton);
+    let commentField = ReactDom.findDOMNode(CForm.refs.commentField);
+    let commentButton = ReactDom.findDOMNode(CForm.refs.commentButton);
     commentField.value = 'commenting is fun';
     TestUtils.Simulate.change(commentField);
     TestUtils.Simulate.click(commentButton);
@@ -144,8 +145,8 @@ describe('Test the group post components', () => {
 
     let dom = TestUtils.renderIntoDocument(element);
     let CForm = TestUtils.findRenderedComponentWithType(dom, CommentForm);
-    let commentField = React.findDOMNode(CForm.refs.commentField);
-    let commentButton = React.findDOMNode(CForm.refs.commentButton);
+    let commentField = ReactDom.findDOMNode(CForm.refs.commentField);
+    let commentButton = ReactDom.findDOMNode(CForm.refs.commentButton);
     commentField.value = '';
     TestUtils.Simulate.change(commentField);
     TestUtils.Simulate.click(commentButton);
@@ -168,8 +169,8 @@ describe('Test the group post components', () => {
 
     let dom = TestUtils.renderIntoDocument(element);
     let CForm = TestUtils.findRenderedComponentWithType(dom, CommentForm);
-    let commentField = React.findDOMNode(CForm.refs.commentField);
-    let commentButton = React.findDOMNode(CForm.refs.commentButton);
+    let commentField = ReactDom.findDOMNode(CForm.refs.commentField);
+    let commentButton = ReactDom.findDOMNode(CForm.refs.commentButton);
     commentField.value = 'per er sej';
     TestUtils.Simulate.change(commentField);
     TestUtils.Simulate.click(commentButton);
@@ -189,8 +190,8 @@ describe('Test the group post components', () => {
 
     let dom = TestUtils.renderIntoDocument(element);
     let CForm = TestUtils.findRenderedComponentWithType(dom, CommentForm);
-    let commentField = React.findDOMNode(CForm.refs.commentField);
-    let commentButton = React.findDOMNode(CForm.refs.commentButton);
+    let commentField = ReactDom.findDOMNode(CForm.refs.commentField);
+    let commentButton = ReactDom.findDOMNode(CForm.refs.commentButton);
     commentField.value = 'this comment won\'t display';
     TestUtils.Simulate.change(commentField);
     TestUtils.Simulate.click(commentButton);
@@ -204,7 +205,7 @@ describe('Test the group post components', () => {
     });
 
     let dom = TestUtils.renderIntoDocument(element);
-    const parentNode = React.findDOMNode(TestUtils.findRenderedComponentWithType(dom, GroupPostComponent)).parentNode;
-    React.unmountComponentAtNode(parentNode);
+    const parentNode = ReactDom.findDOMNode(TestUtils.findRenderedComponentWithType(dom, GroupPostComponent)).parentNode;
+    ReactDom.unmountComponentAtNode(parentNode);
   });
 });

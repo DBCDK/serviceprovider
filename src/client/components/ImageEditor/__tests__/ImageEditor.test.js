@@ -2,7 +2,8 @@
 
 import {expect} from 'chai';
 import React from 'react';
-import TestUtils from 'react/lib/ReactTestUtils';
+import ReactDom from 'react-dom';
+import TestUtils from 'react-addons-test-utils';
 
 import ImageEditor from '../ImageEditor.component.js';
 
@@ -11,14 +12,14 @@ describe('Test the ImageEditor', () => {
   it('should create ImageEditor', () => {
     let element = React.createElement(ImageEditor, {});
     let dom = TestUtils.renderIntoDocument(element);
-    let imageEditor = React.findDOMNode(TestUtils.findRenderedComponentWithType(dom, ImageEditor));
+    let imageEditor = ReactDom.findDOMNode(TestUtils.findRenderedComponentWithType(dom, ImageEditor));
     expect(imageEditor.innerHTML).to.contain('Beskær');
   });
 
   it('render image after upload', () => {
     let element = React.createElement(ImageEditor, {});
     let dom = TestUtils.renderIntoDocument(element);
-    let imageEditor = React.findDOMNode(TestUtils.findRenderedComponentWithType(dom, ImageEditor));
+    let imageEditor = ReactDom.findDOMNode(TestUtils.findRenderedComponentWithType(dom, ImageEditor));
     let uploadButton = TestUtils.findRenderedComponentWithType(dom, ImageEditor).refs.fileUpload;
     TestUtils.Simulate.change(uploadButton,
       {

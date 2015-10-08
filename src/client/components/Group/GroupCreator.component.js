@@ -1,6 +1,7 @@
 'use strict';
 
 import React, {PropTypes} from 'react';
+import ReactDom from 'react-dom';
 
 class GroupCreator extends React.Component {
   static displayName() {
@@ -19,8 +20,8 @@ class GroupCreator extends React.Component {
 
   createGroup() {
     return () => {
-      let name = React.findDOMNode(this.refs.groupName).value.trim();
-      let description = React.findDOMNode(this.refs.groupDescription).value.trim();
+      let name = ReactDom.findDOMNode(this.refs.groupName).value.trim();
+      let description = ReactDom.findDOMNode(this.refs.groupDescription).value.trim();
       const group = {
         name: name,
         description: description

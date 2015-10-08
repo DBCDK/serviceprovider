@@ -50,7 +50,7 @@ const ImageEditor = React.createClass({
 
     if (typeof this.state.image !== 'undefined') {
       // get drawing context
-      let canvas = React.findDOMNode(this.refs.cvs);
+      let canvas = this.refs.cvs;
       let ctx = canvas.getContext('2d');
 
       let image = this.state.image;
@@ -116,7 +116,7 @@ const ImageEditor = React.createClass({
   handleSave: function () {
     const self = this;
     // create new image from crop selection
-    let canvas = React.findDOMNode(this.refs.cvs);
+    let canvas = this.refs.cvs;
 
     let croppedImageUrl = canvas.toDataURL('image/png');
 
@@ -173,7 +173,7 @@ const ImageEditor = React.createClass({
     else if (isLandscape) {
 
       // compute canvas image dimensions
-      let canvas = React.findDOMNode(this.refs.cvs);
+      let canvas = this.refs.cvs;
       let ctx = canvas.getContext('2d');
       let ratio = this.state.image.height / this.state.image.width;
       let cvsImageWidth = (1 / ratio) * ctx.canvas.width;
@@ -190,7 +190,7 @@ const ImageEditor = React.createClass({
     else {
 
       // compute canvas image dimensions
-      let canvas = React.findDOMNode(this.refs.cvs);
+      let canvas = this.refs.cvs;
       let ctx = canvas.getContext('2d');
       let ratio = this.state.image.height / this.state.image.width;
       let cvsImageHeight = ratio * ctx.canvas.height;

@@ -50,7 +50,6 @@ describe('Test the Search component', () => {
     TestUtils.Simulate.click(domElement[0]);
 
     let store = QueryStore.getInitialState();
-    console.log(store.query);
     expect(store.query).to.have.length(1);
   });
 });

@@ -2,6 +2,7 @@
 
 import {assert, expect} from 'chai';
 import React from 'react';
+import ReactDom from 'react-dom';
 import TestUtils from 'react-addons-test-utils';
 
 import Profile from '../Profile.component.js';
@@ -25,11 +26,11 @@ describe('Test the Profile component', () => {
     let dom = TestUtils.renderIntoDocument(element);
     assert.equal(testProfile.editEnabled, false);
     let header = TestUtils.findRenderedComponentWithType(dom, ProfileHeader);
-    let toggleButtonText = React.findDOMNode(header.refs.toggleButton).text;
+    let toggleButtonText = ReactDom.findDOMNode(header.refs.toggleButton).text;
     expect(toggleButtonText).to.be.equal('Rediger');
-    TestUtils.Simulate.click(header.refs.toggleButton.getDOMNode());
+    TestUtils.Simulate.click(header.refs.toggleButton);
     setTimeout(() => {
-      toggleButtonText = React.findDOMNode(header.refs.toggleButton).text;
+      toggleButtonText = ReactDom.findDOMNode(header.refs.toggleButton).text;
       expect(toggleButtonText).to.be.equal('Gem');
       done();
     }, 0);
