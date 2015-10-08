@@ -9,6 +9,7 @@ import express from 'express';
 import passport from 'passport';
 import dbcMiddleware from './middleware.js';
 import React from 'react';
+import ReactDOM from 'react-dom/server';
 
 import Profile from '../../client/components/Profile/Profile.component.js';
 import Login from '../../client/components/Login/Login.component.js';
@@ -67,7 +68,7 @@ PassportRoutes.get('/confirm', (req, res) => {
 
 PassportRoutes.get('/signup', (req, res) => {
   res.render('signup', {
-    signUpString: React.renderToString(<Signup />)
+    signUpString: ReactDOM.renderToString(<Signup />)
   });
 });
 
@@ -94,7 +95,7 @@ PassportRoutes.post('/signup', (req, res) => {
 
     Promise.all(resp).then(() => {
       res.render('signup', {
-        signUpString: React.renderToString(<Signup />),
+        signUpString: ReactDOM.renderToString(<Signup />),
         message: {
           text: 'Vi har sendt en bekræftelse-email til dig',
           error: false
@@ -109,7 +110,7 @@ PassportRoutes.post('/signup', (req, res) => {
     // we have validation errors!
     const errorMessage = req.validationErrors()[0].msg;
     res.render('signup', {
-      signUpString: React.renderToString(<Signup />),
+      signUpString: ReactDOM.renderToString(<Signup />),
       message: {
         text: errorMessage,
         error: true
@@ -120,19 +121,19 @@ PassportRoutes.post('/signup', (req, res) => {
 
 PassportRoutes.get('/resetpassword', (req, res) => {
   res.render('resetpassword', {
-    resetString: React.renderToString(<ResetPassword />)
+    resetString: ReactDOM.renderToString(<ResetPassword />)
   });
 });
 
 PassportRoutes.get('/login', (req, res) => {
   res.render('login', {
-    loginString: React.renderToString(<Login />)
+    loginString: ReactDOM.renderToString(<Login />)
   });
 });
 
 PassportRoutes.get('/', dbcMiddleware.ensureAuthenticated, (req, res) => {
   res.render('profile', {
-    profileString: React.renderToString(<Profile />)
+    profileString: ReactDOM.renderToString(<Profile />)
   });
 });
 

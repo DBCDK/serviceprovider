@@ -1,9 +1,9 @@
 'use strict';
 
-import React from 'react';
+import ReactDOM from 'react-dom';
 import LibrarySuggestContainerComponent from './LibrarySuggestContainer.component.js';
 
-React.render(
+ReactDOM.render(
   <LibrarySuggestContainerComponent
     libraryData={window.libSuggestProps.libraryData || []}
     query={window.libSuggestProps.qObj || []} />,

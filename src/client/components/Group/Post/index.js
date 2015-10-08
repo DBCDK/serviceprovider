@@ -1,9 +1,9 @@
 'use strict';
 
-import React from 'react';
+import ReactDOM from 'react-dom';
 import GroupPostContainerComponent from './GroupPostContainer.component.js';
 
-React.render(
+ReactDOM.render(
   <GroupPostContainerComponent
     groupId={window.groupId[0]}
     groupPostData={window.groupPostData}

@@ -4,7 +4,7 @@
  * entry point for the search page
  */
 
-import React from 'react';
+import ReactDOM from 'react-dom';
 import Search from './SearchPageLayout.component.js';
 
 /**
@@ -13,7 +13,7 @@ import Search from './SearchPageLayout.component.js';
  * If a querystring from the url exists it is added to the global window object, and should be passed to the client
  */
 
-React.render(
+ReactDOM.render(
   <Search
     query={window.QUERYSTRING_PROPS.query || {}}
     recommendations={window.QUERYSTRING_PROPS.recommendations || {}}
