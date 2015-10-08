@@ -5,7 +5,7 @@
  * This file is the entrypoint for the ResetPassword component
  */
 
-import React from 'react';
+import ReactDOM from 'react-dom';
 import ResetPassword from './ResetPassword.component.js';
 
-React.render(<ResetPassword/>, document.getElementById('resetpassword'), null);
+ReactDOM.render(<ResetPassword/>, document.getElementById('resetpassword'), null);
