@@ -113,8 +113,8 @@ function runAllTests(driverCaps) {
   test.describe('Library', function () {
     test.it('SSR rendering of library', function () {
       var driver = driverCaps.build();
-      var libraryId = '786008';
-      var agencyTitle = 'Hjørring Bibliotekerne';
+      var libraryId = '710100';
+      var agencyTitle = 'Københavns Biblioteker';
 
       // ssrTimeout url param sets how many milliseconds to wait for data
       // Test times out before the ssrTimeout to ensure whats sent is rendered server side

@@ -13,17 +13,6 @@ import LibrarySearchStore from '../../stores/LibrarySearch.store.js';
 import QueryStore from '../../stores/QueryStore.store.js';
 
 class LibrarySuggestContainerComponent extends React.Component {
-  static displayName() {
-    return 'LibrarySuggestContainer.component';
-  }
-
-  static propTypes() {
-    return {
-      libraryData: React.PropTypes.array,
-      query: React.PropTypes.array
-    };
-  }
-
   constructor() {
     super();
 
@@ -78,5 +67,11 @@ class LibrarySuggestContainerComponent extends React.Component {
     );
   }
 }
+
+LibrarySuggestContainerComponent.displayName = 'LibrarySuggestContainer.component';
+LibrarySuggestContainerComponent.propTypes = {
+  libraryData: React.PropTypes.array,
+  query: React.PropTypes.array
+};
 
 export default LibrarySuggestContainerComponent;

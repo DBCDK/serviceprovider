@@ -2,7 +2,8 @@
 
 import {expect} from 'chai';
 import React from 'react';
-import TestUtils from 'react/lib/ReactTestUtils';
+import ReactDom from 'react-dom';
+import TestUtils from 'react-addons-test-utils';
 
 import GroupActions from '../../../actions/Group.action.js';
 
@@ -21,7 +22,7 @@ describe('Test the group components', () => {
       commentCb: () => {}
     });
     let dom = TestUtils.renderIntoDocument(element);
-    let group = React.findDOMNode(TestUtils.findRenderedComponentWithType(dom, Group));
+    let group = ReactDom.findDOMNode(TestUtils.findRenderedComponentWithType(dom, Group));
     expect(group.innerHTML).to.contain('<img');
   });
 
@@ -47,7 +48,7 @@ describe('Test the group components', () => {
       commentCb: () => {}
     });
     let dom = TestUtils.renderIntoDocument(element);
-    let group = React.findDOMNode(TestUtils.findRenderedComponentWithType(dom, GroupPost));
+    let group = ReactDom.findDOMNode(TestUtils.findRenderedComponentWithType(dom, GroupPost));
     expect(group.innerHTML).to.contain('Skriv kommentar');
   });
 
@@ -95,7 +96,7 @@ describe('Test the group components', () => {
     GroupActions.updateGroup(newGroup);
 
     let dom = TestUtils.renderIntoDocument(element);
-    let group = React.findDOMNode(TestUtils.findRenderedComponentWithType(dom, GroupPost));
+    let group = ReactDom.findDOMNode(TestUtils.findRenderedComponentWithType(dom, GroupPost));
     expect(group.innerHTML).to.contain('Skriv kommentar');
   });
 

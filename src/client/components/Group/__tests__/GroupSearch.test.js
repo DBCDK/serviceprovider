@@ -2,7 +2,8 @@
 
 import {expect} from 'chai';
 import React from 'react';
-import TestUtils from 'react/lib/ReactTestUtils';
+import ReactDom from 'react-dom';
+import TestUtils from 'react-addons-test-utils';
 
 import GroupSearchResultsComponent from '../Search/GroupSearchResults.component.js';
 import {groupSearchMock} from './GroupSearch.mock.js';
@@ -19,7 +20,7 @@ describe('Test the group search components', () => {
       searchingPlaceholder: searchPlaceholder
     });
     let dom = TestUtils.renderIntoDocument(element);
-    let dmn = React.findDOMNode(TestUtils.findRenderedComponentWithType(dom, GroupSearchResultsComponent));
+    let dmn = ReactDom.findDOMNode(TestUtils.findRenderedComponentWithType(dom, GroupSearchResultsComponent));
     expect(dmn.innerHTML).to.contain(searchPlaceholder);
   });
 
@@ -34,7 +35,7 @@ describe('Test the group search components', () => {
       searchingPlaceholder: ''
     });
     let dom = TestUtils.renderIntoDocument(element);
-    let dmn = React.findDOMNode(TestUtils.findRenderedComponentWithType(dom, GroupSearchResultsComponent));
+    let dmn = ReactDom.findDOMNode(TestUtils.findRenderedComponentWithType(dom, GroupSearchResultsComponent));
     expect(dmn.innerHTML).to.contain(emptyPlaceholder);
   });
 
@@ -48,7 +49,7 @@ describe('Test the group search components', () => {
       query: []
     });
     let dom = TestUtils.renderIntoDocument(element);
-    let dmn = React.findDOMNode(TestUtils.findRenderedComponentWithType(dom, GroupSearchResultsComponent));
+    let dmn = ReactDom.findDOMNode(TestUtils.findRenderedComponentWithType(dom, GroupSearchResultsComponent));
     expect(dmn.innerHTML).to.not.contain(emptyPlaceholder);
     expect(dmn.innerHTML).to.not.contain(searchPlaceholder);
   });
@@ -62,7 +63,7 @@ describe('Test the group search components', () => {
       query: ['']
     });
     let dom = TestUtils.renderIntoDocument(element);
-    let dmn = React.findDOMNode(TestUtils.findRenderedComponentWithType(dom, GroupSearchResultsComponent));
+    let dmn = ReactDom.findDOMNode(TestUtils.findRenderedComponentWithType(dom, GroupSearchResultsComponent));
     expect(dmn.innerHTML).to.contain(searchPlaceholder);
   });
 
@@ -75,7 +76,7 @@ describe('Test the group search components', () => {
       query: ['']
     });
     let dom = TestUtils.renderIntoDocument(element);
-    let dmn = React.findDOMNode(TestUtils.findRenderedComponentWithType(dom, GroupSearchResultsComponent));
+    let dmn = ReactDom.findDOMNode(TestUtils.findRenderedComponentWithType(dom, GroupSearchResultsComponent));
     expect(dmn.innerHTML).to.contain(emptyPlaceholder);
   });
 
@@ -86,7 +87,7 @@ describe('Test the group search components', () => {
       query: [groupSearchMock[3].name]
     });
     let dom = TestUtils.renderIntoDocument(element);
-    let dmn = React.findDOMNode(TestUtils.findRenderedComponentWithType(dom, GroupSearchResultsComponent));
+    let dmn = ReactDom.findDOMNode(TestUtils.findRenderedComponentWithType(dom, GroupSearchResultsComponent));
     expect(dmn.innerHTML).to.contain('search-item');
   });
 });

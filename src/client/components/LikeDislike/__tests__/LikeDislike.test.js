@@ -5,7 +5,8 @@
  */
 
 import React from 'react';
-import TestUtils from 'react/lib/ReactTestUtils';
+import ReactDom from 'react-dom';
+import TestUtils from 'react-addons-test-utils';
 import {assert} from 'chai';
 
 import LikeContainer from '../LikeContainer.component.js';
@@ -49,7 +50,7 @@ describe('Testing the Like container', () => {
   });
 
   it('Should invoke onClick on click', () => {
-    TestUtils.Simulate.click(component.getDOMNode());
+    TestUtils.Simulate.click(ReactDom.findDOMNode(component));
     assert.isTrue(ProfileActions.likeObject.called);
     assert.isTrue(ProfileActions.likeObject.calledWith('some_pid'));
   });
@@ -91,7 +92,7 @@ describe('Testing the Dislike container', () => {
   });
 
   it('Should invoke onClick on click', () => {
-    TestUtils.Simulate.click(component.getDOMNode());
+    TestUtils.Simulate.click(ReactDom.findDOMNode(component));
     assert.isTrue(ProfileActions.dislikeObject.called);
     assert.isTrue(ProfileActions.dislikeObject.calledWith('some_pid'));
   });

@@ -6,20 +6,6 @@ import LibrarySearchResultsItem from './LibrarySearchResultsItem.component.js';
 import {isEmpty} from 'lodash';
 
 class LibrarySearchResultsComponent extends React.Component {
-  static displayName() {
-    return 'LibrarySearchResults.component';
-  }
-
-  static propTypes() {
-    return {
-      data: PropTypes.array.isRequired,
-      emptyMessage: PropTypes.string,
-      pending: PropTypes.bool,
-      query: PropTypes.array.isRequired,
-      searchingPlaceholder: PropTypes.string
-    };
-  }
-
   render() {
     let rows = [];
     this.props.data.forEach((val, index) => {
@@ -48,5 +34,14 @@ class LibrarySearchResultsComponent extends React.Component {
     );
   }
 }
+
+LibrarySearchResultsComponent.displayName = 'LibrarySearchResults.component';
+LibrarySearchResultsComponent.propTypes = {
+  data: PropTypes.array.isRequired,
+  emptyMessage: PropTypes.string,
+  pending: PropTypes.bool,
+  query: PropTypes.array.isRequired,
+  searchingPlaceholder: PropTypes.string
+};
 
 export default LibrarySearchResultsComponent;

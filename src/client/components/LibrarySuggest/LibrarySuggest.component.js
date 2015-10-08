@@ -16,17 +16,6 @@ import InputFieldStore from '../../stores/InputField.store.js';
 import LibrarySuggestStore from '../../stores/LibrarySuggest.store.js';
 
 class LibrarySuggestComponent extends React.Component {
-  static displayName() {
-    return 'LibrarySuggest.component';
-  }
-
-  static propTypes() {
-    return {
-      placeholder: PropTypes.string,
-      query: PropTypes.array.isRequired
-    };
-  }
-
   constructor() {
     super();
 
@@ -78,5 +67,11 @@ class LibrarySuggestComponent extends React.Component {
     );
   }
 }
+
+LibrarySuggestComponent.displayName = 'LibrarySuggest.component';
+LibrarySuggestComponent.propTypes = {
+  placeholder: PropTypes.string,
+  query: PropTypes.array.isRequired
+};
 
 export default LibrarySuggestComponent;

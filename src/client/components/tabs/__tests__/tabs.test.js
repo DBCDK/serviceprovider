@@ -6,7 +6,7 @@
 
 import {expect} from 'chai';
 import React from 'react';
-import TestUtils from 'react/lib/ReactTestUtils';
+import TestUtils from 'react-addons-test-utils';
 import Tabs from '../Tabs.component.js';
 import TabsButton from '../TabsButton.component.js';
 
