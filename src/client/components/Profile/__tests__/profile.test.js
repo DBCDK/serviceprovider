@@ -2,7 +2,8 @@
 
 import {assert, expect} from 'chai';
 import React from 'react';
-import TestUtils from 'react/lib/ReactTestUtils';
+import TestUtils from 'react-addons-test-utils';
+
 import Profile from '../Profile.component.js';
 import ProfileHeader from '../ProfileHeader.component.js';
 import Image from '../ProfileImage.component.js';
@@ -18,7 +19,7 @@ let testProfile = {
 
 
 describe('Test the Profile component', () => {
-  it('should toggle to edit mode when edit button is clicked', () => {
+  it('should toggle to edit mode when edit button is clicked', (done) => {
 
     let element = React.createElement(Profile, {testProfile});
     let dom = TestUtils.renderIntoDocument(element);
@@ -30,8 +31,10 @@ describe('Test the Profile component', () => {
     setTimeout(() => {
       toggleButtonText = React.findDOMNode(header.refs.toggleButton).text;
       expect(toggleButtonText).to.be.equal('Gem');
+      done();
     }, 0);
   });
+
   it('should have a profile image in non-edit mode', () => {
     let element = React.createElement(Profile, {testProfile});
     let dom = TestUtils.renderIntoDocument(element);
