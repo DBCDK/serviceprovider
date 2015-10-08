@@ -13,7 +13,9 @@
     "serve": "supervisor --harmony -w src/app.js,src/server,node_modules src/main.js",
     "build": "webpack --progress --colors -p",
     "start:watch": "webpack --progress --colors --watch -d",
-    "dev": "parallelshell \"npm run start:watch -s\" \"npm run serve -s\""
+    "dev": "parallelshell \"npm run start:watch -s\" \"npm run serve -s\"",
+    "siege": "siege -c2000 -d10 -t5M -i -f siegetestendpoints.txt",
+    "siege:live": "siege -c2000 -d10 -t5M -i -f siegedemoendpoints.txt"
   },
   "repository": {
     "type": "git",
