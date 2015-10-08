@@ -3,16 +3,6 @@
 import React, {PropTypes} from 'react';
 
 class LibrarySearchResultsItemComponent extends React.Component {
-  static displayName() {
-    return 'LibrarySearchResultsItem.component';
-  }
-
-  static propTypes() {
-    return {
-      libraryData: PropTypes.object.isRequired
-    };
-  }
-
   render() {
     return (
       <div className='search-item row'>
@@ -25,5 +15,10 @@ class LibrarySearchResultsItemComponent extends React.Component {
     );
   }
 }
+
+LibrarySearchResultsItemComponent.displayName = 'LibrarySearchResultsItem.component';
+LibrarySearchResultsItemComponent.propTypes = {
+  libraryData: PropTypes.object.isRequired
+};
 
 export default LibrarySearchResultsItemComponent;

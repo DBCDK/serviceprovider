@@ -34,9 +34,6 @@ describe('Test the group post components', () => {
   });
 
   it('Create GroupPostContainer with props and data in state', () => {
-    let mock = sinon.mock(GroupPostStore); // eslint-disable-line
-    mock.expects('getInitialState').once().returns({data: groupPost.groupPostData, pending: false});
-
     let element = React.createElement(GroupPostContainer, {
       groupId: groupPost.groupId,
       groupPostData: groupPost.groupPostData,
@@ -44,15 +41,17 @@ describe('Test the group post components', () => {
     });
 
     let dom = TestUtils.renderIntoDocument(element);
+
+    GroupPostStore.fetchGroupPostResponse(groupPost.groupPostData);
+
     let GPost = React.findDOMNode(TestUtils.findRenderedComponentWithType(dom, GroupPostComponent));
     expect(GPost.innerHTML).to.contain('Dette er en kommentar');
-    mock.verify();
-    mock.restore();
   });
 
   it('Create GroupPostContainer with props and data in state, and logged in user, send comment to check action is called', () => {
     let sandbox = sinon.sandbox.create(); // eslint-disable-line
     sandbox.spy(GroupPostActions, 'commentsUpdated');
+    sandbox.spy(GroupPostActions, 'fetchGroupPost');
 
     let mock = sinon.mock(ProfileStore); // eslint-disable-line
     mock.expects('getInitialState').returns({userIsLoggedIn: true});
@@ -80,7 +79,10 @@ describe('Test the group post components', () => {
     expect(GroupPostActions.commentsUpdated.calledWith({
       postId: groupPost.groupPostId,
       commentText: 'kommentaren som skal sendes'
-    }));
+    })).to.equal(true);
+
+    GroupPostStore.commentsUpdatedResponse();
+    expect(GroupPostActions.fetchGroupPost.calledWith(groupPost.groupId)).to.equal(true);
 
     sandbox.restore();
     mock.restore();
