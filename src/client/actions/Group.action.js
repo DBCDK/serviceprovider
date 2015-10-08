@@ -10,6 +10,7 @@ import SocketClient from 'dbc-node-serviceprovider-socketclient';
 const getGroupEvent = SocketClient('getGroup');
 const updateGroupEvent = SocketClient('updateGroup');
 const createGroupEvent = SocketClient('createGroup');
+const createCommentEvent = SocketClient('commentOnGroupPost');
 
 const GroupActions = Reflux.createActions([
   'saveGroup',
@@ -17,7 +18,10 @@ const GroupActions = Reflux.createActions([
   'fetchGroup',
   'confirmSaveGroup',
   'createGroup',
-  'confirmCreateGroup'
+  'confirmCreateGroup',
+  'createComment',
+  'confirmCreateComment',
+  'toggleCommentExpansion'
 ]);
 
 GroupActions.saveGroup.listen(updateGroupEvent.request);
@@ -25,6 +29,9 @@ updateGroupEvent.response(GroupActions.confirmSaveGroup);
 
 GroupActions.createGroup.listen(createGroupEvent.request);
 createGroupEvent.response(GroupActions.confirmCreateGroup);
+
+GroupActions.createComment.listen(createCommentEvent.request);
+createCommentEvent.response(GroupActions.confirmCreateComment);
 
 GroupActions.fetchGroup.listen(getGroupEvent.request);
 getGroupEvent.response(GroupActions.updateGroup);

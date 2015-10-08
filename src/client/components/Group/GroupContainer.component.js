@@ -20,7 +20,8 @@ class GroupContainer extends React.Component {
       name: '',
       description: '',
       posts: [],
-      members: []
+      members: [],
+      groupId: null
     };
 
     GroupStore.listen(this.onUpdateGroup);
@@ -37,13 +38,21 @@ class GroupContainer extends React.Component {
     GroupActions.createGroup(group);
   }
 
-  onUpdateGroup(group) {
-    this.setState(group);
+  createComment(postId, comment) {
+    GroupActions.createComment({
+      postId: postId,
+      commentText: comment
+    });
+  }
+
+  onUpdateGroup(store) {
+    this.setState(store.group);
   }
 
   render() {
     const createMode = typeof window.QUERYSTRING_PROPS === 'undefined';
     const props = this.state;
+    props.commentCb = this.createComment;
     const content = (createMode) ? <GroupCreator onCreate={this.create}/> : <Group {...props} />;
     return (<div>{content}</div>);
   }

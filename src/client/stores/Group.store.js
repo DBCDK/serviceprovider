@@ -21,13 +21,21 @@ const GroupStore = Reflux.createStore({
       name: newGroup.name,
       description: newGroup.description,
       members: newGroup.members,
-      posts: newGroup.posts
+      posts: newGroup.posts,
+      groupId: newGroup.id
     };
 
-    this.trigger(this.store.group);
+    this.trigger(this.store);
   },
 
   onConfirmCreateGroup() {
+  },
+
+  onCreateComment() {
+  },
+
+  onConfirmCreateComment() {
+    GroupActions.fetchGroup({id: this.store.group.groupId});
   }
 
 });
