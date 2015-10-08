@@ -5,8 +5,7 @@
  * Provides the work view for the enduser.
  */
 import React, {PropTypes} from 'react';
-
-import {find} from 'lodash';
+import {find, isString} from 'lodash';
 
 // Stores
 import LibraryStore from '../../stores/Library.store.js';
@@ -71,6 +70,18 @@ class Library extends React.Component {
   }
 
   render() {
+    const agencyName = isString(this.state.library.data.agencyName) ? this.state.library.data.agencyName : '';
+    const agencyId = isString(this.state.library.data.agencyId) ? this.state.library.data.agencyId : '';
+    const branchEmail = isString(this.state.library.data.branchEmail) ? this.state.library.data.branchEmail : '';
+    const branchId = isString(this.state.library.data.branchId) ? this.state.library.data.branchId : '';
+    const branchNameDan = isString(this.state.library.data.branchNameDan) ? this.state.library.data.branchNameDan : '';
+    const branchPhone = isString(this.state.library.data.branchPhone) ? this.state.library.data.branchPhone : '';
+    const branchWebsiteUrl = isString(this.state.library.data.branchWebsiteUrl) ? this.state.library.data.branchWebsiteUrl : '';
+    const city = isString(this.state.library.data.city) ? this.state.library.data.city : '';
+    const openingHoursDan = isString(this.state.library.data.openingHoursDan) ? this.state.library.data.openingHoursDan : '';
+    const postalAddress = isString(this.state.library.data.postalAddress) ? this.state.library.data.postalAddress : '';
+    const postalCode = isString(this.state.library.data.postalCode) ? this.state.library.data.postalCode : '';
+
     const shouldDisableFavoriteButton = this.shouldDisableFavoriteButton();
     let favoriteButton = '';
 
@@ -85,17 +96,17 @@ class Library extends React.Component {
     return (
       <div className='library'>
         <a className='button tiny' onClick={this.goBack} ref='backButton'>Tilbage!</a>
-        <p>{this.state.library.data.agencyName}</p>
-        <p>{this.state.library.data.agencyId}</p>
-        <p>{this.state.library.data.branchEmail}</p>
-        <p>{this.state.library.data.branchId}</p>
-        <p>{this.state.library.data.branchNameDan}</p>
-        <p>{this.state.library.data.branchPhone}</p>
-        <p>{this.state.library.data.branchWebsiteUrl}</p>
-        <p>{this.state.library.data.city}</p>
-        <p>{this.state.library.data.openingHoursDan}</p>
-        <p>{this.state.library.data.postalAddress}</p>
-        <p>{this.state.library.data.postalCode}</p>
+        <p>{agencyName}</p>
+        <p>{agencyId}</p>
+        <p>{branchEmail}</p>
+        <p>{branchId}</p>
+        <p>{branchNameDan}</p>
+        <p>{branchPhone}</p>
+        <p>{branchWebsiteUrl}</p>
+        <p>{city}</p>
+        <p>{openingHoursDan}</p>
+        <p>{postalAddress}</p>
+        <p>{postalCode}</p>
         {favoriteButton}
       </div>
     );
