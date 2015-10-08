@@ -36,7 +36,7 @@ describe('Test the Profile component', () => {
       done();
     }, 0);
   });
-  
+
   it('should have a profile image in non-edit mode', () => {
     let element = React.createElement(Profile, {testProfile});
     let dom = TestUtils.renderIntoDocument(element);
