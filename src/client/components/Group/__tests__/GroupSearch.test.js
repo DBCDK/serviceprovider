@@ -2,7 +2,7 @@
 
 import {expect} from 'chai';
 import React from 'react';
-import TestUtils from 'react/lib/ReactTestUtils';
+import TestUtils from 'react-addons-test-utils';
 
 import GroupSearchResultsComponent from '../Search/GroupSearchResults.component.js';
 import {groupSearchMock} from './GroupSearch.mock.js';
