@@ -6,7 +6,7 @@ class GroupSearchResultsItemComponent extends React.Component {
   render() {
     return (
       <div className='search-item row'>
-        <a href={'/groups?id=' + this.props.groupData.id}>
+        <a href={'/groups/' + this.props.groupData.id}>
           <div className="large-2 medium-2 small-4 columns">
             <img src="http://placehold.it/150x150" />
           </div>
