@@ -5,6 +5,7 @@
  * This file is the entrypoint for the Profile component
  */
 
+import React from 'react';
 import ReactDOM from 'react-dom';
 import Profile from './Profile.component.js';
 

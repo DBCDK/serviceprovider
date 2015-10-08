@@ -4,6 +4,7 @@
  * entry point for the search page
  */
 
+import React from 'react';
 import ReactDOM from 'react-dom';
 import Search from './SearchPageLayout.component.js';
 

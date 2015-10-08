@@ -34,7 +34,7 @@ class GroupPostComponent extends React.Component {
 GroupPostComponent.displayName = 'GroupPost.component';
 GroupPostComponent.propTypes = {
   commentCb: PropTypes.func,
-  enableBackButton: PropTypes.bool.required,
+  enableBackButton: PropTypes.bool.isRequired,
   groupId: PropTypes.number.isRequired,
   groupPostData: PropTypes.object.isRequired,
   groupPostId: PropTypes.number.isRequired,
