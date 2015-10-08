@@ -12,6 +12,7 @@ const fetchEvent = SocketClient('getProfile');
 const saveEvent = SocketClient('updateProfile');
 const openAgency = SocketClient('getMultiOpenAgency');
 const saveLike = SocketClient('saveLike');
+const resetLikes = SocketClient('resetLikes');
 
 const ProfileActions = Reflux.createActions([
   'toggleEdit',
@@ -31,7 +32,9 @@ const ProfileActions = Reflux.createActions([
   'likeObject',
   'dislikeObject',
   'saveLike',
-  'likeSaved'
+  'likeSaved',
+  'resetLikes',
+  'likesReset'
 ]);
 
 ProfileActions.saveProfile.listen(saveEvent.request);
@@ -47,5 +50,7 @@ ProfileActions.libraryIdUpdated.listen((val) => {
   openAgency.request(val);
 });
 openAgency.response(ProfileActions.libraryIdUpdatedResponse);
+
+ProfileActions.resetLikes.listen(resetLikes.request);
 
 export default ProfileActions;
