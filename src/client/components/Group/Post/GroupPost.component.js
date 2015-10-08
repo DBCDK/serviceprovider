@@ -10,6 +10,8 @@ class GroupPostComponent extends React.Component {
   }
 
   render() {
+    console.log(this.props);
+
     const comments = <CommentsContainer comments={this.props.groupPostData.comments ? this.props.groupPostData.comments : []} />;
     const commentForm = <CommentForm commentCb={this.props.commentCb} loggedIn={this.props.loggedIn} />;
     const backButton = <a className="button tiny" href={'/groups/' + this.props.groupId}>Tilbage til gruppen!</a>;
@@ -34,7 +36,7 @@ class GroupPostComponent extends React.Component {
 GroupPostComponent.displayName = 'GroupPost.component';
 GroupPostComponent.propTypes = {
   commentCb: PropTypes.func,
-  enableBackButton: PropTypes.bool.required,
+  enableBackButton: PropTypes.bool.isRequired,
   groupId: PropTypes.number.isRequired,
   groupPostData: PropTypes.object.isRequired,
   groupPostId: PropTypes.number.isRequired,

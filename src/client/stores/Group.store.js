@@ -16,7 +16,7 @@ const GroupStore = Reflux.createStore({
   },
 
   onUpdateGroup(newGroup) {
-
+    
     this.store.group = {
       name: newGroup.name,
       description: newGroup.description,
