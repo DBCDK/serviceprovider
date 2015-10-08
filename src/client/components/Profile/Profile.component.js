@@ -12,6 +12,7 @@ import ProfileImage from './ProfileImage.component.js';
 import ProfileAttribute from './ProfileAttribute.component.js';
 import ProfileHeader from './ProfileHeader.component.js';
 import ProfileLibraries from './ProfileLibraries.component.js';
+import ResetLikesDislikesButton from './ResetLikesDislikesButton.component.js';
 
 import ProfileStore from '../../stores/Profile.store.js';
 import ProfileActions from '../../actions/Profile.action.js';
@@ -24,6 +25,10 @@ const Profile = React.createClass({
     Reflux.connect(ProfileStore, 'profile')
   ],
 
+  onResetButtonClicked() {
+    ProfileActions.resetLikes();
+  },
+
   render: function() {
     const profile = this.state.profile;
     const editable = profile.editEnabled;
@@ -32,6 +37,8 @@ const Profile = React.createClass({
         <ProfileHeader editable={editable} ref='header' />
         <ProfileImage editable={editable} url={this.state.profile.imageUrl} />
         <ProfileAttribute editable={editable} name='Email' type='string' value={this.state.profile.name} />
+        <hr />
+        <ResetLikesDislikesButton buttonText='Nulstil likes og dislikes' resetCallback={this.onResetButtonClicked} />
         <ProfileLibraries
           actions={ProfileActions}
           addLibraryLabel={'Tilføj bibliotek'}
