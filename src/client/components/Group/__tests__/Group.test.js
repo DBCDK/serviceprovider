@@ -2,7 +2,8 @@
 
 import {expect} from 'chai';
 import React from 'react';
-import TestUtils from 'react/lib/ReactTestUtils';
+import ReactDom from 'react-dom';
+import TestUtils from 'react-addons-test-utils';
 
 import GroupActions from '../../../actions/Group.action.js';
 
@@ -19,7 +20,7 @@ describe('Test the group components', () => {
       posts: []
     });
     let dom = TestUtils.renderIntoDocument(element);
-    let group = React.findDOMNode(TestUtils.findRenderedComponentWithType(dom, Group));
+    let group = ReactDom.findDOMNode(TestUtils.findRenderedComponentWithType(dom, Group));
     expect(group.innerHTML).to.contain('<img');
   });
 
@@ -43,7 +44,7 @@ describe('Test the group components', () => {
       ]
     });
     let dom = TestUtils.renderIntoDocument(element);
-    let group = React.findDOMNode(TestUtils.findRenderedComponentWithType(dom, Post));
+    let group = ReactDom.findDOMNode(TestUtils.findRenderedComponentWithType(dom, Post));
     expect(group.innerHTML).to.contain('some@email.com');
   });
 
@@ -87,7 +88,7 @@ describe('Test the group components', () => {
     GroupActions.updateGroup(newGroup);
 
     let dom = TestUtils.renderIntoDocument(element);
-    let group = React.findDOMNode(TestUtils.findRenderedComponentWithType(dom, Post));
+    let group = ReactDom.findDOMNode(TestUtils.findRenderedComponentWithType(dom, Post));
     expect(group.innerHTML).to.contain('some@email.com');
   });
 
