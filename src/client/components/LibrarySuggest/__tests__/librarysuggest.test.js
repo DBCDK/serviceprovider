@@ -2,7 +2,8 @@
 
 import {expect} from 'chai';
 import React from 'react';
-import TestUtils from 'react/lib/ReactTestUtils';
+import ReactDOM from 'react-dom';
+import TestUtils from 'react-addons-test-utils';
 
 import LibrarySuggestContainerComponent from '../LibrarySuggestContainer.component.js';
 import {TokenSearchField} from 'dbc-react-components';
@@ -15,9 +16,9 @@ describe('LibrarySuggest tests', () => {
   it('render librarysuggestcontainer without props', () => {
     let element = React.createElement(LibrarySuggestContainerComponent, {});
     let dom = TestUtils.renderIntoDocument(element);
-    let dmn = React.findDOMNode(TestUtils.findRenderedComponentWithType(dom, LibrarySuggestContainerComponent));
+    let dmn = ReactDOM.findDOMNode(TestUtils.findRenderedComponentWithType(dom, LibrarySuggestContainerComponent));
     expect(dmn.innerHTML).to.contain('Søg efter biblioteker her');
-    React.unmountComponentAtNode(dmn.parentNode);
+    ReactDOM.unmountComponentAtNode(dmn.parentNode);
   });
 
   it('render librarysuggestcontainer with props', () => {
@@ -43,9 +44,9 @@ describe('LibrarySuggest tests', () => {
     });
 
     let dom = TestUtils.renderIntoDocument(element);
-    let dmn = React.findDOMNode(TestUtils.findRenderedComponentWithType(dom, LibrarySuggestContainerComponent));
+    let dmn = ReactDOM.findDOMNode(TestUtils.findRenderedComponentWithType(dom, LibrarySuggestContainerComponent));
     expect(dmn.innerHTML).to.contain('Espergærde');
-    React.unmountComponentAtNode(dmn.parentNode);
+    ReactDOM.unmountComponentAtNode(dmn.parentNode);
   });
 
   it('render librarysuggestcontainer with query, but no data', () => {
@@ -79,7 +80,7 @@ describe('LibrarySuggest tests', () => {
 
     QueryStore.onAdd(query[0]);
 
-    let dmn = React.findDOMNode(TestUtils.findRenderedComponentWithType(dom, LibrarySuggestContainerComponent));
+    let dmn = ReactDOM.findDOMNode(TestUtils.findRenderedComponentWithType(dom, LibrarySuggestContainerComponent));
     expect(dmn.innerHTML).to.contain('detteerenlangsøgning');
   });
 
@@ -95,6 +96,6 @@ describe('LibrarySuggest tests', () => {
     TestUtils.Simulate.keyDown(srch, {key: 'Enter', keyCode: 13, which: 13});
 
     LibrarySuggestStore.onTextfieldUpdated(srch.value);
-    expect(React.findDOMNode(dmn).innerHTML).to.contain('token-searchfield--spinner pending');
+    expect(ReactDOM.findDOMNode(dmn).innerHTML).to.contain('token-searchfield--spinner pending');
   });
 });
