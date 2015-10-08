@@ -4,7 +4,7 @@
  * @file Write a short description here.
  */
 
-import React, {PropTypes} from 'react';
+import React from 'react';
 import {curry} from 'lodash';
 
 import GroupPost from './Post/GroupPost.component.js';
@@ -33,7 +33,7 @@ class PostTimeline extends React.Component {
             />
         </li>
       );
-    })
+    });
 
     return (
       <ul className='group--post-list'>

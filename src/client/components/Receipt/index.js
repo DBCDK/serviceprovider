@@ -1,4 +1,6 @@
 'use strict';
+
+import React from 'react';
 import ReactDOM from 'react-dom';
 import {Receipt} from 'dbc-react-components';
 

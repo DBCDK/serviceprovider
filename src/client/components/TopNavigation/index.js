@@ -5,6 +5,7 @@
  * This file is the entrypoint for the TopNavigation component
  */
 
+import React from 'react';
 import ReactDOM from 'react-dom';
 import TopNavigation from './TopNavigation.component.js';
 
