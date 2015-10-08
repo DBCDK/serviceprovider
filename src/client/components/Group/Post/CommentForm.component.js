@@ -3,6 +3,7 @@
 import React, {PropTypes} from 'react';
 
 class CommentFormComponent extends React.Component {
+
   sendComment() {
     const commentText = React.findDOMNode(this.refs.commentField).value.trim();
     if (this.props.loggedIn && commentText !== '' && this.props.commentCb) {
@@ -16,7 +17,7 @@ class CommentFormComponent extends React.Component {
     return (
       <div className='row'>
         <div className='large-10 medium-10 small-10 columns'>
-          <label>Indsend kommentar
+          <label>Skriv kommentar
             <input
               disabled={loggedIn ? false : 'disabled'}
               id='commentField'

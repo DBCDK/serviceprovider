@@ -14,10 +14,12 @@ class Group extends React.Component {
 
   static propTypes() {
     return {
-      name: PropTypes.string.isRequired(),
-      description: PropTypes.string.isRequired(),
-      posts: PropTypes.array.isRequired(),
-      members: PropTypes.array.isRequired()
+      name: PropTypes.string.isRequired,
+      description: PropTypes.string.isRequired,
+      posts: PropTypes.array.isRequired,
+      members: PropTypes.array.isRequired,
+      commentCb: PropTypes.func.isRequired,
+      groupId: PropTypes.number.isRequired
     };
   }
 
@@ -31,7 +33,7 @@ class Group extends React.Component {
       <div>
         <GroupCoverImage url={coverUrl}/>
         <MemberSummary members={this.props.members}/>
-        <PostTimeline posts={this.props.posts}/>
+        <PostTimeline commentCb={this.props.commentCb} groupId={this.props.groupId} posts={this.props.posts}/>
       </div>
     );
   }

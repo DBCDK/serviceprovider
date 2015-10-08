@@ -7,7 +7,7 @@ import TestUtils from 'react/lib/ReactTestUtils';
 import GroupActions from '../../../actions/Group.action.js';
 
 import Group from '../Group.component.js';
-import Post from '../Post.component.js';
+import GroupPost from '../Post/GroupPost.component.js';
 
 describe('Test the group components', () => {
 
@@ -16,7 +16,9 @@ describe('Test the group components', () => {
       members: [],
       name: 'En gruppe',
       description: 'En beskrivelse',
-      posts: []
+      posts: [],
+      groupId: 1,
+      commentCb: () => {}
     });
     let dom = TestUtils.renderIntoDocument(element);
     let group = React.findDOMNode(TestUtils.findRenderedComponentWithType(dom, Group));
@@ -40,11 +42,13 @@ describe('Test the group components', () => {
             },
             comments: []
           }
-      ]
+      ],
+      groupId: 1,
+      commentCb: () => {}
     });
     let dom = TestUtils.renderIntoDocument(element);
-    let group = React.findDOMNode(TestUtils.findRenderedComponentWithType(dom, Post));
-    expect(group.innerHTML).to.contain('some@email.com');
+    let group = React.findDOMNode(TestUtils.findRenderedComponentWithType(dom, GroupPost));
+    expect(group.innerHTML).to.contain('Skriv kommentar');
   });
 
   it('should update group cover image', () => {
@@ -63,7 +67,9 @@ describe('Test the group components', () => {
             },
             comments: []
           }
-      ]
+      ],
+      groupId: 1,
+      commentCb: () => {}
     });
 
     const newGroup = {
@@ -81,14 +87,16 @@ describe('Test the group components', () => {
             },
             comments: []
           }
-      ]
+      ],
+      groupId: 1,
+      commentCb: () => {}
     };
 
     GroupActions.updateGroup(newGroup);
 
     let dom = TestUtils.renderIntoDocument(element);
-    let group = React.findDOMNode(TestUtils.findRenderedComponentWithType(dom, Post));
-    expect(group.innerHTML).to.contain('some@email.com');
+    let group = React.findDOMNode(TestUtils.findRenderedComponentWithType(dom, GroupPost));
+    expect(group.innerHTML).to.contain('Skriv kommentar');
   });
 
 });

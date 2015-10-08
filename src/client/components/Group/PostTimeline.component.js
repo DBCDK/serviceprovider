@@ -5,8 +5,9 @@
  */
 
 import React, {PropTypes} from 'react';
+import {curry} from 'lodash';
 
-import Post from './Post.component.js';
+import GroupPost from './Post/GroupPost.component.js';
 
 
 class PostTimeline extends React.Component {
@@ -16,7 +17,9 @@ class PostTimeline extends React.Component {
 
   static propTypes() {
     return {
-      posts: PropTypes.array.isRequired
+      posts: PropTypes.array.isRequired,
+      groupId: PropTypes.number.isRequired,
+      commentCb: PropTypes.func.isRequired
     };
   }
 
@@ -25,18 +28,20 @@ class PostTimeline extends React.Component {
   }
 
   render() {
+    const props = this.props;
     return (
       <ul className='group--post-list'>
-        {this.props.posts.map(function(post) {
+        {props.posts.map(function(post) {
+          let curriedCb = curry(props.commentCb);
           return (
             <li key={post.id}>
-              <Post
-                authorImageUrl={post.owner.imageUrl}
-                authorName={post.owner.email}
-                comments={post.comments}
-                text={post.content}
-                timeCreated={post.timeCreated}
-                title={post.title}
+              <GroupPost
+                commentCb={curriedCb(post.id)}
+                enableBackButton={false}
+                groupId={props.groupId}
+                groupPostData={post}
+                groupPostId={post.id}
+                loggedIn={true} // eslint-disable-line react/jsx-boolean-value
                 />
             </li>
           );

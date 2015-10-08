@@ -58,9 +58,11 @@ class GroupPostContainerComponent extends React.Component {
   }
 
   render() {
+    const enableBackButton = true;
     return (
       <GroupPostComponent
         commentCb={this.commentOnGroupPost()}
+        enableBackButton={enableBackButton}
         groupId={this.props.groupId}
         groupPostData={this.state.groupPost.data}
         groupPostId={this.props.groupPostId}
