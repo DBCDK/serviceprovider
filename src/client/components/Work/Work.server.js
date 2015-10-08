@@ -1,5 +1,6 @@
 'use strict';
 import React from 'react';
+import ReactDOM from 'react-dom/server';
 import Work from './Work.component.js';
 
 /**
@@ -9,8 +10,9 @@ import Work from './Work.component.js';
  * and 'props' is a stringified version of the properties for client side export.
  */
 export default function workServer(props) {
-  const work = React.renderToString(
-    <Work id={props.id || []} work={props.work} />
+  const id = props.id || [];
+  const work = ReactDOM.renderToString(
+    <Work id={id} work={props.work} />
   );
   return {
     work,
