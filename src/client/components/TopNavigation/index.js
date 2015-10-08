@@ -5,7 +5,7 @@
  * This file is the entrypoint for the TopNavigation component
  */
 
-import React from 'react';
+import ReactDOM from 'react-dom';
 import TopNavigation from './TopNavigation.component.js';
 
-React.render(<TopNavigation/>, document.getElementById('topnavigation'), null);
+ReactDOM.render(<TopNavigation/>, document.getElementById('topnavigation'), null);
