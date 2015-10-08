@@ -6,6 +6,7 @@
  */
 
 import React from 'react';
+import ReactDOM from 'react-dom/server';
 
 import express from 'express';
 const WorkRoutes = express.Router();
@@ -34,11 +35,13 @@ WorkRoutes.get(
     let query = req.query;
     query = JSON.stringify(query);
 
-    const image = <CoverImage pids={req.query.coverImageIds.split(',')} prefSize={'detail_500'} rewriteImgUrl={rewriteCoverImageUrl} />;
+    const image =
+            <CoverImage pids={req.query.coverImageIds.split(',')} prefSize={'detail_500'} rewriteImgUrl={rewriteCoverImageUrl} />;
 
     res.render('order', {
       query,
-      orderString: React.renderToString(<Order coverImage={image} order={req.query} />)
+      orderString: ReactDOM.renderToString(
+        <Order coverImage={image} order={req.query} />)
     });
   }
 );
@@ -48,7 +51,7 @@ WorkRoutes.get(['/receipt', '/receipt/*'], (req, res) => {
   query = JSON.stringify(query);
   res.render('receipt', {
     query,
-    receiptString: React.renderToString(<Receipt receipt={req.query} />)
+    receiptString: ReactDOM.renderToString(<Receipt receipt={req.query} />)
   });
 });
 

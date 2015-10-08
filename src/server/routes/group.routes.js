@@ -5,11 +5,11 @@
  * Configure group routes
  */
 
-
 import express from 'express';
 const GroupRoutes = express.Router();
 
 import React from 'react';
+import ReactDOM from 'react-dom/server';
 import GroupSearchContainerComponent from '../../client/components/Group/Search/GroupSearchContainer.component.js';
 import GroupPostComponent from '../../client/components/Group/Post/GroupPost.component.js';
 
@@ -28,7 +28,8 @@ GroupRoutes.get(['/search*'], (req, res) => {
 
   dbcMiddleware.setupSSR(req, res, promiseResponse, (err, result) => {
     let groupData = result ? result[0].groups : [];
-    let groupSearchString = React.renderToString(<GroupSearchContainerComponent groupData={groupData} query={qObj} />);
+    let groupSearchString = ReactDOM.renderToString(
+      <GroupSearchContainerComponent groupData={groupData} query={qObj} />);
     res.render('group_index', {
       query: query,
       groupSearchProps: JSON.stringify({
@@ -45,9 +46,10 @@ GroupRoutes.get(['/:groupId/post/:id'], (req, res) => {
 
   dbcMiddleware.setupSSR(req, res, promiseResponse, (err, result) => {
     let groupPostData = result ? result[0] : {};
-    let groupPostString = React.renderToString(<GroupPostComponent groupId={parseInt(req.params.groupId, 10)}
-                                                                  groupPostData={groupPostData}
-                                                                  groupPostId={parseInt(req.params.id, 10)} />);
+    let groupPostString = ReactDOM.renderToString(
+      <GroupPostComponent groupId={parseInt(req.params.groupId, 10)}
+                          groupPostData={groupPostData}
+                          groupPostId={parseInt(req.params.id, 10)} />);
     res.render('group_post_view', {
       groupId: req.params.groupId,
       id: req.params.id,

@@ -9,6 +9,7 @@ import express from 'express';
 const LibraryRoutes = express.Router();
 
 import React from 'react';
+import ReactDOM from 'react-dom/server';
 
 import dbcMiddleware from './middleware.js';
 import {stringToObject} from '../../utils/QueryParser.util.js';
@@ -29,7 +30,7 @@ LibraryRoutes.get(['/suggest', '/suggest/*'], (req, res) => {
 
   dbcMiddleware.setupSSR(req, res, promiseResponse, (err, result) => {
     let libraryData = result ? result[0].agencies : [];
-    let libSuggestString = React.renderToString(<LibrarySuggestContainerComponent libraryData={libraryData} query={qObj} />);
+    let libSuggestString = ReactDOM.renderToString(<LibrarySuggestContainerComponent libraryData={libraryData} query={qObj} />);
 
     res.set('Cache-Control', 'max-age=86400, s-maxage=86400, public');
     res.render('library_suggest', {query, libSuggestString, libSuggestProps: JSON.stringify({libraryData, qObj})});
@@ -44,7 +45,7 @@ LibraryRoutes.get(['/', '/*'], (req, res) => {
 
   dbcMiddleware.setupSSR(req, res, promiseResponse, (err, result) => {
     let libData = result ? result[0] : null;
-    let libString = React.renderToString(<Library id={id} libData={libData} />);
+    let libString = ReactDOM.renderToString(<Library id={id} libData={libData} />);
 
     res.set('Cache-Control', 'max-age=86400, s-maxage=86400, public');
     res.render('library', {id, libString, libData: JSON.stringify(libData)});
