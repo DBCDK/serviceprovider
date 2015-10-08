@@ -12,13 +12,6 @@ import Post from '../Post.component.js';
 
 describe('Test the group components', () => {
 
-  it('should create GroupContainer', () => {
-    let element = React.createElement(GroupContainer, {});
-    let dom = TestUtils.renderIntoDocument(element);
-    let GContainer = React.findDOMNode(TestUtils.findRenderedComponentWithType(dom, GroupContainer));
-    expect(GContainer.innerHTML).to.contain('Opret ny gruppe');
-  });
-
   it('Group should have a cover image', () => {
     let element = React.createElement(Group, {
       members: [],
