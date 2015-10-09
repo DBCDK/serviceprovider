@@ -24,7 +24,7 @@ import expressValidator from 'express-validator';
 import compression from 'compression';
 import expressSession from 'express-session';
 import RedisStore from 'connect-redis';
-import helmet from 'helmet';
+// import helmet from 'helmet';
 
 // loading routes
 import MainRoutes from './server/routes/main.routes.js';
@@ -50,7 +50,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
 
 // Helmet configuration
-app.use(helmet());
+// app.use(helmet());
 
 // Port config
 app.set('port', process.env.PORT || 8080); // eslint-disable-line no-process-env
