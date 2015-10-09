@@ -1,0 +1,15 @@
+.responsetime--container {
+  right: 0.2em;
+  bottom: 0.2em;
+  position: fixed;
+  height: 20px;
+  width: 300px;
+}
+
+.responsetime {
+  /*display: none;*/
+}
+
+.responsetime--container:hover .responsetime {
+  display: block;
+}

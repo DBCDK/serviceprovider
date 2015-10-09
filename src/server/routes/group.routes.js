@@ -26,36 +26,36 @@ GroupRoutes.get(['/search*'], (req, res) => {
       return val.value;
     }).join(' '), {request: req});
 
-  dbcMiddleware.setupSSR(req, res, promiseResponse, (err, result) => {
+  dbcMiddleware.setupSSR(req, res, promiseResponse, (err, result, serviceTime) => {
     let groupData = result ? result[0].groups : [];
     let groupSearchString = ReactDOM.renderToString(
       <GroupSearchContainerComponent groupData={groupData} query={qObj} />);
-    res.render('group_index', {
+    dbcMiddleware.renderPage(res, 'group_index', {
       query: query,
       groupSearchProps: JSON.stringify({
         groupData: groupData,
         qObj
       }),
       groupSearchString: groupSearchString
-    });
+    }, serviceTime);
   });
 });
 
 GroupRoutes.get(['/:groupId/post/:id'], (req, res) => {
   let promiseResponse = req.app.get('serviceProvider').trigger('getGroupPost', req.params.id, {request: req});
 
-  dbcMiddleware.setupSSR(req, res, promiseResponse, (err, result) => {
+  dbcMiddleware.setupSSR(req, res, promiseResponse, (err, result, serviceTime) => {
     let groupPostData = result ? result[0] : {};
     let groupPostString = ReactDOM.renderToString(
       <GroupPostComponent groupId={parseInt(req.params.groupId, 10)}
                           groupPostData={groupPostData}
                           groupPostId={parseInt(req.params.id, 10)} />);
-    res.render('group_post_view', {
+    dbcMiddleware.renderPage(res, 'group_post_view', {
       groupId: req.params.groupId,
       id: req.params.id,
       groupPostData: JSON.stringify(groupPostData),
       groupPostString: groupPostString
-    });
+    }, serviceTime);
   });
 });
 

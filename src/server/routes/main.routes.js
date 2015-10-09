@@ -29,18 +29,18 @@ MainRoutes.get(['/', '/search', '/search/*'], (req, res) => {
     info: {more: false}
   };
 
-  function cbFunc(err, result) {
+  function cbFunc(err, result, timeTaken) {
     if (result) {
       recommendations.result = result[0];
     }
 
     let properties = SearchServer({query, recommendations});
     res.set('Cache-Control', 'max-age=86400, s-maxage=86400, public');
-    res.render('search', properties);
+    dbcMiddleware.renderPage(res, 'search', properties, timeTaken);
   }
 
   if (!isEmpty(query)) {
-    cbFunc(null, null);
+    cbFunc(null, null, 'call was deferred');
   }
   else {
     let promiseResponse = req.app.get('serviceProvider').trigger('getRecommendations', {likes: defaultLikes, dislikes: []});
