@@ -38,21 +38,21 @@ WorkRoutes.get(
     const image =
             <CoverImage pids={req.query.coverImageIds.split(',')} prefSize={'detail_500'} rewriteImgUrl={rewriteCoverImageUrl} />;
 
-    res.render('order', {
+    dbcMiddleware.renderPage(res, 'order', {
       query,
       orderString: ReactDOM.renderToString(
         <Order coverImage={image} order={req.query} />)
-    });
+    }, 'was not serverside');
   }
 );
 
 WorkRoutes.get(['/receipt', '/receipt/*'], (req, res) => {
   let query = req.query;
   query = JSON.stringify(query);
-  res.render('receipt', {
+  dbcMiddleware.renderPage(res, 'receipt', {
     query,
     receiptString: ReactDOM.renderToString(<Receipt receipt={req.query} />)
-  });
+  }, 'was not serverside');
 });
 
 WorkRoutes.get(['/', '/*'], (req, res) => {
@@ -69,12 +69,12 @@ WorkRoutes.get(['/', '/*'], (req, res) => {
     }
   );
 
-  dbcMiddleware.setupSSR(req, res, promiseResponse, (err, result) => {
+  dbcMiddleware.setupSSR(req, res, promiseResponse, (err, result, serviceTime) => {
     if (err) {
-      return res.render('work', {
+      return dbcMiddleware.renderPage(res, 'work', {
         id,
         workString: workServer({id}).work
-      });
+      }, 'was too slow');
     }
 
     let workStr = workServer({
@@ -83,10 +83,10 @@ WorkRoutes.get(['/', '/*'], (req, res) => {
     }).work;
 
     res.set('Cache-Control', 'max-age=86400, s-maxage=86400, public');
-    res.render('work', {
+    dbcMiddleware.renderPage(res, 'work', {
       id,
       workString: workStr
-    });
+    }, serviceTime);
   });
 });
 

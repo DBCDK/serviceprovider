@@ -28,12 +28,12 @@ LibraryRoutes.get(['/suggest', '/suggest/*'], (req, res) => {
       return val.value;
     }).join(' '));
 
-  dbcMiddleware.setupSSR(req, res, promiseResponse, (err, result) => {
+  dbcMiddleware.setupSSR(req, res, promiseResponse, (err, result, serviceTime) => {
     let libraryData = result ? result[0].agencies : [];
     let libSuggestString = ReactDOM.renderToString(<LibrarySuggestContainerComponent libraryData={libraryData} query={qObj} />);
 
     res.set('Cache-Control', 'max-age=86400, s-maxage=86400, public');
-    res.render('library_suggest', {query, libSuggestString, libSuggestProps: JSON.stringify({libraryData, qObj})});
+    dbcMiddleware.renderPage(res, 'library_suggest', {query, libSuggestString, libSuggestProps: JSON.stringify({libraryData, qObj})}, serviceTime);
   });
 });
 
@@ -43,12 +43,12 @@ LibraryRoutes.get(['/', '/*'], (req, res) => {
 
   let promiseResponse = req.app.get('serviceProvider').trigger('getOpenAgency', req.query.id);
 
-  dbcMiddleware.setupSSR(req, res, promiseResponse, (err, result) => {
+  dbcMiddleware.setupSSR(req, res, promiseResponse, (err, result, serviceTime) => {
     let libData = result ? result[0] : null;
     let libString = ReactDOM.renderToString(<Library id={id} libData={libData} />);
 
     res.set('Cache-Control', 'max-age=86400, s-maxage=86400, public');
-    res.render('library', {id, libString, libData: JSON.stringify(libData)});
+    dbcMiddleware.renderPage(res, 'library', {id, libString, libData: JSON.stringify(libData)}, serviceTime);
   });
 });
 

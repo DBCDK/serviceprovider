@@ -69,22 +69,23 @@ function setupTimeouts(req, res, timeout, cb) {
 
   setTimeout(() => { // If we cant respond within the timeout, just send what we have
     if (!res.headersSent) {
-      cb('Couldn\'t respond in time', null);
+      cb('Couldn\'t respond in time', null, 'did not respond in time');
     }
   }, timeout);
 }
 
 function ssrPromiseFunction(res, promiseResponse, cb) {
+  const before = Date.now();
   Promise.all(promiseResponse).then((result) => { // If the promise is resolved, render the react component with the data
     if (!res.headersSent) {
       // Callback only gets called if the response isn't already underway
       // cb (error, response)
-      cb(null, result);
+      cb(null, result, 'responded in: ' + (Date.now() - before) + 'ms');
     }
   }, (err) => { // If the promise is rejected, render the template without data and send it
     logger.error('Error in SSR: Promise was rejected', err);
     if (!res.headersSent) { // _httpMessage becomes null when request is sent
-      cb(err, null);
+      cb(err, null, 'responded in: ' + (Date.now() - before) + 'ms');
     }
   });
 }
@@ -94,11 +95,20 @@ function setupSSR(req, res, promiseResponse, cb) {
   ssrPromiseFunction(res, promiseResponse, cb);
 }
 
+function renderPage(res, template, properties, serviceTime) {
+  const beforeTime = Date.now();
+  res.render(template, properties, (err, html) => {
+    const timeTaken = Date.now() - beforeTime;
+    res.send(html.replace('%RENDERTIME%', timeTaken).replace('%SERVICETIME%', serviceTime));
+  });
+}
+
 const dbcMiddleware = {
   ensureAuthenticated: ensureAuthenticated,
   redirectWhenLoggedIn: redirectWhenLoggedIn,
   redirectToCallbackWhenLoggedIn: redirectToCallbackWhenLoggedIn,
-  setupSSR: setupSSR
+  setupSSR: setupSSR,
+  renderPage: renderPage
 };
 
 export default dbcMiddleware;

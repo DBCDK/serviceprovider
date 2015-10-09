@@ -109,32 +109,32 @@ PassportRoutes.post('/signup', (req, res) => {
   else {
     // we have validation errors!
     const errorMessage = req.validationErrors()[0].msg;
-    res.render('signup', {
+    dbcMiddleware.renderPage(res, 'signup', {
       signUpString: ReactDOM.renderToString(<Signup />),
       message: {
         text: errorMessage,
         error: true
       }
-    });
+    }, 'not timed');
   }
 });
 
 PassportRoutes.get('/resetpassword', (req, res) => {
-  res.render('resetpassword', {
+  dbcMiddleware.renderPage(res, 'resetpassword', {
     resetString: ReactDOM.renderToString(<ResetPassword />)
-  });
+  }, 'no service involved');
 });
 
 PassportRoutes.get('/login', (req, res) => {
-  res.render('login', {
+  dbcMiddleware.renderPage(res, 'login', {
     loginString: ReactDOM.renderToString(<Login />)
-  });
+  }, 'no service involved');
 });
 
 PassportRoutes.get('/', dbcMiddleware.ensureAuthenticated, (req, res) => {
-  res.render('profile', {
+  dbcMiddleware.renderPage(res, 'profile', {
     profileString: ReactDOM.renderToString(<Profile />)
-  });
+  }, 'no service involved');
 });
 
 export default PassportRoutes;
