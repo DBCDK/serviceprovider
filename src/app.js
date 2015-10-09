@@ -53,23 +53,6 @@ app.use(bodyParser.urlencoded({extended: true}));
 // Helmet configuration
 app.use(helmet());
 
-// Content security policy configuration
-app.use(csp({
-  defaultSrc: ['\'self\''],
-  scriptSrc: ['\'self\'', '\'unsafe-inline\'', 'cdnjs.cloudflare.com', 'js-agent.newrelic.com'],
-  styleSrc: ['\'self\'', 'fonts.googleapis.com', 'cdnjs.cloudflare.com', 'maxcdn.bootstrapcdn.com'],
-  imgSrc: ['\'self\'', 'data:'],
-  fontSrc: ['fonts.gstatic.com', 'maxcdn.bootstrapcdn.com'],
-  connectSrc: ['\'self\'', 'ws:', 'http:', 'https:'],
-  sandbox: ['allow-forms', 'allow-scripts'],
-  reportUri: '/report-violation',
-  objectSrc: ['\'self\''],
-  reportOnly: false,
-  setAllHeaders: true,
-  disableAndroid: false,
-  safari5: false
-}));
-
 // Port config
 app.set('port', process.env.PORT || 8080); // eslint-disable-line no-process-env
 
