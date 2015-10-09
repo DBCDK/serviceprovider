@@ -4,15 +4,23 @@ import Reflux from 'reflux';
 
 import GroupActions from '../actions/Group.action.js';
 
+import ProfileStore from './Profile.store.js';
+
 
 const GroupStore = Reflux.createStore({
 
   store: {
-    group: {}
+    group: {},
+    loggedIn: false
   },
 
   init() {
     this.listenToMany(GroupActions);
+    this.listenTo(ProfileStore, this.profileStoreUpdate);
+  },
+
+  profileStoreUpdate(profile) {
+    this.store.loggedIn = profile.userIsLoggedIn;
   },
 
   onUpdateGroup(newGroup) {
@@ -22,7 +30,8 @@ const GroupStore = Reflux.createStore({
       description: newGroup.description,
       members: newGroup.members,
       posts: newGroup.posts,
-      groupId: newGroup.id
+      groupId: newGroup.id,
+      loggedIn: this.store.loggedIn
     };
 
     this.trigger(this.store);

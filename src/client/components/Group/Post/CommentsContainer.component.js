@@ -2,7 +2,7 @@
 
 import React, {PropTypes} from 'react';
 import Comment from './Comment.component.js';
-import {isEmpty, take} from 'lodash';
+import {isEmpty, takeRight} from 'lodash';
 
 class CommentsContainerComponent extends React.Component {
   constructor() {
@@ -21,7 +21,7 @@ class CommentsContainerComponent extends React.Component {
 
     const allComments = this.props.comments;
 
-    const visibleComments = this.state.isExpanded ? take(allComments, 2) : allComments;
+    const visibleComments = this.state.isExpanded ? takeRight(allComments, 2) : allComments;
 
     const comments = !(isEmpty(visibleComments)) ? visibleComments.map((val) => {
       return (

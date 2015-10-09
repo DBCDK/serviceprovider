@@ -21,7 +21,8 @@ class GroupContainer extends React.Component {
       description: '',
       posts: [],
       members: [],
-      groupId: null
+      groupId: null,
+      loggedIn: false
     };
 
     GroupStore.listen(this.onUpdateGroup);
