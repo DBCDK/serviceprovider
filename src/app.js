@@ -24,6 +24,8 @@ import expressValidator from 'express-validator';
 import compression from 'compression';
 import expressSession from 'express-session';
 import RedisStore from 'connect-redis';
+import helmet from 'helmet';
+import csp from 'helmet-csp';
 
 // loading routes
 import MainRoutes from './server/routes/main.routes.js';
@@ -43,6 +45,30 @@ const PRODUCTION = ENV === 'production';
 const APP_NAME = process.env.NEW_RELIC_APP_NAME || 'app_name'; // eslint-disable-line no-process-env
 const logger = new Logger({app_name: APP_NAME});
 const expressLoggers = logger.getExpressLoggers();
+
+// Setting bodyparser
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({extended: true}));
+
+// Helmet configuration
+app.use(helmet());
+
+// Content security policy configuration
+app.use(csp({
+  defaultSrc: ['\'self\''],
+  scriptSrc: ['\'self\'', '\'unsafe-inline\'', 'cdnjs.cloudflare.com', 'js-agent.newrelic.com'],
+  styleSrc: ['\'self\'', 'fonts.googleapis.com', 'cdnjs.cloudflare.com', 'maxcdn.bootstrapcdn.com'],
+  imgSrc: ['\'self\'', 'data:'],
+  fontSrc: ['fonts.gstatic.com', 'maxcdn.bootstrapcdn.com'],
+  connectSrc: ['\'self\'', 'ws:', 'http:', 'https:'],
+  sandbox: ['allow-forms', 'allow-scripts'],
+  reportUri: '/report-violation',
+  objectSrc: ['\'self\''],
+  reportOnly: false,
+  setAllHeaders: true,
+  disableAndroid: false,
+  safari5: false
+}));
 
 // Port config
 app.set('port', process.env.PORT || 8080); // eslint-disable-line no-process-env
@@ -123,10 +149,6 @@ app.use(express.static(path.join(__dirname, '../static'), fileHeaders));
 // Setting logger
 app.use(expressLoggers.logger);
 app.use(expressLoggers.errorLogger);
-
-// Setting bodyparser
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({extended: true}));
 
 // Setting Input Validation
 const validatorOptions = {};

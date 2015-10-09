@@ -55,4 +55,15 @@ MainRoutes.get('/moreinfo/:restOfPath*', (req, res) => {
   });
 });
 
+MainRoutes.post(['/report-violation'], function (req, res) {
+  const logger = req.app.get('logger');
+  if (req.body) {
+    logger.log('CSP Violation: ', req.body);
+  }
+  else {
+    logger.log('CSP Violation: No data received!');
+  }
+  res.status(204).end();
+});
+
 export default MainRoutes;
