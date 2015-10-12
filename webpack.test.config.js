@@ -28,7 +28,7 @@ module.exports = {
       },
       {
         test: /\.js$/,
-        exclude: /(test|node_modules|bower|__tests__)\//,
+        exclude: /(test|node_modules|bower|__tests__|ImageEditor)\//,
         loader: 'isparta'
       }
     ],
