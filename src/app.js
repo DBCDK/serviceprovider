@@ -50,7 +50,6 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
 
 // Helmet configuration
-// app.use(helmet());
 app.use(helmet.xssFilter());
 app.use(helmet.frameguard());
 app.use(helmet.hsts({
