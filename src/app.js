@@ -24,7 +24,7 @@ import expressValidator from 'express-validator';
 import compression from 'compression';
 import expressSession from 'express-session';
 import RedisStore from 'connect-redis';
-// import helmet from 'helmet';
+import helmet from 'helmet';
 
 // loading routes
 import MainRoutes from './server/routes/main.routes.js';
@@ -51,6 +51,15 @@ app.use(bodyParser.urlencoded({extended: true}));
 
 // Helmet configuration
 // app.use(helmet());
+app.use(helmet.xssFilter());
+app.use(helmet.frameguard());
+app.use(helmet.hsts({
+  maxAge: 112200,
+  includeSubdomains: true
+}));
+app.use(helmet.hidePoweredBy({setTo: 'Funkys Venner!'}));
+app.use(helmet.ieNoOpen());
+app.use(helmet.noSniff());
 
 // Port config
 app.set('port', process.env.PORT || 8080); // eslint-disable-line no-process-env
@@ -71,7 +80,7 @@ app.set('view engine', 'jade');
 app.enable('trust proxy');
 
 // disabling 'X-Powered-By:Express' in response header
-app.disable('x-powered-by');
+// app.disable('x-powered-by');
 
 // settings production specific options
 if (!PRODUCTION && newrelic) {
