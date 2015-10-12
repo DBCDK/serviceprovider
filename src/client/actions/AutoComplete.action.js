@@ -9,9 +9,7 @@ const AutoCompleteActions = Reflux.createActions({
   clear: {}
 });
 
-AutoCompleteActions.textfieldUpdated.listen((val) => {
-  socket.request(val);
-});
+AutoCompleteActions.textfieldUpdated.listen(socket.request);
 
 socket.response(AutoCompleteActions.textfieldUpdated.response);
 
