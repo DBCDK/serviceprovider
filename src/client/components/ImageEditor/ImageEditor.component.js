@@ -108,6 +108,7 @@ const ImageEditor = React.createClass({
         this.loadImage(imageUrl);
         this.props.onSave(imageUrl);
       };
+      console.log(reader)
       reader.readAsDataURL(files[0]);
     }
   },
@@ -142,7 +143,6 @@ const ImageEditor = React.createClass({
 
       // call save function passed as prop with image url
       self.props.onSave(croppedImageUrl);
-
     };
   },
 

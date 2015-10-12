@@ -14,7 +14,17 @@ describe('Test the group components', () => {
 
   it('Group should have a cover image', () => {
     let element = React.createElement(Group, {
-      members: [],
+      members: [
+          {
+            id: 1,
+            imageUrl: '/dummy.jpg',
+            email: 'mrtest@waaaargh.ch'
+          },
+          {
+            id: 2,
+            email: 'mrtest@waaaargh.ch'
+          }
+      ],
       name: 'En gruppe',
       description: 'En beskrivelse',
       posts: [],
