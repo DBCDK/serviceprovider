@@ -5,7 +5,7 @@
  */
 
 import React from 'react';
-import {curry} from 'lodash';
+import {curry, sortByOrder} from 'lodash';
 
 import GroupPost from './Post/GroupPost.component.js';
 
@@ -19,7 +19,9 @@ class PostTimeline extends React.Component {
   render() {
     const props = this.props;
 
-    const posts = props.posts.map(function(post) {
+    const sortedPosts = sortByOrder(props.posts, ['timeCreated'], ['desc']);
+
+    const posts = sortedPosts.map(function(post) {
       let curriedCb = curry(props.commentCb);
       return (
         <li key={post.id}>

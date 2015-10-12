@@ -19,8 +19,10 @@ class Group extends React.Component {
       posts: PropTypes.array.isRequired,
       members: PropTypes.array.isRequired,
       commentCb: PropTypes.func.isRequired,
-      groupId: PropTypes.number.isRequired,
-      loggedIn: PropTypes.boolean.isRequired
+      toggleCreatePostCb: PropTypes.func.isRequired,
+      id: PropTypes.number.isRequired,
+      loggedIn: PropTypes.boolean.isRequired,
+      createPostMode: PropTypes.boolean.isRequired
     };
   }
 
@@ -34,9 +36,12 @@ class Group extends React.Component {
       <div>
         <GroupCoverImage url={coverUrl}/>
         <MemberSummary members={this.props.members}/>
+        <div className='row'>
+          <button onClick={this.props.toggleCreatePostCb}>Skriv nyt indlæg</button>
+        </div>
         <PostTimeline
           commentCb={this.props.commentCb}
-          groupId={this.props.groupId}
+          groupId={this.props.id}
           loggedIn={this.props.loggedIn}
           posts={this.props.posts}/>
       </div>

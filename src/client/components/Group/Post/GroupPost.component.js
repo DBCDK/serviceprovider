@@ -18,7 +18,6 @@ class GroupPostComponent extends React.Component {
       <div>
       <div className='row'>
         {this.props.enableBackButton ? backButton : null}
-        <h1>{this.props.groupPostData.title}</h1>
         <p>{this.props.groupPostData.content}</p>
         <div>
           {comments}

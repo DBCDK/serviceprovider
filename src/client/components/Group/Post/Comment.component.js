@@ -9,10 +9,13 @@ class CommentComponent extends React.Component {
 
   render() {
     return (
-      <div className="row">
-        <div className="large-1 medium-2 hide-for-small-only columns"><img src={this.props.ownerImageUrl} /> <p></p></div>
-        <div className="large-11 medium-10 small-12 columns"><p><strong>{this.props.ownerEmail}:</strong> {this.props.commentContent}</p></div>
-        <hr />
+      <div className="row group--comment">
+        <div className="large-1 medium-2 hide-for-small-only columns">
+          <img className='group--member-image' src={this.props.ownerImageUrl}/>
+        </div>
+        <div className="large-11 medium-10 small-12 columns">
+          <p><strong>{this.props.ownerEmail}:</strong> {this.props.commentContent}</p>
+        </div>
       </div>
     );
   }
