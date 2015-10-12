@@ -108,7 +108,6 @@ const ImageEditor = React.createClass({
         this.loadImage(imageUrl);
         this.props.onSave(imageUrl);
       };
-      console.log(reader)
       reader.readAsDataURL(files[0]);
     }
   },

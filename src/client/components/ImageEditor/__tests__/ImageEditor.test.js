@@ -38,11 +38,4 @@ describe('Test the ImageEditor', () => {
     );
     expect(imageEditor.innerHTML).to.contain('Beskær');
   });
-
-  it('should save image', () => {
-    let element = React.createElement(ImageEditor, {});
-    let dom = TestUtils.renderIntoDocument(element);
-    let imageEditor = ReactDom.findDOMNode(TestUtils.findRenderedComponentWithType(dom, ImageEditor));
-    expect(imageEditor.innerHTML).to.contain('Beskær');
-  });
 });
