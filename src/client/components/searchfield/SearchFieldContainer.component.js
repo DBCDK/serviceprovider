@@ -5,9 +5,7 @@
  * Container for the SearchField functionality, which contains a tokenized inputfield and an autocomplete
  */
 
-
-import React from 'react';
-import Reflux from 'reflux';
+import React, {PropTypes} from 'react';
 
 // Components
 import AutoCompleteContainer from '../autocomplete/AutocompleteContainer.component.js';
@@ -25,28 +23,56 @@ import AutoCompleteStore from '../../stores/AutoComplete.store.js';
 import MaterialTypeStore from '../../stores/MaterialType.store.js';
 
 
-const SearchFieldContainerComponent = React.createClass({
-  displayName: 'SearchFieldContainer.component',
+class SearchFieldContainerComponent extends React.Component {
+  constructor() {
+    super();
 
-  propTypes: {
-    placeholder: React.PropTypes.string,
-    query: React.PropTypes.array
-  },
+    this.state = {
+      autocomplete: AutoCompleteStore.getInitialState(),
+      input: InputFieldStore.getInitialState(),
+      query: QueryStore.getInitialState(),
+      categories: MaterialTypeStore.getInitialState()
+    };
 
-  mixins: [
-    Reflux.connect(AutoCompleteStore, 'autocomplete'),
-    Reflux.connect(InputFieldStore, 'input'),
-    Reflux.connect(QueryStore, 'query'),
-    Reflux.connect(MaterialTypeStore, 'categories')
-  ],
+    this.unsubscribe = [
+      AutoCompleteStore.listen(
+        () => this.setState({
+          autocomplete: AutoCompleteStore.store
+        })
+      ),
+      InputFieldStore.listen(
+        () => this.setState({
+          input: InputFieldStore.store
+        })
+      ),
+      QueryStore.listen(
+        () => this.setState({
+          query: QueryStore.store
+        })
+      ),
+      MaterialTypeStore.listen(
+        () => this.setState({
+          categories: MaterialTypeStore.store
+        })
+      )
+    ];
+
+    this.showPlaceholder.bind(this);
+  }
+
+  componentWillMount() {
+    this.state.query.query = this.props.query ? this.props.query : this.state.query.query;
+  }
+
+  componentWillUnmount() {
+    this.unsubscribe.forEach((unsubscriber) => {
+      unsubscriber();
+    });
+  }
 
   showPlaceholder() {
-    if (typeof window === 'undefined') {
-      return !(this.props.query && this.props.query.length);
-    }
-
     return !(this.state.query.query && this.state.query.query.length);
-  },
+  }
 
   render() {
     const placeholder = this.showPlaceholder() ? (this.props.placeholder || 'Skriv dine søgeord her') : '';
@@ -57,7 +83,7 @@ const SearchFieldContainerComponent = React.createClass({
           focus={InputFieldActions.focus}
           pending={this.state.autocomplete.pending}
           placeholder={placeholder}
-          query={typeof window !== 'undefined' ? this.state.query.query : this.props.query}
+          query={this.state.query.query}
           translations={this.state.categories.translations}
           update={QueryActions.update}
           />
@@ -65,6 +91,12 @@ const SearchFieldContainerComponent = React.createClass({
       </div>
     );
   }
-});
+}
+
+SearchFieldContainerComponent.displayName = 'SearchFieldContainer.component';
+SearchFieldContainerComponent.propTypes = {
+  placeholder: PropTypes.string,
+  query: PropTypes.array
+};
 
 export default SearchFieldContainerComponent;
