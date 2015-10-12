@@ -9,9 +9,7 @@ const LibrarySuggestActions = Reflux.createActions({
   clear: {}
 });
 
-LibrarySuggestActions.textfieldUpdated.listen((val) => {
-  socket.request(val);
-});
+LibrarySuggestActions.textfieldUpdated.listen(socket.request);
 
 socket.response(LibrarySuggestActions.textfieldUpdated.response);
 
