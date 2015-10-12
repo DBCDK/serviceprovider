@@ -3,6 +3,8 @@
 [![GitHub tag](https://img.shields.io/github/tag/DBCDK/pallesgavebod.svg?style=flat-square)](https://github.com/DBCDK/pallesgavebod)
 [![David](https://img.shields.io/david/DBCDK/pallesgavebod.svg?style=flat-square)](https://david-dm.org/DBCDK/pallesgavebod#info=dependencies)
 [![David](https://img.shields.io/david/dev/DBCDK/pallesgavebod.svg?style=flat-square)](https://david-dm.org/DBCDK/pallesgavebod#info=devDependencies)
+[![Build Status](https://travis-ci.org/DBCDK/pallesgavebod.svg?branch=master)](https://travis-ci.org/DBCDK/pallesgavebod)
+[![Coverage Status](https://coveralls.io/repos/DBCDK/pallesgavebod/badge.svg?branch=master&service=github)](https://coveralls.io/github/DBCDK/pallesgavebod?branch=master)
 
 Next generation Palles Gavebod
 
