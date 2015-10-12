@@ -14,3 +14,10 @@ after_success:
 env:
   global:
     secure: aA2vByDCPZexWQfE7KFdoa3nb3UOB9eAi88MjzBHvqaUEwkSaVpMJi4Nt9/5NyFShOiKVE7erTN47MaM7JE6VWEQth2EHMxK0AzJHOkClqz6YLrRRSVFCRsm30n7DEWv5zZ6nxIvkW2UnMuEJEhfls04gCe2KJRA3Lcw53hHdYI=
+addons:
+  apt:
+    sources:
+    - ubuntu-toolchain-r-test
+    packages:
+    - gcc-4.8
+    - g++-4.8
