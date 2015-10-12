@@ -9,9 +9,7 @@ const LibrarySearchActions = Reflux.createActions({
   clear: {}
 });
 
-LibrarySearchActions.libraryQueryUpdated.listen((val) => {
-  socket.request(val);
-});
+LibrarySearchActions.libraryQueryUpdated.listen(socket.request);
 
 socket.response(LibrarySearchActions.libraryQueryUpdated.response);
 
