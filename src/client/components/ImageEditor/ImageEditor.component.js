@@ -142,7 +142,6 @@ const ImageEditor = React.createClass({
 
       // call save function passed as prop with image url
       self.props.onSave(croppedImageUrl);
-
     };
   },
 
