@@ -36,6 +36,10 @@ module.exports = function(config) {
         type: 'html'
       }, {
         type: 'cobertura'
+      }, {
+        type: 'lcovonly',
+        file: 'lcov.info',
+        subdir: '.'
       }]
     }
   });

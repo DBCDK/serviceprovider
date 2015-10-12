@@ -73,6 +73,7 @@
   "devDependencies": {
     "babel-eslint": "^4.0.5",
     "chai": "^3.2.0",
+    "coveralls": "^2.11.4",
     "eslint": "^1.0.0",
     "eslint-loader": "^1.0.0",
     "eslint-plugin-react": "^3.5.1",
