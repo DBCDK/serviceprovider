@@ -5,6 +5,10 @@ import ReactDom from 'react-dom';
 
 class CommentFormComponent extends React.Component {
 
+  constructor() {
+    super();
+  }
+
   sendComment() {
     const commentText = ReactDom.findDOMNode(this.refs.commentField).value.trim();
     if (this.props.loggedIn && commentText !== '' && this.props.commentCb) {
@@ -17,19 +21,18 @@ class CommentFormComponent extends React.Component {
 
     return (
       <div className='row'>
-        <div className='large-10 medium-10 small-10 columns'>
-          <label>Skriv kommentar
-            <input
-              disabled={loggedIn ? false : 'disabled'}
-              id='commentField'
-              placeholder='Skriv din kommentar her'
-              ref='commentField'
-              type='text'
-              />
-          </label>
+        <div className='large-10 medium-10 small-10 column'>
+          <label>Skriv kommentar</label>
+          <input
+            disabled={loggedIn ? false : 'disabled'}
+            id='commentField'
+            placeholder='Skriv din kommentar her'
+            ref='commentField'
+            type='text'
+            />
         </div>
-        <div className='large-2 medium-2 small-2 columns'>
-          <a className='button' id='commentButton' onClick={this.sendComment.bind(this)} ref='commentButton'>Indsend!</a>
+        <div className='large-2 medium-2 small-2 column'>
+          <a className='button tiny' id='commentButton' onClick={this.sendComment.bind(this)} ref='commentButton'>Indsend</a>
         </div>
       </div>
     );

@@ -17,11 +17,13 @@ class CommentsContainerComponent extends React.Component {
 
   render() {
 
+    const visibleCommentsMax = 2;
+
     const expandButtonText = this.state.isExpanded ? 'Se flere kommentarer' : 'Vis færre kommentarer';
 
     const allComments = this.props.comments;
 
-    const visibleComments = this.state.isExpanded ? takeRight(allComments, 2) : allComments;
+    const visibleComments = this.state.isExpanded ? takeRight(allComments, visibleCommentsMax) : allComments;
 
     const comments = !(isEmpty(visibleComments)) ? visibleComments.map((val) => {
       return (
@@ -34,11 +36,29 @@ class CommentsContainerComponent extends React.Component {
       );
     }) : (<div className='noComments' />);
 
+    const hasComments = allComments.length > 0;
+    let header = <div></div>;
+
+    let expandButton;// <button className='tiny' onClick={this.toggleExpand}>{expandButtonText}</button>;
+
+    if (allComments.length > visibleCommentsMax) {
+      expandButton = <button className='tiny' onClick={this.toggleExpand}>{expandButtonText}</button>;
+    }
+
+
+    if (hasComments) {
+      header = (
+        <div>
+          <h6>{allComments.length} Kommentarer</h6>
+          {expandButton}
+          <hr />
+        </div>
+      );
+    }
+
     return (
       <div>
-        <h4>{allComments.length} Kommentarer</h4>
-        <button className='tiny' onClick={this.toggleExpand}>{expandButtonText}</button>
-        <hr />
+        {header}
         {comments}
       </div>
     );

@@ -11,6 +11,7 @@ const getGroupEvent = SocketClient('getGroup');
 const updateGroupEvent = SocketClient('updateGroup');
 const createGroupEvent = SocketClient('createGroup');
 const createCommentEvent = SocketClient('commentOnGroupPost');
+const createPostEvent = SocketClient('createGroupPost');
 
 const GroupActions = Reflux.createActions([
   'saveGroup',
@@ -21,7 +22,10 @@ const GroupActions = Reflux.createActions([
   'confirmCreateGroup',
   'createComment',
   'confirmCreateComment',
-  'toggleCommentExpansion'
+  'createPost',
+  'confirmCreatePost',
+  'toggleCommentExpansion',
+  'toggleCreatePostMode'
 ]);
 
 GroupActions.saveGroup.listen(updateGroupEvent.request);
@@ -32,6 +36,9 @@ createGroupEvent.response(GroupActions.confirmCreateGroup);
 
 GroupActions.createComment.listen(createCommentEvent.request);
 createCommentEvent.response(GroupActions.confirmCreateComment);
+
+GroupActions.createPost.listen(createPostEvent.request);
+createPostEvent.response(GroupActions.confirmCreatePost);
 
 GroupActions.fetchGroup.listen(getGroupEvent.request);
 getGroupEvent.response(GroupActions.updateGroup);

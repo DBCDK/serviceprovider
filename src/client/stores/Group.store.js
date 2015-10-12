@@ -10,8 +10,17 @@ import ProfileStore from './Profile.store.js';
 const GroupStore = Reflux.createStore({
 
   store: {
-    group: {},
-    loggedIn: false
+    group: {
+      name: '',
+      description: '',
+      posts: [],
+      members: [],
+      id: null,
+      loggedIn: false,
+      createPostMode: false
+    },
+    loggedIn: false,
+    createPostMode: false
   },
 
   init() {
@@ -30,8 +39,9 @@ const GroupStore = Reflux.createStore({
       description: newGroup.description,
       members: newGroup.members,
       posts: newGroup.posts,
-      groupId: newGroup.id,
-      loggedIn: this.store.loggedIn
+      id: newGroup.id,
+      loggedIn: this.store.loggedIn,
+      createPostMode: this.store.createPostMode
     };
 
     this.trigger(this.store);
@@ -40,11 +50,20 @@ const GroupStore = Reflux.createStore({
   onConfirmCreateGroup() {
   },
 
+  onConfirmCreatePost() {
+    GroupActions.fetchGroup({id: this.store.group.id});
+  },
+
   onCreateComment() {
   },
 
+  onToggleCreatePostMode() {
+    this.store.createPostMode = !this.store.createPostMode;
+    GroupActions.updateGroup(this.store.group);
+  },
+
   onConfirmCreateComment() {
-    GroupActions.fetchGroup({id: this.store.group.groupId});
+    GroupActions.fetchGroup({id: this.store.group.id});
   }
 
 });
