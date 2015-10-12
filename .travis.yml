@@ -1,11 +1,16 @@
 language: node_js
 node_js:
-  - "4.1"
+- '4.1'
 cache:
   directories:
-    - node_modules
+  - node_modules
 branches:
   only:
-  - 'master'
+  - master
 after_success:
-  - cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js
+- cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js
+deploy:
+  provider: npm
+  email: ux@dbc.dk
+  api_key:
+    secure: nwPi1w3qNc2rS5VY7TOcGKU0O2V8TzSqXY5gdlEHgv60f+NqeXwBswpYm/HFmbyPbp2c22rjgNhB3hYSFZUA5LVhcyu/aOVPS2xjMb75nfHt4E+oJ5zfRxFtI/z3m9+LobotwoVE8OMi+HRViXA1yVwnWz1IWJXmQ7r5LJhq8jQ=
