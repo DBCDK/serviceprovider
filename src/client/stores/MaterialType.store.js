@@ -28,13 +28,14 @@ function translateCategories(category) {
 }
 
 let MaterialTypeStore = Reflux.createStore({
-  categories: [],
+  store: {
+    categories: [],
+    translations: translations
+  },
 
   getInitialState() {
-    return {
-      categories: this.checkForQueryContent(this.categories),
-      translations: translations
-    };
+    this.store.categories = this.checkForQueryContent(this.store.categories);
+    return this.store;
   },
 
   init() {
@@ -45,22 +46,16 @@ let MaterialTypeStore = Reflux.createStore({
   onQueryUpdated(self) {
     // Return closure function in order to get correct "this" context from action
     return (store) => {
-      self.categories = self.checkForQueryContent(self.categories, store).map(translateCategories);
-      self.trigger({
-        categories: self.categories,
-        translations: translations
-      });
+      self.store.categories = self.checkForQueryContent(self.store.categories, store).map(translateCategories);
+      self.trigger(self.store);
     };
   },
 
   onResponse(self) {
     return (result) => {
       if (!result.pending && result.info.facets) {
-        self.categories = self.checkForQueryContent(result.info.facets).map(translateCategories);
-        self.trigger({
-          categories: self.categories,
-          translations: translations
-        });
+        self.store.categories = self.checkForQueryContent(result.info.facets).map(translateCategories);
+        self.trigger(self.store);
       }
     };
   },
