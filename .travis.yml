@@ -7,10 +7,10 @@ cache:
 branches:
   only:
   - master
+before_install:
+- npm config set //registry.npmjs.org/:_authToken $NPM_KEY
 after_success:
 - cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js
-deploy:
-  provider: npm
-  email: ux@dbc.dk
-  api_key:
-    secure: nwPi1w3qNc2rS5VY7TOcGKU0O2V8TzSqXY5gdlEHgv60f+NqeXwBswpYm/HFmbyPbp2c22rjgNhB3hYSFZUA5LVhcyu/aOVPS2xjMb75nfHt4E+oJ5zfRxFtI/z3m9+LobotwoVE8OMi+HRViXA1yVwnWz1IWJXmQ7r5LJhq8jQ=
+env:
+  global:
+    secure: aA2vByDCPZexWQfE7KFdoa3nb3UOB9eAi88MjzBHvqaUEwkSaVpMJi4Nt9/5NyFShOiKVE7erTN47MaM7JE6VWEQth2EHMxK0AzJHOkClqz6YLrRRSVFCRsm30n7DEWv5zZ6nxIvkW2UnMuEJEhfls04gCe2KJRA3Lcw53hHdYI=
