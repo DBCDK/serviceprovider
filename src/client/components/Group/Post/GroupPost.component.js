@@ -15,16 +15,15 @@ class GroupPostComponent extends React.Component {
     const backButton = <a className="button tiny" href={'/groups/' + this.props.groupId}>Tilbage til gruppen!</a>;
 
     return (
-      <div>
-      <div className='row'>
-        {this.props.enableBackButton ? backButton : null}
-        <p>{this.props.groupPostData.content}</p>
-        <div>
-          {comments}
-          {commentForm}
+      <div className='group--post'>
+        <div className='row'>
+          {this.props.enableBackButton ? backButton : null}
+          <p>{this.props.groupPostData.content}</p>
+          <div>
+            {comments}
+            {commentForm}
+          </div>
         </div>
-        <p><small>Group: {this.props.groupId}, Post: {this.props.groupPostId}</small></p>
-      </div>
       </div>
     );
   }

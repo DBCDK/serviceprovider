@@ -59,7 +59,7 @@ GroupRoutes.get(['/:groupId/post/:id'], (req, res) => {
   });
 });
 
-GroupRoutes.get('/create', (req, res) => {
+GroupRoutes.get('/create', dbcMiddleware.ensureAuthenticated, (req, res) => {
   res.render('group', {});
 });
 
