@@ -63,7 +63,7 @@ GroupRoutes.get('/create', dbcMiddleware.ensureAuthenticated, (req, res) => {
   res.render('group', {});
 });
 
-GroupRoutes.get('/:id?', (req, res) => {
+GroupRoutes.get('/:id', (req, res) => {
   var id = req.params.id;
   res.render('group', {id});
 });
