@@ -32,7 +32,7 @@ class GroupPostComponent extends React.Component {
           {this.props.enableBackButton ? backButton : null}
           {ownerImage}
           <span className='small-7 column'><strong>{this.props.ownerName}</strong></span>
-          <span className='small-3 column group--timesince'>Skrevet for {timeSinceString} siden</span>
+          <span className='small-3 column group--timesince'>{timeSinceString} siden</span>
         </div>
         <div className='row'>
           <p>{this.props.groupPostData.content}</p>

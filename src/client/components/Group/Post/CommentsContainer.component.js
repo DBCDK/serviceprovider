@@ -32,6 +32,7 @@ class CommentsContainerComponent extends React.Component {
           key={val.id}
           ownerEmail={val.owner.email}
           ownerImageUrl={val.owner.imageUrl ? val.owner.imageUrl : '/dummy.jpg'}
+          timeCreated={val.timeCreated}
           />
       );
     }) : (<div className='noComments' />);

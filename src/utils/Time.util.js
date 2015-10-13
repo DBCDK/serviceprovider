@@ -19,7 +19,6 @@ export function timeSince(fromDateISO, toDateISO) {
   const minuteDelta = Math.floor(msDelta / 1000 / 60);
   const secondDelta = Math.floor(msDelta / 1000);
 
-  // TODO: fix time unit plural
   let timeSinceString;
   if (yearDelta >= 1) {
     const pluralPostfix = (yearDelta > 1) ? '' : '';
