@@ -10,6 +10,7 @@ import {AutoComplete} from 'dbc-react-components';
 
 const AutoCompleteContainer = React.createClass({
   displayName: 'AutoCompleteContainer',
+
   propTypes: {
     actions: React.PropTypes.object.isRequired,
     input: React.PropTypes.object.isRequired,
