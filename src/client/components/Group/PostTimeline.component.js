@@ -23,6 +23,8 @@ class PostTimeline extends React.Component {
 
     const posts = sortedPosts.map(function(post) {
       let curriedCb = curry(props.commentCb);
+      const ownerImageUrl = (post.owner && typeof post.owner.imageUrl !== 'undefined') ? post.owner.imageUrl : '/dummy.jpg';
+      const ownerName = (post.owner && typeof post.owner.email !== 'undefined') ? post.owner.email : 'no name';
       return (
         <li key={post.id}>
           <GroupPost
@@ -31,6 +33,8 @@ class PostTimeline extends React.Component {
             groupId={props.groupId}
             groupPostData={post}
             groupPostId={post.id}
+            ownerImageUrl={ownerImageUrl}
+            ownerName={ownerName}
             loggedIn={props.loggedIn} // eslint-disable-line react/jsx-boolean-value
             />
         </li>
