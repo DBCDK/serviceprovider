@@ -47,7 +47,10 @@ const GroupStore = Reflux.createStore({
     this.trigger(this.store);
   },
 
-  onConfirmCreateGroup() {
+  onConfirmCreateGroup(response) {
+    if (response.succes && response.groupId) {
+      window.location = '/groups/' + response.groupId;
+    }
   },
 
   onConfirmCreatePost() {
