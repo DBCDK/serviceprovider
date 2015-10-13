@@ -37,10 +37,10 @@ body {
 
 a {
   color: #1b9ec6;
-}
 
-a:hover {
-  color: #2971A7;
+  &:hover {
+    color: #2971A7;
+  }
 }
 
 button:hover,
@@ -181,7 +181,7 @@ button:focus,
 .order--container .order,
 .receipt--container .image,
 .receipt--container .receipt {
-    float: left;
+  float: left;
 }
 
 

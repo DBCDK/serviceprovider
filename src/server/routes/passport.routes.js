@@ -68,7 +68,8 @@ PassportRoutes.get('/confirm', (req, res) => {
 
 PassportRoutes.get('/signup', (req, res) => {
   res.render('signup', {
-    signUpString: ReactDOM.renderToString(<Signup />)
+    signUpString: ReactDOM.renderToString(<Signup />),
+    title: req.app.locals.title + ' - Opret ny bruger'
   });
 });
 
@@ -127,13 +128,15 @@ PassportRoutes.get('/resetpassword', (req, res) => {
 
 PassportRoutes.get('/login', (req, res) => {
   dbcMiddleware.renderPage(res, 'login', {
-    loginString: ReactDOM.renderToString(<Login />)
+    loginString: ReactDOM.renderToString(<Login />),
+    title: req.app.locals.title + ' - Log ind'
   }, 'no service involved');
 });
 
 PassportRoutes.get('/', dbcMiddleware.ensureAuthenticated, (req, res) => {
   dbcMiddleware.renderPage(res, 'profile', {
-    profileString: ReactDOM.renderToString(<Profile />)
+    profileString: ReactDOM.renderToString(<Profile />),
+    title: req.app.locals.title + ' - Profil'
   }, 'no service involved');
 });
 

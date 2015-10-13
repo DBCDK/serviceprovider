@@ -5,8 +5,8 @@
 }
 
 #topbar {
-    background-color: #f26306;
-    height: 50px;
+  background-color: #f26306;
+  height: 50px;
 }
 
 #search {
@@ -40,12 +40,10 @@
 }
 
 a {
-    color: #f26304;
-}
-
-a:hover {
-    color: #f26304;
+  color: #f26304;
+  &:hover {
     text-decoration: underline;
+  }
 }
 
 .token-searchfield {
@@ -69,19 +67,19 @@ a:hover {
 }
 
 .can-order-false {
-    color: #000000;
-    background-color: #ffffff !important;
-    border: solid 0.5px #7A7A7A !important;
+  color: #000000;
+  background-color: #ffffff !important;
+  border: solid 0.5px #7A7A7A !important;
 }
 
 .button {
-    background-color: #7A7A7A;
-    border: solid 0.5px #ffffff;
+  background-color: #7A7A7A;
+  border: solid 0.5px #ffffff;
 }
 
 .button:hover {
-    background-color: #000000;
-    text-decoration: none;
+  background-color: #000000;
+  text-decoration: none;
 }
 
 .filterguide-list-element {
