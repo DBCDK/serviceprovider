@@ -11,6 +11,7 @@ before_install:
 - npm config set //registry.npmjs.org/:_authToken $NPM_KEY
 after_success:
 - cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js
+- ./node_modules/codeclimate-test-reporter/bin/codeclimate.js < ./coverage/lcov.info
 env:
   global:
     secure: aA2vByDCPZexWQfE7KFdoa3nb3UOB9eAi88MjzBHvqaUEwkSaVpMJi4Nt9/5NyFShOiKVE7erTN47MaM7JE6VWEQth2EHMxK0AzJHOkClqz6YLrRRSVFCRsm30n7DEWv5zZ6nxIvkW2UnMuEJEhfls04gCe2KJRA3Lcw53hHdYI=
@@ -21,6 +22,3 @@ addons:
     packages:
     - gcc-4.8
     - g++-4.8
-
-  code_climate:
-    repo_token: df15bf75c15fb05e36b1c2d440bc6d01b11b6219e917ad4662df8bfdce30d3dd
