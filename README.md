@@ -5,6 +5,7 @@
 [![David](https://img.shields.io/david/dev/DBCDK/pallesgavebod.svg?style=flat-square)](https://david-dm.org/DBCDK/pallesgavebod#info=devDependencies)
 [![Build Status](https://travis-ci.org/DBCDK/pallesgavebod.svg?branch=master)](https://travis-ci.org/DBCDK/pallesgavebod)
 [![Coverage Status](https://coveralls.io/repos/DBCDK/pallesgavebod/badge.svg?branch=master&service=github)](https://coveralls.io/github/DBCDK/pallesgavebod?branch=master)
+[![Code Climate](https://codeclimate.com/github/DBCDK/pallesgavebod/badges/gpa.svg)](https://codeclimate.com/github/DBCDK/pallesgavebod)
 
 Next generation Palles Gavebod
 
