@@ -20,7 +20,10 @@ class GroupPostComponent extends React.Component {
 
     let ownerImage = null;
     if (typeof this.props.ownerImageUrl !== 'undefined') {
-      ownerImage = <img src={this.props.ownerImageUrl} className='small-2 column group--member-image'/>;
+      ownerImage = (<img
+        className='small-2 column group--member-image'
+        src={this.props.ownerImageUrl}
+        />);
     }
 
     return (

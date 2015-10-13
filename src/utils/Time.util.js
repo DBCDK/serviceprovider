@@ -5,10 +5,12 @@
  * Utility functions focused on formatting time
  */
 
-export function timeSince(DateStringISO) {
+export function timeSince(fromDateISO, toDateISO) {
 
-  const date = new Date(DateStringISO);
-  const msDelta =  Date.now() - date.getTime();
+  const toTime = (new Date(fromDateISO)).getTime();
+  const fromTime = (typeof toDateISO !== 'undefined') ? (new Date(toDateISO)).getTime() : Date.now();
+
+  const msDelta = fromTime - toTime;
 
   const yearDelta = Math.floor(msDelta / 1000 / 60 / 60 / 24 / 365);
   const monthDelta = Math.floor(msDelta / 1000 / 60 / 60 / 24 / 30);
@@ -25,7 +27,7 @@ export function timeSince(DateStringISO) {
   }
   else if (monthDelta >= 1) {
     const pluralPostfix = (monthDelta > 1) ? 'er' : '';
-    timeSinceString = yearDelta + ' måned' + pluralPostfix;
+    timeSinceString = monthDelta + ' måned' + pluralPostfix;
   }
   else if (dayDelta >= 1) {
     const pluralPostfix = (dayDelta > 1) ? 'e' : '';

@@ -33,9 +33,9 @@ class PostTimeline extends React.Component {
             groupId={props.groupId}
             groupPostData={post}
             groupPostId={post.id}
+            loggedIn={props.loggedIn} // eslint-disable-line react/jsx-boolean-value
             ownerImageUrl={ownerImageUrl}
             ownerName={ownerName}
-            loggedIn={props.loggedIn} // eslint-disable-line react/jsx-boolean-value
             />
         </li>
       );
