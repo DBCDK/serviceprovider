@@ -2,10 +2,12 @@
 # LOGS / REPORTS
 # ============
 *.log
+*.log.gz
 report.xml
 output
 test-results.xml
 coverage/*
+dump.rdb
 
 # ============
 # BUILDS
