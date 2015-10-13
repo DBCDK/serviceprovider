@@ -21,3 +21,6 @@ addons:
     packages:
     - gcc-4.8
     - g++-4.8
+
+  code_climate:
+    repo_token: df15bf75c15fb05e36b1c2d440bc6d01b11b6219e917ad4662df8bfdce30d3dd
