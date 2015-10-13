@@ -4,12 +4,14 @@ import {assert, expect} from 'chai';
 import React from 'react';
 import ReactDom from 'react-dom';
 import TestUtils from 'react-addons-test-utils';
+import {extend} from 'lodash';
 
 import Profile from '../Profile.component.js';
 import ProfileHeader from '../ProfileHeader.component.js';
 import Image from '../ProfileImage.component.js';
 import ResetLikesDislikesButton from '../ResetLikesDislikesButton.component.js';
 import ProfileActions from '../../../actions/Profile.action.js';
+import ProfileLibraries from '../ProfileLibraries.component.js';
 
 let testProfile = {
   name: 'I-Love-Ponys',
@@ -56,5 +58,83 @@ describe('Test the Profile component', () => {
 
     expect(ProfileActions.resetLikes.calledOnce).to.equal(true);
     sandbox.restore();
+  });
+
+  it('should have a favorite library', () => {
+    let testProfileWithLibraries = extend({}, testProfile);
+    testProfileWithLibraries.favoriteLibraries = [
+      {
+        agencyID: '710118',
+        libraryID: '710100',
+        borrowerID: '123',
+        default: 1
+      }
+    ];
+    testProfileWithLibraries.favoriteLibrariesResolved = [
+      {"agencyName":"Københavns Biblioteker","agencyId":"710100","branchId":"710118","branchNameDan":"Kulturstationen Vanløse. Biblioteket","branchPhone":"33 66 30 00","branchEmail":"bibliotek@kff.kk.dk","postalAddress":"Jernbane Alle 38","postalCode":"2720","city":"Vanløse","openingHoursDan":"Åbningstider\r\nMandag-søndag: kl. 8-22 \r\n\r\nAdgang med sundhedskort\r\nMandag-fredag: kl. 17-22\r\nLørdag: kl. 14-22\r\nSøndag: kl. 8-22\r\n \r\nPersonlig vejledning\r\nMandag-fredag: kl. 10-17\r\nLørdag: kl. 10-14\r\n\r\nBorgerservice\r\nMandag-fredag: kl. 10-17\r\nLørdag: kl. 10-14","branchWebsiteUrl":"http://bibliotek.kk.dk/","query":"710118"} // eslint-disable-line
+    ];
+
+    let element = React.createElement(ProfileLibraries, {
+      store: testProfileWithLibraries,
+      libraries: testProfileWithLibraries.favoriteLibraries,
+      actions: {libraryIdUpdated: {trigger: () => {}}}
+    });
+    let dom = TestUtils.renderIntoDocument(element);
+    expect(dom.getDOMNode().innerHTML).to.contain('Kulturstationen Vanløse. Biblioteket');
+  });
+
+  it('should have a favorite library and be selectable as default', () => {
+    let testProfileWithLibraries = extend({}, testProfile);
+    testProfileWithLibraries.favoriteLibraries = [
+      {
+        agencyID: '710118',
+        libraryID: '710100',
+        borrowerID: '123',
+        default: 1
+      }, {
+        agencyID: '710111',
+        libraryID: '710100',
+        borrowerID: '', default: 0
+      }
+    ];
+    testProfileWithLibraries.favoriteLibrariesResolved = [
+      {"agencyName":"Københavns Biblioteker","agencyId":"710100","branchId":"710118","branchNameDan":"Kulturstationen Vanløse. Biblioteket","branchPhone":"33 66 30 00","branchEmail":"bibliotek@kff.kk.dk","postalAddress":"Jernbane Alle 38","postalCode":"2720","city":"Vanløse","openingHoursDan":"Åbningstider\r\nMandag-søndag: kl. 8-22 \r\n\r\nAdgang med sundhedskort\r\nMandag-fredag: kl. 17-22\r\nLørdag: kl. 14-22\r\nSøndag: kl. 8-22\r\n \r\nPersonlig vejledning\r\nMandag-fredag: kl. 10-17\r\nLørdag: kl. 10-14\r\n\r\nBorgerservice\r\nMandag-fredag: kl. 10-17\r\nLørdag: kl. 10-14","branchWebsiteUrl":"http://bibliotek.kk.dk/","query":"710118"}, // eslint-disable-line
+      {"agencyName":"Københavns Biblioteker","agencyId":"710100","branchId":"710111","branchNameDan":"Nørrebro Bibliotek","branchPhone":"33 66 30 00","branchEmail":"bibliotek@kff.kk.dk","postalAddress":"Bragesgade 8","postalCode":"2200","city":"København N","openingHoursDan":"Alle dage kl. 8-22\r\n\r\nAdgang med sundhedskort:\r\nMandag-fredag kl. 19-22\r\nLørdag kl. 15-22\r\nSøndag kl. 8-22\r\n\r\nPersonlig vejledning:\r\nMandag og onsdag kl. 11-16\r\nTirsdag og torsdag kl. 13-18\r\nFredag og lørdag  kl. 11-15","branchWebsiteUrl":"http://bibliotek.kk.dk/biblioteker/norrebro","query":"710111"} // eslint-disable-line
+    ];
+
+    let defaultLibrary = '';
+    let borrowerId = '';
+
+    let element = React.createElement(ProfileLibraries, {
+      store: testProfileWithLibraries,
+      libraries: testProfileWithLibraries.favoriteLibraries,
+      actions: {
+        libraryIdUpdated: {
+          trigger() {}
+        },
+        toggleEdit() {},
+        setLibraryAsDefault(val) {
+          defaultLibrary = val;
+        },
+        updateBorrowerIDForLibrary(val, borrId) {
+          borrowerId = borrId;
+        }
+      },
+      editable: true,
+      pickupLocationText: 'afhentningssted',
+      setAsText: 'Vælg som'
+    });
+    let dom = TestUtils.renderIntoDocument(element);
+    expect(dom.getDOMNode().innerHTML).to.contain('Nørrebro Bibliotek');
+    expect(dom.getDOMNode().innerHTML).to.contain('Vælg som');
+    expect(dom.getDOMNode().innerHTML).to.contain('afhentningssted');
+    let btn = TestUtils.scryRenderedDOMComponentsWithClass(dom, 'button tiny')[1];
+    TestUtils.Simulate.click(btn);
+    assert.equal(defaultLibrary, '710111');
+
+    let libraryField = TestUtils.scryRenderedDOMComponentsWithClass(dom, 'profile--library--borrower-id')[0];
+    libraryField.value = 'dette er et låner id';
+    TestUtils.Simulate.change(ReactDom.findDOMNode(libraryField));
+    assert.equal(borrowerId, 'dette er et låner id');
   });
 });

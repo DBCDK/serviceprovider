@@ -50,14 +50,33 @@ const ProfileLibrary = React.createClass({
         <div className='row'>
           <h3>{library.branchNameDan}</h3>
           <h5>{library.agencyName}</h5>
-          <input
-            defaultValue={this.props.library.borrowerID}
-            onChange={this.handleTextChange}
-            placeholder={this.props.placeholder}
-            />
-          <a className={this.props.library.default === 1 ? 'button disabled secondary tiny' : 'button tiny'} onClick={this.setDefaultLibrary}>
-            {this.props.library.default === 1 ? '' : this.props.setAsText} {this.props.pickupLocationText}
-          </a>
+          <div className='row'>
+            <div className='large-4 medium-4 small-12 columns'>
+              <label>
+                <span>Låner ID</span>
+                <input
+                  className='profile--library--borrower-id'
+                  defaultValue={this.props.library.borrowerID}
+                  onChange={this.handleTextChange}
+                  placeholder={this.props.placeholder}
+                  type='text' />
+              </label>
+            </div>
+            <div className='large-4 medium-4 small-12 columns'>
+              <label>
+                <span>Pinkode</span>
+                <input
+                  className='profile--library--borrower-password'
+                  defaultValue='Skriv din kode her'
+                  type='password' />
+              </label>
+            </div>
+            <div className='large-4 medium-4 small-12 columns'>
+              <a className={this.props.library.default === 1 ? 'button disabled secondary tiny' : 'button tiny'} onClick={this.setDefaultLibrary}>
+                {this.props.library.default === 1 ? '' : this.props.setAsText} {this.props.pickupLocationText}
+              </a>
+            </div>
+          </div>
         </div>
       );
     }
