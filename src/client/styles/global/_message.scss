@@ -1,0 +1,19 @@
+// =============================================================================
+// #MESSAGE
+// =============================================================================
+
+#message {
+  p {
+    text-align: center;
+    font-weight: 900;
+    border: 1px solid #ddd;
+  }
+
+  .info {
+    background-color: lightgreen;
+  }
+
+  .warning {
+    background-color: indianred;
+  }
+}

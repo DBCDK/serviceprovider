@@ -7,10 +7,10 @@ $line-height: 20px;
 }
 
 .searchfield-wrapper {
-  border: 1px solid #cccccc;
-  margin: 20px;
-  border-radius: 3px;
-  position: relative;
+  border: none;
+  margin: 0;
+  padding-left: 3px;
+  padding-right: 10px;
 
   input {
     height: $height;
@@ -28,14 +28,16 @@ $line-height: 20px;
     box-shadow: none;
   }
 
-  .button {
-    padding: 0 20px;
-    border-radius: 0 3px 3px 0;
-  }
-
   .submit {
     position: absolute;
     right: 5px;
+  }
+
+  .button {
+    padding: 0 20px;
+    border-radius: 0 3px 3px 0;
+    background-image: linear-gradient(#444443, #1e1e1f);
+    font-size: 1rem;
   }
 
   .inputfield {
@@ -52,6 +54,11 @@ $line-height: 20px;
   }
 }
 
+.token-searchfield {
+  background-color: $toke-searchfield-background-color;
+  padding: 10px 0;
+}
+
 .token-searchfield--spinner {
   position: absolute;
   display: none;
@@ -60,12 +67,11 @@ $line-height: 20px;
     display: block;
     width: 20px;
     height: 20px;
-    position: absolute;
     background-image: url("/loader.gif");
     background-size: 20px;
     background-repeat: no-repeat;
-    right: 70px;
+    right: 80px;
     background-position: center;
-    top: 6px;
+    top: 130px;
   }
 }

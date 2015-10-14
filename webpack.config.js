@@ -8,6 +8,8 @@ var commonsPlugin = new webpack.optimize.CommonsChunkPlugin('common.js');
 var noErrorsPlugin = new webpack.NoErrorsPlugin();
 var extractCss = new extractTextPlugin('../styles/style.css');
 
+var baseSass = process.env.NODE_APPLICATION === 'ddbmobil' && './src/client/styles/ddb.scss' || './src/client/styles/pg.scss'; // eslint-disable-line no-process-env
+
 module.exports = [{
   name: 'browser',
   entry: {
@@ -25,7 +27,7 @@ module.exports = [{
     receipt: './src/client/components/Receipt/index.js',
     groupsearch: './src/client/components/Group/Search/index.js',
     grouppost: './src/client/components/Group/Post/index.js',
-    styles: process.env.NODE_APPLICATION === 'ddbmobil' && './src/client/styles/ddb.scss' || './src/client/styles/pg.scss' // eslint-disable-line no-process-env
+    styles: baseSass
   },
   output: {
     path: path.join(__dirname, 'public/js'),

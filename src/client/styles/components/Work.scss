@@ -108,7 +108,8 @@
 }
 
 .can-order-false {
-  background-color: #aeaeae !important;
+  background-color: $can-order-false-background-color !important;
+  border: solid 0.5px darken($can-order-false-background-color, 20%) !important;
   pointer-events: none;
   cursor: default;
 }
@@ -136,7 +137,18 @@
   }
 }
 
-/* LIKE BUTTONS */
+.work {
+  padding-left: 5px;
+
+  img {
+    max-height: 330px;
+  }
+}
+
+
+// =============================================================================
+// LIKE BUTTONS
+// =============================================================================
 
 .work--like-buttons {
   margin-bottom: 5px;
