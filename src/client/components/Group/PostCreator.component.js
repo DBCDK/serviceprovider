@@ -39,10 +39,10 @@ class PostCreator extends React.Component {
     return (
       <div className='row'>
         <h4>Opret Indlæg</h4>
-        <button className='tiny' onClick={this.toggleComponent}>Tilbage</button>
         <div className='small-12 medium-4 column'>
           <label>Indlæg</label>
           <textarea placeholder='Skriv dit indlæg her' ref="postContent"></textarea>
+          <button onClick={this.toggleComponent}>Tilbage</button>
           <button onClick={this.createPost}>Opret</button>
         </div>
         <div className='hide-for-small-only medium-8'>

@@ -48,7 +48,7 @@ const ImageEditor = React.createClass({
   drawImage: function () {
     let self = this;
 
-    if (typeof this.state.image !== 'undefined') {
+    if (this.state.image !== null && typeof this.state.image !== 'undefined') {
       // get drawing context
       let canvas = this.refs.cvs;
       let ctx = canvas.getContext('2d');

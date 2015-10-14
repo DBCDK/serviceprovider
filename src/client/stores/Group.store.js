@@ -17,11 +17,11 @@ const GroupStore = Reflux.createStore({
       members: [],
       id: null,
       groupownerid: null,
-      loggedIn: false,
-      createPostMode: false
+      loggedIn: false
     },
     loggedIn: false,
     createPostMode: false,
+    editGroupMode: false,
     uid: null
   },
 
@@ -46,7 +46,8 @@ const GroupStore = Reflux.createStore({
       groupownerid: newGroup.groupownerid,
       isOwner: this.store.uid === newGroup.groupownerid,
       loggedIn: this.store.loggedIn,
-      createPostMode: this.store.createPostMode
+      createPostMode: this.store.createPostMode,
+      editGroupMode: this.store.editGroupMode
     };
 
     this.trigger(this.store);
@@ -58,6 +59,10 @@ const GroupStore = Reflux.createStore({
     }
   },
 
+  onConfirmSaveGroup() {
+    GroupActions.fetchGroup({id: this.store.group.id});
+  },
+
   onConfirmCreatePost() {
     GroupActions.fetchGroup({id: this.store.group.id});
   },
@@ -67,6 +72,11 @@ const GroupStore = Reflux.createStore({
 
   onToggleCreatePostMode() {
     this.store.createPostMode = !this.store.createPostMode;
+    GroupActions.updateGroup(this.store.group);
+  },
+
+  onToggleEditGroupMode() {
+    this.store.editGroupMode = !this.store.editGroupMode;
     GroupActions.updateGroup(this.store.group);
   },
 

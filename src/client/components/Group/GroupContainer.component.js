@@ -43,6 +43,14 @@ class GroupContainer extends React.Component {
     GroupActions.createGroup(group);
   }
 
+  updateGroup(group) {
+    GroupActions.updateGroup(group);
+  }
+
+  saveGroup(group) {
+    GroupActions.saveGroup(group);
+  }
+
   createPost(post) {
     const newPost = {
       title: 'no title',
@@ -82,16 +90,17 @@ class GroupContainer extends React.Component {
 
     let content = null;
 
-    if (typeof props.id === 'undefined') {
-      content = <div className='row'></div>;
-    }
-    else if (createGroupMode) {
+    if (createGroupMode || props.editGroupMode) {
       props.onCreate = this.createGroup;
+      props.onSave = this.saveGroup;
       content = <GroupCreator {...props} />;
     }
     else if (createPostMode) {
       props.onCreate = this.createPost;
       content = <PostCreator {...props} />;
+    }
+    else if (typeof props.id === 'undefined') {
+      content = <div className='row'></div>;
     }
     else {
       content = <Group {...props} />;
