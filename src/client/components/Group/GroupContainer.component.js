@@ -16,6 +16,7 @@ class GroupContainer extends React.Component {
     super();
 
     this.onUpdateGroup = this.onUpdateGroup.bind(this);
+    this.saveGroup = this.saveGroup.bind(this);
     this.createPost = this.createPost.bind(this);
 
     this.state = {
@@ -48,6 +49,8 @@ class GroupContainer extends React.Component {
   }
 
   saveGroup(group) {
+    // attach groupId
+    group.id = this.state.id;
     GroupActions.saveGroup(group);
   }
 
