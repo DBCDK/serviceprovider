@@ -1,6 +1,30 @@
-// Components
+$APPLICATION: 'pg';
+
+// =============================================================================
+// SETTINGS
+// =============================================================================
+@import "settings/colors";
+//@import "foundation/foundation/settings";
+
+// =============================================================================
+// FOUNDATION
+// =============================================================================
+@import "foundation/normalize";
+@import "foundation/foundation";
+
+// =============================================================================
+// GLOBALS
+// =============================================================================
+@import "global/buttons";
+@import "global/html";
+@import "global/logo";
+@import "global/message";
+@import "global/search";
+
+// =============================================================================
+// COMPONENTS
+// =============================================================================
 @import 'components/AutoComplete';
-@import 'components/Buttons';
 @import 'components/DisplayResult';
 @import 'components/Work';
 @import 'components/Profile';
@@ -16,5 +40,9 @@
 @import 'components/Receipt';
 @import 'components/Responsetime';
 
-// General
-@import "general/header_palle";
+
+// =============================================================================
+// PG SPECIFIC OVERRIDES
+// =============================================================================
+
+@import "overrides/pg";

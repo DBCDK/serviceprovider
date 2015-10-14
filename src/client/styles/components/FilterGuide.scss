@@ -1,11 +1,13 @@
+// =============================================================================
+// FILTER GUIDE COMPONENT
+// =============================================================================
 .filterguide-wrapper {
-  //position: absolute;
   overflow: hidden;
   width: 100%;
 }
+
 .filterguide {
   width: 104%;
-  //height: 60px;
   white-space: nowrap;
   overflow-x: scroll;
   -webkit-overflow-scrolling: touch;
@@ -19,7 +21,10 @@
 .filterguide-list-element {
   margin: 2px;
   display: inline-block;
+
   .button {
     margin: 0;
+    background-color: $filter-guide-list-element-button;
+    color: $link-color;
   }
 }

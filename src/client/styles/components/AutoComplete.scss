@@ -1,5 +1,9 @@
-$border-color: #d0d0d0;
-$background-color: #fdfdfd;
+// =============================================================================
+// AUTOCOMPLETE COMPONENT
+// =============================================================================
+
+$border-color: #f4f4f4;
+$background-color: #fffffc;
 
 input[type=text] {
   &.search-input {
@@ -31,10 +35,14 @@ input[type=text] {
   }
 }
 
+.autocomplete--category--label {
+  text-transform: uppercase;
+}
+
 .autocomplete--category--label-container {
   vertical-align: middle;
   text-align: left;
-  line-height: 40px;
+  line-height: 31px;
   padding-left: 12px;
   color: #FFFFFF;
   background-color: #000;
@@ -53,6 +61,8 @@ input[type=text] {
 .autocomplete--row {
   line-height: 70px;
   padding: 0 10px;
+  background-color: $background-color;
+  border-bottom: 1px solid $border-color;
 
   &:hover, &:focus {
     background-color: #f0f0f0;
@@ -75,4 +85,5 @@ input[type=text] {
 .autocomplete--row-text {
   display: table-cell;
   white-space: nowrap;
+  color: black;
 }

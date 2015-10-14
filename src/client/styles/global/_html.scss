@@ -1,0 +1,14 @@
+body {
+  font-family: "Source Sans Pro", "Lucida Sans", Arial, sans-serif;
+}
+
+// =============================================================================
+// A
+// =============================================================================
+a {
+  color: $link-color;
+
+  &:hover {
+    text-decoration: underline;
+  }
+}

@@ -1,0 +1,154 @@
+// =============================================================================
+// BODY
+// =============================================================================
+body {
+  font-family: "Lucida Sans Unicode", "Lucida Sans", Arial, sans-serif;
+}
+
+// =============================================================================
+// LOGO
+// =============================================================================
+
+#logo {
+  background: url('/palle_logo.png');
+  background-size: 100%;
+  height: 60px;
+}
+
+.logo--container {
+  width: 100px;
+}
+
+// =============================================================================
+// A
+// =============================================================================
+a {
+  &:hover {
+    color: $link-hover-color;
+    text-decoration: none;
+  }
+}
+
+// =============================================================================
+// SEARCHFIELD
+// =============================================================================
+.searchfield-wrapper {
+  border: 1px solid $border-color;
+  border-radius: 3px;
+
+  .submit {
+    .button {
+      background-image: none;
+    }
+  }
+
+  li {
+    padding-left: 10px;
+  }
+}
+
+// =============================================================================
+// ORDER BUTTON
+// =============================================================================
+.can-order-false {
+  border: none;
+}
+
+// =============================================================================
+// FILTER GUIDE COMPONENT
+// =============================================================================
+.filterguide-list-element {
+  border-radius: 4px;
+  .button {
+    color: $white;
+  }
+
+  .element-label {
+    background-color: $label-color;
+    border: 1px solid darken($label-color, 20%);
+    text-shadow: 0 -1px 0 darken($label-color, 10%);
+    box-shadow: inset 0 1px 0 lighten($label-color, 20%);
+  }
+
+  .element-label-worktype {
+    background-color: $label-worktype-color;
+    border: 1px solid darken($label-worktype-color, 20%);
+    text-shadow: 0 -1px 0 darken($label-worktype-color, 10%);
+    box-shadow: inset 0 1px 0 lighten($label-worktype-color, 20%);
+  }
+}
+
+// =============================================================================
+// WORK
+// =============================================================================
+.work {
+  .fa {
+    color: $white;
+    background-color: #f6ab0c;
+    @include radius(0);
+    top: 0.3em;
+    left: 1.5em;
+    width: 1.5em;
+    line-height: 2.5em;
+    padding: 0 4px;
+  }
+}
+
+// =============================================================================
+// BUTTON
+// =============================================================================
+button:hover,
+button:focus,
+.button:hover,
+.button:focus {
+  background-color: $button-background-color--hover;
+}
+
+.button-group {
+  margin-left: 1px;
+  margin-right: 1px;
+  li {
+    margin: 0 !important;
+  }
+  li:first-of-type {
+    padding-right: 2px;
+  }
+  li:last-of-type {
+    padding-left: 2px;
+  }
+}
+
+.button {
+  border: none;
+  @include radius(4px);
+  margin: 10px;
+
+  &.secondary {
+    text-transform: none;
+    border: 1px solid;
+    border-color: $border-color !important;
+
+    &.active {
+      background-color: $button-background-color--secondary-active-color;
+    }
+  }
+}
+
+// =============================================================================
+// SEARCH RESULT
+// =============================================================================
+.search-result--loadmore,
+.order-button {
+  background-color: #1b9ec6;
+  border-radius: 4px;
+}
+
+.order--container .image,
+.order--container .order,
+.receipt--container .image,
+.receipt--container .receipt {
+  float: left;
+}
+
+
+

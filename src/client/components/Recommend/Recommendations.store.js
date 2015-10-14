@@ -56,7 +56,7 @@ let RecommendationsStore = Reflux.createStore({
   onResponse(result) {
     this.store.pending = false;
     if (result.error) {
-      throw new Error(result.error.statusMessage, result.error);
+      console.error(result.error.statusMessage, result.error); // eslint-disable-line
     }
     else {
       this.store.result = result.splice(0, 20);

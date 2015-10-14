@@ -1,0 +1,33 @@
+// =============================================================================
+// COLORS
+// =============================================================================
+$black: #000;
+$border-color: #CCC;
+$button-background-color: #7A7A7A;
+$button-background-color--hover: #000000;
+$button-background-color--secondary-color: #7a7a7a;
+$button-background-color--secondary-active-color: #333;
+$button-text-color: #FFF;
+$can-order-false-background-color: #ffffff;
+$filter-guide-list-element-button: #e8e8e8;
+$link-color: #f26304;
+$toke-searchfield-background-color: #505050;
+$white: #FFF;
+$work-mattype-icon-background-color: #f6ab0c;
+
+@if $APPLICATION == pg {
+  $border-color: #CCC;
+  $button-background-color: #1b9ec6;
+  $button-background-color--hover: #2971A7;
+  $button-background-color--secondary-color: #FFF;
+  $button-background-color--secondary-active-color: #1b9ec6;
+  $button-text-color: #000;
+  $can-order-false-background-color: #aeaeae;
+  $filter-guide-list-element-button: #e8e8e8;
+  $label-color: #14b43e;
+  $label-worktype-color: #1974e2;
+  $link-color: #1b9ec6;
+  $link-hover-color: #2971A7;
+  $toke-searchfield-background-color: #FFF;
+  $work-mattype-icon-background-color: #f6ab0c;
+}
