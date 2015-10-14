@@ -7,15 +7,6 @@
 import React, {PropTypes} from 'react';
 
 class MemberSummary extends React.Component {
-  static displayName() {
-    return 'MemberSummary.component';
-  }
-
-  static propTypes() {
-    return {
-      members: PropTypes.array.isRequired
-    };
-  }
 
   constructor() {
     super();
@@ -35,5 +26,10 @@ class MemberSummary extends React.Component {
     );
   }
 }
+
+MemberSummary.displayName = 'MemberSummary.component';
+MemberSummary.propTypes = {
+  members: PropTypes.array.isRequired
+};
 
 export default MemberSummary;

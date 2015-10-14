@@ -8,23 +8,6 @@ import PostTimeline from './PostTimeline.component.js';
 
 
 class Group extends React.Component {
-  static displayName() {
-    return 'Group.component';
-  }
-
-  static propTypes() {
-    return {
-      name: PropTypes.string.isRequired,
-      description: PropTypes.string.isRequired,
-      posts: PropTypes.array.isRequired,
-      members: PropTypes.array.isRequired,
-      commentCb: PropTypes.func.isRequired,
-      toggleCreatePostCb: PropTypes.func.isRequired,
-      id: PropTypes.number.isRequired,
-      loggedIn: PropTypes.boolean.isRequired,
-      createPostMode: PropTypes.boolean.isRequired
-    };
-  }
 
   constructor() {
     super();
@@ -38,6 +21,7 @@ class Group extends React.Component {
         <MemberSummary members={this.props.members}/>
         <div className='row'>
           <button onClick={this.props.toggleCreatePostCb}>Skriv nyt indlæg</button>
+          <button onClick={this.props.toggleEditGroupCb}>Rediger gruppe</button>
         </div>
         <PostTimeline
           commentCb={this.props.commentCb}
@@ -48,5 +32,20 @@ class Group extends React.Component {
     );
   }
 }
+
+Group.propTypes = {
+  commentCb: PropTypes.func.isRequired,
+  createPostMode: PropTypes.bool.isRequired,
+  description: PropTypes.string.isRequired,
+  editGroupMode: PropTypes.bool.isRequired,
+  id: PropTypes.number.isRequired,
+  loggedIn: PropTypes.bool.isRequired,
+  members: PropTypes.array.isRequired,
+  name: PropTypes.string.isRequired,
+  posts: PropTypes.array.isRequired,
+  toggleCreatePostCb: PropTypes.func.isRequired,
+  toggleEditGroupCb: PropTypes.func.isRequired
+};
+Group.displayName = 'Group.component';
 
 export default Group;
