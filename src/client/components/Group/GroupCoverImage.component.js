@@ -7,15 +7,6 @@
 import React, {PropTypes} from 'react';
 
 class GroupCoverImage extends React.Component {
-  static displayName() {
-    return 'GroupCoverImage.component';
-  }
-
-  static propTypes() {
-    return {
-      url: PropTypes.string.isRequired
-    };
-  }
 
   constructor() {
     super();
@@ -29,5 +20,10 @@ class GroupCoverImage extends React.Component {
     );
   }
 }
+
+GroupCoverImage.displayName = 'GroupCoverImage.component';
+GroupCoverImage.propTypes = {
+  url: PropTypes.string.isRequired
+};
 
 export default GroupCoverImage;

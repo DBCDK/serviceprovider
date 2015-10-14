@@ -21,7 +21,7 @@ class GroupPostComponent extends React.Component {
     let ownerImage = null;
     if (typeof this.props.ownerImageUrl !== 'undefined') {
       ownerImage = (<img
-        className='small-2 column group--member-image'
+        className='small-3 medium-2 column group--member-image'
         src={this.props.ownerImageUrl}
         />);
     }
@@ -31,8 +31,8 @@ class GroupPostComponent extends React.Component {
         <div className='row'>
           {this.props.enableBackButton ? backButton : null}
           {ownerImage}
-          <span className='small-7 column'><strong>{this.props.ownerName}</strong></span>
-          <span className='small-3 column group--timesince'>{timeSinceString} siden</span>
+          <span className='small-6 medium-7 column'><strong>{this.props.ownerName}</strong></span>
+          <span className='small-3 medium-3 column group--timesince'>{timeSinceString} siden</span>
         </div>
         <div className='row'>
           <p>{this.props.groupPostData.content}</p>
