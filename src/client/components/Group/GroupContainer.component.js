@@ -25,7 +25,8 @@ class GroupContainer extends React.Component {
       members: [],
       loggedIn: false,
       createPostMode: false,
-      editGroupMode: false
+      editGroupMode: false,
+      isOwner: false
     };
 
     GroupStore.listen(this.onUpdateGroup);
@@ -63,6 +64,7 @@ class GroupContainer extends React.Component {
   }
 
   toggleEditGroupMode() {
+    GroupActions.toggleEditGroupMode();
   }
 
   onUpdateGroup(store) {
