@@ -25,7 +25,8 @@ const GroupActions = Reflux.createActions([
   'createPost',
   'confirmCreatePost',
   'toggleCommentExpansion',
-  'toggleCreatePostMode'
+  'toggleCreatePostMode',
+  'toggleEditGroupMode'
 ]);
 
 GroupActions.saveGroup.listen(updateGroupEvent.request);

@@ -16,11 +16,13 @@ const GroupStore = Reflux.createStore({
       posts: [],
       members: [],
       id: null,
+      groupownerid: null,
       loggedIn: false,
       createPostMode: false
     },
     loggedIn: false,
-    createPostMode: false
+    createPostMode: false,
+    uid: null
   },
 
   init() {
@@ -30,6 +32,7 @@ const GroupStore = Reflux.createStore({
 
   profileStoreUpdate(profile) {
     this.store.loggedIn = profile.userIsLoggedIn;
+    this.store.uid = profile.id;
   },
 
   onUpdateGroup(newGroup) {
@@ -40,6 +43,8 @@ const GroupStore = Reflux.createStore({
       members: newGroup.members,
       posts: newGroup.posts,
       id: newGroup.id,
+      groupownerid: newGroup.groupownerid,
+      isOwner: this.store.uid === newGroup.groupownerid,
       loggedIn: this.store.loggedIn,
       createPostMode: this.store.createPostMode
     };

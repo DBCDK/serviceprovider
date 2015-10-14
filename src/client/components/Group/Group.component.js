@@ -15,13 +15,17 @@ class Group extends React.Component {
 
   render() {
     const coverUrl = 'http://www.nalder.com.au/galleries/Limited%20Edition%20Landscape/photos/The_Consequence_of_Drought.jpg';
+
+    const createPostButton =(this.props.loggedIn) ? <button onClick={this.props.toggleCreatePostCb}>Skriv nyt indlæg</button> : null;
+    const editGroupButton = (this.props.isOwner) ? <button onClick={this.props.toggleEditGroupCb}>Rediger gruppe</button> : null;
+
     return (
       <div>
         <GroupCoverImage url={coverUrl}/>
         <MemberSummary members={this.props.members}/>
         <div className='row'>
-          <button onClick={this.props.toggleCreatePostCb}>Skriv nyt indlæg</button>
-          <button onClick={this.props.toggleEditGroupCb}>Rediger gruppe</button>
+          {createPostButton}
+          {editGroupButton}
         </div>
         <PostTimeline
           commentCb={this.props.commentCb}
@@ -39,6 +43,7 @@ Group.propTypes = {
   description: PropTypes.string.isRequired,
   editGroupMode: PropTypes.bool.isRequired,
   id: PropTypes.number.isRequired,
+  isOwner: PropTypes.bool.isRequired,
   loggedIn: PropTypes.bool.isRequired,
   members: PropTypes.array.isRequired,
   name: PropTypes.string.isRequired,
