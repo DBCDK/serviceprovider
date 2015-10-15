@@ -6,7 +6,7 @@ import WorkActions from '../actions/Work.action.js';
 // Setup dataobject for query
 // @todo We may need to initialize it with data from the URL or an global object
 let _store = {
-  result: [],
+  result: {},
   info: [],
   error: []
 };
@@ -28,7 +28,7 @@ let WorkStore = Reflux.createStore({
 
   // update the work object and trigger an action
   update(result) {
-    let work = result.result || [];
+    let work = result.work || {};
     let info = result.info || [];
     let error = result.error || [];
     // this.callImageActions(work);
