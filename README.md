@@ -43,6 +43,14 @@ Currently this value is also used to identify the application in logs and append
 
 The default value is `app_name`
 
+### NODE_APPLICATION
+Use this varialbe to let the application how stylesheets are compiled and which jade templates are used.
+Currently two values are used to control compiling of SASS and delivering of templates:
+- `pg` Should be used when building Palles Gavebod
+- `ddbmobil` Should be used when building Mobil Søg
+
+The default value is `pg`
+
 ### PORT
 Defines which portnumber the application should use when bootinh up.
 If `PORT` is undefined the application will be accecsible at port 8080 (i.e. localhost:8080)

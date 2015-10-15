@@ -8,10 +8,13 @@ $APPLICATION: 'mobilsoeg';
 // =============================================================================
 // FOUNDATION
 // =============================================================================
+@import "foundation/normalize";
+@import "foundation/foundation";
 
 // =============================================================================
 // GLOBALS
 // =============================================================================
+@import "global/buttons";
 @import "global/header";
 @import "global/html";
 @import "global/logo";
@@ -23,7 +26,6 @@ $APPLICATION: 'mobilsoeg';
 // COMPONENTS
 // =============================================================================
 @import 'components/AutoComplete';
-@import 'components/Buttons';
 @import 'components/DisplayResult';
 @import 'components/Work';
 @import 'components/FilterGuide';
@@ -35,9 +37,3 @@ $APPLICATION: 'mobilsoeg';
 @import 'components/Receipt';
 @import 'components/Profile';
 @import 'components/Responsetime';
-
-// =============================================================================
-// PG SPECIFIC OVERRIDES
-// =============================================================================
-
-@import "overrides/mobilsoeg";

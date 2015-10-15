@@ -22,7 +22,7 @@ import expressValidator from 'express-validator';
 import compression from 'compression';
 import expressSession from 'express-session';
 import RedisStore from 'connect-redis';
-// import helmet from 'helmet';
+import helmet from 'helmet';
 
 // loading routes
 import MainRoutes from './server/routes/main.routes.js';
@@ -48,7 +48,6 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
 
 // Helmet configuration
-/*
 app.use(helmet.xssFilter());
 app.use(helmet.frameguard());
 app.use(helmet.hsts({
@@ -58,7 +57,7 @@ app.use(helmet.hsts({
 app.use(helmet.hidePoweredBy({setTo: 'Funkys Venner!'}));
 app.use(helmet.ieNoOpen());
 app.use(helmet.noSniff());
-*/
+
 // Port config
 app.set('port', process.env.PORT || 8080); // eslint-disable-line no-process-env
 
@@ -89,7 +88,6 @@ app.locals.version = version;
 app.locals.production = PRODUCTION;
 app.locals.title = config.palle.applicationTitle || '';
 app.locals.application = process.env.NODE_APPLICATION === 'ddbmobil' ? 'mobilsoeg' : 'pg'; // eslint-disable-line no-process-env
-
 
 // setup environments
 let redisConfig;

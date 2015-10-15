@@ -10,13 +10,9 @@ body {
 // =============================================================================
 
 #logo {
-  background: url('/palle_logo.png');
-  background-size: 100%;
+  background: url('/palle_logo.png') no-repeat left;
+  background-size: 90px;
   height: 60px;
-}
-
-.logo--container {
-  width: 100px;
 }
 
 // =============================================================================

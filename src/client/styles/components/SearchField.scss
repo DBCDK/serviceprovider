@@ -1,16 +1,9 @@
 $height: 32px;
 $line-height: 20px;
 
-.searchfield--container {
-  margin: 0 5px;
-
-}
-
 .searchfield-wrapper {
   border: none;
-  margin: 0;
-  padding-left: 3px;
-  padding-right: 10px;
+  margin: 20px 10px;
 
   input {
     height: $height;
@@ -67,11 +60,9 @@ $line-height: 20px;
     display: block;
     width: 20px;
     height: 20px;
-    background-image: url("/loader.gif");
+    background: url("/loader.gif") no-repeat center;
     background-size: 20px;
-    background-repeat: no-repeat;
     right: 80px;
-    background-position: center;
-    top: 130px;
+    top: 140px;
   }
 }
