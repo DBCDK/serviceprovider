@@ -1,9 +1,13 @@
 $height: 32px;
 $line-height: 20px;
 
+.searchfield--container {
+  padding: 0 5px;
+}
+
 .searchfield-wrapper {
   border: none;
-  margin: 20px 10px;
+  margin: 0;
 
   input {
     height: $height;
@@ -37,14 +41,6 @@ $line-height: 20px;
     width: 100%;
     padding: 0;
   }
-
-  li {
-    height: $height;
-    vertical-align: middle;
-    display: inline-block;
-    list-style: none;
-    padding: 0;
-  }
 }
 
 .token-searchfield {
@@ -62,7 +58,7 @@ $line-height: 20px;
     height: 20px;
     background: url("/loader.gif") no-repeat center;
     background-size: 20px;
-    right: 80px;
-    top: 140px;
+    right: 10px;
+    top: 10px;
   }
 }
