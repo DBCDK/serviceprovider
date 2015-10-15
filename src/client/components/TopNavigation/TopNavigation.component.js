@@ -37,18 +37,16 @@ const TopNavigation = React.createClass({
     const profileLink = isLoggedIn ? <a href='/profile' >{this.state.username}</a> : '';
 
     return (
-      <nav className='topnavigation--header' role="navigation" >
-        <div className='row' >
-          <div className='small-16 columns topnavigation--header--buttons' >
+      <div className='topnavigation--header' role="navigation" >
+          <div className='topnavigation--header--buttons' >
             <div className='left topnavigation--header--buttons--profilelink' >
               {profileLink}
             </div>
             <div className='right' >
               <a className='button tiny' href={buttonData.url} >{buttonData.text}</a>
             </div>
-          </div>
         </div>
-      </nav>
+      </div>
     );
   }
 });
