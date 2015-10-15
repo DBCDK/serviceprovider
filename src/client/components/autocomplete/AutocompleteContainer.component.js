@@ -17,6 +17,8 @@ const AutoCompleteContainer = React.createClass({
     store: React.PropTypes.object
   },
 
+  timer: null,
+
   getInitialState() {
     return {
       focus: false,
@@ -40,7 +42,13 @@ const AutoCompleteContainer = React.createClass({
       return;
     }
     if (this.lastInputValue !== inputValue) {
-      this.props.actions.textfieldUpdated(inputValue);
+      if (this.timer) {
+        clearTimeout(this.timer);
+      }
+      this.timer = setTimeout(() => {
+        console.log('timeout');
+        this.props.actions.textfieldUpdated(inputValue);
+      }, 500);
     }
     this.lastInputValue = inputValue;
     this.state.hasSearched = true;
