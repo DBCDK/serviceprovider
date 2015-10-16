@@ -25,11 +25,11 @@ $APPLICATION: 'mobilsoeg';
 // COMPONENTS
 // =============================================================================
 @import 'components/AutoComplete';
-@import 'components/DisplayResult';
+@import 'components/DisplayResult.mobilsoeg.scss';
 @import 'components/Work';
 @import 'components/FilterGuide';
 @import 'components/Loader';
-@import 'components/SearchField';
+@import 'components/SearchField.mobilsoeg.scss';
 @import 'components/TokenList';
 @import 'components/TopNavigation';
 @import 'components/Order';

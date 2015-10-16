@@ -24,7 +24,7 @@ $APPLICATION: 'pg';
 // COMPONENTS
 // =============================================================================
 @import 'components/AutoComplete';
-@import 'components/DisplayResult';
+@import 'components/DisplayResult.pg.scss';
 @import 'components/FilterGuide';
 @import 'components/Group';
 @import 'components/Loader';
@@ -33,7 +33,7 @@ $APPLICATION: 'pg';
 @import 'components/Profile';
 @import 'components/Receipt';
 @import 'components/Responsetime';
-@import 'components/SearchField';
+@import 'components/SearchField.pg.scss';
 @import 'components/Signup';
 @import 'components/TokenList';
 @import 'components/TopNavigation';
