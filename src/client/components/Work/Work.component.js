@@ -144,7 +144,7 @@ const Work = React.createClass({
         </div>
 
         <div className='work small-12 medium-6 large-4'>
-          <OrderButton manifestations={specifics} profile={profile} />
+          <OrderButton manifestations={specifics} profile={profile} relations={work.result.relations} />
 
           {likeContainers}
 
