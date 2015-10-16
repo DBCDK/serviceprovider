@@ -1,4 +1,4 @@
-# pallesgavebod
+# Palles Gavebod
 
 [![GitHub tag](https://img.shields.io/github/tag/DBCDK/pallesgavebod.svg?style=flat-square)](https://github.com/DBCDK/pallesgavebod)
 [![David](https://img.shields.io/david/DBCDK/pallesgavebod.svg?style=flat-square)](https://david-dm.org/DBCDK/pallesgavebod#info=dependencies)
@@ -12,7 +12,7 @@ Next generation Palles Gavebod
 As default the application will load on localhost:8080. Se a running example on [pg.demo.dbc.dk](http://pg.demo.dbc.dk)
 
 ## How to install and run the application
-```
+```bash
 // Build and install the application
 git clone https://github.com/DBCDK/pallesgavebod.git
 npm install
@@ -31,31 +31,39 @@ mv config.example.js config.js
 ## Environment Varibles
 The following environment variables can be used to override default settings in the application
 
-### EMAIL_REDIRECT
+- __EMAIL_REDIRECT__  
 Used when a user creates a new account. The value given in `EMAIL_REDIRECT` will be used as basepath in the link that'll appear in the confirmation email sent to the user.
-Typically you'll want the value in `EMAIL_REDIRECT` to be the same as the basepath for the given site the user is signing up at. I.e pg.demo.dbc.dk.
+Typically you'll want the value in `EMAIL_REDIRECT` to be the same as the basepath for the given site the user is signing up at. I.e pg.demo.dbc.dk.  
+  
+  The default value is `localhost`
 
-The default value is `localhost`
+- __KAFKA_TOPIC__  
+(inherited from [dbc-node-logger](https://www.npmjs.com/package/dbc-node-logger))  
+This defines which topic in Kafka the log messages should be associated with 
 
-### NEW_RELIC_APP_NAME
+- __KAFKA_HOST__  
+(inherited from [dbc-node-logger](https://www.npmjs.com/package/dbc-node-logger))  
+String that defines the Zookeeper connectionstring. Should be defined as `host:port`. see [winston-kafka-transport](https://www.npmjs.com/package/winston-kafka-transport) and [dbc-node-logger](https://www.npmjs.com/package/dbc-node-logger) 
+
+- __NEW_RELIC_APP_NAME__  
 This variable is used to configure the name with which the application should appear in New Relic but also elsewhere.
-Currently this value is also used to identify the application in logs and appended to secrets used in Redis
+Currently this value is also used to identify the application in logs and appended to secrets used in Redis.  
+  
+  The default value is `app_name`
 
-The default value is `app_name`
-
-### NODE_APPLICATION
+- __NODE_APPLICATION__  
 Use this varialbe to let the application how stylesheets are compiled and which jade templates are used.
 Currently two values are used to control compiling of SASS and delivering of templates:
-- `pg` Should be used when building Palles Gavebod
-- `ddbmobil` Should be used when building Mobil Søg
+  - `pg` Should be used when building Palles Gavebod
+  - `ddbmobil` Should be used when building Mobil Søg
+  
+  The default value is `pg`
 
-The default value is `pg`
-
-### PORT
+- __PORT__  
 Defines which portnumber the application should use when bootinh up.
-If `PORT` is undefined the application will be accecsible at port 8080 (i.e. localhost:8080)
- 
-The default value is `8080`
+If `PORT` is undefined the application will be accecsible at port 8080 (i.e. localhost:8080)  
+  
+  The default value is `8080`
 
 ## New Relic
 As New Relic is used by DBC A/S this application requires New Relic to be configured.  
