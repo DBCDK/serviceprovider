@@ -48,12 +48,12 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
 
 // Helmet configuration
-app.use(helmet.xssFilter());
+// app.use(helmet.xssFilter());
 app.use(helmet.frameguard());
-app.use(helmet.hsts({
-  maxAge: 112200,
-  includeSubdomains: true
-}));
+// app.use(helmet.hsts({
+//   maxAge: 112200,
+//   includeSubdomains: true
+// }));
 app.use(helmet.hidePoweredBy({setTo: 'Funkys Venner!'}));
 app.use(helmet.ieNoOpen());
 app.use(helmet.noSniff());
