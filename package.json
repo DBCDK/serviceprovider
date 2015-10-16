@@ -96,7 +96,6 @@
     "node-libs-browser": "^0.5.2",
     "parallelshell": "^2.0.0",
     "phantomjs": "^1.9.17",
-    "react-tools": "^0.13.2",
     "selenium-webdriver": "^2.46.1",
     "sinon": "^1.16.1",
     "wallaby-webpack": "0.0.8"
