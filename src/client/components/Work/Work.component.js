@@ -109,7 +109,7 @@ const Work = React.createClass({
 
       editions.push(edition);
 
-      const elementKey = element.accessType + '_' + element.workType;
+      const elementKey = element.accessType + '_' + element.type;
 
       if (!specifics_object.hasOwnProperty(elementKey)) {
         specifics_object[elementKey] = {
@@ -142,7 +142,6 @@ const Work = React.createClass({
         <div className='work work--cover-image small-12 medium-6 large-4'>
           <CoverImage pids={[id, work.result.pid]} prefSize='detail_500' rewritwImgUrl={rewriteCoverImageUrl} />
         </div>
-
         <div className='work small-12 medium-6 large-4'>
           <OrderButton manifestations={specifics} profile={profile} />
 
