@@ -8,31 +8,58 @@ var commonsPlugin = new webpack.optimize.CommonsChunkPlugin('common.js');
 var noErrorsPlugin = new webpack.NoErrorsPlugin();
 var extractCss = new extractTextPlugin('../styles/style.css');
 
-var baseSass = process.env.NODE_APPLICATION === 'ddbmobil' && './src/client/styles/ddb.scss' || './src/client/styles/pg.scss'; // eslint-disable-line no-process-env
+var APPLICATION = process.env.NODE_APPLICATION; // eslint-disable-line no-process-env
 
-module.exports = [{
-  name: 'browser',
-  entry: {
-    querysearch: './src/client/components/searchpage/index.js',
-    profile: './src/client/components/Profile/index.js',
-    topnavigation: './src/client/components/TopNavigation/index.js',
+var entries = {
+  styles: ''
+};
+
+if (APPLICATION === 'ddbmobil') {
+  entries = {
     library: './src/client/components/Library/index.js',
     librarysuggest: './src/client/components/LibrarySuggest/index.js',
     login: './src/client/components/Login/index.js',
-    group: './src/client/components/Group/index.js',
-    signup: './src/client/components/Signup/index.js',
-    resetpassword: './src/client/components/ResetPassword/index.js',
-    work: './src/client/components/Work/Work.client',
     order: './src/client/components/Order/index.js',
+    profile: './src/client/components/Profile/index.js',
+    querysearch: './src/client/components/searchpage/index.js',
     receipt: './src/client/components/Receipt/index.js',
-    groupsearch: './src/client/components/Group/Search/index.js',
+    resetpassword: './src/client/components/ResetPassword/index.js',
+    signup: './src/client/components/Signup/index.js',
+    topnavigation: './src/client/components/TopNavigation/index.js',
+    work: './src/client/components/Work/Work.client',
+    styles: './src/client/styles/ddb.scss'
+  };
+}
+else {
+  entries = {
+    group: './src/client/components/Group/index.js',
     grouppost: './src/client/components/Group/Post/index.js',
-    styles: baseSass
-  },
+    groupsearch: './src/client/components/Group/Search/index.js',
+    library: './src/client/components/Library/index.js',
+    librarysuggest: './src/client/components/LibrarySuggest/index.js',
+    login: './src/client/components/Login/index.js',
+    order: './src/client/components/Order/index.js',
+    profile: './src/client/components/Profile/index.js',
+    querysearch: './src/client/components/searchpage/index.js',
+    receipt: './src/client/components/Receipt/index.js',
+    resetpassword: './src/client/components/ResetPassword/index.js',
+    signup: './src/client/components/Signup/index.js',
+    topnavigation: './src/client/components/TopNavigation/index.js',
+    work: './src/client/components/Work/Work.client',
+    styles: './src/client/styles/pg.scss'
+  };
+}
+
+module.exports = [{
+  name: 'browser',
+
+  entry: entries,
+
   output: {
     path: path.join(__dirname, 'public/js'),
     filename: '[name].js'
   },
+
   module: {
     loaders: [
       {

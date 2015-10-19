@@ -40,6 +40,7 @@ const socket = socketio.listen(server);
 const ENV = app.get('env');
 const PRODUCTION = ENV === 'production';
 const APP_NAME = process.env.NEW_RELIC_APP_NAME || 'app_name'; // eslint-disable-line no-process-env
+const APPLICATION = process.env.NODE_APPLICATION === 'ddbmobil' ? 'mobilsoeg' : 'pg'; // eslint-disable-line no-process-env
 const logger = new Logger({app_name: APP_NAME});
 const expressLoggers = logger.getExpressLoggers();
 
@@ -87,7 +88,7 @@ app.locals.env = ENV;
 app.locals.version = version;
 app.locals.production = PRODUCTION;
 app.locals.title = config.palle.applicationTitle || '';
-app.locals.application = process.env.NODE_APPLICATION === 'ddbmobil' ? 'mobilsoeg' : 'pg'; // eslint-disable-line no-process-env
+app.locals.application = APPLICATION;
 
 // setup environments
 let redisConfig;
@@ -156,7 +157,9 @@ app.use('/', MainRoutes);
 app.use('/library', LibraryRoutes);
 app.use('/profile', PassportRoutes);
 app.use('/work', WorkRoutes);
-app.use('/groups', GroupRoutes);
+if (APPLICATION === 'pg') {
+  app.use('/groups', GroupRoutes);
+}
 
 // starting server
 server.listen(app.get('port'), () => {
