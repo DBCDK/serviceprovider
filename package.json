@@ -14,6 +14,7 @@
     "build": "webpack --progress --colors -p",
     "start:watch": "webpack --progress --colors --watch -d",
     "dev": "parallelshell \"npm run start:watch -s\" \"npm run serve -s\"",
+    "dev:remoteprofile": "PROFILE_SERVICE_URL=\"http://profile-i01.dbc.dk:3001/\" npm run dev",
     "dev:ddb": "NODE_APPLICATION=ddbmobil npm run dev",
     "siege": "siege -c2000 -d10 -t5M -i -f siegetestendpoints.txt",
     "siege:live": "siege -c2000 -d10 -t5M -i -f siegedemoendpoints.txt"
