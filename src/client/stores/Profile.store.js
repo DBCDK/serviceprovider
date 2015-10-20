@@ -21,7 +21,9 @@ let profileStore = Reflux.createStore({
     favoriteLibraries: [],
     favoriteLibrariesResolved: [],
     likes: [],
-    userIsLoggedIn: false
+    userIsLoggedIn: false,
+    borrowerCheckStatus: '',
+    borrowerInfoSaved: false
   },
 
   init() {
@@ -60,18 +62,12 @@ let profileStore = Reflux.createStore({
     return this.store;
   },
 
-  onUpdateBorrowerIDForLibrary(agencyID, borrowerID) {
-    const libraryIndex = findIndex(this.store.favoriteLibraries, 'agencyID', agencyID);
-    if (libraryIndex >= 0) {
-      this.store.favoriteLibraries[libraryIndex].borrowerID = borrowerID;
-    }
-  },
-
   onAddLibraryToFavorites(agencyID, libraryID) {
     let favoriteModel = {
       agencyID: agencyID,
       libraryID: libraryID,
       borrowerID: '',
+      borrowerPIN: '',
       default: 0
     };
 
@@ -118,6 +114,8 @@ let profileStore = Reflux.createStore({
     if (libraryIndex >= 0) {
       this.store.favoriteLibraries[libraryIndex].default = 1;
     }
+
+    ProfileActions.saveProfile(this.store);
 
     this.trigger(this.store);
   },
@@ -187,6 +185,17 @@ let profileStore = Reflux.createStore({
     this.trigger(this.store);
 
     ProfileActions.saveLike(request);
+  },
+
+  checkBorrowerAndSaveToProfile() {
+    this.store.borrowerCheckStatus = 'pending';
+    this.trigger(this.store);
+  },
+
+  checkBorrowerAndSaveToProfileResponse(response) {
+    this.store.borrowerCheckStatus = response.borrowerStatus;
+    this.store.borrowerInfoSaved = response.profileStatus;
+    this.trigger(this.store);
   }
 });
 
