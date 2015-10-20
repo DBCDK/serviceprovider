@@ -120,7 +120,8 @@ const Work = React.createClass({
           links: [],
           order: '',
           title: element.title,
-          type: element.type
+          type: element.type,
+          workType: element.workType
         };
       }
 
