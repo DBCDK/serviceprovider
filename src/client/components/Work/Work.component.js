@@ -143,7 +143,7 @@ const Work = React.createClass({
           <CoverImage pids={[id, work.result.pid]} prefSize='detail_500' rewritwImgUrl={rewriteCoverImageUrl} />
         </div>
         <div className='work small-12 medium-6 large-4'>
-          <OrderButton manifestations={specifics} profile={profile} />
+          <OrderButton manifestations={specifics} profile={profile} relations={work.result.relations} />
 
           {likeContainers}
 
