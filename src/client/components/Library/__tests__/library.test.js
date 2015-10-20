@@ -6,14 +6,27 @@ import ReactDom from 'react-dom';
 import TestUtils from 'react-addons-test-utils';
 
 import Library from '../Library.component.js';
-import {libraryMock} from './library.mock.js';
+import {libraryMock, profileLibraryMock} from './library.mock.js';
 
 import ProfileStore from '../../../stores/Profile.store.js';
 import LibraryStore from '../../../stores/Library.store.js';
 
 import ProfileActions from '../../../actions/Profile.action.js';
+import MessageActions from '../../../actions/Message.action.js';
 
 describe('Test the library component', () => {
+  let sandbox;
+
+  beforeEach(function(done) {
+    sandbox = sinon.sandbox.create(); // eslint-disable-line
+    done();
+  });
+
+  afterEach(function(done) {
+    sandbox.restore();
+    done();
+  });
+
   it('Create library without props', () => {
     let element = React.createElement(Library, {id: ''});
     let dom = TestUtils.renderIntoDocument(element);
@@ -33,7 +46,6 @@ describe('Test the library component', () => {
   });
 
   it('Create library with data and click on add to favorites', () => {
-    let sandbox = sinon.sandbox.create(); // eslint-disable-line
     sandbox.spy(ProfileActions, 'addLibraryToFavorites');
 
     let element = React.createElement(Library, {libData: libraryMock, id: ''});
@@ -44,11 +56,9 @@ describe('Test the library component', () => {
 
     TestUtils.Simulate.click(dmn.refs.favoriteButton);
     expect(ProfileActions.addLibraryToFavorites.calledWith(dmn.state.library.data.branchId, dmn.state.library.data.agencyId)).to.equal(true);
-    sandbox.restore();
   });
 
   it('Create library with data and click on remove from favorites', () => {
-    let sandbox = sinon.sandbox.create(); // eslint-disable-line
     sandbox.spy(ProfileActions, 'removeLibraryFromFavorites');
 
     let element = React.createElement(Library, {libData: libraryMock, id: libraryMock.agencyId});
@@ -67,11 +77,9 @@ describe('Test the library component', () => {
 
     TestUtils.Simulate.click(dmn.refs.favoriteButton);
     expect(ProfileActions.removeLibraryFromFavorites.calledWith(libraryMock.branchId)).to.equal(true);
-    sandbox.restore();
   });
 
   it('should test back button', () => {
-    let sandbox = sinon.sandbox.create(); // eslint-disable-line
     sandbox.spy(window.history, 'back');
 
     let element = React.createElement(Library, {libData: libraryMock, id: libraryMock.agencyId});
@@ -80,7 +88,6 @@ describe('Test the library component', () => {
     TestUtils.Simulate.click(dmn.refs.backButton);
 
     expect(window.history.back.calledOnce).to.equal(true);
-    sandbox.restore();
   });
 
   it('should test store onResponse', () => {
@@ -90,5 +97,100 @@ describe('Test the library component', () => {
     ProfileStore.onUpdateProfile({userIsLoggedIn: true});
     LibraryStore.onLibraryIdUpdatedResponse(libraryMock);
     expect(ReactDom.findDOMNode(dmn).innerHTML).to.contain(libraryMock.agencyName);
+  });
+
+  it('should test editing of borrower info', () => {
+    sandbox.spy(ProfileActions, 'checkBorrowerAndSaveToProfile');
+
+    let element = React.createElement(Library, {libData: libraryMock, id: libraryMock.agencyId});
+    let dom = TestUtils.renderIntoDocument(element);
+    let dmn = TestUtils.findRenderedComponentWithType(dom, Library);
+
+    ProfileStore.onUpdateProfile({
+      userIsLoggedIn: true,
+      favoriteLibraries: profileLibraryMock
+    });
+
+    dmn.refs.favoriteLibraryBorrowerId.value = '1234id';
+    TestUtils.Simulate.change(dmn.refs.favoriteLibraryBorrowerId);
+
+    dmn.refs.favoriteLibraryBorrowerPassword.value = '1234pass';
+    TestUtils.Simulate.change(dmn.refs.favoriteLibraryBorrowerPassword);
+
+    TestUtils.Simulate.submit(TestUtils.scryRenderedDOMComponentsWithClass(dom, 'library--favorite-library-form')[0]);
+
+    expect(ProfileActions.checkBorrowerAndSaveToProfile.calledWith({
+      updatedLibrary: {
+        agencyID: libraryMock.branchId,
+        libraryID: libraryMock.agencyId,
+        borrowerID: '1234id',
+        borrowerPIN: '1234pass',
+        default: 0
+      },
+      favoriteLibraries: profileLibraryMock
+    })).to.equal(true);
+  });
+
+  it('should test usermessage when no data is present in form', () => {
+    sandbox.spy(MessageActions, 'setUserMessage');
+
+    let element = React.createElement(Library, {libData: libraryMock, id: libraryMock.agencyId});
+    let dom = TestUtils.renderIntoDocument(element);
+
+    ProfileStore.onUpdateProfile({
+      userIsLoggedIn: true,
+      favoriteLibraries: profileLibraryMock
+    });
+
+    TestUtils.Simulate.submit(TestUtils.scryRenderedDOMComponentsWithClass(dom, 'library--favorite-library-form')[0]);
+
+    expect(MessageActions.setUserMessage.calledWith({message: 'Fejl, husk at udfylde alle felter', error: true})).to.equal(true);
+  });
+
+  it('should test all messages get sent to user', () => {
+    sandbox.spy(MessageActions, 'setUserMessage');
+
+    ProfileStore.onUpdateProfile({
+      borrowerCheckStatus: 'pending'
+    });
+    expect(MessageActions.setUserMessage.calledWith({message: 'Checker brugerdata', error: false})).to.equal(true);
+  });
+
+  it('should test all messages get sent to user', () => {
+    sandbox.spy(MessageActions, 'setUserMessage');
+
+    ProfileStore.onUpdateProfile({
+      borrowerCheckStatus: 'ok',
+      borrowerInfoSaved: false
+    });
+    expect(MessageActions.setUserMessage.calledWith({message: 'Der skete en fejl! Prøv igen senere...', error: true})).to.equal(true);
+  });
+
+  it('should test all messages get sent to user', () => {
+    sandbox.spy(MessageActions, 'setUserMessage');
+
+    ProfileStore.onUpdateProfile({
+      borrowerCheckStatus: 'ok',
+      borrowerInfoSaved: true
+    });
+    expect(MessageActions.setUserMessage.calledWith({message: 'Dine brugerdata er gemt!', error: false})).to.equal(true);
+  });
+
+  it('should test all messages get sent to user', () => {
+    sandbox.spy(MessageActions, 'setUserMessage');
+
+    ProfileStore.onUpdateProfile({
+      borrowerCheckStatus: 'borrower_not_found'
+    });
+    expect(MessageActions.setUserMessage.calledWith({message: 'Ugyldig bruger, check venligst låner ID og pinkode', error: true})).to.equal(true);
+  });
+
+  it('should test all messages get sent to user', () => {
+    sandbox.spy(MessageActions, 'setUserMessage');
+
+    ProfileStore.onUpdateProfile({
+      borrowerCheckStatus: 'none'
+    });
+    expect(MessageActions.setUserMessage.calledWith({message: 'Der skete en fejl! Prøv igen senere...', error: true})).to.equal(true);
   });
 });
