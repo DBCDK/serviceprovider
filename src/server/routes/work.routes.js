@@ -35,8 +35,7 @@ WorkRoutes.get(
     let query = req.query;
     query = JSON.stringify(query);
 
-    const image =
-            <CoverImage pids={req.query.coverImageIds.split(',')} prefSize={'detail_500'} rewriteImgUrl={rewriteCoverImageUrl} />;
+    const image = <CoverImage pids={req.query.coverImageIds.split(',')} prefSize={'detail_500'} rewriteImgUrl={rewriteCoverImageUrl} />;
 
     dbcMiddleware.renderPage(res, 'order', {
       query,

@@ -16,6 +16,7 @@ var entries = {
 
 if (APPLICATION === 'ddbmobil') {
   entries = {
+    frontpage: './src/client/components/FrontPage/index.js',
     library: './src/client/components/Library/index.js',
     librarysuggest: './src/client/components/LibrarySuggest/index.js',
     login: './src/client/components/Login/index.js',

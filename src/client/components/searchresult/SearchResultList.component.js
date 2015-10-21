@@ -13,9 +13,10 @@ import {CoverImage, ResultDisplay} from 'dbc-react-components';
 import Loader from '../Loader.component.js';
 
 const SearchResultList = React.createClass({
-  displayName: 'SearchResultList.component',
+  displayName: 'SearchResultList',
   propTypes: {
     data: React.PropTypes.object.isRequired,
+    layout: React.PropTypes.func,
     loadMore: React.PropTypes.func
   },
 
@@ -34,12 +35,13 @@ const SearchResultList = React.createClass({
       <ResultDisplay
         coverImage={coverImage}
         hasMore={this.props.data.results.info.more === 'true'}
+        layout={this.props.layout}
         loadMore={this.props.loadMore}
         loader={<Loader pending={this.props.data.results.pending} />}
         noResultsText=''
         pending={this.props.data.results.pending}
         result={this.props.data.results.result}
-        />
+      />
     );
   }
 });

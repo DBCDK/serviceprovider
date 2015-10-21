@@ -11,7 +11,7 @@ import * as logger from 'dbc-node-logger';
  * @function
  * Middleware which lets you carry on if you're logged in, else it redirects you to the login page
  */
-function ensureAuthenticated (req, res, next) {
+function ensureAuthenticated(req, res, next) {
   if (req.isAuthenticated()) {
     // the user is logged in
     return next();
@@ -27,7 +27,7 @@ function ensureAuthenticated (req, res, next) {
  * If the string is not set, it falls back to original URL.
  * returns a middleware function which redirects you, yo the destination once you're logged in
  */
-function redirectWhenLoggedIn (destination) {
+function redirectWhenLoggedIn(destination) {
   return (req, res, next) => {
     if (req.isAuthenticated()) {
       if (destination && destination !== req.originalUrl) {
@@ -47,7 +47,7 @@ function redirectWhenLoggedIn (destination) {
  * Middleware which gets your destination from a callback (that has to return a string)
  * callback gets called the request and response
  */
-function redirectToCallbackWhenLoggedIn (cb, alwaysRedirect) {
+function redirectToCallbackWhenLoggedIn(cb, alwaysRedirect) {
   return (req, res, next) => {
     if (req.isAuthenticated()) {
       if (alwaysRedirect) {
