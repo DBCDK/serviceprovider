@@ -153,7 +153,7 @@ class Library extends React.Component {
           <p>{agencyId}</p>
           <p>{branchEmail}</p>
           <p>{branchId}</p>
-          <p>{branchNameDan}</p>
+          <p className='library--branch-name'>{branchNameDan}</p>
           <p>{branchPhone}</p>
           <p>{branchWebsiteUrl}</p>
           <p>{city}</p>
