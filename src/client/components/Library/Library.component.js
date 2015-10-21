@@ -64,9 +64,11 @@ class Library extends React.Component {
   addOrRemoveFromFavorites() {
     if (this.shouldDisableFavoriteButton()) {
       ProfileActions.removeLibraryFromFavorites(this.state.library.data.branchId);
+      MessageActions.setUserMessage({message: 'Biblioteket er fjernet fra dine favoritter!', error: false});
     }
     else {
       ProfileActions.addLibraryToFavorites(this.state.library.data.branchId, this.state.library.data.agencyId);
+      MessageActions.setUserMessage({message: 'Biblioteket er blevet tilføjet til dine favoritter!', error: false});
     }
   }
 
@@ -120,6 +122,14 @@ class Library extends React.Component {
     window.history.back();
   }
 
+  onFormFieldInput() {
+    let elements = document.getElementsByClassName('cleardefault');
+    while (elements.length > 0) {
+      elements[0].value = '';
+      elements[0].className = elements[0].className.replace('cleardefault', '').trim();
+    }
+  }
+
   render() {
     const agencyName = isString(this.state.library.data.agencyName) ? this.state.library.data.agencyName : '';
     const agencyId = isString(this.state.library.data.agencyId) ? this.state.library.data.agencyId : '';
@@ -144,27 +154,12 @@ class Library extends React.Component {
       );
     }
 
-    return (
-      <div className='library'>
-        <br />
-        <div className='row'>
-          <a className='button tiny' onClick={this.goBack} ref='backButton'>Tilbage!</a>
-          <p>{agencyName}</p>
-          <p>{agencyId}</p>
-          <p>{branchEmail}</p>
-          <p>{branchId}</p>
-          <p className='library--branch-name'>{branchNameDan}</p>
-          <p>{branchPhone}</p>
-          <p>{branchWebsiteUrl}</p>
-          <p>{city}</p>
-          <p>{openingHoursDan}</p>
-          <p>{postalAddress}</p>
-          <p>{postalCode}</p>
-        </div>
-        <div className='row'>
+    if (shouldDisableFavoriteButton) {
+      favoriteButton = (
+        <div>
           {favoriteButton}
 
-          <form className={'library--favorite-library-form' + (shouldDisableFavoriteButton ? '' : ' hide')} onSubmit={this.saveBorrowerInfo.bind(this)}>
+          <form className='library--favorite-library-form' onSubmit={this.saveBorrowerInfo.bind(this)}>
             <div className='hide'>
               <input name='id' type='hidden' value={branchId} />
             </div>
@@ -175,8 +170,9 @@ class Library extends React.Component {
                 <label>
                   <span>Låner ID</span>
                   <input
-                    className='profile--library--borrower-id'
-                    defaultValue={''}
+                    className='profile--library--borrower-id cleardefault'
+                    defaultValue={shouldDisableFavoriteButton && shouldDisableFavoriteButton.borrowerID !== '' ? '0000000000': ''}
+                    onChange={this.onFormFieldInput}
                     placeholder={'Skriv dit låner id her'}
                     ref='favoriteLibraryBorrowerId'
                     type='password' />
@@ -186,8 +182,9 @@ class Library extends React.Component {
                 <label>
                   <span>Pinkode</span>
                   <input
-                    className='profile--library--borrower-password'
-                    defaultValue={''}
+                    className='profile--library--borrower-password cleardefault'
+                    defaultValue={shouldDisableFavoriteButton && shouldDisableFavoriteButton.borrowerPIN !== '' ? '0000': ''}
+                    onChange={this.onFormFieldInput}
                     placeholder='Skriv din kode her'
                     ref='favoriteLibraryBorrowerPassword'
                     type='password' />
@@ -207,6 +204,29 @@ class Library extends React.Component {
               </div>
             </fieldset>
           </form>
+        </div>
+      );
+    }
+
+    return (
+      <div className='library'>
+        <br />
+        <div className='row'>
+          <a className='button tiny' onClick={this.goBack} ref='backButton'>Tilbage!</a>
+          <p>{agencyName}</p>
+          <p>{agencyId}</p>
+          <p>{branchEmail}</p>
+          <p>{branchId}</p>
+          <p className='library--branch-name'>{branchNameDan}</p>
+          <p>{branchPhone}</p>
+          <p>{branchWebsiteUrl}</p>
+          <p>{city}</p>
+          <p>{openingHoursDan}</p>
+          <p>{postalAddress}</p>
+          <p>{postalCode}</p>
+        </div>
+        <div className='row'>
+          {favoriteButton}
         </div>
       </div>
     );
