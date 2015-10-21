@@ -1,0 +1,11 @@
+//- header.jade
+
+extends layout
+
+block prepend footerscripts
+    script(src='/js/frontpage.js' defer=true)
+
+block content
+    #frontpage-container-component
+    //#search !{search}
+    //script window.QUERYSTRING_PROPS = !{props}

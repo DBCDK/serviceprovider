@@ -19,7 +19,19 @@ import {defaultLikes} from '../../client/components/Recommend/Recommendations.st
 
 import dbcMiddleware from './middleware.js';
 
-MainRoutes.get(['/', '/search', '/search/*'], (req, res) => {
+MainRoutes.get('/', (req, res) => {
+  const APPLICATION = req.app.get('APPLICATION');
+
+  if (APPLICATION === 'pg') {
+    res.redirect('/search');
+  }
+  else {
+    res.set('Cache-Control', 'max-age=86400, s-maxage=86400, public');
+    res.render('frontpage-mobilsoeg');
+  }
+});
+
+MainRoutes.get(['/search', '/search/*'], (req, res) => {
   let query = req.query || [];
   query = query.text ? stringToObject(query) : [];
 
@@ -55,13 +67,13 @@ MainRoutes.get('/moreinfo/:restOfPath*', (req, res) => {
   });
 });
 
-MainRoutes.post(['/report-violation'], function (req, res) {
+MainRoutes.post(['/report-violation'], function(req, res) {
   const logger = req.app.get('logger');
   if (req.body) {
-    logger.log('CSP Violation: ', req.body);
+    logger.log('warning', 'CSP Violation: ', req.body);
   }
   else {
-    logger.log('CSP Violation: No data received!');
+    logger.log('warning', 'CSP Violation: No data received!');
   }
   res.status(204).end();
 });
