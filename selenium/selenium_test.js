@@ -114,17 +114,17 @@ function runAllTests(driverCaps) {
     test.it('SSR rendering of library', function () {
       var driver = driverCaps.build();
       var libraryId = '710100';
-      var agencyTitle = 'Københavns Biblioteker';
+      var branchName = 'Hovedbiblioteket, Krystalgade';
 
       // ssrTimeout url param sets how many milliseconds to wait for data
       // Test times out before the ssrTimeout to ensure whats sent is rendered server side
       // If this test functions it SSR must work
       driver.get(BASE_URL + '/library?id=' + libraryId + '&ssrTimeout=900000');
-      driver.wait(webdriver.until.elementIsVisible(driver.findElement({tagName: 'p'})), 5000);
+      driver.wait(webdriver.until.elementLocated(webdriver.By.className('library--branch-name')), 5000);
 
-      var libraryTitle = driver.findElement({tagName: 'p'});
+      var libraryTitle = driver.findElement(webdriver.By.className('library--branch-name'));
       libraryTitle.getInnerHtml().then(function (html) {
-        assert.equal(html, agencyTitle);
+        assert.equal(html, branchName);
       });
 
       driver.quit();
