@@ -1,9 +1,12 @@
 'use strict';
+
 /**
  * @file
  * Component that synchronizes the url and the QueryStore state
- *
- * This component does not render anything only updates QueryStore and url history
+ * This component does not render anything only updates QueryStore and url
+ * history.
+ * if props.shouldDoPageLoad is true an actual pageload will happen and not
+ * only a pushstate.
  */
 
 import React from 'react';
@@ -15,8 +18,10 @@ import ComponentUtils from '../../../utils/ComponentHelpers.util.js';
 const Query = React.createClass({
   displayName: 'QueryComponent',
   propTypes: {
-    queryLocation: React.PropTypes.string.isRequired
+    queryLocation: React.PropTypes.string.isRequired,
+    shouldDoPageLoad: React.PropTypes.bool
   },
+
   mixins: [
     Reflux.connect(QueryStore, 'query'),
     ComponentUtils
@@ -31,7 +36,13 @@ const Query = React.createClass({
   updateHistoryState(query) {
     if (this.isClient() && window.location.search !== query.search) {
       const queryString = `${this.props.queryLocation + query.search}`;
-      history.pushState(null, null, window.location.origin + queryString);
+
+      if (this.props.shouldDoPageLoad) {
+        window.location = queryString;
+      }
+      else {
+        history.pushState(null, null, window.location.origin + queryString);
+      }
     }
   },
 
