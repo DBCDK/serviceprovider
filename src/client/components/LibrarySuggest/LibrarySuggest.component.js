@@ -26,9 +26,12 @@ class LibrarySuggestComponent extends React.Component {
 
     this.unsubscribe = [
       InputFieldStore.listen(
-        () => this.setState({
-          input: InputFieldStore.store
-        })
+        () => {
+          InputFieldStore.store.value = InputFieldStore.store.value.toLowerCase();
+          this.setState({
+            input: InputFieldStore.store
+          });
+        }
       ),
       LibrarySuggestStore.listen(
         () => this.setState({
