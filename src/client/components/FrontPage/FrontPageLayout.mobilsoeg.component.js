@@ -11,6 +11,7 @@ import React from 'react';
 import NewsFrontPageContainerComponent from '../News/NewsFrontPageContainer.component';
 import RecommendationContainer from '../Recommend/RecommendationContainer.component';
 import SearchFieldContainer from '../searchfield/SearchFieldContainer.component';
+import Query from '../query/Query.component.js';
 
 // Layouts
 import FrontPageRecommendationsLayout from './layouts/FrontPageRecommendationsLayout.component';
@@ -23,6 +24,7 @@ export default class FrontPageLayoutMobilsoeg extends React.Component {
         <div className="frontpage-container--content row" >
           <div className="frontpage-container--search--container large-16 columns" >
             <div className="frontpage-container--search--searchfield" >
+              <Query queryLocation='/search' shouldDoPageLoad />
               <SearchFieldContainer />
             </div>
             <div className="frontpage-container--search--recommendations" >

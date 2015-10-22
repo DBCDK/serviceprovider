@@ -165,6 +165,7 @@ app.use(expressLoggers.errorLogger);
 server.listen(app.get('port'), () => {
   logger.log('debug', 'Server listening on port ' + app.get('port'));
   logger.log('debug', 'NEW_RELIC_APP_NAME: ' + APP_NAME);
+  logger.log('debug', 'APPLICATION: ' + APPLICATION);
   logger.log('debug', 'EMAIL_REDIRECT: ' + EMAIL_REDIRECT);
   logger.log('info', 'Versions: ', process.versions);
   logger.log('info', version + ' is up and running');
