@@ -1,5 +1,5 @@
-body {
-  font-family: 'Open Sans', sans-serif;
+.search-result {
+  @extend .row;
 }
 
 .row {
@@ -16,7 +16,6 @@ body {
 
 .work {
   float: left;
-  padding: 5px;
   position: relative;
   img {
     max-height: 500px;

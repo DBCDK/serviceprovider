@@ -35,12 +35,19 @@ const AutoCompleteContainer = React.createClass({
     return true;
   },
 
+  timer: null,
+
   onInputValueChange(inputValue) {
     if (isEmpty(inputValue)) {
       return;
     }
     if (this.lastInputValue !== inputValue) {
-      this.props.actions.textfieldUpdated(inputValue);
+      if (this.timer) {
+        clearTimeout(this.timer);
+      }
+      this.timer = setTimeout(() => {
+        this.props.actions.textfieldUpdated(inputValue);
+      }, 500);
     }
     this.lastInputValue = inputValue;
     this.state.hasSearched = true;

@@ -90,11 +90,11 @@ describe('Test the Profile component', () => {
         agencyID: '710118',
         libraryID: '710100',
         borrowerID: '123',
-        default: 1
+        default: 0
       }, {
         agencyID: '710111',
         libraryID: '710100',
-        borrowerID: '', default: 0
+        borrowerID: '', default: 1
       }
     ];
     testProfileWithLibraries.favoriteLibrariesResolved = [
@@ -102,8 +102,8 @@ describe('Test the Profile component', () => {
       {"agencyName":"Københavns Biblioteker","agencyId":"710100","branchId":"710111","branchNameDan":"Nørrebro Bibliotek","branchPhone":"33 66 30 00","branchEmail":"bibliotek@kff.kk.dk","postalAddress":"Bragesgade 8","postalCode":"2200","city":"København N","openingHoursDan":"Alle dage kl. 8-22\r\n\r\nAdgang med sundhedskort:\r\nMandag-fredag kl. 19-22\r\nLørdag kl. 15-22\r\nSøndag kl. 8-22\r\n\r\nPersonlig vejledning:\r\nMandag og onsdag kl. 11-16\r\nTirsdag og torsdag kl. 13-18\r\nFredag og lørdag  kl. 11-15","branchWebsiteUrl":"http://bibliotek.kk.dk/biblioteker/norrebro","query":"710111"} // eslint-disable-line
     ];
 
-    let defaultLibrary = '';
-    let borrowerId = '';
+    let defaultLibrary;
+    let removedLibrary;
 
     let element = React.createElement(ProfileLibraries, {
       store: testProfileWithLibraries,
@@ -116,8 +116,8 @@ describe('Test the Profile component', () => {
         setLibraryAsDefault(val) {
           defaultLibrary = val;
         },
-        updateBorrowerIDForLibrary(val, borrId) {
-          borrowerId = borrId;
+        removeLibraryFromFavorites(val) {
+          removedLibrary = val;
         }
       },
       editable: true,
@@ -128,13 +128,12 @@ describe('Test the Profile component', () => {
     expect(dom.getDOMNode().innerHTML).to.contain('Nørrebro Bibliotek');
     expect(dom.getDOMNode().innerHTML).to.contain('Vælg som');
     expect(dom.getDOMNode().innerHTML).to.contain('afhentningssted');
-    let btn = TestUtils.scryRenderedDOMComponentsWithClass(dom, 'button tiny')[1];
+    let btn = TestUtils.scryRenderedDOMComponentsWithClass(dom, 'button tiny')[2];
     TestUtils.Simulate.click(btn);
-    assert.equal(defaultLibrary, '710111');
+    assert.equal(defaultLibrary, '710118');
 
-    let libraryField = TestUtils.scryRenderedDOMComponentsWithClass(dom, 'profile--library--borrower-id')[0];
-    libraryField.value = 'dette er et låner id';
-    TestUtils.Simulate.change(ReactDom.findDOMNode(libraryField));
-    assert.equal(borrowerId, 'dette er et låner id');
+    let remove_btn = TestUtils.scryRenderedDOMComponentsWithClass(dom, 'button tiny')[1];
+    TestUtils.Simulate.click(remove_btn);
+    assert.equal(removedLibrary, '710118');
   });
 });

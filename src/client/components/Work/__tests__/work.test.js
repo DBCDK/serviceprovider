@@ -29,7 +29,7 @@ describe('Test the Work component with data', () => {
   });
 
   it('should have specific title', ()=> {
-    expect(dom.props.work.result.general.title).to.equal('Force majeure');
+    expect(dom.props.work.result.title).to.equal('Force majeure');
   });
 
   it('should have one hit', ()=> {

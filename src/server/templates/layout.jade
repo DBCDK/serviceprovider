@@ -1,20 +1,19 @@
 //- layout.jade
 
 html(lang='da')
-    include header
+    include head
 
     body
-        #message
+        #message.row
             include message
         block top
-            #header.clearfix
-                #topbar
-                    .logo--container
-                        a(href='/')
-                            #logo
-                #topnavigation.clearfix
+            if application == 'mobilsoeg'
+                include header-mobilsoeg
+            else if application == 'pg'
+                include header-pg
 
         block content
+
         div.responsetime--container
             small.responsetime Page was rendered in: %RENDERTIME%ms. Serviceprovider %SERVICETIME%
 

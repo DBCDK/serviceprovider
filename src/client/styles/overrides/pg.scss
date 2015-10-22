@@ -10,13 +10,10 @@ body {
 // =============================================================================
 
 #logo {
-  background: url('/palle_logo.png');
-  background-size: 100%;
+  background: url('/palle_logo.png') no-repeat left;
+  background-size: 90px;
   height: 60px;
-}
-
-.logo--container {
-  width: 100px;
+  width: 90px;
 }
 
 // =============================================================================
@@ -119,10 +116,6 @@ button:focus,
 }
 
 .button {
-  border: none;
-  @include radius(4px);
-  margin: 10px;
-
   &.secondary {
     text-transform: none;
     border: 1px solid;

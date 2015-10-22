@@ -7,7 +7,7 @@
 import React from 'react';
 import Reflux from 'reflux';
 
-import {isEmpty} from 'lodash';
+import {isEmpty, values} from 'lodash';
 
 import workAction from '../../actions/Work.action.js';
 import WorkStore from '../../stores/Work.store.js';
@@ -47,159 +47,6 @@ const Work = React.createClass({
     workAction({id: this.props.id});
   },
 
-  getPublications: function(publications) {
-    let types, publishers, links;
-    let edition, dates;
-    const editions = publications.map((publ, key) => {
-      let className = 'work-container--work--editions--publication-details';
-
-      if (publ.hasOwnProperty('types')) {
-        types = publ.types.map((t, index) => {
-          className += ' ' + t.toLowerCase().replace(/ .*/, '');
-          return (<div className='type' key={index} >{t}</div>);
-        });
-      }
-      if (publ.hasOwnProperty('dates')) {
-        dates = publ.dates.map((d, index) => {
-          return (<div className='date' key={index} >{d}</div>);
-        });
-      }
-      if (publ.hasOwnProperty('editions')) {
-        edition = publ.editions.map((ed, index) => {
-          return (<div className='edition' key={index} >{ed}</div>);
-        });
-      }
-
-      const isbns = this.getMetaData(publ, 'isbns', 'isbn', 'ISBN: ', false, false);
-      const extents = this.getMetaData(publ, 'extents', 'extent', '', false, false);
-
-      if (publ.hasOwnProperty('links')) {
-        links = publ.links.map((l, index) => {
-          return (
-            <div className='sub-publication link' key={index} >
-              <a href={l} target='_blank' >Se online</a>
-            </div>);
-        });
-      }
-      return (
-        <div className={className} data-identifiers={publ.identifier} key={key} >
-          {types}
-          {publishers}
-          <div className='inline' >
-            {edition}
-            <span>,&nbsp;</span>
-            {dates}
-          </div>
-          {extents}
-          {isbns}
-          {links}
-        </div>
-      );
-    });
-
-    return (
-      <div className='work-container--work--editions-container' >
-        <span className='work-container--work--editions--label clearfix' >Udgaver: </span>
-        {editions}
-      </div>
-    );
-  },
-
-  getMetaData(general, property, className = '', prefix = '', wrapInLink = false, clearfix = true) {
-    let items = null;
-    let result = null;
-
-    if (general.hasOwnProperty(property)) {
-      items = general[property].map((item, index) => {
-        let content = '';
-        const value = item.value || item;
-
-        if (wrapInLink) {
-          content = <a href={item.search_link} >{value}</a>;
-        }
-        else {
-          content = value;
-        }
-
-        return (
-          <div className={className} key={index} >
-            {content}
-          </div>
-        );
-      });
-
-      const classes = clearfix ? property + ' clearfix' : property;
-      result = <div className={classes} ><span>{prefix}</span>{items}</div>;
-    }
-
-    return result;
-  },
-
-  getDk5s(general) {
-    let dk5s = null;
-    let result = null;
-    if (general.hasOwnProperty('dk5s')) {
-      dk5s = general.dk5s.map((dk5, index) => {
-        return (
-          <div className='dk5' key={index} >
-            <a href={dk5.search_link} >{dk5.text}</a>
-          </div>
-        );
-      });
-      result = (
-        <div className='dk5s clearfix' >
-          <span>Opstilling: </span>{dk5s}
-        </div>
-      );
-    }
-    return result;
-  },
-
-  getSpecifics(specific) {
-    let dates;
-    const specifics = specific.map((tw, index) => {
-      let identifiers = [];
-      identifiers.push(tw.identifiers);
-      if (tw.dates && tw.dates[0] !== null) {
-        dates = tw.dates.map((date, indx) => {
-          return (<div className='date' key={indx} >{date}</div>);
-        });
-      }
-      return (
-        <div className='specific' data-identifiers={identifiers} key={index} >
-          <div className='type' >
-            {tw.type}
-          </div>
-          {dates}
-        </div>
-      );
-    });
-    return (
-      <div className='specifics clearfix' >{specifics}</div>
-    );
-  },
-
-  getSeries(general) {
-    let series = '';
-    if (general.hasOwnProperty('series')) {
-      series = (
-        <div className='series' >
-          <a href={general.series.search_link} >{general.series.value}</a>
-        </div>
-      );
-    }
-    return series;
-  },
-
-  getTitle(titel) {
-    return (<div className='title' >{titel}</div>);
-  },
-
-  getDescription(general) {
-    return general.hasOwnProperty('series') ?
-      <div className='description clearfix' >{general.description}.</div> : '';
-  },
-
   getLikeDislikeContainers(id) {
     return (
       <div className='work--like-buttons' >
@@ -218,69 +65,180 @@ const Work = React.createClass({
     const work = this.props.work ? this.props.work : this.state.work;
     const id = this.props.id;
 
+    // No result found!
     if (work.info.hits === '0') {
       return (<div className="work-not-found" >Værket blev ikke fundet</div>);
     }
+
+    // Result is pending, waiting for serviceprovider
+    if (isEmpty(work.result) && isEmpty(work.info)) {
+      return (
+        <div className='row' >
+          <span className='loader' />
+        </div>
+      );
+    }
+
+    // Empty result (Should perhaps be an error report)
     if (isEmpty(work.result)) {
       return (<div />);
     }
 
-    const general = work.result.general;
-    const title = this.getTitle(general.title);
-    const description = this.getDescription(general);
-    const audience = general.audience || {};
-    const publications = work.result.publications;
-    const editions = this.getPublications(publications);
-
-    const orderButtons = <OrderButton manifestations={work.result.specific} profile={profile} />;
-    const specifics = this.getSpecifics(work.result.specific);
-
-    const parts = this.getMetaData(work.result.general, 'partOf', 'part', 'I: ');
-    const subjects = this.getMetaData(work.result.general, 'subjects', 'subject', 'Emner: ', true);
-    const creators = this.getMetaData(work.result.general, 'creators', 'creator', '', true);
-    const actors = this.getMetaData(work.result.general, 'actors', 'actor', 'Medvirkende: ', true);
-    const tracks = this.getMetaData(work.result.general, 'tracks', 'track', 'Trackliste: ');
-    const languages = this.getMetaData(work.result.general, 'languages', 'language', 'Sprog: ');
-    const issns = this.getMetaData(work.result.general, 'issn', 'issn', 'ISBN: ');
-    const extents = this.getMetaData(work.result.general, 'extent', 'extent');
-
-    const dk5s = this.getDk5s(general);
-    const series = this.getSeries(general);
-
+    // Data was found, begin rendering
     const likeContainers = this.state.profile.userIsLoggedIn ? this.getLikeDislikeContainers(id) : ' ';
+    let editions = [];
+    let specifics_object = {};
+
+    work.result.editions.forEach((element, index) => {
+      let edition = (
+        <div className={'work-container--work--editions--publication-details ' + element.type} key={'edition_' + index} >
+          <div className='type' >{element.type}</div>
+          <div className='date' >{element.edition + (element.edition !== '' ? ', ' : '')} {element.date}</div>
+          <div className='extents' >{element.extent}</div>
+          <div className='isbns' >
+            <span>{element.isbns.length > 0 ? 'ISBN: ' : ''}</span>
+            {element.isbns.join(', ')}
+          </div>
+          <div className='sub-publication-link' >
+            {element.link.map((link, idx) => {
+              return (
+                <a href={link} key={'sub-publication-link_' + idx} target='_blank' >Find online</a>);
+            })}
+          </div>
+        </div>
+      );
+
+      editions.push(edition);
+
+      const elementKey = element.accessType + '_' + element.type;
+
+      if (!specifics_object.hasOwnProperty(elementKey)) {
+        specifics_object[elementKey] = {
+          accessType: element.accessType,
+          creator: element.creator,
+          dates: [],
+          identifiers: [],
+          links: [],
+          order: '',
+          title: element.title,
+          type: element.type,
+          workType: element.workType
+        };
+      }
+
+      element.link.forEach((link) => {
+        specifics_object[elementKey].links.push(link);
+      });
+      specifics_object[elementKey].dates.push(element.date);
+      specifics_object[elementKey].identifiers.push(element.identifier);
+      specifics_object[elementKey].order = '/order?ids=' + specifics_object[elementKey].identifiers.join(',') +
+        '&creator=' + specifics_object[elementKey].creator +
+        '&title=' + encodeURIComponent(specifics_object[elementKey].title) +
+        '&type=' + specifics_object[elementKey].type;
+    });
+
+    let specifics = values(specifics_object);
 
     return (
       <div className='work-container' data-pid={id} >
-        <div className='work work--cover-image small-12 medium-6 large-4' >
-          <CoverImage pids={work.result.specific[0].identifiers} prefSize={'detail_500'} rewriteImgUrl={rewriteCoverImageUrl} />
+        <div className='work work--cover-image small-24 medium-12 large-8' >
+          <CoverImage pids={[id, work.result.pid]} prefSize='detail_500' rewritwImgUrl={rewriteCoverImageUrl} />
         </div>
-
-        <div className='work small-12 medium-6 large-4' >
-          {orderButtons}
+        <div className='work small-24 medium-12 large-8' >
+          <OrderButton manifestations={specifics} profile={profile} relations={work.result.relations} />
 
           {likeContainers}
 
           <div className='general' >
-            {title}
-            {creators}
-            {description}
-            {parts}
-            {issns}
-            {extents}
-            {actors}
-            {series}
-            {subjects}
-            {dk5s}
-            <div className='audience clearfix' >
-              <div className='age' >{audience.age}</div>
-              <div className='pegi' >{audience.pegi}</div>
-              <div className='medieraad' >{audience.medieraad}</div>
+            <div className='title' >{work.result.title}</div>
+
+            <div className='creators' >
+              <a href={'/search?phrase.creator=' + encodeURIComponent(work.result.creator)} >
+                {work.result.creator}
+              </a>
             </div>
-            {tracks}
-            {languages}
+
+            <div className='description' >{work.result.abstract}</div>
+
+            <div className='issn' >
+              {work.result.isbns.length > 0 ? 'ISBN: ' + work.result.isbns[0] : ''}
+            </div>
+
+            <div className='extent clearfix' >{work.result.extent}</div>
+
+            <div className='clearfix' >
+              <div className='actors clearfix' >
+                <span>{work.result.actors.length > 0 ? 'Medvirkende: ' : ''}</span>
+                {work.result.actors.map((actor, index) => {
+                  return (
+                    <span className='actor' key={'actor_' + index} >
+                      <a href={'/search?phrase.creator=' + encodeURIComponent(actor)} >
+                        {actor}
+                      </a>
+                    </span>);
+                })}
+              </div>
+            </div>
+
+            <div className='series clearfix' >
+              <a href='#' >{work.result.series}</a>
+            </div>
+
+            <div className='subjects clearfix' >
+              <span>{work.result.subjects.length > 0 ? 'Emner: ' : ''}</span>
+              {work.result.subjects.map((subject, index, array) => {
+                const notLast = (array.length - 1) !== index;
+                return (
+                  <span className='subject' key={'subject_' + index} >
+                    <a href={'/search?phrase.subject=' + encodeURIComponent(subject)} > {notLast ? subject + ', ' : subject}</a>
+                  </span>
+                );
+              })}
+            </div>
+
+            <div className='dk5s clearfix' >
+              <span>{work.result.dk5s.length > 0 ? 'Opstilling: ' : ''}</span>
+              {work.result.dk5s.map((dk5, index) => {
+                return (
+                  <span className='opstilling' key={'dk5_' + index} >
+                    <a href={'/search?dkcclterm.dk=' + encodeURIComponent(dk5.value)} >{dk5.text}</a>
+                  </span>
+                );
+              })}
+            </div>
+
+            <div className='audience clearfix' >
+              <div className='age' >{work.result.audience.age.join(', ')}</div>
+              <div className='pegi' >{work.result.audience.pegi}</div>
+              <div className='medieraad' >{work.result.audience.medieraad}</div>
+            </div>
+
+            <div className='tracks clearfix' >
+              {work.result.tracks.length > 0 ? 'Trackliste: ' : ''}
+              {work.result.tracks.map((track, index) => {
+                return (
+                  <div className='track' key={'track_' + index} >{track}</div>);
+              })}
+            </div>
+
+            <div className='language clearfix' >
+              <span>{work.result.languages.length > 0 ? 'Sprog: ' : ''}</span>
+              <span>{work.result.languages.join(', ')}</span>
+            </div>
           </div>
-          {specifics}
-          {editions}
+
+          <div className='specifics clearfix' >
+            {specifics.map((specific, index) => {
+              return (
+                <span key={'specific_' + index} >{specific.type} ({specific.dates.join('; ')}) </span>
+              );
+            })}
+          </div>
+
+          <div className='editions clearfix' >
+            <span className='work-container--work--editions--label' >{editions.length > 0 ? 'Udgaver:' : ''}</span>
+            {editions}
+          </div>
         </div>
       </div>
     );

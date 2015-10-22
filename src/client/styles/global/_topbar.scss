@@ -1,4 +1,5 @@
 #topbar {
-  background-color: #f26306;
+  background-color: $topbar-background-color;
+  display: block;
   height: 50px;
 }

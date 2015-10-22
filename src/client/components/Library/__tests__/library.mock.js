@@ -18,3 +18,17 @@ export const libraryMock = {
   branchWebsiteUrl: 'http://bibliotek.kk.dk/',
   query: '710118'
 };
+
+export const profileLibraryMock = [{
+  agencyID: '710118',
+  libraryID: '710100',
+  borrowerID: '',
+  borrowerPIN: '',
+  default: 0
+}, {
+  agencyID: '710111',
+  libraryID: '710100',
+  borrowerID: '',
+  borrowerPIN: '',
+  default: 1
+}];

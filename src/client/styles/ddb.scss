@@ -1,43 +1,39 @@
-$APPLICATION: 'mobilsoeg';
 
 // =============================================================================
 // SETTINGS
 // =============================================================================
-@import "settings/colors";
+@import "settings/_settings.mobilsoeg.scss";
 
 // =============================================================================
 // FOUNDATION
 // =============================================================================
+@import "foundation/normalize";
+@import "foundation/foundation";
 
 // =============================================================================
 // GLOBALS
 // =============================================================================
+@import "global/buttons";
 @import "global/header";
 @import "global/html";
 @import "global/logo";
 @import "global/message";
-@import "global/search";
 @import "global/topbar";
 
 // =============================================================================
 // COMPONENTS
 // =============================================================================
 @import 'components/AutoComplete';
-@import 'components/Buttons';
-@import 'components/DisplayResult';
-@import 'components/Work';
+@import 'components/DisplayResult.mobilsoeg.scss';
 @import 'components/FilterGuide';
+@import "components/FrontPage";
 @import 'components/Loader';
-@import 'components/SearchField';
+@import "components/News.mobilsoeg.scss";
+@import 'components/Order';
+@import 'components/Profile';
+@import 'components/Receipt';
+@import 'components/Responsetime';
+@import 'components/SearchField.mobilsoeg.scss';
 @import 'components/TokenList';
 @import 'components/TopNavigation';
-@import 'components/Order';
-@import 'components/Receipt';
-@import 'components/Profile';
-@import 'components/Responsetime';
-
-// =============================================================================
-// PG SPECIFIC OVERRIDES
-// =============================================================================
-
-@import "overrides/mobilsoeg";
+@import 'components/Work';

@@ -79,11 +79,14 @@ class RecommendationContainer extends React.Component {
 
   render() {
     return (
-        <SearchResultList data={{results: this.state.recommendations}} />
+        <SearchResultList data={{results: this.state.recommendations}} layout={this.props.layout} />
     );
   }
 }
 
 RecommendationContainer.displayName = 'RecommendationContainer';
+RecommendationContainer.propTypes = {
+  layout: React.PropTypes.func
+};
 
 export default RecommendationContainer;

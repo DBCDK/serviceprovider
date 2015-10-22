@@ -80,7 +80,7 @@ export default React.createClass({
     const result = this.state.query.query.length && this.renderSearchResult() || this.renderDefaultRecommendations();
 
     return (
-      <div className='search-result' >
+      <div className={'search-result'} >
         {result}
       </div>
     );
