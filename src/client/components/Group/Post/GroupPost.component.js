@@ -15,6 +15,7 @@ class GroupPostComponent extends React.Component {
     const commentForm = <CommentForm commentCb={this.props.commentCb} loggedIn={this.props.loggedIn} />;
     const backButton = <a className="button tiny" href={'/groups/' + this.props.groupId}>Tilbage til gruppen!</a>;
 
+
     const dateString = this.props.groupPostData.timeCreated;
     const timeSinceString = timeSince(dateString);
 

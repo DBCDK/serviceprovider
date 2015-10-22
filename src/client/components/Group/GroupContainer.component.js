@@ -27,7 +27,8 @@ class GroupContainer extends React.Component {
       loggedIn: false,
       createPostMode: false,
       editGroupMode: false,
-      isOwner: false
+      isOwner: false,
+      isMember: false
     };
 
     GroupStore.listen(this.onUpdateGroup);
@@ -78,6 +79,10 @@ class GroupContainer extends React.Component {
     GroupActions.toggleEditGroupMode();
   }
 
+  toggleGroupMembership() {
+    GroupActions.toggleGroupMembership();
+  }
+
   onUpdateGroup(store) {
     this.setState(store.group);
   }
@@ -87,6 +92,7 @@ class GroupContainer extends React.Component {
     props.commentCb = this.createComment;
     props.toggleCreatePostCb = this.toggleCreatePostMode;
     props.toggleEditGroupCb = this.toggleEditGroupMode;
+    props.toggleGroupMembershipCb = this.toggleGroupMembership;
 
     const createGroupMode = typeof window.QUERYSTRING_PROPS === 'undefined';
     const createPostMode = props.createPostMode;
