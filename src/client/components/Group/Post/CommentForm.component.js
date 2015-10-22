@@ -14,6 +14,15 @@ class CommentFormComponent extends React.Component {
     if (this.props.loggedIn && commentText !== '' && this.props.commentCb) {
       this.props.commentCb(commentText);
     }
+    // reset input field
+    this.refs.commentField.value = '';
+  }
+
+  textEntered(e) {
+    // commit comment when Enter is pressed
+    if (e.key === 'Enter') {
+      this.sendComment();
+    }
   }
 
   render() {
@@ -26,6 +35,7 @@ class CommentFormComponent extends React.Component {
           <input
             disabled={loggedIn ? false : 'disabled'}
             id='commentField'
+            onKeyPress={this.textEntered.bind(this)}
             placeholder='Skriv din kommentar her'
             ref='commentField'
             type='text'
