@@ -15,7 +15,7 @@ class GroupCoverImage extends React.Component {
   render() {
     return (
       <div className='row'>
-        <img className='small-12' src={this.props.url}></img>
+        <img className='small-24' src={this.props.url}></img>
       </div>
     );
   }
