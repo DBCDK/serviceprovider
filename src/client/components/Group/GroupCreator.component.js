@@ -47,7 +47,7 @@ class GroupCreator extends React.Component {
     return (
       <div className='row'>
         <h4>{title}</h4>
-        <div className='small-12 medium-4 column'>
+        <div className='small-24 medium-8 column'>
           <label>Gruppenavn</label>
           <input defaultValue={groupName} ref="groupName" type='text'></input>
           <label>Beskrivelse</label>

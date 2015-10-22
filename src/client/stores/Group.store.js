@@ -6,6 +6,7 @@ import GroupActions from '../actions/Group.action.js';
 
 import ProfileStore from './Profile.store.js';
 
+import {any} from 'lodash';
 
 const GroupStore = Reflux.createStore({
 
@@ -17,6 +18,7 @@ const GroupStore = Reflux.createStore({
       members: [],
       id: null,
       groupownerid: null,
+      isMember: false,
       loggedIn: false
     },
     loggedIn: false,
@@ -47,7 +49,8 @@ const GroupStore = Reflux.createStore({
       isOwner: this.store.uid === newGroup.groupownerid,
       loggedIn: this.store.loggedIn,
       createPostMode: this.store.createPostMode,
-      editGroupMode: this.store.editGroupMode
+      editGroupMode: this.store.editGroupMode,
+      isMember: any(newGroup.members, (member)=>(member.id === this.store.uid))
     };
 
     this.trigger(this.store);
@@ -67,6 +70,16 @@ const GroupStore = Reflux.createStore({
     GroupActions.fetchGroup({id: this.store.group.id});
   },
 
+  onConfirmJoinGroup() {
+    this.store.group.isMember = true;
+    GroupActions.fetchGroup({id: this.store.group.id});
+  },
+
+  onConfirmLeaveGroup() {
+    this.store.group.isMember = false;
+    GroupActions.fetchGroup({id: this.store.group.id});
+  },
+
   onCreateComment() {
   },
 
@@ -78,6 +91,15 @@ const GroupStore = Reflux.createStore({
   onToggleEditGroupMode() {
     this.store.editGroupMode = !this.store.editGroupMode;
     GroupActions.updateGroup(this.store.group);
+  },
+
+  onToggleGroupMembership() {
+    if (this.store.group.isMember) {
+      GroupActions.leaveGroup({groupId: this.store.group.id});
+    }
+    else {
+      GroupActions.joinGroup({groupId: this.store.group.id});
+    }
   },
 
   onConfirmCreateComment() {

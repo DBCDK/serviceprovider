@@ -15,13 +15,14 @@ class GroupPostComponent extends React.Component {
     const commentForm = <CommentForm commentCb={this.props.commentCb} loggedIn={this.props.loggedIn} />;
     const backButton = <a className="button tiny" href={'/groups/' + this.props.groupId}>Tilbage til gruppen!</a>;
 
+
     const dateString = this.props.groupPostData.timeCreated;
     const timeSinceString = timeSince(dateString);
 
     let ownerImage = null;
     if (typeof this.props.ownerImageUrl !== 'undefined') {
       ownerImage = (<img
-        className='small-3 medium-2 column group--member-image'
+        className='small-6 medium-4 column group--member-image'
         src={this.props.ownerImageUrl}
         />);
     }
@@ -31,8 +32,8 @@ class GroupPostComponent extends React.Component {
         <div className='row'>
           {this.props.enableBackButton ? backButton : null}
           {ownerImage}
-          <span className='small-6 medium-7 column'><strong>{this.props.ownerName}</strong></span>
-          <span className='small-3 medium-3 column group--timesince'>{timeSinceString} siden</span>
+          <span className='small-12 medium-14 column'><strong>{this.props.ownerName}</strong></span>
+          <span className='small-6 medium-6 column group--timesince'>{timeSinceString} siden</span>
         </div>
         <div className='row'>
           <p>{this.props.groupPostData.content}</p>

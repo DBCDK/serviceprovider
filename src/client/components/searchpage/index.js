@@ -18,7 +18,7 @@ ReactDOM.render(
   <Search
     query={window.QUERYSTRING_PROPS.query || {}}
     recommendations={window.QUERYSTRING_PROPS.recommendations || {}}
-    />,
+  />,
   document.getElementById('search')
 );
 

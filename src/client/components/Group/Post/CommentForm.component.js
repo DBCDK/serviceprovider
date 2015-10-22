@@ -21,7 +21,7 @@ class CommentFormComponent extends React.Component {
 
     return (
       <div className='row'>
-        <div className='large-10 medium-10 small-10 column'>
+        <div className='large-20 medium-20 small-20 column'>
           <label>Skriv kommentar</label>
           <input
             disabled={loggedIn ? false : 'disabled'}
@@ -31,7 +31,7 @@ class CommentFormComponent extends React.Component {
             type='text'
             />
         </div>
-        <div className='large-2 medium-2 small-2 column'>
+        <div className='large-4 medium-4 small-4 column'>
           <a className='button tiny' id='commentButton' onClick={this.sendComment.bind(this)} ref='commentButton'>Indsend</a>
         </div>
       </div>

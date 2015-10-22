@@ -65,6 +65,17 @@ GroupRoutes.get('/create', dbcMiddleware.ensureAuthenticated, (req, res) => {
 
 GroupRoutes.get('/:id', (req, res) => {
   var id = req.params.id;
+  if (isNaN(id)) {
+    res.status(404)        // HTTP status 404: NotFound
+      .send('Not found');
+  }
+  else {
+    res.render('group', {id});
+  }
+});
+
+GroupRoutes.get('/:id', (req, res) => {
+  var id = req.params.id;
   res.render('group', {id});
 });
 

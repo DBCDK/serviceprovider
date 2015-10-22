@@ -1,0 +1,23 @@
+.frontpage-container--search--recommendations {
+  .container {
+    padding: 10px 0;
+
+    @media #{$small-only} {
+      ul {
+        @include inline-list;
+        list-style: none;
+        white-space: nowrap;
+        margin-left: 0;
+        overflow-x: scroll;
+        -webkit-overflow-scrolling: touch;
+
+        li {
+          display: inline-block;
+          float: none;
+          margin-left: 0;
+          padding-left: 0;
+        }
+      }
+    }
+  }
+}

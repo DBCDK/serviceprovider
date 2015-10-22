@@ -65,6 +65,7 @@ const EMAIL_REDIRECT = process.env.EMAIL_REDIRECT || 'localhost:' + app.get('por
 app.set('serviceProvider', ServiceProvider(config.palle.provider, logger).setupSockets(socket));
 app.set('logger', logger);
 app.set('EMAIL_REDIRECT', EMAIL_REDIRECT);
+app.set('APPLICATION', APPLICATION);
 
 // Configure templating
 app.set('views', path.join(__dirname, 'server/templates'));
@@ -85,6 +86,7 @@ app.locals.version = version;
 app.locals.production = PRODUCTION;
 app.locals.title = config.palle.applicationTitle || '';
 app.locals.application = APPLICATION;
+app.locals.faviconUrl = APPLICATION === 'mobilsoeg' ? 'https://www.aakb.dk/sites/www.aakb.dk/files/favicon.ico' : '/favicon.ico';
 
 // setup environments
 let redisConfig;
@@ -95,8 +97,8 @@ switch (ENV) {
     redisConfig = config.palle.sessionStores.redis.development;
     break;
   case 'production':
-    fileHeaders = {index: false, dotfiles: 'ignore', maxAge: '1d'};
     redisConfig = config.palle.sessionStores.redis.production;
+    fileHeaders = {index: false, dotfiles: 'ignore', maxAge: '5 days'};
     break;
   default:
     redisConfig = config.palle.sessionStores.redis.local;
@@ -132,7 +134,6 @@ app.use(express.static(path.join(__dirname, '../static'), fileHeaders));
 
 // Setting logger
 app.use(expressLoggers.logger);
-app.use(expressLoggers.errorLogger);
 
 // Setting Input Validation
 const validatorOptions = {};
@@ -173,10 +174,14 @@ app.use((req, res) => {
   res.render('error', {errorImage: 'https://http.cat/404'});
 });
 
+// Setting logger -- should be placed after routes
+app.use(expressLoggers.errorLogger);
+
 // starting server
 server.listen(app.get('port'), () => {
   logger.log('debug', 'Server listening on port ' + app.get('port'));
   logger.log('debug', 'NEW_RELIC_APP_NAME: ' + APP_NAME);
+  logger.log('debug', 'APPLICATION: ' + APPLICATION);
   logger.log('debug', 'EMAIL_REDIRECT: ' + EMAIL_REDIRECT);
   logger.log('info', 'Versions: ', process.versions);
   logger.log('info', version + ' is up and running');

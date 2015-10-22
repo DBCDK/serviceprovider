@@ -73,7 +73,7 @@ const Work = React.createClass({
     // Result is pending, waiting for serviceprovider
     if (isEmpty(work.result) && isEmpty(work.info)) {
       return (
-        <div className='row'>
+        <div className='row' >
           <span className='loader' />
         </div>
       );
@@ -91,17 +91,18 @@ const Work = React.createClass({
 
     work.result.editions.forEach((element, index) => {
       let edition = (
-        <div className={'work-container--work--editions--publication-details ' + element.type} key={'edition_' + index}>
-          <div className='type'>{element.type}</div>
-          <div className='date'>{element.edition + (element.edition !== '' ? ', ' : '')} {element.date}</div>
-          <div className='extents'>{element.extent}</div>
-          <div className='isbns'>
+        <div className={'work-container--work--editions--publication-details ' + element.type} key={'edition_' + index} >
+          <div className='type' >{element.type}</div>
+          <div className='date' >{element.edition + (element.edition !== '' ? ', ' : '')} {element.date}</div>
+          <div className='extents' >{element.extent}</div>
+          <div className='isbns' >
             <span>{element.isbns.length > 0 ? 'ISBN: ' : ''}</span>
             {element.isbns.join(', ')}
           </div>
-          <div className='sub-publication-link'>
+          <div className='sub-publication-link' >
             {element.link.map((link, idx) => {
-              return (<a href={link} key={'sub-publication-link_' + idx} target='_blank'>Find online</a>);
+              return (
+                <a href={link} key={'sub-publication-link_' + idx} target='_blank' >Find online</a>);
             })}
           </div>
         </div>
@@ -139,39 +140,39 @@ const Work = React.createClass({
     let specifics = values(specifics_object);
 
     return (
-      <div className='work-container' data-pid={id}>
-        <div className='work work--cover-image small-12 medium-6 large-4'>
+      <div className='work-container' data-pid={id} >
+        <div className='work work--cover-image small-24 medium-12 large-8' >
           <CoverImage pids={[id, work.result.pid]} prefSize='detail_500' rewritwImgUrl={rewriteCoverImageUrl} />
         </div>
-        <div className='work small-12 medium-6 large-4'>
+        <div className='work small-24 medium-12 large-8' >
           <OrderButton manifestations={specifics} profile={profile} relations={work.result.relations} />
 
           {likeContainers}
 
-          <div className='general'>
-            <div className='title'>{work.result.title}</div>
+          <div className='general' >
+            <div className='title' >{work.result.title}</div>
 
-            <div className='creators'>
-              <a href={'/search?phrase.creator=' + encodeURIComponent(work.result.creator)}>
+            <div className='creators' >
+              <a href={'/search?phrase.creator=' + encodeURIComponent(work.result.creator)} >
                 {work.result.creator}
               </a>
             </div>
 
-            <div className='description'>{work.result.abstract}</div>
+            <div className='description' >{work.result.abstract}</div>
 
-            <div className='issn'>
-              {work.result.isbns.length > 0 ? 'ISBN: '+ work.result.isbns[0] : ''}
+            <div className='issn' >
+              {work.result.isbns.length > 0 ? 'ISBN: ' + work.result.isbns[0] : ''}
             </div>
 
-            <div className='extent clearfix'>{work.result.extent}</div>
+            <div className='extent clearfix' >{work.result.extent}</div>
 
-            <div className='clearfix'>
-              <div className='actors clearfix'>
+            <div className='clearfix' >
+              <div className='actors clearfix' >
                 <span>{work.result.actors.length > 0 ? 'Medvirkende: ' : ''}</span>
                 {work.result.actors.map((actor, index) => {
                   return (
-                    <span className='actor' key={'actor_' + index}>
-                      <a href={'/search?phrase.creator=' + encodeURIComponent(actor)}>
+                    <span className='actor' key={'actor_' + index} >
+                      <a href={'/search?phrase.creator=' + encodeURIComponent(actor)} >
                         {actor}
                       </a>
                     </span>);
@@ -179,62 +180,63 @@ const Work = React.createClass({
               </div>
             </div>
 
-            <div className='series clearfix'>
-              <a href='#'>{work.result.series}</a>
+            <div className='series clearfix' >
+              <a href='#' >{work.result.series}</a>
             </div>
 
-            <div className='subjects clearfix'>
+            <div className='subjects clearfix' >
               <span>{work.result.subjects.length > 0 ? 'Emner: ' : ''}</span>
               {work.result.subjects.map((subject, index, array) => {
                 const notLast = (array.length - 1) !== index;
                 return (
-                  <span className='subject' key={'subject_' + index}>
-                    <a href={'/search?phrase.subject=' + encodeURIComponent(subject)}> {notLast ? subject + ', ' : subject}</a>
+                  <span className='subject' key={'subject_' + index} >
+                    <a href={'/search?phrase.subject=' + encodeURIComponent(subject)} > {notLast ? subject + ', ' : subject}</a>
                   </span>
                 );
               })}
             </div>
 
-            <div className='dk5s clearfix'>
+            <div className='dk5s clearfix' >
               <span>{work.result.dk5s.length > 0 ? 'Opstilling: ' : ''}</span>
               {work.result.dk5s.map((dk5, index) => {
                 return (
-                  <span className='opstilling' key={'dk5_' + index}>
-                    <a href={'/search?dkcclterm.dk=' + encodeURIComponent(dk5.value)}>{dk5.text}</a>
+                  <span className='opstilling' key={'dk5_' + index} >
+                    <a href={'/search?dkcclterm.dk=' + encodeURIComponent(dk5.value)} >{dk5.text}</a>
                   </span>
                 );
               })}
             </div>
 
-            <div className='audience clearfix'>
-              <div className='age'>{work.result.audience.age.join(', ')}</div>
-              <div className='pegi'>{work.result.audience.pegi}</div>
-              <div className='medieraad'>{work.result.audience.medieraad}</div>
+            <div className='audience clearfix' >
+              <div className='age' >{work.result.audience.age.join(', ')}</div>
+              <div className='pegi' >{work.result.audience.pegi}</div>
+              <div className='medieraad' >{work.result.audience.medieraad}</div>
             </div>
 
-            <div className='tracks clearfix'>
+            <div className='tracks clearfix' >
               {work.result.tracks.length > 0 ? 'Trackliste: ' : ''}
               {work.result.tracks.map((track, index) => {
-                return (<div className='track' key={'track_' + index}>{track}</div>);
+                return (
+                  <div className='track' key={'track_' + index} >{track}</div>);
               })}
             </div>
 
-            <div className='language clearfix'>
+            <div className='language clearfix' >
               <span>{work.result.languages.length > 0 ? 'Sprog: ' : ''}</span>
               <span>{work.result.languages.join(', ')}</span>
             </div>
           </div>
 
-          <div className='specifics clearfix'>
+          <div className='specifics clearfix' >
             {specifics.map((specific, index) => {
               return (
-                <span key={'specific_' + index}>{specific.type} ({specific.dates.join('; ')}) </span>
+                <span key={'specific_' + index} >{specific.type} ({specific.dates.join('; ')}) </span>
               );
             })}
           </div>
 
-          <div className='editions clearfix'>
-            <span className='work-container--work--editions--label'>{editions.length > 0 ? 'Udgaver:' : ''}</span>
+          <div className='editions clearfix' >
+            <span className='work-container--work--editions--label' >{editions.length > 0 ? 'Udgaver:' : ''}</span>
             {editions}
           </div>
         </div>
