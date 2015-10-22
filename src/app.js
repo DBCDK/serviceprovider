@@ -157,6 +157,22 @@ if (APPLICATION === 'pg') {
   app.use('/groups', GroupRoutes);
 }
 
+// Graceful handling of errors
+app.use((err, req, res, next) => {
+  if (res.headersSent) {
+    return next(err);
+  }
+
+  res.status(500);
+  res.render('error', {errorImage: 'https://http.cat/500'});
+});
+
+// Handle 404's
+app.use((req, res) => {
+  res.status(404);
+  res.render('error', {errorImage: 'https://http.cat/404'});
+});
+
 // starting server
 server.listen(app.get('port'), () => {
   logger.log('debug', 'Server listening on port ' + app.get('port'));
