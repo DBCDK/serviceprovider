@@ -16,7 +16,9 @@ class Group extends React.Component {
   render() {
     const coverUrl = 'http://www.nalder.com.au/galleries/Limited%20Edition%20Landscape/photos/The_Consequence_of_Drought.jpg';
 
-    const createPostButton =(this.props.loggedIn) ? <button onClick={this.props.toggleCreatePostCb}>Skriv nyt indlæg</button> : null;
+    const createPostButton =(this.props.loggedIn && this.props.isMember) ? <button onClick={this.props.toggleCreatePostCb}>Skriv nyt indlæg</button> : null;
+    const joinButtonText = (this.props.isMember) ? 'Forlad Gruppe' : 'Bliv medlem';
+    const joinGroupButton =(this.props.loggedIn) ? <button onClick={this.props.toggleGroupMembershipCb}>{joinButtonText}</button> : null;
     const editGroupButton = (this.props.isOwner) ? <button onClick={this.props.toggleEditGroupCb}>Rediger gruppe</button> : null;
 
     return (
@@ -26,6 +28,7 @@ class Group extends React.Component {
         <div className='row'>
           {createPostButton}
           {editGroupButton}
+          {joinGroupButton}
         </div>
         <PostTimeline
           commentCb={this.props.commentCb}
@@ -43,13 +46,15 @@ Group.propTypes = {
   description: PropTypes.string.isRequired,
   editGroupMode: PropTypes.bool.isRequired,
   id: PropTypes.number.isRequired,
+  isMember: PropTypes.bool.isRequired,
   isOwner: PropTypes.bool.isRequired,
   loggedIn: PropTypes.bool.isRequired,
   members: PropTypes.array.isRequired,
   name: PropTypes.string.isRequired,
   posts: PropTypes.array.isRequired,
   toggleCreatePostCb: PropTypes.func.isRequired,
-  toggleEditGroupCb: PropTypes.func.isRequired
+  toggleEditGroupCb: PropTypes.func.isRequired,
+  toggleGroupMembershipCb: PropTypes.func.isRequired
 };
 Group.displayName = 'Group.component';
 
