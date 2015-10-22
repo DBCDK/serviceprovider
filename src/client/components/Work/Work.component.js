@@ -140,11 +140,11 @@ const Work = React.createClass({
     let specifics = values(specifics_object);
 
     return (
-      <div className='work-container' data-pid={id} >
-        <div className='work work--cover-image small-24 medium-12 large-8' >
-          <CoverImage pids={[id, work.result.pid]} prefSize='detail_500' rewritwImgUrl={rewriteCoverImageUrl} />
+      <div className='work-container row' data-pid={id} >
+        <div className='work--image small-20 small-centered medium-10 medium-uncentered large-10 large-uncentered columns' >
+          <CoverImage noCoverUrl='/covers/no-cover-image-book.png' pids={[id, work.result.pid]} prefSize='detail_500' rewritwImgUrl={rewriteCoverImageUrl} />
         </div>
-        <div className='work small-24 medium-12 large-8' >
+        <div className='work small-24 small-centered medium-14 medium-uncentered large-14 large-uncentered columns' >
           <OrderButton manifestations={specifics} profile={profile} relations={work.result.relations} />
 
           {likeContainers}

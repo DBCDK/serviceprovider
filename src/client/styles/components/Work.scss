@@ -137,9 +137,9 @@
   }
 }
 
-.work {
-  img {
-    max-height: 330px;
+.work--image {
+  @media  #{$small-only} {
+    padding-bottom: 20px;
   }
 }
 
