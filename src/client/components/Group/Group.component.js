@@ -23,6 +23,10 @@ class Group extends React.Component {
 
     return (
       <div>
+        <div className='row'>
+          <h2>{this.props.name}</h2>
+          <p>{this.props.description}</p>
+        </div>
         <GroupCoverImage url={coverUrl}/>
         <MemberSummary members={this.props.members}/>
         <div className='row'>
