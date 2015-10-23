@@ -99,12 +99,6 @@ const Work = React.createClass({
             <span>{element.isbns.length > 0 ? 'ISBN: ' : ''}</span>
             {element.isbns.join(', ')}
           </div>
-          <div className='sub-publication-link' >
-            {element.link.map((link, idx) => {
-              return (
-                <a href={link} key={'sub-publication-link_' + idx} target='_blank' >Find online</a>);
-            })}
-          </div>
         </div>
       );
 
@@ -118,7 +112,6 @@ const Work = React.createClass({
           creator: element.creator,
           dates: [],
           identifiers: [],
-          links: [],
           order: '',
           title: element.title,
           type: element.type,
@@ -126,9 +119,6 @@ const Work = React.createClass({
         };
       }
 
-      element.link.forEach((link) => {
-        specifics_object[elementKey].links.push(link);
-      });
       specifics_object[elementKey].dates.push(element.date);
       specifics_object[elementKey].identifiers.push(element.identifier);
       specifics_object[elementKey].order = '/order?ids=' + specifics_object[elementKey].identifiers.join(',') +
