@@ -6,7 +6,7 @@ import QueryParser from '../../utils/QueryParser.util.js';
 import QueryActions from '../actions/QueryUpdate.action.js';
 
 const defaultStore = {
-  queryHasChanged: false,
+  loadMoreWasTriggered: false,
   query: [],
   page: 0,
   worksPerPage: 12,
@@ -41,6 +41,7 @@ let QueryStore = Reflux.createStore({
   getInitialState() {
     return this.store;
   },
+
   init() {
     if (typeof window !== 'undefined') {
       this.store.query = QueryParser.urlQueryToObject(window.location.search);
@@ -63,6 +64,10 @@ let QueryStore = Reflux.createStore({
     this.store.query.push(queryElement);
     this.store.page = 0;
     this.triggerOnQueryChange(this.store);
+  },
+
+  onLoadMore() {
+    this.onNextPage();
   },
 
   onNextPage() {
