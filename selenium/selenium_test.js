@@ -20,7 +20,7 @@ function runAllTests(driverCaps) {
       driver.get(BASE_URL);
 
       driver.getTitle().then(function (title) {
-        assert.equal(title, 'Palles Gavebod', 'Title is Palles Gavebod');
+        assert.equal(title, 'Mobilsøg', 'Title is Mobilsøg');
       });
       driver.quit();
     });
