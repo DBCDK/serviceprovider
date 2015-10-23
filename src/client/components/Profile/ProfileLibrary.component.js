@@ -47,17 +47,17 @@ const ProfileLibrary = React.createClass({
               <h5>{library.agencyName}</h5>
             </a>
             <div className='row'>
-              <div className='large-4 medium-4 small-12 columns'>
+              <div className='large-8 medium-8 small-24 columns'>
                 <a className='button tiny expand' href={'/library?id=' + library.branchId}>
                   Ret lånerdata
                 </a>
               </div>
-              <div className='large-4 medium-4 small-12 columns'>
+              <div className='large-8 medium-8 small-24 columns'>
                 <a className='button alert expand tiny' href='#' onClick={this.removeFavoriteLibrary}>
                   Fjern bibliotek fra favoritter
                 </a>
               </div>
-              <div className='large-4 medium-4 small-12 columns'>
+              <div className='large-8 medium-8 small-24 columns'>
                 <a className={this.props.library.default === 1 ? 'button disabled secondary tiny expand' : 'button tiny expand'}
                    href='#'
                    onClick={this.setDefaultLibrary}>
