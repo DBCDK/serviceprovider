@@ -34,7 +34,7 @@ PassportRoutes.get('/logout', (req, res) => {
   });
 });
 
-PassportRoutes.post('/login', passport.authenticate('local'), (req, res) => {
+PassportRoutes.post('/login', passport.authenticate('local', {failureRedirect: '/profile/login?error=Ugyldigt%20brugernavn%20eller%20kodeord'}), (req, res) => {
   if (req.session.hasOwnProperty('returnTo')) {
     res.redirect(req.session.returnTo);
   }
@@ -127,10 +127,19 @@ PassportRoutes.get('/resetpassword', (req, res) => {
 });
 
 PassportRoutes.get('/login', (req, res) => {
-  dbcMiddleware.renderPage(res, 'login', {
+  let contextObject = {
     loginString: ReactDOM.renderToString(<Login />),
     title: req.app.locals.title + ' - Log ind'
-  }, 'no service involved');
+  };
+
+  if (req.query.error) {
+    contextObject.message = {
+      text: req.query.error,
+      error: true
+    };
+  }
+
+  dbcMiddleware.renderPage(res, 'login', contextObject, 'no service involved');
 });
 
 PassportRoutes.get('/', dbcMiddleware.ensureAuthenticated, (req, res) => {
