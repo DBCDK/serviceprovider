@@ -11,7 +11,6 @@ import Reflux from 'reflux';
 // Components
 import SearchResultList from './SearchResultList.component.js';
 import RecommendationContainer from '../Recommend/RecommendationContainer.component';
-import Tabs from '../tabs/Tabs.component.js';
 
 // Actions
 import RecommendationActions from '../Recommend/Recommendations.action';
@@ -51,22 +50,11 @@ export default React.createClass({
   },
 
   renderSearchResult() {
-    const tabs = [];
-    tabs.push({
-      label: 'Søgeresultat',
-      component:
-        <SearchResultList data={{results: this.state.results}} loadMore={QueryActions.loadMore} />,
-      active: true
-    });
-    tabs.push({
-      label: 'Anbefalinger',
-      component:
-        <SearchResultList data={{results: this.state.recommendations}} loadMore={QueryActions.loadMore} />,
-      active: false
-    });
-
     return (
-      <Tabs defaultSelected={0} tabs={tabs} />
+      <div>
+        <h2>Søgeresultat</h2>
+        <SearchResultList data={{results: this.state.results}} loadMore={QueryActions.loadMore} />
+      </div>
     );
   },
 
@@ -80,7 +68,7 @@ export default React.createClass({
     const result = this.state.query.query.length && this.renderSearchResult() || this.renderDefaultRecommendations();
 
     return (
-      <div className={'search-result'} >
+      <div className={'search-result columns'} >
         {result}
       </div>
     );
