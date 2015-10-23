@@ -158,6 +158,22 @@ if (APPLICATION === 'pg') {
   app.use('/groups', GroupRoutes);
 }
 
+// Graceful handling of errors
+app.use((err, req, res, next) => {
+  if (res.headersSent) {
+    return next(err);
+  }
+
+  res.status(500);
+  res.render('error', {errorImage: 'https://http.cat/500'});
+});
+
+// Handle 404's
+app.use((req, res) => {
+  res.status(404);
+  res.render('error', {errorImage: 'https://http.cat/404'});
+});
+
 // Setting logger -- should be placed after routes
 app.use(expressLoggers.errorLogger);
 

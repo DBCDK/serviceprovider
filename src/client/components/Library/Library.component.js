@@ -125,7 +125,7 @@ class Library extends React.Component {
   onFormFieldInput() {
     let elements = document.getElementsByClassName('cleardefault');
     while (elements.length > 0) {
-      elements[0].value = '';
+      elements[0].value = elements[0].value.replace(/P/g, '');
       elements[0].className = elements[0].className.replace('cleardefault', '').trim();
     }
   }
@@ -166,31 +166,31 @@ class Library extends React.Component {
             <fieldset>
               <legend>Favoritbibliotek</legend>
 
-              <div className='large-5 medium-4 small-12 columns'>
+              <div className='large-10 medium-8 small-24 columns'>
                 <label>
                   <span>Låner ID</span>
                   <input
                     className='profile--library--borrower-id cleardefault'
-                    defaultValue={shouldDisableFavoriteButton && shouldDisableFavoriteButton.borrowerID !== '' ? '0000000000': ''}
+                    defaultValue={shouldDisableFavoriteButton && shouldDisableFavoriteButton.borrowerID !== '' ? 'PPPPPPPPPP': ''}
                     onChange={this.onFormFieldInput}
                     placeholder={'Skriv dit låner id her'}
                     ref='favoriteLibraryBorrowerId'
                     type='password' />
                 </label>
               </div>
-              <div className='large-5 medium-4 small-12 columns'>
+              <div className='large-10 medium-8 small-24 columns'>
                 <label>
                   <span>Pinkode</span>
                   <input
                     className='profile--library--borrower-password cleardefault'
-                    defaultValue={shouldDisableFavoriteButton && shouldDisableFavoriteButton.borrowerPIN !== '' ? '0000': ''}
+                    defaultValue={shouldDisableFavoriteButton && shouldDisableFavoriteButton.borrowerPIN !== '' ? 'PPPP': ''}
                     onChange={this.onFormFieldInput}
                     placeholder='Skriv din kode her'
                     ref='favoriteLibraryBorrowerPassword'
                     type='password' />
                 </label>
               </div>
-              <div className='large-2 medium-4 small-12 columns'>
+              <div className='large-4 medium-8 small-24 columns'>
                 <label>
                   <br />
                   <input
