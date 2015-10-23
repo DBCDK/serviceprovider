@@ -9,11 +9,14 @@ let ResultListStore = Reflux.createStore({
   mixins: [SocketClient('getOpenSearchResultList')],
 
   store: {
-    result: [],
+    hasSearchBeenExecuted: false,
     info: {hits: 0, collections: 0, more: false},
+    page: 0,
     pending: false,
-    hasSearchBeenExecuted: false
+    result: []
   },
+
+  shouldScroll: false,
 
   getInitialState() {
     return this.store;
@@ -31,6 +34,11 @@ let ResultListStore = Reflux.createStore({
     }
     const {query, page, worksPerPage, sort} = store;
     const offset = page * worksPerPage;
+
+    if (page > this.store.page) {
+      this.shouldScroll = $('.search-result--loadmore').offset().top - 50; // eslint-disable-line
+      this.store.page = page;
+    }
 
     if (query.length > 0) {
       if (page === 0) {
@@ -62,6 +70,17 @@ let ResultListStore = Reflux.createStore({
       this.store.offset += this.store.worksPerPage;
     }
     this.trigger(this.store);
+
+    if (this.shouldScroll) {
+      this.doScroll();
+    }
+  },
+
+  doScroll() {
+    setTimeout(() => {
+      $(window).scrollTo(this.shouldScroll, 850, {interrupt: true, axis: 'y'}); // eslint-disable-line 
+      this.shouldScroll = false;
+    }, 50);
   },
 
   empty() {
