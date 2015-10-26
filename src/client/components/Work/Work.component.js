@@ -5,47 +5,57 @@
  * Provides the work view for the enduser.
  */
 import React from 'react';
-import Reflux from 'reflux';
-
 import {isEmpty, values} from 'lodash';
-
-import workAction from '../../actions/Work.action.js';
-import WorkStore from '../../stores/Work.store.js';
-import {CoverImage, OrderButton} from 'dbc-react-components';
 import {rewriteCoverImageUrl} from '../../../utils/CoverImage.util.js';
+
+// Actions
+import workAction from '../../actions/Work.action.js';
+
+// Components
+import {CoverImage, OrderButton} from 'dbc-react-components';
 import LikeContainer from '../LikeDislike/LikeContainer.component.js';
 import DislikeContainer from '../LikeDislike/DislikeContainer.component.js';
+import WorkEdition from './WorkEdition.component.js';
+
+// Stores
+import WorkStore from '../../stores/Work.store.js';
 import ProfileStore from '../../stores/Profile.store.js';
 
-const Work = React.createClass({
-  displayName: 'Work.component',
+class Work extends React.Component {
+  constructor() {
+    super();
 
-  propTypes: {
-    id: React.PropTypes.string,
-    work: React.PropTypes.object
-  },
+    this.state = {
+      profile: ProfileStore.getInitialState(),
+      work: WorkStore.getInitialState()
+    };
 
-  mixins: [
-    Reflux.connect(WorkStore, 'work'),
-    Reflux.connect(ProfileStore, 'profile')
-  ],
+    this.unsubscribe = [
+      ProfileStore.listen(() => this.setState({
+        profile: ProfileStore.getProfile()
+      })),
 
-  getInitialState() {
-    if (typeof window === 'undefined') {
-      this.getWork();
-    }
-  },
+      WorkStore.listen(() => this.setState({
+        work: WorkStore.store
+      }))
+    ];
+  }
+
+  componentWillMount() {
+    this.state.work = isEmpty(this.props.work) ? this.state.work : this.props.work;
+  }
 
   componentDidMount() {
-    this.getWork();
-  },
-
-  getWork() {
-    if (this.props.work) {
-      workAction.updated([this.props.work]);
-    }
     workAction({id: this.props.id});
-  },
+  }
+
+  componentWillUnmount() {
+    this.unsubscribe.forEach(
+      (unsubscriber) => {
+        unsubscriber();
+      }
+    );
+  }
 
   getLikeDislikeContainers(id) {
     return (
@@ -58,7 +68,7 @@ const Work = React.createClass({
         </div>
       </div>
     );
-  },
+  }
 
   render() {
     const profile = this.state.profile;
@@ -90,19 +100,15 @@ const Work = React.createClass({
     let specifics_object = {};
 
     work.result.editions.forEach((element, index) => {
-      let edition = (
-        <div className={'work-container--work--editions--publication-details ' + element.type} key={'edition_' + index} >
-          <div className='type' >{element.type}</div>
-          <div className='date' >{element.edition + (element.edition !== '' ? ', ' : '')} {element.date}</div>
-          <div className='extents' >{element.extent}</div>
-          <div className='isbns' >
-            <span>{element.isbns.length > 0 ? 'ISBN: ' : ''}</span>
-            {element.isbns.join(', ')}
-          </div>
-        </div>
+      editions.push(
+        <WorkEdition
+          date={element.date}
+          edition={element.edition}
+          extent={element.extent}
+          isbns={element.isbns}
+          key={'edition_' + index}
+          workType={element.type} />
       );
-
-      editions.push(edition);
 
       const elementKey = element.accessType + '_' + element.type;
 
@@ -233,6 +239,12 @@ const Work = React.createClass({
       </div>
     );
   }
-});
+}
+
+Work.displayName = 'Work.component';
+Work.propTypes = {
+  id: React.PropTypes.string.isRequired,
+  work: React.PropTypes.object
+};
 
 export default Work;
