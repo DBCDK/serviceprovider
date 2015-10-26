@@ -3,18 +3,15 @@
 import Reflux from 'reflux';
 import WorkActions from '../actions/Work.action.js';
 
-// Setup dataobject for query
-// @todo We may need to initialize it with data from the URL or an global object
-let _store = {
-  result: {},
-  info: [],
-  error: []
-};
-
 /**
  * Store containing the current query of the page
  */
 let WorkStore = Reflux.createStore({
+  store: {
+    result: {},
+    info: [],
+    error: []
+  },
 
   // Initial setup by reflux
   init() {
@@ -23,7 +20,7 @@ let WorkStore = Reflux.createStore({
   },
 
   getInitialState() {
-    return _store;
+    return this.store;
   },
 
   // update the work object and trigger an action
@@ -31,16 +28,16 @@ let WorkStore = Reflux.createStore({
     let work = result.work || {};
     let info = result.info || [];
     let error = result.error || [];
-    // this.callImageActions(work);
-    _store.result = work;
-    _store.info = info;
-    _store.error = error;
-    this.trigger(_store);
+
+    this.store.result = work;
+    this.store.info = info;
+    this.store.error = error;
+    this.trigger(this.store);
   },
 
   // return the store data
   getStore() {
-    return _store;
+    return this.store;
   }
 });
 
