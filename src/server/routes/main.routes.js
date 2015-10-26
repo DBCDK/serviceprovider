@@ -7,7 +7,6 @@
  */
 
 import {isEmpty} from 'lodash';
-import http from 'http';
 import express from 'express';
 const MainRoutes = express.Router();
 
@@ -58,13 +57,6 @@ MainRoutes.get(['/search', '/search/*'], (req, res) => {
     let promiseResponse = req.app.get('serviceProvider').trigger('getRecommendations', {likes: defaultLikes, dislikes: []});
     dbcMiddleware.setupSSR(req, res, promiseResponse, cbFunc);
   }
-});
-
-MainRoutes.get('/moreinfo/:restOfPath*', (req, res) => {
-  http.get('http://moreinfo.addi.dk/' + req.params.restOfPath, (response) => {
-    res.set('Cache-Control', 'max-age=86400, s-maxage=86400, public');
-    response.pipe(res);
-  });
 });
 
 MainRoutes.post(['/report-violation'], function(req, res) {
