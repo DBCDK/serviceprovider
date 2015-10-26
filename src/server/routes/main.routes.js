@@ -70,4 +70,8 @@ MainRoutes.post(['/report-violation'], function(req, res) {
   res.status(204).end();
 });
 
+MainRoutes.get('/socket-terminal', (req, res) => {
+  res.render('socket-terminal', {});
+});
+
 export default MainRoutes;

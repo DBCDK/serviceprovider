@@ -28,6 +28,7 @@ if (APPLICATION === 'ddbmobil') {
     signup: './src/client/components/Signup/index.js',
     topnavigation: './src/client/components/TopNavigation/index.js',
     work: './src/client/components/Work/Work.client',
+    terminal: './src/utils/Terminal',
     styles: './src/client/styles/ddb.scss'
   };
 }
@@ -47,6 +48,7 @@ else {
     signup: './src/client/components/Signup/index.js',
     topnavigation: './src/client/components/TopNavigation/index.js',
     work: './src/client/components/Work/Work.client',
+    terminal: './src/utils/Terminal',
     styles: './src/client/styles/pg.scss'
   };
 }
