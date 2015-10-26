@@ -6,7 +6,6 @@
  */
 
 import React from 'react';
-import {rewriteCoverImageUrl} from '../../../utils/CoverImage.util.js';
 
 // Components
 import {CoverImage, ResultDisplay} from 'dbc-react-components';
@@ -27,8 +26,7 @@ const SearchResultList = React.createClass({
         appendWorkType: true,
         url: `/covers/no-cover-image-[WORKTYPE].png`
       },
-      prefSize: 'detail_500',
-      rewriteImgUrl: rewriteCoverImageUrl
+      prefSize: 'detail_500'
     };
 
     return (

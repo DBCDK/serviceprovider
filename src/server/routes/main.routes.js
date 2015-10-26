@@ -60,13 +60,6 @@ MainRoutes.get(['/search', '/search/*'], (req, res) => {
   }
 });
 
-MainRoutes.get('/moreinfo/:restOfPath*', (req, res) => {
-  http.get('http://moreinfo.addi.dk/' + req.params.restOfPath, (response) => {
-    res.set('Cache-Control', 'max-age=86400, s-maxage=86400, public');
-    response.pipe(res);
-  });
-});
-
 MainRoutes.post(['/report-violation'], function(req, res) {
   const logger = req.app.get('logger');
   if (req.body) {

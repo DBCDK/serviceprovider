@@ -15,7 +15,6 @@ import dbcMiddleware from './middleware.js';
 
 import workServer from '../../client/components/Work/Work.server.js';
 import {CoverImage, Order, Receipt} from 'dbc-react-components';
-import {rewriteCoverImageUrl} from '../../utils/CoverImage.util.js';
 
 WorkRoutes.get(
   ['/order', '/order*'],
@@ -35,7 +34,7 @@ WorkRoutes.get(
     let query = req.query;
     query = JSON.stringify(query);
 
-    const image = <CoverImage pids={req.query.coverImageIds.split(',')} prefSize={'detail_500'} rewriteImgUrl={rewriteCoverImageUrl} />;
+    const image = <CoverImage pids={req.query.coverImageIds.split(',')} prefSize={'detail_500'} />;
 
     dbcMiddleware.renderPage(res, 'order', {
       query,

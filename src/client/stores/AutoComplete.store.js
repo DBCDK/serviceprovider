@@ -6,8 +6,6 @@ import React from 'react';
 import AutoCompleteActions from '../actions/AutoComplete.action.js';
 import {CoverImage} from 'dbc-react-components';
 
-import {rewriteCoverImageUrl} from '../../utils/CoverImage.util.js';
-
 const AutoCompleteStore = Reflux.createStore({
   listenables: AutoCompleteActions,
   store: {
@@ -72,7 +70,7 @@ const AutoCompleteStore = Reflux.createStore({
 
       const pids = value.pid ? [value.pid] : null;
       item.imageComp = (
-        <CoverImage noCoverUrl={'/covers/no-cover-image-other.png'} pids={pids} prefSize={'detail_117'} rewriteImgUrl={rewriteCoverImageUrl} />
+        <CoverImage noCoverUrl={'/covers/no-cover-image-other.png'} pids={pids} prefSize={'detail_117'} />
       );
 
       item.text = value.text;

@@ -6,7 +6,6 @@
  */
 import React from 'react';
 import {isEmpty, values} from 'lodash';
-import {rewriteCoverImageUrl} from '../../../utils/CoverImage.util.js';
 
 // Actions
 import workAction from '../../actions/Work.action.js';
@@ -138,7 +137,7 @@ class Work extends React.Component {
     return (
       <div className='work-container row' data-pid={id} >
         <div className='work--image small-20 small-centered medium-10 medium-uncentered large-10 large-uncentered columns' >
-          <CoverImage noCoverUrl='/covers/no-cover-image-book.png' pids={[id, work.result.pid]} prefSize='detail_500' rewritwImgUrl={rewriteCoverImageUrl} />
+          <CoverImage noCoverUrl='/covers/no-cover-image-book.png' pids={[id, work.result.pid]} prefSize='detail_500' />
         </div>
         <div className='work small-24 small-centered medium-14 medium-uncentered large-14 large-uncentered columns' >
           <OrderButton manifestations={specifics} profile={profile} relations={work.result.relations} />
