@@ -9,7 +9,7 @@
 
 Next generation Palles Gavebod
 
-As default the application will load on localhost:8080. Se a running example on [pg.demo.dbc.dk](http://pg.demo.dbc.dk)
+As default the application will load on localhost:8080. Se a running example on [pg.demo.dbc.dk](https://pg.demo.dbc.dk) or [ddbmobil.demo.dbc.dk](https://ddbmobil.demo.dbc.dk)
 
 ## How to install and run the application
 ```bash

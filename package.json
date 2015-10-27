@@ -16,8 +16,8 @@
     "dev": "parallelshell \"npm run start:watch -s\" \"npm run serve -s\"",
     "dev:remoteprofile": "PROFILE_SERVICE_URL=\"http://profile-i01.dbc.dk:3001/\" npm run dev",
     "dev:ddb": "NODE_APPLICATION=ddbmobil npm run dev",
-    "siege": "siege -c2000 -d10 -t5M -i -f siegetestendpoints.txt",
-    "siege:live": "siege -c2000 -d10 -t5M -i -f siegedemoendpoints.txt"
+    "siege": "siege -c500 -d10 -t30M -i -f siegetestendpoints.txt",
+    "siege:live": "siege -c500 -d10 -t30M -i -f siegedemoendpoints.txt"
   },
   "repository": {
     "type": "git",
