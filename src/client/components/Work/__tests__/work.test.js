@@ -17,8 +17,6 @@ import DislikeContainer from '../../LikeDislike/DislikeContainer.component.js';
 
 import WorkStore from '../../../stores/Work.store.js';
 
-import WorkActions from '../../../actions/Work.action.js';
-
 import forceMajureMockWork from './work.mock.js';
 
 describe('Test the Work component with data', () => {
