@@ -46,7 +46,10 @@ const AutoCompleteContainer = React.createClass({
         clearTimeout(this.timer);
       }
       this.timer = setTimeout(() => {
-        this.props.actions.textfieldUpdated(inputValue);
+        // request suggestions only when more than 3 characters have been entered
+        if (inputValue.length >= 3) {
+          this.props.actions.textfieldUpdated(inputValue);
+        }
       }, 500);
     }
     this.lastInputValue = inputValue;
