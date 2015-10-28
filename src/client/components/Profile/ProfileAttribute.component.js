@@ -9,17 +9,12 @@ import React from 'react';
 import ProfileActions from '../../actions/Profile.action.js';
 
 const ProfileAttribute = React.createClass({
+  displayName: 'ReactProfileAttribute',
 
-  displayName: function() {
-    return 'ReactProfileAttribute';
-  },
-
-  propTypes: function () {
-    return {
-      name: React.PropTypes.string,
-      value: React.PropTypes.string,
-      editable: React.PropTypes.bool
-    };
+  propTypes: {
+    editable: React.PropTypes.bool,
+    name: React.PropTypes.string,
+    value: React.PropTypes.string
   },
 
   handleTextChange: function (e) {

@@ -81,6 +81,9 @@ describe('Test the Profile component', () => {
     });
     let dom = TestUtils.renderIntoDocument(element);
     expect(dom.getDOMNode().innerHTML).to.contain('Kulturstationen Vanløse. Biblioteket');
+
+    let btn = TestUtils.scryRenderedDOMComponentsWithClass(dom, 'button tiny')[2];
+    TestUtils.Simulate.click(btn);
   });
 
   it('should have a favorite library and be selectable as default', () => {
@@ -135,5 +138,22 @@ describe('Test the Profile component', () => {
     let remove_btn = TestUtils.scryRenderedDOMComponentsWithClass(dom, 'button tiny')[1];
     TestUtils.Simulate.click(remove_btn);
     assert.equal(removedLibrary, '710118');
+  });
+
+  it('should test editing of profile attributes', () => {
+    let sandbox = sinon.sandbox.create(); // eslint-disable-line
+    sandbox.spy(ProfileActions, 'updateAttribute');
+
+    let element = React.createElement(Profile, {testProfile});
+    let dom = TestUtils.renderIntoDocument(element);
+    let header = TestUtils.findRenderedComponentWithType(dom, ProfileHeader);
+    TestUtils.Simulate.click(header.refs.toggleButton);
+    let displayName = TestUtils.scryRenderedDOMComponentsWithClass(dom, 'profile--displayname')[0];
+    displayName.value = 'displayNameValue';
+    TestUtils.Simulate.change(displayName);
+
+    assert.equal(ProfileActions.updateAttribute.calledWith('displayNameValue'), true);
+
+    sandbox.restore();
   });
 });

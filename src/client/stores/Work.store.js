@@ -25,19 +25,10 @@ let WorkStore = Reflux.createStore({
 
   // update the work object and trigger an action
   update(result) {
-    let work = result.work || {};
-    let info = result.info || [];
-    let error = result.error || [];
-
-    this.store.result = work;
-    this.store.info = info;
-    this.store.error = error;
+    this.store.result = result.work || {};
+    this.store.info = result.info || [];
+    this.store.error = result.error || [];
     this.trigger(this.store);
-  },
-
-  // return the store data
-  getStore() {
-    return this.store;
   }
 });
 

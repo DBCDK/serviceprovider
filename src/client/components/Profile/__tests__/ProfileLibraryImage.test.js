@@ -1,9 +1,11 @@
 'use strict';
 import React from 'react';
+import ReactDom from 'react-dom';
 import TestUtils from 'react-addons-test-utils';
 import {assert} from 'chai';
 
 import ProfileImage from '../ProfileImage.component';
+import ImageEditor from '../../ImageEditor/ImageEditor.component.js';
 
 describe('Testing the ProfileImage Component', () => {
 
@@ -27,5 +29,16 @@ describe('Testing the ProfileImage Component', () => {
     const rendered = render.getRenderOutput();
     assert.equal(rendered.type, 'div', 'Found div');
     assert.equal(rendered.props.children.type.displayName, 'ReactImageEditor', 'Found ReactImageEditor');
+  });
+
+  it('Should render a ReactImageEditor component', () => {
+    let element = React.createElement(ProfileImage, {
+      editable: true,
+      url: 'https://http.cat/204'
+    });
+
+    let dom = TestUtils.renderIntoDocument(element);
+    let dmn = TestUtils.findRenderedComponentWithType(dom, ImageEditor);
+    TestUtils.Simulate.click(dmn.refs.cropButton);
   });
 });
