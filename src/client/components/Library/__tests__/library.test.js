@@ -6,7 +6,7 @@ import ReactDom from 'react-dom';
 import TestUtils from 'react-addons-test-utils';
 
 import Library from '../Library.component.js';
-import {libraryMock, profileLibraryMock} from './library.mock.js';
+import {libraryMock, profileLibraryMock, profileLibraryWithPinMock} from './library.mock.js';
 
 import ProfileStore from '../../../stores/Profile.store.js';
 import LibraryStore from '../../../stores/Library.store.js';
@@ -139,10 +139,19 @@ describe('Test the library component', () => {
 
     ProfileStore.onUpdateProfile({
       userIsLoggedIn: true,
-      favoriteLibraries: profileLibraryMock
+      favoriteLibraries: profileLibraryWithPinMock
     });
 
-    TestUtils.Simulate.submit(TestUtils.scryRenderedDOMComponentsWithClass(dom, 'library--favorite-library-form')[0]);
+    let dmn = TestUtils.findRenderedComponentWithType(dom, Library);
+
+    dmn.refs.favoriteLibraryBorrowerId.value = '';
+    TestUtils.Simulate.change(dmn.refs.favoriteLibraryBorrowerId);
+
+    dmn.refs.favoriteLibraryBorrowerPassword.value = '';
+    TestUtils.Simulate.change(dmn.refs.favoriteLibraryBorrowerPassword);
+
+    const commentForm = TestUtils.scryRenderedDOMComponentsWithClass(dom, 'library--favorite-library-form')[0];
+    TestUtils.Simulate.submit(commentForm);
 
     expect(MessageActions.setUserMessage.calledWith({message: 'Fejl, husk at udfylde alle felter', error: true})).to.equal(true);
   });
@@ -192,5 +201,40 @@ describe('Test the library component', () => {
       borrowerCheckStatus: 'none'
     });
     expect(MessageActions.setUserMessage.calledWith({message: 'Der skete en fejl! Prøv igen senere...', error: true})).to.equal(true);
+  });
+
+  it('should test default values of borrower id on library', () => {
+    sandbox.spy(ProfileActions, 'checkBorrowerAndSaveToProfile');
+
+    let element = React.createElement(Library, {libData: libraryMock, id: libraryMock.agencyId});
+    let dom = TestUtils.renderIntoDocument(element);
+    let dmn = TestUtils.findRenderedComponentWithType(dom, Library);
+
+    ProfileStore.onUpdateProfile({
+      userIsLoggedIn: true,
+      favoriteLibraries: profileLibraryWithPinMock
+    });
+
+    expect(dmn.refs.favoriteLibraryBorrowerId.value).to.equal('PPPPPPPPPP');
+    expect(dmn.refs.favoriteLibraryBorrowerPassword.value).to.equal('PPPP');
+
+    dmn.refs.favoriteLibraryBorrowerId.value = '1234id';
+    TestUtils.Simulate.change(dmn.refs.favoriteLibraryBorrowerId);
+
+    dmn.refs.favoriteLibraryBorrowerPassword.value = '1234pass';
+    TestUtils.Simulate.change(dmn.refs.favoriteLibraryBorrowerPassword);
+
+    TestUtils.Simulate.submit(TestUtils.scryRenderedDOMComponentsWithClass(dom, 'library--favorite-library-form')[0]);
+
+    expect(ProfileActions.checkBorrowerAndSaveToProfile.calledWith({
+      updatedLibrary: {
+        agencyID: libraryMock.branchId,
+        libraryID: libraryMock.agencyId,
+        borrowerID: '1234id',
+        borrowerPIN: '1234pass',
+        default: 0
+      },
+      favoriteLibraries: profileLibraryWithPinMock
+    })).to.equal(true);
   });
 });

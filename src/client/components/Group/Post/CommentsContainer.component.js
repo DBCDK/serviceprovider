@@ -43,7 +43,7 @@ class CommentsContainerComponent extends React.Component {
     let expandButton;// <button className='tiny' onClick={this.toggleExpand}>{expandButtonText}</button>;
 
     if (allComments.length > visibleCommentsMax) {
-      expandButton = <button className='tiny' onClick={this.toggleExpand}>{expandButtonText}</button>;
+      expandButton = <button className='group--post--comments-container--expand-button tiny' onClick={this.toggleExpand}>{expandButtonText}</button>;
     }
 
 

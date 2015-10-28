@@ -5,11 +5,18 @@
  */
 
 import {expect, assert} from 'chai';
+import {extend} from 'lodash';
+
 import React from 'react';
+import ReactDom from 'react-dom';
 import TestUtils from 'react-addons-test-utils';
+
 import Work from '../Work.component.js';
 import LikeContainer from '../../LikeDislike/LikeContainer.component.js';
 import DislikeContainer from '../../LikeDislike/DislikeContainer.component.js';
+
+import WorkStore from '../../../stores/Work.store.js';
+
 import forceMajureMockWork from './work.mock.js';
 
 describe('Test the Work component with data', () => {
@@ -73,6 +80,8 @@ describe('Test that Like/Dislike containers are rendered correctly as part of th
   });
 
   afterEach(() => {
+    const parentNode = ReactDom.findDOMNode(TestUtils.findRenderedComponentWithType(component, Work)).parentNode;
+    React.unmountComponentAtNode(parentNode);
     component = null;
   });
 
@@ -97,5 +106,74 @@ describe('Test that Like/Dislike containers are rendered correctly as part of th
 
     assert.equal(TestUtils.scryRenderedComponentsWithType(component, LikeContainer).length, 1, 'The like-containers was found');
     assert.equal(TestUtils.scryRenderedComponentsWithType(component, DislikeContainer).length, 1, 'The dislike-containers was found');
+  });
+});
+
+describe('Test store with valid and invalid data', () => {
+  it('should test invalid data', () => {
+    const workComponent = React.createElement(Work, {id: '870970-basis:50822312'});
+    let component = TestUtils.renderIntoDocument(workComponent);
+
+    WorkStore.update({});
+
+    expect(ReactDom.findDOMNode(TestUtils.findRenderedComponentWithType(component, Work)).innerHTML).to.contain('loader');
+  });
+
+  it('should test with no data', () => {
+    const info = {hits: '0', collections: '0'};
+
+    const workComponent = React.createElement(Work, {id: ''});
+    let component = TestUtils.renderIntoDocument(workComponent);
+
+    WorkStore.update({
+      work: {},
+      info: info,
+      error: []
+    });
+
+    expect(ReactDom.findDOMNode(TestUtils.findRenderedComponentWithType(component, Work)).innerHTML).to.contain('Værket blev ikke fundet');
+  });
+
+  it('should test valid data', () => {
+    const info = {hits: 1, collections: 1};
+    const work = {work: forceMajureMockWork, info: info, error: []};
+
+    const workComponent = React.createElement(Work, {id: '870970-basis:50822312'});
+    let component = TestUtils.renderIntoDocument(workComponent);
+
+    WorkStore.update(work);
+
+    expect(ReactDom.findDOMNode(TestUtils.findRenderedComponentWithType(component, Work)).innerHTML).to.contain('Gå til desktopversion for at bestille Dvd');
+  });
+
+  it('should test valid data varient', () => {
+    let workMock = extend({}, forceMajureMockWork);
+    workMock.isbns = ['isbn1', 'isbn2', 'isbn3'];
+    workMock.actors = ['actor1', 'actor2', 'actor3'];
+    workMock.subjects = ['subj1', 'subj2', 'subj3'];
+    workMock.tracks = ['track1', 'track2', 'track3'];
+    workMock.dk5s = [];
+    workMock.languages = [];
+    workMock.editions = [];
+
+    const info = {hits: 1, collections: 1};
+    const work = {work: workMock, info: info, error: []};
+
+    const workComponent = React.createElement(Work, {id: '870970-basis:50822312'});
+    let component = TestUtils.renderIntoDocument(workComponent);
+
+    WorkStore.update(work);
+
+    const workHtml = ReactDom.findDOMNode(TestUtils.findRenderedComponentWithType(component, Work)).innerHTML;
+
+    expect(workHtml).to.contain('isbn1');
+    expect(workHtml).to.contain('actor1');
+    expect(workHtml).to.contain('subj1');
+    expect(workHtml).to.contain('track1');
+
+    expect(workHtml).to.contain('ISBN: ');
+    expect(workHtml).to.contain('Medvirkende: ');
+    expect(workHtml).to.contain('Emner: ');
+    expect(workHtml).to.contain('Trackliste: ');
   });
 });

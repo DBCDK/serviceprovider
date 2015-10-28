@@ -32,3 +32,17 @@ export const profileLibraryMock = [{
   borrowerPIN: '',
   default: 1
 }];
+
+export const profileLibraryWithPinMock = [{
+  agencyID: '710118',
+  libraryID: '710100',
+  borrowerID: '1234id',
+  borrowerPIN: '1234pin',
+  default: 0
+}, {
+  agencyID: '710111',
+  libraryID: '710100',
+  borrowerID: '1234id',
+  borrowerPIN: '1234pin',
+  default: 1
+}];

@@ -5,7 +5,7 @@ import React from 'react';
 import ReactDom from 'react-dom';
 import TestUtils from 'react-addons-test-utils';
 
-import {groupPost} from './GroupPost.mock.js';
+import {groupPost, groupPostManyComments} from './GroupPost.mock.js';
 
 import GroupPostStore from '../../../stores/GroupPost.store.js';
 import ProfileStore from '../../../stores/Profile.store.js';
@@ -15,6 +15,7 @@ import GroupPostActions from '../../../actions/GroupPost.action.js';
 import GroupPostContainer from '../Post/GroupPostContainer.component.js';
 import GroupPostComponent from '../Post/GroupPost.component.js';
 import CommentForm from '../Post/CommentForm.component.js';
+import Comment from '../Post/Comment.component.js';
 
 describe('Test the group post components', () => {
   it('Create GroupPostContainer without data', () => {
@@ -209,5 +210,50 @@ describe('Test the group post components', () => {
     let dom = TestUtils.renderIntoDocument(element);
     const parentNode = ReactDom.findDOMNode(TestUtils.findRenderedComponentWithType(dom, GroupPostComponent)).parentNode;
     ReactDom.unmountComponentAtNode(parentNode);
+  });
+
+  it('should test comment is sent when enter is pressed', () => {
+    let commentText = '';
+
+    let element = React.createElement(GroupPostComponent, {
+      loggedIn: true,
+      groupId: groupPost.groupId,
+      groupPostData: groupPost.groupPostData,
+      groupPostId: groupPost.groupPostId
+    });
+
+    let dom = TestUtils.renderIntoDocument(element);
+    let CForm = TestUtils.findRenderedComponentWithType(dom, CommentForm);
+    let commentField = ReactDom.findDOMNode(CForm.refs.commentField);
+    commentField.value = 'this comment won\'t display';
+    TestUtils.Simulate.change(commentField);
+    TestUtils.Simulate.keyPress(commentField, {key: 'Enter', keyCode: 13, which: 13});
+    TestUtils.Simulate.change(commentField);
+    TestUtils.Simulate.keyPress(commentField, {key: 'y', keyCode: 89, which: 89});
+    TestUtils.Simulate.change(commentField);
+
+    expect(commentText).to.equal('');
+  });
+
+  it('should test expansion of comments', () => {
+    let element = React.createElement(GroupPostComponent, {
+      loggedIn: true,
+      groupId: groupPostManyComments.groupId,
+      groupPostData: groupPostManyComments.groupPostData,
+      groupPostId: groupPostManyComments.groupPostId
+    });
+
+    let dom = TestUtils.renderIntoDocument(element);
+
+    // Before expansion
+    let comments = TestUtils.scryRenderedComponentsWithType(dom, Comment);
+    expect(comments.length).to.equal(2);
+
+    let commentsExpandButton = ReactDom.findDOMNode(TestUtils.findRenderedDOMComponentWithClass(dom, 'group--post--comments-container--expand-button'));
+    TestUtils.Simulate.click(commentsExpandButton);
+
+    // After expansion
+    comments = TestUtils.scryRenderedComponentsWithType(dom, Comment);
+    expect(comments.length).to.equal(6);
   });
 });
