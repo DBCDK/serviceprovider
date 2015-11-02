@@ -2,7 +2,11 @@
 
 import Reflux from 'reflux';
 import SocketClient from 'dbc-node-serviceprovider-socketclient';
+
+// Utils
 import QueryParser from '../../utils/QueryParser.util.js';
+
+// Stores
 import QueryStore from './QueryStore.store.js';
 
 let ResultListStore = Reflux.createStore({
@@ -15,8 +19,6 @@ let ResultListStore = Reflux.createStore({
     pending: false,
     result: []
   },
-
-  shouldScroll: false,
 
   getInitialState() {
     return this.store;
@@ -32,13 +34,9 @@ let ResultListStore = Reflux.createStore({
     if (!store.queryHasChanged) {
       return;
     }
+
     const {query, page, worksPerPage, sort} = store;
     const offset = page * worksPerPage;
-
-    if (page > this.store.page) {
-      this.shouldScroll = $('.search-result--loadmore').offset().top - 50; // eslint-disable-line
-      this.store.page = page;
-    }
 
     if (query.length > 0) {
       if (page === 0) {
@@ -70,17 +68,6 @@ let ResultListStore = Reflux.createStore({
       this.store.offset += this.store.worksPerPage;
     }
     this.trigger(this.store);
-
-    if (this.shouldScroll) {
-      this.doScroll();
-    }
-  },
-
-  doScroll() {
-    setTimeout(() => {
-      $(window).scrollTo(this.shouldScroll, 850, {interrupt: true, axis: 'y'}); // eslint-disable-line 
-      this.shouldScroll = false;
-    }, 50);
   },
 
   empty() {
