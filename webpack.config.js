@@ -92,6 +92,10 @@ module.exports = [{
     commonsPlugin,
     extractCss,
     noErrorsPlugin
-  ]
+  ],
+
+  watchOptions: {
+    poll: true
+  }
 }
 ];
