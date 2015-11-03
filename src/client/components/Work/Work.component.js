@@ -5,20 +5,23 @@
  * Provides the work view for the enduser.
  */
 import React from 'react';
-import {isEmpty, values} from 'lodash';
+import {isEmpty, values, take} from 'lodash';
 
 // Actions
 import workAction from '../../actions/Work.action.js';
+import RecommendationActions from '../../actions/Recommendations.actions.js';
 
 // Components
 import {CoverImage, OrderButton} from 'dbc-react-components';
 import LikeContainer from '../LikeDislike/LikeContainer.component.js';
 import DislikeContainer from '../LikeDislike/DislikeContainer.component.js';
 import WorkEdition from './WorkEdition.component.js';
+import {BibliographicData} from 'dbc-react-components';
 
 // Stores
 import WorkStore from '../../stores/Work.store.js';
 import ProfileStore from '../../stores/Profile.store.js';
+import RecommendationsStore from '../../stores/Recommendations.store.js';
 
 class Work extends React.Component {
   constructor() {
@@ -26,7 +29,8 @@ class Work extends React.Component {
 
     this.state = {
       profile: ProfileStore.getInitialState(),
-      work: WorkStore.getInitialState()
+      work: WorkStore.getInitialState(),
+      recommendations: RecommendationsStore.getInitialState()
     };
 
     this.unsubscribe = [
@@ -36,6 +40,10 @@ class Work extends React.Component {
 
       WorkStore.listen(() => this.setState({
         work: WorkStore.store
+      })),
+
+      RecommendationsStore.listen(() => this.setState({
+        recommendations: RecommendationsStore.store
       }))
     ];
   }
@@ -46,6 +54,7 @@ class Work extends React.Component {
 
   componentDidMount() {
     workAction({id: this.props.id});
+    RecommendationActions.getRecommendations({likes: [this.props.id], dislikes: []});
   }
 
   componentWillUnmount() {
@@ -134,106 +143,135 @@ class Work extends React.Component {
 
     let specifics = values(specifics_object);
 
+    const coverImage = {
+      component: CoverImage,
+      noCoverUrl: {
+        appendWorkType: true,
+        url: `/covers/no-cover-image-[WORKTYPE].png`
+      },
+      prefSize: 'detail_500'
+    };
+
     return (
       <div className='work-container row' data-pid={id} >
-        <div className='work--image small-20 small-centered medium-10 medium-uncentered large-10 large-uncentered columns' >
-          <CoverImage noCoverUrl='/covers/no-cover-image-book.png' pids={[id, work.result.pid]} prefSize='detail_500' />
-        </div>
-        <div className='work small-24 small-centered medium-14 medium-uncentered large-14 large-uncentered columns' >
-          <OrderButton manifestations={specifics} profile={profile} relations={work.result.relations} />
+        <div className='small-24 medium-16 large-16 columns'>
+          <div className='work--image small-20 small-centered medium-8 medium-uncentered large-8 large-uncentered columns' >
+            <CoverImage noCoverUrl='/covers/no-cover-image-book.png' pids={[id, work.result.pid]} prefSize='detail_500' />
+          </div>
+          <div className='work small-24 small-centered medium-16 medium-uncentered large-16 large-uncentered columns' >
+            <OrderButton manifestations={specifics} profile={profile} relations={work.result.relations} />
 
-          {likeContainers}
+            {likeContainers}
 
-          <div className='general' >
-            <div className='title' >{work.result.title}</div>
+            <div className='general' >
+              <div className='title' >{work.result.title}</div>
 
-            <div className='creators' >
-              <a href={'/search?phrase.creator=' + encodeURIComponent(work.result.creator)} >
-                {work.result.creator}
-              </a>
-            </div>
+              <div className='creators' >
+                <a href={'/search?phrase.creator=' + encodeURIComponent(work.result.creator)} >
+                  {work.result.creator}
+                </a>
+              </div>
 
-            <div className='description' >{work.result.abstract}</div>
+              <div className='description' >{work.result.abstract}</div>
 
-            <div className='issn' >
-              {work.result.isbns.length > 0 ? 'ISBN: ' + work.result.isbns[0] : ''}
-            </div>
+              <div className='issn' >
+                {work.result.isbns.length > 0 ? 'ISBN: ' + work.result.isbns[0] : ''}
+              </div>
 
-            <div className='extent clearfix' >{work.result.extent}</div>
+              <div className='extent clearfix' >{work.result.extent}</div>
 
-            <div className='clearfix' >
-              <div className='actors clearfix' >
-                <span>{work.result.actors.length > 0 ? 'Medvirkende: ' : ''}</span>
-                {work.result.actors.map((actor, index) => {
+              <div className='clearfix' >
+                <div className='actors clearfix' >
+                  <span>{work.result.actors.length > 0 ? 'Medvirkende: ' : ''}</span>
+                  {work.result.actors.map((actor, index) => {
+                    return (
+                      <span className='actor' key={'actor_' + index} >
+                        <a href={'/search?phrase.creator=' + encodeURIComponent(actor)} >
+                          {actor}
+                        </a>
+                      </span>);
+                  })}
+                </div>
+              </div>
+
+              <div className='series clearfix' >
+                <a href='#' >{work.result.series}</a>
+              </div>
+
+              <div className='subjects clearfix' >
+                <span>{work.result.subjects.length > 0 ? 'Emner: ' : ''}</span>
+                {work.result.subjects.map((subject, index, array) => {
+                  const notLast = (array.length - 1) !== index;
                   return (
-                    <span className='actor' key={'actor_' + index} >
-                      <a href={'/search?phrase.creator=' + encodeURIComponent(actor)} >
-                        {actor}
-                      </a>
-                    </span>);
+                    <span className='subject' key={'subject_' + index} >
+                      <a href={'/search?phrase.subject=' + encodeURIComponent(subject)} > {notLast ? subject + ', ' : subject}</a>
+                    </span>
+                  );
                 })}
+              </div>
+
+              <div className='dk5s clearfix' >
+                <span>{work.result.dk5s.length > 0 ? 'Opstilling: ' : ''}</span>
+                {work.result.dk5s.map((dk5, index) => {
+                  return (
+                    <span className='opstilling' key={'dk5_' + index} >
+                      <a href={'/search?dkcclterm.dk=' + encodeURIComponent(dk5.value)} >{dk5.text}</a>
+                    </span>
+                  );
+                })}
+              </div>
+
+              <div className='audience clearfix' >
+                <div className='age' >{work.result.audience.age.join(', ')}</div>
+                <div className='pegi' >{work.result.audience.pegi}</div>
+                <div className='medieraad' >{work.result.audience.medieraad}</div>
+              </div>
+
+              <div className='tracks clearfix' >
+                {work.result.tracks.length > 0 ? 'Trackliste: ' : ''}
+                {work.result.tracks.map((track, index) => {
+                  return (
+                    <div className='track' key={'track_' + index} >{track}</div>);
+                })}
+              </div>
+
+              <div className='language clearfix' >
+                <span>{work.result.languages.length > 0 ? 'Sprog: ' : ''}</span>
+                <span>{work.result.languages.join(', ')}</span>
               </div>
             </div>
 
-            <div className='series clearfix' >
-              <a href='#' >{work.result.series}</a>
-            </div>
-
-            <div className='subjects clearfix' >
-              <span>{work.result.subjects.length > 0 ? 'Emner: ' : ''}</span>
-              {work.result.subjects.map((subject, index, array) => {
-                const notLast = (array.length - 1) !== index;
+            <div className='specifics clearfix' >
+              {specifics.map((specific, index) => {
                 return (
-                  <span className='subject' key={'subject_' + index} >
-                    <a href={'/search?phrase.subject=' + encodeURIComponent(subject)} > {notLast ? subject + ', ' : subject}</a>
-                  </span>
+                  <span key={'specific_' + index} >{specific.type} ({specific.dates.join('; ')}) </span>
                 );
               })}
             </div>
 
-            <div className='dk5s clearfix' >
-              <span>{work.result.dk5s.length > 0 ? 'Opstilling: ' : ''}</span>
-              {work.result.dk5s.map((dk5, index) => {
-                return (
-                  <span className='opstilling' key={'dk5_' + index} >
-                    <a href={'/search?dkcclterm.dk=' + encodeURIComponent(dk5.value)} >{dk5.text}</a>
-                  </span>
-                );
-              })}
-            </div>
-
-            <div className='audience clearfix' >
-              <div className='age' >{work.result.audience.age.join(', ')}</div>
-              <div className='pegi' >{work.result.audience.pegi}</div>
-              <div className='medieraad' >{work.result.audience.medieraad}</div>
-            </div>
-
-            <div className='tracks clearfix' >
-              {work.result.tracks.length > 0 ? 'Trackliste: ' : ''}
-              {work.result.tracks.map((track, index) => {
-                return (
-                  <div className='track' key={'track_' + index} >{track}</div>);
-              })}
-            </div>
-
-            <div className='language clearfix' >
-              <span>{work.result.languages.length > 0 ? 'Sprog: ' : ''}</span>
-              <span>{work.result.languages.join(', ')}</span>
+            <div className='editions clearfix' >
+              <span className='work-container--work--editions--label' >{editions.length > 0 ? 'Udgaver:' : ''}</span>
+              {editions}
             </div>
           </div>
+        </div>
 
-          <div className='specifics clearfix' >
-            {specifics.map((specific, index) => {
+        <div className='work--recommendations small-24 medium-8 large-8 columns'>
+          <h3 className='work--recommendations--title'>Noget der ligner</h3>
+          <ul className="small-block-grid-2">
+            {take(this.state.recommendations.recommendations, 6).map((val, index) => {
               return (
-                <span key={'specific_' + index} >{specific.type} ({specific.dates.join('; ')}) </span>
+                <BibliographicData
+                  coverImage={coverImage}
+                  creator={val.creator}
+                  identifiers={val.identifiers}
+                  key={'recommendation_' + index}
+                  title={val.title}
+                  workType={val.workType}
+                  />
               );
             })}
-          </div>
-
-          <div className='editions clearfix' >
-            <span className='work-container--work--editions--label' >{editions.length > 0 ? 'Udgaver:' : ''}</span>
-            {editions}
-          </div>
+          </ul>
         </div>
       </div>
     );
