@@ -31,3 +31,5 @@ node_modules
 # ============
 newrelic.config.js
 config.js
+
+NODE_ENV_DOCKERFILE

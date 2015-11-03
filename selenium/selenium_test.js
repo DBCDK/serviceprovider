@@ -3,11 +3,15 @@ var config = require('./saucelabs.config');
 var assert = require('assert');
 var test = require('selenium-webdriver/testing');
 var webdriver = require('selenium-webdriver');
+var async = require('async');
 
 var isSauceLabsTest = false;
 var sauceLabsCaps = config.saucelabs.browserCaps;
 
+var isJenkinsTest = process.env.JENKINS_TESTING || false; // eslint-disable-line
+
 var SAUCE_URL = 'http://ondemand.saucelabs.com:80/wd/hub';
+var DBC_URLS = ['http://uxwin81-01:4444/wd/hub', 'http://uxwin10-01:4444/wd/hub'];
 var BASE_URL = isSauceLabsTest ? 'https://pg.demo.dbc.dk' : process.env.SELENIUM_URL || 'http://localhost:8080'; // eslint-disable-line
 
 
@@ -148,8 +152,35 @@ if (isSauceLabsTest) {
   }
 }
 else {
+  console.log('Testing on chrome!'); // eslint-disable-line
+
   var chromeCaps = new webdriver.Builder()
     .withCapabilities(webdriver.Capabilities.chrome());
 
   runAllTests(chromeCaps);
+
+  if (isJenkinsTest) {
+    async.parallel([
+      function() {
+        console.log('Testing on IE, win 8.1!'); // eslint-disable-line
+
+        var driver = new webdriver.Builder()
+          .forBrowser('internet explorer')
+          .usingServer(DBC_URLS[0]);
+
+        runAllTests(driver);
+      },
+      function() {
+        console.log('Testing on IE, win 10!'); // eslint-disable-line
+
+        var driver = new webdriver.Builder()
+          .forBrowser('internet explorer')
+          .usingServer(DBC_URLS[1]);
+
+        runAllTests(driver);
+      }
+    ], function() {
+      console.log('Done running remote tests!'); // eslint-disable-line
+    });
+  }
 }
