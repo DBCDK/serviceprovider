@@ -16,7 +16,7 @@ import {CoverImage, OrderButton} from 'dbc-react-components';
 import LikeContainer from '../LikeDislike/LikeContainer.component.js';
 import DislikeContainer from '../LikeDislike/DislikeContainer.component.js';
 import WorkEdition from './WorkEdition.component.js';
-import {BibliographicData} from 'dbc-react-components'
+import {BibliographicData} from 'dbc-react-components';
 
 // Stores
 import WorkStore from '../../stores/Work.store.js';
