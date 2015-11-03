@@ -31,6 +31,10 @@ mv config.example.js config.js
 ## Environment Varibles
 The following environment variables can be used to override default settings in the application
 
+- __NPM_TOKEN__
+Used to download private modules. THIS IS REQUIRED. You can find your npm token in ~/.npmrc
+The token has the following format: NPM_TOKEN=“00000000-0000-0000-0000-000000000000”
+
 - __EMAIL_REDIRECT__  
 Used when a user creates a new account. The value given in `EMAIL_REDIRECT` will be used as basepath in the link that'll appear in the confirmation email sent to the user.
 Typically you'll want the value in `EMAIL_REDIRECT` to be the same as the basepath for the given site the user is signing up at. I.e pg.demo.dbc.dk.  
