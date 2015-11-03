@@ -11,7 +11,7 @@ var sauceLabsCaps = config.saucelabs.browserCaps;
 var isJenkinsTest = process.env.JENKINS_TESTING || false; // eslint-disable-line
 
 var SAUCE_URL = 'http://ondemand.saucelabs.com:80/wd/hub';
-var DBC_URLS = ['http://uxwin81-01:4444/wd/hub', 'http://uxwin10-01:4444/wd/hub'];
+var DBC_URLS = ['http://uxwin81-01:4444/wd/hub', 'http://uxwin10-01:5432/wd/hub'];
 var BASE_URL = isSauceLabsTest ? 'https://pg.demo.dbc.dk' : process.env.SELENIUM_URL || 'http://localhost:8080'; // eslint-disable-line
 
 
