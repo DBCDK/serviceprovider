@@ -28,9 +28,8 @@ import reload from 'reload';
 // loading routes
 import MainRoutes from './server/routes/main.routes.js';
 import LibraryRoutes from './server/routes/library.routes.js';
-import PassportRoutes from './server/routes/passport.routes.js';
-import DDBProfileRoutes from './server/routes/ddbprofile.routes.js';
-import PalleProfileRoutes from './server/routes/palleprofile.routes.js';
+import PassportRoutesPG from './server/routes/passport.routes.pg.js';
+import PassportRoutesMobilsoeg from './server/routes/passport.routes.mobilsoeg.js';
 import WorkRoutes from './server/routes/work.routes.js';
 import GroupRoutes from './server/routes/group.routes.js';
 
@@ -159,16 +158,19 @@ app.use(sessionMiddleware);
 passportConfig(app);
 
 // Setup Routes
-app.use('/', MainRoutes);
-app.use('/library', LibraryRoutes);
-app.use('/profile', PassportRoutes);
-app.use('/work', WorkRoutes);
 if (APPLICATION === 'pg') {
+  app.use('/', MainRoutes);
+  app.use('/library', LibraryRoutes);
+  app.use('/profile', PassportRoutesPG);
+  app.use('/work', WorkRoutes);
   app.use('/groups', GroupRoutes);
-  app.use('/profile', PalleProfileRoutes);
 }
-else {
-  app.use('/profile', DDBProfileRoutes);
+
+if (APPLICATION === 'mobilsoeg') {
+  app.use('/', MainRoutes);
+  app.use('/library', LibraryRoutes);
+  app.use('/profile', PassportRoutesMobilsoeg);
+  app.use('/work', WorkRoutes);
 }
 
 // If running in dev-mode enable auto reload in browser when the server restarts
