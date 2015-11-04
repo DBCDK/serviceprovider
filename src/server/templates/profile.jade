@@ -1,0 +1,10 @@
+//
+   Created by matias on 22-07-15.
+
+extends layout
+
+block prepend footerscripts
+   script(src='/js/profile.js' defer=true)
+
+block content
+   #profile !{profileString}

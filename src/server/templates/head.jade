@@ -1,0 +1,33 @@
+//- head.jade
+
+head
+    meta(charset='utf-8')
+    meta(name='viewport' content='width=device-width, initial-scale=1')
+    meta(name='robots' content='noindex, nofollow')
+    meta(name='version' content=version)
+    meta(name='env' content=env)
+    meta(name='viewport' content='user-scalable=no, width=device-width, initial-scale=1, maximum-scale=1')
+    meta(http-equiv='X-UA-Compatible' content='IE=Edge,chrome=1')
+
+    title!= title
+
+    block styles
+        link(rel='stylesheet' href='//fonts.googleapis.com/css?family=Source+Sans+Pro:400,700' type='text/css')
+        link(rel='stylesheet' href='//fonts.googleapis.com/css?family=Open+Sans:400,300,700' type='text/css')
+        link(rel='stylesheet', href='/styles/style.css')
+
+    block scripts
+        if newrelic
+            != newrelic.getBrowserTimingHeader()
+        if production
+            script(src='//cdnjs.cloudflare.com/ajax/libs/react/0.14.0/react.min.js', type='text/javascript' defer=true)
+            script(src='//cdnjs.cloudflare.com/ajax/libs/react/0.14.0/react-dom.min.js', type='text/javascript' defer=true)
+        else
+            script(src='//cdnjs.cloudflare.com/ajax/libs/react/0.14.0/react.js', type='text/javascript' defer=true)
+            script(src='//cdnjs.cloudflare.com/ajax/libs/react/0.14.0/react-dom.js', type='text/javascript' defer=true)
+            script(src='/reload/reload.js', type='text/javascript' defer=true)
+
+        script(src='//cdnjs.cloudflare.com/ajax/libs/lodash.js/3.10.1/lodash.js', type='text/javascript' defer=true)
+        script(src='/js/common.js', type='text/javascript' defer=true)
+
+        link(rel='shortcut icon', href!=faviconUrl, type='image/x-icon ')

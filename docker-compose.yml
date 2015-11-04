@@ -1,0 +1,19 @@
+pgenv:
+  build: .
+  dockerfile: ./NODE_ENV_DOCKERFILE
+  entrypoint: /bin/echo
+  command: "Env configured"
+pg_dev:
+  build: .
+  ports:
+  - "8080:8080"
+  volumes:
+  - ./src:/usr/src/app/src
+  links:
+  - redis
+  environment:
+  - REDISHOST=redis
+  - CACHEHOST=redis
+  - NPM_TOKEN
+redis:
+  image: redis

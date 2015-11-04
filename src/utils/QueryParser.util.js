@@ -71,7 +71,7 @@ function splitGroupToCQL(group, key) {
 
   // If key is text the query if from the default index and no index should be specified. Else the key defines the
   // the index
-  return (key === 'text') && `(${values})` || `${key}=(${values})`;
+  return key === 'text' && `(${values})` || `${key}=(${values})`;
 }
 
 
@@ -100,7 +100,7 @@ function parseQueryStringElement(values, type) {
 /**
  * Converts a query string object to a internal query object
  *
- * @param QueryStringObject {Array}
+ * @param queryStringObject {Array}
  *    @see type one in the file description
  * @returns {Array}
  *    An array of internal query objects

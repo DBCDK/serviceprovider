@@ -1,5 +1,5 @@
 'use strict';
-let newRelicConfig = require('./newrelic.config');
+let newRelicConfig = require('@dbcdk/dbc-config').newrelic;
 const ENV = (process.env.NODE_ENV) ? process.env.NODE_ENV : 'local'; // eslint-disable-line no-process-env
 const NAME = newRelicConfig.palle.app_name + ' - ' + ENV;
 /**
@@ -23,6 +23,6 @@ exports.config = {
      * issues with the agent, 'info' and higher will impose the least overhead on
      * production applications.
      */
-    level: 'trace'
+    level: 'info'
   }
 };

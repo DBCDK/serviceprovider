@@ -1,0 +1,6 @@
+extends layout
+block prepend footerscripts
+   script(src='/js/group.js' defer=true)
+block content
+    #group
+    script window.QUERYSTRING_PROPS = !{id}

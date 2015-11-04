@@ -1,0 +1,10 @@
+//- index.jade
+
+extends layout
+
+block prepend footerscripts
+    script(src='/js/work.js' defer=true)
+
+block content
+    #work !{workString}
+    script window.QUERYSTRING_PROPS = !{id}

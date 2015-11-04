@@ -20,12 +20,19 @@ var extractCss = new extractTextPlugin('style.css');
  */
 module.exports = {
   module: {
-    loaders: [
+    preLoaders: [
       {
         test: /\.js?$/,
         loaders: ['babel'],
         exclude: /node_modules/
       },
+      {
+        test: /\.js$/,
+        exclude: /(test|node_modules|bower|__tests__|ImageEditor)\//,
+        loader: 'isparta'
+      }
+    ],
+    loaders: [
       {
         test: /\.scss$/,
         loader: extractTextPlugin.extract(

@@ -3,15 +3,24 @@
 module.exports = function(config) {
   config.set({
     basePath: '',
-    frameworks: ['mocha'],
+    frameworks: ['mocha', 'sinon'],
     files: [
-      'tests.webpack.js'
+      'tests.utils.webpack.js',
+      'tests.stores.webpack.js',
+      'tests.components.webpack.js'
     ],
+    proxies: {
+      '/dummy.jpg': 'https://pg.demo.dbc.dk/dummy.jpg',
+      '/like_inactive.png': 'https://pg.demo.dbc.dk/like_inactive.png',
+      '/dislike_inactive.png': 'https://pg.demo.dbc.dk/dislike_inactive.png'
+    },
     exclude: [],
     preprocessors: {
-      'tests.webpack.js': ['webpack']
+      'tests.utils.webpack.js': ['webpack'],
+      'tests.stores.webpack.js': ['webpack'],
+      'tests.components.webpack.js': ['webpack']
     },
-    reporters: ['mocha', 'dots', 'junit'],
+    reporters: ['mocha', 'junit', 'coverage'],
     junitReporter: {
       outputDir: 'output'
     },
@@ -24,6 +33,19 @@ module.exports = function(config) {
     webpack: require('./webpack.test.config'),
     webpackMiddleware: {
       noInfo: true
+    },
+    coverageReporter: {
+      includeAllSources: true,
+      dir: 'coverage/',
+      reporters: [{
+        type: 'html'
+      }, {
+        type: 'cobertura'
+      }, {
+        type: 'lcovonly',
+        file: 'lcov.info',
+        subdir: '.'
+      }]
     }
   });
 };

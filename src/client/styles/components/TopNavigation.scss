@@ -1,0 +1,18 @@
+
+.topnavigation--header--buttons {
+  padding: 0 5px;
+  .topnavigation--header--buttons--profilelink {
+    padding-top: 15px;
+    a {
+      color: #2F4F4F;
+    }
+  }
+
+  .button {
+    background-color: #7a7a7a;
+    margin-top: 5px;
+    &:hover {
+      background-color: black;
+    }
+  }
+}

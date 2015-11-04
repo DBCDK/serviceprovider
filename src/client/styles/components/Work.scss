@@ -1,0 +1,178 @@
+@import '../mixins/horizontal-list';
+
+.general, .specific {
+  text-align: left;
+}
+
+.title {
+  font-size: 18px;
+  font-weight: bold;
+}
+
+.creators {
+  font-style: italic;
+  @extend .clearfix;
+}
+
+.creator {
+  float: left;
+  margin-right: 5px;
+  font-style: italic;
+}
+
+.subjects {
+  padding-top: 5px;
+}
+
+.subject {
+  display: inline-block;
+  padding-right: 5px;
+}
+
+.part {
+  padding-top: 5px;
+}
+
+.dk5 {
+  display: inline-block;
+  padding-right: 5px;
+  padding-top: 5px;
+}
+
+.actor {
+  float: left;
+  margin-right: 5px;
+}
+
+.actor:after {
+  content: "; ";
+}
+
+.actor:last-of-type:after {
+  content: "";
+}
+
+.audience {
+  padding-top: 5px;
+}
+
+.language {
+  display: inline-block;
+  padding-right: 5px;
+  padding-top: 5px;
+}
+
+.specifics {
+  padding-top: 5px;
+}
+
+/* Specific material type */
+
+.specific {
+  .type {
+    float: left;
+  }
+
+  .type:after {
+    content: "\00a0";
+  }
+
+  .date {
+    float: left;
+  }
+
+  .date:nth-child(2):before {
+    content: "(";
+  }
+
+  .date:after {
+    content: ";\00a0";
+  }
+
+  .date:last-of-type:after {
+    content: ")\00a0";
+  }
+}
+
+.work-not-found {
+  text-align: center;
+  padding-top: 20px;
+}
+
+.order-button,
+.online-link {
+  float: left;
+  margin-right: 10px;
+}
+
+.online-link {
+  padding: 15px;
+}
+
+.can-order-false {
+  background-color: $can-order-false-background-color !important;
+  border: solid 0.5px darken($can-order-false-background-color, 20%) !important;
+  pointer-events: none;
+  cursor: default;
+}
+
+/* Publication Details */
+.work-container--work--editions-container {
+  text-align: left;
+  padding-top: 10px;
+}
+
+.work-container--work--editions--label {
+  font-weight: bold;
+}
+
+.work-container--work--editions--publication-details {
+  padding: 20px;
+  text-align: left;
+  border-top: 1px solid;
+  .inline {
+    display: inline-flex;
+  }
+
+  .isbn {
+    display: inline-block;
+  }
+}
+
+.work--image {
+  @media  #{$small-only} {
+    padding-bottom: 20px;
+  }
+}
+
+
+// =============================================================================
+// LIKE BUTTONS
+// =============================================================================
+
+.work--like-buttons {
+  margin-bottom: 5px;
+  img {
+    width: 30px;
+  }
+}
+
+.work--like-buttons--like-container,
+.work--like-buttons--dislike-container {
+  display: inline;
+  margin-left: 5px;
+}
+
+// =============================================================================
+// Similar titles
+// =============================================================================
+
+.work--recommendations--title {
+  background-color: $similar-title-background-color;
+  color: $similar-title-font-color;
+  padding: 5px;
+}
+
+.work--recommendations {
+  @include horizontal-list($small-only);
+}

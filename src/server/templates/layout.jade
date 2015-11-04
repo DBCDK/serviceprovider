@@ -1,0 +1,21 @@
+//- layout.jade
+
+doctype html
+html(lang='da')
+    include head
+
+    body
+        #message.row
+            include message
+        block top
+            if application == 'mobilsoeg'
+                include header-mobilsoeg
+            else if application == 'pg'
+                include header-pg
+
+        block content
+
+        div.responsetime--container
+            small.responsetime Page was rendered in: %RENDERTIME%ms. Serviceprovider %SERVICETIME%
+
+    include footer

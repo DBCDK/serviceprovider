@@ -8,20 +8,61 @@ var commonsPlugin = new webpack.optimize.CommonsChunkPlugin('common.js');
 var noErrorsPlugin = new webpack.NoErrorsPlugin();
 var extractCss = new extractTextPlugin('../styles/style.css');
 
+var APPLICATION = process.env.NODE_APPLICATION; // eslint-disable-line no-process-env
+
+var entries = {
+  styles: ''
+};
+
+if (APPLICATION === 'ddbmobil') {
+  entries = {
+    frontpage: './src/client/components/FrontPage/index.js',
+    library: './src/client/components/Library/index.js',
+    librarysuggest: './src/client/components/LibrarySuggest/index.js',
+    login: './src/client/components/Login/index.mobilsoeg.js',
+    order: './src/client/components/Order/index.js',
+    profile: './src/client/components/DDBProfile/index.js',
+    querysearch: './src/client/components/searchpage/index.js',
+    receipt: './src/client/components/Receipt/index.js',
+    resetpassword: './src/client/components/ResetPassword/index.js',
+    signup: './src/client/components/Signup/index.mobilsoeg.js',
+    topnavigation: './src/client/components/TopNavigation/index.js',
+    work: './src/client/components/Work/Work.client',
+    terminal: './src/utils/Terminal',
+    styles: './src/client/styles/ddb.scss'
+  };
+}
+else {
+  entries = {
+    group: './src/client/components/Group/index.js',
+    grouppost: './src/client/components/Group/Post/index.js',
+    groupsearch: './src/client/components/Group/Search/index.js',
+    library: './src/client/components/Library/index.js',
+    librarysuggest: './src/client/components/LibrarySuggest/index.js',
+    login: './src/client/components/Login/index.pg.js',
+    order: './src/client/components/Order/index.js',
+    profile: './src/client/components/Profile/index.js',
+    querysearch: './src/client/components/searchpage/index.js',
+    receipt: './src/client/components/Receipt/index.js',
+    resetpassword: './src/client/components/ResetPassword/index.js',
+    signup: './src/client/components/Signup/index.pg.js',
+    topnavigation: './src/client/components/TopNavigation/index.js',
+    work: './src/client/components/Work/Work.client',
+    terminal: './src/utils/Terminal',
+    styles: './src/client/styles/pg.scss'
+  };
+}
+
 module.exports = [{
   name: 'browser',
-  entry: {
-    querysearch: './src/components/Search/Search.client',
-    logo: './src/components/logo/index.js',
-    autocomplete: './src/components/autocomplete/index.js',
-    work: './src/components/Work/Work.client',
-    order: './src/components/Order/Order.client',
-    styles: process.env.NODE_APPLICATION === 'ddbmobil' && './src/styles/ddb.scss' || './src/styles/pg.scss' // eslint-disable-line no-process-env
-  },
+
+  entry: entries,
+
   output: {
     path: path.join(__dirname, 'public/js'),
     filename: '[name].js'
   },
+
   module: {
     loaders: [
       {
@@ -42,6 +83,7 @@ module.exports = [{
 
   externals: {
     react: 'React',
+    'react-dom': 'ReactDOM',
     lodash: '_',
     newrelic: 'newrelic'
   },
@@ -50,6 +92,9 @@ module.exports = [{
     commonsPlugin,
     extractCss,
     noErrorsPlugin
-  ]
-}
-];
+  ],
+
+  watchOptions: {
+    poll: true
+  }
+}];

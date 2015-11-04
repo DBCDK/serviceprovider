@@ -1,0 +1,10 @@
+//- index.jade
+
+extends layout
+
+block prepend footerscripts
+    script(src='/js/receipt.js' defer=true)
+
+block content
+    #receipt !{receiptString}
+    script window.RECEIPT_PROPS = !{query}
