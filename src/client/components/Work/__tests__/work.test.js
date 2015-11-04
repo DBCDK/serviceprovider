@@ -195,15 +195,4 @@ describe('Test store with valid and invalid data', () => {
     expect(workHtml).to.contain('Noget der ligner');
     expect(workHtml).to.contain('Suzanne Collins');
   });
-
-  it('should test recommendations on a work', () => {
-    const workComponent = React.createElement(Work, {id: '870970-basis:50822312'});
-    let component = TestUtils.renderIntoDocument(workComponent);
-
-    const work = {work: forceMajureMockWork, info: {hits: 1, collections: 1}, error: []};
-    const recommmendations = {error: {}};
-
-    RecommendationsStore.getRecommendationsResponse(recommmendations);
-    WorkStore.update(work);
-  });
 });
