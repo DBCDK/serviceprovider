@@ -9,7 +9,7 @@ import React, {PropTypes} from 'react';
 // import Reflux from 'reflux';
 
 
-class LoansList extends React.Component {ś
+class LoansList extends React.Component {
 
   constructor() {
     super();
