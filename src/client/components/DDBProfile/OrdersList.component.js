@@ -21,13 +21,13 @@ class OrdersList extends React.Component {
 
   render() {
 
-    let orders = (<p>no orders</p>);
+    let orders = (<p>ingen reserveringer</p>);
     if (this.props.orders) {
       orders = this.props.orders.map(function(order) {
         return (
-          <li key={order.orderId}>
-            <p>{order.title}</p>
-            <p>{(order.status === 'Available for pickup') ? 'Klar til afhentning' : '[bestilt dato X]'}</p>
+          <li className='row' key={order.orderId}>
+            <span className='small-12 column'>{order.title}</span>
+            <span className='small-12 column'>{(order.status === 'Available for pickup') ? 'Klar til afhentning' : '[bestilt dato X]'}</span>
           </li>
         );
       });
@@ -39,7 +39,14 @@ class OrdersList extends React.Component {
 
     const loadingWheel = (<p>Loading...</p>);
 
-    return (this.props.orders === null) ? loadingWheel : ordersList;
+    const content = (
+        <div>
+          <h2>Reserveringer</h2>
+          {(this.props.orders === null) ? loadingWheel : ordersList}
+        </div>
+    );
+
+    return content;
   }
 }
 
