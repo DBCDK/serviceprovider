@@ -16,6 +16,7 @@ import LikeContainer from '../../LikeDislike/LikeContainer.component.js';
 import DislikeContainer from '../../LikeDislike/DislikeContainer.component.js';
 
 import WorkStore from '../../../stores/Work.store.js';
+import RecommendationsStore from '../../../stores/Recommendations.store.js';
 
 import forceMajureMockWork from './work.mock.js';
 
@@ -135,15 +136,18 @@ describe('Test store with valid and invalid data', () => {
   });
 
   it('should test valid data', () => {
+    let majureMock = extend({}, forceMajureMockWork);
+    majureMock.editions[0].workType = 'other';
+
     const info = {hits: 1, collections: 1};
-    const work = {work: forceMajureMockWork, info: info, error: []};
+    const work = {work: majureMock, info: info, error: []};
 
     const workComponent = React.createElement(Work, {id: '870970-basis:50822312'});
     let component = TestUtils.renderIntoDocument(workComponent);
 
     WorkStore.update(work);
 
-    expect(ReactDom.findDOMNode(TestUtils.findRenderedComponentWithType(component, Work)).innerHTML).to.contain('Gå til desktopversion for at bestille Dvd');
+    expect(ReactDom.findDOMNode(TestUtils.findRenderedComponentWithType(component, Work)).innerHTML).to.contain('Gå til desktopversion');
   });
 
   it('should test valid data varient', () => {
@@ -175,5 +179,31 @@ describe('Test store with valid and invalid data', () => {
     expect(workHtml).to.contain('Medvirkende: ');
     expect(workHtml).to.contain('Emner: ');
     expect(workHtml).to.contain('Trackliste: ');
+  });
+
+  it('should test recommendations on a work', () => {
+    const workComponent = React.createElement(Work, {id: '870970-basis:50822312'});
+    let component = TestUtils.renderIntoDocument(workComponent);
+
+    const work = {work: forceMajureMockWork, info: {hits: 1, collections: 1}, error: []};
+    const recommmendations = [{identifiers: ['870970-basis:28693699'], title: 'Oprør', creator: 'Suzanne Collins', workType: 'book'}];
+
+    RecommendationsStore.getRecommendationsResponse(recommmendations);
+    WorkStore.update(work);
+
+    const workHtml = ReactDom.findDOMNode(TestUtils.findRenderedComponentWithType(component, Work)).innerHTML;
+    expect(workHtml).to.contain('Noget der ligner');
+    expect(workHtml).to.contain('Suzanne Collins');
+  });
+
+  it('should test recommendations on a work', () => {
+    const workComponent = React.createElement(Work, {id: '870970-basis:50822312'});
+    let component = TestUtils.renderIntoDocument(workComponent);
+
+    const work = {work: forceMajureMockWork, info: {hits: 1, collections: 1}, error: []};
+    const recommmendations = {error: {}};
+
+    RecommendationsStore.getRecommendationsResponse(recommmendations);
+    WorkStore.update(work);
   });
 });
