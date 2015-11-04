@@ -7,6 +7,6 @@
 
 import React from 'react';
 import ReactDOM from 'react-dom';
-import Login from './Login.component.js';
+import Login from './mobilsoeg/Login.mobilsoeg.component.js';
 
 ReactDOM.render(<Login/>, document.getElementById('login'), null);

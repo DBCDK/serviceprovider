@@ -23,11 +23,14 @@ import compression from 'compression';
 import expressSession from 'express-session';
 import RedisStore from 'connect-redis';
 import helmet from 'helmet';
+import reload from 'reload';
 
 // loading routes
 import MainRoutes from './server/routes/main.routes.js';
 import LibraryRoutes from './server/routes/library.routes.js';
 import PassportRoutes from './server/routes/passport.routes.js';
+import DDBProfileRoutes from './server/routes/ddbprofile.routes.js';
+import PalleProfileRoutes from './server/routes/palleprofile.routes.js';
 import WorkRoutes from './server/routes/work.routes.js';
 import GroupRoutes from './server/routes/group.routes.js';
 
@@ -35,7 +38,7 @@ import GroupRoutes from './server/routes/group.routes.js';
 import passportConfig from './passport.config.js';
 
 const app = express();
-const server = http.Server(app);
+const server = http.createServer(app);
 const socket = socketio.listen(server);
 const ENV = app.get('env');
 const PRODUCTION = ENV === 'production';
@@ -136,8 +139,14 @@ app.use(express.static(path.join(__dirname, '../static'), fileHeaders));
 app.use(expressLoggers.logger);
 
 // Setting Input Validation
-const validatorOptions = {};
-app.use(expressValidator([validatorOptions]));
+const validatorOptions = {
+  customValidators: {
+    isEqual: (a, b) => {
+      return a === b;
+    }
+  }
+};
+app.use(expressValidator(validatorOptions));
 
 // Setting sessions
 socket.use((_socket, next) => {
@@ -156,6 +165,15 @@ app.use('/profile', PassportRoutes);
 app.use('/work', WorkRoutes);
 if (APPLICATION === 'pg') {
   app.use('/groups', GroupRoutes);
+  app.use('/profile', PalleProfileRoutes);
+}
+else {
+  app.use('/profile', DDBProfileRoutes);
+}
+
+// If running in dev-mode enable auto reload in browser when the server restarts
+if (ENV === 'development') {
+  reload(server, app, 1000, true);
 }
 
 // Graceful handling of errors

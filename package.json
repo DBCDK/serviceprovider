@@ -10,7 +10,7 @@
     "selenium:junit": "mocha -t 20000 selenium/selenium_test.js -R mocha-jenkins-reporter",
     "lint:checkstyle": "eslint ./src  -o report.xml -f checkstyle",
     "lint": "eslint ./src",
-    "serve": "supervisor --harmony -w src/app.js,src/server,node_modules src/main.js",
+    "serve": "supervisor -w src/app.js,src/server,node_modules src/main.js",
     "build": "webpack --progress --colors -p",
     "start": "node src/main.js",
     "start:watch": "webpack --progress --colors --watch -d",
@@ -35,7 +35,7 @@
   },
   "homepage": "https://github.com/DBCDK/pallesgavebod#readme",
   "dependencies": {
-    "@dbcdk/dbc-config": "^1.3.0",
+    "@dbcdk/dbc-config": "^1.4.0",
     "async": "^1.5.0",
     "babel": "5.8.29",
     "babel-core": "5.8.29",
@@ -99,6 +99,7 @@
     "node-libs-browser": "^0.5.2",
     "parallelshell": "^2.0.0",
     "phantomjs": "^1.9.17",
+    "reload": "^0.7.0",
     "selenium-webdriver": "2.47.0",
     "sinon": "^1.16.1",
     "wallaby-webpack": "0.0.8"

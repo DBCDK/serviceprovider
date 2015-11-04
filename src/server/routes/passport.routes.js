@@ -11,10 +11,12 @@ import dbcMiddleware from './middleware.js';
 import React from 'react';
 import ReactDOM from 'react-dom/server';
 
-import Profile from '../../client/components/Profile/Profile.component.js';
-import Login from '../../client/components/Login/Login.component.js';
+import LoginPG from '../../client/components/Login/pg/Login.pg.component';
+import LoginMobilSoeg from '../../client/components/Login/mobilsoeg/Login.mobilsoeg.component';
 import ResetPassword from '../../client/components/ResetPassword/ResetPassword.component.js';
-import Signup from '../../client/components/Signup/Signup.component.js';
+
+import SignupPG from '../../client/components/Signup/pg/Signup.pg.component.js';
+import SignupMobilSoeg from '../../client/components/Signup/mobilsoeg/Signup.mobilsoeg.component.js';
 
 const PassportRoutes = express.Router();
 
@@ -67,8 +69,9 @@ PassportRoutes.get('/confirm', (req, res) => {
 });
 
 PassportRoutes.get('/signup', (req, res) => {
+  const Signup = req.app.get('APPLICATION') === 'pg' ? SignupPG : SignupMobilSoeg;
   res.render('signup', {
-    signUpString: ReactDOM.renderToString(<Signup />),
+    markup: ReactDOM.renderToString(<Signup />),
     title: req.app.locals.title + ' - Opret ny bruger'
   });
 });
@@ -78,11 +81,17 @@ PassportRoutes.post('/signup', (req, res) => {
   const EMAIL_REDIRECT = req.app.get('EMAIL_REDIRECT');
   const logger = req.app.get('logger');
 
-  req.checkBody('email', 'Invalid email').isEmail();
-  req.checkBody('password', 'Password should contain 8-30 characters').notEmpty().len(8, 30);
+  const Signup = req.app.get('APPLICATION') === 'pg' ? SignupPG : SignupMobilSoeg;
 
   const email = req.body.email;
   const password = req.body.password;
+  const repeatedPassword = req.body.repeatedPassword;
+  const library = req.body.library;
+
+  req.checkBody('email', 'Du skal indtaste en gyldig email adresse').notEmpty();
+  req.checkBody('email', 'Du skal indtaste en gyldig email adresse').isEmail();
+  req.checkBody('password', 'Dit password skal være på mellem 8 og 30 tegn').notEmpty().len(8, 30);
+  req.checkBody('password', 'De to passwords er ikke ens').isEqual(repeatedPassword);
 
   // validate arguments
   if (!req.validationErrors()) {
@@ -96,24 +105,35 @@ PassportRoutes.post('/signup', (req, res) => {
 
     Promise.all(resp).then(() => {
       res.render('signup', {
-        signUpString: ReactDOM.renderToString(<Signup />),
+        markup: ReactDOM.renderToString(<Signup />),
         message: {
           text: 'Vi har sendt en bekræftelse-email til dig',
           error: false
         }
       });
     }, (error) => {
-      res.status(500).send('Internal Error');
-      logger.log('error', 'Internal Error on signup', error);
+      res.status(500).render('signup', {
+        markup: ReactDOM.renderToString(<Signup />),
+        message: {
+          text: 'På grund af en fejl på serveren kunne du ikke blive oprettet.',
+          error: true
+        }
+      });
+      logger.log('error', 'Internal Error on signup. Is the profile service running?', error);
     });
   }
   else {
     // we have validation errors!
-    const errorMessage = req.validationErrors()[0].msg;
+    const validationErrors = req.validationErrors();
     dbcMiddleware.renderPage(res, 'signup', {
-      signUpString: ReactDOM.renderToString(<Signup />),
+      markup: ReactDOM.renderToStaticMarkup(
+        <Signup data={{email: email, library: library}} errors={validationErrors} />
+      ),
+      props: JSON.stringify({
+        errors: validationErrors
+      }),
       message: {
-        text: errorMessage,
+        text: 'Alle felter skal være korrekt udfyldt',
         error: true
       }
     }, 'not timed');
@@ -127,8 +147,9 @@ PassportRoutes.get('/resetpassword', (req, res) => {
 });
 
 PassportRoutes.get('/login', (req, res) => {
+  const Login = req.app.get('APPLICATION') === 'pg' ? LoginPG : LoginMobilSoeg;
   let contextObject = {
-    loginString: ReactDOM.renderToString(<Login />),
+    markup: ReactDOM.renderToString(<Login />),
     title: req.app.locals.title + ' - Log ind'
   };
 
@@ -140,13 +161,6 @@ PassportRoutes.get('/login', (req, res) => {
   }
 
   dbcMiddleware.renderPage(res, 'login', contextObject, 'no service involved');
-});
-
-PassportRoutes.get('/', dbcMiddleware.ensureAuthenticated, (req, res) => {
-  dbcMiddleware.renderPage(res, 'profile', {
-    profileString: ReactDOM.renderToString(<Profile />),
-    title: req.app.locals.title + ' - Profil'
-  }, 'no service involved');
 });
 
 export default PassportRoutes;

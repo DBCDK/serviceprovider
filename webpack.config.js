@@ -19,13 +19,13 @@ if (APPLICATION === 'ddbmobil') {
     frontpage: './src/client/components/FrontPage/index.js',
     library: './src/client/components/Library/index.js',
     librarysuggest: './src/client/components/LibrarySuggest/index.js',
-    login: './src/client/components/Login/index.js',
+    login: './src/client/components/Login/index.mobilsoeg.js',
     order: './src/client/components/Order/index.js',
-    profile: './src/client/components/Profile/index.js',
+    profile: './src/client/components/DDBProfile/index.js',
     querysearch: './src/client/components/searchpage/index.js',
     receipt: './src/client/components/Receipt/index.js',
     resetpassword: './src/client/components/ResetPassword/index.js',
-    signup: './src/client/components/Signup/index.js',
+    signup: './src/client/components/Signup/index.mobilsoeg.js',
     topnavigation: './src/client/components/TopNavigation/index.js',
     work: './src/client/components/Work/Work.client',
     terminal: './src/utils/Terminal',
@@ -39,13 +39,13 @@ else {
     groupsearch: './src/client/components/Group/Search/index.js',
     library: './src/client/components/Library/index.js',
     librarysuggest: './src/client/components/LibrarySuggest/index.js',
-    login: './src/client/components/Login/index.js',
+    login: './src/client/components/Login/index.pg.js',
     order: './src/client/components/Order/index.js',
     profile: './src/client/components/Profile/index.js',
     querysearch: './src/client/components/searchpage/index.js',
     receipt: './src/client/components/Receipt/index.js',
     resetpassword: './src/client/components/ResetPassword/index.js',
-    signup: './src/client/components/Signup/index.js',
+    signup: './src/client/components/Signup/index.pg.js',
     topnavigation: './src/client/components/TopNavigation/index.js',
     work: './src/client/components/Work/Work.client',
     terminal: './src/utils/Terminal',
@@ -97,5 +97,4 @@ module.exports = [{
   watchOptions: {
     poll: true
   }
-}
-];
+}];
