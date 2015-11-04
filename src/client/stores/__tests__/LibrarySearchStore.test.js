@@ -9,17 +9,8 @@ import LibrarySearch from '../LibrarySearch.store.js';
 
 describe('Testing the LibrarySearch Store', () => {
   it('Test getInitialState', () => {
+    LibrarySearch.libraryQueryUpdatedResponse({});
     expect(JSON.stringify(LibrarySearch.getInitialState())).to.equal(JSON.stringify({data: [], pending: false}));
-  });
-
-  it('Test getInitialState with undefined window setting', () => {
-    window.QUERYSTRING_PROPS = 'undefined';
-    expect(JSON.stringify(LibrarySearch.getInitialState())).to.equal(JSON.stringify({data: [], pending: false}));
-  });
-
-  it('Test getInitialState with window setting', () => {
-    window.QUERYSTRING_PROPS = {text: 'per'};
-    expect(JSON.stringify(LibrarySearch.getInitialState())).to.equal(JSON.stringify({data: [], pending: true}));
   });
 
   it('tests libraryQueryUpdatedResponse without agencies', () => {

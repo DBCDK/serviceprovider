@@ -1,8 +1,9 @@
+//- login.jade
 
 extends layout
 
 block prepend footerscripts
-   script(src='/js/login.js' defer=true)
+    script(src='/js/login.js' defer=true)
 
 block content
-   #login !{loginString}
+    #login.row !{markup}

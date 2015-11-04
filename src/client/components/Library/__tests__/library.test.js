@@ -215,14 +215,17 @@ describe('Test the library component', () => {
       favoriteLibraries: profileLibraryWithPinMock
     });
 
-    expect(dmn.refs.favoriteLibraryBorrowerId.value).to.equal('PPPPPPPPPP');
-    expect(dmn.refs.favoriteLibraryBorrowerPassword.value).to.equal('PPPP');
+    const borrId = dmn.refs.favoriteLibraryBorrowerId;
+    const borrPass = dmn.refs.favoriteLibraryBorrowerPassword;
 
-    dmn.refs.favoriteLibraryBorrowerId.value = '1234id';
-    TestUtils.Simulate.change(dmn.refs.favoriteLibraryBorrowerId);
+    expect(borrId.value).to.equal('PPPPPPPPPP');
+    expect(borrPass.value).to.equal('PPPP');
 
-    dmn.refs.favoriteLibraryBorrowerPassword.value = '1234pass';
-    TestUtils.Simulate.change(dmn.refs.favoriteLibraryBorrowerPassword);
+    borrId.value = '1234id';
+    TestUtils.Simulate.change(borrId);
+
+    borrPass.value = '1234pass';
+    TestUtils.Simulate.change(borrPass);
 
     TestUtils.Simulate.submit(TestUtils.scryRenderedDOMComponentsWithClass(dom, 'library--favorite-library-form')[0]);
 

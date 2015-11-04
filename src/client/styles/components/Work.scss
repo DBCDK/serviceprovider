@@ -1,3 +1,5 @@
+@import '../mixins/horizontal-list';
+
 .general, .specific {
   text-align: left;
 }
@@ -167,5 +169,10 @@
 
 .work--recommendations--title {
   background-color: $similar-title-background-color;
+  color: $similar-title-font-color;
+  padding: 5px;
 }
 
+.work--recommendations {
+  @include horizontal-list($small-only);
+}
