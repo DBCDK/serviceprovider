@@ -12,6 +12,7 @@ import UserStatusStore from '../../stores/UserStatus.store.js';
 // import UserStatusActions from '../../actions/UserStatus.action.js';
 
 import OrdersList from './OrdersList.component';
+import LoansList from './LoansList.component';
 
 class DDBProfile extends React.Component {
 
@@ -39,8 +40,10 @@ class DDBProfile extends React.Component {
 
   render() {
     const orders = (this.state.status && this.state.status.orderedItems.count > 0) ? this.state.status.orderedItems.orders : null;
+    const loans = (this.state.status && this.state.status.loanedItems.count > 0) ? this.state.status.loanedItems.loans : null;
     return (
-      <div>
+      <div className='profile--user-status'>
+        <LoansList loans={loans}/>
         <OrdersList orders={orders}/>
       </div>
     );

@@ -21,6 +21,16 @@ $background-color: #fdfdfd;
   min-width: 300px;
 }
 
+.profile--user-status{
+  ul {
+    list-style-type: none;
+
+    li {
+      border-top: 1px solid black;
+    }
+  }
+}
+
 .profile--image-round{
   @include rounded(50%);
   width: 50%;
