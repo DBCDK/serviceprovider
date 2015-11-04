@@ -16,21 +16,6 @@ var BASE_URL = isSauceLabsTest ? 'https://pg.demo.dbc.dk' : process.env.SELENIUM
 
 
 function runAllTests(driverCaps) {
-
-  test.describe('Title assertion', function () {
-    test.it('Title is Palles Gavebod', function () {
-      var driver = driverCaps.build();
-
-      driver.get(BASE_URL);
-
-      driver.getTitle().then(function (title) {
-        assert.equal(title, 'Mobilsøg', 'Title is Mobilsøg');
-      });
-      driver.quit();
-    });
-  });
-
-
   test.describe('Express endpoint', function () {
     test.it('/profile/login can be reached', function () {
       var endpoint = '/profile/login';
