@@ -14,17 +14,14 @@ describe('Test the group components', () => {
 
   it('Group should have a cover image', () => {
     let element = React.createElement(Group, {
-      members: [
-        {
-          id: 1,
-          imageUrl: '/dummy.jpg',
-          email: 'mrtest@waaaargh.ch'
-        },
-        {
-          id: 2,
-          email: 'mrtest@waaaargh.ch'
-        }
-      ],
+      members: [{
+        id: 1,
+        imageUrl: '/dummy.jpg',
+        email: 'mrtest@waaaargh.ch'
+      }, {
+        id: 2,
+        email: 'mrtest@waaaargh.ch'
+      }],
       name: 'En gruppe',
       description: 'En beskrivelse',
       posts: [],
@@ -43,17 +40,16 @@ describe('Test the group components', () => {
       members: [],
       name: 'En gruppe',
       description: 'En beskrivelse',
-      posts: [
-        {
-          id: 666,
-          owner: {
-            id: 42,
-            email: 'some@email.com',
-            imageUrl: '/dummy.jpg',
-            timeCreated: 123123123
-          },
-          comments: []
-        }
+      posts: [{
+        id: 666,
+        owner: {
+          id: 42,
+          email: 'some@email.com',
+          imageUrl: '/dummy.jpg',
+          timeCreated: 123123123
+        },
+        comments: []
+      }
       ],
       groupId: 1,
       commentCb: () => {
@@ -69,17 +65,16 @@ describe('Test the group components', () => {
       members: [],
       name: 'En gruppe',
       description: 'En beskrivelse',
-      posts: [
-        {
-          id: 666,
-          owner: {
-            id: 42,
-            email: 'some@email.com',
-            imageUrl: '/dummy.jpg',
-            timeCreated: 123123123
-          },
-          comments: []
-        }
+      posts: [{
+        id: 666,
+        owner: {
+          id: 42,
+          email: 'some@email.com',
+          imageUrl: '/dummy.jpg',
+          timeCreated: 123123123
+        },
+        comments: []
+      }
       ],
       groupId: 1,
       commentCb: () => {
@@ -90,17 +85,16 @@ describe('Test the group components', () => {
       members: [],
       name: 'En gruppe',
       description: 'En beskrivelse',
-      posts: [
-        {
-          id: 666,
-          owner: {
-            id: 42,
-            email: 'someother@email.com',
-            imageUrl: '/dummy.jpg',
-            timeCreated: 123123123
-          },
-          comments: []
-        }
+      posts: [{
+        id: 666,
+        owner: {
+          id: 42,
+          email: 'someother@email.com',
+          imageUrl: '/dummy.jpg',
+          timeCreated: 123123123
+        },
+        comments: []
+      }
       ],
       groupId: 1,
       commentCb: () => {
