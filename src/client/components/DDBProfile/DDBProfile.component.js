@@ -48,7 +48,7 @@ class DDBProfile extends React.Component {
     return (
       <div className='profile--user-status'>
         <LoansList loans={loans}/>
-        <OrdersList orders={orders} onDelete={this.deleteOrder}/>
+        <OrdersList onDelete={this.deleteOrder} orders={orders}/>
       </div>
     );
   }

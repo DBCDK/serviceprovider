@@ -18,7 +18,7 @@ class OrdersList extends React.Component {
 
   render() {
 
-    const deleteOrder = this.props.onDelete ? curry(this.props.onDelete, 2) : function(){};
+    const deleteOrder = this.props.onDelete ? curry(this.props.onDelete, 2) : function() {};
 
     let orders = (<p>ingen reserveringer</p>);
     if (this.props.orders) {
@@ -30,18 +30,18 @@ class OrdersList extends React.Component {
           actionField = <button className='tiny' onClick={deleteOrder(order.orderId)}>marked</button>;
 
           if (order.isDeleteSuccesful) {
-            actionField = <button className='tiny' onClick={deleteOrder(order.orderId)}>lån fjernet</button>
+            actionField = <button className='tiny' onClick={deleteOrder(order.orderId)}>lån fjernet</button>;
           }
           else {
-            actionField = <button className='tiny' onClick={deleteOrder(order.orderId)}>kunne ikke fjerne lån</button>
+            actionField = <button className='tiny' onClick={deleteOrder(order.orderId)}>kunne ikke fjerne lån</button>;
           }
         }
 
         return (
           <li className='row' key={order.orderId}>
             <span className='small-12 column'>{order.title}</span>
-            <span className='small-10 column'>{ ready ? 'Klar til afhentning' : '[bestilt dato X]'}</span>
-            <span className='small-2 column'>{ ready ? '' : actionField}</span>
+            <span className='small-10 column'>{ready ? 'Klar til afhentning' : '[bestilt dato X]'}</span>
+            <span className='small-2 column'>{ready ? '' : actionField}</span>
           </li>
         );
       });
@@ -65,8 +65,8 @@ class OrdersList extends React.Component {
 }
 
 OrdersList.propTypes = {
-  orders: PropTypes.array,
-  onDelete: PropTypes.func
+  onDelete: PropTypes.func,
+  orders: PropTypes.array
 };
 
 OrdersList.displayName = 'OrdersList.component';
