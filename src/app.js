@@ -28,9 +28,8 @@ import reload from 'reload';
 // loading routes
 import MainRoutes from './server/routes/main.routes.js';
 import LibraryRoutes from './server/routes/library.routes.js';
-import PassportRoutes from './server/routes/passport.routes.js';
-import DDBProfileRoutes from './server/routes/ddbprofile.routes.js';
-import PalleProfileRoutes from './server/routes/palleprofile.routes.js';
+import PassportRoutesPG from './server/routes/passport.routes.pg.js';
+import PassportRoutesMobilsoeg from './server/routes/passport.routes.mobilsoeg.js';
 import WorkRoutes from './server/routes/work.routes.js';
 import GroupRoutes from './server/routes/group.routes.js';
 
@@ -65,7 +64,7 @@ app.set('port', process.env.PORT || 8080); // eslint-disable-line no-process-env
 const EMAIL_REDIRECT = process.env.EMAIL_REDIRECT || 'localhost:' + app.get('port'); // eslint-disable-line no-process-env
 
 // Configure app variables
-app.set('serviceProvider', ServiceProvider(config.palle.provider, logger).setupSockets(socket));
+app.set('serviceProvider', ServiceProvider(config[process.env.CONFIG_NAME || 'palle'].provider, logger).setupSockets(socket)); // eslint-disable-line no-process-env
 app.set('logger', logger);
 app.set('EMAIL_REDIRECT', EMAIL_REDIRECT);
 app.set('APPLICATION', APPLICATION);
@@ -87,7 +86,7 @@ app.locals.newrelic = newrelic;
 app.locals.env = ENV;
 app.locals.version = version;
 app.locals.production = PRODUCTION;
-app.locals.title = config.palle.applicationTitle || '';
+app.locals.title = config[process.env.CONFIG_NAME || 'palle'].applicationTitle || ''; // eslint-disable-line no-process-env
 app.locals.application = APPLICATION;
 app.locals.faviconUrl = APPLICATION === 'mobilsoeg' ? 'https://www.aakb.dk/sites/www.aakb.dk/files/favicon.ico' : '/favicon.ico';
 
@@ -97,14 +96,14 @@ let fileHeaders = {};
 
 switch (ENV) {
   case 'development':
-    redisConfig = config.palle.sessionStores.redis.development;
+    redisConfig = config[process.env.CONFIG_NAME || 'palle'].sessionStores.redis.development; // eslint-disable-line no-process-env
     break;
   case 'production':
-    redisConfig = config.palle.sessionStores.redis.production;
+    redisConfig = config[process.env.CONFIG_NAME || 'palle'].sessionStores.redis.production; // eslint-disable-line no-process-env
     fileHeaders = {index: false, dotfiles: 'ignore', maxAge: '5 days'};
     break;
   default:
-    redisConfig = config.palle.sessionStores.redis.local;
+    redisConfig = config[process.env.CONFIG_NAME || 'palle'].sessionStores.redis.local; // eslint-disable-line no-process-env
     break;
 }
 
@@ -159,16 +158,19 @@ app.use(sessionMiddleware);
 passportConfig(app);
 
 // Setup Routes
-app.use('/', MainRoutes);
-app.use('/library', LibraryRoutes);
-app.use('/profile', PassportRoutes);
-app.use('/work', WorkRoutes);
 if (APPLICATION === 'pg') {
+  app.use('/', MainRoutes);
+  app.use('/library', LibraryRoutes);
+  app.use('/profile', PassportRoutesPG);
+  app.use('/work', WorkRoutes);
   app.use('/groups', GroupRoutes);
-  app.use('/profile', PalleProfileRoutes);
 }
-else {
-  app.use('/profile', DDBProfileRoutes);
+
+if (APPLICATION === 'mobilsoeg') {
+  app.use('/', MainRoutes);
+  app.use('/library', LibraryRoutes);
+  app.use('/profile', PassportRoutesMobilsoeg);
+  app.use('/work', WorkRoutes);
 }
 
 // If running in dev-mode enable auto reload in browser when the server restarts

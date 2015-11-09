@@ -11,14 +11,20 @@ import dbcMiddleware from './middleware.js';
 import React from 'react';
 import ReactDOM from 'react-dom/server';
 
-import LoginPG from '../../client/components/Login/pg/Login.pg.component';
-import LoginMobilSoeg from '../../client/components/Login/mobilsoeg/Login.mobilsoeg.component';
+// Components
+import Login from '../../client/components/Login/pg/Login.pg.component';
 import ResetPassword from '../../client/components/ResetPassword/ResetPassword.component.js';
-
-import SignupPG from '../../client/components/Signup/pg/Signup.pg.component.js';
-import SignupMobilSoeg from '../../client/components/Signup/mobilsoeg/Signup.mobilsoeg.component.js';
+import Signup from '../../client/components/Signup/pg/Signup.pg.component.js';
+import Profile from '../../client/components/Profile/Profile.component.js';
 
 const PassportRoutes = express.Router();
+
+PassportRoutes.get('/', dbcMiddleware.ensureAuthenticated, (req, res) => {
+  dbcMiddleware.renderPage(res, 'profile', {
+    profileString: ReactDOM.renderToString(<Profile />),
+    title: req.app.locals.title + ' - Profil'
+  }, 'no service involved');
+});
 
 PassportRoutes.get('/logout', (req, res) => {
   const serviceProvider = req.app.get('serviceProvider');
@@ -69,7 +75,6 @@ PassportRoutes.get('/confirm', (req, res) => {
 });
 
 PassportRoutes.get('/signup', (req, res) => {
-  const Signup = req.app.get('APPLICATION') === 'pg' ? SignupPG : SignupMobilSoeg;
   res.render('signup', {
     markup: ReactDOM.renderToString(<Signup />),
     title: req.app.locals.title + ' - Opret ny bruger'
@@ -80,8 +85,6 @@ PassportRoutes.post('/signup', (req, res) => {
   const serviceProvider = req.app.get('serviceProvider');
   const EMAIL_REDIRECT = req.app.get('EMAIL_REDIRECT');
   const logger = req.app.get('logger');
-
-  const Signup = req.app.get('APPLICATION') === 'pg' ? SignupPG : SignupMobilSoeg;
 
   const email = req.body.email;
   const password = req.body.password;
@@ -147,7 +150,6 @@ PassportRoutes.get('/resetpassword', (req, res) => {
 });
 
 PassportRoutes.get('/login', (req, res) => {
-  const Login = req.app.get('APPLICATION') === 'pg' ? LoginPG : LoginMobilSoeg;
   let contextObject = {
     markup: ReactDOM.renderToString(<Login />),
     title: req.app.locals.title + ' - Log ind'
