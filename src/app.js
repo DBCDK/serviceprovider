@@ -5,12 +5,13 @@
  * Configure and start our server
  */
 
+// Config
 import config from '@dbcdk/dbc-config';
 // newrelic needs to be required the es5 way because we only wants to load new relic if specified in config.js
 const newrelic = config.palle.newrelic && require('newrelic') || null;
 import {version} from '../package.json';
 
-// loading libraries
+// Libraries
 import express from 'express';
 import http from 'http';
 import socketio from 'socket.io';
@@ -25,7 +26,7 @@ import RedisStore from 'connect-redis';
 import helmet from 'helmet';
 import reload from 'reload';
 
-// loading routes
+// Routes
 import MainRoutes from './server/routes/main.routes.js';
 import LibraryRoutes from './server/routes/library.routes.js';
 import PassportRoutesPG from './server/routes/passport.routes.pg.js';
@@ -33,9 +34,10 @@ import PassportRoutesMobilsoeg from './server/routes/passport.routes.mobilsoeg.j
 import WorkRoutes from './server/routes/work.routes.js';
 import GroupRoutes from './server/routes/group.routes.js';
 
-// loading configurations
-import passportConfig from './passport.config.js';
+// Passport
+import * as PassportStrategies from './server/PassportStrategies/strategies.passport';
 
+// Setup
 const app = express();
 const server = http.createServer(app);
 const socket = socketio.listen(server);
@@ -73,7 +75,7 @@ app.set('APPLICATION', APPLICATION);
 app.set('views', path.join(__dirname, 'server/templates'));
 app.set('view engine', 'jade');
 
-// setting proxy
+// Setting proxy
 app.enable('trust proxy');
 
 // settings production specific options
@@ -90,10 +92,11 @@ app.locals.title = config[process.env.CONFIG_NAME || 'palle'].applicationTitle |
 app.locals.application = APPLICATION;
 app.locals.faviconUrl = APPLICATION === 'mobilsoeg' ? 'https://www.aakb.dk/sites/www.aakb.dk/files/favicon.ico' : '/favicon.ico';
 
-// setup environments
+// Setup environments
 let redisConfig;
 let fileHeaders = {};
 
+// Redis
 switch (ENV) {
   case 'development':
     redisConfig = config[process.env.CONFIG_NAME || 'palle'].sessionStores.redis.development; // eslint-disable-line no-process-env
@@ -127,10 +130,10 @@ let sessionMiddleware = expressSession({
   }
 });
 
-// adding gzip'ing
+// Adding gzip'ing
 app.use(compression());
 
-// setting paths
+// Aetting paths
 app.use(express.static(path.join(__dirname, '../public'), fileHeaders));
 app.use(express.static(path.join(__dirname, '../static'), fileHeaders));
 
@@ -154,11 +157,12 @@ socket.use((_socket, next) => {
 
 app.use(sessionMiddleware);
 
-// Setup passport
-passportConfig(app);
-
-// Setup Routes
+// Configuring PG application
 if (APPLICATION === 'pg') {
+  // Setup passport
+  PassportStrategies.PGPassportConfig(app);
+
+  // Setup Routes
   app.use('/', MainRoutes);
   app.use('/library', LibraryRoutes);
   app.use('/profile', PassportRoutesPG);
@@ -166,7 +170,12 @@ if (APPLICATION === 'pg') {
   app.use('/groups', GroupRoutes);
 }
 
+// Configuring MobilSøg application
 if (APPLICATION === 'mobilsoeg') {
+  // Setup passport
+  PassportStrategies.MobilSoegPassportConfig(app);
+
+  // Setup Routes
   app.use('/', MainRoutes);
   app.use('/library', LibraryRoutes);
   app.use('/profile', PassportRoutesMobilsoeg);
@@ -197,7 +206,7 @@ app.use((req, res) => {
 // Setting logger -- should be placed after routes
 app.use(expressLoggers.errorLogger);
 
-// starting server
+// Starting server
 server.listen(app.get('port'), () => {
   logger.log('debug', 'Server listening on port ' + app.get('port'));
   logger.log('debug', 'NEW_RELIC_APP_NAME: ' + APP_NAME);
