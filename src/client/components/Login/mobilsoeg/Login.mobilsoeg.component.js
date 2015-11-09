@@ -12,10 +12,13 @@ export default class Login extends React.Component {
   render() {
     return (
       <div className="large-24 columns" >
-        <form action='/profile/login' method='POST' >
 
+        <div className="large-24 columns" >
           <h2>Log ind</h2>
+          <p>For at logge ind skal du være oprettet som låner på dit lokale bibliotek.</p>
+        </div>
 
+        <form action='/profile/login' method='POST' >
           <div className="large-24 columns" >
             <label>Vælg dit bibliotek
               <LibrarySelector />
@@ -30,7 +33,7 @@ export default class Login extends React.Component {
 
           <div className="large-24 columns" >
             <label>Pinkode
-              <input name="pin" type="password" />
+              <input name="pincode" type="password" />
             </label>
           </div>
 

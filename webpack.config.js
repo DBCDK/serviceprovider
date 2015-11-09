@@ -25,7 +25,6 @@ if (APPLICATION === 'ddbmobil') {
     querysearch: './src/client/components/searchpage/index.js',
     receipt: './src/client/components/Receipt/index.js',
     resetpassword: './src/client/components/ResetPassword/index.js',
-    signup: './src/client/components/Signup/index.mobilsoeg.js',
     topnavigation: './src/client/components/TopNavigation/index.js',
     work: './src/client/components/Work/Work.client',
     terminal: './src/utils/Terminal',
