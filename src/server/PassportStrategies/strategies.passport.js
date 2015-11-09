@@ -12,7 +12,7 @@ import LocalStrategy from 'passport-local';
 import BorchkStrategy from 'passport-borchk';
 
 export function MobilSoegPassportConfig(app) {
-  const logger = app.get('logger');
+  // const logger = app.get('logger');
   const serviceProvider = app.get('serviceProvider');
 
   app.use(passport.initialize());
