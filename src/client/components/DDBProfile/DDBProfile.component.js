@@ -38,8 +38,8 @@ class DDBProfile extends React.Component {
     this.setState({status: status});
   }
 
-  deleteOrder(orderId) {
-    UserStatusActions.markOrderForDeletion(orderId);
+  deleteOrder(orderId, orderType) {
+    UserStatusActions.markOrderForDeletion(orderId, orderType);
   }
 
   render() {
