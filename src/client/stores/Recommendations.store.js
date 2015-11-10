@@ -37,7 +37,6 @@ const RecommendationsStore = Reflux.createStore({
   },
 
   getRecommendationsResponse(data) {
-    console.error(data);
     this.store.pending = false;
     this.store.error = {};
 
