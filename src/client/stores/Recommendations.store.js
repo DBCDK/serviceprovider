@@ -3,17 +3,32 @@
 import Reflux from 'reflux';
 
 import RecommendationActions from '../actions/Recommendations.actions.js';
+import ProfileStore from './Profile.store';
 
 const RecommendationsStore = Reflux.createStore({
   listenables: RecommendationActions,
   store: {
-    recommendations: [],
+    recommendations: {
+      generic: [],
+      personal: []
+    },
     error: {},
-    pending: false
+    pending: false,
+    loggedIn: false,
+    likes: []
+  },
+
+  init() {
+    this.listenTo(ProfileStore, this.profileStoreUpdate);
   },
 
   getInitialState() {
     return this.store;
+  },
+
+  profileStoreUpdate(profile) {
+    this.store.loggedIn = profile.userIsLoggedIn;
+    this.store.likes = profile.likes;
   },
 
   getRecommendations() {
@@ -22,6 +37,7 @@ const RecommendationsStore = Reflux.createStore({
   },
 
   getRecommendationsResponse(data) {
+    console.error(data);
     this.store.pending = false;
     this.store.error = {};
 
@@ -29,7 +45,8 @@ const RecommendationsStore = Reflux.createStore({
       this.store.error = data.error;
     }
     else {
-      this.store.recommendations = data;
+      this.store.recommendations.generic = data.generic;
+      this.store.recommendations.personal = data.personal;
     }
 
     this.trigger(this.store);

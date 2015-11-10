@@ -46,6 +46,8 @@ class Work extends React.Component {
         recommendations: RecommendationsStore.store
       }))
     ];
+
+    this.getRecommendations.bind(this);
   }
 
   componentWillMount() {
@@ -54,7 +56,18 @@ class Work extends React.Component {
 
   componentDidMount() {
     workAction({id: this.props.id});
-    RecommendationActions.getRecommendations({likes: [this.props.id], dislikes: []});
+    RecommendationActions.getRecommendations({
+      work: this.props.id,
+      likes: [
+        '870970-basis:25254996',
+        '870970-basis:20414642',
+        '870970-basis:27088988',
+        '870970-basis:23202182',
+        '870970-basis:43847546',
+        '870970-basis:44777010'
+      ],
+      dislikes: []
+    });
   }
 
   componentWillUnmount() {
@@ -76,6 +89,37 @@ class Work extends React.Component {
         </div>
       </div>
     );
+  }
+
+  getRecommendations(type) {
+    const coverImage = {
+      component: CoverImage,
+      noCoverUrl: {
+        appendWorkType: true,
+        url: `/covers/no-cover-image-[WORKTYPE].png`
+      },
+      prefSize: 'detail_500'
+    };
+
+    return (
+        <div className={'work--recommendations--' + type}>
+          <h3 className='work--recommendations--title'>Noget der ligner</h3>
+          <ul className="small-block-grid-2">
+            {take(this.state.recommendations.recommendations[type], 6).map((val, index) => {
+              return (
+                <BibliographicData
+                  coverImage={coverImage}
+                  creator={val.creator}
+                  identifiers={val.identifiers}
+                  key={'recommendation_' + index}
+                  title={val.title}
+                  workType={val.workType}
+                />
+              );
+            })}
+          </ul>
+        </div>
+      );
   }
 
   render() {
@@ -142,15 +186,6 @@ class Work extends React.Component {
     });
 
     let specifics = values(specifics_object);
-
-    const coverImage = {
-      component: CoverImage,
-      noCoverUrl: {
-        appendWorkType: true,
-        url: `/covers/no-cover-image-[WORKTYPE].png`
-      },
-      prefSize: 'detail_500'
-    };
 
     return (
       <div className='work-container row' data-pid={id} >
@@ -257,21 +292,8 @@ class Work extends React.Component {
         </div>
 
         <div className='work--recommendations small-24 medium-8 large-8 columns'>
-          <h3 className='work--recommendations--title'>Noget der ligner</h3>
-          <ul className="small-block-grid-2">
-            {take(this.state.recommendations.recommendations, 6).map((val, index) => {
-              return (
-                <BibliographicData
-                  coverImage={coverImage}
-                  creator={val.creator}
-                  identifiers={val.identifiers}
-                  key={'recommendation_' + index}
-                  title={val.title}
-                  workType={val.workType}
-                  />
-              );
-            })}
-          </ul>
+          {this.getRecommendations('generic')}
+          {this.getRecommendations('personal')}
         </div>
       </div>
     );
