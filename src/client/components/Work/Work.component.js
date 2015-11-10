@@ -63,6 +63,13 @@ class Work extends React.Component {
     this.getRecommendationState();
   }
 
+  shouldComponentUpdate(props, nextState) {
+    if (this.state.profile !== nextState.profile) {
+      this.getRecommendationState();
+    }
+    return (this.state !== nextState);
+  }
+
   componentWillUnmount() {
     this.unsubscribe.forEach(
       (unsubscriber) => {
@@ -94,7 +101,7 @@ class Work extends React.Component {
     );
   }
 
-  getRecommendations(type) {
+  getRecommendations(type, recommendations) {
     const coverImage = {
       component: CoverImage,
       noCoverUrl: {
@@ -107,13 +114,13 @@ class Work extends React.Component {
     return (
         <div className={'work--recommendations--' + type}>
           <ul className="small-block-grid-2">
-            {take(this.state.recommendations.recommendations[type], 6).map((val, index) => {
+            {take(recommendations, 6).map((val, index) => {
               return (
                 <BibliographicData
                   coverImage={coverImage}
                   creator={val.creator}
                   identifiers={val.identifiers}
-                  key={'recommendation_' + index}
+                  key={'recommendation_' + type + '_' + index}
                   title={val.title}
                   workType={val.workType}
                 />
@@ -128,6 +135,9 @@ class Work extends React.Component {
     const profile = this.state.profile;
     const work = this.props.work ? this.props.work : this.state.work;
     const id = this.props.id;
+
+    const personalRecommendations = profile.userIsLoggedIn ? this.getRecommendations('personal', this.state.recommendations.recommendations.personal) : '';
+    const genericRecommendations = this.getRecommendations('generic', this.state.recommendations.recommendations.generic);
 
     // No result found!
     if (work.info.hits === '0') {
@@ -149,7 +159,7 @@ class Work extends React.Component {
     }
 
     // Data was found, begin rendering
-    const likeContainers = this.state.profile.userIsLoggedIn ? this.getLikeDislikeContainers(id) : ' ';
+    const likeContainers = profile.userIsLoggedIn ? this.getLikeDislikeContainers(id) : ' ';
     let editions = [];
     let specifics_object = {};
 
@@ -295,8 +305,8 @@ class Work extends React.Component {
 
         <div className='work--recommendations small-24 medium-8 large-8 columns'>
           <h3 className='work--recommendations--title'>Noget der ligner</h3>
-          {this.state.profile.userIsLoggedIn ? this.getRecommendations('personal') : ''}
-          {this.getRecommendations('generic')}
+          {personalRecommendations}
+          {genericRecommendations}
         </div>
       </div>
     );
