@@ -34,9 +34,13 @@ class Work extends React.Component {
     };
 
     this.unsubscribe = [
-      ProfileStore.listen(() => this.setState({
-        profile: ProfileStore.getProfile()
-      })),
+      ProfileStore.listen(() => {
+        this.setState({
+          profile: ProfileStore.getProfile()
+        });
+
+        this.getRecommendationState();
+      }),
 
       WorkStore.listen(() => this.setState({
         work: WorkStore.store
@@ -56,18 +60,7 @@ class Work extends React.Component {
 
   componentDidMount() {
     workAction({id: this.props.id});
-    RecommendationActions.getRecommendations({
-      work: this.props.id,
-      likes: [
-        '870970-basis:25254996',
-        '870970-basis:20414642',
-        '870970-basis:27088988',
-        '870970-basis:23202182',
-        '870970-basis:43847546',
-        '870970-basis:44777010'
-      ],
-      dislikes: []
-    });
+    this.getRecommendationState();
   }
 
   componentWillUnmount() {
@@ -76,6 +69,16 @@ class Work extends React.Component {
         unsubscriber();
       }
     );
+  }
+
+  getRecommendationState() {
+    RecommendationActions.getRecommendations({
+      work: this.props.id,
+      likes: this.state.profile.likes.map((like) => {
+        return like.item_id;
+      }),
+      dislikes: []
+    });
   }
 
   getLikeDislikeContainers(id) {
