@@ -39,14 +39,19 @@ PassportRoutes.get('/logout', (req, res) => {
   });
 });
 
-PassportRoutes.post('/login', passport.authenticate('local', {failureRedirect: '/profile/login?error=Ugyldigt%20brugernavn%20eller%20kodeord'}), (req, res) => {
-  if (req.session.hasOwnProperty('returnTo')) {
-    res.redirect(req.session.returnTo);
-  }
-  else {
-    res.redirect('/profile');
-  }
-});
+PassportRoutes.post('/login', passport.authenticate('borchk',
+  {
+    failureRedirect: '/profile/login?error=Ugyldigt%20brugernavn%20eller%20kodeord'
+  }),
+  (req, res) => {
+    console.log('hep'); // eslint-disable-line
+    if (req.session.hasOwnProperty('returnTo')) {
+      res.redirect(req.session.returnTo);
+    }
+    else {
+      res.redirect('/profile');
+    }
+  });
 
 PassportRoutes.get('/login', (req, res) => {
   let contextObject = {
