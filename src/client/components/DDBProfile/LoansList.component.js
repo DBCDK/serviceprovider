@@ -17,7 +17,8 @@ class LoansList extends React.Component {
 
   render() {
 
-    let loans = (<p>Du har ingen lån</p>);
+    let loans;
+
     if (this.props.loans) {
       loans = this.props.loans.map(function(loan) {
         return (
@@ -33,12 +34,24 @@ class LoansList extends React.Component {
       {loans}
     </ul>);
 
+    // show this if not results have been returned yet
     const loadingWheel = (<p>Loading...</p>);
+
+    const noLoansMessage = (<p>Du har ingen lån</p>);
+
+    let listContent = loadingWheel;
+    if (Array.isArray(this.props.loans) && this.props.loans.length === 0) {
+      listContent = noLoansMessage;
+    }
+    else if (this.props.loans !== null) {
+      listContent = loansList;
+    }
+
 
     const content = (
         <div>
           <h2>Lån</h2>
-          {(this.props.loans === null) ? loadingWheel : loansList}
+          {listContent}
         </div>
     );
 

@@ -13,11 +13,12 @@ const UserStatusStore = Reflux.createStore({
   },
 
   init() {
-    UserStatusActions.fetchUserStatus({userId: 'B1480085', pinCode: 'B1480085', agencyId: 'B1480085'});
+    UserStatusActions.fetchUserStatus();
     this.listenToMany(UserStatusActions);
   },
 
   onUpdateUserStatus(userStatusResponse) { // eslint-disable-line
+
     this.store.status = {
       orderedItems: userStatusResponse.result.orderedItems,
       loanedItems: userStatusResponse.result.loanedItems,

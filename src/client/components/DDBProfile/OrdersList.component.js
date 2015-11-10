@@ -30,11 +30,11 @@ class OrdersList extends React.Component {
         if (order.markedForDeletion) {
           actionField = <button className='tiny' onClick={deleteOrder(order.orderId, order.orderType)}>marked</button>;
 
-          if (order.isDeleteSuccesful) {
-            actionField = <button className='tiny' onClick={deleteOrder(order.orderId, order.orderType)}>lån fjernet</button>;
-          }
-          else {
+          if (order.isDeleteConfirmed && !order.isDeleteSuccesful) {
             actionField = <button className='tiny' onClick={deleteOrder(order.orderId, order.orderType)}>kunne ikke fjerne lån</button>;
+          }
+          else if (order.isDeleteConfirmed && order.isDeleteSuccesful) {
+            actionField = <button className='tiny' onClick={deleteOrder(order.orderId, order.orderType)}>lån fjernet</button>;
           }
         }
 
