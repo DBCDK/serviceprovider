@@ -18,22 +18,23 @@ class OrdersList extends React.Component {
 
   render() {
 
-    const deleteOrder = this.props.onDelete ? curry(this.props.onDelete, 2) : function() {};
+    const deleteOrder = this.props.onDelete ? curry(this.props.onDelete, 3) : function() {};
 
     let orders = (<p>ingen reserveringer</p>);
     if (this.props.orders) {
       orders = this.props.orders.map(function(order) {
+
         const ready = (order.status === 'Available for pickup');
 
-        let actionField = <button className='tiny' onClick={deleteOrder(order.orderId)}>slet</button>;
+        let actionField = <button className='tiny' onClick={deleteOrder(order.orderId, order.orderType)}>slet</button>;
         if (order.markedForDeletion) {
-          actionField = <button className='tiny' onClick={deleteOrder(order.orderId)}>marked</button>;
+          actionField = <button className='tiny' onClick={deleteOrder(order.orderId, order.orderType)}>marked</button>;
 
-          if (order.isDeleteSuccesful) {
-            actionField = <button className='tiny' onClick={deleteOrder(order.orderId)}>lån fjernet</button>;
+          if (order.isDeleteConfirmed && !order.isDeleteSuccesful) {
+            actionField = <button className='tiny' onClick={deleteOrder(order.orderId, order.orderType)}>kunne ikke fjerne lån</button>;
           }
-          else {
-            actionField = <button className='tiny' onClick={deleteOrder(order.orderId)}>kunne ikke fjerne lån</button>;
+          else if (order.isDeleteConfirmed && order.isDeleteSuccesful) {
+            actionField = <button className='tiny' onClick={deleteOrder(order.orderId, order.orderType)}>lån fjernet</button>;
           }
         }
 

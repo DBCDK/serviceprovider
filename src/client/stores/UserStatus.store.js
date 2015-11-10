@@ -13,10 +13,12 @@ const UserStatusStore = Reflux.createStore({
   },
 
   init() {
+    UserStatusActions.fetchUserStatus();
     this.listenToMany(UserStatusActions);
   },
 
   onUpdateUserStatus(userStatusResponse) { // eslint-disable-line
+
     this.store.status = {
       orderedItems: userStatusResponse.result.orderedItems,
       loanedItems: userStatusResponse.result.loanedItems,
@@ -26,7 +28,7 @@ const UserStatusStore = Reflux.createStore({
     this.trigger(this.store.status);
   },
 
-  onMarkOrderForDeletion(orderId) {
+  onMarkOrderForDeletion(orderId, orderType) {
     // modify store.status.orderedItems to mark an order for deletion
 
     if (this.store.status.orderedItems) {
@@ -44,7 +46,7 @@ const UserStatusStore = Reflux.createStore({
     this.trigger(this.store.status);
 
     // TODO: send cancel action to complete deletion (REMOVE CRAP FROM orderId)
-    UserStatusActions.cancelOrder({orderId: orderId});
+    UserStatusActions.cancelOrder({orderId: orderId, orderType: orderType, userId: 'B1480085', pinCode: 'B1480085', agencyId: 'B1480085'});
   },
 
   onCancelOrder(orderId) { // eslint-disable-line

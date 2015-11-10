@@ -10,6 +10,7 @@ export default class LibrarySelector extends React.Component {
         <option disabled="true" value="743001" >Ringe</option>
         <option value="100451" >Q2fjern</option>
         <option value="775100" >Aarhus</option>
+        <option value="714700" >Frederiksberg</option>
       </select>
     );
   }
