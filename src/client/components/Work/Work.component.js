@@ -106,7 +106,6 @@ class Work extends React.Component {
 
     return (
         <div className={'work--recommendations--' + type}>
-          <h3 className='work--recommendations--title'>Noget der ligner</h3>
           <ul className="small-block-grid-2">
             {take(this.state.recommendations.recommendations[type], 6).map((val, index) => {
               return (
@@ -295,8 +294,9 @@ class Work extends React.Component {
         </div>
 
         <div className='work--recommendations small-24 medium-8 large-8 columns'>
+          <h3 className='work--recommendations--title'>Noget der ligner</h3>
+          {this.state.profile.userIsLoggedIn ? this.getRecommendations('personal') : ''}
           {this.getRecommendations('generic')}
-          {this.getRecommendations('personal')}
         </div>
       </div>
     );
