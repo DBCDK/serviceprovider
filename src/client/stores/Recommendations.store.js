@@ -7,7 +7,10 @@ import RecommendationActions from '../actions/Recommendations.actions.js';
 const RecommendationsStore = Reflux.createStore({
   listenables: RecommendationActions,
   store: {
-    recommendations: [],
+    recommendations: {
+      generic: [],
+      personal: []
+    },
     error: {},
     pending: false
   },
@@ -29,7 +32,8 @@ const RecommendationsStore = Reflux.createStore({
       this.store.error = data.error;
     }
     else {
-      this.store.recommendations = data;
+      this.store.recommendations.generic = data.generic;
+      this.store.recommendations.personal = data.personal;
     }
 
     this.trigger(this.store);

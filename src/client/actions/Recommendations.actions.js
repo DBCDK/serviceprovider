@@ -2,7 +2,7 @@
 
 import Reflux from 'reflux';
 import SocketClient from 'dbc-node-serviceprovider-socketclient';
-let socket = SocketClient('getRecommendations');
+let socket = SocketClient('getPersonalRecommendations');
 
 const RecommendationActions = Reflux.createActions([
   'getRecommendations',

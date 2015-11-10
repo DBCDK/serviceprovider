@@ -186,7 +186,7 @@ describe('Test store with valid and invalid data', () => {
     let component = TestUtils.renderIntoDocument(workComponent);
 
     const work = {work: forceMajureMockWork, info: {hits: 1, collections: 1}, error: []};
-    const recommmendations = [{identifiers: ['870970-basis:28693699'], title: 'Oprør', creator: 'Suzanne Collins', workType: 'book'}];
+    const recommmendations = {generic: [{identifiers: ['870970-basis:28693699'], title: 'Oprør', creator: 'Suzanne Collins', workType: 'book'}]};
 
     RecommendationsStore.getRecommendationsResponse(recommmendations);
     WorkStore.update(work);

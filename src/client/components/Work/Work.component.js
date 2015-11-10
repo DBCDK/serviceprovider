@@ -34,9 +34,13 @@ class Work extends React.Component {
     };
 
     this.unsubscribe = [
-      ProfileStore.listen(() => this.setState({
-        profile: ProfileStore.getProfile()
-      })),
+      ProfileStore.listen(() => {
+        this.setState({
+          profile: ProfileStore.getProfile()
+        });
+
+        this.getRecommendationState();
+      }),
 
       WorkStore.listen(() => this.setState({
         work: WorkStore.store
@@ -46,6 +50,8 @@ class Work extends React.Component {
         recommendations: RecommendationsStore.store
       }))
     ];
+
+    this.getRecommendations.bind(this);
   }
 
   componentWillMount() {
@@ -54,7 +60,7 @@ class Work extends React.Component {
 
   componentDidMount() {
     workAction({id: this.props.id});
-    RecommendationActions.getRecommendations({likes: [this.props.id], dislikes: []});
+    this.getRecommendationState();
   }
 
   componentWillUnmount() {
@@ -63,6 +69,16 @@ class Work extends React.Component {
         unsubscriber();
       }
     );
+  }
+
+  getRecommendationState() {
+    RecommendationActions.getRecommendations({
+      work: this.props.id,
+      likes: this.state.profile.likes.map((like) => {
+        return like.item_id;
+      }),
+      dislikes: []
+    });
   }
 
   getLikeDislikeContainers(id) {
@@ -76,6 +92,36 @@ class Work extends React.Component {
         </div>
       </div>
     );
+  }
+
+  getRecommendations(type) {
+    const coverImage = {
+      component: CoverImage,
+      noCoverUrl: {
+        appendWorkType: true,
+        url: `/covers/no-cover-image-[WORKTYPE].png`
+      },
+      prefSize: 'detail_500'
+    };
+
+    return (
+        <div className={'work--recommendations--' + type}>
+          <ul className="small-block-grid-2">
+            {take(this.state.recommendations.recommendations[type], 6).map((val, index) => {
+              return (
+                <BibliographicData
+                  coverImage={coverImage}
+                  creator={val.creator}
+                  identifiers={val.identifiers}
+                  key={'recommendation_' + index}
+                  title={val.title}
+                  workType={val.workType}
+                />
+              );
+            })}
+          </ul>
+        </div>
+      );
   }
 
   render() {
@@ -142,15 +188,6 @@ class Work extends React.Component {
     });
 
     let specifics = values(specifics_object);
-
-    const coverImage = {
-      component: CoverImage,
-      noCoverUrl: {
-        appendWorkType: true,
-        url: `/covers/no-cover-image-[WORKTYPE].png`
-      },
-      prefSize: 'detail_500'
-    };
 
     return (
       <div className='work-container row' data-pid={id} >
@@ -258,20 +295,8 @@ class Work extends React.Component {
 
         <div className='work--recommendations small-24 medium-8 large-8 columns'>
           <h3 className='work--recommendations--title'>Noget der ligner</h3>
-          <ul className="small-block-grid-2">
-            {take(this.state.recommendations.recommendations, 6).map((val, index) => {
-              return (
-                <BibliographicData
-                  coverImage={coverImage}
-                  creator={val.creator}
-                  identifiers={val.identifiers}
-                  key={'recommendation_' + index}
-                  title={val.title}
-                  workType={val.workType}
-                  />
-              );
-            })}
-          </ul>
+          {this.state.profile.userIsLoggedIn ? this.getRecommendations('personal') : ''}
+          {this.getRecommendations('generic')}
         </div>
       </div>
     );
