@@ -7,7 +7,7 @@
 
 import React, {PropTypes} from 'react';
 // import Reflux from 'reflux';
-import {curry} from 'lodash';
+import {curry, sortByAll} from 'lodash';
 
 class OrdersList extends React.Component {
 
@@ -20,9 +20,14 @@ class OrdersList extends React.Component {
 
     const deleteOrder = this.props.onDelete ? curry(this.props.onDelete, 3) : function() {};
 
-    let orders = (<p>ingen reserveringer</p>);
+    let orderListContent = (<p>ingen reserveringer</p>);
     if (this.props.orders) {
-      orders = this.props.orders.map(function(order) {
+
+      let sortedOrders = sortByAll(this.props.orders, (o) => {
+        return o.status !== 'Available for pickup';
+      }, 'title');
+
+      orderListContent = sortedOrders.map(function(order) {
 
         const ready = (order.status === 'Available for pickup');
 
@@ -41,7 +46,7 @@ class OrdersList extends React.Component {
         return (
           <li className='row' key={order.orderId}>
             <span className='small-12 column'>{order.title}</span>
-            <span className='small-10 column'>{ready ? 'Klar til afhentning' : '[bestilt dato X]'}</span>
+            <span className='small-10 column'>{ready ? 'Klar til afhentning på ' + order.pickUpAgency : '[bestilt dato X]'}</span>
             <span className='small-2 column'>{ready ? '' : actionField}</span>
           </li>
         );
@@ -49,7 +54,7 @@ class OrdersList extends React.Component {
     }
 
     const ordersList = (<ul>
-      {orders}
+      {orderListContent}
     </ul>);
 
     const loadingWheel = (<p>Loading...</p>);
