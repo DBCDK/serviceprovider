@@ -26,7 +26,7 @@ class UserStatusSummary extends React.Component {
 
     let debt = 0;
     forEach(this.props.items, (item) => {
-      if(item.amount) {
+      if (item.amount) {
         debt += item.amount;
       }
     });
