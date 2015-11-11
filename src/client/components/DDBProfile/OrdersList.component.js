@@ -28,7 +28,6 @@ class OrdersList extends React.Component {
       }, 'title');
 
       orderListContent = sortedOrders.map(function(order) {
-
         const ready = (order.status === 'Available for pickup');
 
         let actionField = <button className='tiny' onClick={deleteOrder(order.orderId, order.orderType)}>slet</button>;
@@ -36,18 +35,19 @@ class OrdersList extends React.Component {
           actionField = <button className='tiny' onClick={deleteOrder(order.orderId, order.orderType)}>marked</button>;
 
           if (order.isDeleteConfirmed && !order.isDeleteSuccesful) {
-            actionField = <button className='tiny' onClick={deleteOrder(order.orderId, order.orderType)}>kunne ikke fjerne lån</button>;
+            actionField = <button className='tiny' onClick={deleteOrder(order.orderId, order.orderType)}>kunne ikke slette reservering</button>;
           }
           else if (order.isDeleteConfirmed && order.isDeleteSuccesful) {
-            actionField = <button className='tiny' onClick={deleteOrder(order.orderId, order.orderType)}>lån fjernet</button>;
+            actionField = <button className='tiny' onClick={deleteOrder(order.orderId, order.orderType)}>reservering slettet</button>;
           }
         }
 
+        const pickupDate = (order.pickUpExpiryDate ? 'Hentes senest ' + order.pickUpExpiryDate : '');
         return (
           <li className='row' key={order.orderId}>
-            <span className='small-12 column'>{order.title}</span>
-            <span className='small-10 column'>{ready ? 'Klar til afhentning på ' + order.pickUpAgency : 'Kø: ' + order.queue}</span>
-            <span className='small-2 column'>{ready ? '' : actionField}</span>
+            <span className='small-10 medium-11 large-12 column'>{order.title}</span>
+            <span className='small-9 medium-10 large-10 column'>{ready ? 'Klar til afhentning på ' + order.pickUpAgency : 'Kø: ' + order.queue}</span>
+            <span className='small-5 medium-3 large-2 column'>{ready ? pickupDate : actionField}</span>
           </li>
         );
       });
@@ -68,6 +68,7 @@ class OrdersList extends React.Component {
 
     return content;
   }
+
 }
 
 OrdersList.propTypes = {
