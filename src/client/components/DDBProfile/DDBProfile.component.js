@@ -13,6 +13,7 @@ import UserStatusActions from '../../actions/UserStatus.action.js';
 
 import OrdersList from './OrdersList.component';
 import LoansList from './LoansList.component';
+import FiscalStatus from './FiscalStatus.component';
 
 class DDBProfile extends React.Component {
 
@@ -30,8 +31,6 @@ class DDBProfile extends React.Component {
     };
 
     UserStatusStore.listen(this.onUpdateUserStatus);
-    // fetch the current user's status
-    // UserStatusActions.fetchUserStatus({id: userId});
   }
 
   onUpdateUserStatus(status) {
@@ -48,6 +47,11 @@ class DDBProfile extends React.Component {
 
   render() {
 
+    let fiscalItems = null;
+    if (this.state.status && this.state.status.fiscalAccount) {
+      fiscalItems = this.state.status.fiscalAccount.items;
+    }
+
     let orders = null;
     if (this.state.status && this.state.status.orderedItems) {
       orders = this.state.status.orderedItems.orders;
@@ -60,6 +64,7 @@ class DDBProfile extends React.Component {
 
     return (
       <div className='profile--user-status'>
+        <FiscalStatus items={fiscalItems} />
         <LoansList loans={loans} onRenew={this.renewLoan} />
         <OrdersList onDelete={this.deleteOrder} orders={orders}/>
       </div>
