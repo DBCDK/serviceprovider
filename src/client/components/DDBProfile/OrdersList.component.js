@@ -46,7 +46,7 @@ class OrdersList extends React.Component {
         return (
           <li className='row' key={order.orderId}>
             <span className='small-12 column'>{order.title}</span>
-            <span className='small-10 column'>{ready ? 'Klar til afhentning på ' + order.pickUpAgency : '[bestilt dato X]'}</span>
+            <span className='small-10 column'>{ready ? 'Klar til afhentning på ' + order.pickUpAgency : 'Kø: ' + order.queue}</span>
             <span className='small-2 column'>{ready ? '' : actionField}</span>
           </li>
         );
