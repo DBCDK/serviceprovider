@@ -24,9 +24,13 @@ $background-color: #fdfdfd;
 .profile--user-status{
   ul {
     list-style-type: none;
-
+    margin-left: 0;
     li {
       border-top: 1px solid black;
+      padding: 5px 0;
+      .tiny {
+        margin-bottom: 0;
+      }
     }
   }
 }
