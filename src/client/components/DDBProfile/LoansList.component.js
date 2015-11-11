@@ -52,7 +52,8 @@ class LoansList extends React.Component {
         if (loan.overdue) {
           dateClass += ' overdue';
           dueText = 'Skulle have være afleveret ';
-        } else if (loan.dueSoon) {
+        }
+        else if (loan.dueSoon) {
           dateClass += ' due-soon';
         }
 
