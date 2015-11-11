@@ -5,7 +5,7 @@
  * Provides the work view for the enduser.
  */
 import React from 'react';
-import {isEmpty, values, take} from 'lodash';
+import {isEmpty, values} from 'lodash';
 
 // Actions
 import workAction from '../../actions/Work.action.js';
@@ -16,7 +16,7 @@ import {CoverImage, OrderButton} from 'dbc-react-components';
 import LikeContainer from '../LikeDislike/LikeContainer.component.js';
 import DislikeContainer from '../LikeDislike/DislikeContainer.component.js';
 import WorkEdition from './WorkEdition.component.js';
-import {BibliographicData} from 'dbc-react-components';
+import WorkRecommendation from './WorkRecommendation.component';
 
 // Stores
 import WorkStore from '../../stores/Work.store.js';
@@ -36,10 +36,10 @@ class Work extends React.Component {
     this.unsubscribe = [
       ProfileStore.listen(() => {
         this.setState({
-          profile: ProfileStore.getProfile()
+          profile: ProfileStore.store
         });
 
-        this.getRecommendationState();
+        this.getRecommendationState(ProfileStore.store);
       }),
 
       WorkStore.listen(() => this.setState({
@@ -50,8 +50,6 @@ class Work extends React.Component {
         recommendations: RecommendationsStore.store
       }))
     ];
-
-    this.getRecommendations.bind(this);
   }
 
   componentWillMount() {
@@ -63,13 +61,6 @@ class Work extends React.Component {
     this.getRecommendationState();
   }
 
-  shouldComponentUpdate(props, nextState) {
-    if (this.state.profile !== nextState.profile) {
-      this.getRecommendationState();
-    }
-    return (this.state !== nextState);
-  }
-
   componentWillUnmount() {
     this.unsubscribe.forEach(
       (unsubscriber) => {
@@ -78,10 +69,10 @@ class Work extends React.Component {
     );
   }
 
-  getRecommendationState() {
+  getRecommendationState(profileState) {
     RecommendationActions.getRecommendations({
       work: this.props.id,
-      likes: this.state.profile.likes.map((like) => {
+      likes: profileState.likes.map((like) => {
         return like.item_id;
       }),
       dislikes: []
@@ -101,43 +92,22 @@ class Work extends React.Component {
     );
   }
 
-  getRecommendations(type, recommendations) {
-    const coverImage = {
-      component: CoverImage,
-      noCoverUrl: {
-        appendWorkType: true,
-        url: `/covers/no-cover-image-[WORKTYPE].png`
-      },
-      prefSize: 'detail_500'
-    };
-
-    return (
-        <div className={'work--recommendations--' + type}>
-          <ul className="small-block-grid-2">
-            {take(recommendations, 6).map((val, index) => {
-              return (
-                <BibliographicData
-                  coverImage={coverImage}
-                  creator={val.creator}
-                  identifiers={val.identifiers}
-                  key={'recommendation_' + type + '_' + index}
-                  title={val.title}
-                  workType={val.workType}
-                />
-              );
-            })}
-          </ul>
-        </div>
-      );
-  }
-
   render() {
     const profile = this.state.profile;
     const work = this.props.work ? this.props.work : this.state.work;
     const id = this.props.id;
 
-    const personalRecommendations = profile.userIsLoggedIn ? this.getRecommendations('personal', this.state.recommendations.recommendations.personal) : '';
-    const genericRecommendations = this.getRecommendations('generic', this.state.recommendations.recommendations.generic);
+    let personalRecommendations = profile.userIsLoggedIn ? (
+      <WorkRecommendation
+        recommendations={this.state.recommendations.recommendations.personal}
+        type='personal' />
+    ) : '';
+
+    let genericRecommendations = (
+      <WorkRecommendation
+        recommendations={this.state.recommendations.recommendations.generic}
+        type='generic' />
+    );
 
     // No result found!
     if (work.info.hits === '0') {
