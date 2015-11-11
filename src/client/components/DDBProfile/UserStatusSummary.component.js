@@ -7,7 +7,7 @@
 
 import React, {PropTypes} from 'react';
 
-import {filter, reduce} from 'lodash';
+import {filter, forEach} from 'lodash';
 
 class UserStatusSummary extends React.Component {
 
@@ -24,11 +24,12 @@ class UserStatusSummary extends React.Component {
 
     const ordersReadyForPickUp = (this.props.items) ? this.props.items.length : 0;
 
-    const debt = (this.props.items) ? reduce(this.props.items, (a, b) => {
-      return a.amount + b.amount;
-    }, {
-      amount: 0
-    }) : 0;
+    let debt = 0;
+    forEach(this.props.items, (item) => {
+      if (item.amount) {
+        debt += item.amount;
+      }
+    });
 
     const ordersReadyForPickUpMessage = (<p>{ordersReadyForPickUp} reserveringer klar til afhentning</p>);
     const expiringLoansMessage = (<p>{expiringLoansCount} lån skal afleveres snart</p>);
