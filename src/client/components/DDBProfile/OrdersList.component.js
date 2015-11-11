@@ -60,7 +60,7 @@ class OrdersList extends React.Component {
     const loadingWheel = (<p>Loading...</p>);
 
     const content = (
-        <div>
+        <div className='row'>
           <h2>Reserveringer</h2>
           {(this.props.orders === null) ? loadingWheel : ordersList}
         </div>

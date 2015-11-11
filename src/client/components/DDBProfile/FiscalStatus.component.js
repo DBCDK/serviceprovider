@@ -50,8 +50,8 @@ class FiscalStatus extends React.Component {
 
 
     const content = (
-        <div>
-          <h2>Mellemhavende</h2>
+        <div className='row'>
+          <h2>Mellemværende</h2>
           {listContent}
         </div>
     );
