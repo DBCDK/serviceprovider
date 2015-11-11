@@ -45,8 +45,50 @@ const UserStatusStore = Reflux.createStore({
     // make sure re-render is triggered
     this.trigger(this.store.status);
 
-    // TODO: send cancel action to complete deletion (REMOVE CRAP FROM orderId)
-    UserStatusActions.cancelOrder({orderId: orderId, orderType: orderType, userId: 'B1480085', pinCode: 'B1480085', agencyId: 'B1480085'});
+    // send cancel action to complete deletion
+    UserStatusActions.cancelOrder({orderId: orderId, orderType: orderType});
+  },
+
+  onMarkLoanForRenewal(loanId) {
+    // modify store.status.loanedItems to mark a loan for renewal
+
+    if (this.store.status.loanedItems) {
+      forEach(this.store.status.loanedItems.loans, (loan) => {
+        if (loan.loanId === loanId) {
+          // mark the specified loan
+          loan.markedForRenewal = true;
+          loan.isRenewConfirmed = false;
+          loan.isRenewSuccesful = false;
+        }
+      });
+    }
+
+    // make sure re-render is triggered
+    this.trigger(this.store.status);
+
+    // send renew action
+    UserStatusActions.renewLoan({loanId: loanId});
+  },
+
+
+  onRenewLoan(loanId) { // eslint-disable-line
+  },
+
+  onConfirmRenewLoan(result) {
+
+    if (this.store.status.loanedItems) {
+      forEach(this.store.status.loanedItems.loans, (loan) => {
+        if (loan.loanId === result.loanId) {
+          // mark the specified loan
+          loan.markedForRenewal = true;
+          loan.isRenewConfirmed = true;
+          loan.isRenewSuccesful = result.loanRenewed;
+        }
+      });
+    }
+
+    // make sure re-render is triggered
+    this.trigger(this.store.status);
   },
 
   onCancelOrder(orderId) { // eslint-disable-line

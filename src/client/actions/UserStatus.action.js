@@ -9,13 +9,17 @@ import SocketClient from 'dbc-node-serviceprovider-socketclient';
 
 const fetchUserStatusEvent = SocketClient('getUserStatus');
 const cancelOrderEvent = SocketClient('cancelOrder');
+const renewLoanEvent = SocketClient('renewLoan');
 
 const UserStatusActions = Reflux.createActions([
   'fetchUserStatus',
   'updateUserStatus',
   'cancelOrder',
   'confirmCancelOrder',
-  'markOrderForDeletion'
+  'renewLoan',
+  'confirmRenewLoan',
+  'markOrderForDeletion',
+  'markLoanForRenewal'
 ]);
 
 UserStatusActions.fetchUserStatus.listen(fetchUserStatusEvent.request);
@@ -23,5 +27,8 @@ fetchUserStatusEvent.response(UserStatusActions.updateUserStatus);
 
 UserStatusActions.cancelOrder.listen(cancelOrderEvent.request);
 cancelOrderEvent.response(UserStatusActions.confirmCancelOrder);
+
+UserStatusActions.renewLoan.listen(renewLoanEvent.request);
+renewLoanEvent.response(UserStatusActions.confirmRenewLoan);
 
 export default UserStatusActions;

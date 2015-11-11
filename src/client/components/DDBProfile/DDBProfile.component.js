@@ -42,6 +42,10 @@ class DDBProfile extends React.Component {
     UserStatusActions.markOrderForDeletion(orderId, orderType);
   }
 
+  renewLoan(loanId) {
+    UserStatusActions.markLoanForRenewal(loanId);
+  }
+
   render() {
 
     let orders = null;
@@ -56,7 +60,7 @@ class DDBProfile extends React.Component {
 
     return (
       <div className='profile--user-status'>
-        <LoansList loans={loans}/>
+        <LoansList loans={loans} onRenew={this.renewLoan} />
         <OrdersList onDelete={this.deleteOrder} orders={orders}/>
       </div>
     );
