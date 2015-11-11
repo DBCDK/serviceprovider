@@ -31,15 +31,15 @@ class UserStatusSummary extends React.Component {
       }
     });
 
-    const ordersReadyForPickUpMessage = (<p>{ordersReadyForPickUp} reserveringer klar til afhentning</p>);
-    const expiringLoansMessage = (<p>{expiringLoansCount} lån skal afleveres snart</p>);
-    const debtMessage = (<p>Du skylder {debt} kr</p>);
+    const ordersReadyForPickUpMessage = (ordersReadyForPickUp > 0) ? (<p>{ordersReadyForPickUp} reserveringer klar til afhentning</p>) : '';
+    const expiringLoansMessage =(expiringLoansCount > 0) ? (<p>{expiringLoansCount} lån skal afleveres snart</p>) : '';
+    const debtMessage = (debt > 0) ? (<p>Du skylder {debt} kr</p>) : '';
 
     const content = (
         <div className='row'>
-          <span className='small-8 column'>{ordersReadyForPickUpMessage}</span>
-          <span className='small-8 column'>{expiringLoansMessage}</span>
-          <span className='small-8 column'>{debtMessage}</span>
+          <span className='small-24 large-8 column'>{ordersReadyForPickUpMessage}</span>
+          <span className='small-24 large-8 column'>{expiringLoansMessage}</span>
+          <span className='small-24 large-8 column'>{debtMessage}</span>
         </div>
     );
 
