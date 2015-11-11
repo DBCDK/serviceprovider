@@ -50,13 +50,17 @@ class FiscalStatus extends React.Component {
 
 
     const content = (
-        <div>
-          <h2>BØDER!</h2>
+        <div className='row'>
+          <h2>Mellemværende</h2>
           {listContent}
         </div>
     );
 
-    return content;
+    const emptyComponent = (<span/>);
+
+    const stuffToBeRendered = Array.isArray(items) && (items.length > 0) ? content : emptyComponent;
+
+    return stuffToBeRendered;
   }
 }
 
