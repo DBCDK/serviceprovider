@@ -10,5 +10,6 @@ a {
 
   &:hover {
     text-decoration: underline;
+    color: $link-hover-color;
   }
 }
