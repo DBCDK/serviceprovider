@@ -14,6 +14,7 @@ import UserStatusActions from '../../actions/UserStatus.action.js';
 import OrdersList from './OrdersList.component';
 import LoansList from './LoansList.component';
 import FiscalStatus from './FiscalStatus.component';
+import UserStatusSummary from './UserStatusSummary.component';
 
 class DDBProfile extends React.Component {
 
@@ -64,6 +65,7 @@ class DDBProfile extends React.Component {
 
     return (
       <div className='profile--user-status'>
+        <UserStatusSummary items={fiscalItems} loans={loans} orders={orders} />
         <FiscalStatus items={fiscalItems} />
         <LoansList loans={loans} onRenew={this.renewLoan} />
         <OrdersList onDelete={this.deleteOrder} orders={orders}/>

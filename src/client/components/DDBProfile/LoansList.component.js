@@ -68,7 +68,7 @@ class LoansList extends React.Component {
 
 
     const content = (
-        <div>
+        <div className='row'>
           <h2>Lån</h2>
           {listContent}
         </div>
