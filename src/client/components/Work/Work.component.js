@@ -36,10 +36,10 @@ class Work extends React.Component {
     this.unsubscribe = [
       ProfileStore.listen(() => {
         this.setState({
-          profile: ProfileStore.store
+          profile: ProfileStore.getProfile()
         });
 
-        this.getRecommendationState(ProfileStore.store);
+        this.getRecommendationState();
       }),
 
       WorkStore.listen(() => this.setState({
@@ -69,10 +69,10 @@ class Work extends React.Component {
     );
   }
 
-  getRecommendationState(profileState) {
+  getRecommendationState() {
     RecommendationActions.getRecommendations({
       work: this.props.id,
-      likes: profileState.likes.map((like) => {
+      likes: this.state.profile.likes.map((like) => {
         return like.item_id;
       }),
       dislikes: []
