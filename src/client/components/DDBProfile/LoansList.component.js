@@ -7,7 +7,7 @@
 
 import React, {PropTypes} from 'react';
 // import Reflux from 'reflux';
-import {curry} from 'lodash';
+import {curry, sortByAll} from 'lodash';
 
 
 class LoansList extends React.Component {
@@ -23,7 +23,12 @@ class LoansList extends React.Component {
     let loans;
 
     if (this.props.loans) {
-      loans = this.props.loans.map(function(loan) {
+
+      let sortedLoans = sortByAll(this.props.loans, (l) => {
+        return new Date(l.dueDate);
+      }, 'title');
+
+      loans = sortedLoans.map(function(loan) {
 
         const renewable = true;
 
@@ -39,11 +44,21 @@ class LoansList extends React.Component {
           }
         }
 
+        const date = new Date(loan.dueDate);
+
+        let dateClass = 'small-9 medium-10 large-10 column';
+        let dueText = 'Afleveres senest ';
+
+        if (date < new Date()) {
+          dateClass += ' overdue';
+          dueText = 'Skulle have være afleveret ';
+        }
+
         return (
           <li className='row' key={loan.loanId}>
-            <span className='small-12 column'>{loan.title}</span>
-            <span className='small-10 column'>{loan.dueDate}</span>
-            <span className='small-2 column'>{renewable ? actionField : ''}</span>
+            <span className='small-10 medium-11 large-12 column'>{loan.title}</span>
+            <span className={dateClass}>{dueText + date.getDate() + '/' + (date.getMonth() + 1) + '-' + date.getFullYear()}</span>
+            <span className='small-5 medium-3 large-2 column'>{renewable ? actionField : ''}</span>
           </li>
         );
       });

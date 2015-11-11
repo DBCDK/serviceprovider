@@ -11,6 +11,9 @@ export default class LibrarySelector extends React.Component {
         <option value="100451" >Q2fjern</option>
         <option value="775100" >Aarhus</option>
         <option value="714700" >Frederiksberg</option>
+        <option value="710100" >København</option>
+        <option value="715100" >Ballerup</option>
+        <option value="716300" >Herlev</option>
       </select>
     );
   }
