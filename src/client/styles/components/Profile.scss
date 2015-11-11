@@ -31,6 +31,12 @@ $background-color: #fdfdfd;
       .tiny {
         margin-bottom: 0;
       }
+      .overdue {
+         color: red;
+      }
+      .due-soon {
+        color: orange;
+      }
     }
   }
 }
