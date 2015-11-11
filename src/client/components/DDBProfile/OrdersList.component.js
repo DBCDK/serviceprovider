@@ -42,11 +42,16 @@ class OrdersList extends React.Component {
           }
         }
 
-        const pickupDate = (order.pickUpExpiryDate ? 'Hentes senest ' + order.pickUpExpiryDate : '');
+        const date = new Date(order.pickUpExpiryDate);
+        const pickupDate = (order.pickUpExpiryDate ? 'Hentes senest ' + date.getDate() + '/' + (date.getMonth() + 1) + '-' + date.getFullYear() : '');
+        let pickupClass = 'small-9 medium-10 large-10 column';
+        if (ready) {
+          pickupClass += ' ready';
+        }
         return (
           <li className='row' key={order.orderId}>
             <span className='small-10 medium-11 large-12 column'>{order.title}</span>
-            <span className='small-9 medium-10 large-10 column'>{ready ? 'Klar til afhentning på ' + order.pickUpAgency : 'Kø: ' + order.queue}</span>
+            <span className={pickupClass}>{ready ? 'Klar til afhentning på ' + order.pickUpAgency : 'Kø: ' + order.queue}</span>
             <span className='small-5 medium-3 large-2 column'>{ready ? pickupDate : actionField}</span>
           </li>
         );
