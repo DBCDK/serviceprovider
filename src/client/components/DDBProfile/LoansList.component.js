@@ -42,7 +42,7 @@ class LoansList extends React.Component {
         return (
           <li className='row' key={loan.loanId}>
             <span className='small-12 column'>{loan.title}</span>
-            <span className='small-10 column'>{loan.dueDate}</span>
+            <span className='small-10 column'>{'Afleveres senest ' + loan.dueDate}</span>
             <span className='small-2 column'>{renewable ? actionField : ''}</span>
           </li>
         );
