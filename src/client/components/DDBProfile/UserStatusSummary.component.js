@@ -17,16 +17,18 @@ class UserStatusSummary extends React.Component {
 
   render() {
 
-    console.log(this.props.items);
-    console.log(this.props.loans);
-    console.log(this.props.orders);
-
-    const expiringLoans = (this.props.loans) ? filter(this.props.loans, (x) => {return x.expiresSoon;}) : [];
+    const expiringLoans = (this.props.loans) ? filter(this.props.loans, (x) => {
+      return x.dueSoon;
+    }) : [];
     const expiringLoansCount = expiringLoans.length;
 
     const ordersReadyForPickUp = (this.props.items) ? this.props.items.length : 0;
 
-    const debt = (this.props.items) ? reduce(this.props.items, (a,b) => {return a.amount + b.amount;}, {amount:0}) : 0;
+    const debt = (this.props.items) ? reduce(this.props.items, (a, b) => {
+      return a.amount + b.amount;
+    }, {
+      amount: 0
+    }) : 0;
 
     const ordersReadyForPickUpMessage = (<p>{ordersReadyForPickUp} reserveringer klar til afhentning</p>);
     const expiringLoansMessage = (<p>{expiringLoansCount} lån skal afleveres snart</p>);
