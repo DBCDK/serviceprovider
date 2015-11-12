@@ -28,14 +28,19 @@ class DDBProfile extends React.Component {
     this.onUpdateUserStatus = this.onUpdateUserStatus.bind(this);
 
     this.state = {
-      status: null
+      status: null,
+      uiStatus: {
+        loanCollapsed: true,
+        ordersCollapsed: true,
+        fiscalCollapsed: true
+      }
     };
 
     UserStatusStore.listen(this.onUpdateUserStatus);
   }
 
-  onUpdateUserStatus(status) {
-    this.setState({status: status});
+  onUpdateUserStatus(store) {
+    this.setState({status: store.status, uiStatus: store.uiStatus});
   }
 
   deleteOrder(orderId, orderType) {
@@ -44,6 +49,10 @@ class DDBProfile extends React.Component {
 
   renewLoan(loanId) {
     UserStatusActions.markLoanForRenewal(loanId);
+  }
+
+  toggleOrderDisplay() {
+    UserStatusActions.toggleOrderDisplay();
   }
 
   render() {
@@ -68,7 +77,7 @@ class DDBProfile extends React.Component {
         <UserStatusSummary items={fiscalItems} loans={loans} orders={orders} />
         <FiscalStatus items={fiscalItems} />
         <LoansList loans={loans} onRenew={this.renewLoan} />
-        <OrdersList onDelete={this.deleteOrder} orders={orders}/>
+        <OrdersList collapsed={this.state.uiStatus.ordersCollapsed} onDelete={this.deleteOrder} onToggleOrderDisplay={this.toggleOrderDisplay} orders={orders}/>
       </div>
     );
   }
