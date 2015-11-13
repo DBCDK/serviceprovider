@@ -48,10 +48,13 @@ class OrdersList extends React.Component {
         if (ready) {
           pickupClass += ' ready';
         }
+
+        const queue = (order.queue !== null) ? 'Kø: ' + order.queue : '';
+
         return (
           <li className='row' key={order.orderId}>
             <span className='small-10 medium-11 large-12 column'>{order.title}</span>
-            <span className={pickupClass}>{ready ? 'Klar til afhentning på ' + order.pickUpAgency : 'Du er nr ' + order.queue + ' i køen. Afhentes på ' + order.pickUpAgency}</span>
+            <span className={pickupClass}>{ready ? 'Klar til afhentning på ' + order.pickUpAgency : queue}</span>
             <span className='small-5 medium-3 large-2 column'>{ready ? pickupDate : actionField}</span>
           </li>
         );
