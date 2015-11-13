@@ -55,6 +55,10 @@ class DDBProfile extends React.Component {
     UserStatusActions.toggleOrderDisplay();
   }
 
+  toggleLoanDisplay() {
+    UserStatusActions.toggleLoanDisplay();
+  }
+
   render() {
 
     let fiscalItems = null;
@@ -76,7 +80,7 @@ class DDBProfile extends React.Component {
       <div className='profile--user-status'>
         <UserStatusSummary items={fiscalItems} loans={loans} orders={orders} />
         <FiscalStatus items={fiscalItems} />
-        <LoansList loans={loans} onRenew={this.renewLoan} />
+        <LoansList collapsed={this.state.uiStatus.loanCollapsed} loans={loans} onRenew={this.renewLoan} onToggleLoanDisplay={this.toggleLoanDisplay} />
         <OrdersList collapsed={this.state.uiStatus.ordersCollapsed} onDelete={this.deleteOrder} onToggleOrderDisplay={this.toggleOrderDisplay} orders={orders}/>
       </div>
     );

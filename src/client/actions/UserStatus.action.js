@@ -20,6 +20,7 @@ const UserStatusActions = Reflux.createActions([
   'confirmRenewLoan',
   'markOrderForDeletion',
   'markLoanForRenewal',
+  'toggleLoanDisplay',
   'toggleOrderDisplay'
 ]);
 

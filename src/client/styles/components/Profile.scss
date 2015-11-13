@@ -42,21 +42,21 @@ $background-color: #fdfdfd;
       }
     }
   }
-  .order-header {
+  .user-status-header {
     display: inline-block;
   }
-  .arrows {
+  .toggle-buttons {
     display: inline-block;
     padding: 0 10px;
     cursor: pointer;
-    .arrow-down {
+    .button-collapsed {
       width: 0; 
       height: 0; 
       border-left: 20px solid transparent;
       border-right: 20px solid transparent;
       border-top: 20px solid #000000;
     }
-    .arrow-up {
+    .button-not-collapsed {
       width: 0; 
       height: 0; 
       border-left: 20px solid transparent;
@@ -64,9 +64,10 @@ $background-color: #fdfdfd;
       border-bottom: 20px solid #000000;
     }
   }
+  .loan-list.collapsed,
   .order-list.collapsed,
-  .collapsed .arrow-up,
-  .not-collapsed .arrow-down {
+  .collapsed .button-not-collapsed,
+  .not-collapsed .button-collapsed {
     display: none;
   }
 }

@@ -2,13 +2,13 @@
 
 /**
  * @file
- * DDBProfile component displays the user attributes and allows editing.
+ * LoansList component a list of loans made by the user.
  */
 
 import React, {PropTypes} from 'react';
 // import Reflux from 'reflux';
 import {curry, sortByAll} from 'lodash';
-
+import ToggleButton from './ToggleButton.component';
 
 class LoansList extends React.Component {
 
@@ -19,6 +19,7 @@ class LoansList extends React.Component {
   render() {
 
     const renewLoan = this.props.onRenew ? curry(this.props.onRenew, 2) : function() {};
+    const toggleDisplay = this.props.onToggleLoanDisplay;
 
     let loans;
 
@@ -67,27 +68,32 @@ class LoansList extends React.Component {
       });
     }
 
-    const loansList = (<ul>
+    const listClass = (this.props.collapsed === true) ? 'loan-list collapsed' : 'loan-list';
+
+    const loansList = (<ul className={listClass} id='loan-list'>
       {loans}
     </ul>);
 
     // show this if not results have been returned yet
     const loadingWheel = (<p>Loading...</p>);
 
-    const noLoansMessage = (<p>Du har ingen lån</p>);
-
     let listContent = loadingWheel;
+    let header = 'Lån';
+    let arrows = '';
     if (Array.isArray(this.props.loans) && this.props.loans.length === 0) {
-      listContent = noLoansMessage;
+      header = 'Du har ingen lån';
+      listContent = '';
     }
     else if (this.props.loans !== null) {
+      arrows = <ToggleButton collapsed={this.props.collapsed} toggleDisplay={toggleDisplay} />;
+      header = this.props.loans.length + ' lån';
       listContent = loansList;
     }
 
-
     const content = (
         <div className='row'>
-          <h2>Lån</h2>
+          <h2 className='user-status-header'>{header}</h2>
+          {arrows}
           {listContent}
         </div>
     );
@@ -97,8 +103,10 @@ class LoansList extends React.Component {
 }
 
 LoansList.propTypes = {
+  collapsed: PropTypes.bool,
   loans: PropTypes.array,
-  onRenew: PropTypes.func
+  onRenew: PropTypes.func,
+  onToggleLoanDisplay: PropTypes.func
 };
 
 LoansList.displayName = 'LoansList.component';

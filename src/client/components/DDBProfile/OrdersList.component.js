@@ -2,15 +2,15 @@
 
 /**
  * @file
- * DDBProfile component displays the user attributes and allows editing.
+ * OrderList component displays a list of orders made by the user.
  */
 
 import React, {PropTypes} from 'react';
 // import Reflux from 'reflux';
 import {curry, sortByAll} from 'lodash';
+import ToggleButton from './ToggleButton.component';
 
 class OrdersList extends React.Component {
-
 
   constructor() {
     super();
@@ -72,16 +72,12 @@ class OrdersList extends React.Component {
     let header = 'Reserveringer';
     let arrows = '';
 
-    const arrowsClass = (this.props.collapsed === true) ? 'arrows collapsed' : 'arrows not-collapsed';
-
     if (this.props.orders !== null) {
-      arrows = (
-        <div className={arrowsClass} onClick={toggleDisplay}>
-          <div className='arrow-down'></div>
-          <div className='arrow-up'></div>
-        </div>
-      );
-      if (this.props.orders.length === 1) {
+      arrows = <ToggleButton collapsed={this.props.collapsed} toggleDisplay={toggleDisplay} />;
+      if (this.props.orders.length === 0) {
+        header = 'Du har ingen reserveringer';
+      }
+      else if (this.props.orders.length === 1) {
         header = this.props.orders.length + ' reservering';
       }
       else {
@@ -91,7 +87,7 @@ class OrdersList extends React.Component {
 
     const content = (
         <div className='row'>
-          <h2 className='order-header'>{header}</h2>
+          <h2 className='user-status-header'>{header}</h2>
           {arrows}
           {(this.props.orders === null) ? loadingWheel : ordersList}
         </div>
