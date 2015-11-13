@@ -9,7 +9,12 @@ import {forEach} from 'lodash';
 const UserStatusStore = Reflux.createStore({
 
   store: {
-    status: null
+    status: null,
+    uiStatus: {
+      loanCollapsed: true,
+      ordersCollapsed: true,
+      fiscalCollapsed: true
+    }
   },
 
   init() {
@@ -25,7 +30,12 @@ const UserStatusStore = Reflux.createStore({
       fiscalAccount: userStatusResponse.result.fiscalAccount
     };
 
-    this.trigger(this.store.status);
+    this.trigger(this.store);
+  },
+
+  onToggleOrderDisplay() { // eslint-disable-line
+    this.store.uiStatus.ordersCollapsed = !this.store.uiStatus.ordersCollapsed;
+    this.trigger(this.store);
   },
 
   onMarkOrderForDeletion(orderId, orderType) {
@@ -64,7 +74,7 @@ const UserStatusStore = Reflux.createStore({
     }
 
     // make sure re-render is triggered
-    this.trigger(this.store.status);
+    this.trigger(this.store);
 
     // send renew action
     UserStatusActions.renewLoan({loanId: loanId});
@@ -88,7 +98,7 @@ const UserStatusStore = Reflux.createStore({
     }
 
     // make sure re-render is triggered
-    this.trigger(this.store.status);
+    this.trigger(this.store);
   },
 
   onCancelOrder(orderId) { // eslint-disable-line
@@ -107,8 +117,9 @@ const UserStatusStore = Reflux.createStore({
       });
     }
     // make sure re-render is triggered
-    this.trigger(this.store.status);
+    this.trigger(this.store);
   }
+
 });
 
 export default UserStatusStore;

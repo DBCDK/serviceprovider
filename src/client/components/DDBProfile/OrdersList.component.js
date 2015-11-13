@@ -17,8 +17,8 @@ class OrdersList extends React.Component {
   }
 
   render() {
-
     const deleteOrder = this.props.onDelete ? curry(this.props.onDelete, 3) : function() {};
+    const toggleDisplay = this.props.onToggleOrderDisplay;
 
     let orderListContent = (<p>ingen reserveringer</p>);
     if (this.props.orders) {
@@ -61,15 +61,38 @@ class OrdersList extends React.Component {
       });
     }
 
-    const ordersList = (<ul>
+    const listClass = (this.props.collapsed === true) ? 'order-list collapsed' : 'order-list';
+
+    const ordersList = (<ul className={listClass} id='order-list'>
       {orderListContent}
     </ul>);
 
     const loadingWheel = (<p>Loading...</p>);
 
+    let header = 'Reserveringer';
+    let arrows = '';
+
+    const arrowsClass = (this.props.collapsed === true) ? 'arrows collapsed' : 'arrows not-collapsed';
+
+    if (this.props.orders !== null) {
+      arrows = (
+        <div className={arrowsClass} onClick={toggleDisplay}>
+          <div className='arrow-down'></div>
+          <div className='arrow-up'></div>
+        </div>
+      );
+      if (this.props.orders.length === 1) {
+        header = this.props.orders.length + ' reservering';
+      }
+      else {
+        header = this.props.orders.length + ' reserveringer';
+      }
+    }
+
     const content = (
         <div className='row'>
-          <h2>Reserveringer</h2>
+          <h2 className='order-header'>{header}</h2>
+          {arrows}
           {(this.props.orders === null) ? loadingWheel : ordersList}
         </div>
     );
@@ -80,7 +103,9 @@ class OrdersList extends React.Component {
 }
 
 OrdersList.propTypes = {
+  collapsed: PropTypes.bool,
   onDelete: PropTypes.func,
+  onToggleOrderDisplay: PropTypes.func,
   orders: PropTypes.array
 };
 
