@@ -6,6 +6,7 @@
  */
 
 import React, {PropTypes} from 'react';
+import ToggleButton from './ToggleButton.component';
 
 
 class FiscalStatus extends React.Component {
@@ -17,6 +18,7 @@ class FiscalStatus extends React.Component {
   render() {
 
     let items;
+    const toggleDisplay = this.props.onToggleFiscalDisplay;
 
     if (this.props.items) {
       items = this.props.items.map(function(item) {
@@ -31,27 +33,39 @@ class FiscalStatus extends React.Component {
       });
     }
 
-    const itemsList = (<ul>
+    const listClass = (this.props.collapsed === true) ? 'fiscal-list collapsed' : 'fiscal-list';
+
+    const itemsList = (<ul className={listClass} id='fiscal-list'>
       {items}
     </ul>);
 
     // show this if not results have been returned yet
     const loadingWheel = (<p>Loading...</p>);
 
-    const noItemsMessage = (<p>Du har ingen bøder</p>);
+    let header = 'Mellemværender';
+    let arrows = '';
 
     let listContent = loadingWheel;
     if (Array.isArray(this.props.items) && this.props.items.length === 0) {
-      listContent = noItemsMessage;
+      header = 'Du har ingen mellemværender';
+      listContent = '';
     }
     else if (this.props.items !== null) {
+      arrows = <ToggleButton collapsed={this.props.collapsed} toggleDisplay={toggleDisplay} />;
+      if (this.props.items.length === 1) {
+        header = this.props.items.length + ' mellemværende';
+      }
+      else {
+        header = this.props.items.length + ' mellemværender';
+      }
       listContent = itemsList;
     }
 
 
     const content = (
         <div className='row'>
-          <h2>Mellemværende</h2>
+          <h2 className='user-status-header'>{header}</h2>
+          {arrows}
           {listContent}
         </div>
     );
@@ -65,7 +79,9 @@ class FiscalStatus extends React.Component {
 }
 
 FiscalStatus.propTypes = {
-  items: PropTypes.array
+  collapsed: PropTypes.bool,
+  items: PropTypes.array,
+  onToggleFiscalDisplay: PropTypes.func
 };
 
 FiscalStatus.displayName = 'FiscalStatus.component';

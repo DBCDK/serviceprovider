@@ -33,6 +33,11 @@ const UserStatusStore = Reflux.createStore({
     this.trigger(this.store);
   },
 
+  onToggleFiscalDisplay() { // eslint-disable-line
+    this.store.uiStatus.fiscalCollapsed = !this.store.uiStatus.fiscalCollapsed;
+    this.trigger(this.store);
+  },
+
   onToggleLoanDisplay() { // eslint-disable-line
     this.store.uiStatus.loanCollapsed = !this.store.uiStatus.loanCollapsed;
     this.trigger(this.store);
