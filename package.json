@@ -35,7 +35,7 @@
   },
   "homepage": "https://github.com/DBCDK/pallesgavebod#readme",
   "dependencies": {
-    "@dbcdk/dbc-config": "^1.5.1",
+    "@dbcdk/dbc-config": "^1.7.1",
     "async": "1.5.0",
     "babel": "5.8.29",
     "babel-core": "5.8.29",
