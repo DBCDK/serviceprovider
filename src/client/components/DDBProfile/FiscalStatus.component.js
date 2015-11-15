@@ -61,12 +61,13 @@ class FiscalStatus extends React.Component {
       listContent = itemsList;
     }
 
-
+    const sliderClass = (this.props.collapsed === true) ? 'slider slider-collapsed' : 'slider slider-not-collapsed';
     const content = (
         <div className='row'>
+          <a id='fiscal-scroll' name='fiscal-scroll'></a>
           <h2 className='user-status-header'>{header}</h2>
           {arrows}
-          {listContent}
+          <div className={sliderClass}>{listContent}</div>
         </div>
     );
 

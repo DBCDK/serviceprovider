@@ -85,11 +85,13 @@ class OrdersList extends React.Component {
       }
     }
 
+    const sliderClass = (this.props.collapsed === true) ? 'slider slider-collapsed' : 'slider slider-not-collapsed';
     const content = (
         <div className='row'>
+          <a id='order-scroll' name='order-scroll'></a>
           <h2 className='user-status-header'>{header}</h2>
           {arrows}
-          {(this.props.orders === null) ? loadingWheel : ordersList}
+          {(this.props.orders === null) ? loadingWheel : <div className={sliderClass}>{ordersList}</div>}
         </div>
     );
 

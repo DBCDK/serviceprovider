@@ -14,10 +14,10 @@ class ToggleButton extends React.Component {
   }
 
   render() {
-    const arrowsClass = (this.props.collapsed === true) ? 'toggle-buttons collapsed' : 'toggle-buttons not-collapsed';
+    const toggleClass = (this.props.collapsed === true) ? 'toggle-buttons collapsed' : 'toggle-buttons not-collapsed';
 
     return (
-      <div className={arrowsClass} onClick={this.props.toggleDisplay}>
+      <div className={toggleClass} onClick={this.props.toggleDisplay}>
         <div className='button-collapsed'></div>
         <div className='button-not-collapsed'></div>
       </div>
