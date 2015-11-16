@@ -40,11 +40,10 @@ PassportRoutes.get('/logout', (req, res) => {
 });
 
 PassportRoutes.post('/login', passport.authenticate('borchk',
-  {
+  { // TODO mmj cutsom callback to properly handle borchk responses
     failureRedirect: '/profile/login?error=Ugyldigt%20brugernavn%20eller%20kodeord'
   }),
   (req, res) => {
-    console.log('hep'); // eslint-disable-line
     if (req.session.hasOwnProperty('returnTo')) {
       res.redirect(req.session.returnTo);
     }
