@@ -9,6 +9,7 @@ import React, {PropTypes} from 'react';
 // import Reflux from 'reflux';
 import {curry, sortByAll} from 'lodash';
 import ToggleButton from './ToggleButton.component';
+import Loader from '../Loader.component.js';
 
 class OrdersList extends React.Component {
 
@@ -66,8 +67,8 @@ class OrdersList extends React.Component {
     const ordersList = (<ul className={listClass} id='order-list'>
       {orderListContent}
     </ul>);
-
-    const loadingWheel = (<p>Loading...</p>);
+    const pending = true;
+    const loadingWheel = <Loader pending={pending} />;
 
     let header = 'Reserveringer';
     let arrows = '';
@@ -80,7 +81,7 @@ class OrdersList extends React.Component {
         header = 'Du har ingen reserveringer';
       }
       else if (this.props.orders.length === 1) {
-        header = this.props.orders.length + ' reservering';
+        header = '1 reservering';
       }
       else {
         header = this.props.orders.length + ' reserveringer';
@@ -89,7 +90,7 @@ class OrdersList extends React.Component {
       headerClass = 'user-status-header toggle';
     }
 
-    const sliderClass = (this.props.collapsed === true) ? 'slider slider-collapsed' : 'slider slider-not-collapsed';
+    const sliderClass = (this.props.collapsed) ? 'slider slider-collapsed' : 'slider slider-not-collapsed';
     const content = (
         <div className='row'>
           <a id='order-scroll' name='order-scroll'></a>

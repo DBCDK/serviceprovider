@@ -9,6 +9,7 @@ import React, {PropTypes} from 'react';
 // import Reflux from 'reflux';
 import {curry, sortByAll} from 'lodash';
 import ToggleButton from './ToggleButton.component';
+import Loader from '../Loader.component.js';
 
 class LoansList extends React.Component {
 
@@ -75,7 +76,8 @@ class LoansList extends React.Component {
     </ul>);
 
     // show this if not results have been returned yet
-    const loadingWheel = (<p>Loading...</p>);
+    const pending = true;
+    const loadingWheel = <Loader pending={pending} />;
 
     let listContent = loadingWheel;
     let header = 'Lån';
