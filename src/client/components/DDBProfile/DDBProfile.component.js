@@ -26,6 +26,9 @@ class DDBProfile extends React.Component {
     super();
 
     this.onUpdateUserStatus = this.onUpdateUserStatus.bind(this);
+    this.toggleOrderDisplay = this.toggleOrderDisplay.bind(this);
+    this.toggleLoanDisplay = this.toggleLoanDisplay.bind(this);
+    this.toggleFiscalDisplay = this.toggleFiscalDisplay.bind(this);
 
     this.state = {
       status: null,
@@ -53,14 +56,23 @@ class DDBProfile extends React.Component {
 
   toggleFiscalDisplay() {
     UserStatusActions.toggleFiscalDisplay();
+    if (this.state.uiStatus.fiscalCollapsed === true) {
+      location.hash = '#fiscal-scroll';
+    }
   }
 
   toggleOrderDisplay() {
     UserStatusActions.toggleOrderDisplay();
+    if (this.state.uiStatus.ordersCollapsed === true) {
+      location.hash = '#order-scroll';
+    }
   }
 
   toggleLoanDisplay() {
     UserStatusActions.toggleLoanDisplay();
+    if (this.state.uiStatus.loanCollapsed === true) {
+      location.hash = '#loan-scroll';
+    }
   }
 
   render() {
@@ -82,10 +94,15 @@ class DDBProfile extends React.Component {
 
     return (
       <div className='profile--user-status'>
-        <UserStatusSummary items={fiscalItems} loans={loans} orders={orders} />
-        <FiscalStatus collapsed={this.state.uiStatus.fiscalCollapsed} items={fiscalItems} onToggleFiscalDisplay={this.toggleFiscalDisplay} />
+        <UserStatusSummary
+          items={fiscalItems}
+          loans={loans} orders={orders}
+          toggleFiscalDisplay={this.toggleFiscalDisplay}
+          toggleLoanDisplay={this.toggleLoanDisplay}
+          toggleOrderDisplay={this.toggleOrderDisplay} />
         <LoansList collapsed={this.state.uiStatus.loanCollapsed} loans={loans} onRenew={this.renewLoan} onToggleLoanDisplay={this.toggleLoanDisplay} />
         <OrdersList collapsed={this.state.uiStatus.ordersCollapsed} onDelete={this.deleteOrder} onToggleOrderDisplay={this.toggleOrderDisplay} orders={orders}/>
+        <FiscalStatus collapsed={this.state.uiStatus.fiscalCollapsed} items={fiscalItems} onToggleFiscalDisplay={this.toggleFiscalDisplay} />
       </div>
     );
   }

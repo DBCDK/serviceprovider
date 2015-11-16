@@ -90,11 +90,13 @@ class LoansList extends React.Component {
       listContent = loansList;
     }
 
+    const sliderClass = (this.props.collapsed === true) ? 'slider slider-collapsed' : 'slider slider-not-collapsed';
     const content = (
         <div className='row'>
+          <a id='loan-scroll' name='loan-scroll'></a>
           <h2 className='user-status-header'>{header}</h2>
           {arrows}
-          {listContent}
+          {(this.props.loans === null) ? loadingWheel : <div className={sliderClass}>{listContent}</div>}
         </div>
     );
 

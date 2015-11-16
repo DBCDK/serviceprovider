@@ -12,7 +12,7 @@
     "lint:checkstyle": "eslint ./src  -o report.xml -f checkstyle",
     "serve": "supervisor  --instant-kill -w src/app.js,src/server,node_modules src/main.js",
     "selenium": "mocha -t 20000 selenium/selenium_test.js",
-    "selenium:junit": "mocha -t 20000 selenium/selenium_test.js -R mocha-jenkins-reporter",
+    "selenium:junit": "mocha -t 35000 selenium/selenium_test.js -R mocha-jenkins-reporter",
     "siege": "siege -c500 -d10 -t30M -i -f siegetestendpoints.txt",
     "siege:live": "siege -c500 -d10 -t30M -i -f siegedemoendpoints.txt",
     "start": "node src/main.js",
