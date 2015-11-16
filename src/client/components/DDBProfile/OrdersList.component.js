@@ -71,6 +71,8 @@ class OrdersList extends React.Component {
 
     let header = 'Reserveringer';
     let arrows = '';
+    let toggleFunc = '';
+    let headerClass = '';
 
     if (this.props.orders !== null) {
       arrows = <ToggleButton collapsed={this.props.collapsed} toggleDisplay={toggleDisplay} />;
@@ -83,13 +85,15 @@ class OrdersList extends React.Component {
       else {
         header = this.props.orders.length + ' reserveringer';
       }
+      toggleFunc = toggleDisplay;
+      headerClass = 'user-status-header toggle';
     }
 
     const sliderClass = (this.props.collapsed === true) ? 'slider slider-collapsed' : 'slider slider-not-collapsed';
     const content = (
         <div className='row'>
           <a id='order-scroll' name='order-scroll'></a>
-          <h2 className='user-status-header'>{header}</h2>
+          <h2 className={headerClass} onClick={toggleFunc}>{header}</h2>
           {arrows}
           {(this.props.orders === null) ? loadingWheel : <div className={sliderClass}>{ordersList}</div>}
         </div>

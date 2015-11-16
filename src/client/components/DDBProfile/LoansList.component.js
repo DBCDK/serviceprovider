@@ -80,9 +80,14 @@ class LoansList extends React.Component {
     let listContent = loadingWheel;
     let header = 'Lån';
     let arrows = '';
+    let toggleFunc = toggleDisplay;
+    let headerClass = 'user-status-header toggle';
+
     if (Array.isArray(this.props.loans) && this.props.loans.length === 0) {
       header = 'Du har ingen lån';
       listContent = '';
+      toggleFunc = '';
+      headerClass = 'user-status-header';
     }
     else if (this.props.loans !== null) {
       arrows = <ToggleButton collapsed={this.props.collapsed} toggleDisplay={toggleDisplay} />;
@@ -94,7 +99,7 @@ class LoansList extends React.Component {
     const content = (
         <div className='row'>
           <a id='loan-scroll' name='loan-scroll'></a>
-          <h2 className='user-status-header'>{header}</h2>
+          <h2 className={headerClass} onClick={toggleFunc}>{header}</h2>
           {arrows}
           {(this.props.loans === null) ? loadingWheel : <div className={sliderClass}>{listContent}</div>}
         </div>
