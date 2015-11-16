@@ -11,6 +11,7 @@ var SAUCE_URL = 'http://ondemand.saucelabs.com:80/wd/hub';
 var DBC_URLS = ['http://uxwin7-01:4444/wd/hub', 'http://uxwin81-01:4444/wd/hub', 'http://uxwin10-01:5432/wd/hub'];
 var BASE_URL = isSauceLabsTest ? 'https://pg.demo.dbc.dk' : process.env.SELENIUM_URL || 'http://localhost:8080'; // eslint-disable-line
 var driverTimeout = process.env.DRIVER_TIMEOUT || 10000; // eslint-disable-line no-process-env
+driverTimeout = parseInt(driverTimeout, 10);
 
 function runAllTests(driverCaps) {
   test.describe('Express endpoint', function () {
