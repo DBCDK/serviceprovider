@@ -45,6 +45,9 @@ $background-color: #fdfdfd;
   .user-status-header {
     display: inline-block;
   }
+  .toggle {
+    cursor: pointer;
+  }
   .toggle-buttons {
     display: inline-block;
     padding: 0 10px;
