@@ -12,7 +12,7 @@ import LocalStrategy from 'passport-local';
 import BorchkStrategy from 'passport-borchk';
 
 export function MobilSoegPassportConfig(app) {
-  // const logger = app.get('logger');
+  const logger = app.get('logger');
   const serviceProvider = app.get('serviceProvider');
 
   app.use(passport.initialize());
@@ -20,8 +20,7 @@ export function MobilSoegPassportConfig(app) {
 
   passport.use('borchk', new BorchkStrategy(
     (agencyid, loanerid, pincode, done) => {
-      console.log('done'); // eslint-disable-line
-      const BorchkResponse = serviceProvider.trigger(
+      const promisses = serviceProvider.trigger(
         'checkBorrower', {
           agencyID: agencyid,
           loanerID: loanerid,
@@ -29,51 +28,35 @@ export function MobilSoegPassportConfig(app) {
         }
       );
 
-      Promise.all(BorchkResponse).then((response) => {
-        const borchkResponse = response[0];
+      Promise.all(promisses)
+        .then((response) => {
+          const borchkResponse = response[0];
 
-        console.log('borchkResponse', borchkResponse); // eslint-disable-line
-        if (borchkResponse.requestStatus === 'ok') {
+          console.log('borchkResponse', borchkResponse); // eslint-disable-line
+          if (borchkResponse.error) {
+            done(borchkResponse.error);
+          }
 
-          const user = {
-            agencyid: agencyid,
-            loanerid: loanerid,
-            pincode: pincode
-          };
-
-          done(null, user);
-        }
-      });
-
-      /*
-       let loginResponse = serviceProvider.trigger(
-       'loginProfile', {
-       email: username,
-       password: password
-       }
-       );
-       */
-      /*
-       Promise.all(loginResponse).then((response) => {
-       const result = response[0];
-       const isLoginSuccesful = typeof result.error === 'undefined';
-       if (isLoginSuccesful) {
-       const user = {
-       id: result.id,
-       uid: result.userId,
-       ttl: result.ttl
-       };
-       done(null, user);
-       }
-       else {
-       done(null, false);
-       }
-       }, (err) => {
-       // return 500 Internal Error status code
-       logger.error('Error in local login strategy, promise rejected', err);
-       done(null, false);
-       });
-       */
+          if (borchkResponse.requestStatus === 'ok') {
+            const user = {
+              agencyid: agencyid,
+              loanerid: loanerid,
+              pincode: pincode
+            };
+            done(null, user);
+          }
+          else {
+            logger.warning('User could not be verified against borchk', {borchkResponse: borchkResponse, agencyid: agencyid});
+            done(null, null, borchkResponse);
+          }
+        })
+        .catch((e) => {
+          logger.error('Some error occured while resolving a promise from borchk during login', {error: e});
+        }, (err) => {
+          // return 500 Internal Error status code
+          logger.error('Error in local borchk strategy, promise rejected', {error: err});
+          done(null, false);
+        });
     }
   ));
 
