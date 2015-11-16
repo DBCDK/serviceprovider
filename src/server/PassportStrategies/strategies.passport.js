@@ -28,9 +28,12 @@ export function MobilSoegPassportConfig(app) {
         }
       );
 
+
       Promise.all(promisses)
         .then((response) => {
           const borchkResponse = response[0];
+          const openAgencyResponse = response[1];
+
 
           console.log('borchkResponse', borchkResponse); // eslint-disable-line
           if (borchkResponse.error) {
@@ -41,7 +44,8 @@ export function MobilSoegPassportConfig(app) {
             const user = {
               agencyid: agencyid,
               loanerid: loanerid,
-              pincode: pincode
+              pincode: pincode,
+              branchNames: openAgencyResponse.branchNames
             };
             done(null, user);
           }
