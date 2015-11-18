@@ -1,7 +1,6 @@
 'use strict';
 
 import React from 'react';
-import LibrarySelector from '../../LibrarySelector/LibrarySelector.component';
 
 /**
  * @file
@@ -19,11 +18,7 @@ export default class Login extends React.Component {
         </div>
 
         <form action='/profile/login' method='POST' >
-          <div className="large-24 columns" >
-            <label>Vælg dit bibliotek
-              <LibrarySelector />
-            </label>
-          </div>
+          <input name="agencyid" type="hidden" value={this.props.agencyId} />
 
           <div className="large-24 columns" >
             <label>Låner ID
@@ -47,3 +42,6 @@ export default class Login extends React.Component {
 }
 
 Login.displayName = 'Login.mobilsoeg';
+Login.propTypes = {
+  agencyId: React.PropTypes.string.isRequired
+};

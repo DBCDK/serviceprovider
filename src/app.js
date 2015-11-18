@@ -34,6 +34,9 @@ import PassportRoutesMobilsoeg from './server/routes/passport.routes.mobilsoeg.j
 import WorkRoutes from './server/routes/work.routes.js';
 import GroupRoutes from './server/routes/group.routes.js';
 
+// Middleware
+import mobilsoegmiddleware from './server/routes/mobilsoeg.middleware.js';
+
 // Passport
 import * as PassportStrategies from './server/PassportStrategies/strategies.passport';
 
@@ -70,6 +73,7 @@ app.set('serviceProvider', ServiceProvider(config[process.env.CONFIG_NAME || 'pa
 app.set('logger', logger);
 app.set('EMAIL_REDIRECT', EMAIL_REDIRECT);
 app.set('APPLICATION', APPLICATION);
+app.set('Configuration', config);
 
 // Configure templating
 app.set('views', path.join(__dirname, 'server/templates'));
@@ -172,6 +176,9 @@ if (APPLICATION === 'pg') {
 
 // Configuring MobilSøg application
 if (APPLICATION === 'mobilsoeg') {
+  // Detect library and set context
+  app.use(mobilsoegmiddleware.libraryStyleWare);
+
   // Setup passport
   PassportStrategies.MobilSoegPassportConfig(app);
 
@@ -189,6 +196,7 @@ if (ENV === 'development') {
 
 // Graceful handling of errors
 app.use((err, req, res, next) => {
+  logger.log('error', 'An error occurred! Got following: ' + err);
   if (res.headersSent) {
     return next(err);
   }

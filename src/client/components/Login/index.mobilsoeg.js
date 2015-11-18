@@ -9,4 +9,5 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import Login from './mobilsoeg/Login.mobilsoeg.component.js';
 
-ReactDOM.render(<Login/>, document.getElementById('login'), null);
+let agencyId = typeof window !== 'undefined' ? window.agencyId : '775100';
+ReactDOM.render(<Login agencyId={agencyId} />, document.getElementById('login'), null);

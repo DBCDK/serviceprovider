@@ -5,7 +5,7 @@
  */
 'use strict';
 
-var config = require('@dbcdk/dbc-config').palle;
+var config = require('@dbcdk/dbc-config')[process.env.CONFIG_NAME || 'palle']; // eslint-disable-line no-process-env
 
 if (config.newrelic) {
   require('newrelic');
