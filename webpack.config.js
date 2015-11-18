@@ -25,8 +25,8 @@ if (APPLICATION === 'ddbmobil') {
     querysearch: './src/client/components/searchpage/index.js',
     receipt: './src/client/components/Receipt/index.js',
     resetpassword: './src/client/components/ResetPassword/index.js',
-    topnavigation: './src/client/components/TopNavigation/index.js',
-    work: './src/client/components/Work/Work.client',
+    topnavigation: './src/client/components/TopNavigation/index.mobilsoeg.js',
+    work: './src/client/components/Work/Work.client.mobilsoeg',
     terminal: './src/utils/Terminal',
     styles: './src/client/styles/ddb.scss'
   };
@@ -45,8 +45,8 @@ else {
     receipt: './src/client/components/Receipt/index.js',
     resetpassword: './src/client/components/ResetPassword/index.js',
     signup: './src/client/components/Signup/index.pg.js',
-    topnavigation: './src/client/components/TopNavigation/index.js',
-    work: './src/client/components/Work/Work.client',
+    topnavigation: './src/client/components/TopNavigation/index.pg.js',
+    work: './src/client/components/Work/Work.client.pg',
     terminal: './src/utils/Terminal',
     styles: './src/client/styles/pg.scss'
   };

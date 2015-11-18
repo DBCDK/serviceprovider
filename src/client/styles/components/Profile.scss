@@ -103,20 +103,6 @@ $background-color: #fdfdfd;
   .expired {
     background-color: red;
   }
-
-  .selector {
-    .loading {
-      background-image: url('/loader.gif');
-      background-size: 15%;
-      background-position-x: 50%;
-    }
-    .success {
-      border-color:green;
-    }
-    .failure {
-      border-color:red;
-    }
-  }
 }
 
 .profile--image-round{

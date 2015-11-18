@@ -24,23 +24,13 @@ PassportRoutes.get('/', dbcMiddleware.ensureAuthenticated, (req, res) => {
 });
 
 PassportRoutes.get('/logout', (req, res) => {
-  const serviceProvider = req.app.get('serviceProvider');
-
-  if (typeof req.user !== 'undefined') {
-    const params = {
-      accessToken: req.user.id,
-      id: req.user.uid
-    };
-    serviceProvider.trigger('logoutProfile', params);
-  }
-
   req.session.destroy(() => {
-    res.redirect('/profile/login');
+    res.redirect('/');
   });
 });
 
 PassportRoutes.post('/login', passport.authenticate('borchk',
-  { // TODO mmj cutsom callback to properly handle borchk responses
+  {
     failureRedirect: '/profile/login?error=Ugyldigt%20brugernavn%20eller%20kodeord'
   }),
   (req, res) => {
@@ -53,10 +43,14 @@ PassportRoutes.post('/login', passport.authenticate('borchk',
   });
 
 PassportRoutes.get('/login', (req, res) => {
-  let contextObject = {
+  const contextObject = {
     markup: ReactDOM.renderToString(<Login />),
     title: req.app.locals.title + ' - Log ind'
   };
+
+  if (!req.session.returnTo && req.headers.referer) {
+    req.session.returnTo = req.headers.referer;
+  }
 
   if (req.query.error) {
     contextObject.message = {

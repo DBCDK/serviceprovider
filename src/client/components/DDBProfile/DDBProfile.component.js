@@ -29,7 +29,6 @@ class DDBProfile extends React.Component {
     this.toggleOrderDisplay = this.toggleOrderDisplay.bind(this);
     this.toggleLoanDisplay = this.toggleLoanDisplay.bind(this);
     this.toggleFiscalDisplay = this.toggleFiscalDisplay.bind(this);
-    this.selectPickupAgency = this.selectPickupAgency.bind(this);
 
     this.state = {
       status: null,
@@ -76,10 +75,6 @@ class DDBProfile extends React.Component {
     }
   }
 
-  selectPickupAgency(orderId, agencyId) {
-    UserStatusActions.markForChangePickupAgency({orderId: orderId, agencyId: agencyId});
-  }
-
   render() {
 
     let fiscalItems = null;
@@ -97,11 +92,6 @@ class DDBProfile extends React.Component {
       loans = this.state.status.loanedItems.loans;
     }
 
-    let branchNamesMap = null;
-    if (this.state.status && this.state.status.branchNamesMap) {
-      branchNamesMap = this.state.status.branchNamesMap;
-    }
-
     return (
       <div className='profile--user-status'>
         <UserStatusSummary
@@ -110,25 +100,9 @@ class DDBProfile extends React.Component {
           toggleFiscalDisplay={this.toggleFiscalDisplay}
           toggleLoanDisplay={this.toggleLoanDisplay}
           toggleOrderDisplay={this.toggleOrderDisplay} />
-        <LoansList
-            collapsed={this.state.uiStatus.loanCollapsed}
-            loans={loans}
-            onRenew={this.renewLoan}
-            onToggleLoanDisplay={this.toggleLoanDisplay}
-            />
-        <OrdersList
-            branchNamesMap={branchNamesMap}
-            collapsed={this.state.uiStatus.ordersCollapsed}
-            onDelete={this.deleteOrder}
-            onSelectPickupAgency={this.selectPickupAgency}
-            onToggleOrderDisplay={this.toggleOrderDisplay}
-            orders={orders}
-            />
-        <FiscalStatus
-            collapsed={this.state.uiStatus.fiscalCollapsed}
-            items={fiscalItems}
-            onToggleFiscalDisplay={this.toggleFiscalDisplay}
-            />
+        <LoansList collapsed={this.state.uiStatus.loanCollapsed} loans={loans} onRenew={this.renewLoan} onToggleLoanDisplay={this.toggleLoanDisplay} />
+        <OrdersList collapsed={this.state.uiStatus.ordersCollapsed} onDelete={this.deleteOrder} onToggleOrderDisplay={this.toggleOrderDisplay} orders={orders}/>
+        <FiscalStatus collapsed={this.state.uiStatus.fiscalCollapsed} items={fiscalItems} onToggleFiscalDisplay={this.toggleFiscalDisplay} />
       </div>
     );
   }
