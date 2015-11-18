@@ -16,13 +16,20 @@ class UserStatusSummary extends React.Component {
   }
 
   render() {
-
     const expiringLoans = (this.props.loans) ? filter(this.props.loans, (x) => {
       return x.dueSoon;
     }) : [];
+    const expiredLoans = (this.props.loans) ? filter(this.props.loans, (y) => {
+      return y.overdue;
+    }) : [];
+    const readyOrders = (this.props.orders) ? filter(this.props.orders, (z) => {
+      return z.ready;
+    }) : [];
     const expiringLoansCount = expiringLoans.length;
+    const expiredLoansCount = expiredLoans.length;
+    const readyOrdersCount = readyOrders.length;
 
-    const ordersReadyForPickUp = (this.props.items) ? this.props.items.length : 0;
+    const noOders = (readyOrdersCount === 1) ? 'reservering' : 'reserveringer';
 
     let debt = 0;
     forEach(this.props.items, (item) => {
@@ -31,15 +38,29 @@ class UserStatusSummary extends React.Component {
       }
     });
 
-    const ordersReadyForPickUpMessage = (ordersReadyForPickUp > 0) ? (<p>{ordersReadyForPickUp} reserveringer klar til afhentning</p>) : '';
-    const expiringLoansMessage =(expiringLoansCount > 0) ? (<p>{expiringLoansCount} lån skal afleveres snart</p>) : '';
-    const debtMessage = (debt > 0) ? (<p>Du skylder {debt} kr</p>) : '';
+    const ordersReadyForPickUpMessage = (readyOrdersCount > 0) ? (
+      <div className='small-24 medium-12 large-8 column pickup'>
+        <div onClick={this.props.toggleOrderDisplay}>{readyOrdersCount} {noOders} klar til afhentning</div>
+      </div>) : '';
+    const expiringLoansMessage =(expiringLoansCount > 0) ? (
+      <div className='small-24 medium-12 large-8 column expiring'>
+        <div onClick={this.props.toggleLoanDisplay}>{expiringLoansCount} lån skal afleveres snart</div>
+      </div>) : '';
+    const expiredLoansMessage =(expiredLoansCount > 0) ? (
+      <div className='small-24 medium-12 large-8 column expired'>
+        <div onClick={this.props.toggleLoanDisplay}>{expiredLoansCount} lån skulle have været afleveret</div>
+      </div>) : '';
+    const debtMessage = (debt > 0) ? (
+      <div className='small-24 medium-12 large-8 column debt'>
+        <div onClick={this.props.toggleFiscalDisplay}>Du skylder {debt} kr</div>
+      </div>) : '';
 
     const content = (
-        <div className='row'>
-          <span className='small-24 large-8 column'>{ordersReadyForPickUpMessage}</span>
-          <span className='small-24 large-8 column'>{expiringLoansMessage}</span>
-          <span className='small-24 large-8 column'>{debtMessage}</span>
+        <div className='row action'>
+          {ordersReadyForPickUpMessage}
+          {expiringLoansMessage}
+          {expiredLoansMessage}
+          {debtMessage}
         </div>
     );
 
@@ -50,7 +71,10 @@ class UserStatusSummary extends React.Component {
 UserStatusSummary.propTypes = {
   items: PropTypes.array,
   loans: PropTypes.array,
-  orders: PropTypes.array
+  orders: PropTypes.array,
+  toggleFiscalDisplay: PropTypes.func,
+  toggleLoanDisplay: PropTypes.func,
+  toggleOrderDisplay: PropTypes.func
 };
 
 UserStatusSummary.displayName = 'UserStatusSummary.component';

@@ -7,6 +7,8 @@
 
 import React from 'react';
 import ReactDOM from 'react-dom';
-import TopNavigation from './TopNavigation.component.js';
+import TopNavigation from './mobilsoeg/TopNavigation.component.js';
 
-ReactDOM.render(<TopNavigation/>, document.getElementById('topnavigation'), null);
+ReactDOM.render(
+  <TopNavigation/>, document.getElementById('topnavigation'), null
+);

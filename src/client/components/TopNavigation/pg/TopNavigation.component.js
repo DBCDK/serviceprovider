@@ -6,7 +6,7 @@
  */
 
 import React from 'react';
-import ProfileStore from '../../stores/Profile.store.js';
+import ProfileStore from '../../../stores/Profile.store.js';
 
 const TopNavigation = React.createClass({
 
@@ -33,7 +33,6 @@ const TopNavigation = React.createClass({
   render() {
     const isLoggedIn = this.state.isLoggedIn;
     const buttonData = isLoggedIn ? {url: '/profile/logout', text: 'Log Ud'} : {url: '/profile/login', text: 'Log Ind'};
-
     const profileLink = isLoggedIn ? <a href='/profile' >{this.state.username}</a> : '';
 
     return (

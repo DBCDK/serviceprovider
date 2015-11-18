@@ -44,11 +44,15 @@ class FiscalStatus extends React.Component {
 
     let header = 'Mellemværender';
     let arrows = '';
+    let toggleFunc = toggleDisplay;
+    let headerClass = 'user-status-header toggle';
 
     let listContent = loadingWheel;
     if (Array.isArray(this.props.items) && this.props.items.length === 0) {
       header = 'Du har ingen mellemværender';
       listContent = '';
+      toggleFunc = '';
+      headerClass = 'user-status-header';
     }
     else if (this.props.items !== null) {
       arrows = <ToggleButton collapsed={this.props.collapsed} toggleDisplay={toggleDisplay} />;
@@ -61,12 +65,13 @@ class FiscalStatus extends React.Component {
       listContent = itemsList;
     }
 
-
+    const sliderClass = (this.props.collapsed === true) ? 'slider slider-collapsed' : 'slider slider-not-collapsed';
     const content = (
         <div className='row'>
-          <h2 className='user-status-header'>{header}</h2>
+          <a id='fiscal-scroll' name='fiscal-scroll'></a>
+          <h2 className={headerClass} onClick={toggleFunc}>{header}</h2>
           {arrows}
-          {listContent}
+          <div className={sliderClass}>{listContent}</div>
         </div>
     );
 

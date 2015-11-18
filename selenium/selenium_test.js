@@ -15,18 +15,9 @@ driverTimeout = parseInt(driverTimeout, 10);
 
 function runAllTests(driverCaps) {
   test.describe('Express endpoint', function () {
-    var driver;
-
-    beforeEach(function() {
-      driver = driverCaps.build();
-    });
-
-    afterEach(function() {
-      driver.quit();
-    });
-
     test.it('/profile/login can be reached', function () {
       var endpoint = '/profile/login';
+      var driver = driverCaps.build();
       driver.get(BASE_URL + endpoint);
       driver.wait(webdriver.until.elementIsVisible(driver.findElement({tagName: 'body'})), driverTimeout);
       var body = driver.findElement({tagName: 'body'});
@@ -36,10 +27,13 @@ function runAllTests(driverCaps) {
         .then(function (id) {
           assert.notEqual(typeof id, 'undefined');
         });
+
+      driver.quit();
     });
 
     test.it('/profile/signup can be reached', function () {
       var endpoint = '/profile/signup';
+      var driver = driverCaps.build();
       driver.get(BASE_URL + endpoint);
       driver.wait(webdriver.until.elementIsVisible(driver.findElement({tagName: 'body'})), driverTimeout);
       var body = driver.findElement({tagName: 'body'});
@@ -49,60 +43,38 @@ function runAllTests(driverCaps) {
         .then(function (id) {
           assert.notEqual(typeof id, 'undefined');
         });
+
+      driver.quit();
     });
   });
 
   test.describe('Login page', function () {
-    var driver;
-
-    beforeEach(function() {
-      driver = driverCaps.build();
-    });
-
-    afterEach(function() {
-      driver.quit();
-    });
-
     test.it('is rendered', function () {
       var endpoint = '/profile/login';
+      var driver = driverCaps.build();
       driver.get(BASE_URL + endpoint);
       driver.wait(webdriver.until.elementIsVisible(driver.findElement({tagName: 'input', name: 'username'})), driverTimeout);
       var emailInput = driver.findElement({tagName: 'input', name: 'username'});
       emailInput.sendKeys('rasmussen.matias@gmail.com');
+      driver.quit();
     });
   });
 
 
   test.describe('Signup page', function () {
-    var driver;
-
-    beforeEach(function() {
-      driver = driverCaps.build();
-    });
-
-    afterEach(function() {
-      driver.quit();
-    });
-
     test.it('is rendered', function () {
       var endpoint = '/profile/signup';
+      var driver = driverCaps.build();
       driver.get(BASE_URL + endpoint);
       driver.wait(webdriver.until.elementIsVisible(driver.findElement({tagName: 'input', name: 'username'})), driverTimeout);
+      driver.quit();
     });
   });
 
   test.describe('Library Suggest - Autocomplete', function () {
-    var driver;
-
-    beforeEach(function() {
-      driver = driverCaps.build();
-    });
-
-    afterEach(function() {
-      driver.quit();
-    });
-
     test.it('returns suggestions', function () {
+      var driver = driverCaps.build();
+
       driver.get(BASE_URL + '/library/suggest');
 
       driver.wait(webdriver.until.elementIsVisible(driver.findElement({tagName: 'input'})), driverTimeout);
@@ -120,21 +92,14 @@ function runAllTests(driverCaps) {
       });
 
       acRow.click();
+
+      driver.quit();
     });
   });
 
   test.describe('Library', function () {
-    var driver;
-
-    beforeEach(function() {
-      driver = driverCaps.build();
-    });
-
-    afterEach(function() {
-      driver.quit();
-    });
-
     test.it('SSR rendering of library', function () {
+      var driver = driverCaps.build();
       var libraryId = '710100';
       var branchName = 'Hovedbiblioteket, Krystalgade';
 
@@ -148,6 +113,8 @@ function runAllTests(driverCaps) {
       libraryTitle.getInnerHtml().then(function (html) {
         assert.equal(html, branchName);
       });
+
+      driver.quit();
     });
   });
 }

@@ -18,12 +18,7 @@ import socketio from 'socket.io';
 import path from 'path';
 import Logger from 'dbc-node-logger';
 import ServiceProvider from 'dbc-node-serviceprovider';
-import bodyParser from 'body-parser';
-import expressValidator from 'express-validator';
-import compression from 'compression';
-import expressSession from 'express-session';
 import RedisStore from 'connect-redis';
-import helmet from 'helmet';
 import reload from 'reload';
 
 // Routes
@@ -31,11 +26,18 @@ import MainRoutes from './server/routes/main.routes.js';
 import LibraryRoutes from './server/routes/library.routes.js';
 import PassportRoutesPG from './server/routes/passport.routes.pg.js';
 import PassportRoutesMobilsoeg from './server/routes/passport.routes.mobilsoeg.js';
-import WorkRoutes from './server/routes/work.routes.js';
+import WorkRoutesMobilSoeg from './server/routes/work.routes.mobilsoeg';
+import WorkRoutesPG from './server/routes/work.routes.pg';
 import GroupRoutes from './server/routes/group.routes.js';
 
 // Middleware
 import mobilsoegmiddleware from './server/routes/mobilsoeg.middleware.js';
+import bodyParser from 'body-parser';
+import expressValidator from 'express-validator';
+import compression from 'compression';
+import expressSession from 'express-session';
+import helmet from 'helmet';
+import {GlobalsMiddleware} from './server/middlewares/globals.middleware';
 
 // Passport
 import * as PassportStrategies from './server/PassportStrategies/strategies.passport';
@@ -170,7 +172,7 @@ if (APPLICATION === 'pg') {
   app.use('/', MainRoutes);
   app.use('/library', LibraryRoutes);
   app.use('/profile', PassportRoutesPG);
-  app.use('/work', WorkRoutes);
+  app.use('/work', WorkRoutesPG);
   app.use('/groups', GroupRoutes);
 }
 
@@ -182,11 +184,14 @@ if (APPLICATION === 'mobilsoeg') {
   // Setup passport
   PassportStrategies.MobilSoegPassportConfig(app);
 
+  // Setting middleware
+  app.use('*', GlobalsMiddleware); // should be placed after PassportStrategies.MobilSoegPassportConfig
+
   // Setup Routes
   app.use('/', MainRoutes);
   app.use('/library', LibraryRoutes);
   app.use('/profile', PassportRoutesMobilsoeg);
-  app.use('/work', WorkRoutes);
+  app.use('/work', WorkRoutesMobilSoeg);
 }
 
 // If running in dev-mode enable auto reload in browser when the server restarts

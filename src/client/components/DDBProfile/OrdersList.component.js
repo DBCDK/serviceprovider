@@ -9,6 +9,7 @@ import React, {PropTypes} from 'react';
 // import Reflux from 'reflux';
 import {curry, sortByAll} from 'lodash';
 import ToggleButton from './ToggleButton.component';
+import Loader from '../Loader.component.js';
 
 class OrdersList extends React.Component {
 
@@ -66,11 +67,13 @@ class OrdersList extends React.Component {
     const ordersList = (<ul className={listClass} id='order-list'>
       {orderListContent}
     </ul>);
-
-    const loadingWheel = (<p>Loading...</p>);
+    const pending = true;
+    const loadingWheel = <Loader pending={pending} />;
 
     let header = 'Reserveringer';
     let arrows = '';
+    let toggleFunc = '';
+    let headerClass = '';
 
     if (this.props.orders !== null) {
       arrows = <ToggleButton collapsed={this.props.collapsed} toggleDisplay={toggleDisplay} />;
@@ -78,18 +81,22 @@ class OrdersList extends React.Component {
         header = 'Du har ingen reserveringer';
       }
       else if (this.props.orders.length === 1) {
-        header = this.props.orders.length + ' reservering';
+        header = '1 reservering';
       }
       else {
         header = this.props.orders.length + ' reserveringer';
       }
+      toggleFunc = toggleDisplay;
+      headerClass = 'user-status-header toggle';
     }
 
+    const sliderClass = (this.props.collapsed) ? 'slider slider-collapsed' : 'slider slider-not-collapsed';
     const content = (
         <div className='row'>
-          <h2 className='user-status-header'>{header}</h2>
+          <a id='order-scroll' name='order-scroll'></a>
+          <h2 className={headerClass} onClick={toggleFunc}>{header}</h2>
           {arrows}
-          {(this.props.orders === null) ? loadingWheel : ordersList}
+          {(this.props.orders === null) ? loadingWheel : <div className={sliderClass}>{ordersList}</div>}
         </div>
     );
 

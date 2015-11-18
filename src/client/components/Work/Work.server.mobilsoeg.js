@@ -1,7 +1,8 @@
 'use strict';
 import React from 'react';
 import ReactDOM from 'react-dom/server';
-import Work from './Work.component.js';
+import WorkContainer from './WorkContainer.container.component';
+import WorkLayout from './WorkLayout.mobilsoeg.component';
 
 /**
  * Render component for server use.
@@ -12,7 +13,7 @@ import Work from './Work.component.js';
 export default function workServer(props) {
   const id = props.id || [];
   const work = ReactDOM.renderToString(
-    <Work id={id} work={props.work} />
+    <WorkContainer id={id} work={props.work} workLayout={WorkLayout} />
   );
   return {
     work,

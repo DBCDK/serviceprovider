@@ -9,6 +9,7 @@ import React, {PropTypes} from 'react';
 // import Reflux from 'reflux';
 import {curry, sortByAll} from 'lodash';
 import ToggleButton from './ToggleButton.component';
+import Loader from '../Loader.component.js';
 
 class LoansList extends React.Component {
 
@@ -75,14 +76,20 @@ class LoansList extends React.Component {
     </ul>);
 
     // show this if not results have been returned yet
-    const loadingWheel = (<p>Loading...</p>);
+    const pending = true;
+    const loadingWheel = <Loader pending={pending} />;
 
     let listContent = loadingWheel;
     let header = 'Lån';
     let arrows = '';
+    let toggleFunc = toggleDisplay;
+    let headerClass = 'user-status-header toggle';
+
     if (Array.isArray(this.props.loans) && this.props.loans.length === 0) {
       header = 'Du har ingen lån';
       listContent = '';
+      toggleFunc = '';
+      headerClass = 'user-status-header';
     }
     else if (this.props.loans !== null) {
       arrows = <ToggleButton collapsed={this.props.collapsed} toggleDisplay={toggleDisplay} />;
@@ -90,11 +97,13 @@ class LoansList extends React.Component {
       listContent = loansList;
     }
 
+    const sliderClass = (this.props.collapsed === true) ? 'slider slider-collapsed' : 'slider slider-not-collapsed';
     const content = (
         <div className='row'>
-          <h2 className='user-status-header'>{header}</h2>
+          <a id='loan-scroll' name='loan-scroll'></a>
+          <h2 className={headerClass} onClick={toggleFunc}>{header}</h2>
           {arrows}
-          {listContent}
+          {(this.props.loans === null) ? loadingWheel : <div className={sliderClass}>{listContent}</div>}
         </div>
     );
 

@@ -45,6 +45,9 @@ $background-color: #fdfdfd;
   .user-status-header {
     display: inline-block;
   }
+  .toggle {
+    cursor: pointer;
+  }
   .toggle-buttons {
     display: inline-block;
     padding: 0 10px;
@@ -64,12 +67,41 @@ $background-color: #fdfdfd;
       border-bottom: 20px solid #000000;
     }
   }
-  .fiscal-list.collapsed,
-  .loan-list.collapsed,
-  .order-list.collapsed,
   .collapsed .button-not-collapsed,
   .not-collapsed .button-collapsed {
     display: none;
+  }
+  .slider {
+    overflow: hidden;
+    max-height: 1000px;
+  }
+  .slider.slider-not-collapsed {
+    -webkit-transition: all 3000ms cubic-bezier(0.17, 0.04, 0.03, 0.94);
+    transition: all 3000ms cubic-bezier(0.17, 0.04, 0.03, 0.94);
+  }
+  .slider.slider-collapsed {
+    max-height: 0;
+    -webkit-transition: all 300ms cubic-bezier(0.17, 0.04, 0.03, 0.94);
+    transition: all 300ms cubic-bezier(0.17, 0.04, 0.03, 0.94);
+  }
+  .action .column {
+    text-align: center;
+    color: #ffffff;
+    margin-bottom: 5px;
+    div {
+      padding: 10px;
+      cursor: pointer;
+    }
+  }
+  .pickup {
+    background-color: green;
+  }
+  .expiring {
+    background-color: orange;
+  }
+  .debt,
+  .expired {
+    background-color: red;
   }
 }
 
