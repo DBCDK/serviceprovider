@@ -28,29 +28,51 @@ export function MobilSoegPassportConfig(app) {
         }
       );
 
-
       Promise.all(promisses)
         .then((response) => {
           const borchkResponse = response[0];
           const openAgencyResponse = response[1];
 
-
-          console.log('borchkResponse', borchkResponse); // eslint-disable-line
           if (borchkResponse.error) {
             done(borchkResponse.error);
           }
 
           if (borchkResponse.requestStatus === 'ok') {
-            const user = {
-              agencyid: agencyid,
-              loanerid: loanerid,
-              pincode: pincode,
-              branchNames: openAgencyResponse.branchNames
-            };
-            done(null, user);
+            // retrieve the users profile from the profileservice.
+            const profilePromise = serviceProvider.trigger('findMobilSoegProfile', {agencyid: agencyid, loanerid: loanerid});
+            Promise.all(profilePromise).then((resp) => {
+              logger.info('Got the following response from the profile service while logging in user', {response: resp, agencyid: agencyid, loanerid: loanerid});
+              const profileResponse = resp[0].body;
+              const user = {
+                agencyid: agencyid,
+                loanerid: loanerid,
+                pincode: pincode,
+                branchNames: openAgencyResponse.branchNames,
+                profile: {
+                  pickup_agency: profileResponse.pickup_agency,
+                  profileId: profileResponse.id,
+                  likes: profileResponse.likes
+                }
+              };
+              done(null, user);
+            }, (error) => {
+              logger.error('Failed to log in user due to some error in the profileservice', {
+                error: error,
+                agencyid: agencyid,
+                loanerid: loanerid,
+                borchkResponse: borchkResponse.requestStatus,
+                openAgencyResponse: openAgencyResponse
+              });
+              done(true, false);
+            });
           }
           else {
-            logger.warning('User could not be verified against borchk', {borchkResponse: borchkResponse, agencyid: agencyid});
+            logger.warning('User could not be verified against borchk', {
+              borchkResponse: borchkResponse,
+              openAgencyResponse: openAgencyResponse,
+              agencyid: agencyid,
+              loanerid: loanerid
+            });
             done(null, null, borchkResponse);
           }
         })
