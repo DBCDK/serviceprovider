@@ -9,6 +9,7 @@ import React, {PropTypes} from 'react';
 // import Reflux from 'reflux';
 import {curry, sortByAll} from 'lodash';
 import ToggleButton from './ToggleButton.component';
+import PickUpAgencySelector from './PickUpAgencySelector.component';
 import Loader from '../Loader.component.js';
 
 class OrdersList extends React.Component {
@@ -20,6 +21,10 @@ class OrdersList extends React.Component {
   render() {
     const deleteOrder = this.props.onDelete ? curry(this.props.onDelete, 3) : function() {};
     const toggleDisplay = this.props.onToggleOrderDisplay;
+
+    const onSelect = this.props.onSelectPickupAgency;
+
+    const branchNamesMap = this.props.branchNamesMap;
 
     let orderListContent = (<p>ingen reserveringer</p>);
     if (this.props.orders) {
@@ -45,18 +50,26 @@ class OrdersList extends React.Component {
 
         const date = new Date(order.pickUpExpiryDate);
         const pickupDate = (order.pickUpExpiryDate ? 'Hentes senest ' + date.getDate() + '/' + (date.getMonth() + 1) + '-' + date.getFullYear() : '');
-        let pickupClass = 'small-9 medium-10 large-10 column';
-        if (ready) {
-          pickupClass += ' ready';
-        }
 
-        const queue = (order.queue !== null) ? 'Du er nr ' + order.queue + ' i køen. Afhentes på ' + order.pickUpAgency : '';
+        const pickupClass = (ready) ? 'ready' : '';
+
+        const queue = (order.queue !== null) ? 'Du er nr ' + order.queue + ' i køen': '-';
+
+        const dropdown = (
+            <PickUpAgencySelector
+                branchNamesMap={branchNamesMap}
+                onSelect={onSelect}
+                order={order}
+                />
+        );
+
 
         return (
           <li className='row' key={order.orderId}>
-            <span className='small-10 medium-11 large-12 column'>{order.title}</span>
-            <span className={pickupClass}>{ready ? 'Klar til afhentning på ' + order.pickUpAgency : queue}</span>
-            <span className='small-5 medium-3 large-2 column'>{ready ? pickupDate : actionField}</span>
+            <span className='small-6 column'>{order.title}</span>
+            <span className={'small-6 column ' + pickupClass}>{ready ? 'Klar til afhentning på ' + order.pickUpAgency : queue}</span>
+            <span className='small-6 column'>{ready ? '' : dropdown}</span>
+            <span className='small-6 column'>{ready ? pickupDate : actionField}</span>
           </li>
         );
       });
@@ -106,8 +119,10 @@ class OrdersList extends React.Component {
 }
 
 OrdersList.propTypes = {
+  branchNamesMap: PropTypes.object,
   collapsed: PropTypes.bool,
   onDelete: PropTypes.func,
+  onSelectPickupAgency: PropTypes.func,
   onToggleOrderDisplay: PropTypes.func,
   orders: PropTypes.array
 };
