@@ -8,6 +8,7 @@
     "dev": "parallelshell \"npm run start:watch -s\" \"npm run serve -s\"",
     "dev:ddb": "NODE_APPLICATION=ddbmobil npm run dev",
     "dev:remoteprofile": "PROFILE_SERVICE_URL=\"http://profile-i01.dbc.dk:3001/\" npm run dev",
+    "dev:ddb:remoteprofile": "NODE_APPLICATION=ddbmobil PROFILE_SERVICE_URL=\"http://profile-i01.dbc.dk:3001/\" npm run dev",
     "lint": "eslint ./src",
     "lint:checkstyle": "eslint ./src  -o report.xml -f checkstyle",
     "serve": "supervisor  --instant-kill -w src/app.js,src/server,node_modules src/main.js",
@@ -18,7 +19,9 @@
     "start": "node src/main.js",
     "start:watch": "webpack --progress --colors --watch -d",
     "test": "karma start --single-run=true",
-    "test:watch": "karma start"
+    "test:watch": "karma start",
+    "tail": "tail -f log.log",
+    "tail:timer": "tail -f log.log | awk '(/event/ || /time_delta/ || /TIMER/) && !/result/'"
   },
   "repository": {
     "type": "git",
@@ -35,7 +38,7 @@
   },
   "homepage": "https://github.com/DBCDK/pallesgavebod#readme",
   "dependencies": {
-    "@dbcdk/dbc-config": "^1.7.1",
+    "@dbcdk/dbc-config": "^2.0.0",
     "async": "1.5.0",
     "babel": "5.8.29",
     "babel-core": "5.8.29",

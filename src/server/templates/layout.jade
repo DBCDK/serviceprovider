@@ -4,7 +4,7 @@ doctype html
 html(lang='da')
     include head
 
-    body
+    body(class=libdata ? libdata.bodyclass : '')
         #message
             include message
         block top

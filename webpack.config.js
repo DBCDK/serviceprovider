@@ -9,6 +9,7 @@ var noErrorsPlugin = new webpack.NoErrorsPlugin();
 var extractCss = new extractTextPlugin('../styles/style.css');
 
 var APPLICATION = process.env.NODE_APPLICATION; // eslint-disable-line no-process-env
+var NODE_ENV = process.env.NODE_ENV || 'production'; // eslint-disable-line no-process-env
 
 var entries = {
   styles: ''
@@ -27,7 +28,6 @@ if (APPLICATION === 'ddbmobil') {
     resetpassword: './src/client/components/ResetPassword/index.js',
     topnavigation: './src/client/components/TopNavigation/index.mobilsoeg.js',
     work: './src/client/components/Work/Work.client.mobilsoeg',
-    terminal: './src/utils/Terminal',
     styles: './src/client/styles/ddb.scss'
   };
 }
@@ -47,9 +47,12 @@ else {
     signup: './src/client/components/Signup/index.pg.js',
     topnavigation: './src/client/components/TopNavigation/index.pg.js',
     work: './src/client/components/Work/Work.client.pg',
-    terminal: './src/utils/Terminal',
     styles: './src/client/styles/pg.scss'
   };
+}
+
+if (NODE_ENV === 'development') {
+  entries.terminal = './src/utils/Terminal';
 }
 
 module.exports = [{

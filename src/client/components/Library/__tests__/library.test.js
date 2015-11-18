@@ -24,7 +24,9 @@ describe('Test the library component', () => {
 
   afterEach(function(done) {
     sandbox.restore();
-    done();
+    React.unmountComponentAtNode(document.body); // Assuming mounted to document.body
+    document.body.innerHTML = ''; // Just to be sure :-P
+    setTimeout(done);
   });
 
   it('Create library without props', () => {

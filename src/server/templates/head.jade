@@ -15,6 +15,14 @@ head
         link(rel='stylesheet' href='//fonts.googleapis.com/css?family=Source+Sans+Pro:400,700' type='text/css')
         link(rel='stylesheet' href='//fonts.googleapis.com/css?family=Open+Sans:400,300,700' type='text/css')
         link(rel='stylesheet', href='/styles/style.css')
+        if libdata
+            style(type='text/css')
+                !{"#topbar {background-color: " + libdata.config.colour + ";}"}
+                !{"#logo {background: url(" + libdata.config.logo + ") no-repeat left; background-size: auto 100%;}"}
+                !{".news--container {background-color: " + libdata.config.colour + ";}"}
+                !{"a {color: " + libdata.config.colour + ";}"}
+                !{".work--recommendations--title {background-color: " + libdata.config.colour + ";}"}
+
 
     block scripts
         if newrelic
@@ -30,6 +38,8 @@ head
         script(src='//cdnjs.cloudflare.com/ajax/libs/lodash.js/3.10.1/lodash.js', type='text/javascript' defer=true)
         script(src='/js/common.js', type='text/javascript' defer=true)
         script(src='/js/topnavigation.js', defer=true)
+        if libdata
+            script window.agencyId = "!{libdata.libraryId}";
 
         link(rel='shortcut icon', href!=faviconUrl, type='image/x-icon ')
 
