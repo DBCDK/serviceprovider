@@ -18,7 +18,9 @@ export default class Login extends React.Component {
         </div>
 
         <form action='/profile/login' method='POST' >
-          <input name="agencyid" type="hidden" value={this.props.agencyId} />
+          <div>
+            <input name="agencyid" type="hidden" value={this.props.agencyId} />
+          </div>
 
           <div className="large-24 columns" >
             <label>Låner ID

@@ -19,7 +19,9 @@
     "start": "node src/main.js",
     "start:watch": "webpack --progress --colors --watch -d",
     "test": "karma start --single-run=true",
-    "test:watch": "karma start"
+    "test:watch": "karma start",
+    "tail": "tail -f log.log",
+    "tail:timer": "tail -f log.log | awk '(/event/ || /time_delta/ || /TIMER/) && !/result/'"
   },
   "repository": {
     "type": "git",

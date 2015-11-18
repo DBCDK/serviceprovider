@@ -21,7 +21,7 @@ describe('Testing the Login.mobilsoeg.component', () => {
   });
 
   it('Assert inputfields are rendered', () => {
-    renderer.render(<Login />);
+    renderer.render(<Login agencyId="715100" />);
     const result = renderer.getRenderOutput();
 
     assert.equal(result.type, 'div', 'Found outer div');
@@ -35,11 +35,11 @@ describe('Testing the Login.mobilsoeg.component', () => {
     assert.equal(form.props.children.length, 4, 'Form has 4 childrens');
     assert.equal(form.props.children[0].type, 'div', 'First child is div');
 
-    // LibrarySelector
+    // Hidden library input
     assert.equal(form.props.children[0].type, 'div', 'First child is div');
-    const librarySelector = form.props.children[0].props.children.props.children;
-    assert.equal(librarySelector[0], 'Vælg dit bibliotek');
-    assert.equal(librarySelector[1].type.displayName, 'LibrarySelector', 'Found component with displayName LibrarySelector');
+    const agencyIdField = form.props.children[0].props.children;
+    assert.equal(agencyIdField.type, 'input');
+    assert.equal(agencyIdField.props.value, '715100', 'Found hidden agency id');
 
     // LoanerID input
     assert.equal(form.props.children[1].type, 'div', 'First child is div');
