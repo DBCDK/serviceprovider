@@ -77,7 +77,18 @@ export default class WorkLayout extends React.Component {
   }
 
   render() {
-    const profile = this.state.profile;
+    // Fake profile to look like old one until refactor!
+    // TODO: REFACTOR!
+    const mobprofile = this.state.profile;
+    let profile = {
+      userIsLoggedIn: mobprofile.userIsLoggedIn,
+      favoriteLibraries: [{
+        libraryID: mobprofile.profile.agencyid,
+        agencyID: mobprofile.profile.agencyid,
+        borrowerID: typeof window !== 'undefined' && window.BORROWER_ID ? window.BORROWER_ID : ''
+      }]
+    };
+
     const personalRecommendations = profile.userIsLoggedIn ? (
       <WorkRecommendation
         recommendations={this.state.recommendations.recommendations.personal}
@@ -99,7 +110,7 @@ export default class WorkLayout extends React.Component {
             <CoverImage noCoverUrl='/covers/no-cover-image-book.png' pids={[this.props.id, this.props.work.result.pid]} prefSize='detail_500' />
           </div>
           <div className='work small-24 small-centered medium-16 medium-uncentered large-16 large-uncentered columns' >
-            <OrderButton manifestations={this.props.specifics} profile={profile} relations={this.props.work.result.relations} />
+            <OrderButton favoriteLibraries={profile.favoriteLibraries} manifestations={this.props.specifics} profile={profile} relations={this.props.work.result.relations} />
 
             {likeContainers}
 

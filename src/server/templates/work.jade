@@ -8,3 +8,5 @@ block prepend footerscripts
 block content
     #work !{workString}
     script window.QUERYSTRING_PROPS = !{id}
+    if borrowerId
+        script window.BORROWER_ID = "!{borrowerId}";
