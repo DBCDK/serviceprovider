@@ -1,20 +1,19 @@
-.news--container {
+.news {
   background-color: $news-background-color;
   padding: 20px 10px;
 }
 
-.news--items-container {
+.news-items {
   background-color: #fffffe;
   padding-bottom: 5px;
+  .news-items-headline {
+    padding: 10px;
+    font-weight: $font-weight-bold;
+    font-size: rem-calc(20px);
+  }
 }
 
-.news--items-container--headline {
-  padding: 10px;
-  font-weight: $font-weight-bold;
-  font-size: rem-calc(20px);
-}
-
-.news--item {
+.news-item {
   padding: 10px;
   margin: 0 10px 10px 10px;
 
@@ -25,30 +24,37 @@
   &.even {
     background-color: #f2f2f2;
   }
+
+  .title{
+    font-size: rem-calc(18px);
+    font-weight: $font-weight-bold;
+  }
+
+  .link {
+    display: block;
+    height: 20px;
+    text-align: right;
+    clear: both;
+  }
+
+  .image {
+    width: 33%;
+    padding-right: 15px;
+    float: left;
+  }
+  .lead {
+    width: 67%;
+    float: right;
+  }
+
 }
-
-.news--item--headline,
-.news--item--body,
-.news--item--link {
-  display: block;
-}
-
-.news--item--headline {
-  font-size: rem-calc(18px);
-  font-weight: $font-weight-bold;
-}
-
-.news--item--link {
- height: 20px;
-}
-
-.new--container--all-news-link {
-  height: 50px;
-  padding: 5px 0 10px 0;
-  display: block;
-  font-size: rem-calc(20px);
-
-  a {
+.news-items-link-container {
+  .link {
+    height: 50px;
+    padding: 5px 0 10px 0;
+    display: block;
+    font-size: rem-calc(20px);
     color: white;
+    text-align: right;
   }
 }

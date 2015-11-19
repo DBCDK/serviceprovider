@@ -1,53 +1,77 @@
 'use strict';
 
-// eslint-disable-line disable-file
-
+import {slice} from 'lodash';
 import React from 'react';
+import NewsItem from './NewsItem.component.js';
+import NewsActions from '../../actions/News.action.js';
+import NewsStore from '../../stores/News.store.js';
 
 export default class NewsFrontPageContainerComponent extends React.Component {
-  /*eslint-disable */
+  constructor(props) {
+    super();
+    NewsStore.listen(this.setState.bind(this));
+    this.state = NewsStore.getInitialState();
+    this.state.showNumberOfPosts = props.showNumberOfPosts || 10;
+    NewsActions.fetchNewsList({amount: props.loadNumberOfPosts || 3});
+  }
+
+  /**
+   * maps news objects to a news compoment
+   * @param news
+   * @returns {*}
+   */
+  mapNews(news) {
+    return news.map((element, i) => {
+      const zebra = (i % 2 === 0) && 'even' || 'odd';
+      const link = `/news/${element.id}`;
+      return (
+        <NewsItem key={element.id} {...element} link={link} zebra={zebra} />
+      );
+    });
+  }
+
+  /**
+   * Show all loaded news
+   * @todo when the ddbContent service supports pagination, this should call an action to load more news
+   * @param event
+   */
+  showAllNews(event) {
+    event.preventDefault();
+    const showNumberOfPosts = this.state.news.items.length;
+    this.setState({showNumberOfPosts});
+  }
+
   render() {
+    const newsDefault = slice(this.state.news.items, 0, this.state.showNumberOfPosts);
+    const newsMore = slice(this.state.news.items, this.state.showNumberOfPosts);
+
     return (
-      <div className="news--container" >
-        <div className="news--items-container" >
-          <div className="news--items-container--headline" >
+      <div className='news' >
+        <div className='news-items' >
+          <div className='news-items-headline' >
             <span>Nyt fra biblioteket</span>
           </div>
-          <div className="news--item odd" >
-            <span className="news--item--headline" >Strikkecafé</span>
-            <span className="news--item--body" >Er du mellem 6 og 12 år, så kom til en hyggelig og sjov strikkeworkshop, lørdag 24. oktober kl. 10.00-13.00 på Tranbjerg Bibliotek.</span>
-            <span className="news--item--link" ><a href="#" className="right" >Læs mere</a></span>
+          <div className="news-default" >
+            {this.mapNews(newsDefault)}
           </div>
-          <div className="news--item even" >
-            <span className="news--item--headline" >Klar til Kalman?</span>
-            <span className="news--item--body" >Islandske Jón Kalman Stefánsson er nomineret til Nordisk Råds Litteraturpris, som uddeles sidst i oktober. Onsdag 4. november kan han opleves på Dokk1 til en...</span>
-            <span className="news--item--link" ><a className="right" href="#" >Læs mere</a></span>
+          <div className={`news-more hide`} >
+            {this.mapNews(newsMore)}
           </div>
         </div>
-
-        <div className="new--container--all-news-link">
-          <span className="new--container--all-new-link" ><a className="right" href="#" >Se alle nyheder...</a></span>
+        <div className='news-items-link-container' >
+          {newsMore.length &&
+          (<a className='link' href='#' onClick={this.showAllNews.bind(this)} >Se flere nyheder...</a>) || null
+          }
         </div>
-
-        <div className="news--items-container" >
-          <div className="news--items-container--headline" >
-            <span>Det sker</span>
-          </div>
-          <div className="news--item odd" >
-            <span className="news--item--headline" >Strikkecafé</span>
-            <span className="news--item--body" >Er du mellem 6 og 12 år, så kom til en hyggelig og sjov strikkeworkshop, lørdag 24. oktober kl. 10.00-13.00 på Tranbjerg Bibliotek.</span>
-            <span className="news--item--link" ><a href="#" className="right" >Læs mere</a></span>
-          </div>
-        </div>
-
-        <div className="new--container--all-news-link">
-          <span className="new--container--all-new-link" ><a className="right" href="#" >Se alle events...</a></span>
-        </div>
-
       </div>
     );
-    /*eslint-enable */
   }
 }
 
 NewsFrontPageContainerComponent.displayName = 'NewsFrontPageContainerComponent';
+NewsFrontPageContainerComponent.propTypes = {
+  loadNumberOfPosts: React.PropTypes.number,
+  showNumberOfPosts: React.PropTypes.number
+};
+
+

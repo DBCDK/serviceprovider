@@ -34,7 +34,7 @@ export default class FrontPageLayoutMobilsoeg extends React.Component {
 
           <div className="frontpage-container--news--container large-8 columns" >
             <div className="frontpage-container--news" >
-              <NewsFrontPageContainerComponent />
+              <NewsFrontPageContainerComponent loadNumberOfPosts="10" showNumberOfPosts="4" />
             </div>
           </div>
         </div>
