@@ -7,7 +7,7 @@
 
 import express from 'express';
 import passport from 'passport';
-import dbcMiddleware from './middleware.js';
+import dbcMiddleware from './../middlewares/middleware.js';
 import React from 'react';
 import ReactDOM from 'react-dom/server';
 

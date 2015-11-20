@@ -11,7 +11,7 @@ import ReactDOM from 'react-dom/server';
 import express from 'express';
 const WorkRoutes = express.Router();
 
-import dbcMiddleware from './middleware.js';
+import dbcMiddleware from './../middlewares/middleware.js';
 
 import workServer from '../../client/components/Work/Work.server.mobilsoeg';
 import {CoverImage, Order, Receipt} from 'dbc-react-components';
