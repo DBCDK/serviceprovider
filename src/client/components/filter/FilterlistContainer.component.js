@@ -20,12 +20,11 @@ import MaterialTypeStore from '../../stores/MaterialType.store.js';
 export default React.createClass({
   displayName: 'FilterListContainer',
   mixins: [
-    Reflux.connect(FilterStore, 'filter'),
     Reflux.connect(MaterialTypeStore, 'categories')
   ],
 
   render() {
-    const filterGuide = this.state.filter.length && (<FilterGuide categories={this.state.categories.categories} elements={this.state.filter} select={QueryActions.add} />) || '';
+    const filterGuide = (<FilterGuide categories={this.state.categories.categories} elements={this.state.filter} select={QueryActions.add} />) || '';
     return (
       <div className='filterguide--wrapper' >
         {filterGuide}
