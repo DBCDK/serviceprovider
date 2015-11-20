@@ -12,7 +12,7 @@ import {assert} from 'chai';
 import LikeContainer from '../LikeContainer.component.js';
 import DislikeContainer from '../DislikeContainer.component.js';
 
-import ProfileActions from '../../../actions/Profile.action.js';
+import MobilSoegProfileActions from '../../../../actions/MobilSoegProfile.action';
 
 describe('Testing the Like container', () => {
   let likeContainer;
@@ -24,7 +24,7 @@ describe('Testing the Like container', () => {
     component = TestUtils.renderIntoDocument(likeContainer);
 
     sandbox = sinon.sandbox.create(); // eslint-disable-line
-    sandbox.spy(ProfileActions, 'likeObject'); // eslint-disable-line
+    sandbox.spy(MobilSoegProfileActions, 'likeObject'); // eslint-disable-line
   });
 
   afterEach(() => {
@@ -51,8 +51,9 @@ describe('Testing the Like container', () => {
 
   it('Should invoke onClick on click', () => {
     TestUtils.Simulate.click(ReactDom.findDOMNode(component));
-    assert.isTrue(ProfileActions.likeObject.called);
-    assert.isTrue(ProfileActions.likeObject.calledWith('some_pid'));
+
+    assert.isTrue(MobilSoegProfileActions.likeObject.called);
+    assert.isTrue(MobilSoegProfileActions.likeObject.calledWith('some_pid'));
   });
 });
 
@@ -66,7 +67,7 @@ describe('Testing the Dislike container', () => {
     component = TestUtils.renderIntoDocument(dislikeContainer);
 
     sandbox = sinon.sandbox.create(); // eslint-disable-line
-    sandbox.spy(ProfileActions, 'dislikeObject'); // eslint-disable-line
+    sandbox.spy(MobilSoegProfileActions, 'dislikeObject'); // eslint-disable-line
   });
 
   afterEach(() => {
@@ -93,7 +94,7 @@ describe('Testing the Dislike container', () => {
 
   it('Should invoke onClick on click', () => {
     TestUtils.Simulate.click(ReactDom.findDOMNode(component));
-    assert.isTrue(ProfileActions.dislikeObject.called);
-    assert.isTrue(ProfileActions.dislikeObject.calledWith('some_pid'));
+    assert.isTrue(MobilSoegProfileActions.dislikeObject.called);
+    assert.isTrue(MobilSoegProfileActions.dislikeObject.calledWith('some_pid'));
   });
 });

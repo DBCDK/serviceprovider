@@ -5,8 +5,8 @@ import React, {PropTypes} from 'react';
 
 // Components
 import {CoverImage, OrderButton} from 'dbc-react-components';
-import LikeContainer from '../LikeDislike/LikeContainer.component.js';
-import DislikeContainer from '../LikeDislike/DislikeContainer.component.js';
+import LikeContainer from '../LikeDislike/pg/LikeContainer.component.js';
+import DislikeContainer from '../LikeDislike/pg/DislikeContainer.component.js';
 import WorkRecommendation from './WorkRecommendation.component';
 
 // Actions

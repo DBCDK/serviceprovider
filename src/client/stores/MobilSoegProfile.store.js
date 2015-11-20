@@ -7,6 +7,8 @@
 
 import Reflux from 'reflux';
 
+import {findIndex} from 'lodash';
+
 // Actions
 import MobilSoegProfileActions from '../actions/MobilSoegProfile.action';
 
@@ -16,7 +18,6 @@ const MobilSoegProfileStore = Reflux.createStore({
     profile: {
       agencyid: null,
       likes: [],
-      mobilSoegProfileId: 0,
       pickup_agency: null
     }
   },
@@ -42,6 +43,75 @@ const MobilSoegProfileStore = Reflux.createStore({
       this.store.profile = response.body;
       this.pushStore();
     }
+  },
+
+  /**
+   * @param {string} workId
+   */
+  onLikeObject(workId) {
+    let request = {item_id: workId, action: null};
+    const myLikes = this.store.profile.likes;
+
+    const index = findIndex(myLikes, 'item_id', workId);
+    if (index < 0) {
+      request.action = 'like';
+      myLikes.push({item_id: workId, value: 1});
+    }
+    else if (myLikes[index].value === '-1') {
+      const like = myLikes[index];
+      request.id = like.id || null;
+      request.action = 'like';
+      myLikes[index].value = 1;
+    }
+    else {
+      const like = myLikes[index];
+      request.id = like.id || null;
+      request.action = 'remove';
+      myLikes.splice(index, 1);
+    }
+
+    this.store.profile.likes = myLikes;
+
+    this.trigger(this.store);
+
+    MobilSoegProfileActions.saveLikeToMobilSoegProfile(request);
+  },
+
+  onDislikeObject(workId) {
+    let request = {item_id: workId, action: null};
+    const myLikes = this.store.profile.likes;
+
+    const index = findIndex(myLikes, 'item_id', workId);
+    if (index < 0) {
+      request.action = 'dislike';
+      myLikes.push({item_id: workId, value: -1});
+    }
+    else if (myLikes[index].value === '1') {
+      const like = myLikes[index];
+      request.id = like.id || null;
+      request.action = 'dislike';
+      myLikes[index].value = -1;
+    }
+    else {
+      const like = myLikes[index];
+      request.id = like.id || null;
+      request.action = 'remove';
+      myLikes.splice(index, 1);
+    }
+
+    this.store.profile.likes = myLikes;
+
+    this.trigger(this.store);
+
+    MobilSoegProfileActions.saveLikeToMobilSoegProfile(request);
+  },
+
+  onLikeSaved(response) {
+    if (!response) {
+      console.error('Some error occured when saving a like/dislike'); // eslint-disable-line no-console
+    }
+
+    MobilSoegProfileActions.fetchMobilSoegProfile();
   },
 
   pushStore() {

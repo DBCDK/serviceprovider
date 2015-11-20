@@ -5,8 +5,8 @@ import React, {PropTypes} from 'react';
 
 // Components
 import {CoverImage, OrderButton} from 'dbc-react-components';
-import LikeContainer from '../LikeDislike/LikeContainer.component.js';
-import DislikeContainer from '../LikeDislike/DislikeContainer.component.js';
+import LikeContainer from '../LikeDislike/MobilSoeg/LikeContainer.component.js';
+import DislikeContainer from '../LikeDislike/MobilSoeg/DislikeContainer.component.js';
 import WorkRecommendation from './WorkRecommendation.component';
 
 // Actions
@@ -105,11 +105,11 @@ export default class WorkLayout extends React.Component {
 
     return (
       <div className='work-container row' data-pid={this.props.id} >
-        <div className='small-24 medium-16 large-16 columns' >
-          <div className='work--image small-20 small-centered medium-8 medium-uncentered large-8 large-uncentered columns' >
+        <div className='small-24 medium-24 large-16 columns' >
+          <div className='work--image small-20 small-centered medium-10 medium-uncentered large-8 large-uncentered columns' >
             <CoverImage noCoverUrl='/covers/no-cover-image-book.png' pids={[this.props.id, this.props.work.result.pid]} prefSize='detail_500' />
           </div>
-          <div className='work small-24 small-centered medium-16 medium-uncentered large-16 large-uncentered columns' >
+          <div className='work small-24 small-centered medium-14 medium-uncentered large-16 large-uncentered columns' >
             <OrderButton favoriteLibraries={profile.favoriteLibraries} manifestations={this.props.specifics} profile={profile} relations={this.props.work.result.relations} />
 
             {likeContainers}
@@ -207,7 +207,7 @@ export default class WorkLayout extends React.Component {
           </div>
         </div>
 
-        <div className='work--recommendations small-24 medium-8 large-8 columns' >
+        <div className='work--recommendations small-24 medium-24 large-8 columns' >
           <h3 className='work--recommendations--title' >Noget der ligner</h3>
           {personalRecommendations}
           {genericRecommendations}

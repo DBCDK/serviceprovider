@@ -50,7 +50,7 @@ export function MobilSoegPassportConfig(app) {
                 branchNames: openAgencyResponse.branchNames,
                 profile: {
                   pickup_agency: profileResponse.pickup_agency,
-                  profileId: profileResponse.id,
+                  mobilSoegProfileId: profileResponse.mobilSoegProfileId,
                   likes: profileResponse.likes
                 }
               };
