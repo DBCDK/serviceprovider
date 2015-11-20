@@ -31,7 +31,7 @@ import WorkRoutesPG from './server/routes/work.routes.pg';
 import GroupRoutes from './server/routes/group.routes.js';
 
 // Middleware
-import mobilsoegmiddleware from './server/routes/mobilsoeg.middleware.js';
+import mobilsoegmiddleware from './server/middlewares/mobilsoeg.middleware.js';
 import bodyParser from 'body-parser';
 import expressValidator from 'express-validator';
 import compression from 'compression';

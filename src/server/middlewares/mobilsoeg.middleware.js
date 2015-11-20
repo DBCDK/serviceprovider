@@ -3,10 +3,13 @@
  */
 'use strict';
 
+import {has} from 'lodash';
+
 function libraryStyleWare(req, res, next) {
   let kommune = req.get('host').split('.')[0];
   let config = req.app.get('Configuration');
-  let conf = config[kommune] || config[process.env.CONFIG_NAME || 'palle']; // eslint-disable-line no-process-env
+  kommune = has(config, kommune) ? kommune : process.env.CONFIG_NAME || 'aarhus';// eslint-disable-line no-process-env
+  let conf = config[kommune];
 
   res.locals.libdata = {
     kommune: kommune,

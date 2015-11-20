@@ -16,7 +16,7 @@ import {stringToObject} from '../../utils/QueryParser.util.js';
 import SearchServer from '../../client/components/searchpage/Search.server.js';
 import {defaultLikes} from '../../client/components/Recommend/Recommendations.store.js';
 
-import dbcMiddleware from './middleware.js';
+import dbcMiddleware from './../middlewares/middleware.js';
 
 MainRoutes.get('/', (req, res) => {
   const APPLICATION = req.app.get('APPLICATION');

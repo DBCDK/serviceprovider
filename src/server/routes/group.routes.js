@@ -14,7 +14,7 @@ import GroupSearchContainerComponent from '../../client/components/Group/Search/
 import GroupPostComponent from '../../client/components/Group/Post/GroupPost.component.js';
 
 import {stringToObject} from '../../utils/QueryParser.util.js';
-import dbcMiddleware from './middleware.js';
+import dbcMiddleware from './../middlewares/middleware.js';
 
 GroupRoutes.get(['/search*'], (req, res) => {
   let query = req.query || [];

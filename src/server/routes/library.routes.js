@@ -11,7 +11,7 @@ const LibraryRoutes = express.Router();
 import React from 'react';
 import ReactDOM from 'react-dom/server';
 
-import dbcMiddleware from './middleware.js';
+import dbcMiddleware from './../middlewares/middleware.js';
 import {stringToObject} from '../../utils/QueryParser.util.js';
 
 import Library from '../../client/components/Library/Library.component.js';
