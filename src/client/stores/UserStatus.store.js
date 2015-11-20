@@ -27,7 +27,8 @@ const UserStatusStore = Reflux.createStore({
     this.store.status = {
       orderedItems: userStatusResponse.result.orderedItems,
       loanedItems: userStatusResponse.result.loanedItems,
-      fiscalAccount: userStatusResponse.result.fiscalAccount
+      fiscalAccount: userStatusResponse.result.fiscalAccount,
+      branchNamesMap: userStatusResponse.result.branchNamesMap
     };
 
     this.trigger(this.store);
@@ -63,10 +64,49 @@ const UserStatusStore = Reflux.createStore({
     }
 
     // make sure re-render is triggered
-    this.trigger(this.store.status);
+    this.trigger(this.store);
 
     // send cancel action to complete deletion
     UserStatusActions.cancelOrder({orderId: orderId, orderType: orderType});
+  },
+
+  onMarkForChangePickupAgency(data) {
+
+    if (this.store.status.orderedItems) {
+      forEach(this.store.status.orderedItems.orders, (order) => {
+        if (order.orderId === data.orderId) {
+          // mark the specified order
+          order.markedForChangePickupAgency = true;
+          order.isChangePickupAgencyConfirmed = false;
+          order.isChangePickupAgencySuccesful = false;
+        }
+      });
+    }
+
+    // make sure re-render is triggered
+    this.trigger(this.store);
+
+    UserStatusActions.changePickupAgency({orderId: data.orderId, pickUpAgencyId: data.agencyId});
+  },
+
+  onConfirmChangePickupAgency(data) {
+
+    if (this.store.status.orderedItems) {
+      forEach(this.store.status.orderedItems.orders, (order) => {
+        if (order.orderId === data.orderId) {
+          // mark the specified order
+          // TODO: should anything else be marked?
+          // TODO: get inspiration from similar calls
+          order.markedForChangePickupAgency = true;
+          order.isChangePickupAgencyConfirmed = true;
+          order.isChangePickupAgencySuccesful = data.orderUpdated;
+        }
+      });
+    }
+
+    if (data.orderUpdated) {
+      UserStatusActions.fetchUserStatus();
+    }
   },
 
   onMarkLoanForRenewal(loanId) {

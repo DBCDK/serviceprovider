@@ -7,30 +7,61 @@
 
 import React, {PropTypes} from 'react';
 
-class ToggleButton extends React.Component {
+class PickUpAgencySelector extends React.Component {
 
   constructor() {
     super();
+    this.changePickupAgency = this.changePickupAgency.bind(this);
+  }
+
+  changePickupAgency(e) {
+    const newAgencyId = e.target.value;
+    this.props.onSelect(this.props.order.orderId, newAgencyId);
   }
 
   render() {
-    const toggleClass = (this.props.collapsed === true) ? 'toggle-buttons collapsed' : 'toggle-buttons not-collapsed';
 
-    return (
-      <div className={toggleClass} onClick={this.props.toggleDisplay}>
-        <div className='button-collapsed'></div>
-        <div className='button-not-collapsed'></div>
-      </div>
+    const branchNamesMap = this.props.branchNamesMap;
+
+    const branchIds = Object.keys(branchNamesMap);
+
+    const isConfirmedSuccess = this.props.order.isChangePickupAgencyConfirmed && this.props.order.isChangePickupAgencySuccesful;
+
+    const isConfirmedFailure = this.props.order.isChangePickupAgencyConfirmed && !this.props.order.isChangePickupAgencySuccesful;
+
+    const isSelectorLoading = this.props.order.markedForChangePickupAgency && !isConfirmedFailure && !isConfirmedSuccess;
+
+
+    let selector = (
+        <span className='selector'>
+          <select onChange={this.changePickupAgency} value={this.props.order.pickUpAgencyId}>
+            {branchIds.map((id) => {
+              return <option key={id} value={id}>{branchNamesMap[id]}</option>;
+            })}
+          </select>
+        </span>
     );
-  }
 
+    if (isSelectorLoading) {
+      selector = (
+          <span className='selector'>
+            <select className='loading' disabled='true'>
+              <option></option>
+            </select>
+          </span>
+      );
+    }
+
+    return selector;
+  }
 }
 
-ToggleButton.propTypes = {
-  collapsed: PropTypes.bool,
-  toggleDisplay: PropTypes.func
+PickUpAgencySelector.propTypes = {
+  branchNamesMap: PropTypes.object,
+  onSelect: PropTypes.func,
+  order: PropTypes.object
 };
 
-ToggleButton.displayName = 'ToggleButton.component';
+PickUpAgencySelector.displayName = 'PickUpAgencySelector.component';
 
-export default ToggleButton;
+export default PickUpAgencySelector;
