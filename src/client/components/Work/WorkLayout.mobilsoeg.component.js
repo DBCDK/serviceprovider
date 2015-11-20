@@ -77,17 +77,29 @@ export default class WorkLayout extends React.Component {
   }
 
   render() {
+    const profile = this.state.profile;
     // Fake profile to look like old one until refactor!
     // TODO: REFACTOR!
-    const mobprofile = this.state.profile;
-    let profile = {
-      userIsLoggedIn: mobprofile.userIsLoggedIn,
-      favoriteLibraries: [{
-        libraryID: mobprofile.profile.agencyid,
-        agencyID: mobprofile.pickup_agency ? mobprofile.pickup_agency : mobprofile.profile.agencyid,
-        borrowerID: typeof window !== 'undefined' && window.BORROWER_ID ? window.BORROWER_ID : ''
-      }]
-    };
+    let orderButtonComponent = '';
+    if (profile.userIsLoggedIn && profile.profile.agencyid) {
+      const orderProfile = {
+        userIsLoggedIn: profile.userIsLoggedIn,
+        favoriteLibraries: [{
+          libraryID: profile.profile.agencyid,
+          agencyID: profile.pickup_agency ? profile.pickup_agency : profile.profile.agencyid,
+          borrowerID: typeof window !== 'undefined' && window.BORROWER_ID ? window.BORROWER_ID : ''
+        }]
+      };
+
+      orderButtonComponent = (
+        <OrderButton
+          favoriteLibraries={orderProfile.favoriteLibraries}
+          manifestations={this.props.specifics}
+          profile={orderProfile}
+          relations={this.props.work.result.relations}
+        />
+      );
+    }
 
     const personalRecommendations = profile.userIsLoggedIn ? (
       <WorkRecommendation
@@ -110,7 +122,7 @@ export default class WorkLayout extends React.Component {
             <CoverImage noCoverUrl='/covers/no-cover-image-book.png' pids={[this.props.id, this.props.work.result.pid]} prefSize='detail_500' />
           </div>
           <div className='work small-24 small-centered medium-14 medium-uncentered large-16 large-uncentered columns' >
-            <OrderButton favoriteLibraries={profile.favoriteLibraries} manifestations={this.props.specifics} profile={profile} relations={this.props.work.result.relations} />
+            {orderButtonComponent}
 
             {likeContainers}
 
