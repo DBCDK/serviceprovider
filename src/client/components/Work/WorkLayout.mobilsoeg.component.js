@@ -78,7 +78,6 @@ export default class WorkLayout extends React.Component {
 
   render() {
     const profile = this.state.profile;
-    console.log(this.state.profile);
     // Fake profile to look like old one until refactor!
     // TODO: REFACTOR!
     let orderButtonComponent = '';

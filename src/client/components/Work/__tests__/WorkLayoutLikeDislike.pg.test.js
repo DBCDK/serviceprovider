@@ -10,9 +10,7 @@ import React from 'react';
 import ReactDom from 'react-dom';
 import TestUtils from 'react-addons-test-utils';
 
-import {assert, expect} from 'chai';
-
-import {extend} from 'lodash';
+import {assert} from 'chai';
 
 // Components
 import WorkLayout from '../WorkLayout.pg.component';
