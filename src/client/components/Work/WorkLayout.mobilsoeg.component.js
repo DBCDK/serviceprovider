@@ -103,13 +103,13 @@ export default class WorkLayout extends React.Component {
 
     const personalRecommendations = profile.userIsLoggedIn ? (
       <WorkRecommendation
-        recommendations={this.state.recommendations.recommendations.personal}
+        recommendations={this.state.recommendations.recommendations.personal || []}
         type='personal' />
     ) : '';
 
     const genericRecommendations = (
       <WorkRecommendation
-        recommendations={this.state.recommendations.recommendations.generic}
+        recommendations={this.state.recommendations.recommendations.generic || []}
         type='generic' />
     );
 
