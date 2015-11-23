@@ -1,7 +1,8 @@
 'use strict';
+
 /**
  * @file
- * Test of work component
+ * Test of the WorkContainer component using the WorkLayout.pg component
  */
 
 import {expect} from 'chai';
@@ -12,7 +13,7 @@ import ReactDom from 'react-dom';
 import TestUtils from 'react-addons-test-utils';
 
 import Work from '../WorkContainer.container.component';
-import WorkLayout from '../WorkLayout.mobilsoeg.component';
+import WorkLayout from '../WorkLayout.pg.component';
 
 import WorkStore from '../../../stores/Work.store.js';
 import RecommendationsStore from '../../../stores/Recommendations.store.js';

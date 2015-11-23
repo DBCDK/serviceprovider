@@ -3,7 +3,7 @@
 /**
  * @file
  * Tests the rendering of the Like/Dislike component in the
- * WorkLayput.mobilsoeg component.
+ * WorkLayput.pg component.
  */
 
 import React from 'react';

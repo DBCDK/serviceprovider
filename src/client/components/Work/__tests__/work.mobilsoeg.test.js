@@ -1,7 +1,8 @@
 'use strict';
+
 /**
  * @file
- * Test of work component
+ * Test of the WorkContainer component using the WorkLayout.mobilsoeg component
  */
 
 import {expect} from 'chai';
