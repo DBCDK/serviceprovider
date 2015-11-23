@@ -70,8 +70,8 @@ export default class NewsFrontPageContainerComponent extends React.Component {
 
 NewsFrontPageContainerComponent.displayName = 'NewsFrontPageContainerComponent';
 NewsFrontPageContainerComponent.propTypes = {
-  loadNumberOfPosts: React.PropTypes.number,
-  showNumberOfPosts: React.PropTypes.number
+  loadNumberOfPosts: React.PropTypes.string,
+  showNumberOfPosts: React.PropTypes.string
 };
 
 

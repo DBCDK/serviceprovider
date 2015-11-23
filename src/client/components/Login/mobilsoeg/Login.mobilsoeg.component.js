@@ -45,5 +45,5 @@ export default class Login extends React.Component {
 
 Login.displayName = 'Login.mobilsoeg';
 Login.propTypes = {
-  agencyId: React.PropTypes.string.isRequired
+  agencyId: React.PropTypes.string
 };

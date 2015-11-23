@@ -10,7 +10,7 @@ import Reflux from 'reflux';
 
 // Components
 import SearchResultList from './SearchResultList.component.js';
-import RecommendationContainer from '../Recommend/RecommendationContainer.component';
+import RecommendationContainer from '../Recommend/RecommendationContainer.mobilsoeg.component';
 
 // Actions
 import RecommendationActions from '../Recommend/Recommendations.action';
