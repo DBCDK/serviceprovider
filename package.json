@@ -47,7 +47,7 @@
     "compression": "1.6.0",
     "connect-redis": "3.0.0",
     "css-loader": "0.22.0",
-    "dbc-node-logger": "^1.3.1",
+    "dbc-node-logger": "^1.4.6",
     "dbc-node-newrelic-wrapper": "^1.0.1",
     "dbc-node-serviceprovider": "git://github.com/DBCDK/dbc-node-serviceprovider#stable_dist",
     "dbc-node-serviceprovider-socketclient": "^1.0.3",
