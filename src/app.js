@@ -90,6 +90,7 @@ if (!PRODUCTION && newrelic) {
   newrelic.agent_enabled = false;
 }
 
+
 // setting local vars that should be available to our template engine
 app.locals.newrelic = newrelic;
 app.locals.env = ENV;
