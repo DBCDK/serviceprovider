@@ -28,6 +28,7 @@ if (APPLICATION === 'ddbmobil') {
     resetpassword: './src/client/components/ResetPassword/index.js',
     topnavigation: './src/client/components/TopNavigation/index.mobilsoeg.js',
     work: './src/client/components/Work/Work.client.mobilsoeg',
+    news: './src/client/components/News/NewsPage.index',
     styles: './src/client/styles/ddb.scss'
   };
 }

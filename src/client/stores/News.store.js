@@ -2,8 +2,9 @@
 
 /**
  * @file
- * News Store. Contains a list of news.
+ * News Store. Contains a list of news and|or single news items
  */
+
 import Reflux from 'reflux';
 import NewsActions from '../actions/News.action.js';
 
@@ -13,6 +14,10 @@ let newsStore = Reflux.createStore({
     news: {
       items: [],
       haveBeenFetched: false,
+      loading: false
+    },
+    singles: {
+      news: {},
       loading: false
     }
   },
@@ -36,6 +41,16 @@ let newsStore = Reflux.createStore({
       haveBeenFetched: true,
       loading: false
     };
+    this.trigger(this.store);
+  },
+
+  onfetchNewsById(id) {
+    this.store.singles[id] = {loading: true};
+    this.trigger(this.store);
+  },
+
+  onUpdateNewsById(response) {
+    this.store.singles[response.nid] = response;
     this.trigger(this.store);
   }
 });

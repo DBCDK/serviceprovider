@@ -8,7 +8,7 @@
 import React from 'react';
 
 // Components
-import NewsFrontPageContainerComponent from '../News/NewsFrontPageContainer.component';
+import NewsList from '../News/NewsListContainer.component.js';
 import RecommendationContainer from '../Recommend/RecommendationContainer.mobilsoeg.component';
 import SearchFieldContainer from '../searchfield/SearchFieldContainer.component';
 import Query from '../query/Query.component.js';
@@ -34,7 +34,7 @@ export default class FrontPageLayoutMobilsoeg extends React.Component {
 
           <div className="frontpage-container--news--container large-8 columns" >
             <div className="frontpage-container--news" >
-              <NewsFrontPageContainerComponent loadNumberOfPosts="10" showNumberOfPosts="4" />
+              <NewsList loadNumberOfPosts="10" showNumberOfPosts="4" />
             </div>
           </div>
         </div>

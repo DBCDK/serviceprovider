@@ -29,6 +29,7 @@ import PassportRoutesMobilsoeg from './server/routes/passport.routes.mobilsoeg.j
 import WorkRoutesMobilSoeg from './server/routes/work.routes.mobilsoeg';
 import WorkRoutesPG from './server/routes/work.routes.pg';
 import GroupRoutes from './server/routes/group.routes.js';
+import NewsRoutes from './server/routes/news.routes.mobilsoeg.js';
 
 // Middleware
 import mobilsoegmiddleware from './server/middlewares/mobilsoeg.middleware.js';
@@ -192,6 +193,7 @@ if (APPLICATION === 'mobilsoeg') {
   app.use('/library', LibraryRoutes);
   app.use('/profile', PassportRoutesMobilsoeg);
   app.use('/work', WorkRoutesMobilSoeg);
+  app.use('/news', NewsRoutes);
 }
 
 // If running in dev-mode enable auto reload in browser when the server restarts

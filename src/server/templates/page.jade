@@ -1,0 +1,8 @@
+extends layout
+block prepend footerscripts
+   if pagescript
+      script(src="/js/" + pagescript defer=true)
+block content
+   #page.row !{content}
+
+   script window.PAGE_DATA = !{data};

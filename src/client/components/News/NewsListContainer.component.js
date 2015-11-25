@@ -1,18 +1,29 @@
 'use strict';
 
+/**
+ * @file
+ * Shows a list of news from the ddbContent service
+ *
+ * @usage
+ * <NewsListContainer loadNumberOfPosts=10 showNumberOfPosts=4 />
+ */
+
 import {slice} from 'lodash';
 import React from 'react';
-import NewsItem from './NewsItem.component.js';
+import NewsItem from './NewsListItemLayout.component.js';
 import NewsActions from '../../actions/News.action.js';
 import NewsStore from '../../stores/News.store.js';
 
-export default class NewsFrontPageContainerComponent extends React.Component {
+export default class NewsListContainer extends React.Component {
   constructor(props) {
     super();
     NewsStore.listen(this.setState.bind(this));
-    this.state = NewsStore.getInitialState();
+    this.state = props.data || NewsStore.getInitialState();
     this.state.showNumberOfPosts = props.showNumberOfPosts || 10;
-    NewsActions.fetchNewsList({amount: props.loadNumberOfPosts || 3});
+  }
+
+  componentDidMount() {
+    NewsActions.fetchNewsList({amount: this.props.loadNumberOfPosts || 3});
   }
 
   /**
@@ -23,9 +34,9 @@ export default class NewsFrontPageContainerComponent extends React.Component {
   mapNews(news) {
     return news.map((element, i) => {
       const zebra = (i % 2 === 0) && 'even' || 'odd';
-      const link = `/news/${element.id}`;
+      const link = `/news/${element.nid}`;
       return (
-        <NewsItem key={element.id} {...element} link={link} zebra={zebra} />
+        <NewsItem key={element.nid} {...element} link={link} zebra={zebra} />
       );
     });
   }
@@ -60,7 +71,7 @@ export default class NewsFrontPageContainerComponent extends React.Component {
         </div>
         <div className='news-items-link-container' >
           {newsMore.length &&
-          (<a className='link' href='#' onClick={this.showAllNews.bind(this)} >Se flere nyheder...</a>) || null
+          (<a className='link show-more' href='#' onClick={this.showAllNews.bind(this)} >Se flere nyheder...</a>) || null
           }
         </div>
       </div>
@@ -68,8 +79,9 @@ export default class NewsFrontPageContainerComponent extends React.Component {
   }
 }
 
-NewsFrontPageContainerComponent.displayName = 'NewsFrontPageContainerComponent';
-NewsFrontPageContainerComponent.propTypes = {
+NewsListContainer.displayName = 'NewsListContainer';
+NewsListContainer.propTypes = {
+  data: React.PropTypes.object,
   loadNumberOfPosts: React.PropTypes.string,
   showNumberOfPosts: React.PropTypes.string
 };
