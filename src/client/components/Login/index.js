@@ -7,7 +7,7 @@
 
 import React from 'react';
 import ReactDOM from 'react-dom';
-import Login from './mobilsoeg/Login.mobilsoeg.component.js';
+import Login from './Login.component.js';
 
 let agencyId = typeof window !== 'undefined' ? window.agencyId : '775100';
 ReactDOM.render(<Login agencyId={agencyId} />, document.getElementById('login'), null);

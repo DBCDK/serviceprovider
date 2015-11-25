@@ -11,7 +11,7 @@ import dbcMiddleware from './../middlewares/middleware.js';
 import React from 'react';
 import ReactDOM from 'react-dom/server';
 
-import Login from '../../client/components/Login/mobilsoeg/Login.mobilsoeg.component';
+import Login from '../../client/components/Login/Login.component.js';
 import Profile from '../../client/components/DDBProfile/DDBProfile.component.js';
 
 const PassportRoutes = express.Router();

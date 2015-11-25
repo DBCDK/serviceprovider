@@ -2,7 +2,7 @@
 
 /**
  * @file
- * Testing the Login.mobilsoeg.component
+ * Testing the Login.component
  */
 
 import React from 'react';
@@ -10,9 +10,9 @@ import TestUtils from 'react-addons-test-utils';
 import {assert} from 'chai';
 
 // Components
-import Login from '../Login.mobilsoeg.component';
+import Login from '../Login.component.js';
 
-describe('Testing the Login.mobilsoeg.component', () => {
+describe('Testing the Login.component', () => {
 
   let renderer;
 
