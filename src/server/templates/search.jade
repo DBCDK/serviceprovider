@@ -1,6 +1,7 @@
-//- search.jade
-
-if application == 'mobilsoeg'
-    include search-mobilsoeg
-else if application == 'pg'
-    include search-pg
+//- index.jade
+extends layout
+block prepend footerscripts
+    script(src='/js/querysearch.js' defer=true)
+block content
+    #search.row !{search}
+    script window.QUERYSTRING_PROPS = !{props}

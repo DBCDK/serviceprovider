@@ -23,12 +23,8 @@ import reload from 'reload';
 
 // Routes
 import MainRoutes from './server/routes/main.routes.js';
-import LibraryRoutes from './server/routes/library.routes.js';
-import PassportRoutesPG from './server/routes/passport.routes.pg.js';
 import PassportRoutesMobilsoeg from './server/routes/passport.routes.mobilsoeg.js';
 import WorkRoutesMobilSoeg from './server/routes/work.routes.mobilsoeg';
-import WorkRoutesPG from './server/routes/work.routes.pg';
-import GroupRoutes from './server/routes/group.routes.js';
 import NewsRoutes from './server/routes/news.routes.mobilsoeg.js';
 
 // Middleware
@@ -50,7 +46,7 @@ const socket = socketio.listen(server);
 const ENV = app.get('env');
 const PRODUCTION = ENV === 'production';
 const APP_NAME = process.env.NEW_RELIC_APP_NAME || 'app_name'; // eslint-disable-line no-process-env
-const APPLICATION = process.env.NODE_APPLICATION === 'ddbmobil' ? 'mobilsoeg' : 'pg'; // eslint-disable-line no-process-env
+const APPLICATION = 'mobilsoeg'; // eslint-disable-line no-process-env
 const logger = new Logger({app_name: APP_NAME});
 const expressLoggers = logger.getExpressLoggers();
 
@@ -165,37 +161,21 @@ socket.use((_socket, next) => {
 
 app.use(sessionMiddleware);
 
-// Configuring PG application
-if (APPLICATION === 'pg') {
-  // Setup passport
-  PassportStrategies.PGPassportConfig(app);
+// Detect library and set context
+app.use(mobilsoegmiddleware.libraryStyleWare);
 
-  // Setup Routes
-  app.use('/', MainRoutes);
-  app.use('/library', LibraryRoutes);
-  app.use('/profile', PassportRoutesPG);
-  app.use('/work', WorkRoutesPG);
-  app.use('/groups', GroupRoutes);
-}
+// Setup passport
+PassportStrategies.MobilSoegPassportConfig(app);
 
-// Configuring MobilSøg application
-if (APPLICATION === 'mobilsoeg') {
-  // Detect library and set context
-  app.use(mobilsoegmiddleware.libraryStyleWare);
+// Setting middleware
+app.use('*', GlobalsMiddleware); // should be placed after PassportStrategies.MobilSoegPassportConfig
 
-  // Setup passport
-  PassportStrategies.MobilSoegPassportConfig(app);
+// Setup Routes
+app.use('/', MainRoutes);
+app.use('/profile', PassportRoutesMobilsoeg);
+app.use('/work', WorkRoutesMobilSoeg);
+app.use('/news', NewsRoutes);
 
-  // Setting middleware
-  app.use('*', GlobalsMiddleware); // should be placed after PassportStrategies.MobilSoegPassportConfig
-
-  // Setup Routes
-  app.use('/', MainRoutes);
-  app.use('/library', LibraryRoutes);
-  app.use('/profile', PassportRoutesMobilsoeg);
-  app.use('/work', WorkRoutesMobilSoeg);
-  app.use('/news', NewsRoutes);
-}
 
 // If running in dev-mode enable auto reload in browser when the server restarts
 if (ENV === 'development') {
