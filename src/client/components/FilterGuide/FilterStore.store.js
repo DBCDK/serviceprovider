@@ -3,7 +3,7 @@
 import Reflux from 'reflux';
 import {filter} from 'lodash';
 import SocketClient from 'dbc-node-serviceprovider-socketclient';
-import QueryStore from './QueryStore.store.js';
+import QueryStore from './../../stores/QueryStore.store.js';
 
 // Setup dataobject for query
 // @todo We may need to initialize it with data from the URL or an global object

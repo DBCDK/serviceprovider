@@ -2,8 +2,8 @@
 
 import React from 'react';
 import ReactDOM from 'react-dom';
-import {Order} from 'dbc-react-components';
-import {CoverImage} from 'dbc-react-components';
+import Order from '../Order/Order.component';
+import CoverImage from '../CoverImage/CoverImageContainer.component';
 
 /**
  * Entry point for Order

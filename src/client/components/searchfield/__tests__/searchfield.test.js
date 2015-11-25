@@ -9,10 +9,10 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import TestUtils from 'react-addons-test-utils';
 import Search from '../SearchFieldContainer.component.js';
-import {TokenSearchField} from 'dbc-react-components';
+import TokenSearchField from '../../TokenSearchField/TokenSearchField.component';
 import QueryStore from '../../../stores/QueryStore.store.js';
-import AutoCompleteActions from '../../../actions/AutoComplete.action.js';
-import AutoCompleteStore from '../../../stores/AutoComplete.store.js';
+import AutoCompleteActions from '../../AutoComplete/AutoComplete.action.js';
+import AutoCompleteStore from '../../AutoComplete/AutoComplete.store.js';
 import InputFieldStore from '../../../stores/InputField.store.js';
 
 describe('Test the Search component', () => {

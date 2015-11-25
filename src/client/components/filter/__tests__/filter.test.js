@@ -8,8 +8,8 @@ import {expect} from 'chai';
 import React from 'react';
 import TestUtils from 'react-addons-test-utils';
 import Filter from '../FilterlistContainer.component.js';
-import {FilterGuide} from 'dbc-react-components';
-import FilterStore from '../../../stores/FilterStore.store.js';
+import FilterGuide from '../../FilterGuide/FilterGuide.component';
+import FilterStore from '../../FilterGuide/FilterStore.store.js';
 
 
 describe('Test the Filter component', () => {

@@ -6,7 +6,7 @@
  */
 
 import React from 'react';
-import {ImageSwitch} from 'dbc-react-components';
+import ImageSwitch from '../../ImageSwitch/ImageSwitchComponent.component';
 
 // actions
 import ProfileActions from '../../../actions/Profile.action.js';

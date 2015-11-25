@@ -6,7 +6,7 @@ import ReactDOM from 'react-dom';
 import TestUtils from 'react-addons-test-utils';
 
 import LibrarySuggestContainerComponent from '../LibrarySuggestContainer.component.js';
-import {TokenSearchField} from 'dbc-react-components';
+import TokenSearchField from '../../TokenSearchField/TokenSearchField.component';
 
 import LibrarySearchStore from '../../../stores/LibrarySearch.store.js';
 import QueryStore from '../../../stores/QueryStore.store.js';

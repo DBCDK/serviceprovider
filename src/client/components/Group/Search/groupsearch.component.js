@@ -3,7 +3,7 @@
 import React, {PropTypes} from 'react';
 
 // Components
-import {TokenSearchField} from 'dbc-react-components';
+import TokenSearchField from '../../TokenSearchField/TokenSearchField.component';
 
 // Actions
 import QueryActions from '../../../actions/QueryUpdate.action.js';

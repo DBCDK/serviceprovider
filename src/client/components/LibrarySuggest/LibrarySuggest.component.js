@@ -3,8 +3,8 @@
 import React, {PropTypes} from 'react';
 
 // Components
-import AutoCompleteContainer from '../autocomplete/AutocompleteContainer.component.js';
-import {TokenSearchField} from 'dbc-react-components';
+import AutoCompleteContainer from '../AutoComplete/AutocompleteContainer.component.js';
+import TokenSearchField from '../TokenSearchField/TokenSearchField.component';
 
 // Actions
 import LibrarySuggestAction from '../../actions/LibrarySuggest.action.js';

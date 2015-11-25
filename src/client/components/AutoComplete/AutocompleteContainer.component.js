@@ -6,7 +6,7 @@
 
 import React from 'react';
 import {isEmpty} from 'lodash';
-import {AutoComplete} from 'dbc-react-components';
+import AutoComplete from './AutoComplete.component';
 
 const AutoCompleteContainer = React.createClass({
   displayName: 'AutoCompleteContainer',
