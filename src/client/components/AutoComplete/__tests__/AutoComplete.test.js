@@ -5,7 +5,7 @@
  * Testing the AutoComplete.store
  */
 import {assert, expect} from 'chai';
-import AutoCompleteStore from '../AutoComplete.store';
+import AutoCompleteStore from '../AutoComplete.store.js';
 
 describe('Testing the AutoComplete Store', () => {
 

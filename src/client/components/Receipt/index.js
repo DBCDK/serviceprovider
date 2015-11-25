@@ -2,7 +2,7 @@
 
 import React from 'react';
 import ReactDOM from 'react-dom';
-import {Receipt} from 'dbc-react-components';
+import Receipt from '../Receipt/Receipt.component';
 
 /**
  * Client side rendering of the Receipt component

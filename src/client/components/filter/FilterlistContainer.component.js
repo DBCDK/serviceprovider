@@ -8,14 +8,14 @@ import React from 'react';
 import Reflux from 'reflux';
 
 // Components
-import {FilterGuide} from 'dbc-react-components';
+import FilterGuide from '../FilterGuide/FilterGuide.component';
 
 
 // Actions
 import QueryActions from '../../actions/QueryUpdate.action.js';
 
 // Stores
-import FilterStore from '../../stores/FilterStore.store.js'; // eslint-disable-line no-unused-vars
+import FilterStore from '../FilterGuide/FilterStore.store.js'; // eslint-disable-line no-unused-vars
 import MaterialTypeStore from '../../stores/MaterialType.store.js';
 
 export default React.createClass({

@@ -3,7 +3,8 @@
 import React, {PropTypes} from 'react';
 import {take} from 'lodash';
 
-import {CoverImage, BibliographicData} from 'dbc-react-components';
+import CoverImage from '../CoverImage/CoverImageContainer.component';
+import BibliographicData from '../ResultListView/DisplayBibliographicData/DisplayBibliographicData.component';
 
 class WorkRecommendationComponent extends React.Component {
   render() {

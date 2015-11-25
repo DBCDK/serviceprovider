@@ -3,8 +3,8 @@
 import Reflux from 'reflux';
 import React from 'react';
 
-import AutoCompleteActions from '../actions/AutoComplete.action.js';
-import {CoverImage} from 'dbc-react-components';
+import AutoCompleteActions from './AutoComplete.action';
+import CoverImage from '../CoverImage/CoverImageContainer.component';
 
 const AutoCompleteStore = Reflux.createStore({
   listenables: AutoCompleteActions,

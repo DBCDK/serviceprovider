@@ -8,7 +8,8 @@
 import React from 'react';
 
 // Components
-import {CoverImage, ResultDisplay} from 'dbc-react-components';
+import ResultDisplay from '../ResultListView/ResultDisplay/ResultDisplay.component';
+import CoverImage from '../CoverImage/CoverImageContainer.component';
 import Loader from '../Loader.component.js';
 
 const SearchResultList = React.createClass({

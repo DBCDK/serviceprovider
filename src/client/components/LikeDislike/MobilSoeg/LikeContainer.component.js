@@ -6,7 +6,7 @@
  */
 
 import React from 'react';
-import {ImageSwitch} from 'dbc-react-components';
+import ImageSwitch from '../../ImageSwitch/ImageSwitchComponent.component';
 
 // Actions
 import MobilSoegProfileActions from '../../../actions/MobilSoegProfile.action';
