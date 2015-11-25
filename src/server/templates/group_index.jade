@@ -1,7 +1,0 @@
-extends layout
-block prepend footerscripts
-   script(src='/js/groupsearch.js' defer=true)
-block content
-   #search !{groupSearchString}
-   script window.QUERYSTRING_PROPS = !{query};
-   script window.groupSearchProps = !{groupSearchProps};

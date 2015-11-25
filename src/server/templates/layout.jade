@@ -8,10 +8,8 @@ html(lang='da')
         #message
             include message
         block top
-            if application == 'mobilsoeg'
-                include header-mobilsoeg
-            else if application == 'pg'
-                include header-pg
+            include header-mobilsoeg
+
 
         block content
 
