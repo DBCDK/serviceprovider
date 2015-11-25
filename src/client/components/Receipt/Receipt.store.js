@@ -8,31 +8,25 @@
 import Reflux from 'reflux';
 import ReceiptActions from './Receipt.action.js';
 
-let store = {};
-
 const ReceiptStore = Reflux.createStore({
-  getState: function() {
-    return store;
+  store: {},
+
+  getState() {
+    return this.store;
   },
 
-  init: function() {
+  init() {
     this.listenTo(ReceiptActions.updated, this.update);
   },
 
   update(response) {
     const pid = response.info.pids.toString();
-    if (response.result.hasOwnProperty('orderPlaced')) {
-      store[pid] = response.result.orderPlaced;
-    }
-    else {
-      store[pid] = 'false';
-    }
-
+    this.store[pid] = response.result.hasOwnProperty('orderPlaced') ? response.result.orderPlaced : 'false';
     this.pushStore();
   },
 
-  pushStore: function() {
-    this.trigger(store);
+  pushStore() {
+    this.trigger(this.store);
   }
 });
 
