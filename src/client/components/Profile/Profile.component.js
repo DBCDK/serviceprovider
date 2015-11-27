@@ -2,7 +2,7 @@
 
 /**
  * @file
- * DDBProfile component displays the user attributes and allows editing.
+ * Profile component displays the user attributes and allows editing.
  */
 
 import React from 'react';
@@ -16,10 +16,10 @@ import LoansList from './LoansList.component';
 import FiscalStatus from './FiscalStatus.component';
 import UserStatusSummary from './UserStatusSummary.component';
 
-class DDBProfile extends React.Component {
+class Profile extends React.Component {
 
   static displayName() {
-    return 'DDBProfile.component';
+    return 'Profile.component';
   }
 
   constructor() {
@@ -134,4 +134,4 @@ class DDBProfile extends React.Component {
   }
 }
 
-export default DDBProfile;
+export default Profile;

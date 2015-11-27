@@ -12,7 +12,7 @@ import React from 'react';
 import ReactDOM from 'react-dom/server';
 
 import Login from '../../client/components/Login/Login.component.js';
-import Profile from '../../client/components/DDBProfile/DDBProfile.component.js';
+import Profile from '../../client/components/Profile/Profile.component.js';
 
 const PassportRoutes = express.Router();
 
