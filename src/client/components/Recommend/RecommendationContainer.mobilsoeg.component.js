@@ -10,7 +10,7 @@ import React from 'react';
 import RecommendationActions from './Recommendations.action';
 
 // Stores
-import MobilSoegProfileStore from '../../stores/MobilSoegProfile.store';
+import ProfileStore from '../../stores/Profile.store';
 import RecommendationStore from './Recommendations.store';
 
 // Components
@@ -35,7 +35,7 @@ class RecommendationContainer extends React.Component {
 
   componentDidMount() {
     this.unsubscribe = [
-      MobilSoegProfileStore.listen(() => this.gotProfile()),
+      ProfileStore.listen(() => this.gotProfile()),
       RecommendationStore.listen(() => this.gotRecommendations())
     ];
   }
@@ -53,7 +53,7 @@ class RecommendationContainer extends React.Component {
   }
 
   gotProfile() {
-    const profileLikes = MobilSoegProfileStore.store.profile.likes;
+    const profileLikes = ProfileStore.store.profile.likes;
     this.requestRecommendations(profileLikes);
   }
 

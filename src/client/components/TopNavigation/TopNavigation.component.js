@@ -6,18 +6,18 @@
  */
 
 import React from 'react';
-import MobilSoegProfileStore from '../../stores/MobilSoegProfile.store.js';
+import ProfileStore from '../../stores/Profile.store.js';
 
 class TopNavigation extends React.Component {
   constructor() {
     super();
 
-    this.state = MobilSoegProfileStore.getState();
+    this.state = ProfileStore.getState();
   }
 
   componentDidMount() {
     this.unsubscribe = [
-      MobilSoegProfileStore.listen(() => this.updateProfile())
+      ProfileStore.listen(() => this.updateProfile())
     ];
   }
 
@@ -30,7 +30,7 @@ class TopNavigation extends React.Component {
   }
 
   updateProfile() {
-    this.setState(MobilSoegProfileStore.getState());
+    this.setState(ProfileStore.getState());
   }
 
   render() {

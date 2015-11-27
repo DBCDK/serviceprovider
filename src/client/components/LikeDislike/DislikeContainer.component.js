@@ -9,20 +9,20 @@ import React from 'react';
 import ImageSwitch from '../ImageSwitch/ImageSwitchComponent.component.js';
 
 // Actions
-import MobilSoegProfileActions from '../../actions/MobilSoegProfile.action.js';
+import ProfileActions from '../../actions/Profile.action.js';
 
 // Stores
-import MobilSoegProfileStore from '../../stores/MobilSoegProfile.store.js';
+import ProfileStore from '../../stores/Profile.store.js';
 
 export default class DislikeContainer extends React.Component {
   constructor(props) {
     super(props);
 
     this.unsubscribe = [
-      MobilSoegProfileStore.listen(this.updateProfile.bind(this))
+      ProfileStore.listen(this.updateProfile.bind(this))
     ];
 
-    this.state = MobilSoegProfileStore.getState();
+    this.state = ProfileStore.getState();
   }
 
   componentWillUnmount() {
@@ -39,7 +39,7 @@ export default class DislikeContainer extends React.Component {
 
   onClick(e) {
     e.preventDefault();
-    MobilSoegProfileActions.dislikeObject(this.props.objectId);
+    ProfileActions.dislikeObject(this.props.objectId);
   }
 
   isToggled() {
