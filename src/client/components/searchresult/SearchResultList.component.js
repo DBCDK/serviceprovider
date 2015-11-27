@@ -9,40 +9,30 @@ import React from 'react';
 
 // Components
 import ResultDisplay from '../ResultListView/ResultDisplay/ResultDisplay.component';
-import CoverImage from '../CoverImage/CoverImageContainer.component';
-import Loader from '../Loader.component.js';
 
-const SearchResultList = React.createClass({
-  displayName: 'SearchResultList',
-  propTypes: {
-    data: React.PropTypes.object.isRequired,
-    layout: React.PropTypes.func,
-    loadMore: React.PropTypes.func
-  },
+
+export default class SearchResultList extends React.Component {
+  constructor(props) {
+    super(props);
+  }
 
   render() {
-    const coverImage = {
-      component: CoverImage,
-      noCoverUrl: {
-        appendWorkType: true,
-        url: `/covers/no-cover-image-[WORKTYPE].png`
-      },
-      prefSize: 'detail_500'
-    };
-
     return (
       <ResultDisplay
-        coverImage={coverImage}
         hasMore={this.props.data.results.info.more === 'true'}
         layout={this.props.layout}
         loadMore={this.props.loadMore}
-        loader={<Loader pending={this.props.data.results.pending} />}
         noResultsText=''
         pending={this.props.data.results.pending}
         result={this.props.data.results.result}
       />
     );
   }
-});
+}
 
-export default SearchResultList;
+SearchResultList.displayName = 'SearchResultList';
+SearchResultList.propTypes = {
+  data: React.PropTypes.object.isRequired,
+  layout: React.PropTypes.func,
+  loadMore: React.PropTypes.func
+};

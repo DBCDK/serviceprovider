@@ -31,7 +31,9 @@ let RecommendationsStore = Reflux.createStore({
   store: {
     result: [],
     pending: false,
-    info: {more: false}
+    info: {
+      more: false
+    }
   },
 
   init() {
@@ -60,23 +62,27 @@ let RecommendationsStore = Reflux.createStore({
     }
     else {
       this.store.result = result.splice(0, 20);
-      this.trigger(this.store);
+      this.pushStore();
     }
   },
 
   updatePending(state) {
     this.store.pending = state;
-    this.trigger(this.store);
+    this.pushStore();
   },
 
   update(result) {
     this.store.result = result.splice(0, 20);
     this.store.pending = false;
-    this.trigger(this.store);
+    this.pushStore();
   },
 
   getDefaultRecommendations() {
     return defaultLikes;
+  },
+
+  pushStore() {
+    this.trigger(this.store);
   }
 });
 

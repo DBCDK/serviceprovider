@@ -14,7 +14,7 @@ module.exports = function(wallaby) {
       {pattern: 'src/client/components/**/*.js', load: false},
       {pattern: 'src/client/stores/*.js', load: false},
       {pattern: 'src/client/actions/*.js', load: false},
-      {pattern: 'src/utils/*.js', load: false},
+      {pattern: 'src/utils/**/*.js', load: false},
       {pattern: 'src/**/*.test.js', ignore: true}
     ],
 

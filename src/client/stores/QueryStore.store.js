@@ -6,10 +6,11 @@ import QueryParser from '../../utils/QueryParser.util.js';
 import QueryActions from '../actions/QueryUpdate.action.js';
 
 const defaultStore = {
-  loadMoreWasTriggered: false,
+  queryHasChanged: false,
   query: [],
   page: 0,
   worksPerPage: 12,
+  search: '',
   sort: 'default'
 };
 
@@ -22,6 +23,7 @@ let QueryStore = Reflux.createStore({
     query: [],
     page: 0,
     worksPerPage: 12,
+    search: '',
     sort: 'default'
   },
 

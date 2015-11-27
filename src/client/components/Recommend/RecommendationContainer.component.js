@@ -24,11 +24,7 @@ class RecommendationContainer extends React.Component {
     super();
 
     this.state = {
-      recommendations: {
-        result: [],
-        pending: false,
-        info: {more: false}
-      },
+      recommendations: RecommendationStore.store,
       result: []
     };
   }
@@ -38,10 +34,6 @@ class RecommendationContainer extends React.Component {
       ProfileStore.listen(() => this.gotProfile()),
       RecommendationStore.listen(() => this.gotRecommendations())
     ];
-  }
-
-  shouldComponentUpdate(nextProps, nextState) {
-    return JSON.stringify(this.state.result) !== JSON.stringify(nextState.result);
   }
 
   componentWillUnmount() {
