@@ -2,19 +2,19 @@
 
 /**
  * @file
- * Container providing like functionality
+ * Container providing dislike functionality
  */
 
 import React from 'react';
-import ImageSwitch from '../../ImageSwitch/ImageSwitchComponent.component';
+import ImageSwitch from '../ImageSwitch/ImageSwitchComponent.component.js';
 
 // Actions
-import MobilSoegProfileActions from '../../../actions/MobilSoegProfile.action';
+import MobilSoegProfileActions from '../../actions/MobilSoegProfile.action.js';
 
 // Stores
-import MobilSoegProfileStore from '../../../stores/MobilSoegProfile.store';
+import MobilSoegProfileStore from '../../stores/MobilSoegProfile.store.js';
 
-export default class LikeContainer extends React.Component {
+export default class DislikeContainer extends React.Component {
   constructor(props) {
     super(props);
 
@@ -39,7 +39,7 @@ export default class LikeContainer extends React.Component {
 
   onClick(e) {
     e.preventDefault();
-    MobilSoegProfileActions.likeObject(this.props.objectId);
+    MobilSoegProfileActions.dislikeObject(this.props.objectId);
   }
 
   isToggled() {
@@ -49,7 +49,7 @@ export default class LikeContainer extends React.Component {
       return like.item_id === this.props.objectId;
     });
 
-    return obj.length ? (obj[0].value === '1') : false;
+    return obj.length ? (obj[0].value === '-1') : false;
   }
 
   render() {
@@ -57,13 +57,13 @@ export default class LikeContainer extends React.Component {
 
     return (
       <a href='#' onClick={this.onClick.bind(this)} >
-        <ImageSwitch isToggled={isToggled} offStateImg='/like_inactive.png' onStateImg='/like_active.png' />
+        <ImageSwitch isToggled={isToggled} offStateImg='/dislike_inactive.png' onStateImg='/dislike_active.png' />
       </a>
     );
   }
 }
 
-LikeContainer.displayName = 'LikeContainer';
-LikeContainer.propTypes = {
+DislikeContainer.displayName = 'DislikeContainer';
+DislikeContainer.propTypes = {
   objectId: React.PropTypes.string.isRequired
 };

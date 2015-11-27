@@ -12,7 +12,7 @@ import {assert} from 'chai';
 import LikeContainer from '../LikeContainer.component.js';
 import DislikeContainer from '../DislikeContainer.component.js';
 
-import MobilSoegProfileActions from '../../../../actions/MobilSoegProfile.action';
+import MobilSoegProfileActions from '../../../actions/MobilSoegProfile.action';
 
 describe('Testing the Like container', () => {
   let likeContainer;

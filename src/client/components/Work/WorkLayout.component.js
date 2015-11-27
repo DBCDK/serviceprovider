@@ -6,8 +6,8 @@ import React, {PropTypes} from 'react';
 // Components
 import CoverImage from '../CoverImage/CoverImageContainer.component';
 import OrderButton from '../Order/OrderButton/OrderButton.component';
-import LikeContainer from '../LikeDislike/MobilSoeg/LikeContainer.component.js';
-import DislikeContainer from '../LikeDislike/MobilSoeg/DislikeContainer.component.js';
+import LikeContainer from '../LikeDislike/LikeContainer.component.js';
+import DislikeContainer from '../LikeDislike/DislikeContainer.component.js';
 import WorkRecommendation from './WorkRecommendation.component';
 
 // Actions
