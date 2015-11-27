@@ -1,13 +1,16 @@
 'use strict';
+
+/**
+ * @file
+ * Rendering a LoadMore button
+ */
+
 import React from 'react';
 
-var Loadmore = React.createClass({
-  displayName: 'Loadmore',
-
-  propTypes: {
-    button: React.PropTypes.string,
-    update: React.PropTypes.func
-  },
+export default class LoadMore extends React.Component {
+  constructor() {
+    super();
+  }
 
   render() {
     let classes = ['search-result--loadmore', 'button', 'primary'];
@@ -16,12 +19,16 @@ var Loadmore = React.createClass({
         className={classes.join(' ')}
         key={this.props.button}
         onClick={this.props.update.bind(null, null)}
-        >
+      >
         {this.props.button}
       </button>
     );
   }
-});
+}
 
-export default Loadmore;
+LoadMore.displayName = 'Loadmore';
+LoadMore.propTypes = {
+  button: React.PropTypes.string,
+  update: React.PropTypes.func
+};
 

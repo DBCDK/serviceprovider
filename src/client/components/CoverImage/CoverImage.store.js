@@ -3,11 +3,11 @@
 import Reflux from 'reflux';
 import CoverImageActions from './CoverImage.action.js';
 
-let store = {};
-
 const CoverImageStore = Reflux.createStore({
+  store: {},
+
   getState: function() {
-    return store;
+    return this.store;
   },
 
   init: function() {
@@ -16,12 +16,12 @@ const CoverImageStore = Reflux.createStore({
 
   update(response) {
     const pid = response.identifiers.toString();
-    store[pid] = response.result.images;
+    this.store[pid] = response.result.images;
     this.pushStore();
   },
 
   pushStore: function() {
-    this.trigger(store);
+    this.trigger(this.store);
   }
 });
 

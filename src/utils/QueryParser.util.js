@@ -150,6 +150,7 @@ export function objectToString(query) {
  */
 export function objectToCql(query) {
   let groups = groupByType(query);
+
   return _.map(groups, splitGroupToCQL).join(' and ');
 }
 

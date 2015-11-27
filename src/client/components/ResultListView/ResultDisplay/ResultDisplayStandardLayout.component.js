@@ -1,6 +1,14 @@
 'use strict';
 
+/**
+ * @file
+ * Component for displaying a standdard search result layout
+ */
+
 import React from 'react';
+
+// Components
+import Loader from '../../Loader.component';
 
 export default class DisplayResultStandardLayout extends React.Component {
   constructor(props) {
@@ -13,7 +21,7 @@ export default class DisplayResultStandardLayout extends React.Component {
         <ul className='small-block-grid-2 medium-block-grid-3 large-block-grid-4' >
           {this.props.workElement}
         </ul>
-        {this.props.loader}
+        <Loader pending={this.props.pending} />
         {this.props.loadMoreButton}
       </div>
     );
@@ -23,6 +31,6 @@ export default class DisplayResultStandardLayout extends React.Component {
 DisplayResultStandardLayout.displayName = 'DisplayResultStandardLayout';
 DisplayResultStandardLayout.propTypes = {
   loadMoreButton: React.PropTypes.element,
-  loader: React.PropTypes.element,
+  pending: React.PropTypes.bool,
   workElement: React.PropTypes.arrayOf(React.PropTypes.element)
 };

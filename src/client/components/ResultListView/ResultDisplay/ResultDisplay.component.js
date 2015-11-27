@@ -7,35 +7,28 @@
  */
 
 import React from 'react';
+
+// Components
 import LoadMore from './LoadMore.component.js';
 import BibliographicData from './../DisplayBibliographicData/DisplayBibliographicData.component.js';
-
 import DisplayResultStandardLayout from './ResultDisplayStandardLayout.component';
 
 /**
  * Main component for presenting search result
  */
-const ResultDisplay = React.createClass({
-  displayName: 'ResultDisplay',
-
-  propTypes: {
-    coverImage: React.PropTypes.object,
-    hasMore: React.PropTypes.bool,
-    layout: React.PropTypes.func,
-    loadMore: React.PropTypes.func,
-    loader: React.PropTypes.element,
-    pending: React.PropTypes.bool,
-    result: React.PropTypes.array.isRequired
-  },
+export default class ResultDisplay extends React.Component {
+  constructor() {
+    super();
+  }
 
   render() {
-    const {loader, pending, result, hasMore, loadMore} = this.props;
-    const loadMoreButton = (hasMore && !pending) ? <LoadMore button={'Se flere'} update={loadMore} /> : null;
+    const {pending, result, hasMore, loadMore} = this.props;
+    const loadMoreButton = (hasMore && !pending) ?
+      <LoadMore button={'Se flere'} update={loadMore} /> : null;
 
     const workElement = result.map((work, i) => {
       return (
         <BibliographicData
-          coverImage={this.props.coverImage}
           creator={work.creator}
           identifiers={work.identifiers}
           key={i}
@@ -47,9 +40,16 @@ const ResultDisplay = React.createClass({
     const Layout = this.props.layout || DisplayResultStandardLayout;
 
     return (
-      <Layout loadMoreButton={loadMoreButton} loader={loader} workElement={workElement}/>
+      <Layout loadMoreButton={loadMoreButton} pending={pending} workElement={workElement} />
     );
   }
-});
+}
 
-export default ResultDisplay;
+ResultDisplay.displayName = 'ResultDisplay';
+ResultDisplay.propTypes = {
+  hasMore: React.PropTypes.bool,
+  layout: React.PropTypes.func,
+  loadMore: React.PropTypes.func,
+  pending: React.PropTypes.bool,
+  result: React.PropTypes.array.isRequired
+};

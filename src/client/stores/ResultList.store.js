@@ -30,12 +30,12 @@ let ResultListStore = Reflux.createStore({
     this.response(this.onResponse);
   },
 
-  onQueryUpdated(store) {
-    if (!store.queryHasChanged) {
+  onQueryUpdated(queryStore) {
+    if (!queryStore.queryHasChanged) {
       return;
     }
 
-    const {query, page, worksPerPage, sort} = store;
+    const {query, page, worksPerPage, sort} = queryStore;
     const offset = page * worksPerPage;
 
     if (query.length > 0) {

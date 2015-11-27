@@ -1,6 +1,7 @@
 'use strict';
 
 import React from 'react';
+import Loader from '../../Loader.component';
 
 export default class FrontPageRecommendationsLayout extends React.Component {
   constructor(props) {
@@ -13,7 +14,7 @@ export default class FrontPageRecommendationsLayout extends React.Component {
         <ul className='medium-block-grid-3 large-block-grid-3' >
           {this.props.workElement}
         </ul>
-        {this.props.loader}
+        <Loader pending={this.props.pending} />
       </div>
     );
   }
@@ -22,5 +23,6 @@ export default class FrontPageRecommendationsLayout extends React.Component {
 FrontPageRecommendationsLayout.displayName = 'FrontPageRecommendationsLayout';
 FrontPageRecommendationsLayout.propTypes = {
   loader: React.PropTypes.element,
+  pending: React.PropTypes.bool,
   workElement: React.PropTypes.arrayOf(React.PropTypes.element)
 };
