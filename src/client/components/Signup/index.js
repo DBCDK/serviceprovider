@@ -7,7 +7,7 @@
 
 import React from 'react';
 import ReactDOM from 'react-dom';
-import Signup from './mobilsoeg/Signup.mobilsoeg.component';
+import Signup from './Signup.component.js';
 
 const props = window.SIGNUP_PROPS || {};
 

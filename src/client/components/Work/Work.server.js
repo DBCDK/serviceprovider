@@ -2,7 +2,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom/server';
 import WorkContainer from './WorkContainer.container.component';
-import WorkLayout from './WorkLayout.mobilsoeg.component';
+import WorkLayout from './WorkLayout.component';
 
 /**
  * Render component for server use.

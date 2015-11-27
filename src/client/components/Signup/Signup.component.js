@@ -143,7 +143,7 @@ class Signup extends React.Component {
   }
 }
 
-Signup.displayName = 'Signup.mobilsoeg';
+Signup.displayName = 'Signup';
 Signup.propTypes = {
   errors: React.PropTypes.object
 };
