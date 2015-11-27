@@ -19,7 +19,7 @@ var entries = {
   profile: './src/client/components/Profile/index.js',
   querysearch: './src/client/components/searchpage/index.js',
   receipt: './src/client/components/Receipt/index.js',
-  topnavigation: './src/client/components/TopNavigation/index.mobilsoeg.js',
+  topnavigation: './src/client/components/TopNavigation/index.js',
   work: './src/client/components/Work/Work.client.mobilsoeg',
   news: './src/client/components/News/NewsPage.index',
   styles: './src/client/styles/ddb.scss'

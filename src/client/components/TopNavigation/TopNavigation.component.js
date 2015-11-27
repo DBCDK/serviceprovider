@@ -6,7 +6,7 @@
  */
 
 import React from 'react';
-import MobilSoegProfileStore from '../../../stores/MobilSoegProfile.store';
+import MobilSoegProfileStore from '../../stores/MobilSoegProfile.store.js';
 
 class TopNavigation extends React.Component {
   constructor() {
