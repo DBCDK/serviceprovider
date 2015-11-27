@@ -13,8 +13,8 @@ import TestUtils from 'react-addons-test-utils';
 
 import Work from '../WorkContainer.container.component';
 import WorkLayout from '../WorkLayout.component';
-import LikeContainer from '../../LikeDislike/MobilSoeg/LikeContainer.component.js';
-import DislikeContainer from '../../LikeDislike/MobilSoeg/DislikeContainer.component.js';
+import LikeContainer from '../../LikeDislike/LikeContainer.component.js';
+import DislikeContainer from '../../LikeDislike/DislikeContainer.component.js';
 
 import WorkStore from '../../../stores/Work.store.js';
 import RecommendationsStore from '../../../stores/Recommendations.store.js';
