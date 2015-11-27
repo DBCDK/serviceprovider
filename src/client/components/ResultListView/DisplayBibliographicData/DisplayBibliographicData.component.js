@@ -1,9 +1,14 @@
 'use strict';
-import React from 'react';
 
 /**
+ * @file
  * Component for creating presentation of bibliographic data
  */
+
+import React from 'react';
+
+// Components
+import CoverImageComponent from '../../CoverImage/CoverImageContainer.component';
 
 function _getIcon(worktype) {
 
@@ -40,43 +45,10 @@ function _getIcon(worktype) {
 
 }
 
-const BibliographicData = React.createClass({
-  displayName: 'BibliographicData.component',
-
-  propTypes: {
-    coverImage: React.PropTypes.object,
-    creator: React.PropTypes.string,
-    identifiers: React.PropTypes.array.isRequired,
-    title: React.PropTypes.string,
-    workType: React.PropTypes.string
-  },
-
-  getCoverComponent(pids, workType) {
-    let CoverImage = null;
-
-    if (!workType) {
-      workType = 'other';
-    }
-
-    if (this.props.coverImage) {
-      const CoverComponent = this.props.coverImage.component;
-      let noCoverUrl = this.props.coverImage.noCoverUrl.url;
-
-      if (this.props.coverImage.noCoverUrl && this.props.coverImage.noCoverUrl.appendWorkType) {
-        noCoverUrl = this.rewriteCoverImageUrl(this.props.coverImage.noCoverUrl.url, workType);
-      }
-
-      CoverImage = (
-        <CoverComponent noCoverUrl={noCoverUrl} pids={pids} prefSize={this.props.coverImage.prefSize} rewriteImgUrl={this.props.coverImage.rewriteImgUrl} />
-      );
-    }
-
-    return CoverImage;
-  },
-
-  rewriteCoverImageUrl(url, workType) {
-    return url.replace('[WORKTYPE]', workType);
-  },
+export default class BibliographicData extends React.Component {
+  constructor(props) {
+    super(props);
+  }
 
   render() {
     const {title, creator, workType, identifiers} = this.props;
@@ -85,20 +57,26 @@ const BibliographicData = React.createClass({
     const firstPid = pids[0];
     const workid = 'id-' + firstPid;
     const worklink = '/work?id=' + firstPid;
-    const CoverComponent = this.getCoverComponent(pids, workType);
+    const noCoverUrl = workType ? `/covers/no-cover-image-${workType}.png` : `/covers/no-cover-image-other.png`;
 
     return (
       <li data-work-id={firstPid} >
         <div className='work' data-work-id={firstPid} id={workid} >
           <a className="image-see-work" href={worklink} >
             <i className={icon.join(' ')} />
-            {CoverComponent}
+            <CoverImageComponent noCoverUrl={noCoverUrl} pids={pids} prefSize={'detail_500'} />
             <div className="title" >{title}</div>
             <div className="creator" >{creator}</div>
           </a>
         </div>
       </li>);
   }
-});
+}
 
-export default BibliographicData;
+BibliographicData.displayName = 'BibliographicData';
+BibliographicData.propTypes = {
+  creator: React.PropTypes.string,
+  identifiers: React.PropTypes.array.isRequired,
+  title: React.PropTypes.string,
+  workType: React.PropTypes.string
+};

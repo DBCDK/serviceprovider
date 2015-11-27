@@ -1,19 +1,20 @@
 'use strict';
 
+/**
+ * @file
+ * Component for displaying a simple loading indicator
+ */
+
 import React from 'react';
 
-
-const Loader = React.createClass({
-
-  displayName: 'ReactLoader',
-
-  propTypes: {
-    pending: React.PropTypes.bool.isRequired
-  },
-
+export default class LoaderComponent extends React.Component {
   render() {
-    return this.props.pending ? <span className='loader'>loader...</span> : <span className='no-loader'/>;
+    return this.props.pending ? <span className='loader' >loader...</span> :
+      <span className='no-loader' />;
   }
-});
+}
 
-export default Loader;
+LoaderComponent.displayName = 'LoaderComponent';
+LoaderComponent.propTypes = {
+  pending: React.PropTypes.bool.isRequired
+};

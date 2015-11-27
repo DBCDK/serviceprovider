@@ -9,7 +9,7 @@ import React from 'react';
 import TestUtils from 'react-addons-test-utils';
 import {assert} from 'chai';
 
-import RecommendationContainer from '../RecommendationContainer.mobilsoeg.component';
+import RecommendationContainer from '../RecommendationContainer.component.js';
 import RecommendationActions from '../Recommendations.action';
 import SearchResultList from '../../searchresult/SearchResultList.component';
 

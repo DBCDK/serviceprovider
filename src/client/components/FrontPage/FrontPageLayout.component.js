@@ -9,7 +9,7 @@ import React from 'react';
 
 // Components
 import NewsList from '../News/NewsListContainer.component.js';
-import RecommendationContainer from '../Recommend/RecommendationContainer.mobilsoeg.component';
+import RecommendationContainer from '../Recommend/RecommendationContainer.component.js';
 import SearchFieldContainer from '../searchfield/SearchFieldContainer.component';
 import Query from '../query/Query.component.js';
 

@@ -6,11 +6,10 @@
  */
 
 import React from 'react';
-import Reflux from 'reflux';
 
 // Components
 import SearchResultList from './SearchResultList.component.js';
-import RecommendationContainer from '../Recommend/RecommendationContainer.mobilsoeg.component';
+import RecommendationContainer from '../Recommend/RecommendationContainer.component.js';
 
 // Actions
 import RecommendationActions from '../Recommend/Recommendations.action';
@@ -21,33 +20,47 @@ import ResultListStore from '../../stores/ResultList.store.js';
 import RecommendationsStore from '../Recommend/Recommendations.store';
 import QueryStore from '../../stores/QueryStore.store.js';
 
-export default React.createClass({
-  displayName: 'SearchResultContainer.component',
+export default class SearchResultContainer extends React.Component {
+  constructor(props) {
+    super(props);
 
-  propTypes: {
-    recommendations: React.PropTypes.object
-  },
+    this.state = {
+      recommendations: this.props.recommendations ? this.props.recommendations : RecommendationsStore.store,
+      results: ResultListStore.store,
+      query: QueryStore.store
+    };
 
-  mixins: [
-    Reflux.listenTo(ResultListStore, 'updateRecommendations'),
-    Reflux.connect(ResultListStore, 'results'),
-    Reflux.connect(RecommendationsStore, 'recommendations'),
-    Reflux.connect(QueryStore, 'query')
-  ],
+    this.unsubscribe = [
+      RecommendationsStore.listen(this.recommendationsStoreWasUpdated.bind(this)),
+      ResultListStore.listen(this.resultStoreWasUpdated.bind(this)),
+      QueryStore.listen(this.queryStoreWasUpdated.bind(this))
+    ];
+  }
 
-  getInitialState() {
-    let _recommendationsStore = RecommendationsStore.store;
+  componentWillUnmount() {
+    this.unsubscribe.forEach(
+      (unsubscriber) => {
+        unsubscriber();
+      }
+    );
+  }
 
-    if (this.props.recommendations) {
-      _recommendationsStore.recommendations = this.props.recommendations;
-    }
+  recommendationsStoreWasUpdated() {
+    this.setState({recommendations: RecommendationsStore.store});
+  }
 
-    return _recommendationsStore;
-  },
+  resultStoreWasUpdated(data) {
+    this.setState({results: ResultListStore.store});
+    this.updateRecommendations(data);
+  }
+
+  queryStoreWasUpdated() {
+    this.setState({query: QueryStore.store});
+  }
 
   updateRecommendations(data) {
     RecommendationActions.request(data.result.map(element => element.identifiers[0]));
-  },
+  }
 
   renderSearchResult() {
     return (
@@ -56,13 +69,13 @@ export default React.createClass({
         <SearchResultList data={{results: this.state.results}} loadMore={QueryActions.loadMore} />
       </div>
     );
-  },
+  }
 
   renderDefaultRecommendations() {
     return (
       <RecommendationContainer />
     );
-  },
+  }
 
   render() {
     const result = this.state.query.query.length && this.renderSearchResult() || this.renderDefaultRecommendations();
@@ -73,4 +86,9 @@ export default React.createClass({
       </div>
     );
   }
-});
+}
+
+SearchResultContainer.displayName = 'SearchResultContainer';
+SearchResultContainer.propTypes = {
+  recommendations: React.PropTypes.object
+};
