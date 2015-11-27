@@ -10,7 +10,7 @@ describe('Test the QueryStore', () => {
   let sandbox;
 
   beforeEach(() => {
-    sandbox = sinon.sandbox.create();
+    sandbox = sinon.sandbox.create(); // eslint-disable-line no-undef
     QueryStore.store = {};
     QueryStore.onReset();
   });
@@ -41,7 +41,7 @@ describe('Test the QueryStore', () => {
 
   it('onAdd should call triggerOnQueryChange', () => {
     const spy = sandbox.spy(QueryStore, 'triggerOnQueryChange');
-    QueryStore.onAdd('test');
+    QueryStore.onAdd({value: 'test', type: 'text'});
     assert.isTrue(spy.called, 'triggerOnQueryChange was called');
   });
 
