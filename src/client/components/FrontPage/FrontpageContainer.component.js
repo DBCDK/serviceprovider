@@ -3,6 +3,7 @@
 import React, {PropTypes} from 'react';
 
 // Layouts
+
 import FrontPageLayoutMobilsoeg from './FrontPageLayout.component.js';
 
 export default class FrontpageContainer extends React.Component {

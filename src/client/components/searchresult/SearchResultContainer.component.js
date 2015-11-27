@@ -9,6 +9,7 @@ import React from 'react';
 
 // Components
 import SearchResultList from './SearchResultList.component.js';
+
 import RecommendationContainer from '../Recommend/RecommendationContainer.component.js';
 
 // Actions
