@@ -20,7 +20,7 @@ var entries = {
   querysearch: './src/client/components/searchpage/index.js',
   receipt: './src/client/components/Receipt/index.js',
   topnavigation: './src/client/components/TopNavigation/index.js',
-  work: './src/client/components/Work/Work.client.mobilsoeg',
+  work: './src/client/components/Work/Work.client',
   news: './src/client/components/News/NewsPage.index',
   styles: './src/client/styles/ddb.scss'
 };
