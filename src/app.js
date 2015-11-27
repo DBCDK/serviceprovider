@@ -23,9 +23,9 @@ import reload from 'reload';
 
 // Routes
 import MainRoutes from './server/routes/main.routes.js';
-import PassportRoutesMobilsoeg from './server/routes/passport.routes.mobilsoeg.js';
-import WorkRoutesMobilSoeg from './server/routes/work.routes.mobilsoeg';
-import NewsRoutes from './server/routes/news.routes.mobilsoeg.js';
+import PassportRoutes from './server/routes/passport.routes.js';
+import WorkRoutes from './server/routes/work.routes.js';
+import NewsRoutes from './server/routes/news.routes.js';
 
 // Middleware
 import mobilsoegmiddleware from './server/middlewares/mobilsoeg.middleware.js';
@@ -172,8 +172,8 @@ app.use('*', GlobalsMiddleware); // should be placed after PassportStrategies.Mo
 
 // Setup Routes
 app.use('/', MainRoutes);
-app.use('/profile', PassportRoutesMobilsoeg);
-app.use('/work', WorkRoutesMobilSoeg);
+app.use('/profile', PassportRoutes);
+app.use('/work', WorkRoutes);
 app.use('/news', NewsRoutes);
 
 

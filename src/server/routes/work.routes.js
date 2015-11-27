@@ -14,7 +14,7 @@ const WorkRoutes = express.Router();
 import dbcMiddleware from './../middlewares/middleware.js';
 
 // Components
-import workServer from '../../client/components/Work/Work.server.mobilsoeg';
+import workServer from '../../client/components/Work/Work.server';
 import CoverImage from '../../client/components/CoverImage/CoverImageContainer.component';
 import Order from '../../client/components/Order/Order.component';
 import Receipt from '../../client/components/Receipt/Receipt.component';
