@@ -10,9 +10,9 @@ import Reflux from 'reflux';
 import {findIndex} from 'lodash';
 
 // Actions
-import MobilSoegProfileActions from '../actions/MobilSoegProfile.action';
+import ProfileActions from '../actions/Profile.action';
 
-const MobilSoegProfileStore = Reflux.createStore({
+const ProfileStore = Reflux.createStore({
   store: {
     userIsLoggedIn: typeof window !== 'undefined' && window.USER_IS_LOGGED_IN,
     profile: {
@@ -27,9 +27,9 @@ const MobilSoegProfileStore = Reflux.createStore({
   },
 
   init() {
-    this.listenToMany(MobilSoegProfileActions);
-    MobilSoegProfileActions.isLoggedIn();
-    MobilSoegProfileActions.fetchMobilSoegProfile();
+    this.listenToMany(ProfileActions);
+    ProfileActions.isLoggedIn();
+    ProfileActions.fetchMobilSoegProfile();
   },
 
   onIsLoggedInResponse(response) {
@@ -74,7 +74,7 @@ const MobilSoegProfileStore = Reflux.createStore({
 
     this.trigger(this.store);
 
-    MobilSoegProfileActions.saveLikeToMobilSoegProfile(request);
+    ProfileActions.saveLikeToMobilSoegProfile(request);
   },
 
   onDislikeObject(workId) {
@@ -103,7 +103,7 @@ const MobilSoegProfileStore = Reflux.createStore({
 
     this.trigger(this.store);
 
-    MobilSoegProfileActions.saveLikeToMobilSoegProfile(request);
+    ProfileActions.saveLikeToMobilSoegProfile(request);
   },
 
   onLikeSaved(response) {
@@ -111,7 +111,7 @@ const MobilSoegProfileStore = Reflux.createStore({
       console.error('Some error occured when saving a like/dislike'); // eslint-disable-line no-console
     }
 
-    MobilSoegProfileActions.fetchMobilSoegProfile();
+    ProfileActions.fetchMobilSoegProfile();
   },
 
   pushStore() {
@@ -119,4 +119,4 @@ const MobilSoegProfileStore = Reflux.createStore({
   }
 });
 
-export default MobilSoegProfileStore;
+export default ProfileStore;

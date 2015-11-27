@@ -1,60 +1,36 @@
 'use strict';
 
 /**
- * @file
- * Profile Actions
+ * @File
+ * TODO some description
  */
 
 import Reflux from 'reflux';
 import SocketClient from 'dbc-node-serviceprovider-socketclient';
 
-const fetchEvent = SocketClient('getProfile');
-const saveEvent = SocketClient('updateProfile');
-const openAgency = SocketClient('getMultiOpenAgency');
-const saveLike = SocketClient('saveLike');
-const resetLikes = SocketClient('resetLikes');
-const checkBorrowerAndSaveToProfileSocket = SocketClient('checkBorrowerAndSaveToProfile');
+const fetchMobilSoegProfile = SocketClient('findMobilSoegProfile');
+const isLoggedIn = SocketClient('isMobilSoegUserLoggedIn');
+const saveLikeToMobilSoegProfile = SocketClient('saveLikeToMobilSoegProfile');
 
-const ProfileActions = Reflux.createActions([
-  'toggleEdit',
-  'updateAttribute',
-  'updateImageUrl',
-  'saveProfile',
-  'updateProfile',
-  'fetchProfile',
-  'confirmSaveProfile',
-  'addLibraryToFavorites',
-  'removeLibraryFromFavorites',
-  'updateBorrowerIDForLibrary',
-  'libraryIdUpdated',
-  'libraryIdUpdatedResponse',
-  'setLibraryAsDefault',
-  'resolveFavoriteLibraries',
-  'checkBorrowerAndSaveToProfile',
-  'checkBorrowerAndSaveToProfileResponse',
+let ProfileActions = Reflux.createActions([
+  'isLoggedIn', // Checks if the user is logged in and returns true/false based on that
+  'isLoggedInResponse',
+  'fetchMobilSoegProfile',
+  'fetchMobilSoegProfileResponse',
+  'saveLikeToMobilSoegProfile',
   'likeObject',
   'dislikeObject',
-  'saveLike',
   'likeSaved',
-  'resetLikes',
-  'likesReset'
+  'dislikeObject'
 ]);
 
-ProfileActions.saveProfile.listen(saveEvent.request);
-saveEvent.response(ProfileActions.confirmSaveProfile);
+ProfileActions.isLoggedIn.listen(isLoggedIn.request);
+isLoggedIn.response(ProfileActions.isLoggedInResponse);
 
-ProfileActions.saveLike.listen(saveLike.request);
-saveLike.response(ProfileActions.likeSaved);
+ProfileActions.fetchMobilSoegProfile.listen(fetchMobilSoegProfile.request);
+fetchMobilSoegProfile.response(ProfileActions.fetchMobilSoegProfileResponse);
 
-ProfileActions.fetchProfile.listen(fetchEvent.request);
-fetchEvent.response(ProfileActions.updateProfile);
-
-ProfileActions.libraryIdUpdated.listen(openAgency.request);
-openAgency.response(ProfileActions.libraryIdUpdatedResponse);
-
-ProfileActions.resetLikes.listen(resetLikes.request);
-
-ProfileActions.checkBorrowerAndSaveToProfile.listen(checkBorrowerAndSaveToProfileSocket.request);
-checkBorrowerAndSaveToProfileSocket.response(ProfileActions.checkBorrowerAndSaveToProfileResponse);
+ProfileActions.saveLikeToMobilSoegProfile.listen(saveLikeToMobilSoegProfile.request);
+saveLikeToMobilSoegProfile.response(ProfileActions.likeSaved);
 
 export default ProfileActions;

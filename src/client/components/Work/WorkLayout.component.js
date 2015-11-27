@@ -14,7 +14,7 @@ import WorkRecommendation from './WorkRecommendation.component';
 import RecommendationActions from '../../actions/Recommendations.actions.js';
 
 // Stores
-import MobilSoegProfileStore from '../../stores/MobilSoegProfile.store';
+import ProfileStore from '../../stores/Profile.store';
 import RecommendationsStore from '../../stores/Recommendations.store.js';
 
 export default class WorkLayout extends React.Component {
@@ -22,14 +22,14 @@ export default class WorkLayout extends React.Component {
     super(props);
 
     this.state = {
-      profile: MobilSoegProfileStore.getState(),
+      profile: ProfileStore.getState(),
       recommendations: RecommendationsStore.getInitialState()
     };
 
     this.unsubscribe = [
-      MobilSoegProfileStore.listen(() => {
+      ProfileStore.listen(() => {
         this.setState({
-          profile: MobilSoegProfileStore.getState()
+          profile: ProfileStore.getState()
         });
 
         this.getRecommendationState();
