@@ -3,7 +3,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import WorkContainer from './WorkContainer.container.component';
-import WorkLayout from './WorkLayout.mobilsoeg.component';
+import WorkLayout from './WorkLayout.component';
 
 /**
  * Client side rendering of the Search component

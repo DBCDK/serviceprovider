@@ -230,7 +230,7 @@ export default class WorkLayout extends React.Component {
   }
 }
 
-WorkLayout.displayName = 'WorkLayout.mobilsoeg';
+WorkLayout.displayName = 'WorkLayout';
 WorkLayout.propTypes = {
   editions: PropTypes.array,
   id: PropTypes.string,
