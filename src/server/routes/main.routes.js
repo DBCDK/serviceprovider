@@ -26,7 +26,7 @@ MainRoutes.get('/', (req, res) => {
   }
   else {
     res.set('Cache-Control', 'max-age=86400, s-maxage=86400, public');
-    res.render('frontpage-mobilsoeg');
+    res.render('frontpage');
   }
 });
 
