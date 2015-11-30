@@ -6,13 +6,13 @@
 
 import React from 'react';
 import ReactDOM from 'react-dom';
-import FronpageContainer from './FrontpageContainer.component';
+import FrontpageContainer from './FrontpageContainer.component';
 
 /**
  * Client side rendering of the Frontpage Component
  */
 ReactDOM.render(
-  <FronpageContainer
+  <FrontpageContainer
     application={window.APPLICATION || 'mobilsoeg'}
   />,
   document.getElementById('frontpage-container-component')

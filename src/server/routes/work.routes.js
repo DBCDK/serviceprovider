@@ -41,7 +41,8 @@ WorkRoutes.get(
 
     dbcMiddleware.renderPage(res, 'order', {
       query,
-      orderString: ReactDOM.renderToString(
+      pagescript: 'order.js',
+      srrString: ReactDOM.renderToString(
         <Order coverImage={image} order={req.query} />)
     }, 'was not serverside');
   }
@@ -52,7 +53,8 @@ WorkRoutes.get(['/receipt', '/receipt/*'], (req, res) => {
   query = JSON.stringify(query);
   dbcMiddleware.renderPage(res, 'receipt', {
     query,
-    receiptString: ReactDOM.renderToString(<Receipt receipt={req.query} />)
+    pagescript: 'receipt.js',
+    ssrString: ReactDOM.renderToString(<Receipt receipt={req.query} />)
   }, 'was not serverside');
 });
 
@@ -77,7 +79,8 @@ WorkRoutes.get(['/', '/*'], (req, res) => {
       return dbcMiddleware.renderPage(res, 'work', {
         id,
         borrowerId: borrowerId,
-        workString: workServer({id}).work
+        pagescript: 'work.js',
+        ssrString: workServer({id}).work
       }, 'was too slow');
     }
 

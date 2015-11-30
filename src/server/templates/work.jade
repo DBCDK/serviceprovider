@@ -1,12 +1,9 @@
 //- index.jade
 
-extends layout
-
-block prepend footerscripts
-    script(src='/js/work.js' defer=true)
+extends page
 
 block content
-    #work !{workString}
+    #work !{ssrString}
     script window.QUERYSTRING_PROPS = !{id}
     if borrowerId
             script window.BORROWER_ID = '!{borrowerId}';

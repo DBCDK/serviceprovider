@@ -18,7 +18,8 @@ const PassportRoutes = express.Router();
 
 PassportRoutes.get('/', dbcMiddleware.ensureAuthenticated, (req, res) => {
   dbcMiddleware.renderPage(res, 'profile', {
-    profileString: ReactDOM.renderToString(<Profile />),
+    ssrString: ReactDOM.renderToString(<Profile />),
+    pagescript: 'profile.js',
     title: req.app.locals.title + ' - Profil'
   }, 'no service involved');
 });
