@@ -85,11 +85,6 @@ const TokenSearchField = React.createClass({
   },
 
   setFocus(state) {
-    // scroll to searchfield
-    location.href = '#mainsearch';
-    // remove url hash again to keep url neat
-    history.replaceState({}, document.title, '/');
-
     this.hasScrolled = false;
     let text = state && this.getQueryTexts() || this.state.text;
     this.props.focus(state); // mismatch between this and the below hasFocus value
@@ -125,7 +120,7 @@ const TokenSearchField = React.createClass({
     const spinnerClass = pending ? 'token-searchfield--spinner pending' : 'token-searchfield--spinner';
 
     return (
-      <div className='token-searchfield' id='mainsearch' onKeyUp={this.onKey} >
+      <div className='token-searchfield' onKeyUp={this.onKey} >
         <form onSubmit={this.onSubmit} >
           <div className="row" >
             <div className="large-24 columns" >
