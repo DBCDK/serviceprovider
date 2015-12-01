@@ -39,9 +39,5 @@ describe('Test AutoComplete Component', () => {
     expect(rendered.getDOMNode().className).to.contain('autocomplete--container-hidden');
   });
 
-  it('Assert no results found message when data is empty', () => {
-    const rendered = TestUtils.renderIntoDocument(<AutoComplete errormessage="Ingen resultater fundet" visible={true}/>); // eslint-disable-line react/jsx-boolean-value
-    expect(rendered.getDOMNode().innerHTML).to.contain('Ingen resultater fundet');
-  });
 });
 
