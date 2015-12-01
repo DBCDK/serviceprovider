@@ -29,6 +29,9 @@ let WorkStore = Reflux.createStore({
     this.store.info = result.info || [];
     this.store.error = result.error || [];
     this.trigger(this.store);
+    if (this.store.result.title) {
+      document.title = this.store.result.title;
+    }
   }
 });
 
