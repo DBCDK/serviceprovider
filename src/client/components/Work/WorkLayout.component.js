@@ -2,6 +2,7 @@
 
 // Libraries
 import React, {PropTypes} from 'react';
+import {isEmpty} from 'lodash';
 
 // Components
 import CoverImage from '../CoverImage/CoverImageContainer.component';
@@ -102,17 +103,30 @@ export default class WorkLayout extends React.Component {
       );
     }
 
-    const personalRecommendations = profile.userIsLoggedIn ? (
-      <WorkRecommendation
-        recommendations={this.state.recommendations.recommendations.personal}
-        type='personal' />
-    ) : '';
+    let workRecommendations = null;
 
-    const genericRecommendations = (
-      <WorkRecommendation
-        recommendations={this.state.recommendations.recommendations.generic}
-        type='generic' />
-    );
+    if (!isEmpty(this.state.recommendations.recommendations.personal) || !isEmpty(this.state.recommendations.recommendations.generic)) {
+
+      const personalRecommendations = profile.userIsLoggedIn ? (
+        <WorkRecommendation
+          recommendations={this.state.recommendations.recommendations.personal}
+          type='personal' />
+      ) : '';
+
+      const genericRecommendations = (
+        <WorkRecommendation
+          recommendations={this.state.recommendations.recommendations.generic}
+          type='generic' />
+      );
+
+      workRecommendations = (
+        <div className='work--recommendations small-24 medium-24 large-8 columns' >
+          <h3 className='work--recommendations--title' >Noget der ligner</h3>
+          {personalRecommendations}
+          {genericRecommendations}
+        </div>
+      );
+    }
 
     const likeContainers = profile.userIsLoggedIn ? this.getLikeDislikeContainers(this.props.id) : ' ';
 
@@ -220,11 +234,7 @@ export default class WorkLayout extends React.Component {
           </div>
         </div>
 
-        <div className='work--recommendations small-24 medium-24 large-8 columns' >
-          <h3 className='work--recommendations--title' >Noget der ligner</h3>
-          {personalRecommendations}
-          {genericRecommendations}
-        </div>
+        {workRecommendations}
       </div>
     );
   }
