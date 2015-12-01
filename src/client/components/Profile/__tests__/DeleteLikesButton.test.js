@@ -21,7 +21,7 @@ describe('Testing the DeleteLikesButton component', () => {
   let dom;
 
   beforeEach(() => {
-    sandbox = sinon.sandbox.create();
+    sandbox = sinon.sandbox.create(); // eslint-disable-line no-undef
     dom = TestUtils.renderIntoDocument(<DeleteLikesButton />);
   });
 
