@@ -34,6 +34,9 @@ class WorkContainer extends React.Component {
   }
 
   componentDidMount() {
+    if (this.state.work.result.title) {
+      document.title = this.state.work.result.title;
+    }
     workAction({id: this.props.id});
   }
 
