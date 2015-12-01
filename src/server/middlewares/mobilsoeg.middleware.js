@@ -17,6 +17,8 @@ function libraryStyleWare(req, res, next) {
     config: conf,
     libraryId: conf.agency
   };
+  res.locals.title = conf.applicationTitle;
+
   next();
 }
 
