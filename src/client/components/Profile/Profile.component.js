@@ -11,6 +11,8 @@ import React from 'react';
 import UserStatusStore from '../../stores/UserStatus.store.js';
 import UserStatusActions from '../../actions/UserStatus.action.js';
 
+// Components
+import DeleteLikesButton from './DeleteLikesButton.component';
 import OrdersList from './OrdersList.component';
 import LoansList from './LoansList.component';
 import FiscalStatus from './FiscalStatus.component';
@@ -103,32 +105,38 @@ class Profile extends React.Component {
     }
 
     return (
-      <div className='profile--user-status'>
+      <div className='profile--user-status' >
         <UserStatusSummary
           items={fiscalItems}
           loans={loans} orders={orders}
           toggleFiscalDisplay={this.toggleFiscalDisplay}
           toggleLoanDisplay={this.toggleLoanDisplay}
-          toggleOrderDisplay={this.toggleOrderDisplay} />
+          toggleOrderDisplay={this.toggleOrderDisplay}
+        />
+
         <LoansList
-            collapsed={this.state.uiStatus.loanCollapsed}
-            loans={loans}
-            onRenew={this.renewLoan}
-            onToggleLoanDisplay={this.toggleLoanDisplay}
-            />
+          collapsed={this.state.uiStatus.loanCollapsed}
+          loans={loans}
+          onRenew={this.renewLoan}
+          onToggleLoanDisplay={this.toggleLoanDisplay}
+        />
+
         <OrdersList
-            branchNamesMap={branchNamesMap}
-            collapsed={this.state.uiStatus.ordersCollapsed}
-            onDelete={this.deleteOrder}
-            onSelectPickupAgency={this.selectPickupAgency}
-            onToggleOrderDisplay={this.toggleOrderDisplay}
-            orders={orders}
-            />
+          branchNamesMap={branchNamesMap}
+          collapsed={this.state.uiStatus.ordersCollapsed}
+          onDelete={this.deleteOrder}
+          onSelectPickupAgency={this.selectPickupAgency}
+          onToggleOrderDisplay={this.toggleOrderDisplay}
+          orders={orders}
+        />
+
         <FiscalStatus
-            collapsed={this.state.uiStatus.fiscalCollapsed}
-            items={fiscalItems}
-            onToggleFiscalDisplay={this.toggleFiscalDisplay}
-            />
+          collapsed={this.state.uiStatus.fiscalCollapsed}
+          items={fiscalItems}
+          onToggleFiscalDisplay={this.toggleFiscalDisplay}
+        />
+
+        <DeleteLikesButton />
       </div>
     );
   }
