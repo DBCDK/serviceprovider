@@ -17,23 +17,6 @@ describe('Test AutoCompleteCategory Component', () => {
     expect(container.textContent).equal('');
   });
 
-  it('Assert no rendering of labelblock when label is empty', () => {
-    // testing empty label
-    let label = '';
-    let rendered = TestUtils.renderIntoDocument(<AutoCompleteCategory label={label}/>);
-
-    let needle = TestUtils.scryRenderedDOMComponentsWithClass(rendered, 'autocomplete--category--label');
-    assert.lengthOf(needle, 0, 'no DOM objects with className=\'autocomplete--category--label\' found');
-
-    // testing testlabel
-    label = 'TestLabel';
-    rendered = TestUtils.renderIntoDocument(<AutoCompleteCategory label={label}/>);
-
-    needle = TestUtils.findRenderedDOMComponentWithClass(rendered, 'autocomplete--category--label').getDOMNode();
-    assert.isNotNull(needle);
-    expect(needle.textContent).equal(label);
-  });
-
   it('Assert no label-container is rendered when no label is provided', () => {
     let rendered = TestUtils.renderIntoDocument(<AutoCompleteCategory />);
     let label = TestUtils.scryRenderedDOMComponentsWithClass(rendered, 'autocomplete--category--label');

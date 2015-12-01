@@ -13,12 +13,22 @@ var AutoCompleteRow = React.createClass({
     href: React.PropTypes.string,
     image: React.PropTypes.string,
     imageComp: React.PropTypes.element,
+    showImage: React.PropTypes.bool,
     text: React.PropTypes.string
+  },
+
+  getDefaultProps: function() {
+    return {
+      showImage: true
+    };
   },
 
   getImage() {
     let img = null;
-    if (this.props.imageComp) {
+    if (!this.props.showImage) {
+      // no image will be included in this row
+    }
+    else if (this.props.imageComp) {
       img = <div className='autocomplete--row-image' >{this.props.imageComp}</div>;
     }
     else if (this.props.image || true) {

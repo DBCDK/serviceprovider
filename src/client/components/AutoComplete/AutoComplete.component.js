@@ -44,7 +44,7 @@ const AutoComplete = React.createClass({
     if (categories.length === 0) {
       htmlToRender = (
         <div className={classNames} >
-        <div className='autocomplete--category--label-container' ></div>
+        <div className='autocomplete--category--label-container'></div>
       </div>
       );
     }

@@ -7,7 +7,7 @@
  */
 
 import React from 'react';
-import {isArray} from 'lodash';
+import {isArray, includes} from 'lodash';
 import AutoCompleteRow from './AutoCompleteRow.component';
 
 var AutoCompleteCategory = React.createClass({
@@ -34,9 +34,11 @@ var AutoCompleteCategory = React.createClass({
     const label = this.props.label || null;
     const labelToRender = (label) ? this.getLabel(label) : '';
 
+    const showImage = label && !includes(['Forfatter', 'Emne'], label.props.children);
+
     const rows = data.map((value, key) => {
       return (
-        <AutoCompleteRow href={value.href} image={value.image} imageComp={value.imageComp} key={key} text={value.text} />
+        <AutoCompleteRow href={value.href} image={value.image} imageComp={value.imageComp} key={key} showImage={showImage} text={value.text} />
       );
     });
 
