@@ -72,6 +72,14 @@ export default class SearchResultContainer extends React.Component {
     );
   }
 
+  renderBeforeSearch() {
+    return (
+      <div className='row'>
+        <span className='small-24 column'></span>
+      </div>
+    );
+  }
+
   renderDefaultRecommendations() {
     return (
       <RecommendationContainer />
@@ -79,7 +87,7 @@ export default class SearchResultContainer extends React.Component {
   }
 
   render() {
-    const result = this.state.query.query.length && this.renderSearchResult() || this.renderDefaultRecommendations();
+    const result = this.state.query.query.length && this.renderSearchResult() || this.renderBeforeSearch();
 
     return (
       <div className={'search-result columns'} >
