@@ -17,8 +17,21 @@
 .work {
   position: relative;
 
-  img {
-    max-height: 500px;
+  @media  #{$small-only} {
+    max-width: 150px;
+  }
+
+  .title {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .creator {
+    font-size: 0.8em;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
 
   .fa {
