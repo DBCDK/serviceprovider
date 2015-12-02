@@ -1,2 +1,19 @@
-#header {
+#logo {
+  display: block;
+  margin-left: 10px;
+  background-Size: contain;
+  background-repeat: no-repeat;
+  background-position-y: center;
+  height: 50px;
+}
+
+.topbar--login-btn-container {
+  padding-top: 6px;
+  a {
+    margin-bottom: 0;
+  }
+}
+
+.header--topnavigation-links {
+  padding: 10px 0;
 }
