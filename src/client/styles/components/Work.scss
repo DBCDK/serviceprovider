@@ -172,3 +172,7 @@
   color: $similar-title-font-color;
   padding: 5px;
 }
+
+.work--recommendations--generic {
+  @include horizontal-list($small-only)
+}

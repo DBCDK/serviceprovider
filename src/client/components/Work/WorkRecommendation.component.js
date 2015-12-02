@@ -19,7 +19,7 @@ class WorkRecommendationComponent extends React.Component {
 
     return (
       <div className={'work--recommendations--' + this.props.type}>
-        <ul className="small-block-grid-2">
+        <ul className="medium-block-grid-2">
           {take(this.props.recommendations, 6).map((val, index) => {
             return (
               <BibliographicData
