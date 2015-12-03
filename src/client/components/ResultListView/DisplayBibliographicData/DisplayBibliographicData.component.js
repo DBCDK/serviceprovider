@@ -65,8 +65,10 @@ export default class BibliographicData extends React.Component {
           <a className="image-see-work" href={worklink} >
             <i className={icon.join(' ')} />
             <CoverImageComponent noCoverUrl={noCoverUrl} pids={pids} prefSize={'detail_500'} />
-            <div className="title" >{title}</div>
-            <div className="creator" >{creator}</div>
+            <div className='work--result-details'>
+              <div className="title" >{title}</div>
+              <div className="creator" >{creator}</div>
+            </div>
           </a>
         </div>
       </li>);

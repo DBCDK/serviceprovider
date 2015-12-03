@@ -136,7 +136,7 @@ export default class WorkLayout extends React.Component {
           <div className='work--image small-20 small-centered medium-10 medium-uncentered large-8 large-uncentered columns' >
             <CoverImage noCoverUrl='/covers/no-cover-image-book.png' pids={[this.props.id, this.props.work.result.pid]} prefSize='detail_500' />
           </div>
-          <div className='work small-24 small-centered medium-14 medium-uncentered large-16 large-uncentered columns' >
+          <div className='small-24 small-centered medium-14 medium-uncentered large-16 large-uncentered columns' >
             {orderButtonComponent}
 
             {likeContainers}

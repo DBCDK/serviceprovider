@@ -15,24 +15,33 @@
 }
 
 .work {
+
   position: relative;
+
 
   @media  #{$small-only} {
     max-width: 150px;
+
+    .title {
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .creator {
+      font-size: 0.8em;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
   }
 
-  .title {
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
+  @media  #{$medium-up} {
+    img {
+
+    }
   }
 
-  .creator {
-    font-size: 0.8em;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-  }
 
   .fa {
     background-color: #ffffff;
