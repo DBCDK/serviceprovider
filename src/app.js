@@ -20,6 +20,7 @@ import Logger from 'dbc-node-logger';
 import ServiceProvider from 'dbc-node-serviceprovider';
 import RedisStore from 'connect-redis';
 import reload from 'reload';
+import {curry} from 'lodash';
 
 // Routes
 import MainRoutes from './server/routes/main.routes.js';
@@ -163,6 +164,7 @@ app.use(sessionMiddleware);
 
 // Detect library and set context
 app.use(mobilsoegmiddleware.libraryStyleWare);
+socket.use(curry(mobilsoegmiddleware.librarySocketWare)(config));
 
 // Setup passport
 PassportStrategies.MobilSoegPassportConfig(app);
