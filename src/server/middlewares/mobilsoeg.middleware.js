@@ -5,24 +5,33 @@
 
 import {has} from 'lodash';
 
-function libraryStyleWare(req, res, next) {
-  let kommune = req.get('host').split('.')[0];
-  let config = req.app.get('Configuration');
-  kommune = has(config, kommune) ? kommune : process.env.CONFIG_NAME || 'aarhus';// eslint-disable-line no-process-env
+function getKommuneConf(host, config) {
+  let kommune = host.split('.')[0];
+  kommune = has(config, kommune) ? kommune : process.env.CONFIG_NAME || 'aarhus'; // eslint-disable-line no-process-env
+
   let conf = config[kommune];
 
-  res.locals.libdata = {
+  return {
     kommune: kommune,
     bodyclass: kommune + '-kommune',
     config: conf,
     libraryId: conf.agency
-  };
-  res.locals.title = conf.applicationTitle;
+  }
+}
 
+function libraryStyleWare(req, res, next) {
+  let libdata = res.locals.libdata = getKommuneConf(req.get('host'), req.app.get('Configuration'));
+  res.locals.title = libdata.config.applicationTitle;
+  next();
+}
+
+function librarySocketWare(config, _socket, next) {
+  _socket.libdata = getKommuneConf(_socket.handshake.headers.host, config);
   next();
 }
 
 const mobilsoegmiddleware = {
-  libraryStyleWare: libraryStyleWare
+  libraryStyleWare: libraryStyleWare,
+  librarySocketWare: librarySocketWare
 };
 export default mobilsoegmiddleware;
