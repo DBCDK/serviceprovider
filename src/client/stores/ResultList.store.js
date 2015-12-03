@@ -6,6 +6,8 @@ import SocketClient from 'dbc-node-serviceprovider-socketclient';
 // Utils
 import QueryParser from '../../utils/QueryParser.util.js';
 
+import FacetsActions from '../components/Facets/Facets.action.js';
+
 // Stores
 import QueryStore from './QueryStore.store.js';
 
@@ -45,6 +47,7 @@ let ResultListStore = Reflux.createStore({
       this.pending();
       let q = QueryParser.objectToCql(query);
       this.request({query: q, offset, worksPerPage, sort});
+      FacetsActions.fetchFacets({query: q, number: 5});
     }
     else {
       this.empty();
