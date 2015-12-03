@@ -19,7 +19,7 @@ head
         if libdata
             style(type='text/css')
                 | !{"#topbar {background-color: " + libdata.config.colour + ";}"}
-                | !{"#logo {background: url(" + libdata.config.logo + ") no-repeat left; background-size: auto 100%;}"}
+                | !{"#logo {background-image: url(" + libdata.config.logo + ");}"}
                 | !{".news--container {background-color: " + libdata.config.colour + ";}"}
                 | !{"a {color: " + libdata.config.colour + ";}"}
                 | !{".work--recommendations--title {background-color: " + libdata.config.colour + ";}"}
@@ -37,8 +37,8 @@ head
             script(src='/reload/reload.js', type='text/javascript' defer=true)
 
         script(src='//cdnjs.cloudflare.com/ajax/libs/lodash.js/3.10.1/lodash.js', type='text/javascript' defer=true)
-        script(src='/js/common.js', type='text/javascript' defer=true)
-        script(src='/js/topnavigation.js', defer=true)
+        script(src='/js/common.js', type='text/javascript', defer=true)
+        script(src='/js/header.js', type='text/javascript', defer=true)
 
         if libdata
             script window.agencyId = "!{libdata.libraryId}";
