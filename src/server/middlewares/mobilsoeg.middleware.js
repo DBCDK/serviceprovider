@@ -16,7 +16,7 @@ function getKommuneConf(host, config) {
     bodyclass: kommune + '-kommune',
     config: conf,
     libraryId: conf.agency
-  }
+  };
 }
 
 function libraryStyleWare(req, res, next) {
