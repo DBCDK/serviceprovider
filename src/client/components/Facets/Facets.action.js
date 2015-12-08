@@ -5,7 +5,11 @@ import SocketClient from 'dbc-node-serviceprovider-socketclient';
 
 const fetchFacetsEvent = SocketClient('getOpenSearchFacets');
 
-const FacetsActions = Reflux.createActions(['fetchFacets', 'updateFacets']);
+const FacetsActions = Reflux.createActions([
+  'fetchFacets',
+  'updateFacets',
+  'toggleFacetDisplay'
+]);
 
 FacetsActions.fetchFacets.listen(fetchFacetsEvent.request);
 fetchFacetsEvent.response(FacetsActions.updateFacets);

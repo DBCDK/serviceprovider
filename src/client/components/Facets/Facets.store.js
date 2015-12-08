@@ -7,7 +7,10 @@ import FacetsActions from './Facets.action.js';
 const FacetsStore = Reflux.createStore({
 
   store: {
-    facets: null
+    facets: [],
+    uiStatus: {
+
+    }
   },
 
   init() {

@@ -8,7 +8,7 @@
 import React, {PropTypes} from 'react';
 // import Reflux from 'reflux';
 import {curry, sortByAll} from 'lodash';
-import ToggleButton from './ToggleButton.component';
+import ToggleButton from '../ToggleButton.component';
 import PickUpAgencySelector from './PickUpAgencySelector.component';
 import Loader from '../Loader.component.js';
 
