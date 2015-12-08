@@ -10,6 +10,7 @@ import React from 'react';
 import FacetsStore from './Facets.store.js';
 
 import FacetsResult from './FacetsResult.component.js';
+import ToggleButton from '../ToggleButton.component.js';
 
 class FacetsContainer extends React.Component {
 
@@ -23,10 +24,18 @@ class FacetsContainer extends React.Component {
     };
 
     FacetsStore.listen(this.onUpdateFacets);
+
+    this.state.isExpanded = {};
   }
 
   onUpdateFacets(store) {
     this.setState({facets: store.facets});
+  }
+
+  toggleFacets(key) {
+    const isExpanded = this.state.isExpanded;
+    isExpanded[key] = !this.state.isExpanded[key];
+    this.setState({isExpanded});
   }
 
 
@@ -35,10 +44,20 @@ class FacetsContainer extends React.Component {
     if (this.state.facets) {
       facets = this.state.facets;
     }
+
+    const isCollapsed = !this.state.isExpanded.facets;
+
+    const toggleFunc = this.toggleFacets.bind(this, 'facets');
+
+    const arrows = <ToggleButton collapsed={isCollapsed} toggleDisplay={toggleFunc} />;
+
+    const facetsClass = (isCollapsed === true) ? 'facets collapsed' : 'facets';
+
     return (
-      <div>
-        <h2>Afgræns din søgning</h2>
-        <FacetsResult facets={facets} />
+      <div className="facets-container">
+        <h2 className="facets-header" onClick={toggleFunc}>Afgræns din søgning</h2>
+        {arrows}
+        <FacetsResult className={facetsClass} facets={facets} />
       </div>
     );
   }

@@ -58,7 +58,7 @@ export default class FacetsResult extends React.Component {
     });
 
     return (
-      <div className="facets">
+      <div className={this.props.className}>
         {facets}
       </div>
     );
@@ -67,5 +67,6 @@ export default class FacetsResult extends React.Component {
 
 FacetsResult.displayName = 'FacetsResult';
 FacetsResult.propTypes = {
+  className: React.PropTypes.string.isRequired,
   facets: React.PropTypes.array.isRequired
 };
