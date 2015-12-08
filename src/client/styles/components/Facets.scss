@@ -1,6 +1,8 @@
-.facets {
-  .facet-name {
+.facet-result {
+  .facet-name,
+  .facets-header {
     display: inline-block;
+    cursor: pointer;
   }
   .toggle {
     cursor: pointer;
@@ -25,6 +27,7 @@
     }
   }
   .button-not-collapsed,
+  .facets.collapsed,
   .facet.collapsed,
   .toggle-buttons.not-collapsed .button-collapsed {
     display: none;
