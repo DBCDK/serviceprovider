@@ -29,6 +29,7 @@ class FacetsContainer extends React.Component {
     this.setState({facets: store.facets});
   }
 
+
   renderFacetsResult() {
     let facets = null;
     if (this.state.facets) {

@@ -6,7 +6,7 @@
  */
 
 import React, {PropTypes} from 'react';
-import ToggleButton from './ToggleButton.component';
+import ToggleButton from '../ToggleButton.component';
 
 
 class FiscalStatus extends React.Component {
