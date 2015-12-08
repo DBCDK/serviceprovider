@@ -9,24 +9,51 @@
 import {isEmpty} from 'lodash';
 import express from 'express';
 const MainRoutes = express.Router();
+import React from 'react';
+import ReactDOM from 'react-dom/server';
 
 import {stringToObject} from '../../utils/QueryParser.util.js';
 
 // loading components
 import SearchServer from '../../client/components/searchpage/Search.server.js';
 import {defaultLikes} from '../../client/components/Recommend/Recommendations.store.js';
+import FrontpageContainer from '../../client/components/FrontPage/FrontpageContainer.component.js';
 
 import dbcMiddleware from './../middlewares/middleware.js';
 
-MainRoutes.get('/', (req, res) => {
-  const APPLICATION = req.app.get('APPLICATION');
+function getRecommendations(res, likes) {
+  res.callServiceProvider('getRecommendations', {likes: likes, dislikes: []}, 50).then((recommendations) => {
+    // got recommendations
+    const content = ReactDOM.renderToString(<FrontpageContainer application='mobilsoeg' recommendations={recommendations} />);
+    res.render('frontpage', {
+      frontpageContainerString: content,
+      recommendations: JSON.stringify(recommendations)
+    });
+  }, () => {
+    // error occurred (most likely a timeout hit)
+    res.render('frontpage');
+  });
+}
 
-  if (APPLICATION === 'pg') {
-    res.redirect('/search');
+MainRoutes.get('/', dbcMiddleware.ssrMiddleware, (req, res) => {
+  res.set('Cache-Control', 'max-age=86400, s-maxage=86400, public');
+
+  if (req.isAuthenticated()) {
+    // user is logged in, get profile.
+    res.callServiceProvider('findMobilSoegProfile', null, 400).then((profile) => {
+      let likes = profile[0].body.likes.map((like) => {
+        return like.item_id;
+      });
+
+      likes = likes.length > 0 ? likes : defaultLikes;
+      // got profile, get recommendations
+      getRecommendations(res, likes);
+    }, () => {
+      res.render('frontpage');
+    });
   }
   else {
-    res.set('Cache-Control', 'max-age=86400, s-maxage=86400, public');
-    res.render('frontpage');
+    getRecommendations(res, defaultLikes);
   }
 });
 

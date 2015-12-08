@@ -19,7 +19,8 @@ const ProfileStore = Reflux.createStore({
       agencyid: null,
       likes: [],
       pickup_agency: null
-    }
+    },
+    pending: true
   },
 
   getState() {
@@ -27,6 +28,7 @@ const ProfileStore = Reflux.createStore({
   },
 
   init() {
+    this.store.pending = true;
     this.listenToMany(ProfileActions);
     ProfileActions.isLoggedIn();
     ProfileActions.fetchMobilSoegProfile();
@@ -39,6 +41,7 @@ const ProfileStore = Reflux.createStore({
   },
 
   onFetchMobilSoegProfileResponse(response) {
+    this.store.pending = false;
     if (response.statusCode === 200) {
       this.store.profile = response.body;
       this.pushStore();

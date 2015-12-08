@@ -8,11 +8,12 @@ import FrontPageLayoutMobilsoeg from './FrontPageLayout.component.js';
 
 export default class FrontpageContainer extends React.Component {
   render() {
-    return <FrontPageLayoutMobilsoeg />;
+    return <FrontPageLayoutMobilsoeg recommendations={this.props.recommendations} />;
   }
 }
 
 FrontpageContainer.displayName = 'FrontpageContainer';
 FrontpageContainer.propTypes = {
-  application: PropTypes.string.isRequired
+  application: PropTypes.string.isRequired,
+  recommendations: PropTypes.array
 };

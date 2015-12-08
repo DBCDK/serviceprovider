@@ -28,7 +28,7 @@ export default class FrontPageLayoutMobilsoeg extends React.Component {
               <SearchFieldContainer />
             </div>
             <div className="frontpage-container--search--recommendations" >
-              <RecommendationContainer layout={FrontPageRecommendationsLayout} />
+              <RecommendationContainer layout={FrontPageRecommendationsLayout} recommendations={this.props.recommendations} />
             </div>
           </div>
 
@@ -44,3 +44,6 @@ export default class FrontPageLayoutMobilsoeg extends React.Component {
 }
 
 FrontPageLayoutMobilsoeg.displayName = 'FrontPageLayoutMobilsoeg';
+FrontPageLayoutMobilsoeg.propTypes = {
+  recommendations: React.PropTypes.array
+};

@@ -25,15 +25,23 @@ class RecommendationContainer extends React.Component {
 
     this.state = {
       recommendations: RecommendationStore.store,
-      result: []
+      result: [],
+      profile: ProfileStore.getState()
     };
-  }
 
-  componentDidMount() {
     this.unsubscribe = [
       ProfileStore.listen(() => this.gotProfile()),
       RecommendationStore.listen(() => this.gotRecommendations())
     ];
+  }
+
+  componentWillMount() {
+    if (typeof window !== 'undefined' && window.ssr_recommendations && window.ssr_recommendations.length > 0) {
+      RecommendationStore.onResponse(JSON.parse(window.ssr_recommendations)[0]);
+    }
+    else if (this.props.recommendations && this.props.recommendations.length > 0) {
+      this.state.recommendations.result = this.props.recommendations[0];
+    }
   }
 
   componentWillUnmount() {
@@ -45,8 +53,10 @@ class RecommendationContainer extends React.Component {
   }
 
   gotProfile() {
-    const profileLikes = ProfileStore.store.profile.likes;
-    this.requestRecommendations(profileLikes);
+    if (!ProfileStore.store.pending) {
+      const profileLikes = ProfileStore.store.profile.likes;
+      this.requestRecommendations(profileLikes);
+    }
   }
 
   requestRecommendations(profileLikes) {
@@ -78,7 +88,8 @@ class RecommendationContainer extends React.Component {
 
 RecommendationContainer.displayName = 'RecommendationContainer';
 RecommendationContainer.propTypes = {
-  layout: React.PropTypes.func
+  layout: React.PropTypes.func,
+  recommendations: React.PropTypes.array
 };
 
 export default RecommendationContainer;

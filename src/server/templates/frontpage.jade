@@ -4,6 +4,7 @@ extends layout
 
 block prepend footerscripts
     script(src='/js/frontpage.js' defer=true)
+    script window.ssr_recommendations = '!{recommendations}';
 
 block content
-    #frontpage-container-component
+    #frontpage-container-component !{frontpageContainerString}

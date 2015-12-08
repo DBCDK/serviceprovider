@@ -6,6 +6,7 @@
  */
 const loginUrl = '/profile/login';
 import * as logger from 'dbc-node-logger';
+import {isArray} from 'lodash';
 
 /*
  * @function
@@ -95,12 +96,76 @@ function setupSSR(req, res, promiseResponse, cb) {
   ssrPromiseFunction(res, promiseResponse, cb);
 }
 
-function renderPage(res, template, properties, serviceTime) {
+function renderPage(res, template, properties, serviceTime, fn) {
   const beforeTime = Date.now();
   res.render(template, properties, (err, html) => {
-    const timeTaken = Date.now() - beforeTime;
-    res.send(html.replace('%RENDERTIME%', timeTaken).replace('%SERVICETIME%', serviceTime));
+    html = html.replace('%RENDERTIME%', Date.now() - beforeTime).replace('%SERVICETIME%', serviceTime);
+    if (fn) {
+      fn(err, html);
+    }
+    else {
+      res.send(html);
+    }
   });
+}
+
+function ssrMiddleware(req, res, next) {
+  let serviceTime = ['responded in: '];
+  let _render = res.render;
+  res.render = (view, options, fn) => {
+    res.render = _render;
+    renderPage(res, view, options, serviceTime.join(', '), fn);
+  };
+
+  let ssrTimeout = req.query.ssrTimeout;
+  let serviceProvider = req.app.get('serviceProvider');
+  res.ssrPromiseTimerFunction = (promiseArray, timeout) => {
+    if (ssrTimeout) {
+      timeout = ssrTimeout;
+    }
+
+    return new Promise((resolve, reject) => {
+      let sent = false;
+      let timer = setTimeout(() => {
+        if (!sent) {
+          sent = true;
+          serviceTime.push('did not respond in time');
+          reject(serviceTime);
+        }
+      }, timeout);
+
+      promiseArray = isArray(promiseArray) ? promiseArray : [promiseArray];
+      const beforeTime = Date.now();
+      Promise.all(promiseArray).then((result) => {
+        if (!sent) {
+          sent = true;
+          serviceTime.push((Date.now() - beforeTime) + 'ms');
+          clearTimeout(timer);
+          resolve(result);
+        }
+      }, (err) => {
+        sent = true;
+        serviceTime = ['failed'];
+        clearTimeout(timer);
+        reject(err);
+      });
+    });
+  };
+
+  res.callServiceProvider = (event, query, timeout) => {
+    timeout = timeout ? timeout : 200;
+
+    let connection = {
+      request: {
+        session: req.session
+      },
+      libdata: res.locals.libdata
+    };
+
+    return res.ssrPromiseTimerFunction(serviceProvider.trigger(event, query, connection), timeout);
+  };
+
+  next();
 }
 
 const dbcMiddleware = {
@@ -108,7 +173,8 @@ const dbcMiddleware = {
   redirectWhenLoggedIn: redirectWhenLoggedIn,
   redirectToCallbackWhenLoggedIn: redirectToCallbackWhenLoggedIn,
   setupSSR: setupSSR,
-  renderPage: renderPage
+  renderPage: renderPage,
+  ssrMiddleware: ssrMiddleware
 };
 
 export default dbcMiddleware;
