@@ -17,9 +17,9 @@ import http from 'http';
 import socketio from 'socket.io';
 import path from 'path';
 import Logger from 'dbc-node-logger';
-import ServiceProvider from 'dbc-node-serviceprovider';
 import RedisStore from 'connect-redis';
 import reload from 'reload';
+import ServiceProviderSetup from './server/serviceProvider/ServiceProviderSetup.js';
 import {curry} from 'lodash';
 
 // Routes
@@ -69,7 +69,7 @@ app.set('port', process.env.PORT || 8080); // eslint-disable-line no-process-env
 const EMAIL_REDIRECT = process.env.EMAIL_REDIRECT || 'localhost:' + app.get('port'); // eslint-disable-line no-process-env
 
 // Configure app variables
-app.set('serviceProvider', ServiceProvider(config[process.env.CONFIG_NAME || 'palle'].provider, logger).setupSockets(socket)); // eslint-disable-line no-process-env
+app.set('serviceProvider', ServiceProviderSetup(config[process.env.CONFIG_NAME || 'palle'].provider.services, logger, socket)); // eslint-disable-line no-process-env
 app.set('logger', logger);
 app.set('EMAIL_REDIRECT', EMAIL_REDIRECT);
 app.set('APPLICATION', APPLICATION);

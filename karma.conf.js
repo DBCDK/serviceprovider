@@ -7,7 +7,8 @@ module.exports = function(config) {
     files: [
       'tests.utils.webpack.js',
       'tests.stores.webpack.js',
-      'tests.components.webpack.js'
+      'tests.components.webpack.js',
+      'tests.serviceprovider.webpack.js'
     ],
     proxies: {
       '/dummy.jpg': 'https://pg.demo.dbc.dk/dummy.jpg',
@@ -18,7 +19,8 @@ module.exports = function(config) {
     preprocessors: {
       'tests.utils.webpack.js': ['webpack'],
       'tests.stores.webpack.js': ['webpack'],
-      'tests.components.webpack.js': ['webpack']
+      'tests.components.webpack.js': ['webpack'],
+      'tests.serviceprovider.webpack.js': ['webpack']
     },
     reporters: ['mocha', 'junit', 'coverage'],
     junitReporter: {
