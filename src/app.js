@@ -48,7 +48,7 @@ const ENV = app.get('env');
 const PRODUCTION = ENV === 'production';
 const APP_NAME = process.env.NEW_RELIC_APP_NAME || 'app_name'; // eslint-disable-line no-process-env
 const APPLICATION = 'mobilsoeg';
-const DEFAULT_CONFIG_NAME = 'aarhus';
+const DEFAULT_CONFIG_NAME = 'aarhus'; // used as a fallback config, if none is set by a url.
 const logger = new Logger({app_name: APP_NAME});
 const expressLoggers = logger.getExpressLoggers();
 
