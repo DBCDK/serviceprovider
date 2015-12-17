@@ -16,7 +16,6 @@ export default express.Router().get(['/:id'], (req, res) => {
   const pagescript = 'news.js';
   let promiseResponse = req.app.get('serviceProvider').trigger('getEventById', {node: id});
   dbcMiddleware.setupSSR(req, res, promiseResponse, (err, result, serviceTime) => {
-    console.log('haha SSR');
     const news = result && result[0] || null;
     const data = {
       id: id,
