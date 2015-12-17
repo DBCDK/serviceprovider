@@ -9,7 +9,6 @@ import React from 'react';
 import TestUtils from 'react-addons-test-utils';
 import Filter from '../FilterlistContainer.component.js';
 import FilterGuide from '../../FilterGuide/FilterGuide.component';
-import FilterStore from '../../FilterGuide/FilterStore.store.js';
 
 
 describe('Test the Filter component', () => {
@@ -25,8 +24,6 @@ describe('Test the Filter component', () => {
       {value: 'test', type: 'testType'},
       {value: 'test2', type: 'testType2'}
     ];
-
-    FilterStore.setStore(filterElements);
 
     let element = React.createElement(Filter);
     let dom = TestUtils.renderIntoDocument(element);
