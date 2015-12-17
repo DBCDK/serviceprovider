@@ -53,7 +53,7 @@ class RecommendationContainer extends React.Component {
   }
 
   gotProfile() {
-    if (!ProfileStore.store.pending) {
+    if (!ProfileStore.store.userIsLoggedIn || !ProfileStore.store.pending) {
       const profileLikes = ProfileStore.store.profile.likes;
       this.requestRecommendations(profileLikes);
     }
