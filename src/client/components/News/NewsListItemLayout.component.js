@@ -19,7 +19,7 @@ export default class NewsListItemLayout extends React.Component {
           <div className="headline" >{this.props.title}</div>
           <div className="image" >
             {this.props.image &&
-            <img alt={this.props.title} className='news-item-image' src={`data:image/png;base64,${this.props.image}`} />
+            <img alt={this.props.title} className='news-item-image' src={`http://rest.filmstriben.dbc.inlead.dk/web/${this.props.image}`} />
             }
           </div>
           <div className="lead" >
