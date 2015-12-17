@@ -12,13 +12,11 @@ input[type=text] {
 }
 
 .autocomplete--container {
-  border: 1px solid $border-color;
-  border-top: none;
-  background-color: $background-color;
   position: absolute;
   z-index: 1000;
   width: 100%;
   overflow: hidden;
+  padding-right: 10px;
 }
 
 .autocomplete--container-hidden {
@@ -65,7 +63,15 @@ input[type=text] {
   border-bottom: 1px solid $border-color;
 
   &:hover, &:focus {
-    background-color: #f0f0f0;
+    background-color: #E6E6E6;
+  }
+
+  a {
+    text-decoration: none;
+
+    &:hover {
+      font-weight: bold;
+    }
   }
 }
 
