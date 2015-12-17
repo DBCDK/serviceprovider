@@ -35,9 +35,7 @@ const CheckBorrower = {
     const openAgencyPromise = this.callServiceClient('openagency', 'getAgencyBranches', {
       id: [query.agencyID]
     });
-    promises.push(openAgencyPromise);
-
-    return promises;
+    return promises.concat(openAgencyPromise);
   },
 
   /**
