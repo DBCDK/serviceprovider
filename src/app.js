@@ -48,7 +48,8 @@ const socket = socketio.listen(server);
 const ENV = app.get('env');
 const PRODUCTION = ENV === 'production';
 const APP_NAME = process.env.NEW_RELIC_APP_NAME || 'app_name'; // eslint-disable-line no-process-env
-const APPLICATION = 'mobilsoeg'; // eslint-disable-line no-process-env
+const APPLICATION = 'mobilsoeg';
+const DEFAULT_CONFIG_NAME = 'aarhus'; // used as a fallback config, if none is set by a url.
 const logger = new Logger({app_name: APP_NAME});
 const expressLoggers = logger.getExpressLoggers();
 
@@ -70,7 +71,7 @@ app.set('port', process.env.PORT || 8080); // eslint-disable-line no-process-env
 const EMAIL_REDIRECT = process.env.EMAIL_REDIRECT || 'localhost:' + app.get('port'); // eslint-disable-line no-process-env
 
 // Configure app variables
-app.set('serviceProvider', ServiceProviderSetup(config[process.env.CONFIG_NAME || 'palle'].provider.services, logger, socket)); // eslint-disable-line no-process-env
+app.set('serviceProvider', ServiceProviderSetup(config[process.env.CONFIG_NAME || DEFAULT_CONFIG_NAME].provider.services, logger, socket)); // eslint-disable-line no-process-env
 app.set('logger', logger);
 app.set('EMAIL_REDIRECT', EMAIL_REDIRECT);
 app.set('APPLICATION', APPLICATION);
@@ -94,7 +95,7 @@ app.locals.newrelic = newrelic;
 app.locals.env = ENV;
 app.locals.version = version;
 app.locals.production = PRODUCTION;
-app.locals.title = config[process.env.CONFIG_NAME || 'palle'].applicationTitle || ''; // eslint-disable-line no-process-env
+app.locals.title = config[process.env.CONFIG_NAME || DEFAULT_CONFIG_NAME].applicationTitle || ''; // eslint-disable-line no-process-env
 app.locals.application = APPLICATION;
 app.locals.faviconUrl = APPLICATION === 'mobilsoeg' ? 'https://www.aakb.dk/sites/www.aakb.dk/files/favicon.ico' : '/favicon.ico';
 
@@ -105,14 +106,14 @@ let fileHeaders = {};
 // Redis
 switch (ENV) {
   case 'development':
-    redisConfig = config[process.env.CONFIG_NAME || 'palle'].sessionStores.redis.development; // eslint-disable-line no-process-env
+    redisConfig = config[process.env.CONFIG_NAME || DEFAULT_CONFIG_NAME].sessionStores.redis.development; // eslint-disable-line no-process-env
     break;
   case 'production':
-    redisConfig = config[process.env.CONFIG_NAME || 'palle'].sessionStores.redis.production; // eslint-disable-line no-process-env
+    redisConfig = config[process.env.CONFIG_NAME || DEFAULT_CONFIG_NAME].sessionStores.redis.production; // eslint-disable-line no-process-env
     fileHeaders = {index: false, dotfiles: 'ignore', maxAge: '5 days'};
     break;
   default:
-    redisConfig = config[process.env.CONFIG_NAME || 'palle'].sessionStores.redis.local; // eslint-disable-line no-process-env
+    redisConfig = config[process.env.CONFIG_NAME || DEFAULT_CONFIG_NAME].sessionStores.redis.local; // eslint-disable-line no-process-env
     break;
 }
 
