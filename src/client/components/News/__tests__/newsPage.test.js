@@ -25,7 +25,7 @@ describe('Test NewsList', () => {
     let element = React.createElement(NewsPageContainer, {id: 1, data});
     let dom = TestUtils.renderIntoDocument(element);
     const newsItem = TestUtils.findRenderedComponentWithType(dom, NewsPageItem);
-    expect(TestUtils.findRenderedDOMComponentWithClass(newsItem, 'image').props.children.props.src).to.be.equal('data:image/png;base64,testImage');
+    expect(TestUtils.findRenderedDOMComponentWithClass(newsItem, 'image').props.children.props.src).to.be.equal('http://rest.filmstriben.dbc.inlead.dk/web/testImage');
     expect(TestUtils.findRenderedDOMComponentWithClass(newsItem, 'lead').innerText).to.be.equal(data.lead);
     expect(TestUtils.findRenderedDOMComponentWithClass(newsItem, 'body').innerText).to.be.equal(data.body);
     expect(TestUtils.findRenderedDOMComponentWithClass(newsItem, 'headline').innerText).to.be.equal(data.title);
