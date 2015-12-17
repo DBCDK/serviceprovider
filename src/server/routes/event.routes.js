@@ -13,7 +13,7 @@ import EventItemPage from '../../client/components/Calendar/EventPageContainer.c
 
 export default express.Router().get(['/:id'], (req, res) => {
   const id = req.params.id;
-  const pagescript = 'news.js';
+  const pagescript = 'event.js';
   let promiseResponse = req.app.get('serviceProvider').trigger('getEventById', {node: id});
   dbcMiddleware.setupSSR(req, res, promiseResponse, (err, result, serviceTime) => {
     const news = result && result[0] || null;

@@ -21,9 +21,9 @@ const EventListTransform = {
         id: item.id,
         nid: item.nid,
         title: fields.title && fields.title.value || null,
-        lead: fields.field_ding_news_lead && fields.field_ding_news_lead.value || null,
-        body: fields.field_ding_news_body && fields.field_ding_news_body.value || null,
-        image: fields.field_ding_news_list_image && fields.field_ding_news_list_image.value[0] || null
+        lead: fields.field_ding_event_lead && fields.field_ding_event_lead.value || null,
+        body: fields.field_ding_event_body && fields.field_ding_event_body.value || null,
+        image: fields.field_ding_event_list_image && fields.field_ding_event_list_image.value[0] || null
       };
     });
     return items;
