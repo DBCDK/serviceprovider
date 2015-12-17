@@ -7,6 +7,7 @@ const NewsByIdTransform = {
   },
 
   requestTransform(event, query) {
+    query.type = 'ding_news';
     return this.callServiceClient('ddbcontent', 'getContentById', query);
   },
 
