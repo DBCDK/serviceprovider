@@ -91,7 +91,8 @@
     "walk": "^2.3.9",
     "webpack": "1.12.2",
     "xmldom": "^0.1.19",
-    "xpath": "0.0.9"
+    "xpath": "0.0.9",
+    "xss-filters": "^1.2.6"
   },
   "devDependencies": {
     "babel-eslint": "^4.0.5",

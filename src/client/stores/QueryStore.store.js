@@ -4,6 +4,7 @@ import Reflux from 'reflux';
 import {extend, isString} from 'lodash';
 import QueryParser from '../../utils/QueryParser.util.js';
 import QueryActions from '../actions/QueryUpdate.action.js';
+import {inHTMLData} from 'xss-filters';
 
 const defaultStore = {
   queryHasChanged: false,
@@ -46,7 +47,8 @@ let QueryStore = Reflux.createStore({
 
   init() {
     if (typeof window !== 'undefined') {
-      this.store.query = QueryParser.urlQueryToObject(window.location.search);
+      // pass window.location through xss filter
+      this.store.query = QueryParser.urlQueryToObject(inHTMLData(window.location.search));
       return this.triggerOnQueryChange(this.store);
     }
   },

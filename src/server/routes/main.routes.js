@@ -11,6 +11,7 @@ import express from 'express';
 const MainRoutes = express.Router();
 import React from 'react';
 import ReactDOM from 'react-dom/server';
+import {inHTMLData} from 'xss-filters';
 
 import {stringToObject} from '../../utils/QueryParser.util.js';
 
@@ -60,6 +61,10 @@ MainRoutes.get('/', dbcMiddleware.ssrMiddleware, (req, res) => {
 MainRoutes.get(['/search', '/search/*'], (req, res) => {
   let query = req.query || [];
   query = query.text ? stringToObject(query) : [];
+
+  // pass input through XSS filter
+  query[0].value = inHTMLData(query[0].value);
+  query[0].index = inHTMLData(query[0].index);
 
   let recommendations = {
     result: [],

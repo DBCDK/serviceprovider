@@ -9,6 +9,7 @@ import React from 'react';
 import ReactDOM from 'react-dom/server';
 
 import express from 'express';
+import {inHTMLData} from 'xss-filters';
 const WorkRoutes = express.Router();
 
 import dbcMiddleware from './../middlewares/middleware.js';
@@ -60,7 +61,7 @@ WorkRoutes.get(['/receipt', '/receipt/*'], (req, res) => {
 
 WorkRoutes.get(['/', '/*'], (req, res) => {
   // Start by getting id from request
-  let id = req.query.id;
+  let id = inHTMLData(req.query.id);
   id = '"' + id + '"';
 
   let promiseResponse = req.app.get('serviceProvider').trigger(
