@@ -21,6 +21,7 @@ var entries = {
   receipt: './src/client/components/Receipt/index.js',
   work: './src/client/components/Work/Work.client',
   news: './src/client/components/News/NewsPage.index',
+  libraries: './src/client/components/LibraryAffiliateList/index.js',
   styles: './src/client/styles/ddb.scss'
 };
 
