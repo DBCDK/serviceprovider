@@ -61,7 +61,7 @@ class FacetsContainer extends React.Component {
       </div>
     );
   }
-  
+
   render() {
     const result = this.state.facets.length && this.renderFacetsResult() || '';
 
