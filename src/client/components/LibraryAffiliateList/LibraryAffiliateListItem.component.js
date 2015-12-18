@@ -29,7 +29,7 @@ export default class LibraryAffiliateListItem extends React.Component {
     let days = {};
     while (day < lastDay && counter < opening_hours_array.length) {
       const currentDay = opening_hours_array[counter];
-      counter = counter + 1;
+      counter += 1;
       day = (new Date(currentDay.date)).getTime();
       if (day >= today.getTime()) {
         if (!days.hasOwnProperty(currentDay.date)) {
@@ -40,7 +40,7 @@ export default class LibraryAffiliateListItem extends React.Component {
     }
 
     let dayArray = [];
-    for(var i = 0; i <= 6; i++) {
+    for (var i = 0; i <= 6; i++) {
       const currentDay = new Date(today.getTime() + (i * oneDayInMilliSeconds));
       const dateString = currentDay.getFullYear() + '-' + (currentDay.getMonth() + 1) + '-' + currentDay.getDate();
 
@@ -73,17 +73,17 @@ export default class LibraryAffiliateListItem extends React.Component {
 
       if (days.hasOwnProperty(dateString)) {
         let openingTimeString = '';
-        openingTimeString = openingTimeString + day;
+        openingTimeString += day;
         let dateStrings = [];
         days[dateString].forEach((date) => {
           dateStrings.push(
             date.opening_time.split(':').splice(0, 2).join(':') +
             ' til ' +
             date.closing_time.split(':').splice(0, 2).join(':')
-          )
+          );
         });
 
-        openingTimeString = openingTimeString + dateStrings.join(', ');
+        openingTimeString += dateStrings.join(', ');
         dayArray.push(
           <p key={day}>{openingTimeString}</p>
         );
@@ -96,6 +96,7 @@ export default class LibraryAffiliateListItem extends React.Component {
     return dayArray;
   }
 
+  /* eslint-disable react/no-danger */
   render() {
     const openingHoursArray = this.getOpeningHours(this.props.opening_hours);
 
@@ -129,6 +130,7 @@ export default class LibraryAffiliateListItem extends React.Component {
       </div>
     );
   }
+  /* eslint-enable react/no-danger */
 }
 
 LibraryAffiliateListItem.displayName = 'LibraryAffiliateListItem.component';

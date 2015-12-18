@@ -15,7 +15,7 @@ const AffiliateListTransform = {
     try {
       query.agency = connection.libdata.config.provider.services.ddbcontent.agency;
       query.key = connection.libdata.config.provider.services.ddbcontent.key;
-    } catch (e) {}
+    } catch (e) {} // eslint-disable-line
 
     query.type = 'ding_library';
     query.amount = 100000;
@@ -26,7 +26,8 @@ const AffiliateListTransform = {
     let contentEndpoint;
     try {
       contentEndpoint = connection.libdata.config.provider.services.ddbcontent.endpoint + '/';
-    } catch (e) {
+    }
+    catch (e) {
       contentEndpoint = '/';
     }
 
@@ -62,13 +63,15 @@ const AffiliateListTransform = {
         // Sort by date, and extract the date, opening- and closing-time.
         opening_hours: sortBy(fields.opening_hours, (n) => {
           return new Date(n.date);
-        }).map((day) => {
-          return {
-            date: day.date,
-            opening_time: day.start_time,
-            closing_time: day.end_time
+        }).map(
+          (day) => {
+            return {
+              date: day.date,
+              opening_time: day.start_time,
+              closing_time: day.end_time
+            };
           }
-        }) || []
+        ) || []
       };
     });
   }
