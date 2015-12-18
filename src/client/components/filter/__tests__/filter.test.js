@@ -20,11 +20,6 @@ describe('Test the Filter component', () => {
   });
 
   it('generates filter guide and is selectable', () => {
-    let filterElements = [
-      {value: 'test', type: 'testType'},
-      {value: 'test2', type: 'testType2'}
-    ];
-
     let element = React.createElement(Filter);
     let dom = TestUtils.renderIntoDocument(element);
     let filterGuides = TestUtils.scryRenderedComponentsWithType(dom, FilterGuide);
