@@ -26,7 +26,7 @@ describe('Test Facets Container Component', () => {
     render.render(<FacetsContainer />);
     const rendered = render.getRenderOutput();
     assert.strictEqual(rendered.type, 'div');
-    assert.strictEqual(rendered.props.className, 'facet-result columns');
+    assert.strictEqual(rendered.props.className, 'facet-result row');
     assert.isUndefined(rendered.props.children.children);
   });
 

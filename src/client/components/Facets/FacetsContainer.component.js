@@ -54,7 +54,7 @@ class FacetsContainer extends React.Component {
     const facetsClass = (isCollapsed === true) ? 'facets collapsed' : 'facets';
 
     return (
-      <div className="facets-container">
+      <div className="facets-container small-24 columns">
         <h2 className="facets-header" onClick={toggleFunc}>Afgræns din søgning</h2>
         {arrows}
         <FacetsResult className={facetsClass} facets={facets} />
@@ -62,20 +62,14 @@ class FacetsContainer extends React.Component {
     );
   }
 
-  renderBeforeFacets() {
-    return (
-      <div className='row'>
-        <span className='small-24 column'></span>
-      </div>
-    );
-  }
-
   render() {
-    const result = this.state.facets.length && this.renderFacetsResult() || this.renderBeforeFacets();
+    const result = this.state.facets.length && this.renderFacetsResult() || '';
 
     return (
-      <div className={'facet-result columns'} >
-        {result}
+      <div className='facet-result row' >
+        <div className='small-24 columns'>
+          {result}
+        </div>
       </div>
     );
   }
