@@ -7,17 +7,14 @@ import FacetsActions from './Facets.action.js';
 const FacetsStore = Reflux.createStore({
 
   store: {
-    facets: [],
-    uiStatus: {
-
-    }
+    facets: []
   },
 
   init() {
     this.listenToMany(FacetsActions);
   },
 
-  onUpdateFacets(facetsResponse) { // eslint-disable-line
+  onUpdateFacets(facetsResponse) {
     this.store.facets = facetsResponse.result;
     this.trigger(this.store);
   }

@@ -29,9 +29,7 @@ const PopSuggestTransform = {
   },
 
   requestTransform(event, query) {
-    if (event === 'getPopSuggestions') {
-      return this.getPopSuggestionsRequest(query);
-    }
+    return this.getPopSuggestionsRequest(query);
   },
 
   responseTransform(response, query) {

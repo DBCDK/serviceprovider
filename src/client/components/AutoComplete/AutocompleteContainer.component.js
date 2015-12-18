@@ -41,6 +41,9 @@ const AutoCompleteContainer = React.createClass({
     if (isEmpty(inputValue)) {
       return;
     }
+
+    inputValue = inputValue.toLowerCase();
+
     if (this.lastInputValue !== inputValue) {
       if (this.timer) {
         clearTimeout(this.timer);
@@ -64,8 +67,11 @@ const AutoCompleteContainer = React.createClass({
     if (this.props.input.focus) {
       this.onInputValueChange(this.props.input.value);
     }
+
     const visible = this.shouldAutoCompleteBeVisible();
-    return <AutoComplete data={this.props.store.data[this.props.input.value]} errormessage="Ingen resultater fundet" visible={visible} />;
+    const currentValue = this.props.input.value.toLowerCase();
+
+    return <AutoComplete data={this.props.store.data[currentValue]} errormessage="Ingen resultater fundet" visible={visible} />;
   }
 });
 

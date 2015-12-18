@@ -22,6 +22,7 @@ var entries = {
   work: './src/client/components/Work/Work.client',
   news: './src/client/components/News/NewsPage.index',
   libraries: './src/client/components/LibraryAffiliateList/index.js',
+  event: './src/client/components/Calendar/EventPage.index',
   styles: './src/client/styles/ddb.scss'
 };
 

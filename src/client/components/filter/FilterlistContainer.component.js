@@ -15,7 +15,6 @@ import FilterGuide from '../FilterGuide/FilterGuide.component';
 import QueryActions from '../../actions/QueryUpdate.action.js';
 
 // Stores
-import FilterStore from '../FilterGuide/FilterStore.store.js'; // eslint-disable-line no-unused-vars
 import MaterialTypeStore from '../../stores/MaterialType.store.js';
 
 export default React.createClass({
