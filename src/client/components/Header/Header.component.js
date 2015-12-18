@@ -40,12 +40,12 @@ export default class Header extends React.Component {
 
         <div id="topbar" >
           <div className="topbar--logo--container row" >
-            <div className="topbar--logo-container small-18 columns" >
+            <div className="topbar--logo-container small-17 columns" >
               <a href="/" >
                 <span id="logo" > </span>
               </a>
             </div>
-            <div className="topbar--login-btn-container small-6 medium-6 large-6 columns" >
+            <div className="topbar--login-btn-container small-7 medium-6 large-6 columns" >
               <a className='button tiny right' href={buttonData.url} >{buttonData.text}</a>
             </div>
           </div>
