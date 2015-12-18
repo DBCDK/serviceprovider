@@ -14,6 +14,7 @@ import Reflux from 'reflux';
 import QueryStore from '../../stores/QueryStore.store.js';
 import QueryActions from '../../actions/QueryUpdate.action.js';
 import ComponentUtils from '../../../utils/ComponentHelpers.util.js';
+import {inHTMLData} from 'xss-filters';
 
 const Query = React.createClass({
   displayName: 'QueryComponent',
@@ -35,7 +36,7 @@ const Query = React.createClass({
 
   updateHistoryState(query) {
     if (this.isClient() && window.location.search !== query.search) {
-      const queryString = `${this.props.queryLocation + query.search}`;
+      const queryString = inHTMLData(`${this.props.queryLocation + query.search}`);
 
       if (this.props.shouldDoPageLoad) {
         window.location = queryString;
