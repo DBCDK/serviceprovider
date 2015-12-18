@@ -59,7 +59,7 @@ MainRoutes.get('/', dbcMiddleware.ssrMiddleware, (req, res) => {
 
 MainRoutes.get(['/search', '/search/*'], (req, res) => {
   let query = req.query || [];
-  query = query.text ? stringToObject(query) : [];
+  query = stringToObject(query) || [];
 
   let recommendations = {
     result: [],
