@@ -27,6 +27,7 @@ import MainRoutes from './server/routes/main.routes.js';
 import PassportRoutes from './server/routes/passport.routes.js';
 import WorkRoutes from './server/routes/work.routes.js';
 import NewsRoutes from './server/routes/news.routes.js';
+import LibraryRoutes from './server/routes/library.routes';
 import EventRoutes from './server/routes/event.routes.js';
 
 // Middleware
@@ -179,6 +180,7 @@ app.use('/', MainRoutes);
 app.use('/profile', PassportRoutes);
 app.use('/work', WorkRoutes);
 app.use('/news', NewsRoutes);
+app.use('/libraries', LibraryRoutes);
 app.use('/event', EventRoutes);
 
 

@@ -64,6 +64,18 @@ let QueryStore = Reflux.createStore({
     this.triggerOnQueryChange(this.store);
   },
 
+  onRemove(query, queryElement) {
+    const queryObject = QueryParser.urlQueryToObject(query);
+    for (var i = 0; i < queryObject.length; i++) {
+      if (queryObject[i].type === queryElement.type && queryObject[i].value === queryElement.value) {
+        queryObject.splice(i);
+      }
+    }
+    this.store.query = queryObject;
+    this.store.page = 0;
+    this.triggerOnQueryChange(this.store);
+  },
+
   onAdd(queryElement) {
     this.store.query.push(queryElement);
     this.store.page = 0;

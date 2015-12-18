@@ -60,7 +60,7 @@ MainRoutes.get('/', dbcMiddleware.ssrMiddleware, (req, res) => {
 
 MainRoutes.get(['/search', '/search/*'], (req, res) => {
   let query = req.query || [];
-  query = query.text ? stringToObject(query) : [];
+  query = stringToObject(query) || [];
 
   // pass input through XSS filter
   query[0].value = inHTMLData(query[0].value);

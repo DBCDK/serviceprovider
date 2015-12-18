@@ -44,7 +44,6 @@ const FacetsTransform = {
       info: {},
       error: []
     };
-
     let result = prep.checkResponse(response);
 
     if (result.hasOwnProperty('errorcode')) {
@@ -56,6 +55,7 @@ const FacetsTransform = {
 
     if (facetResult.hasOwnProperty('facet')) {
       facetResult.facet.forEach((f) => {
+        f.facetTerm = Array.isArray(f.facetTerm) && f.facetTerm || [f.facetTerm];
         let terms = [];
         f.facetTerm.forEach((t) => {
           let term = {};
@@ -66,7 +66,6 @@ const FacetsTransform = {
         data.result.push({facetName: f.facetName, terms: terms});
       });
     }
-
     return data;
   }
 };
