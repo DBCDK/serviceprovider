@@ -66,7 +66,10 @@ let QueryStore = Reflux.createStore({
     const queryObject = QueryParser.urlQueryToObject(query);
     for (var i = 0; i < queryObject.length; i++) {
       if (queryObject[i].type === queryElement.type && queryObject[i].value === queryElement.value) {
-        queryObject.splice(i);
+        queryObject.splice(i, 1);
+      }
+      else if (queryElement.value.length === 0 && queryObject[i].type === queryElement.type) {
+        queryObject.splice(i, 1);
       }
     }
     this.store.query = queryObject;

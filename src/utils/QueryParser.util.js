@@ -51,6 +51,10 @@ function splitGroupToUrlQuery(group, key) {
   return `${key}=${values}`;
 }
 
+function replaceAll(str, find, replace) {
+  return str.replace(new RegExp(find, 'g'), replace);
+}
+
 /**
  * Converts a group of query objects to a CQL string
  *
@@ -68,6 +72,9 @@ function splitGroupToCQL(group, key) {
     return element.indexOf(' ') >= 0 && `"${element}"` || element;
   }).join(' and ');
 
+  if (values.match(',')) {
+    values = replaceAll(values, ',', ' or ');
+  }
 
   // If key is text the query if from the default index and no index should be specified. Else the key defines the
   // the index
@@ -122,7 +129,6 @@ export function urlQueryToObject(queryString) {
       obj[arrayPair[0]] = arrayPair[1];
     });
   }
-
   return stringToObject(obj);
 }
 
@@ -150,7 +156,6 @@ export function objectToString(query) {
  */
 export function objectToCql(query) {
   let groups = groupByType(query);
-
   return _.map(groups, splitGroupToCQL).join(' and ');
 }
 
