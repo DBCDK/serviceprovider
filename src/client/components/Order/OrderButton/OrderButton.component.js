@@ -22,8 +22,7 @@ const OrderButton = React.createClass({
   getUserInfo(profile) {
     let userInfo = {
       agencyId: '',
-      pickupAgencyId: '',
-      borrowerId: ''
+      pickupAgencyId: ''
     };
 
     const favoriteLibraries = this.props.favoriteLibraries || [];
@@ -32,7 +31,6 @@ const OrderButton = React.createClass({
       if (favoriteLibraries.length === 1) {
         userInfo.agencyId = favoriteLibraries[0].libraryID;
         userInfo.pickupAgencyId = favoriteLibraries[0].agencyID;
-        userInfo.borrowerId = favoriteLibraries[0].borrowerID;
       }
       else if (favoriteLibraries.length > 1) {
         const agencies = favoriteLibraries;
@@ -40,12 +38,10 @@ const OrderButton = React.createClass({
         if (index > -1) {
           userInfo.agencyId = favoriteLibraries[index].libraryID;
           userInfo.pickupAgencyId = favoriteLibraries[index].agencyID;
-          userInfo.borrowerId = favoriteLibraries[index].borrowerID;
         }
         else {
           userInfo.agencyId = favoriteLibraries[0].libraryID;
           userInfo.pickupAgencyId = favoriteLibraries[0].agencyID;
-          userInfo.borrowerId = favoriteLibraries[0].borrowerID;
         }
       }
     }
@@ -61,7 +57,6 @@ const OrderButton = React.createClass({
     return (
       <OrderLink
         agencyId={userInfo.agencyId}
-        borrowerId={userInfo.borrowerId}
         coverImagePids={manifestations[0].identifiers}
         key={index}
         linkText={'Bestil ' + m.type}

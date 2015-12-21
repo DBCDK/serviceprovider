@@ -28,7 +28,7 @@ const Receipt = React.createClass({
 
   componentDidMount() {
     ReceiptStore.listen(this.setOrderPlaced);
-    ReceiptActions({agencyId: this.props.receipt.pickupAgency, pids: this.props.receipt.ids, userId: this.props.receipt.borrowerId});
+    ReceiptActions({agencyId: this.props.receipt.pickupAgency, pids: this.props.receipt.ids});
   },
 
   setOrderPlaced(store) {
