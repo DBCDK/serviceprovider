@@ -75,10 +75,10 @@ class Order extends React.Component {
     }
 
     return (<div className='order--container row'>
-        <div className='image small-8 medium-12 large-8'>
+        <div className='image'>
           {coverImage}
         </div>
-        <div className='order small-16 medium-12 large-8'>
+        <div className='order'>
           {ordering}
         </div>
         {cancelOrder}

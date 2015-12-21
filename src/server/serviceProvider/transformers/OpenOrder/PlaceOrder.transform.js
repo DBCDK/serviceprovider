@@ -13,15 +13,13 @@ const PlaceOrderTransform = {
     return new Date(future.setDate(future.getDate() + days)).toISOString();
   },
 
-  placeOrder(request) {
-    return this.callServiceClient('openorder', 'placeOrder', request);
-  },
+  requestTransform(event, request, connection) {
+    const passport = connection.request.session.passport || {user: {loanerid: null}};
 
-  requestTransform(event, request) {
-    return this.placeOrder({
+    return this.callServiceClient('openorder', 'placeOrder', {
       agencyId: request.agencyId,
       pids: request.pids.split(','),
-      userId: request.userId,
+      userId: passport.user.loanerid,
       needBeforeDate: this.getNeedBeforeDate(90)
     });
   },

@@ -66,8 +66,8 @@ const Receipt = React.createClass({
   },
 
   render() {
-    return (<div className='receipt--container'>
-        <div className='receipt small-12 medium-6 large-4'>
+    return (<div className='receipt--container row'>
+        <div className='receipt'>
           <div className="receipt--info">
             <div className="receipt--headline">{this.state.headline}</div>
             <div className="receipt--bibliographic">{this.state.orderInfo}</div>
