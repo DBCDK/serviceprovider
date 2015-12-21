@@ -14,7 +14,16 @@ export default class LibraryAffiliatesDropDown extends React.Component {
     };
 
     this.unsubscribe = [
-      LibraryAffiliateDropDownStore.listen(() => this.setState({affiliates: LibraryAffiliateDropDownStore.store}))
+      LibraryAffiliateDropDownStore.listen(() => this.setState({affiliates: LibraryAffiliateDropDownStore.store})),
+      LibraryAffiliateDropDownActions.getLibraryAffiliatesForAgencyResponse.listen(() => {
+        var options = this.refs.librarySelector.options;
+        for (var i= 0; i<options.length; i++) {
+          if (options[i].value===props.pickupAgency) {
+            options[i].selected= true;
+            break;
+          }
+        }
+      })
     ];
   }
 
