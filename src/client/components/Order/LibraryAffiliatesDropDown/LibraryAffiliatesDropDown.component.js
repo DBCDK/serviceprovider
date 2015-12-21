@@ -41,7 +41,7 @@ export default class LibraryAffiliatesDropDown extends React.Component {
 
   render() {
     const affiliate_options = this.state.affiliates.libraries.map((library) => {
-      return (<option key={library.id} value={library.id}>{library.name} - {library.address}</option>);
+      return (<option key={library.id} value={library.id}>{library.name}</option>);
     });
 
     return (
