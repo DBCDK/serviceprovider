@@ -2,7 +2,7 @@
 
 /**
  * @file
- * News Store. Contains a list of news and|or single news items
+ * Libraries Store. Contains a list of all libraries in a given agency.
  */
 
 import Reflux from 'reflux';

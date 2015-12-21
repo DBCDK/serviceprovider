@@ -8,10 +8,13 @@
 import Reflux from 'reflux';
 import SocketClient from 'dbc-node-serviceprovider-socketclient';
 
+import ReceiptActions from '../components/Receipt/Receipt.action';
+
 const fetchMobilSoegProfile = SocketClient('findMobilSoegProfile');
 const isLoggedIn = SocketClient('isMobilSoegUserLoggedIn');
 const saveLikeToMobilSoegProfile = SocketClient('saveLikeToMobilSoegProfile');
 const deleteLikes = SocketClient('deleteLikesFromMobilSoegProfile');
+const savePickupAgency = SocketClient('savePickupAgencyToMobilSoegProfile');
 
 let ProfileActions = Reflux.createActions([
   'isLoggedIn', // Checks if the user is logged in and returns true/false based on that
@@ -37,5 +40,9 @@ saveLikeToMobilSoegProfile.response(ProfileActions.likeSaved);
 
 ProfileActions.deleteLikes.listen(deleteLikes.request);
 deleteLikes.response(ProfileActions.fetchMobilSoegProfile);
+
+ReceiptActions.listen((order) => {
+  savePickupAgency.request(order.agencyId);
+});
 
 export default ProfileActions;
