@@ -20,7 +20,7 @@ export default class LibraryAffiliatesDropDown extends React.Component {
 
   componentDidMount() {
     LibraryAffiliateDropDownActions.getLibraryAffiliatesForAgency(this.props.pickupAgency);
-    LibraryAffiliateDropDownActions.libraryAffiliateSelected({id: this.props.pickupAgency, name: this.props.pickUpAgency});
+    LibraryAffiliateDropDownActions.libraryAffiliateSelected({id: this.props.pickupAgency, name: this.props.pickupAgency});
   }
 
   componentWillUnmount() {
@@ -46,7 +46,7 @@ export default class LibraryAffiliatesDropDown extends React.Component {
 
     return (
       <span className='order--library-affiliate-list-drop-down'>
-        <select defaultValue={this.props.pickUpAgency} onChange={this.selectionWasChanged.bind(this)} ref={"librarySelector"}>
+        <select defaultValue={this.props.pickupAgency} onChange={this.selectionWasChanged.bind(this)} ref={"librarySelector"}>
           {affiliate_options}
         </select>
       </span>

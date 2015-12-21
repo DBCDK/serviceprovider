@@ -35,12 +35,12 @@ const OpenAgencyPickupAgencyTransform = {
           return library.pickupAllowed === '1';
         }).map((library) => {
           return {
-            name: isArray(library.branchName) ? library.branchName[0]['$value'] : library.branchName['$value'],
+            name: isArray(library.branchName) ? library.branchName[0]['$value'] : library.branchName['$value'], // eslint-disable-line dot-notation
             id: library.branchId,
             address: [library.postalAddress, library.postalCode, library.city].join(', ')
-          }
+          };
         })
-      }
+      };
     }
     data.query = query;
 
