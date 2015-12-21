@@ -88,7 +88,7 @@ export default class WorkLayout extends React.Component {
         userIsLoggedIn: profile.userIsLoggedIn,
         favoriteLibraries: [{
           libraryID: profile.profile.agencyid,
-          agencyID: profile.pickup_agency ? profile.pickup_agency : profile.profile.agencyid,
+          agencyID: profile.profile.pickup_agency ? profile.profile.pickup_agency : profile.profile.agencyid,
           borrowerID: typeof window !== 'undefined' && window.BORROWER_ID ? window.BORROWER_ID : ''
         }]
       };
