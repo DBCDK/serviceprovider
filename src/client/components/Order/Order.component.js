@@ -6,8 +6,8 @@
  */
 import React from 'react';
 
-import LibraryAffiliatesDropDown from './LibraryAffiliatesDropDown/LibraryAffiliatesDropDown.component';
-import LibraryAffiliatesDropDownActions from './LibraryAffiliatesDropDown/LibraryAffiliatesDropDown.action.js';
+import LibraryAffiliatesDropDown from '../LibraryAffiliatesDropDown/LibraryAffiliatesDropDown.component';
+import LibraryAffiliatesDropDownActions from '../LibraryAffiliatesDropDown/LibraryAffiliatesDropDown.action.js';
 
 class Order extends React.Component {
   constructor(props) {

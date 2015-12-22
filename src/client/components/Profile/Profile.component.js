@@ -6,9 +6,9 @@
  */
 
 import React from 'react';
-// import Reflux from 'reflux';
 
-import UserStatusStore from '../../stores/UserStatus.store.js';
+// Actions
+import ProfileActions from '../../actions/Profile.action';
 import UserStatusActions from '../../actions/UserStatus.action.js';
 
 // Components
@@ -17,6 +17,11 @@ import OrdersList from './OrdersList.component';
 import LoansList from './LoansList.component';
 import FiscalStatus from './FiscalStatus.component';
 import UserStatusSummary from './UserStatusSummary.component';
+import LibraryAffiliatesDropDown from '../LibraryAffiliatesDropDown/LibraryAffiliatesDropDown.component';
+
+// Stores
+import ProfileStore from '../../stores/Profile.store';
+import UserStatusStore from '../../stores/UserStatus.store.js';
 
 class Profile extends React.Component {
 
@@ -39,10 +44,22 @@ class Profile extends React.Component {
         loanCollapsed: true,
         ordersCollapsed: true,
         fiscalCollapsed: true
-      }
+      },
+      profile: ProfileStore.getState()
     };
 
-    UserStatusStore.listen(this.onUpdateUserStatus);
+    this.unsubscriber = [
+      UserStatusStore.listen(this.onUpdateUserStatus),
+      ProfileStore.listen((store) => {
+        this.setState({profile: store});
+      })
+    ];
+  }
+
+  componentWillUnmount() {
+    this.unsubscriber.forEach((unsub) => {
+      unsub();
+    });
   }
 
   onUpdateUserStatus(store) {
@@ -104,6 +121,11 @@ class Profile extends React.Component {
       branchNamesMap = this.state.status.branchNamesMap;
     }
 
+    let defaultPickupAgency = '';
+    if (!this.state.profile.pending) {
+      defaultPickupAgency = this.state.profile.profile.pickup_agency || this.state.profile.profile.agencyid;
+    }
+
     return (
       <div className='profile--user-status' >
         <UserStatusSummary
@@ -135,6 +157,14 @@ class Profile extends React.Component {
           items={fiscalItems}
           onToggleFiscalDisplay={this.toggleFiscalDisplay}
         />
+
+        <div className="row clearfix">
+          <h2>Vælg fremtidige afhentningsbibliotek</h2>
+          <p>Bemærk, dette ændrer ikke eksisterende lån.</p>
+          <LibraryAffiliatesDropDown pickupAgency={defaultPickupAgency} onChangeCallback={(library) => {
+            ProfileActions.savePickupAgencyToMobilSoegProfile(library.id);
+          }} />
+        </div>
 
         <DeleteLikesButton />
       </div>
