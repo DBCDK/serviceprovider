@@ -74,6 +74,10 @@ export default React.createClass({
     return text;
   },
 
+  replaceAll(str, find, replace) {
+    return str.replace(new RegExp(find, 'g'), replace);
+  },
+
   render() {
     const {query, remove} = this.props;
 
@@ -86,7 +90,7 @@ export default React.createClass({
           index={element.index}
           key={index}
           remove={remove.bind(null, element)}
-          text={this.getTranslation(element.type, element.value)}
+          text={this.getTranslation(element.type, this.replaceAll(element.value.toString(), ',', ' eller '))}
           />
       );
     }).reverse();

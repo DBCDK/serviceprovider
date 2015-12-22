@@ -8,6 +8,7 @@
 import * as prep from './response-preparation.js';
 import xpath from 'xpath';
 import xmldom from 'xmldom';
+import {inHTMLData} from 'xss-filters';
 
 /**
  * Transforms a work request data and the resulting work object from Open Search
@@ -24,7 +25,7 @@ const WorkTransform = {
   },
 
   requestTransform(event, request) {
-    let pid = 'rec.id=' + request.pid;
+    let pid = 'rec.id=' + inHTMLData(request.pid);
     return this.getWorkResult({
       query: pid,
       start: request.offset,
