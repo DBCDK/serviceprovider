@@ -43,7 +43,7 @@ export default class FacetsResult extends React.Component {
   termSelection(facetName, term, checked) {
     if (this.state.termsSelected) {
       let terms = this.state.termsSelected;
-      const part = {name: facetName, term: term};
+      const part = {name: facetName, term: '"' + term + '"'};
       if (checked) {
         terms.push(part);
       }
