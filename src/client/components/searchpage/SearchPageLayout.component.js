@@ -11,6 +11,7 @@ import SearchFieldContainer from '../searchfield/SearchFieldContainer.component.
 import FacetsContainer from '../Facets/FacetsContainer.component.js';
 import SearchResultContainer from '../searchresult/SearchResultContainer.component.js';
 import FilterGuideContainer from '../filter/FilterlistContainer.component.js';
+import SearchSort from './SearchSort/SearchSort.component';
 import Query from '../query/Query.component.js';
 
 export default React.createClass({
@@ -27,6 +28,7 @@ export default React.createClass({
         <SearchFieldContainer query={this.props.query} />
         <FilterGuideContainer />
         <FacetsContainer />
+        <SearchSort />
         <SearchResultContainer recommendations={this.props.recommendations} />
       </div>
     );

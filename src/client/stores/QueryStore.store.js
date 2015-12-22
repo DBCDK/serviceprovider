@@ -107,6 +107,20 @@ let QueryStore = Reflux.createStore({
 
   getCql() {
     return QueryParser.objectToCql(this.store.query);
+  },
+
+  onChangeQuerySort(new_sort) {
+    const sorts = [
+      'acquisitionDate_ascending', 'acquisitionDate_descending', 'article_date_ascending', 'article_date_descending',
+      'creator_ascending', 'creator_descending', 'date_ascending', 'date_descending', 'random', 'rank_creator',
+      'rank_frequency', 'rank_general', 'rank_main_title', 'rank_none', 'rank_subject', 'rank_title', 'record_owner_ascending',
+      'record_owner_descending', 'title_ascending', 'title_descending', 'work_type_ascending', 'work_type_descending'
+    ];
+
+    if (sorts.indexOf(new_sort) >= 0) {
+      this.store.sort = new_sort;
+      this.trigger(this.store);
+    }
   }
 });
 
