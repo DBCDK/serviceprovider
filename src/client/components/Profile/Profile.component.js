@@ -161,9 +161,9 @@ class Profile extends React.Component {
         <div className="row clearfix">
           <h2>Vælg fremtidige afhentningsbibliotek</h2>
           <p>Bemærk, dette ændrer ikke eksisterende lån.</p>
-          <LibraryAffiliatesDropDown pickupAgency={defaultPickupAgency} onChangeCallback={(library) => {
+          <LibraryAffiliatesDropDown onChangeCallback={(library) => {
             ProfileActions.savePickupAgencyToMobilSoegProfile(library.id);
-          }} />
+          }} pickupAgency={defaultPickupAgency} />
         </div>
 
         <DeleteLikesButton />

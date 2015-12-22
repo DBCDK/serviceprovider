@@ -52,7 +52,9 @@ export default class LibraryAffiliatesDropDown extends React.Component {
     const text = e.options[e.selectedIndex].text;
     this.setState({selected: value});
     LibraryAffiliateDropDownActions.libraryAffiliateSelected({id: value, name: text});
-    if (this.props.onChangeCallback) this.props.onChangeCallback({id: value, name: text});
+    if (this.props.onChangeCallback) {
+      this.props.onChangeCallback({id: value, name: text});
+    }
   }
 
   render() {
@@ -72,6 +74,6 @@ export default class LibraryAffiliatesDropDown extends React.Component {
 
 LibraryAffiliatesDropDown.displayName = 'LibraryAffiliatesDropDown.component';
 LibraryAffiliatesDropDown.propTypes = {
-  pickupAgency: React.PropTypes.string.isRequired,
-  onChangeCallback: React.PropTypes.func
+  onChangeCallback: React.PropTypes.func,
+  pickupAgency: React.PropTypes.string.isRequired
 };
