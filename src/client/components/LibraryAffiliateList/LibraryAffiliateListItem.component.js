@@ -97,7 +97,6 @@ export default class LibraryAffiliateListItem extends React.Component {
   }
 
   render() {
-    console.log(this.props);
     const openingHoursArray = this.getOpeningHours(this.props.opening_hours);
 
     /* eslint-disable react/no-danger */
