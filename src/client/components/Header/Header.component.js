@@ -40,7 +40,7 @@ export default class Header extends React.Component {
 
         <div id="topbar" >
           <div className="topbar--logo--container row" >
-            <div className="topbar--logo-container small-17 columns" >
+            <div className="topbar--logo-container small-17 medium-18 large-18 columns" >
               <a href="/" >
                 <span id="logo" > </span>
               </a>
