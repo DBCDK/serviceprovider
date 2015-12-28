@@ -43,11 +43,14 @@ export default class LibraryAffiliateList extends React.Component {
     this.state.affiliates.libraries.forEach((library) => {
       libraries.push(
         <LibraryAffiliateListItem
+          address={library.address}
+          city={library.city}
           description={library.description}
           key={library.id}
           lead_description={library.lead_description}
           list_images={library.list_images}
           opening_hours={library.opening_hours}
+          postal_code={library.postal_code}
           title={library.title}
           title_images={library.title_images}
         />
