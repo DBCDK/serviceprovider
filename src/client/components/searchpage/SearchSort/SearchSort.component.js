@@ -1,5 +1,10 @@
 'use strict';
 
+/**
+ * @file
+ * Search sort component
+ */
+
 import React from 'react';
 
 import QueryActions from '../../../actions/QueryUpdate.action';
