@@ -6,8 +6,8 @@
  */
 import React from 'react';
 
-import LibraryAffiliatesDropDown from './LibraryAffiliatesDropDown/LibraryAffiliatesDropDown.component';
-import LibraryAffiliatesDropDownActions from './LibraryAffiliatesDropDown/LibraryAffiliatesDropDown.action.js';
+import LibraryAffiliatesDropDown from '../LibraryAffiliatesDropDown/LibraryAffiliatesDropDown.component';
+import LibraryAffiliatesDropDownActions from '../LibraryAffiliatesDropDown/LibraryAffiliatesDropDown.action.js';
 
 class Order extends React.Component {
   constructor(props) {
@@ -31,7 +31,6 @@ class Order extends React.Component {
     const type = this.props.order.type;
     const creator = this.props.order.creator;
     const pickupAgency = this.props.order.pickupAgency;
-    const borrowerId = this.props.order.borrowerId;
     const ids = this.props.order.ids;
     const coverImage = this.props.coverImage;
 
@@ -47,7 +46,7 @@ class Order extends React.Component {
       orderInfo = creator + ': ' + title + ' (' + type + ')';
     }
 
-    const orderLink = '/work/receipt?ids=' + ids + '&pickupAgency=' + this.state.pickupAgency.id + '&borrowerId=' + borrowerId + '&title='
+    const orderLink = '/work/receipt?ids=' + ids + '&pickupAgency=' + this.state.pickupAgency.id + '&title='
       + encodeURIComponent(title) + '&creator=' + encodeURIComponent(creator) + '&type=' + encodeURIComponent(type);
 
     let placeOrder = <a className={'place-order-button button'} href={orderLink}>Ok</a>;
@@ -58,27 +57,11 @@ class Order extends React.Component {
       <div className="order--library">Til afhentning på dit bibliotek: <LibraryAffiliatesDropDown pickupAgency={pickupAgency} /></div>
     </div>);
 
-    if (pickupAgency === '' || borrowerId === '') {
-      placeOrder = '';
-      cancelOrder = '';
-      let orderHeadline = 'Du skal vælge et favoritbibliotek for at kunne bestille';
-      let buttonText = 'bibliotek';
-      if (borrowerId === '' && pickupAgency !== '') {
-        orderHeadline = 'Du skal gemme dit låner id i din profil';
-        buttonText = 'låner id';
-      }
-      ordering = (<div className="order--info">
-        <div className="order--headline">{orderHeadline}</div>
-        <div className="order--bibliographic">{orderInfo}</div>
-        <a className={'library-button button'} href='/profile'>Tilføj {buttonText}</a>
-      </div>);
-    }
-
     return (<div className='order--container row'>
-        <div className='image small-8 medium-12 large-8'>
+        <div className='image'>
           {coverImage}
         </div>
-        <div className='order small-16 medium-12 large-8'>
+        <div className='order'>
           {ordering}
         </div>
         {cancelOrder}

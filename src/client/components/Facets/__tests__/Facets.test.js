@@ -52,7 +52,7 @@ describe('Test Facets Results Component', () => {
     const rendered = render.getRenderOutput();
     assert.strictEqual(rendered.type, 'div');
     assert.strictEqual(rendered.props.children[0].props.children[0].props.children, 'Materialetype');
-    assert.strictEqual(rendered.props.children[0].props.children[2].props.children.props.facetName, 'facet.type');
+    assert.strictEqual(rendered.props.children[0].props.children[2].props.children[0].props.facetName, 'facet.type');
   });
 
   it('Assert rendering of facet collapse buttons', () => {

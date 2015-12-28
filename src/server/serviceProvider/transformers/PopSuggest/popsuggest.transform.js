@@ -8,28 +8,33 @@ const PopSuggestTransform = {
     return 'getPopSuggestions';
   },
 
-  getPopSuggestionsRequest(query) {
+  getPopSuggestionsRequest(query, searchProfile) {
     let requests = [];
+    const filter = [`rec.collectionIdentifier:${searchProfile}`];
 
     requests.push(this.callServiceClient('popsuggest', 'getPopSuggestions', {
       index: 'display.title',
       query: query.replace(' ', '%5C%20'), // prepending a \ to whitespace in query string
-      fields: ['fedoraPid', 'display.title']
+      fields: ['fedoraPid', 'display.title'],
+      filter: filter
     }));
 
     requests.push(this.callServiceClient('entitysuggest', 'getCreatorSuggestions', {
-      query: query
+      query: query,
+      filter: filter
     }));
 
     requests.push(this.callServiceClient('entitysuggest', 'getSubjectSuggestions', {
-      query: query
+      query: query,
+      filter: filter
     }));
 
     return requests;
   },
 
-  requestTransform(event, query) {
-    return this.getPopSuggestionsRequest(query);
+  requestTransform(event, query, connection) {
+    const popSuggestSearchProfile = connection.libdata.config.provider.services.popsuggest.profile || '';
+    return this.getPopSuggestionsRequest(query, popSuggestSearchProfile);
   },
 
   responseTransform(response, query) {
