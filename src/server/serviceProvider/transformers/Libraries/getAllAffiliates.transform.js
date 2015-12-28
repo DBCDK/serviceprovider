@@ -44,6 +44,18 @@ const AffiliateListTransform = {
         // The title of the library
         title: fields.title.value || '',
 
+        // The address of the library without city or postal code
+        address: fields.field_ding_library_addresse__thoroughfare.value[0] || '',
+
+        // The postal code of the library
+        postal_code: fields.field_ding_library_addresse__postal_code.value[0] || '',
+
+        // The city of the library
+        city: fields.field_ding_library_addresse__locality.value[0] || '',
+
+        // The country code of the library
+        country: fields.field_ding_library_addresse__country.value || '',
+
         // A rich text description, we sanatize it to remove inline styles and unwanted tags.
         description: sanitizeHtml(fields.field_ding_library_body.value) || '',
 

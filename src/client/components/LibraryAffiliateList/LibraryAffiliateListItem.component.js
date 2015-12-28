@@ -96,9 +96,14 @@ export default class LibraryAffiliateListItem extends React.Component {
     return dayArray;
   }
 
-  /* eslint-disable react/no-danger */
   render() {
+    console.log(this.props);
     const openingHoursArray = this.getOpeningHours(this.props.opening_hours);
+
+    /* eslint-disable react/no-danger */
+    const library_lead_description = (<div className='libraries--library-list-item--library-lead-description' dangerouslySetInnerHTML={this.getMarkup(this.props.lead_description)}></div>);
+    const library_description = (<div className='libraries--library-list-item--library-description' dangerouslySetInnerHTML={this.getMarkup(this.props.description)}></div>);
+    /* eslint-enable react/no-danger */
 
     return (
       <div className='libraries--library-list-item'>
@@ -110,19 +115,31 @@ export default class LibraryAffiliateListItem extends React.Component {
           <h2>{this.props.title}</h2>
         </div>
 
-        <div className='libraries--library-list-item--library-lead-description' dangerouslySetInnerHTML={this.getMarkup(this.props.lead_description)}></div>
+        {library_lead_description}
         <br />
 
-        <div className='libraries--library-list-item--library-description' dangerouslySetInnerHTML={this.getMarkup(this.props.description)}></div>
+        {library_description}
 
-        <div className='libraries--library-list-item--library-opening-hours'>
-          <div className='libraries--library-list-item--library-opening-hours--title'>
-            <h4>Åbningstider de næste 7 dage</h4>
+        <div className='row'>
+          <div className='libraries--library-list-item--library-opening-hours large-12 medium-12 small-24 columns'>
+            <div className='libraries--library-list-item--library-opening-hours--title'>
+              <h4>Åbningstider de næste 7 dage</h4>
+            </div>
+
+            <div className='libraries--library-list-item--library-opening-hours--opening-hours-list'>
+              <div className='libraries--library-list-item--library-opening-hours--opening-hours-list--opening-hours-list-item'>
+                {openingHoursArray}
+              </div>
+            </div>
           </div>
 
-          <div className='libraries--library-list-item--library-opening-hours--opening-hours-list'>
-            <div className='libraries--library-list-item--library-opening-hours--opening-hours-list--opening-hours-list-item'>
-              {openingHoursArray}
+          <div className='libraries--library-list-item--library-address large-12 medium-12 small-24 columns'>
+            <div className='libraries--library-list-item--library-address--title'>
+              <h4>Adresse på biblioteket</h4>
+            </div>
+
+            <div className='libraries--library-list-item--library-address--full'>
+              <p>{this.props.address}, {this.props.postal_code} {this.props.city}</p>
             </div>
           </div>
         </div>
@@ -130,15 +147,17 @@ export default class LibraryAffiliateListItem extends React.Component {
       </div>
     );
   }
-  /* eslint-enable react/no-danger */
 }
 
 LibraryAffiliateListItem.displayName = 'LibraryAffiliateListItem.component';
 LibraryAffiliateListItem.propTypes = {
+  address: React.PropTypes.string,
+  city: React.PropTypes.string,
   description: React.PropTypes.string,
   lead_description: React.PropTypes.string,
   list_images: React.PropTypes.array,
   opening_hours: React.PropTypes.array.isRequired,
+  postal_code: React.PropTypes.string,
   title: React.PropTypes.string.isRequired,
   title_images: React.PropTypes.array
 };
