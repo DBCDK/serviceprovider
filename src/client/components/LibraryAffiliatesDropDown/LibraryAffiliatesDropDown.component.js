@@ -2,7 +2,7 @@
 
 import React from 'react';
 import LibraryAffiliateDropDownActions from './LibraryAffiliatesDropDown.action.js';
-import LibraryAffiliateDropDownStore from './LibraryAffiliatesDropDown.store';
+import LibraryAffiliateDropDownStore from './LibraryAffiliatesDropDown.store.js';
 
 export default class LibraryAffiliatesDropDown extends React.Component {
   constructor(props) {
@@ -18,7 +18,7 @@ export default class LibraryAffiliatesDropDown extends React.Component {
       LibraryAffiliateDropDownActions.getLibraryAffiliatesForAgencyResponse.listen(() => {
         var options = this.refs.librarySelector.options;
         for (var i= 0; i<options.length; i++) {
-          if (options[i].value===props.pickupAgency) {
+          if (options[i].value===this.props.pickupAgency) {
             options[i].selected= true;
             break;
           }
@@ -30,6 +30,12 @@ export default class LibraryAffiliatesDropDown extends React.Component {
   componentDidMount() {
     LibraryAffiliateDropDownActions.getLibraryAffiliatesForAgency(this.props.pickupAgency);
     LibraryAffiliateDropDownActions.libraryAffiliateSelected({id: this.props.pickupAgency, name: this.props.pickupAgency});
+  }
+
+  componentDidUpdate(prevProps) {
+    if (prevProps.pickupAgency !== this.props.pickupAgency) {
+      LibraryAffiliateDropDownActions.getLibraryAffiliatesForAgency(this.props.pickupAgency);
+    }
   }
 
   componentWillUnmount() {
@@ -46,6 +52,9 @@ export default class LibraryAffiliatesDropDown extends React.Component {
     const text = e.options[e.selectedIndex].text;
     this.setState({selected: value});
     LibraryAffiliateDropDownActions.libraryAffiliateSelected({id: value, name: text});
+    if (this.props.onChangeCallback) {
+      this.props.onChangeCallback({id: value, name: text});
+    }
   }
 
   render() {
@@ -65,5 +74,6 @@ export default class LibraryAffiliatesDropDown extends React.Component {
 
 LibraryAffiliatesDropDown.displayName = 'LibraryAffiliatesDropDown.component';
 LibraryAffiliatesDropDown.propTypes = {
+  onChangeCallback: React.PropTypes.func,
   pickupAgency: React.PropTypes.string.isRequired
 };

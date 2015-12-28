@@ -13,7 +13,6 @@ const OrderLink = React.createClass({
   displayName: 'OrderLink',
   propTypes: {
     agencyId: React.PropTypes.string.isRequired,
-    borrowerId: React.PropTypes.string.isRequired,
     coverImagePids: React.PropTypes.array.isRequired,
     key: React.PropTypes.number,
     linkText: React.PropTypes.string.isRequired,
@@ -28,7 +27,7 @@ const OrderLink = React.createClass({
   getInitialState() {
     return {
       canOrder: false,
-      orderUrl: this.props.orderUrl + '&pickupAgency=' + this.props.pickupAgencyId + '&borrowerId=' + this.props.borrowerId + '&coverImageIds=' + this.props.coverImagePids
+      orderUrl: this.props.orderUrl + '&pickupAgency=' + this.props.pickupAgencyId + '&coverImageIds=' + this.props.coverImagePids
     };
   },
 
@@ -59,7 +58,7 @@ const OrderLink = React.createClass({
   },
 
   render() {
-    const required = ['agencyId', 'borrowerId', 'coverImagePids', 'linkText', 'orderUrl', 'pickupAgencyId', 'pids', 'type', 'userIsLoggedIn', 'workTypeOrder'];
+    const required = ['agencyId', 'coverImagePids', 'linkText', 'orderUrl', 'pickupAgencyId', 'pids', 'type', 'userIsLoggedIn', 'workTypeOrder'];
     for (let i in required) {
       if (!this.props.hasOwnProperty(required[i])) {
         return <div className='no-order-button' ></div>;

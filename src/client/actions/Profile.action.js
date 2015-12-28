@@ -26,7 +26,9 @@ let ProfileActions = Reflux.createActions([
   'dislikeObject',
   'likeSaved',
   'dislikeObject',
-  'deleteLikes'
+  'deleteLikes',
+  'savePickupAgencyToMobilSoegProfile',
+  'savePickupAgencyToMobilSoegProfileResponse'
 ]);
 
 ProfileActions.isLoggedIn.listen(isLoggedIn.request);
@@ -40,6 +42,9 @@ saveLikeToMobilSoegProfile.response(ProfileActions.likeSaved);
 
 ProfileActions.deleteLikes.listen(deleteLikes.request);
 deleteLikes.response(ProfileActions.fetchMobilSoegProfile);
+
+ProfileActions.savePickupAgencyToMobilSoegProfile.listen(savePickupAgency.request);
+savePickupAgency.response(ProfileActions.savePickupAgencyToMobilSoegProfileResponse);
 
 ReceiptActions.listen((order) => {
   savePickupAgency.request(order.agencyId);
