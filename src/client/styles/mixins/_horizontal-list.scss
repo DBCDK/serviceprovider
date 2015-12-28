@@ -3,8 +3,6 @@
  */
 
 @mixin horizontal-list($screensize) {
-  padding: 10px 0;
-
   @media #{$screensize} {
     ul {
       @include inline-list;
