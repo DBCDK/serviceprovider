@@ -27,7 +27,7 @@ const AffiliateListTransform = {
     try {
       contentEndpoint = connection.libdata.config.provider.services.ddbcontent.endpoint + '/';
     }
-    catch (e) {
+    catch (error) {
       contentEndpoint = '/';
     }
 

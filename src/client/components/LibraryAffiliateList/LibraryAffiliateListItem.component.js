@@ -100,8 +100,12 @@ export default class LibraryAffiliateListItem extends React.Component {
     const openingHoursArray = this.getOpeningHours(this.props.opening_hours);
 
     /* eslint-disable react/no-danger */
-    const library_lead_description = (<div className='libraries--library-list-item--library-lead-description' dangerouslySetInnerHTML={this.getMarkup(this.props.lead_description)}></div>);
-    const library_description = (<div className='libraries--library-list-item--library-description' dangerouslySetInnerHTML={this.getMarkup(this.props.description)}></div>);
+    const library_lead_description = (
+      <div className='libraries--library-list-item--library-lead-description' dangerouslySetInnerHTML={this.getMarkup(this.props.lead_description)}></div>
+    );
+    const library_description = (
+      <div className='libraries--library-list-item--library-description' dangerouslySetInnerHTML={this.getMarkup(this.props.description)}></div>
+    );
     /* eslint-enable react/no-danger */
 
     return (
