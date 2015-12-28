@@ -21,6 +21,7 @@ const EventListTransform = {
         id: item.id,
         nid: item.nid,
         title: fields.title && fields.title.value || null,
+        start: fields.field_ding_event_date.value.from,
         lead: fields.field_ding_event_lead && fields.field_ding_event_lead.value || null,
         body: fields.field_ding_event_body && fields.field_ding_event_body.value || null,
         image: fields.field_ding_event_list_image && fields.field_ding_event_list_image.value[0] || null
