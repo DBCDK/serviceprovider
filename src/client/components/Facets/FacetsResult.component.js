@@ -6,8 +6,9 @@
  */
 
 import React from 'react';
-import {remove} from 'lodash';
+import {isArray} from 'lodash';
 
+import FacetsActions from './Facets.action';
 import QueryActions from '../../actions/QueryUpdate.action.js';
 
 import QueryStore from '../../stores/QueryStore.store.js';
@@ -21,7 +22,7 @@ export default class FacetsResult extends React.Component {
 
     this.state = {
       isExpanded: {},
-      termsSelected: [],
+      termsSelected: {},
       query: QueryStore.getInitialState()
     };
 
@@ -30,8 +31,41 @@ export default class FacetsResult extends React.Component {
         () => this.setState({
           query: QueryStore.store
         })
-      )
+      ),
+      QueryActions.queryElementWasRemoved.listen(this.queryElementWasRemoved.bind(this))
     ];
+  }
+
+  componentDidMount() {
+    this.state.query.query.forEach((queryElement) => {
+      if (queryElement.type.indexOf('facet') > -1) {
+        (isArray(queryElement.value) ? queryElement.value : queryElement.value.split(',')).forEach((val) => {
+          const selector = [queryElement.type, val.replace(/"/g, '')].join('.');
+          FacetsActions.selectFacetButton(selector);
+
+          let terms = this.state.termsSelected;
+          terms[queryElement.type] = terms[queryElement.type] || [];
+          terms[queryElement.type].push(val);
+          this.setState({termsSelected: terms}); // eslint-disable-line
+        });
+      }
+    });
+  }
+
+  componentWillUnmount() {
+    this.unsubscribe.forEach((unsub) => unsub());
+  }
+
+  queryElementWasRemoved(element) {
+    if (element.type.indexOf('facet') > -1) {
+      (isArray(element.value) ? element.value : element.value.split(',')).forEach((val) => {
+        val = val.replace(/"/g, '');
+        const selector = [element.type, val].join('.');
+        FacetsActions.deselectFacetButton(selector);
+
+        this.termSelection(element.type, val, false);
+      });
+    }
   }
 
   toggleFacet(key) {
@@ -41,38 +75,33 @@ export default class FacetsResult extends React.Component {
   }
 
   termSelection(facetName, term, checked) {
-    if (this.state.termsSelected) {
-      let terms = this.state.termsSelected;
-      const part = {name: facetName, term: '"' + term + '"'};
-      if (checked) {
-        terms.push(part);
-      }
-      else {
-        terms = remove(terms, function(el) {
-          return el.name === facetName && el.term !== term || el.name !== facetName;
-        });
-      }
-      this.setState({termsSelected: terms});
+    let terms = this.state.termsSelected;
+    terms[facetName] = terms[facetName] || [];
+    term = '"' + term + '"';
+
+    if (checked) {
+      terms[facetName].push(term);
     }
+    else {
+      terms[facetName] = terms[facetName].filter((el) => {
+        return el !== term;
+      });
+    }
+
+    this.setState({termsSelected: terms});
   }
 
   onUpdateQuery(facetName, facets, query) {
-    query.query = remove(query.query, function(el) {
-      return el.type !== facetName;
+    // Remove all the old terms with this facetname
+    query.query.filter((term) => {
+      return term.type === facetName;
+    }).forEach((facet) => {
+      QueryActions.remove(facet);
     });
-    let terms = [];
-    facets.map((term) => {
-      if (term.name === facetName) {
-        terms.push(term.term);
-      }
-    });
-    if (terms.length > 0) {
-      QueryActions.add({type: facetName, value: terms});
+
+    if (facets[facetName] && facets[facetName].length) {
+      QueryActions.add({type: facetName, value: facets[facetName]});
     }
-    else {
-      QueryActions.remove(query.search, {type: facetName, value: terms});
-    }
-    this.setState({query: query});
   }
 
   render() {
@@ -87,7 +116,6 @@ export default class FacetsResult extends React.Component {
     };
 
     const facets = this.props.facets.map((facet) => {
-
       const isCollapsed = !this.state.isExpanded[facet.facetName];
 
       const toggleFunc = this.toggleFacet.bind(this, facet.facetName);
@@ -96,7 +124,7 @@ export default class FacetsResult extends React.Component {
 
       const arrows = <ToggleButton collapsed={isCollapsed} toggleDisplay={toggleFunc} />;
 
-      const facetClass = (isCollapsed === true) ? 'facet collapsed' : 'facet';
+      const facetClass = (isCollapsed) ? 'facet collapsed' : 'facet';
 
       return (
         <div key={facet.facetName}>
@@ -104,6 +132,7 @@ export default class FacetsResult extends React.Component {
           {arrows}
           <div className={facetClass}>
             <FacetTerms facetName={facet.facetName} termSelection={termSelection} terms={facet} />
+            <a className="button" onClick={() => FacetsActions.getMoreFacetTerms(this.state.query.query, facet.facetName, facet.terms.length)}>Hent flere</a>
             <a className="button" onClick={this.onUpdateQuery.bind(this, facet.facetName, this.state.termsSelected, this.state.query)}>Opdater</a>
           </div>
         </div>
