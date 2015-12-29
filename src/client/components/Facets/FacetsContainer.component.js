@@ -23,9 +23,13 @@ class FacetsContainer extends React.Component {
       facets: []
     };
 
-    FacetsStore.listen(this.onUpdateFacets);
+    this.unsub = FacetsStore.listen(this.onUpdateFacets);
 
     this.state.isExpanded = {};
+  }
+
+  componentWillUnmount() {
+    this.unsub();
   }
 
   onUpdateFacets(store) {
@@ -37,7 +41,6 @@ class FacetsContainer extends React.Component {
     isExpanded[key] = !this.state.isExpanded[key];
     this.setState({isExpanded});
   }
-
 
   renderFacetsResult() {
     let facets = null;
@@ -63,7 +66,7 @@ class FacetsContainer extends React.Component {
   }
 
   render() {
-    const result = this.state.facets.length && this.renderFacetsResult() || '';
+    const result = this.state.facets && this.state.facets.length && this.renderFacetsResult() || '';
 
     return (
       <div className='facet-result row' >

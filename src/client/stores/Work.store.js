@@ -8,8 +8,9 @@ import WorkActions from '../actions/Work.action.js';
  */
 let WorkStore = Reflux.createStore({
   store: {
+    brief: {},
     result: {},
-    info: [],
+    info: {},
     error: []
   },
 
@@ -17,6 +18,7 @@ let WorkStore = Reflux.createStore({
   init() {
     // Register statusUpdate action
     this.listenTo(WorkActions.updated, this.update);
+    this.listenTo(WorkActions.partial, this.partial);
   },
 
   getInitialState() {
@@ -26,8 +28,15 @@ let WorkStore = Reflux.createStore({
   // update the work object and trigger an action
   update(result) {
     this.store.result = result.work || {};
-    this.store.info = result.info || [];
-    this.store.error = result.error || [];
+    this.store.info = result.info || {};
+    this.store.error.concat(result.error || []);
+    this.trigger(this.store);
+  },
+
+  partial(result) {
+    this.store.brief = result.work || {};
+    this.store.info = result.info || {};
+    this.store.error.concat(result.error || []);
     this.trigger(this.store);
   }
 });

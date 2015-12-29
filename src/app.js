@@ -192,6 +192,7 @@ if (ENV === 'development') {
 // Graceful handling of errors
 app.use((err, req, res, next) => {
   logger.log('error', 'An error occurred! Got following: ' + err);
+  console.error('error', 'An error occurred! Got following: ' + err); // eslint-disable-line no-console
   if (res.headersSent) {
     return next(err);
   }
