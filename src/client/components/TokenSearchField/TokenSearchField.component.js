@@ -14,6 +14,7 @@ import ReactDOM from 'react-dom';
 import _ from 'lodash';
 import TokenList from '../TokenList/TokenList.component.js';
 import {updateQueryFromString} from '../../../utils/QueryString.util';
+import QueryActions from '../../actions/QueryUpdate.action';
 
 const TokenSearchField = React.createClass({
   displayName: 'TokenSearchField.component',
@@ -54,6 +55,7 @@ const TokenSearchField = React.createClass({
     const text = query.map((e)=> e.value).join(' ');
     this.props.update(query);
     this.setState({text: text});
+    QueryActions.queryElementWasRemoved(element);
   },
 
   onSubmit(event) {

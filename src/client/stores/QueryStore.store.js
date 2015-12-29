@@ -64,19 +64,20 @@ let QueryStore = Reflux.createStore({
     this.triggerOnQueryChange(this.store);
   },
 
-  onRemove(query, queryElement) {
-    const queryObject = QueryParser.urlQueryToObject(query);
-    for (var i = 0; i < queryObject.length; i++) {
-      if (queryObject[i].type === queryElement.type && queryObject[i].value === queryElement.value) {
-        queryObject.splice(i, 1);
-      }
-      else if (queryElement.value.length === 0 && queryObject[i].type === queryElement.type) {
-        queryObject.splice(i, 1);
-      }
-    }
-    this.store.query = queryObject;
+  onRemove(queryElement) {
+    let removedElements = [];
+    this.store.query = this.store.query.filter((element) => {
+      const shouldKeep = !( // if the conditions are true, don't keep the element.
+        queryElement.type === element.type && // Check that the types are the same.
+        (queryElement.value.length === 0 || queryElement.value === element.value) // Check that the length of the value is 0, or the values are identical.
+      );
+      removedElements.push(element);
+      return shouldKeep;
+    });
+
     this.store.page = 0;
     this.triggerOnQueryChange(this.store);
+    removedElements.forEach((element) => QueryActions.queryElementWasRemoved(element));
   },
 
   onAdd(queryElement) {
