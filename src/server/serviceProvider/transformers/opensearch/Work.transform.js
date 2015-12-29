@@ -24,13 +24,14 @@ const WorkTransform = {
     return this.callServiceClient('opensearch', 'getWorkResult', request);
   },
 
-  requestTransform(event, request) {
+  requestTransform(event, request, connection) {
     let pid = 'rec.id=' + inHTMLData(request.pid);
     return this.getWorkResult({
       query: pid,
       start: request.offset,
       stepValue: request.worksPerPage,
-      allObjects: request.allManifestations
+      allObjects: request.allManifestations,
+      agency: connection.libdata.config.agency
     });
   },
 

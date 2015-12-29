@@ -70,7 +70,8 @@ WorkRoutes.get(['/', '/*'], (req, res) => {
       offset: 1,
       worksPerPage: 1,
       allManifestations: true
-    }
+    },
+    res.locals
   );
 
   dbcMiddleware.setupSSR(req, res, promiseResponse, (err, result, serviceTime) => {

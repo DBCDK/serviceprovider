@@ -97,7 +97,7 @@ export default class WorkLayout extends React.Component {
           favoriteLibraries={orderProfile.favoriteLibraries}
           manifestations={this.props.specifics}
           profile={orderProfile}
-          relations={this.props.work.result.relations}
+          relations={this.props.work.relations}
           />
       );
     }
@@ -109,15 +109,15 @@ export default class WorkLayout extends React.Component {
     return (
       <ToggleExpand label='Detaljer om værket' >
         <div className='isbn' >
-          {this.props.work.result.isbns.length > 0 ? 'ISBN: ' + this.props.work.result.isbns[0] : ''}
+          {this.props.work.isbns.length > 0 ? 'ISBN: ' + this.props.work.isbns[0] : ''}
         </div>
 
-        <div className='extent clearfix' >{this.props.work.result.extent}</div>
+        <div className='extent clearfix' >{this.props.work.extent}</div>
 
         <div className='clearfix' >
           <div className='actors clearfix' >
-            <span>{this.props.work.result.actors.length > 0 ? 'Medvirkende: ' : ''}</span>
-            {this.props.work.result.actors.map((actor, index) => {
+            <span>{this.props.work.actors.length > 0 ? 'Medvirkende: ' : ''}</span>
+            {this.props.work.actors.map((actor, index) => {
               return (
                 <span className='actor' key={'actor_' + index} >
                         <a href={'/search?phrase.creator=' + encodeURIComponent(actor)} >
@@ -129,8 +129,8 @@ export default class WorkLayout extends React.Component {
         </div>
 
         <div className='subjects clearfix' >
-          <span>{this.props.work.result.subjects.length > 0 ? 'Emner: ' : ''}</span>
-          {this.props.work.result.subjects.map((subject, index) => {
+          <span>{this.props.work.subjects.length > 0 ? 'Emner: ' : ''}</span>
+          {this.props.work.subjects.map((subject, index) => {
             return (
               <a className='subject' key={'subject_' + index}
                  href={'/search?phrase.subject=' + encodeURIComponent(subject)} >{subject}</a>
@@ -139,8 +139,8 @@ export default class WorkLayout extends React.Component {
         </div>
 
         <div className='dk5s clearfix' >
-          <span>{this.props.work.result.dk5s.length > 0 ? 'Opstilling: ' : ''}</span>
-          {this.props.work.result.dk5s.map((dk5, index) => {
+          <span>{this.props.work.dk5s.length > 0 ? 'Opstilling: ' : ''}</span>
+          {this.props.work.dk5s.map((dk5, index) => {
             return (
               <a className='opstilling' key={'dk5_' + index}
                  href={'/search?dkcclterm.dk=' + encodeURIComponent(dk5.value)} >{dk5.text}</a>
@@ -149,22 +149,22 @@ export default class WorkLayout extends React.Component {
         </div>
 
         <div className='audience clearfix' >
-          <div className='age' >{this.props.work.result.audience.age.join(', ')}</div>
-          <div className='pegi' >{this.props.work.result.audience.pegi}</div>
-          <div className='medieraad' >{this.props.work.result.audience.medieraad}</div>
+          <div className='age' >{this.props.work.audience.age.join(', ')}</div>
+          <div className='pegi' >{this.props.work.audience.pegi}</div>
+          <div className='medieraad' >{this.props.work.audience.medieraad}</div>
         </div>
 
         <div className='tracks clearfix' >
-          {this.props.work.result.tracks.length > 0 ? 'Trackliste: ' : ''}
-          {this.props.work.result.tracks.map((track, index) => {
+          {this.props.work.tracks.length > 0 ? 'Trackliste: ' : ''}
+          {this.props.work.tracks.map((track, index) => {
             return (
               <div className='track' key={'track_' + index} >{track}</div>);
           })}
         </div>
 
         <div className='language clearfix' >
-          <span>{this.props.work.result.languages.length > 0 ? 'Sprog: ' : ''}</span>
-          <span>{this.props.work.result.languages.join(', ')}</span>
+          <span>{this.props.work.languages.length > 0 ? 'Sprog: ' : ''}</span>
+          <span>{this.props.work.languages.join(', ')}</span>
         </div>
       </ToggleExpand>
     );
@@ -220,24 +220,24 @@ export default class WorkLayout extends React.Component {
           <div className='work--main' >
             <div className='work--image' >
               <CoverImage noCoverUrl='/covers/no-cover-image-book.png'
-                          pids={[this.props.id, this.props.work.result.pid]}
+                          pids={[this.props.id, this.props.work.pid]}
                           prefSize='detail_500' />
             </div>
             <div className='work--information' >
               {likeContainers}
-              <h1 className='work--title' >{this.props.work.result.title}</h1>
+              <h1 className='work--title' >{this.props.work.title}</h1>
 
               <div className='work--creators' >
-                <a href={'/search?phrase.creator=' + encodeURIComponent(this.props.work.result.creator)} >
-                  {this.props.work.result.creator}
+                <a href={'/search?phrase.creator=' + encodeURIComponent(this.props.work.creator)} >
+                  {this.props.work.creator}
                 </a>
               </div>
               <div className='work--actions'>
                 {orderButtonComponent}
               </div>
-              <div className='work--description' >{this.props.work.result.abstract}</div>
+              <div className='work--description' >{this.props.work.abstract}</div>
               <div className='series clearfix' >
-                <a href='#' >{this.props.work.result.series}</a>
+                <a href='#' >{this.props.work.series}</a>
               </div>
             </div>
           </div>
