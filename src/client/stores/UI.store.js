@@ -12,7 +12,8 @@ import UIActions from '../actions/UI.actions.js';
 
 const ProfileStore = Reflux.createStore({
   store: {
-    isTopBarMenuOpen: false
+    isTopBarMenuOpen: false,
+    animateTopBarMenu: false
   },
 
   init() {
@@ -21,6 +22,7 @@ const ProfileStore = Reflux.createStore({
 
   onToggleTopBarMenu() {
     this.store.isTopBarMenuOpen = !this.store.isTopBarMenuOpen;
+    this.store.animateTopBarMenu = true;
     this.trigger(this.store);
   }
 
