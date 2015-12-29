@@ -59,7 +59,7 @@ class WorkContainer extends React.Component {
     }
 
     // Result is pending, waiting for serviceprovider
-    if (isEmpty(work.result) && isEmpty(work.info)) {
+    if (isEmpty(work.result) && isEmpty(work.info) && isEmpty(work.brief)) {
       return (
         <div className='row' >
           <span className='loader' />
@@ -68,16 +68,18 @@ class WorkContainer extends React.Component {
     }
 
     // Empty result (Should perhaps be an error report)
-    if (isEmpty(work.result)) {
+    if (isEmpty(work.result) && isEmpty(work.brief)) {
       return <div />;
     }
+
+    let workResult = isEmpty(work.result) ? work.brief : work.result;
 
     // Data was found, begin rendering
     let editions = [];
     let specifics_object = {};
 
-    if (Array.isArray(work.result.editions)) {
-      work.result.editions.forEach((element, index) => {
+    if (Array.isArray(workResult.editions)) {
+      workResult.editions.forEach((element, index) => {
         editions.push(
           <WorkEdition
             date={element.date}
@@ -118,7 +120,7 @@ class WorkContainer extends React.Component {
         editions={editions}
         id={id}
         specifics={specifics}
-        work={work}
+        work={workResult}
       />
     );
   }
