@@ -11,7 +11,7 @@ export default class FrontPageRecommendationsLayout extends React.Component {
   render() {
     return (
       <div className='container' >
-        <ul className='medium-block-grid-3 large-block-grid-3' >
+        <ul className='result-list medium-block-grid-3 large-block-grid-3' >
           {this.props.workElement}
         </ul>
         <Loader pending={this.props.pending} />
