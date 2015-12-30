@@ -18,7 +18,7 @@ export default class DisplayResultStandardLayout extends React.Component {
   render() {
     return (
       <div className='container' >
-        <ul className='small-block-grid-2 medium-block-grid-3 large-block-grid-4' >
+        <ul className='result-list small-block-grid-2 medium-block-grid-3 large-block-grid-4' >
           {this.props.workElement}
         </ul>
         <Loader pending={this.props.pending} />
