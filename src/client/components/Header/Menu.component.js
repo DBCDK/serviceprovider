@@ -1,6 +1,6 @@
 'use strict';
 
-import React from 'react';
+import React, {PropTypes} from 'react';
 
 export default class Menu extends React.Component {
   constructor() {
@@ -24,8 +24,8 @@ export default class Menu extends React.Component {
 }
 
 Menu.propTypes = {
-  isMenuOpen: React.PropTypes.boolean,
-  isMenuAnimated: React.PropTypes.boolean
+  isMenuOpen: PropTypes.bool,
+  isMenuAnimated: PropTypes.bool
 };
 
 Menu.displayName = 'Menu';
