@@ -1,7 +1,7 @@
 'use strict';
 
 import React from 'react';
-import {filter} from 'lodash';
+import {filter, isArray} from 'lodash';
 
 import LibrariesStore from '../../stores/Libraries.store.js';
 import LibrariesActions from '../../actions/Libraries.actions.js';
@@ -14,29 +14,36 @@ export default class Footer extends React.Component {
       openingHoursToday: [],
       openingHoursTomorrow: []
     };
+
+    this.unsubscribe = [
+      LibrariesStore.listen(this.updateLibraries.bind(this))
+    ];
+  }
+
+  componentWillMount() {
+    if (this.props.libraryData) {
+      let stateObject = this.extractLibraryInfo(this.props.libraryData);
+      this.state.agencyName = stateObject.agencyName;
+      this.state.openingHoursToday = stateObject.openingHoursToday;
+      this.state.openingHoursTomorrow = stateObject.openingHoursTomorrow;
+    }
   }
 
   componentDidMount() {
-    this.unsubscribe = [
-      LibrariesStore.listen((val) => {
-        this.updateLibraries(val);
-      })
-    ];
     LibrariesActions.fetchAllAffiliates();
   }
 
   componentWillUnmount() {
-    this.unsubscribe.forEach(
-      (unsubscriber) => {
-        unsubscriber();
-      }
-    );
+    this.unsubscribe.forEach((unsubscriber) => unsubscriber());
   }
 
-  updateLibraries(stuff) {
+  extractLibraryInfo(stuff) {
     // TODO: find a way to identify the main agency in the library
     // for now we just extract the opening hours for the first agency
-    const libraryData = stuff.libraries[0];
+    let libraryData = stuff.libraries[0];
+    while (isArray(libraryData)) {
+      libraryData = libraryData[0];
+    }
 
     const today = new Date(Date.now());
     const tomorrow = new Date(Date.now() + 24*60*60*1000);
@@ -59,21 +66,25 @@ export default class Footer extends React.Component {
       return (day.date === tomorrowString);
     });
 
-    this.setState({
+    return {
       agencyName: libraryData.title,
       openingHoursTomorrow: openingHoursTomorrow,
       openingHoursToday: openingHoursToday
-    });
+    };
+  }
+
+  updateLibraries(stuff) {
+    this.setState(this.extractLibraryInfo(stuff));
   }
 
   render() {
 
     const openToday = this.state.openingHoursToday.map((day) => {
-      return (<p>{day.opening_time} - {day.closing_time}</p>);
+      return (<p key={['idag', day.opening_time, day.closing_time].join('_')}>{day.opening_time} - {day.closing_time}</p>);
     });
 
     const openTomorrow = this.state.openingHoursTomorrow.map((day) => {
-      return (<p>{day.opening_time} - {day.closing_time}</p>);
+      return (<p key={['imorgen', day.opening_time, day.closing_time].join('_')}>{day.opening_time} - {day.closing_time}</p>);
     });
 
     const agencyName = this.state.agencyName || null;
@@ -90,3 +101,6 @@ export default class Footer extends React.Component {
 }
 
 Footer.displayName = 'Footer';
+Footer.propTypes = {
+  libraryData: React.PropTypes.object
+};

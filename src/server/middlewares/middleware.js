@@ -8,6 +8,11 @@ const loginUrl = '/profile/login';
 import * as logger from 'dbc-node-logger';
 import {isArray} from 'lodash';
 
+import React from 'react';
+import ReactDOM from 'react-dom/server';
+
+import Footer from '../../client/components/Footer/Footer.component';
+
 /*
  * @function
  * Middleware which lets you carry on if you're logged in, else it redirects you to the login page
@@ -168,13 +173,45 @@ function ssrMiddleware(req, res, next) {
   next();
 }
 
+/**
+ * Middleware to prerender the dynamic content in the footer
+ * @param req
+ * @param res
+ * @param next
+ */
+function ssrFooter (req, res, next) {
+  // Race the serviceprovider against a timeout, which rejects (and therefore makes sure the resolve is only called with the library results)
+  Promise.race([res.callServiceProvider('getAllAffiliates', {}, 1000), new Promise((resolve, reject) => {
+    setTimeout(() => reject(false), 200);
+  })]).then((libraries) => {
+    if (libraries) {
+      res.locals.footerData = JSON.stringify({libraries: libraries});
+      res.locals.footerString = ReactDOM.renderToString(<Footer libraryData={{libraries: libraries}} />);
+    }
+    next();
+  }, () => next()); // On reject, just call next function
+}
+
+/**
+ * Set a cache header and calls next
+ * @param req
+ * @param res
+ * @param next
+ */
+function cacheMiddleware(req, res, next) {
+  res.set('Cache-Control', 'max-age=86400, s-maxage=86400, public');
+  next();
+}
+
 const dbcMiddleware = {
   ensureAuthenticated: ensureAuthenticated,
   redirectWhenLoggedIn: redirectWhenLoggedIn,
   redirectToCallbackWhenLoggedIn: redirectToCallbackWhenLoggedIn,
   setupSSR: setupSSR,
   renderPage: renderPage,
-  ssrMiddleware: ssrMiddleware
+  ssrMiddleware: ssrMiddleware,
+  ssrFooter: ssrFooter,
+  cacheMiddleware: cacheMiddleware
 };
 
 export default dbcMiddleware;
