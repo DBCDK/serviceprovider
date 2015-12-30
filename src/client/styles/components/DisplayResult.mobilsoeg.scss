@@ -6,28 +6,81 @@
   .title {
     font-size: 14px;
     color: #000000;
+    font-weight: bold;
   }
   .creator {
     float: none;
     font-size: 14px;
+    font-style: italic;
     color: #000000;
+  }
+}
+
+.result-list {
+  margin-top: 20px;
+}
+
+@media  #{$xsmall-only} {
+  .work--recommendations--generic .work {
+    max-width: 135px;
+  }
+}
+@media #{$large-up} {
+  .work--recommendations--generic {
+    .image-container {
+      height: 150px !important;
+    }
+    .cover-image {
+      max-height: 150px !important;
+    }
+  }
+}
+
+@media #{$medium-large-landscape} {
+  .work--recommendations--generic {
+    .image-container {
+      height: 150px !important;
+    }
+    .cover-image {
+      max-height: 150px !important;
+    }
+  }
+  .frontpage-container--search--recommendations, .search-result {
+    .image-container {
+      height: 250px !important;
+    }
+    .cover-image {
+      max-height: 250px !important;
+    }
   }
 }
 
 .work {
 
   position: relative;
-
-
-  @media  #{$small-only} {
-    max-width: 150px;
-
-    .title {
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
+  .image-container {
+    height: 380px;
+    vertical-align: bottom;
+    display: table-cell;
+  }
+  .cover-image {
+    width: auto;
+    max-height: 380px;
+  }
+  .title {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+    
+  @media #{$xsmall-only} {
+    max-width: 144px;
+    .image-container {
+      height: 200px;
     }
-
+    .cover-image {
+      max-height: 200px;
+    }
     .creator {
       font-size: 0.8em;
       white-space: nowrap;
@@ -36,23 +89,40 @@
     }
   }
 
-  @media  #{$medium-up} {
-    img {
+  @media #{$small-only} {
+    max-width: 200px;
+    .image-container {
+      height: 300px;
+    }
+    .cover-image {
+      max-height: 300px;
+    }
+    .creator {
+      font-size: 0.8em;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+  }
 
+  @media #{$medium-up} {
+    .image-container {
+      height: 300px;
+    }
+    .cover-image {
+      max-height: 300px;
     }
   }
 
 
   .fa {
-    background-color: #ffffff;
-    position: absolute;
     @include radius(1em);
     top: 1em;
-    left: 1em;
     width: 2em;
     line-height: 1.9em;
     padding: 1px 8px;
     height: 2em;
+    float: left;
   }
 }
 
