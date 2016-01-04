@@ -1,6 +1,9 @@
 @import '../mixins/horizontal-list';
 
 .frontpage-container--search--recommendations {
+
+  margin-top: 10px;
+
   .container {
     @include horizontal-list($small-only)
   }
