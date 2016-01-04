@@ -9,7 +9,10 @@
  */
 
 import React from 'react';
+
 import LibraryAffiliateListItem from './LibraryAffiliateListItem.component';
+import BackButton from '../TopNavigation/BackButton.js';
+
 import LibrariesStore from '../../stores/Libraries.store.js';
 import LibrariesActions from '../../actions/Libraries.actions';
 
@@ -63,9 +66,7 @@ export default class LibraryAffiliateList extends React.Component {
 
     return (
       <div className='libraries'>
-        <div className='back-button'>
-          <a onClick={this.goBack} ><image src='/icons/back-alt.svg'/></a>
-        </div>
+        <BackButton />
         {libraries}
       </div>
     );

@@ -10,6 +10,8 @@ import OrderButton from '../Order/OrderButton/OrderButton.component';
 import LikeContainer from '../LikeDislike/LikeContainer.component.js';
 import WorkRecommendation from './WorkRecommendation.component';
 import ToggleExpand from './WorkToggleExpand.component';
+import BackButton from '../TopNavigation/BackButton.js';
+
 
 // Actions
 import RecommendationActions from '../../actions/Recommendations.actions.js';
@@ -218,9 +220,7 @@ export default class WorkLayout extends React.Component {
       <div className='work--container row' data-pid={this.props.id} >
         <div className='small-24 medium-24 large-16 columns left-column' >
           <div className='work--main' >
-            <div className='back-button'>
-              <a onClick={this.goBack} ><image src='/icons/back-alt.svg'/></a>
-            </div>
+            <BackButton />
             <div className='work--image' >
               <CoverImage noCoverUrl='/covers/no-cover-image-book.png'
                           pids={[this.props.id, this.props.work.pid]}
