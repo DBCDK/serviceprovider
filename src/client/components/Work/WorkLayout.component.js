@@ -207,6 +207,11 @@ export default class WorkLayout extends React.Component {
 
   }
 
+  goBack() {
+    console.log('go back');
+    history.go(-1);
+  }
+
   render() {
     const orderButtonComponent = this.renderOrderButton(this.state.profile);
 
@@ -218,6 +223,9 @@ export default class WorkLayout extends React.Component {
       <div className='work--container row' data-pid={this.props.id} >
         <div className='small-24 medium-24 large-16 columns left-column' >
           <div className='work--main' >
+            <div className='back-button'>
+              <a onClick={this.goBack} ><image src='/icons/back-alt.svg'/></a>
+            </div>
             <div className='work--image' >
               <CoverImage noCoverUrl='/covers/no-cover-image-book.png'
                           pids={[this.props.id, this.props.work.pid]}
