@@ -208,7 +208,6 @@ export default class WorkLayout extends React.Component {
   }
 
   goBack() {
-    console.log('go back');
     history.go(-1);
   }
 
