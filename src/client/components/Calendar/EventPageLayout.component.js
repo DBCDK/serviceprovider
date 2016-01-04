@@ -9,13 +9,15 @@
  */
 
 import React from 'react';
+import BackButton from '../TopNavigation/BackButton.js';
 
 export default class EventPageLayout extends React.Component {
+
   render() {
     return (
       <div className={`news-page clearfix`} >
+        <BackButton />
         <h1 className="headline" >{this.props.title}</h1>
-
         <div className="image" >
           {this.props.image &&
           <img alt={this.props.title} className='news-item-image' src={`http://rest.filmstriben.dbc.inlead.dk/web/${this.props.image}`} />

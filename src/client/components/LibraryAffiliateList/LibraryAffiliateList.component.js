@@ -9,7 +9,10 @@
  */
 
 import React from 'react';
+
 import LibraryAffiliateListItem from './LibraryAffiliateListItem.component';
+import BackButton from '../TopNavigation/BackButton.js';
+
 import LibrariesStore from '../../stores/Libraries.store.js';
 import LibrariesActions from '../../actions/Libraries.actions';
 
@@ -44,6 +47,10 @@ export default class LibraryAffiliateList extends React.Component {
     );
   }
 
+  goBack() {
+    history.back(-1);
+  }
+
   render() {
     let libraries = [];
     this.state.affiliates.libraries.forEach((library) => {
@@ -65,6 +72,7 @@ export default class LibraryAffiliateList extends React.Component {
 
     return (
       <div className='libraries'>
+        <BackButton />
         {libraries}
       </div>
     );
