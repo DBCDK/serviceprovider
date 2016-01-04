@@ -9,6 +9,7 @@
  */
 
 import React from 'react';
+import BackButton from '../TopNavigation/BackButton.js';
 
 export default class NewsPageLayout extends React.Component {
 
@@ -19,9 +20,7 @@ export default class NewsPageLayout extends React.Component {
   render() {
     return (
       <div className={`news-page clearfix`} >
-        <div className='back-button'>
-          <a onClick={this.goBack} ><image src='/icons/back-alt.svg'/></a>
-        </div>
+        <BackButton />
         <h1 className="headline" >{this.props.title}</h1>
 
         <div className="image" >
