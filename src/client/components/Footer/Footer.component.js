@@ -36,17 +36,18 @@ export default class Footer extends React.Component {
   updateLibraries(stuff) {
     // TODO: find a way to identify the main agency in the library
     // for now we just extract the opening hours for the first agency
+
     const libraryData = stuff.libraries[0];
 
     const today = new Date(Date.now());
     const tomorrow = new Date(Date.now() + 24*60*60*1000);
-    const todayDay = today.getDate();
-    const todayMonth = today.getMonth()+1;
+    const todayDay = ('0' + today.getDate()).slice(-2);
+    const todayMonth = ('0' + today.getMonth()+1).slice(-2);
     const todayYear = today.getFullYear();
     const todayString = todayYear + '-' + todayMonth + '-' + todayDay;
 
-    const tomorrowDay = tomorrow.getDate();
-    const tomorrowMonth = tomorrow.getMonth()+1;
+    const tomorrowDay = ('0' + tomorrow.getDate()).slice(-2);
+    const tomorrowMonth = ('0' + tomorrow.getMonth()+1).slice(-2);
     const tomorrowYear = tomorrow.getFullYear();
     const tomorrowString = tomorrowYear + '-' + tomorrowMonth + '-' + tomorrowDay;
 
