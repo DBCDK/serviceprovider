@@ -38,7 +38,7 @@ describe('Test the RecommendationContainer.component', () => {
     assert.equal(JSON.stringify(args), JSON.stringify(expected));
   });
 
-  it('RecommendationActions.request is called with empty arrays when no profileLikes given', () => {
+  it('RecommendationActions.request is called with filled arrays when profileLikes given', () => {
     sandbox.stub(RecommendationActions, 'request');
     const profileLikes = [{value: '1', item_id: '1'}, {value: '-1', item_id: '2'}];
     component.requestRecommendations(profileLikes);

@@ -10,7 +10,6 @@ import TestUtils from 'react-addons-test-utils';
 import {assert} from 'chai';
 
 import LikeContainer from '../LikeContainer.component.js';
-import DislikeContainer from '../DislikeContainer.component.js';
 
 import ProfileActions from '../../../actions/Profile.action';
 
@@ -54,47 +53,5 @@ describe('Testing the Like container', () => {
 
     assert.isTrue(ProfileActions.likeObject.called);
     assert.isTrue(ProfileActions.likeObject.calledWith('some_pid'));
-  });
-});
-
-describe('Testing the Dislike container', () => {
-  let dislikeContainer;
-  let component;
-  let sandbox;
-
-  beforeEach(() => {
-    dislikeContainer = React.createElement(DislikeContainer, {objectId: 'some_pid'});
-    component = TestUtils.renderIntoDocument(dislikeContainer);
-
-    sandbox = sinon.sandbox.create(); // eslint-disable-line
-    sandbox.spy(ProfileActions, 'dislikeObject'); // eslint-disable-line
-  });
-
-  afterEach(() => {
-    component.state.profile.likes = [];
-    dislikeContainer = null;
-    component = null;
-
-    sandbox.restore();
-  });
-
-  it('Should be un-toggled when no matching item_id is found', () => {
-    assert.isFalse(component.isToggled(), 'DislikeContainer is un-toggled');
-  });
-
-  it('Should be un-toggled when an matching item_id is found with value = 1', () => {
-    component.state.profile.likes = [{item_id: 'some_pid', value: '1'}];
-    assert.isFalse(component.isToggled(), 'DislikeContainer is un-toggled');
-  });
-
-  it('Should be toggled when an matching item_id is found with value = -1', () => {
-    component.state.profile.likes = [{item_id: 'some_pid', value: '-1'}];
-    assert.isTrue(component.isToggled(), 'DislikeContainer is toggled');
-  });
-
-  it('Should invoke onClick on click', () => {
-    TestUtils.Simulate.click(ReactDom.findDOMNode(component));
-    assert.isTrue(ProfileActions.dislikeObject.called);
-    assert.isTrue(ProfileActions.dislikeObject.calledWith('some_pid'));
   });
 });
