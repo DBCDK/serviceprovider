@@ -24,8 +24,8 @@ describe('Test the Work component with data', () => {
   const info = {hits: 1, collections: 1};
   const result = forceMajureMockWork;
   const work = {result: result, info: info, error: []};
-  let element = React.createElement(Work, {id: '870970-basis:50822311', work: work, workLayout: WorkLayout});
-  let dom = TestUtils.renderIntoDocument(element);
+  const element = React.createElement(Work, {id: '870970-basis:50822311', work: work, workLayout: WorkLayout});
+  const dom = TestUtils.renderIntoDocument(element);
 
   it('should have property props', ()=> {
     expect(dom).to.have.property('props');
@@ -42,6 +42,21 @@ describe('Test the Work component with data', () => {
 
   it('should have one hit', ()=> {
     expect(dom.props.work.info.hits).to.equal(1);
+  });
+});
+
+describe('Test that dcoument.title is set', () => {
+  const info = {hits: 1, collections: 1};
+  const result = forceMajureMockWork;
+  const work = {result: result, info: info, error: []};
+  const element = React.createElement(Work, {id: '870970-basis:50822311', work: work, workLayout: WorkLayout});
+  const dom = TestUtils.renderIntoDocument(element); // eslint-disable-line no-unused-vars
+
+  it('Should set the document.title based on fullTtitle and creator', () => {
+    const fullTitle = work.result.fullTitle;
+    const creator = work.result.creator;
+    const documentTitle = window.document.title;
+    assert.equal(documentTitle, fullTitle + ' af ' + creator);
   });
 });
 
@@ -70,7 +85,7 @@ describe('Test the Work component without data', () => {
   });
 });
 
-describe('Test that Like/Dislike containers are rendered correctly as part of the Work component', () => {
+describe('Test that Like containers are rendered correctly as part of the Work component', () => {
   let component;
   const info = {hits: 1, collections: 1};
   const work = {result: forceMajureMockWork, info: info, error: []};
@@ -117,7 +132,8 @@ describe('Test work store with valid and invalid data', () => {
         info: [],
         error: []
       });
-    } catch (e) {} // eslint-disable-line
+    } catch (e) {
+    } // eslint-disable-line
   });
 
   it('should test invalid data', () => {
@@ -204,4 +220,5 @@ describe('Test work store with valid and invalid data', () => {
     expect(workHtml).to.contain('Noget der ligner');
     expect(workHtml).to.contain('Suzanne Collins');
   });
+
 });
