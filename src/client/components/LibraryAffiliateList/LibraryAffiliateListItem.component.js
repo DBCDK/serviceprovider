@@ -16,7 +16,7 @@ export default class LibraryAffiliateListItem extends React.Component {
   }
 
   checkDateHasEnoughChars(date) {
-    return (date.toString().length === 1 ? '0' + date : date)
+    return (date.toString().length === 1 ? '0' + date : date);
   }
 
   getOpeningHours(opening_hours_array) {
