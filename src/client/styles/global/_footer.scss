@@ -1,9 +1,26 @@
 #footer {
+
+  color: $similar-title-font-color;
+  padding: 20px;
+  margin-top: 10px;
+
   background-color: $topbar-background-color;
-  height: 30vh;
+  min-height: 40vh;
+
+  h4, h5 {
+    color: $similar-title-font-color;
+  }
+
+  a {
+    color: $similar-title-font-color;
+    text-decoration: underline;
+  }
+
+  h4 {
+    font-size: 1.2em;
+  }
 
   h5 {
-    font-size: 1.2em;
-    color: $similar-title-font-color;
+    margin-bottom: 2px;
   }
 }
