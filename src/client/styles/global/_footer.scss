@@ -2,12 +2,18 @@
 
   color: $similar-title-font-color;
   padding: 20px;
+  margin-top: 10px;
 
   background-color: $topbar-background-color;
   min-height: 40vh;
 
   h4, h5 {
     color: $similar-title-font-color;
+  }
+
+  a {
+    color: $similar-title-font-color;
+    text-decoration: underline;
   }
 
   h4 {

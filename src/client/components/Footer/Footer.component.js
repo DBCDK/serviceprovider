@@ -91,7 +91,7 @@ export default class Footer extends React.Component {
     const agencyName = this.state.agencyName || null;
     return (
       <div className='small-12 footer' >
-        <h4>Åbningstider for {agencyName}</h4>
+        <h4>Åbningstider for <a href='/libraries'>{agencyName}</a></h4>
         <div className='opening-hours today'>
           <h5>Idag</h5>
           <ul>
