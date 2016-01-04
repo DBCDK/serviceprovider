@@ -70,21 +70,29 @@ export default class Footer extends React.Component {
   render() {
 
     const openToday = this.state.openingHoursToday.map((day) => {
-      return (<p>{day.opening_time} - {day.closing_time}</p>);
+      return (<li>{day.opening_time} - {day.closing_time}</li>);
     });
 
     const openTomorrow = this.state.openingHoursTomorrow.map((day) => {
-      return (<p>{day.opening_time} - {day.closing_time}</p>);
+      return (<li>{day.opening_time} - {day.closing_time}</li>);
     });
 
     const agencyName = this.state.agencyName || null;
     return (
       <div className='small-12 footer' >
-        <h5>Åbningstider for {agencyName}</h5>
-        <p>Idag:</p>
-        {openToday}
-        <p>Imorgen:</p>
-        {openTomorrow}
+        <h4>Åbningstider for {agencyName}</h4>
+        <div className='opening-hours today'>
+          <h5>Idag</h5>
+          <ul>
+          {openToday}
+          </ul>
+        </div>
+        <div className='opening-hours tomorrow'>
+          <h5>Imorgen</h5>
+          <ul>
+          {openTomorrow}
+          </ul>
+        </div>
       </div>
     );
   }
