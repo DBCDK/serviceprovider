@@ -15,6 +15,10 @@ export default class LibraryAffiliateListItem extends React.Component {
     return {__html: html};
   }
 
+  checkDateHasEnoughChars(date) {
+    return (date.toString().length === 1 ? '0' + date : date);
+  }
+
   getOpeningHours(opening_hours_array) {
     const oneDayInMilliSeconds = 86400000;
     let today = new Date();
@@ -42,34 +46,11 @@ export default class LibraryAffiliateListItem extends React.Component {
     let dayArray = [];
     for (var i = 0; i <= 6; i++) {
       const currentDay = new Date(today.getTime() + (i * oneDayInMilliSeconds));
-      const dateString = currentDay.getFullYear() + '-' + (currentDay.getMonth() + 1) + '-' + currentDay.getDate();
+      const dateString = currentDay.getFullYear() + '-' +
+        this.checkDateHasEnoughChars((currentDay.getMonth() + 1)) + '-' +
+        this.checkDateHasEnoughChars(currentDay.getDate());
 
-      switch (currentDay.getDay()) {
-        case 0:
-          day = 'Søndag:';
-          break;
-        case 1:
-          day = 'Mandag: ';
-          break;
-        case 2:
-          day = 'Tirsdag: ';
-          break;
-        case 3:
-          day = 'Onsdag: ';
-          break;
-        case 4:
-          day = 'Torsdag: ';
-          break;
-        case 5:
-          day = 'Fredag: ';
-          break;
-        case 6:
-          day = 'Lørdag: ';
-          break;
-        default:
-          day = 'ukendt ';
-          break;
-      }
+      day = ['Søn', 'Man', 'Tirs', 'Ons', 'Tors', 'Fre', 'Lør'][currentDay.getDay()] + 'dag: ';
 
       if (days.hasOwnProperty(dateString)) {
         let openingTimeString = '';
