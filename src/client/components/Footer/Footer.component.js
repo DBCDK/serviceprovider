@@ -111,5 +111,5 @@ export default class Footer extends React.Component {
 
 Footer.displayName = 'Footer';
 Footer.propTypes = {
-  libraryData: React.PropTypes.object
+  libraryData: React.PropTypes.string
 };
