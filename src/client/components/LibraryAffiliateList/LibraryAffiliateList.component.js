@@ -38,6 +38,10 @@ export default class LibraryAffiliateList extends React.Component {
     );
   }
 
+  goBack() {
+    history.back(-1);
+  }
+
   render() {
     let libraries = [];
     this.state.affiliates.libraries.forEach((library) => {
@@ -59,6 +63,9 @@ export default class LibraryAffiliateList extends React.Component {
 
     return (
       <div className='libraries'>
+        <div className='back-button'>
+          <a onClick={this.goBack} ><image src='/icons/back-alt.svg'/></a>
+        </div>
         {libraries}
       </div>
     );

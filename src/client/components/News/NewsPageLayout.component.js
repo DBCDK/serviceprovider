@@ -11,9 +11,17 @@
 import React from 'react';
 
 export default class NewsPageLayout extends React.Component {
+
+  goBack() {
+    history.back(-1);
+  }
+
   render() {
     return (
       <div className={`news-page clearfix`} >
+        <div className='back-button'>
+          <a onClick={this.goBack} ><image src='/icons/back-alt.svg'/></a>
+        </div>
         <h1 className="headline" >{this.props.title}</h1>
 
         <div className="image" >
