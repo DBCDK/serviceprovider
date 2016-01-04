@@ -111,14 +111,16 @@ describe('Test that Like/Dislike containers are rendered correctly as part of th
   });
 });
 
-describe('Test store with valid and invalid data', () => {
+describe('Test work store with valid and invalid data', () => {
 
   afterEach(() => {
-    WorkStore.update({
-      work: {},
-      info: [],
-      error: []
-    });
+    try { // unstable after each hook.
+      WorkStore.update({
+        work: {},
+        info: [],
+        error: []
+      });
+    } catch (e) {} // eslint-disable-line
   });
 
   it('should test invalid data', () => {
