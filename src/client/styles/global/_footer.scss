@@ -1,11 +1,17 @@
 #footer {
 
+  ul {
+    list-style-type: none;
+    padding: 0;
+    margin-left:0;
+  }
+
   color: $similar-title-font-color;
   padding: 20px;
   margin-top: 10px;
 
   background-color: $topbar-background-color;
-  min-height: 40vh;
+  min-height: 70vh;
 
   h4, h5 {
     color: $similar-title-font-color;

@@ -12,7 +12,12 @@ export default class Footer extends React.Component {
     this.state = {
       agencyName: null,
       openingHoursToday: [],
-      openingHoursTomorrow: []
+      openingHoursTomorrow: [],
+      address: {
+        street: null,
+        city: null,
+        zipcode: null
+      }
     };
 
     this.unsubscribe = [
@@ -26,6 +31,7 @@ export default class Footer extends React.Component {
       this.state.agencyName = stateObject.agencyName;
       this.state.openingHoursToday = stateObject.openingHoursToday;
       this.state.openingHoursTomorrow = stateObject.openingHoursTomorrow;
+      this.state.address = stateObject.address;
     }
   }
 
@@ -41,10 +47,17 @@ export default class Footer extends React.Component {
     // TODO: find a way to identify the main agency in the library
     // for now we just extract the opening hours for the first agency
 
+
     let libraryData = stuff.libraries[0];
     while (isArray(libraryData)) {
       libraryData = libraryData[0];
     }
+
+    const address = {
+      street: libraryData.address,
+      city: libraryData.city,
+      zipcode: libraryData.postal_code
+    };
 
     const today = new Date(Date.now());
     const tomorrow = new Date(Date.now() + 24*60*60*1000);
@@ -70,7 +83,8 @@ export default class Footer extends React.Component {
     return {
       agencyName: libraryData.title,
       openingHoursTomorrow: openingHoursTomorrow,
-      openingHoursToday: openingHoursToday
+      openingHoursToday: openingHoursToday,
+      address: address
     };
   }
 
@@ -88,22 +102,35 @@ export default class Footer extends React.Component {
       return (<li key={['idag', day.opening_time, day.closing_time].join('_')}>{day.opening_time} - {day.closing_time}</li>);
     });
 
+    const address = this.state.address;
+
     const agencyName = this.state.agencyName || null;
     return (
-      <div className='small-12 footer' >
-        <h4>Åbningstider for <a href='/libraries'>{agencyName}</a></h4>
-        <div className='opening-hours today'>
-          <h5>Idag</h5>
-          <ul>
-          {openToday}
-          </ul>
+      <div className='small-24 columns footer' >
+        <div className='small-24 medium-12 column footer--opening-hours'>
+          <h4>Åbningstider for <a href='/libraries'>{agencyName}</a></h4>
+          <div className='opening-hours today'>
+            <h5>Idag</h5>
+            <ul>
+            {openToday}
+            </ul>
+          </div>
+          <div className='opening-hours tomorrow'>
+            <h5>Imorgen</h5>
+            <ul>
+            {openTomorrow}
+            </ul>
+          </div>
         </div>
-        <div className='opening-hours tomorrow'>
-          <h5>Imorgen</h5>
+        <span className='small-24 medium-12 column footer--address'>
+          <h4>Adresse</h4>
           <ul>
-          {openTomorrow}
+            <li>{agencyName}</li>
+            <li>{address.street}</li>
+            <li>{address.zipcode} {address.city}</li>
           </ul>
-        </div>
+          <p><a href='/libraries'>Se alle biblioteker</a></p>
+        </span>
       </div>
     );
   }
