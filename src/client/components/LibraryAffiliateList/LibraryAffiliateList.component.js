@@ -26,6 +26,12 @@ export default class LibraryAffiliateList extends React.Component {
     ];
   }
 
+  componentWillMount() {
+    if (this.props.affiliatesData && this.props.affiliatesData[0]) {
+      this.state.affiliates.libraries = this.props.affiliatesData[0];
+    }
+  }
+
   componentDidMount() {
     LibrariesActions.fetchAllAffiliates();
   }
@@ -66,4 +72,6 @@ export default class LibraryAffiliateList extends React.Component {
 }
 
 LibraryAffiliateList.displayName = 'LibraryAffiliateList.component';
-LibraryAffiliateList.propTypes = {};
+LibraryAffiliateList.propTypes = {
+  affiliatesData: React.PropTypes.array
+};

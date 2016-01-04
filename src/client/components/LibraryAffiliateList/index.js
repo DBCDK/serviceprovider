@@ -9,4 +9,9 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import LibraryAffiliateList from './LibraryAffiliateList.component';
 
-ReactDOM.render(<LibraryAffiliateList />, document.getElementById('page'), null);
+let affiliatesData;
+if (window.PAGE_DATA.length > 0) {
+  affiliatesData = JSON.parse(window.PAGE_DATA);
+}
+
+ReactDOM.render(<LibraryAffiliateList affiliatesData={affiliatesData} />, document.getElementById('page'), null);
