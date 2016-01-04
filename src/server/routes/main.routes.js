@@ -36,9 +36,7 @@ function getRecommendations(res, likes) {
   });
 }
 
-MainRoutes.get('/', dbcMiddleware.ssrMiddleware, (req, res) => {
-  res.set('Cache-Control', 'max-age=86400, s-maxage=86400, public');
-
+MainRoutes.get('/', (req, res) => {
   if (req.isAuthenticated()) {
     // user is logged in, get profile.
     res.callServiceProvider('findMobilSoegProfile', null, 400).then((profile) => {
@@ -78,7 +76,6 @@ MainRoutes.get(['/search', '/search/*'], (req, res) => {
     }
 
     let properties = SearchServer({query, recommendations});
-    res.set('Cache-Control', 'max-age=86400, s-maxage=86400, public');
     dbcMiddleware.renderPage(res, 'search', properties, timeTaken);
   }
 
@@ -100,10 +97,6 @@ MainRoutes.post(['/report-violation'], function(req, res) {
     logger.log('warning', 'CSP Violation: No data received!');
   }
   res.status(204).end();
-});
-
-MainRoutes.get('/socket-terminal', (req, res) => {
-  res.render('socket-terminal', {});
 });
 
 export default MainRoutes;

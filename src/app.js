@@ -38,6 +38,7 @@ import compression from 'compression';
 import expressSession from 'express-session';
 import helmet from 'helmet';
 import {GlobalsMiddleware} from './server/middlewares/globals.middleware';
+import dbcMiddleware from './server/middlewares/middleware';
 
 // Passport
 import * as PassportStrategies from './server/PassportStrategies/strategies.passport';
@@ -175,13 +176,16 @@ PassportStrategies.MobilSoegPassportConfig(app);
 // Setting middleware
 app.use('*', GlobalsMiddleware); // should be placed after PassportStrategies.MobilSoegPassportConfig
 
+// SSR middleware to add utility methods, and render footer automatically.
+app.use('*', dbcMiddleware.ssrMiddleware, dbcMiddleware.ssrFooter);
+
 // Setup Routes
-app.use('/', MainRoutes);
+app.use('/', dbcMiddleware.cacheMiddleware, MainRoutes);
 app.use('/profile', PassportRoutes);
 app.use('/work', WorkRoutes);
-app.use('/news', NewsRoutes);
-app.use('/libraries', LibraryRoutes);
-app.use('/event', EventRoutes);
+app.use('/news', dbcMiddleware.cacheMiddleware, NewsRoutes);
+app.use('/libraries', dbcMiddleware.cacheMiddleware, LibraryRoutes);
+app.use('/event', dbcMiddleware.cacheMiddleware, EventRoutes);
 
 
 // If running in dev-mode enable auto reload in browser when the server restarts

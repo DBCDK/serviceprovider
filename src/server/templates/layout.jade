@@ -17,6 +17,7 @@ html(lang='da')
             small.responsetime Page was rendered in: %RENDERTIME%ms. Serviceprovider %SERVICETIME%
 
         block bottom
-          footer#footer
+          footer#footer !{footerString}
+          script window.footerData = '!{footerData}';
 
     include footer
