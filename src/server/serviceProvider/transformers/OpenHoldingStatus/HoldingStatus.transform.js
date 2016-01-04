@@ -12,17 +12,22 @@ const HoldingStatusTransform = {
     return this.callServiceClient('openholdingstatus', 'getHolding', request);
   },
 
-  requestTransform(event, request) {
+  requestTransform(event, request, connection) {
+    let agencyId;
+    try {
+      agencyId = connection.libdata.config.provider.services.ddbcontent.agency;
+    } catch (e) {} // eslint-disable-line
 
     const params = {
-      responderId: request.agencyId,
-      pid: request.pid
+      responderId: agencyId,
+      pid: request
     };
 
     return this.holdingStatus(params);
   },
 
   responseTransform(response) {
+
     let data = {};
     data.result = {};
     data.info = {};

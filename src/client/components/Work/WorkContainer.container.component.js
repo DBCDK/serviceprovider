@@ -82,9 +82,11 @@ class WorkContainer extends React.Component {
       workResult.editions.forEach((element, index) => {
         editions.push(
           <WorkEdition
+            accessType={element.accessType}
             date={element.date}
             edition={element.edition}
             extent={element.extent}
+            identifier={element.identifier}
             isbns={element.isbns}
             key={'edition_' + index}
             workType={element.type} />
