@@ -8,7 +8,6 @@ import {isEmpty} from 'lodash';
 import CoverImage from '../CoverImage/CoverImageContainer.component';
 import OrderButton from '../Order/OrderButton/OrderButton.component';
 import LikeContainer from '../LikeDislike/LikeContainer.component.js';
-import DislikeContainer from '../LikeDislike/DislikeContainer.component.js';
 import WorkRecommendation from './WorkRecommendation.component';
 import ToggleExpand from './WorkToggleExpand.component';
 
@@ -72,9 +71,6 @@ export default class WorkLayout extends React.Component {
       <div className='work--like-buttons' >
         <div className='work--like-buttons--like-container' >
           <LikeContainer objectId={id} />
-        </div>
-        <div className='work--like-buttons--dislike-container' >
-          <DislikeContainer objectId={id} />
         </div>
       </div>
     );

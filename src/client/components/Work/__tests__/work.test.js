@@ -14,7 +14,6 @@ import TestUtils from 'react-addons-test-utils';
 import Work from '../WorkContainer.container.component';
 import WorkLayout from '../WorkLayout.component';
 import LikeContainer from '../../LikeDislike/LikeContainer.component.js';
-import DislikeContainer from '../../LikeDislike/DislikeContainer.component.js';
 
 import WorkStore from '../../../stores/Work.store.js';
 import RecommendationsStore from '../../../stores/Recommendations.store.js';
@@ -95,7 +94,6 @@ describe('Test that Like/Dislike containers are rendered correctly as part of th
     component.setState({profile: profile, work: work});
 
     assert.equal(TestUtils.scryRenderedComponentsWithType(component, LikeContainer).length, 0, 'No like-containers was found');
-    assert.equal(TestUtils.scryRenderedComponentsWithType(component, DislikeContainer).length, 0, 'No dislike-containers was found');
   });
 
   xit('Should be visible to logged in users', () => {
@@ -107,7 +105,6 @@ describe('Test that Like/Dislike containers are rendered correctly as part of th
     component.setState({profile: profile, work: work});
 
     assert.equal(TestUtils.scryRenderedComponentsWithType(component, LikeContainer).length, 1, 'The like-containers was found');
-    assert.equal(TestUtils.scryRenderedComponentsWithType(component, DislikeContainer).length, 1, 'The dislike-containers was found');
   });
 });
 
