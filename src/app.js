@@ -189,7 +189,7 @@ app.use('/event', dbcMiddleware.cacheMiddleware, EventRoutes);
 
 
 // If running in dev-mode enable auto reload in browser when the server restarts
-if (ENV === 'development') {
+if (ENV === 'development' && !process.env.DISABLE_SOCKET_RELOAD) { // eslint-disable-line no-process-env
   reload(server, app, 1000, true);
 }
 
