@@ -11,7 +11,7 @@
   margin-top: 10px;
 
   background-color: $topbar-background-color;
-  min-height: 70vh;
+  overflow: hidden;
 
   h4, h5 {
     color: $similar-title-font-color;
