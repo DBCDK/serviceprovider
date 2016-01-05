@@ -19,6 +19,8 @@ import workServer from '../../client/components/Work/Work.server';
 import CoverImage from '../../client/components/CoverImage/CoverImageContainer.component';
 import Order from '../../client/components/Order/Order.component';
 import Receipt from '../../client/components/Receipt/Receipt.component';
+import WorkContainer from '../../client/components/Work/WorkContainer.container.component';
+import WorkLayout from '../../client/components/Work/WorkLayout.component';
 
 WorkRoutes.get(
   ['/order', '/order*'],
@@ -59,40 +61,37 @@ WorkRoutes.get(['/receipt', '/receipt/*'], (req, res) => {
   }, 'was not serverside');
 });
 
-WorkRoutes.get(['/', '/*'], (req, res) => {
+WorkRoutes.get(['/', '/*'], dbcMiddleware.cacheMiddleware, (req, res) => {
   // Start by getting id from request
   let id = inHTMLData(req.query.id);
   id = '"' + id + '"';
 
-  let promiseResponse = req.app.get('serviceProvider').trigger(
-    'getOpenSearchWork', {
-      pid: req.query.id,
-      offset: 1,
-      worksPerPage: 1,
-      allManifestations: true
-    },
-    res.locals
-  );
+  let contextObject = {
+    id: id,
+    pagescript: 'work.js',
+    ssrString: '',
+    data: '""'
+  };
 
-  dbcMiddleware.setupSSR(req, res, promiseResponse, (err, result, serviceTime) => {
-    if (err) {
-      return dbcMiddleware.renderPage(res, 'work', {
-        id,
-        pagescript: 'work.js',
-        ssrString: workServer({id}).work
-      }, 'was too slow');
-    }
+  res.callServiceProvider('getOpenSearchWork', {
+    pid: req.query.id,
+    offset: 1,
+    worksPerPage: 1,
+    allManifestations: true
+  }, 30000).then((result) => {
+    let work = {
+      brief: {},
+      result: result[0].work,
+      info: result[0].info,
+      error: result[0].error
+    };
 
-    const workStr = workServer({
-      id: id,
-      work: result[0].work
-    }).work;
-
-    res.set('Cache-Control', 'max-age=86400, s-maxage=86400, public');
-    dbcMiddleware.renderPage(res, 'work', {
-      id,
-      workString: workStr
-    }, serviceTime);
+    contextObject.data = '\'' + JSON.stringify(work) + '\'';
+    contextObject.ssrString = ReactDOM.renderToString(<WorkContainer id={id} work={work} workLayout={WorkLayout} />);
+    res.render('work', contextObject);
+  }, () => {
+    contextObject.ssrString = ReactDOM.renderToString(<WorkContainer id={req.query.id} workLayout={WorkLayout} />);
+    res.render('work', contextObject);
   });
 });
 
