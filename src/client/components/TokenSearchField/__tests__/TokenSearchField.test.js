@@ -33,9 +33,9 @@ describe('Test the SearchField component', () => {
 
     // remove first button
     let label = TestUtils.findRenderedDOMComponentWithClass(Tokens[0], 'text').getDOMNode().textContent;
-    expect(label).to.equal('test2');
+    expect(label).to.equal('test1');
     TestUtils.Simulate.click(TestUtils.findRenderedDOMComponentWithClass(Tokens[0], 'remove'));
-    assert(updateSpy.calledWith([{value: 'test1', index: 1}]), 'called with remaining object');
+    assert(updateSpy.calledWith([{value: 'test2', index: 2}]), 'called with remaining object');
 
   });
 
