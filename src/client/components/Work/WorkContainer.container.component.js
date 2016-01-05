@@ -54,7 +54,7 @@ class WorkContainer extends React.Component {
   }
 
   workStoreSentData(data) {
-    if (Object.keys(this.state.work.result).length === 0) {
+    if (Object.keys(this.state.work.result).length === 0 || Object.keys(data.result).length > 0) {
       this.setState({
         work: data
       });
@@ -63,12 +63,8 @@ class WorkContainer extends React.Component {
 
   render() {
     const WorkLayout = this.props.workLayout;
-    let work = this.state.work;
+    const work = this.props.work ? this.props.work : this.state.work;
     const id = this.props.id;
-
-    if (this.props.work && this.props.work.info && this.props.work.info.hits !== '0') {
-      work = this.props.work;
-    }
 
     if (work.error && work.error.length > 0) {
       return (
