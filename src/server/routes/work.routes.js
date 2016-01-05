@@ -78,7 +78,7 @@ WorkRoutes.get(['/', '/*'], dbcMiddleware.cacheMiddleware, (req, res) => {
     offset: 1,
     worksPerPage: 1,
     allManifestations: true
-  }, 30000).then((result) => {
+  }, 300).then((result) => {
     let work = {
       brief: {},
       result: result[0].work,
