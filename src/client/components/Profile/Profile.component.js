@@ -136,6 +136,8 @@ class Profile extends React.Component {
           toggleOrderDisplay={this.toggleOrderDisplay}
         />
 
+        <hr/>
+
         <LoansList
           collapsed={this.state.uiStatus.loanCollapsed}
           loans={loans}
@@ -158,15 +160,26 @@ class Profile extends React.Component {
           onToggleFiscalDisplay={this.toggleFiscalDisplay}
         />
 
+        <hr/>
+
         <div className="row clearfix">
-          <h2>Vælg fremtidige afhentningsbibliotek</h2>
+          <h2>Afhentningsbibliotek</h2>
           <p>Bemærk, dette ændrer ikke eksisterende lån.</p>
           <LibraryAffiliatesDropDown onChangeCallback={(library) => {
             ProfileActions.savePickupAgencyToMobilSoegProfile(library.id);
           }} pickupAgency={defaultPickupAgency} />
         </div>
 
-        <DeleteLikesButton />
+        <hr/>
+
+        <div className="row">
+          <h2>Brugerhistorik</h2>
+          <p>Her kan du slette din brugerhistorik</p>
+          <DeleteLikesButton />
+        </div>
+
+        <hr/>
+
       </div>
     );
   }

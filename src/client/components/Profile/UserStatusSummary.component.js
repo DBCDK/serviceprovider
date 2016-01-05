@@ -29,7 +29,7 @@ class UserStatusSummary extends React.Component {
     const expiredLoansCount = expiredLoans.length;
     const readyOrdersCount = readyOrders.length;
 
-    const noOders = (readyOrdersCount === 1) ? 'reservering' : 'reserveringer';
+    const noOrders = (readyOrdersCount === 1) ? 'reservering' : 'reserveringer';
 
     let debt = 0;
     forEach(this.props.items, (item) => {
@@ -40,7 +40,7 @@ class UserStatusSummary extends React.Component {
 
     const ordersReadyForPickUpMessage = (readyOrdersCount > 0) ? (
       <div className='small-24 medium-12 large-8 column pickup'>
-        <div onClick={this.props.toggleOrderDisplay}>{readyOrdersCount} {noOders} klar til afhentning</div>
+        <div onClick={this.props.toggleOrderDisplay}>{readyOrdersCount} {noOrders} klar til afhentning</div>
       </div>) : '';
     const expiringLoansMessage =(expiringLoansCount > 0) ? (
       <div className='small-24 medium-12 large-8 column expiring'>

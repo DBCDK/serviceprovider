@@ -25,9 +25,9 @@ class FiscalStatus extends React.Component {
 
         return (
           <li className='row' key={item.title}>
-            <span className='small-12 column'>{item.title}</span>
-            <span className='small-10 column'>Afleveret for sent</span>
-            <span className='small-2 column'>{item.amount + ' ' + item.currency}</span>
+            <span className='small-10 column'>{item.title}</span>
+            <span className='small-9 column'>Afleveret for sent</span>
+            <span className='small-5 column'>{item.amount + ' ' + item.currency}</span>
           </li>
         );
       });

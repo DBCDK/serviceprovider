@@ -22,6 +22,14 @@ $background-color: #fdfdfd;
 }
 
 .profile--user-status{
+
+  padding: 10px;
+
+
+  h2 {
+    font-size: 1.3em;
+  }
+
   ul {
     list-style-type: none;
     margin-left: 0;
@@ -43,7 +51,12 @@ $background-color: #fdfdfd;
     }
   }
   .user-status-header {
-    display: inline-block;
+    display: block;
+    border: 1px solid grey;
+    @include rounded($radius: 5px);
+    padding: 15px;
+    background: url('/icons/forward-alt.svg') right 0.5em center no-repeat;
+    background-size: 1em;
   }
   .toggle {
     cursor: pointer;
@@ -52,20 +65,6 @@ $background-color: #fdfdfd;
     display: inline-block;
     padding: 0 10px;
     cursor: pointer;
-    .button-collapsed {
-      width: 0; 
-      height: 0; 
-      border-left: 20px solid transparent;
-      border-right: 20px solid transparent;
-      border-top: 20px solid #000000;
-    }
-    .button-not-collapsed {
-      width: 0; 
-      height: 0; 
-      border-left: 20px solid transparent;
-      border-right: 20px solid transparent;
-      border-bottom: 20px solid #000000;
-    }
   }
   .collapsed .button-not-collapsed,
   .not-collapsed .button-collapsed {
@@ -77,7 +76,7 @@ $background-color: #fdfdfd;
   }
   .slider.slider-not-collapsed {
     -webkit-transition: all 3000ms cubic-bezier(0.17, 0.04, 0.03, 0.94);
-    transition: all 3000ms cubic-bezier(0.17, 0.04, 0.03, 0.94);
+    transition: all 3000ms cubic-bezier(0.17, 0.4, 0.03, 0.94);
   }
   .slider.slider-collapsed {
     max-height: 0;
@@ -119,60 +118,3 @@ $background-color: #fdfdfd;
   }
 }
 
-.profile--image-round{
-  @include rounded(50%);
-  width: 50%;
-  margin-left:25%;
-  margin-right:25%;
-}
-
-.profile--image-full{
-  width: 100%;
-  margin-left:0%;
-  margin-right:0%;
-}
-
-.profile--image-canvas{
-  margin-left:0%;
-  margin-right:0%;
-}
-
-.profile--displayname{
-  text-align: center;
-}
-
-.profile--header{
-
-  margin-bottom: 15px;
-  text-align: center;
-
-  h2, a{
-    font-size: 1em;
-    padding:0px;
-    cursor: pointer;
-  }
-
-  h2{
-    display: inline;
-    margin: auto auto;
-  }
-
-  a{
-    display: inline;
-    font-size:0.8em;
-    float: right;
-    @include no-select();
-  }
-}
-
-.profile--socialsummary{
-  text-align:center;
-
-  h6{
-    font-size:0.8em;
-  }
-
-  p{
-    font-size:1.4em;
-  }
-}
