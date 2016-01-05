@@ -51,7 +51,6 @@ export default class Header extends React.Component {
     const isMenuAnimated = this.state.animateMenu;
     const isLoggedIn = this.state.userIsLoggedIn;
     const buttonData = isLoggedIn ? {url: '/profile'} : {url: '/profile/login'};
-    const profileLink = isLoggedIn ? <a className='right' href='/profile' >Lånerstatus</a> : '';
 
     const menu = <Menu isMenuAnimated={isMenuAnimated} isMenuOpen={isMenuOpen}/>;
 
@@ -78,14 +77,6 @@ export default class Header extends React.Component {
               </a>
             </div>
 
-          </div>
-        </div>
-
-        <div className="header--topnavigation-container row" >
-          <div className="header--topnavigation-links  small-24 medium-24 large-24 columns" >
-            <div className="header--topnavigation-links--link" >
-              {profileLink}
-            </div>
           </div>
         </div>
 
