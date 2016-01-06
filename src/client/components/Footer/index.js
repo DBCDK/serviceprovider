@@ -11,7 +11,10 @@ import Footer from './Footer.component.js';
 
 // Create variable libraryData first, get footerData from localStorage for future reference.
 let libraryData = {};
-const localData = localStorage.getItem('footerData');
+let localData = false;
+if (typeof localStorage !== 'undefined') {
+  localData = localStorage.getItem('footerData');
+}
 
 // If footerData was sent from server, update localStorage
 if (window.footerData && window.footerData.length > 0) {

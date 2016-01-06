@@ -14,9 +14,18 @@ export default class SearchSort extends React.Component {
     const e = this.refs.sortSelector;
     const value = e.options[e.selectedIndex].value;
     QueryActions.changeQuerySort(value);
+
+    if (typeof localStorage !== 'undefined') {
+      localStorage.setItem('defaultSearchSort', value);
+    }
   }
 
   render() {
+    let defaultSort = 'rank_frequency';
+    if (typeof localStorage !== 'undefined') {
+      defaultSort = localStorage.getItem('defaultSearchSort') || defaultSort;
+    }
+
     const options = [
       {name: 'Almindelig sortering', sort: 'rank_frequency'},
       {name: 'Udgivelsesår - nyeste først', sort: 'date_descending'},
@@ -34,7 +43,7 @@ export default class SearchSort extends React.Component {
 
     return (
       <div className='search-sort-container'>
-        <select onChange={this.sortWasChanged.bind(this)} ref={"sortSelector"}>
+        <select defaultValue={defaultSort} onChange={this.sortWasChanged.bind(this)} ref={"sortSelector"}>
           {options}
         </select>
       </div>
