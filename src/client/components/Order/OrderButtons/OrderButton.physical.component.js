@@ -25,7 +25,7 @@ export default class OrderButtonPhysicalComponent extends React.Component {
 
     return (
       <a className='order--order-button-container--order-button button small' href={orderUrl}>
-        Bestil {m.type} <HoldingStatusComponent accessType={m.accessType} compact={true} identifier={m.identifiers[0]} />
+        Bestil {m.type} <HoldingStatusComponent accessType={m.accessType} compact identifier={m.identifiers[0]} />
       </a>
     );
   }
