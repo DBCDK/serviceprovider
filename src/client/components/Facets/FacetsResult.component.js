@@ -57,7 +57,7 @@ export default class FacetsResult extends React.Component {
   }
 
   queryElementWasRemoved(element) {
-    if (element.type.indexOf('facet') > -1) {
+    if (element.type && element.type.indexOf('facet') > -1) {
       (isArray(element.value) ? element.value : element.value.split(',')).forEach((val) => {
         val = val.replace(/"/g, '');
         const selector = [element.type, val].join('.');
