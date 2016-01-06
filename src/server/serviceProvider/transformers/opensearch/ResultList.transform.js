@@ -81,6 +81,38 @@ const ResultListTransform = {
     this.callServiceClient('opensearch', 'getWorkResult', request);
   },
 
+  extractWorkInformation(work) {
+    let newWork = {};
+    let no = work.collection.numberOfObjects;
+    let identifiers = [];
+    let title, creator, workType;
+
+    if (no === '1') {
+      identifiers.push(work.collection.object.identifier);
+      title = work.formattedCollection.briefDisplay.manifestation.titleFull;
+      creator = work.formattedCollection.briefDisplay.manifestation.creator;
+      workType = work.formattedCollection.briefDisplay.manifestation.workType;
+    }
+    else {
+      work.collection.object.forEach((identifier) => {
+        if (identifier.identifier.length) {
+          identifiers.push(identifier.identifier);
+          title = work.formattedCollection.briefDisplay.manifestation[0].titleFull;
+          creator = work.formattedCollection.briefDisplay.manifestation[0].creator;
+          workType = work.formattedCollection.briefDisplay.manifestation[0].workType;
+        }
+      });
+    }
+
+    if (identifiers.length) {
+      newWork.identifiers = identifiers;
+      newWork.title = title;
+      newWork.creator = creator;
+      newWork.workType = workType;
+      return newWork;
+    }
+  },
+
   /**
    * Transforms the response from Open Search webservice to a representation
    * that can be used by the application
@@ -122,40 +154,16 @@ const ResultListTransform = {
     data.info.facets = this.getFacets(response);
 
     response.result.searchResult.forEach((work) => {
-      let newWork = {};
-      let no = work.collection.numberOfObjects;
-      let identifiers = [];
-      let title, creator, workType;
 
-      if (no === '1') {
-        identifiers.push(work.collection.object.identifier);
-        title = work.formattedCollection.briefDisplay.manifestation.titleFull;
-        creator = work.formattedCollection.briefDisplay.manifestation.creator;
-        workType = work.formattedCollection.briefDisplay.manifestation.workType;
-      }
-      else {
-        work.collection.object.forEach((identifier) => {
-          if (identifier.identifier.length) {
-            identifiers.push(identifier.identifier);
-            title = work.formattedCollection.briefDisplay.manifestation[0].titleFull;
-            creator = work.formattedCollection.briefDisplay.manifestation[0].creator;
-            workType = work.formattedCollection.briefDisplay.manifestation[0].workType;
-          }
+      const newWork = this.extractWorkInformation(work);
+
+      if (newWork) {
+        data.result.push(newWork);
+        // send asynchronous prefetch request for works
+        newWork.identifiers.forEach((pid) => {
+          this.prefetchWork(pid);
         });
       }
-
-      if (identifiers.length) {
-        newWork.identifiers = identifiers;
-        newWork.title = title;
-        newWork.creator = creator;
-        newWork.workType = workType;
-        data.result.push(newWork);
-      }
-
-      // send asynchronous prefetch request for works
-      identifiers.forEach((pid) => {
-        this.prefetchWork(pid);
-      });
 
     });
 
