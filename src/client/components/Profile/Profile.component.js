@@ -17,6 +17,7 @@ import OrdersList from './OrdersList.component';
 import LoansList from './LoansList.component';
 import FiscalStatus from './FiscalStatus.component';
 import UserStatusSummary from './UserStatusSummary.component';
+import ListToggleButton from './ListToggleButton.component';
 import LibraryAffiliatesDropDown from '../LibraryAffiliatesDropDown/LibraryAffiliatesDropDown.component';
 
 // Stores
@@ -126,8 +127,31 @@ class Profile extends React.Component {
       defaultPickupAgency = this.state.profile.profile.pickup_agency || this.state.profile.profile.agencyid;
     }
 
+    const loanList = (
+      <LoansList
+        loans={loans}
+        onRenew={this.renewLoan}
+        />
+    );
+
+    const orderList = (
+      <OrdersList
+        branchNamesMap={branchNamesMap}
+        onDelete={this.deleteOrder}
+        onSelectPickupAgency={this.selectPickupAgency}
+        orders={orders}
+        />
+    );
+
+    const fiscalStatus = (
+      <FiscalStatus
+        items={fiscalItems}
+        />
+    );
+
     return (
       <div className='profile--user-status' >
+
         <UserStatusSummary
           items={fiscalItems}
           loans={loans} orders={orders}
@@ -136,46 +160,50 @@ class Profile extends React.Component {
           toggleOrderDisplay={this.toggleOrderDisplay}
         />
 
+        <hr />
+
+        <ListToggleButton
+          content={fiscalStatus}
+          buttonLabel='Mellemværende'
+          toggleDisplay={this.toggleFiscalDisplay}
+          visible={!this.state.uiStatus.fiscalCollapsed}
+          />
+
+        <ListToggleButton
+          content={orderList}
+          buttonLabel='Reserveringer'
+          toggleDisplay={this.toggleOrderDisplay}
+          visible={!this.state.uiStatus.ordersCollapsed}
+          />
+
+        <ListToggleButton
+          content={loanList}
+          buttonLabel='Lån'
+          toggleDisplay={this.toggleLoanDisplay}
+          visible={!this.state.uiStatus.loanCollapsed}
+          />
+
+
         <hr/>
 
-        <LoansList
-          collapsed={this.state.uiStatus.loanCollapsed}
-          loans={loans}
-          onRenew={this.renewLoan}
-          onToggleLoanDisplay={this.toggleLoanDisplay}
-        />
-
-        <OrdersList
-          branchNamesMap={branchNamesMap}
-          collapsed={this.state.uiStatus.ordersCollapsed}
-          onDelete={this.deleteOrder}
-          onSelectPickupAgency={this.selectPickupAgency}
-          onToggleOrderDisplay={this.toggleOrderDisplay}
-          orders={orders}
-        />
-
-        <FiscalStatus
-          collapsed={this.state.uiStatus.fiscalCollapsed}
-          items={fiscalItems}
-          onToggleFiscalDisplay={this.toggleFiscalDisplay}
-        />
-
-        <hr/>
-
-        <div className="row clearfix">
-          <h2>Afhentningsbibliotek</h2>
-          <p>Bemærk, dette ændrer ikke eksisterende lån.</p>
-          <LibraryAffiliatesDropDown onChangeCallback={(library) => {
-            ProfileActions.savePickupAgencyToMobilSoegProfile(library.id);
-          }} pickupAgency={defaultPickupAgency} />
+        <div className="row">
+          <div className='small-24 column'>
+            <h2>Afhentningsbibliotek</h2>
+            <p>Bemærk, dette ændrer ikke eksisterende lån.</p>
+            <LibraryAffiliatesDropDown onChangeCallback={(library) => {
+              ProfileActions.savePickupAgencyToMobilSoegProfile(library.id);
+            }} pickupAgency={defaultPickupAgency} />
+          </div>
         </div>
 
         <hr/>
 
         <div className="row">
-          <h2>Brugerhistorik</h2>
-          <p>Her kan du slette din brugerhistorik</p>
-          <DeleteLikesButton />
+          <div className='small-24 column'>
+            <h2>Brugerhistorik</h2>
+            <p>Her kan du slette din brugerhistorik</p>
+            <DeleteLikesButton />
+          </div>
         </div>
 
         <hr/>

@@ -25,73 +25,21 @@ $background-color: #fdfdfd;
 
   padding: 10px;
 
-
   h2 {
+    padding:0;
+    margin:0;
     font-size: 1.3em;
   }
 
-  ul {
-    list-style-type: none;
-    margin-left: 0;
-    li {
-      border-top: 1px solid black;
-      padding: 5px 0;
-      .tiny {
-        margin-bottom: 0;
-      }
-      .overdue {
-         color: red;
-      }
-      .due-soon {
-        color: orange;
-      }
-      .ready {
-        color: green;
-      }
-    }
-  }
-  .user-status-header {
-    display: block;
-    border: 1px solid grey;
-    @include rounded($radius: 5px);
-    padding: 15px;
-    background: url('/icons/forward-alt.svg') right 0.5em center no-repeat;
-    background-size: 1em;
-  }
-  .toggle {
+  .message-button {
+    @include rounded(8px);
+    @include no-select();
+    padding:1em;
+    //border:1px solid;
     cursor: pointer;
+    text-align:center;
   }
-  .toggle-buttons {
-    display: inline-block;
-    padding: 0 10px;
-    cursor: pointer;
-  }
-  .collapsed .button-not-collapsed,
-  .not-collapsed .button-collapsed {
-    display: none;
-  }
-  .slider {
-    overflow: hidden;
-    max-height: 1000px;
-  }
-  .slider.slider-not-collapsed {
-    -webkit-transition: all 3000ms cubic-bezier(0.17, 0.04, 0.03, 0.94);
-    transition: all 3000ms cubic-bezier(0.17, 0.4, 0.03, 0.94);
-  }
-  .slider.slider-collapsed {
-    max-height: 0;
-    -webkit-transition: all 300ms cubic-bezier(0.17, 0.04, 0.03, 0.94);
-    transition: all 300ms cubic-bezier(0.17, 0.04, 0.03, 0.94);
-  }
-  .action .column {
-    text-align: center;
-    color: #ffffff;
-    margin-bottom: 5px;
-    div {
-      padding: 10px;
-      cursor: pointer;
-    }
-  }
+
   .pickup {
     background-color: green;
   }
@@ -100,7 +48,7 @@ $background-color: #fdfdfd;
   }
   .debt,
   .expired {
-    background-color: red;
+    background-color: #ff7172;
   }
 
   .selector {
@@ -113,8 +61,65 @@ $background-color: #fdfdfd;
       border-color:green;
     }
     .failure {
-      border-color:red;
+      border-color:#ff7172;
     }
   }
 }
 
+// EXPANDING CONTAINERS
+
+.expand--button {
+  padding:1em;
+  cursor: pointer;
+  @include no-select();
+
+  &.expanded {
+    background: url('/icons/up-alt.svg') right 1em center no-repeat;
+    background-size: 1em;
+  }
+
+  &.collapsed {
+    background: url('/icons/forward-alt.svg') right 1em center no-repeat;
+    background-size: 1em;
+  }
+}
+
+.expand--container {
+
+  -webkit-transition: all 2s linear;
+  transition: all 2s linear;
+
+  overflow:hidden;
+  margin-bottom: 2px;
+  @include rounded(8px);
+  //border:1px solid grey;
+
+  p {
+    text-align: center;
+    margin-top: 20px;
+  }
+
+  ul {
+    list-style:none;
+    margin:0;
+    padding:0;
+
+    li {
+      padding:3px;
+      border: 1px solid lightgrey;
+      overflow: hidden;
+
+      &:nth-child(2n) {
+        background-color: white;
+      }
+
+      &:nth-child(2n+1) {
+        background-color: lightgrey;
+      }
+    }
+  }
+}
+
+.expand--content {
+  border-top:1px solid lightgrey;
+}
