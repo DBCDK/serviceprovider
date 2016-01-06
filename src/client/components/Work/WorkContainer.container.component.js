@@ -27,10 +27,15 @@ class WorkContainer extends React.Component {
     this.state.work = isEmpty(this.props.work) ? this.state.work : this.props.work;
 
     this.unsubscribe = [
-      WorkStore.listen(() => this.setState({
-        work: WorkStore.store
-      }))
+      WorkStore.listen(this.workStoreSentData.bind(this))
     ];
+  }
+
+  componentWillMount() {
+    // Grab data from JSON on window object, if it exists
+    if (typeof window !== 'undefined' && window.WORKDATA && window.WORKDATA.length > 0) {
+      this.state.work = JSON.parse(window.WORKDATA);
+    }
   }
 
   componentDidMount() {
@@ -48,28 +53,40 @@ class WorkContainer extends React.Component {
     );
   }
 
+  workStoreSentData(data) {
+    if (Object.keys(this.state.work.result).length === 0 || Object.keys(data.result).length > 0) {
+      this.setState({
+        work: data
+      });
+    }
+  }
+
   render() {
     const WorkLayout = this.props.workLayout;
     const work = this.props.work ? this.props.work : this.state.work;
     const id = this.props.id;
 
+    if (work.error && work.error.length > 0) {
+      return (
+        <div>
+          <h2>Der er sket en fejl</h2>
+          <p>Vi beklager! Der skete en fejl under hentningen af dette værk. Prøv venligst senere eller kontakt supporten.</p>
+        </div>
+      );
+    }
+
     // No result found!
-    if (work.info.hits === '0') {
+    if (work.info && work.info.hits === '0') {
       return <div className="work-not-found" >Værket blev ikke fundet</div>;
     }
 
     // Result is pending, waiting for serviceprovider
-    if (isEmpty(work.result) && isEmpty(work.info) && isEmpty(work.brief)) {
+    if (Object.keys(work.info).length === 0 && Object.keys(work.result).length === 0 && Object.keys(work.brief).length === 0) {
       return (
         <div className='row' >
           <span className='loader' />
         </div>
       );
-    }
-
-    // Empty result (Should perhaps be an error report)
-    if (isEmpty(work.result) && isEmpty(work.brief)) {
-      return <div />;
     }
 
     let workResult = isEmpty(work.result) ? work.brief : work.result;

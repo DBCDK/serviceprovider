@@ -28,28 +28,18 @@ class Order extends React.Component {
 
   render() {
     const title = this.props.order.title;
-    const type = this.props.order.type;
     const creator = this.props.order.creator;
-    const pickupAgency = this.props.order.pickupAgency;
-    const ids = this.props.order.ids;
+    const pickupAgency = this.props.pickupAgency;
     const coverImage = this.props.coverImage;
+    const workId = this.props.orderId;
 
-    const workId = ids.replace(/,.*/, '');
-
-    const cancelLink = '/work?id=' + workId;
-
-    let cancelOrder = <a className={'cancel-order-button button'} href={cancelLink}>Annuller</a>;
-
-    let orderInfo = title + ' (' + type + ')';
-
+    let cancelOrder = <a className={'cancel-order-button button'} href={'/work?id=' + workId}>Annuller</a>;
+    let orderInfo = title;
     if (creator !== '') {
-      orderInfo = creator + ': ' + title + ' (' + type + ')';
+      orderInfo = creator + ': ' + title;
     }
 
-    const orderLink = '/work/receipt?ids=' + ids + '&pickupAgency=' + this.state.pickupAgency.id + '&title='
-      + encodeURIComponent(title) + '&creator=' + encodeURIComponent(creator) + '&type=' + encodeURIComponent(type);
-
-    let placeOrder = <a className={'place-order-button button'} href={orderLink}>Ok</a>;
+    let placeOrder = <a className={'place-order-button button'} href={'/work/receipt/' + workId}>Ok</a>;
 
     let ordering = (<div className="order--info">
       <div className="order--headline">Du er i gang med at bestille:</div>
@@ -74,7 +64,9 @@ class Order extends React.Component {
 Order.displayName = 'Order.component';
 Order.propTypes = {
   coverImage: React.PropTypes.object,
-  order: React.PropTypes.object.isRequired
+  order: React.PropTypes.object.isRequired,
+  orderId: React.PropTypes.string.isRequired,
+  pickupAgency: React.PropTypes.string.isRequired
 };
 
 export default Order;

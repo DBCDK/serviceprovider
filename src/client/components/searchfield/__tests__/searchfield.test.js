@@ -24,7 +24,6 @@ describe('Test the Search component', () => {
   });
 
   it('no query in querystore should generate 0 tokens', ()=> {
-    QueryStore.onReset();
     let element = React.createElement(Search);
     let dom = TestUtils.renderIntoDocument(element);
     let tokens = TestUtils.scryRenderedDOMComponentsWithClass(dom, 'token');

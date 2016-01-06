@@ -79,6 +79,7 @@ class SearchFieldContainerComponent extends React.Component {
     return (
       <div className='searchfield--container' >
         <TokenSearchField
+          hasFocus={this.state.input.focus}
           change={InputFieldActions.change}
           focus={InputFieldActions.focus}
           pending={this.state.autocomplete.pending}

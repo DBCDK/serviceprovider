@@ -41,7 +41,7 @@ describe('Test Order Component', () => {
     };
     render.render(<Order order={order} />);
     const rendered = render.getRenderOutput();
-    const text = 'This is a title (Bog)';
+    const text = 'This is a title';
     assert.strictEqual(text, rendered.props.children[1].props.children.props.children[1].props.children);
   });
 

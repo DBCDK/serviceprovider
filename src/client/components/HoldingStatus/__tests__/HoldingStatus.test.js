@@ -32,7 +32,7 @@ describe('Test Holding Status Component', () => {
     render.render(<HoldingStatus accessType='physical' identifier='870970-basis:12345678' />);
     const rendered = render.getRenderOutput();
     assert.strictEqual(rendered.type, 'div');
-    assert.strictEqual(rendered.props.children.props.className, 'status ');
+    assert.strictEqual(rendered.props.children.props.className, 'status not-available');
   });
 
 });
