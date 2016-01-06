@@ -17,47 +17,61 @@ import dbcMiddleware from './../middlewares/middleware.js';
 // Components
 import CoverImage from '../../client/components/CoverImage/CoverImageContainer.component';
 import Order from '../../client/components/Order/Order.component';
-import Receipt from '../../client/components/Receipt/Receipt.component';
 import WorkContainer from '../../client/components/Work/WorkContainer.container.component';
 import WorkLayout from '../../client/components/Work/WorkLayout.component';
 
-WorkRoutes.get(
-  ['/order', '/order*'],
-  dbcMiddleware.redirectToCallbackWhenLoggedIn(
-    (req) => {
-      // Redirect destination callback
-      if (req.query.ids) {
-        const rt = req.query.ids.split(',');
-        return '/work?id=' + rt[0];
-      }
+WorkRoutes.get(['/order/:id'], dbcMiddleware.redirectWhenLoggedIn(false), (req, res) => {
+  const id = req.params.id;
+  let contextObject = {
+    pagescript: 'order.js',
+    content: '',
+    data: '""'
+  };
 
-      // if the if fails, just fall back to original url
-      return req.originalUrl;
-    }
-  ),
-  (req, res) => {
-    let query = req.query;
-    query = JSON.stringify(query);
+  res.callServiceProvider('getOpenSearchWorkBriefDisplay', {pid: id}, 30000).then((response) => {
+    let pagedata = {
+      q: id,
+      work: response[0].work,
+      pickupAgency: req.user.profile.pickup_agency ? req.user.profile.pickup_agency : req.user.agencyid
+    };
 
-    const image = <CoverImage pids={req.query.coverImageIds.split(',')} prefSize={'detail_500'} />;
+    contextObject.data = '\'' + JSON.stringify(pagedata) + '\'';
 
-    dbcMiddleware.renderPage(res, 'order', {
-      query,
-      pagescript: 'order.js',
-      srrString: ReactDOM.renderToString(
-        <Order coverImage={image} order={req.query} />)
-    }, 'was not serverside');
-  }
-);
+    const image = <CoverImage pids={pagedata.q} prefSize={'detail_500'} />;
+    contextObject.content = ReactDOM.renderToString(
+      <Order coverImage={image} order={pagedata.work} orderId={pagedata.q} pickupAgency={pagedata.pickupAgency} />);
 
-WorkRoutes.get(['/receipt', '/receipt/*'], (req, res) => {
-  let query = req.query;
-  query = JSON.stringify(query);
-  dbcMiddleware.renderPage(res, 'receipt', {
-    query,
+    res.render('page', contextObject);
+  }, () => {
+    res.status(500);
+    res.render('error', {errorImage: '', errortext: 'Der skete en fejl under indlæsningen af dette værk, prøv igen senere.'});
+  });
+});
+
+WorkRoutes.get(['/receipt/:id'], dbcMiddleware.redirectToCallbackWhenLoggedIn((req) => {
+  return '/work/order/' + req.params.id;
+}, false), (req, res) => {
+  const id = req.params.id;
+  let contextObject = {
     pagescript: 'receipt.js',
-    ssrString: ReactDOM.renderToString(<Receipt receipt={req.query} />)
-  }, 'was not serverside');
+    content: '',
+    data: '""'
+  };
+
+  res.callServiceProvider('getOpenSearchWorkBriefDisplay', {pid: id}, 30000).then((response) => {
+    let pagedata = {
+      q: id,
+      work: response[0].work,
+      pickupAgency: req.user.profile.pickup_agency ? req.user.profile.pickup_agency : req.user.agencyid
+    };
+
+    contextObject.data = '\'' + JSON.stringify(pagedata) + '\'';
+
+    res.render('page', contextObject);
+  }, () => {
+    res.status(500);
+    res.render('error', {errorImage: '', errortext: 'Der skete en fejl under indlæsningen af dette værk, prøv igen senere.'});
+  });
 });
 
 WorkRoutes.get(['/', '/*'], dbcMiddleware.cacheMiddleware, (req, res) => {
@@ -86,7 +100,7 @@ WorkRoutes.get(['/', '/*'], dbcMiddleware.cacheMiddleware, (req, res) => {
     };
 
     contextObject.data = '\'' + JSON.stringify(work) + '\'';
-    contextObject.ssrString = ReactDOM.renderToString(<WorkContainer id={id} work={work} workLayout={WorkLayout} />);
+    contextObject.ssrString = ReactDOM.renderToString(<WorkContainer id={req.query.id} work={work} workLayout={WorkLayout} />);
     res.render('work', contextObject);
   }, () => {
     contextObject.ssrString = ReactDOM.renderToString(<WorkContainer id={req.query.id} workLayout={WorkLayout} />);
