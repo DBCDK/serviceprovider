@@ -2,6 +2,8 @@
 
 import React from 'react';
 
+import HoldingStatusComponent from '../../HoldingStatus/HoldingStatus.component';
+
 export default class OrderButtonPhysicalComponent extends React.Component {
   render() {
     if (!this.props.orderPolicy || this.props.orderPolicy && !this.props.orderPolicy.hasOwnProperty('canOrder')) {
@@ -23,7 +25,7 @@ export default class OrderButtonPhysicalComponent extends React.Component {
 
     return (
       <a className='order--order-button-container--order-button button small' href={orderUrl}>
-        Bestil {m.type}
+        Bestil {m.type} <HoldingStatusComponent accessType={m.accessType} compact identifier={m.identifiers[0]} />
       </a>
     );
   }
