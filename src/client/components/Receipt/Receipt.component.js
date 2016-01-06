@@ -20,7 +20,7 @@ const Receipt = React.createClass({
   getInitialState() {
     return {
       orderPlaced: false,
-      headline: '',
+      headline: 'Bestiller',
       libraryInfo: '',
       orderInfo: ''
     };
