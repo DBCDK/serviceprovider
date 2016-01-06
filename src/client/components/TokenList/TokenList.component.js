@@ -81,6 +81,9 @@ export default React.createClass({
   },
 
   getListWidth(tokens) {
+    if (!tokens.length) {
+      return 0;
+    }
     const padding = 4;
     const emptySpace = 75;
     return tokens
