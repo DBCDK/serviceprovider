@@ -117,7 +117,7 @@ const TokenSearchField = React.createClass({
   },
 
   componentDidUpdate() {
-    if (this.state.hasFocus === true) {
+    if (this.state.hasFocus) {
       ReactDOM.findDOMNode(this.refs.searchfield).focus();
     }
     else {
