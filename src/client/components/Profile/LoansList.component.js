@@ -7,8 +7,7 @@
 
 import React, {PropTypes} from 'react';
 // import Reflux from 'reflux';
-import {curry, sortByAll} from 'lodash';
-import ToggleButton from '../ToggleButton.component';
+import {curry, sortByAll, isEmpty} from 'lodash';
 import Loader from '../Loader.component.js';
 
 class LoansList extends React.Component {
@@ -20,7 +19,6 @@ class LoansList extends React.Component {
   render() {
 
     const renewLoan = this.props.onRenew ? curry(this.props.onRenew, 2) : function() {};
-    const toggleDisplay = this.props.onToggleLoanDisplay;
 
     let loans;
 
@@ -60,7 +58,7 @@ class LoansList extends React.Component {
         }
 
         return (
-          <li className='row' key={loan.loanId}>
+          <li key={loan.loanId}>
             <span className='small-10 medium-11 large-12 column'>{loan.title}</span>
             <span className={dateClass}>{dueText + date.getDate() + '/' + (date.getMonth() + 1) + '-' + date.getFullYear()}</span>
             <span className='small-5 medium-3 large-2 column'>{renewable ? actionField : ''}</span>
@@ -69,41 +67,24 @@ class LoansList extends React.Component {
       });
     }
 
-    const listClass = (this.props.collapsed === true) ? 'loan-list collapsed' : 'loan-list';
+    if (isEmpty(this.props.loans)) {
+      loans = (<p>Du har ingen lån</p>);
+    }
 
-    const loansList = (<ul className={listClass} id='loan-list'>
-      {loans}
-    </ul>);
+    let loansContent = (
+      <ul className='loan-list'>
+        {loans}
+      </ul>
+    );
 
     // show this if not results have been returned yet
     const pending = true;
     const loadingWheel = <Loader pending={pending} />;
 
-    let listContent = loadingWheel;
-    let header = 'Lån';
-    let arrows = '';
-    let toggleFunc = toggleDisplay;
-    let headerClass = 'user-status-header toggle';
 
-    if (Array.isArray(this.props.loans) && this.props.loans.length === 0) {
-      header = 'Du har ingen lån';
-      listContent = '';
-      toggleFunc = '';
-      headerClass = 'user-status-header';
-    }
-    else if (this.props.loans !== null) {
-      arrows = <ToggleButton collapsed={this.props.collapsed} toggleDisplay={toggleDisplay} />;
-      header = this.props.loans.length + ' lån';
-      listContent = loansList;
-    }
-
-    const sliderClass = (this.props.collapsed === true) ? 'slider slider-collapsed' : 'slider slider-not-collapsed';
     const content = (
         <div className='row'>
-          <a id='loan-scroll' name='loan-scroll'></a>
-          <h2 className={headerClass} onClick={toggleFunc}>{header}</h2>
-          {arrows}
-          {(this.props.loans === null) ? loadingWheel : <div className={sliderClass}>{listContent}</div>}
+          {(this.props.loans === null) ? loadingWheel : loansContent}
         </div>
     );
 
