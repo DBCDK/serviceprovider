@@ -5,7 +5,7 @@
 
 import {has} from 'lodash';
 
-function getKommuneConf(host, config) {
+function getKommuneConf(host, config, app) {
   let kommune = host.split('.')[0];
   kommune = has(config, kommune) ? kommune : process.env.CONFIG_NAME || 'aarhus'; // eslint-disable-line no-process-env
 
@@ -15,18 +15,19 @@ function getKommuneConf(host, config) {
     kommune: kommune,
     bodyclass: kommune + '-kommune',
     config: conf,
-    libraryId: conf.agency
+    libraryId: conf.agency,
+    styles: app.locals.styles[kommune] || app.locals.styles['aarhus']
   };
 }
 
 function libraryStyleWare(req, res, next) {
-  let libdata = res.locals.libdata = getKommuneConf(req.get('host'), req.app.get('Configuration'));
+  let libdata = res.locals.libdata = getKommuneConf(req.get('host'), req.app.get('Configuration'), req.app);
   res.locals.title = libdata.config.applicationTitle;
   next();
 }
 
-function librarySocketWare(config, _socket, next) {
-  _socket.libdata = getKommuneConf(_socket.handshake.headers.host, config);
+function librarySocketWare(config, app, _socket, next) {
+  _socket.libdata = getKommuneConf(_socket.handshake.headers.host, config, app);
   next();
 }
 

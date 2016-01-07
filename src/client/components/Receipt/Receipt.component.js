@@ -21,8 +21,7 @@ const Receipt = React.createClass({
     return {
       orderPlaced: false,
       headline: 'Bestiller',
-      libraryInfo: '',
-      orderInfo: ''
+      libraryInfo: ''
     };
   },
 
