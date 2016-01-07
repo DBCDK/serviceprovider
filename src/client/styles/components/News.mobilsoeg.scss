@@ -38,7 +38,7 @@
     }
   }
 
-  .headline{
+  .headline {
     font-size: rem-calc(18px);
     font-weight: $font-weight-bold;
   }
@@ -75,6 +75,13 @@
     font-weight: bold;
     margin-bottom: 10px;
   }
+  .image {
+    height: 200px;
+    overflow: hidden;
+    img {
+      @extend %vertical-align-center;
+    }
+  }
 }
 
 .news-page--workList {
@@ -83,4 +90,17 @@
 
 .worklist {
   @include horizontal-list($small-only)
+}
+
+%vertical-align-center {
+  width: 100%;
+  position: relative;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+%news-item-image {
+  width: 33%;
+  padding-right: 15px;
+  float: left;
 }
