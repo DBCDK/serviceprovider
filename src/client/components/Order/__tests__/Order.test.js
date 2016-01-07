@@ -39,10 +39,10 @@ describe('Test Order Component', () => {
       type: 'Bog',
       ids: '870970-basis:28183488'
     };
-    render.render(<Order order={order} />);
+    render.render(<Order order={order}/>);
     const rendered = render.getRenderOutput();
     const text = 'This is a title';
-    assert.strictEqual(text, rendered.props.children[1].props.children.props.children[1].props.children);
+    assert.strictEqual(text, rendered.props.children[1].props.children[0].props.children[1].props.children);
   });
 
   it('Assert element with correct classes', () => {
@@ -55,7 +55,7 @@ describe('Test Order Component', () => {
     render.render(<Order order={order} />);
     const rendered = render.getRenderOutput();
     const classes = 'place-order-button button';
-    assert.strictEqual(classes, rendered.props.children[3].props.className);
+    assert.strictEqual(classes, rendered.props.children[1].props.children[2].props.className);
   });
 
 });
