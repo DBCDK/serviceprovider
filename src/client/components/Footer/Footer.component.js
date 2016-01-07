@@ -95,11 +95,11 @@ export default class Footer extends React.Component {
   render() {
 
     const openToday = this.state.openingHoursToday.map((day) => {
-      return (<li key={['idag', day.opening_time, day.closing_time].join('_')}>{day.opening_time} - {day.closing_time}</li>);
+      return (<li key={['idag', day.opening_time, day.closing_time].join('_')}>{day.opening_time.slice(0,-3)} - {day.closing_time.slice(0,-3)}</li>);
     });
 
     const openTomorrow = this.state.openingHoursTomorrow.map((day) => {
-      return (<li key={['idag', day.opening_time, day.closing_time].join('_')}>{day.opening_time} - {day.closing_time}</li>);
+      return (<li key={['idag', day.opening_time, day.closing_time].join('_')}>{day.opening_time.slice(0,-3)} - {day.closing_time.slice(0,-3)}</li>);
     });
 
     const address = this.state.address;
