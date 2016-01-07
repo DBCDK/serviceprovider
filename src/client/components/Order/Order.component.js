@@ -47,15 +47,15 @@ class Order extends React.Component {
       <div className="order--library">Til afhentning på dit bibliotek: <LibraryAffiliatesDropDown pickupAgency={pickupAgency} /></div>
     </div>);
 
-    return (<div className='order--container row'>
-        <div className='image'>
+    return (<div className='order--container column small-24'>
+        <div className='image column small-8 medium-6'>
           {coverImage}
         </div>
-        <div className='order'>
+        <div className='order column small-24 medium-18'>
           {ordering}
+          {cancelOrder}
+          {placeOrder}
         </div>
-        {cancelOrder}
-        {placeOrder}
       </div>
     );
   }
