@@ -101,15 +101,15 @@ function generateStyles(filepath) {
   }).css.toString();
 }
 
-styles.aarhus = generateStyles('./src/client/styles/ddb.scss');
-styles.albertslund = generateStyles('./src/client/styles/albertslund.ddb.scss');
-styles.ballerup = generateStyles('./src/client/styles/ballerup.ddb.scss');
-styles.frederiksberg = generateStyles('./src/client/styles/frederiksberg.ddb.scss');
-styles.guldborgsund = generateStyles('./src/client/styles/guldborgsund.ddb.scss');
-styles.herlev = generateStyles('./src/client/styles/herlev.ddb.scss');
-styles.kobenhavn = generateStyles('./src/client/styles/kobenhavn.ddb.scss');
-styles.q2fjern = generateStyles('./src/client/styles/ddb.scss');
-styles.ringe = generateStyles('./src/client/styles/ringe.ddb.scss');
+styles.aarhus = generateStyles(path.join(__dirname, 'client/styles/ddb.scss'));
+styles.albertslund = generateStyles(path.join(__dirname, 'client/styles/albertslund.ddb.scss'));
+styles.ballerup = generateStyles(path.join(__dirname, 'client/styles/ballerup.ddb.scss'));
+styles.frederiksberg = generateStyles(path.join(__dirname, 'client/styles/frederiksberg.ddb.scss'));
+styles.guldborgsund = generateStyles(path.join(__dirname, 'client/styles/guldborgsund.ddb.scss'));
+styles.herlev = generateStyles(path.join(__dirname, 'client/styles/herlev.ddb.scss'));
+styles.kobenhavn = generateStyles(path.join(__dirname, 'client/styles/kobenhavn.ddb.scss'));
+styles.q2fjern = generateStyles(path.join(__dirname, 'client/styles/ddb.scss'));
+styles.ringe = generateStyles(path.join(__dirname, 'client/styles/ringe.ddb.scss'));
 
 // setting local vars that should be available to our template engine
 app.locals.newrelic = newrelic;
