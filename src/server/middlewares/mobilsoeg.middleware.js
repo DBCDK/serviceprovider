@@ -16,7 +16,7 @@ function getKommuneConf(host, config, app) {
     bodyclass: kommune + '-kommune',
     config: conf,
     libraryId: conf.agency,
-    styles: app.locals.styles[kommune] || app.locals.styles['aarhus']
+    styles: app.locals.styles[kommune] || app.locals.styles.aarhus
   };
 }
 
