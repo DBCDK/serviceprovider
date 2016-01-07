@@ -10,6 +10,7 @@
 
 import React from 'react';
 import BackButton from '../TopNavigation/BackButton.js';
+import WorkList from '../Work/WorkList.component.js';
 
 export default class NewsPageLayout extends React.Component {
 
@@ -17,21 +18,34 @@ export default class NewsPageLayout extends React.Component {
     history.back(-1);
   }
 
+  getImage() {
+    return this.props.titleImage || this.props.image || null;
+  }
+
   render() {
+    const image = this.getImage();
     return (
       <div className={`news-page clearfix`} >
         <BackButton />
-        <h1 className="headline" >{this.props.title}</h1>
-
-        <div className="image" >
-          {this.props.image &&
-          <img alt={this.props.title} className='news-item-image' src={`http://rest.filmstriben.dbc.inlead.dk/web/${this.props.image}`} />
-          }
+        <div className="news-page--content clearfix" >
+          <h1 className="headline" >{this.props.title}</h1>
+          <div className="image" >
+            {image &&
+            <img alt={this.props.title} className='news-item-image'
+                 src={`http://rest.filmstriben.dbc.inlead.dk/web/${image}`} />
+            }
+          </div>
+          <div className="lead" >{this.props.lead}</div>
+          {/* eslint-disable */}
+          <div className="body" dangerouslySetInnerHTML={{__html: this.props.body}} />
+          {/* eslint-enable */}
         </div>
-        <div className="lead" >{this.props.lead}</div>
-        {/* eslint-disable */}
-        <div className="body" dangerouslySetInnerHTML={{__html: this.props.body}} />
-        {/* eslint-enable */}
+        {this.props.works.length &&
+        <div className="news-page--workList" >
+          <WorkList works={this.props.works} title="Relaterede poster" />
+        </div>
+        || ''
+        }
       </div>
     );
   }
@@ -42,5 +56,7 @@ NewsPageLayout.propTypes = {
   body: React.PropTypes.string,
   image: React.PropTypes.string,
   lead: React.PropTypes.string,
-  title: React.PropTypes.string
+  title: React.PropTypes.string,
+  titleImage: React.PropTypes.string,
+  works: React.PropTypes.array
 };
