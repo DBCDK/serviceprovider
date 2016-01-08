@@ -12,6 +12,7 @@ import React from 'react';
 import ReactDOM from 'react-dom/server';
 
 import Footer from '../../client/components/Footer/Footer.component';
+import Header from '../../client/components/Header/Header.component';
 
 /*
  * @function
@@ -192,6 +193,18 @@ function ssrFooter (req, res, next) {
   }, () => next()); // On reject, just call next function
 }
 
+
+/**
+ * Middleware to prerender the header
+ * @param req
+ * @param res
+ * @param next
+ */
+function ssrHeader (req, res, next) {
+  res.locals.headerString = ReactDOM.renderToString(<Header/>);
+  next();
+}
+
 /**
  * Set a cache header and calls next
  * @param req
@@ -211,6 +224,7 @@ const dbcMiddleware = {
   renderPage: renderPage,
   ssrMiddleware: ssrMiddleware,
   ssrFooter: ssrFooter,
+  ssrHeader: ssrHeader,
   cacheMiddleware: cacheMiddleware
 };
 

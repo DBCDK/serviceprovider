@@ -197,7 +197,7 @@ PassportStrategies.MobilSoegPassportConfig(app);
 app.use('*', GlobalsMiddleware); // should be placed after PassportStrategies.MobilSoegPassportConfig
 
 // SSR middleware to add utility methods, and render footer automatically.
-app.use('*', dbcMiddleware.ssrMiddleware, dbcMiddleware.ssrFooter);
+app.use('*', dbcMiddleware.ssrMiddleware, dbcMiddleware.ssrFooter, dbcMiddleware.ssrHeader);
 
 // Setup Routes
 app.use('/', dbcMiddleware.cacheMiddleware, MainRoutes);
