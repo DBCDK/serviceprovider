@@ -14,17 +14,11 @@ head
     block styles
         link(rel='stylesheet' href='//fonts.googleapis.com/css?family=Source+Sans+Pro:400,700' type='text/css')
         link(rel='stylesheet' href='//fonts.googleapis.com/css?family=Open+Sans:400,300,700' type='text/css')
-        link(rel='stylesheet', href='/styles/style.css')
 
         if libdata
-            style(type='text/css')
-                | !{"#topbar {background-color: " + libdata.config.colour + ";}"}
-                | !{"#logo {background-image: url(" + libdata.config.logo + ");}"}
-                | !{".news--container {background-color: " + libdata.config.colour + ";}"}
-                | !{"a {color: " + libdata.config.colour + ";}"}
-                | !{".work--recommendations--title {background-color: " + libdata.config.colour + ";}"}
-                | !{".news {background-color: " + libdata.config.colour + ";}"}
-                | !{"#footer {background-color: " + libdata.config.colour + ";}"}
+            style(type='text/css')!=specific_styles
+        else
+            link(rel='stylesheet', href='/styles/style.css')
 
 
     block scripts

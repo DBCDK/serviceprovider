@@ -21,6 +21,7 @@ function getKommuneConf(host, config) {
 
 function libraryStyleWare(req, res, next) {
   let libdata = res.locals.libdata = getKommuneConf(req.get('host'), req.app.get('Configuration'));
+  res.locals.specific_styles = req.app.locals.styles[libdata.kommune] || req.app.locals.styles.aarhus;
   res.locals.title = libdata.config.applicationTitle;
   next();
 }
