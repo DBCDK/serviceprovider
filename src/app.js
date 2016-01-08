@@ -97,19 +97,19 @@ let styles = {};
 function generateStyles(filepath) {
   return sass.renderSync({
     outputStyle: 'compressed',
-    file: filepath
+    file: path.join(__dirname, filepath)
   }).css.toString();
 }
 
-styles.aarhus = generateStyles(path.join(__dirname, 'client/styles/ddb.scss'));
-styles.albertslund = generateStyles(path.join(__dirname, 'client/styles/albertslund.ddb.scss'));
-styles.ballerup = generateStyles(path.join(__dirname, 'client/styles/ballerup.ddb.scss'));
-styles.frederiksberg = generateStyles(path.join(__dirname, 'client/styles/frederiksberg.ddb.scss'));
-styles.guldborgsund = generateStyles(path.join(__dirname, 'client/styles/guldborgsund.ddb.scss'));
-styles.herlev = generateStyles(path.join(__dirname, 'client/styles/herlev.ddb.scss'));
-styles.kobenhavn = generateStyles(path.join(__dirname, 'client/styles/kobenhavn.ddb.scss'));
-styles.q2fjern = generateStyles(path.join(__dirname, 'client/styles/ddb.scss'));
-styles.ringe = generateStyles(path.join(__dirname, 'client/styles/ringe.ddb.scss'));
+styles.aarhus = generateStyles('client/styles/ddb.scss');
+styles.albertslund = generateStyles('client/styles/albertslund.ddb.scss');
+styles.ballerup = generateStyles('client/styles/ballerup.ddb.scss');
+styles.frederiksberg = generateStyles('client/styles/frederiksberg.ddb.scss');
+styles.guldborgsund = generateStyles('client/styles/guldborgsund.ddb.scss');
+styles.herlev = generateStyles('client/styles/herlev.ddb.scss');
+styles.kobenhavn = generateStyles('client/styles/kobenhavn.ddb.scss');
+styles.q2fjern = generateStyles('client/styles/ddb.scss');
+styles.ringe = generateStyles('client/styles/ringe.ddb.scss');
 
 // setting local vars that should be available to our template engine
 app.locals.newrelic = newrelic;
@@ -188,7 +188,7 @@ app.use(sessionMiddleware);
 
 // Detect library and set context
 app.use(mobilsoegmiddleware.libraryStyleWare);
-socket.use(curry(mobilsoegmiddleware.librarySocketWare)(config)(app));
+socket.use(curry(mobilsoegmiddleware.librarySocketWare)(config));
 
 // Setup passport
 PassportStrategies.MobilSoegPassportConfig(app);
