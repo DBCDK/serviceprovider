@@ -27,7 +27,7 @@ function libraryStyleWare(req, res, next) {
 }
 
 function librarySocketWare(config, _socket, next) {
-  _socket.libdata = getKommuneConf(_socket.handshake.headers.host, config);
+  _socket.libdata = getKommuneConf(_socket.request.headers.host, config);
   next();
 }
 

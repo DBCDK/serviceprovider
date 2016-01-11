@@ -12,4 +12,4 @@ if (config.newrelic) {
 }
 
 require('babel/register');
-require('./app');
+require('./scaling');
