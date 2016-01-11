@@ -75,7 +75,7 @@ module.exports.run = function (worker) {
   const EMAIL_REDIRECT = process.env.EMAIL_REDIRECT || 'localhost:' + app.get('port'); // eslint-disable-line no-process-env
 
   // Configure app variables
-  app.set('serviceProvider', ServiceProviderSetup(config[process.env.CONFIG_NAME || DEFAULT_CONFIG_NAME], logger, socket)); // eslint-disable-line no-process-env
+  app.set('serviceProvider', ServiceProviderSetup(config[process.env.CONFIG_NAME || DEFAULT_CONFIG_NAME], logger, worker)); // eslint-disable-line no-process-env
   app.set('logger', logger);
   app.set('EMAIL_REDIRECT', EMAIL_REDIRECT);
   app.set('APPLICATION', APPLICATION);
