@@ -6,24 +6,28 @@
  */
 
 import React from 'react';
-import {isArray} from 'lodash';
+import {isArray, forEach} from 'lodash';
 
+// Actions
 import FacetsActions from './Facets.action';
 import QueryActions from '../../actions/QueryUpdate.action.js';
 
+// Stores
 import QueryStore from '../../stores/QueryStore.store.js';
+import ResultListStore from '../../stores/ResultList.store';
 
+// Components
 import FacetTerms from './FacetTerms.component.js';
-import ToggleButton from '../ToggleButton.component.js';
+import ToggleExpand from '../Work/WorkToggleExpand.component';
 
 export default class FacetsResult extends React.Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      isExpanded: {},
+      query: QueryStore.getInitialState(),
       termsSelected: {},
-      query: QueryStore.getInitialState()
+      result: ResultListStore.getInitialState()
     };
 
     this.unsubscribe = [
@@ -32,7 +36,8 @@ export default class FacetsResult extends React.Component {
           query: QueryStore.store
         })
       ),
-      QueryActions.queryElementWasRemoved.listen(this.queryElementWasRemoved.bind(this))
+      QueryActions.queryElementWasRemoved.listen(this.queryElementWasRemoved.bind(this)),
+      ResultListStore.listen(() => this.setState({result: ResultListStore.store}))
     ];
   }
 
@@ -68,43 +73,40 @@ export default class FacetsResult extends React.Component {
     }
   }
 
-  toggleFacet(key) {
-    const isExpanded = this.state.isExpanded;
-    isExpanded[key] = !this.state.isExpanded[key];
-    this.setState({isExpanded});
-  }
-
   termSelection(facetName, term, checked) {
-    let terms = this.state.termsSelected;
+    const terms = this.state.termsSelected;
     terms[facetName] = terms[facetName] || [];
-    term = '"' + term + '"';
 
     if (checked) {
       terms[facetName].push(term);
+      this.addFacet(facetName, term);
     }
     else {
       terms[facetName] = terms[facetName].filter((el) => {
         return el !== term;
       });
+      this.removeFacet(facetName, term);
     }
 
     this.setState({termsSelected: terms});
   }
 
-  onUpdateQuery(facetName, facets, query) {
-    // Remove all the old terms with this facetname
-    query.query.filter((term) => {
-      return term.type === facetName;
-    }).forEach((facet) => {
-      QueryActions.remove(facet);
-    });
-
-    if (facets[facetName] && facets[facetName].length) {
-      QueryActions.add({type: facetName, value: facets[facetName]});
-    }
+  addFacet(facetName, term) {
+    QueryActions.add({type: facetName, value: term});
   }
 
-  render() {
+  removeFacet(facetName, term) {
+    QueryActions.remove({type: facetName, value: term});
+  }
+
+  resetSelectedFacets() {
+    const selectedFacets = this.state.termsSelected;
+    forEach(selectedFacets, (terms, facetName) => {
+      QueryActions.remove({type: facetName, value: []});
+    });
+  }
+
+  generateFacets() {
     const facetNames = {
       'facet.type': 'Materialetype',
       'facet.creator': 'Forfatter',
@@ -115,32 +117,48 @@ export default class FacetsResult extends React.Component {
       'facet.acSource': 'Kilde'
     };
 
-    const facets = this.props.facets.map((facet) => {
-      const isCollapsed = !this.state.isExpanded[facet.facetName];
+    return this.props.facets.map((facet) => {
 
-      const toggleFunc = this.toggleFacet.bind(this, facet.facetName);
-
-      const termSelection = this.termSelection.bind(this);
-
-      const arrows = <ToggleButton collapsed={isCollapsed} toggleDisplay={toggleFunc} />;
-
-      const facetClass = (isCollapsed) ? 'facet collapsed' : 'facet';
+      const selectedTerms = this.state.termsSelected[facet.facetName] || [];
 
       return (
-        <div key={facet.facetName}>
-          <h3 className='facet-name' onClick={toggleFunc}>{facetNames[facet.facetName]}</h3>
-          {arrows}
-          <div className={facetClass}>
-            <FacetTerms facetName={facet.facetName} termSelection={termSelection} terms={facet} />
-            <a className="button" onClick={() => FacetsActions.getMoreFacetTerms(this.state.query.query, facet.facetName, facet.terms.length)}>Hent flere</a>
-            <a className="button" onClick={this.onUpdateQuery.bind(this, facet.facetName, this.state.termsSelected, this.state.query)}>Opdater</a>
+        <ToggleExpand key={facet.facetName} label={facetNames[facet.facetName]} className="small-10 columns">
+          <div className="facet" >
+            <FacetTerms facetName={facet.facetName} termSelection={this.termSelection.bind(this)} terms={facet} selectedTerms={selectedTerms} />
+            <a className="button tiny" onClick={() => FacetsActions.getMoreFacetTerms(this.state.query.query, facet.facetName, facet.terms.length)} >Mere</a>
           </div>
-        </div>
+        </ToggleExpand>
       );
     });
+  }
+
+  hasSelectedTerms() {
+    let result = false;
+
+    if (typeof this.state.termsSelected === 'object') {
+      forEach(this.state.termsSelected, (value) => {
+        if (value.length) {
+          result = true;
+        }
+      });
+    }
+
+    return result;
+  }
+
+  render() {
+    const removeAllBtnClass = this.hasSelectedTerms() ? '' : 'disabled';
+    const resultCount = this.state.result.info.hits ? this.state.result.info.hits : '0';
+
+    const facets = this.generateFacets();
 
     return (
-      <div className={this.props.className}>
+      <div className={this.props.className} >
+        <div className='facets--update-buttons' >
+          <a className={`button small small-10 ${removeAllBtnClass}`} onClick={this.resetSelectedFacets.bind(this)} >Nulstil</a>
+          <a className='button small small-10' onClick={this.props.toggleFunc} >Vis</a>
+          <p>{`${resultCount} resultater fundet`}</p>
+        </div>
         {facets}
       </div>
     );
@@ -150,5 +168,6 @@ export default class FacetsResult extends React.Component {
 FacetsResult.displayName = 'FacetsResult';
 FacetsResult.propTypes = {
   className: React.PropTypes.string.isRequired,
-  facets: React.PropTypes.array.isRequired
+  facets: React.PropTypes.array.isRequired,
+  toggleFunc: React.PropTypes.func.isRequired
 };

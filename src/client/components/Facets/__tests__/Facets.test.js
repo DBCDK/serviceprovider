@@ -26,10 +26,9 @@ describe('Test Facets Container Component', () => {
     render.render(<FacetsContainer />);
     const rendered = render.getRenderOutput();
     assert.strictEqual(rendered.type, 'div');
-    assert.strictEqual(rendered.props.className, 'facet-result row');
+    assert.strictEqual(rendered.props.className, 'facets--container');
     assert.isUndefined(rendered.props.children.children);
   });
-
 });
 
 describe('Test Facets Results Component', () => {
@@ -51,8 +50,11 @@ describe('Test Facets Results Component', () => {
     render.render(<FacetsResult facets={facets} />);
     const rendered = render.getRenderOutput();
     assert.strictEqual(rendered.type, 'div');
-    assert.strictEqual(rendered.props.children[0].props.children[0].props.children, 'Materialetype');
-    assert.strictEqual(rendered.props.children[0].props.children[2].props.children[0].props.facetName, 'facet.type');
+    assert.strictEqual(rendered.props.children[0].props.children[0].props.children, 'Nulstil');
+    assert.strictEqual(rendered.props.children[0].props.children[1].props.children, 'Vis');
+    assert.strictEqual(rendered.props.children[0].props.children[2].props.children, '0 resultater fundet');
+    assert.strictEqual(rendered.props.children[1][0].props.label, 'Materialetype');
+    assert.strictEqual(rendered.props.children[1][0].props.children.props.children[0].props.facetName, 'facet.type');
   });
 
   it('Assert rendering of facet collapse buttons', () => {
@@ -63,11 +65,10 @@ describe('Test Facets Results Component', () => {
       {term: 'ebog', count: '22'},
       {term: 'billedbog', count: '15'},
       {term: 'tidsskriftsartikel', count: '15'}]}];
-    render.render(<FacetsResult facets={facets} />);
+    render.render(<FacetsResult facets={facets} selectedTerms={[]} />);
     const rendered = render.getRenderOutput();
-    assert.strictEqual(rendered.props.children[0].props.children[0].type, 'h3');
-    assert.strictEqual(rendered.props.children[0].props.children[1].props.collapsed, true);
-    assert.strictEqual(rendered.props.children[0].props.children[2].props.className, 'facet collapsed');
+    assert.strictEqual(rendered.props.children[0].props.children[0].type, 'a');
+    assert.strictEqual(rendered.props.children[1][0].type.displayName, 'ToggleExpand');
   });
 
 });
@@ -86,7 +87,7 @@ describe('Test Facet Terms Component', () => {
       {term: 'ebog', count: '22'},
       {term: 'billedbog', count: '15'},
       {term: 'tidsskriftsartikel', count: '15'}]};
-    render.render(<FacetTerms facetName='facet.type' terms={terms} />);
+    render.render(<FacetTerms facetName='facet.type' terms={terms} selectedTerms={[]} />);
     const rendered = render.getRenderOutput();
     assert.strictEqual(rendered.type, 'form');
     assert.strictEqual(rendered.props.children[1].props.children[0].props.value, 'avisartikel');
