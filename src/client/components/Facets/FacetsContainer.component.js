@@ -23,13 +23,13 @@ class FacetsContainer extends React.Component {
       facets: []
     };
 
-    this.unsub = FacetsStore.listen(this.onUpdateFacets);
+    this.unsubscribe = FacetsStore.listen(this.onUpdateFacets);
 
     this.state.isExpanded = {};
   }
 
   componentWillUnmount() {
-    this.unsub();
+    this.unsubscribe();
   }
 
   onUpdateFacets(store) {

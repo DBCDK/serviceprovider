@@ -7,8 +7,8 @@ import LibrariesStore from '../../stores/Libraries.store.js';
 import LibrariesActions from '../../actions/Libraries.actions.js';
 
 export default class Footer extends React.Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.state = {
       agencyName: null,
       openingHoursToday: [],
@@ -20,19 +20,17 @@ export default class Footer extends React.Component {
       }
     };
 
-    this.unsubscribe = [
-      LibrariesStore.listen(this.updateLibraries.bind(this))
-    ];
-  }
-
-  componentWillMount() {
-    if (this.props.libraryData) {
-      let stateObject = this.extractLibraryInfo(this.props.libraryData);
+    if (props.libraryData) {
+      let stateObject = this.extractLibraryInfo(props.libraryData);
       this.state.agencyName = stateObject.agencyName;
       this.state.openingHoursToday = stateObject.openingHoursToday;
       this.state.openingHoursTomorrow = stateObject.openingHoursTomorrow;
       this.state.address = stateObject.address;
     }
+
+    this.unsubscribe = [
+      LibrariesStore.listen(this.updateLibraries.bind(this))
+    ];
   }
 
   componentDidMount() {

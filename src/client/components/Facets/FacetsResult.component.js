@@ -133,7 +133,7 @@ export default class FacetsResult extends React.Component {
           <div className={facetClass}>
             <FacetTerms facetName={facet.facetName} termSelection={termSelection} terms={facet} />
             <a className="button" onClick={() => FacetsActions.getMoreFacetTerms(this.state.query.query, facet.facetName, facet.terms.length)}>Hent flere</a>
-            <a className="button" onClick={this.onUpdateQuery.bind(this, facet.facetName, this.state.termsSelected, this.state.query)}>Opdater</a>
+            <a className="button" onClick={() => this.onUpdateQuery(facet.facetName, this.state.termsSelected, this.state.query)}>Opdater</a>
           </div>
         </div>
       );
