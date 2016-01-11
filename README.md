@@ -1,4 +1,4 @@
-# Palles Gavebod
+# Mobilsøg
 
 [![GitHub tag](https://img.shields.io/github/tag/DBCDK/pallesgavebod.svg?style=flat-square)](https://github.com/DBCDK/pallesgavebod)
 [![David](https://img.shields.io/david/DBCDK/pallesgavebod.svg?style=flat-square)](https://david-dm.org/DBCDK/pallesgavebod#info=dependencies)
@@ -7,9 +7,7 @@
 [![Coverage Status](https://coveralls.io/repos/DBCDK/pallesgavebod/badge.svg?branch=master&service=github)](https://coveralls.io/github/DBCDK/pallesgavebod?branch=master)
 [![Code Climate](https://codeclimate.com/github/DBCDK/pallesgavebod/badges/gpa.svg)](https://codeclimate.com/github/DBCDK/pallesgavebod)
 
-Next generation Palles Gavebod
-
-As default the application will load on localhost:8080. Se a running example on [pg.demo.dbc.dk](https://pg.demo.dbc.dk) or [ddbmobil.demo.dbc.dk](https://ddbmobil.demo.dbc.dk)
+As default the application will load on localhost:8080. Se a running example on [ddbmobil.demo.dbc.dk](https://ddbmobil.demo.dbc.dk)
 
 ## How to install and run the application
 ```bash
@@ -68,6 +66,21 @@ Defines which portnumber the application should use when bootinh up.
 If `PORT` is undefined the application will be accecsible at port 8080 (i.e. localhost:8080)  
   
   The default value is `8080`
+
+- __NODE_WEB_WORKERS__
+Defines how many workers to use. 
+  
+  The default value is `1`
+  
+- __NODE_WEB_BROKERS__
+Defines how many brokers to use.
+  
+  The default value is `1`
+
+- __AUTO_REBOOT__
+Defines if a worker reboots on crash. (This does not apply to the whole application, just the workers).
+
+  The default value is `true`
 
 ## New Relic
 As New Relic is used by DBC A/S this application requires New Relic to be configured.  
