@@ -1,38 +1,68 @@
-.facet-result {
-  .facet-name,
-  .facets-header {
-    display: inline-block;
-    cursor: pointer;
+.facets {
+
+  position: fixed;
+  background-color: #EFEFEF;
+  top: 0;
+  left: 0;
+  width: 100%;
+  display: block;
+  z-index: 10000;
+  height: 100%;
+  overflow-y: scroll;
+
+  @media #{$medium-up} {
+    position: inherit;
+    background-color: inherit;
+    z-index: auto;
+    height: auto;
+    overflow-y: auto;
   }
-  .toggle {
-    cursor: pointer;
+
+  .toggle--wrapper {
+    border: none;
+    margin: 0;
   }
-  .toggle-buttons {
-    display: inline-block;
-    padding: 0 10px;
-    cursor: pointer;
-    .button-collapsed {
-      width: 0;
-      height: 0;
-      border-left: 20px solid transparent;
-      border-right: 20px solid transparent;
-      border-top: 20px solid #000000;
-    }
-    .button-not-collapsed {
-      width: 0;
-      height: 0;
-      border-left: 20px solid transparent;
-      border-right: 20px solid transparent;
-      border-bottom: 20px solid #000000;
-    }
-  }
-  .button-not-collapsed,
-  .facets.collapsed,
-  .facet.collapsed,
-  .toggle-buttons.not-collapsed .button-collapsed {
+
+  &.collapsed {
     display: none;
   }
-  .toggle-buttons.not-collapsed .button-not-collapsed {
-    display: inline-block;
+}
+
+.facets--result--header {
+  display: block;
+  padding-top: 8px;
+  padding-left: 10px;
+  border: 1px solid #ccc;
+  background-color: #FAFAFA;
+  height: 2.3125rem;
+  font-size: 0.87rem;
+}
+
+.facets--update-buttons {
+  text-align: center;
+  .button {
+    margin: 5px;
+
+    &.disabled {
+      background-color: rgb(204, 204, 204);
+      border: none;
+    }
+
+    &:hover {
+      background-color: #7A7A7A;
+      border: solid 1px #CCC;
+    }
+  }
+}
+
+.facets--term-form {
+  label {
+    font-size: 1rem;
+  }
+}
+
+input[type="checkbox"] {
+  &.facets--term-checkbox {
+    margin: 0 .5rem 1rem 0;
   }
 }

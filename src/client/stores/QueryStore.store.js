@@ -71,7 +71,10 @@ let QueryStore = Reflux.createStore({
         queryElement.type === element.type && // Check that the types are the same.
         (queryElement.value.length === 0 || queryElement.value === element.value) // Check that the length of the value is 0, or the values are identical.
       );
-      removedElements.push(element);
+      if (!shouldKeep) {
+        removedElements.push(element);
+      }
+
       return shouldKeep;
     });
 

@@ -42,7 +42,7 @@ export default class SearchSort extends React.Component {
     });
 
     return (
-      <div className='search-sort-container'>
+      <div className='search-sort-container small-12 columns'>
         <select defaultValue={defaultSort} onChange={this.sortWasChanged.bind(this)} ref={"sortSelector"}>
           {options}
         </select>

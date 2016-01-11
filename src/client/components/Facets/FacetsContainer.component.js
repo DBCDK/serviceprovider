@@ -10,22 +10,18 @@ import React from 'react';
 import FacetsStore from './Facets.store.js';
 
 import FacetsResult from './FacetsResult.component.js';
-import ToggleButton from '../ToggleButton.component.js';
 
-class FacetsContainer extends React.Component {
-
+export default class FacetsContainer extends React.Component {
   constructor() {
     super();
-
-    this.onUpdateFacets = this.onUpdateFacets.bind(this);
 
     this.state = {
       facets: []
     };
 
-    this.unsub = FacetsStore.listen(this.onUpdateFacets);
+    this.unsub = FacetsStore.listen(this.onUpdateFacets.bind(this));
 
-    this.state.isExpanded = {};
+    this.state.isToggled = false;
   }
 
   componentWillUnmount() {
@@ -36,49 +32,32 @@ class FacetsContainer extends React.Component {
     this.setState({facets: store.facets});
   }
 
-  toggleFacets(key) {
-    const isExpanded = this.state.isExpanded;
-    isExpanded[key] = !this.state.isExpanded[key];
-    this.setState({isExpanded});
+  toggleFacets() {
+    this.setState({isToggled: !this.state.isToggled});
   }
 
   renderFacetsResult() {
-    let facets = null;
-    if (this.state.facets) {
-      facets = this.state.facets;
-    }
+    const facets = this.state.facets ? this.state.facets : null;
 
-    const isCollapsed = !this.state.isExpanded.facets;
+    const collapsedClass = !this.state.isToggled ? 'collapsed' : '';
 
-    const toggleFunc = this.toggleFacets.bind(this, 'facets');
-
-    const arrows = <ToggleButton collapsed={isCollapsed} toggleDisplay={toggleFunc} />;
-
-    const facetsClass = (isCollapsed === true) ? 'facets collapsed' : 'facets';
-
-    return (
-      <div className="facets-container small-24 columns">
-        <h2 className="facets-header" onClick={toggleFunc}>Afgræns din søgning</h2>
-        {arrows}
-        <FacetsResult className={facetsClass} facets={facets} />
-      </div>
-    );
+    return <FacetsResult className={`facets small-24 columns ${collapsedClass}`} facets={facets} toggleFunc={this.toggleFacets.bind(this)} />;
   }
 
   render() {
-    const result = this.state.facets && this.state.facets.length && this.renderFacetsResult() || '';
+    const result = this.renderFacetsResult();
+
+    const toggleFunc = this.toggleFacets.bind(this, 'facets');
 
     return (
-      <div className='facet-result row' >
-        <div className='small-24 columns'>
-          {result}
+      <div>
+        <div className='facets--container small-12 columns' >
+          <span className="facets--result--header" onClick={toggleFunc} >Filtrér</span>
         </div>
+        {result}
       </div>
     );
   }
-
 }
 
-FacetsContainer.displayName = 'FacetsContainer.component';
-
-export default FacetsContainer;
+FacetsContainer.displayName = 'FacetsContainer';
