@@ -23,12 +23,14 @@ export default React.createClass({
 
   render() {
     return (
-      <div className='search'>
+      <div className='search' >
         <Query queryLocation='/search' />
         <SearchFieldContainer query={this.props.query} />
         <FilterGuideContainer />
-        <FacetsContainer />
-        <SearchSort />
+        <div className="search--filter-options row" >
+          <SearchSort />
+          <FacetsContainer />
+        </div>
         <SearchResultContainer recommendations={this.props.recommendations} />
       </div>
     );

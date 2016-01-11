@@ -190,17 +190,18 @@
     display: inline-block;
     border-radius: 50%;
     background-color: $similar-title-background-color;
-    width: 25px;
-    height: 25px;
-    line-height: 25px;
+    width: 26px;
+    height: 26px;
     text-align: center;
     margin-right: 5px;
     color: #eee;
     .is-visible & {
-      content: '-';
+      content: '–';
+      line-height: 24px;
     }
     .is-not-visible & {
       content: '+';
+      line-height: 25px;
     }
   }
 }
