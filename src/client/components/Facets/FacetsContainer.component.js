@@ -19,13 +19,13 @@ export default class FacetsContainer extends React.Component {
       facets: []
     };
 
-    this.unsub = FacetsStore.listen(this.onUpdateFacets.bind(this));
+    this.unsubscribe = FacetsStore.listen(this.onUpdateFacets.bind(this));
 
     this.state.isToggled = false;
   }
 
   componentWillUnmount() {
-    this.unsub();
+    this.unsubscribe();
   }
 
   onUpdateFacets(store) {

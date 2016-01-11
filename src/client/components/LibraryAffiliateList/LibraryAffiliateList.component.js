@@ -17,22 +17,20 @@ import LibrariesStore from '../../stores/Libraries.store.js';
 import LibrariesActions from '../../actions/Libraries.actions';
 
 export default class LibraryAffiliateList extends React.Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
 
     this.state = {
       affiliates: LibrariesStore.getInitialState()
     };
 
+    if (props.affiliatesData && props.affiliatesData[0]) {
+      this.state.affiliates.libraries = props.affiliatesData[0];
+    }
+
     this.unsubscribe = [
       LibrariesStore.listen(() => this.setState({affiliates: LibrariesStore.store}))
     ];
-  }
-
-  componentWillMount() {
-    if (this.props.affiliatesData && this.props.affiliatesData[0]) {
-      this.state.affiliates.libraries = this.props.affiliatesData[0];
-    }
   }
 
   componentDidMount() {
