@@ -63,7 +63,7 @@ export function MobilSoegPassportConfig(app) {
                 borchkResponse: borchkResponse.requestStatus,
                 openAgencyResponse: openAgencyResponse
               });
-              done(true, false);
+              done('Error on finding mobil soeg profile', false);
             });
           }
           else {
