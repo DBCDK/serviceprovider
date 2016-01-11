@@ -39,9 +39,7 @@ class WorkContainer extends React.Component {
   }
 
   componentDidMount() {
-    if (this.state.work.result.title) {
-      document.title = this.state.work.result.title;
-    }
+    this.libraryTitle = document.title;
     workAction({id: this.props.id});
   }
 
@@ -51,6 +49,15 @@ class WorkContainer extends React.Component {
         unsubscriber();
       }
     );
+  }
+
+  setTtile(workResult) {
+    if (workResult.fullTitle && workResult.creator) {
+      document.title = workResult.fullTitle + ' af ' + workResult.creator;
+      if (this.libraryTitle) {
+        document.title += ' | ' + this.libraryTitle;
+      }
+    }
   }
 
   workStoreSentData(data) {
@@ -90,6 +97,7 @@ class WorkContainer extends React.Component {
     }
 
     let workResult = isEmpty(work.result) ? work.brief : work.result;
+    this.setTtile(workResult);
 
     // Data was found, begin rendering
     let editions = [];
