@@ -15,84 +15,96 @@ const WorkRoutes = express.Router();
 import dbcMiddleware from './../middlewares/middleware.js';
 
 // Components
-import workServer from '../../client/components/Work/Work.server';
 import CoverImage from '../../client/components/CoverImage/CoverImageContainer.component';
 import Order from '../../client/components/Order/Order.component';
-import Receipt from '../../client/components/Receipt/Receipt.component';
+import WorkContainer from '../../client/components/Work/WorkContainer.container.component';
+import WorkLayout from '../../client/components/Work/WorkLayout.component';
 
-WorkRoutes.get(
-  ['/order', '/order*'],
-  dbcMiddleware.redirectToCallbackWhenLoggedIn(
-    (req) => {
-      // Redirect destination callback
-      if (req.query.ids) {
-        const rt = req.query.ids.split(',');
-        return '/work?id=' + rt[0];
-      }
+WorkRoutes.get(['/order/:id'], dbcMiddleware.redirectWhenLoggedIn(false), (req, res) => {
+  const id = req.params.id;
+  let contextObject = {
+    pagescript: 'order.js',
+    content: '',
+    data: '""'
+  };
 
-      // if the if fails, just fall back to original url
-      return req.originalUrl;
-    }
-  ),
-  (req, res) => {
-    let query = req.query;
-    query = JSON.stringify(query);
+  res.callServiceProvider('getOpenSearchWorkBriefDisplay', {pid: id}, 30000).then((response) => {
+    let pagedata = {
+      q: id,
+      work: response[0].work,
+      pickupAgency: req.user.profile.pickup_agency ? req.user.profile.pickup_agency : req.user.agencyid
+    };
 
-    const image = <CoverImage pids={req.query.coverImageIds.split(',')} prefSize={'detail_500'} />;
+    contextObject.data = '\'' + JSON.stringify(pagedata) + '\'';
 
-    dbcMiddleware.renderPage(res, 'order', {
-      query,
-      pagescript: 'order.js',
-      srrString: ReactDOM.renderToString(
-        <Order coverImage={image} order={req.query} />)
-    }, 'was not serverside');
-  }
-);
+    const image = <CoverImage pids={pagedata.q} prefSize={'detail_500'} />;
+    contextObject.content = ReactDOM.renderToString(
+      <Order coverImage={image} order={pagedata.work} orderId={pagedata.q} pickupAgency={pagedata.pickupAgency} />);
 
-WorkRoutes.get(['/receipt', '/receipt/*'], (req, res) => {
-  let query = req.query;
-  query = JSON.stringify(query);
-  dbcMiddleware.renderPage(res, 'receipt', {
-    query,
-    pagescript: 'receipt.js',
-    ssrString: ReactDOM.renderToString(<Receipt receipt={req.query} />)
-  }, 'was not serverside');
+    res.render('page', contextObject);
+  }, () => {
+    res.status(500);
+    res.render('error', {errorImage: '', errortext: 'Der skete en fejl under indlæsningen af dette værk, prøv igen senere.'});
+  });
 });
 
-WorkRoutes.get(['/', '/*'], (req, res) => {
+WorkRoutes.get(['/receipt/:id'], dbcMiddleware.redirectToCallbackWhenLoggedIn((req) => {
+  return '/work/order/' + req.params.id;
+}, false), (req, res) => {
+  const id = req.params.id;
+  let contextObject = {
+    pagescript: 'receipt.js',
+    content: '',
+    data: '""'
+  };
+
+  res.callServiceProvider('getOpenSearchWorkBriefDisplay', {pid: id}, 30000).then((response) => {
+    let pagedata = {
+      q: id,
+      work: response[0].work,
+      pickupAgency: req.user.profile.pickup_agency ? req.user.profile.pickup_agency : req.user.agencyid
+    };
+
+    contextObject.data = '\'' + JSON.stringify(pagedata) + '\'';
+
+    res.render('page', contextObject);
+  }, () => {
+    res.status(500);
+    res.render('error', {errorImage: '', errortext: 'Der skete en fejl under indlæsningen af dette værk, prøv igen senere.'});
+  });
+});
+
+WorkRoutes.get(['/', '/*'], dbcMiddleware.cacheMiddleware, (req, res) => {
   // Start by getting id from request
   let id = inHTMLData(req.query.id);
   id = '"' + id + '"';
 
-  let promiseResponse = req.app.get('serviceProvider').trigger(
-    'getOpenSearchWork', {
-      pid: req.query.id,
-      offset: 1,
-      worksPerPage: 1,
-      allManifestations: true
-    },
-    res.locals
-  );
+  let contextObject = {
+    id: id,
+    pagescript: 'work.js',
+    ssrString: '',
+    data: '""'
+  };
 
-  dbcMiddleware.setupSSR(req, res, promiseResponse, (err, result, serviceTime) => {
-    if (err) {
-      return dbcMiddleware.renderPage(res, 'work', {
-        id,
-        pagescript: 'work.js',
-        ssrString: workServer({id}).work
-      }, 'was too slow');
-    }
+  res.callServiceProvider('getOpenSearchWork', {
+    pid: req.query.id,
+    offset: 1,
+    worksPerPage: 1,
+    allManifestations: true
+  }, 300).then((result) => {
+    let work = {
+      brief: {},
+      result: result[0].work,
+      info: result[0].info,
+      error: result[0].error
+    };
 
-    const workStr = workServer({
-      id: id,
-      work: result[0].work
-    }).work;
-
-    res.set('Cache-Control', 'max-age=86400, s-maxage=86400, public');
-    dbcMiddleware.renderPage(res, 'work', {
-      id,
-      workString: workStr
-    }, serviceTime);
+    contextObject.data = '\'' + JSON.stringify(work) + '\'';
+    contextObject.ssrString = ReactDOM.renderToString(<WorkContainer id={req.query.id} work={work} workLayout={WorkLayout} />);
+    res.render('work', contextObject);
+  }, () => {
+    contextObject.ssrString = ReactDOM.renderToString(<WorkContainer id={req.query.id} workLayout={WorkLayout} />);
+    res.render('work', contextObject);
   });
 });
 

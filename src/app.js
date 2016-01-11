@@ -21,6 +21,7 @@ import RedisStore from 'connect-redis';
 import reload from 'reload';
 import ServiceProviderSetup from './server/serviceProvider/ServiceProviderSetup.js';
 import {curry} from 'lodash';
+import sass from 'node-sass';
 
 // Routes
 import MainRoutes from './server/routes/main.routes.js';
@@ -73,7 +74,7 @@ app.set('port', process.env.PORT || 8080); // eslint-disable-line no-process-env
 const EMAIL_REDIRECT = process.env.EMAIL_REDIRECT || 'localhost:' + app.get('port'); // eslint-disable-line no-process-env
 
 // Configure app variables
-app.set('serviceProvider', ServiceProviderSetup(config[process.env.CONFIG_NAME || DEFAULT_CONFIG_NAME].provider.services, logger, socket)); // eslint-disable-line no-process-env
+app.set('serviceProvider', ServiceProviderSetup(config[process.env.CONFIG_NAME || DEFAULT_CONFIG_NAME], logger, socket)); // eslint-disable-line no-process-env
 app.set('logger', logger);
 app.set('EMAIL_REDIRECT', EMAIL_REDIRECT);
 app.set('APPLICATION', APPLICATION);
@@ -91,6 +92,24 @@ if (!PRODUCTION && newrelic) {
   newrelic.agent_enabled = false;
 }
 
+// Setup dynamic sass compilation
+let styles = {};
+function generateStyles(filepath) {
+  return sass.renderSync({
+    outputStyle: 'compressed',
+    file: path.join(__dirname, filepath)
+  }).css.toString();
+}
+
+styles.aarhus = generateStyles('client/styles/ddb.scss');
+styles.albertslund = generateStyles('client/styles/albertslund.ddb.scss');
+styles.ballerup = generateStyles('client/styles/ballerup.ddb.scss');
+styles.frederiksberg = generateStyles('client/styles/frederiksberg.ddb.scss');
+styles.guldborgsund = generateStyles('client/styles/guldborgsund.ddb.scss');
+styles.herlev = generateStyles('client/styles/herlev.ddb.scss');
+styles.kobenhavn = generateStyles('client/styles/kobenhavn.ddb.scss');
+styles.q2fjern = generateStyles('client/styles/ddb.scss');
+styles.ringe = generateStyles('client/styles/ringe.ddb.scss');
 
 // setting local vars that should be available to our template engine
 app.locals.newrelic = newrelic;
@@ -100,6 +119,7 @@ app.locals.production = PRODUCTION;
 app.locals.title = config[process.env.CONFIG_NAME || DEFAULT_CONFIG_NAME].applicationTitle || ''; // eslint-disable-line no-process-env
 app.locals.application = APPLICATION;
 app.locals.faviconUrl = APPLICATION === 'mobilsoeg' ? 'https://www.aakb.dk/sites/www.aakb.dk/files/favicon.ico' : '/favicon.ico';
+app.locals.styles = styles;
 
 // Setup environments
 let redisConfig;
@@ -177,7 +197,7 @@ PassportStrategies.MobilSoegPassportConfig(app);
 app.use('*', GlobalsMiddleware); // should be placed after PassportStrategies.MobilSoegPassportConfig
 
 // SSR middleware to add utility methods, and render footer automatically.
-app.use('*', dbcMiddleware.ssrMiddleware, dbcMiddleware.ssrFooter);
+app.use('*', dbcMiddleware.ssrMiddleware, dbcMiddleware.ssrFooter, dbcMiddleware.ssrHeader);
 
 // Setup Routes
 app.use('/', dbcMiddleware.cacheMiddleware, MainRoutes);
@@ -189,7 +209,7 @@ app.use('/event', dbcMiddleware.cacheMiddleware, EventRoutes);
 
 
 // If running in dev-mode enable auto reload in browser when the server restarts
-if (ENV === 'development') {
+if (ENV === 'development' && !process.env.DISABLE_SOCKET_RELOAD) { // eslint-disable-line no-process-env
   reload(server, app, 1000, true);
 }
 

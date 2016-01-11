@@ -5,7 +5,7 @@
  * Setup service provicer
  */
 
-import {Provider, AutoRequire} from 'dbc-node-serviceprovider';
+import {Provider, AutoRequire, ClientCache} from 'dbc-node-serviceprovider';
 import path from 'path';
 
 // import clients
@@ -25,6 +25,28 @@ import RankedRecommendations from 'dbc-node-ranked-recommendations-client';
 import Recommendations from 'dbc-node-recommendations';
 
 /**
+ * Helper function for registering service clients. If cachetime is defined in config, wrap methods with the
+ * client cache manager
+ *
+ * @param provider
+ * @param config
+ * @param clientCache
+ * @param clientName
+ * @param client
+ */
+function registerServiceClient(provider, config, clientCache, clientName, client) {
+  const methods = client(config[clientName]);
+  const cache = config[clientName].cache || null;
+  if (cache) {
+    provider.registerServiceClient(clientName, clientCache(methods, cache));
+  }
+  else {
+    provider.registerServiceClient(clientName, methods);
+  }
+
+}
+
+/**
  * Method for initializing all service clients and transforms
  *
  * @param config
@@ -36,21 +58,23 @@ export default function initProvider(config, logger, sockets) {
   const provider = Provider(logger);
   provider.dispatcher(sockets);
 
+  const RegisterClientOnProvider = registerServiceClient.bind(null, provider, config.provider.services, ClientCache(config.cache));
+
   // Register all clients
-  provider.registerServiceClient('borchk', Borchk(config.borchk));
-  provider.registerServiceClient('ddbcontent', DdbContent(config.ddbcontent));
-  provider.registerServiceClient('entitysuggest', EntitySuggest(config.entitysuggest));
-  provider.registerServiceClient('mobilSoegProfile', MobilSoegProfile(config.mobilSoegProfile));
-  provider.registerServiceClient('moreinfo', MoreInfo(config.moreinfo));
-  provider.registerServiceClient('openagency', OpenAgency(config.openagency));
-  provider.registerServiceClient('openholdingstatus', OpenHoldingStatus(config.openholdingstatus));
-  provider.registerServiceClient('openorder', OpenOrder(config.openorder));
-  provider.registerServiceClient('opensearch', OpenSearch(config.opensearch));
-  provider.registerServiceClient('opensuggest', OpenSuggest(config.opensuggest));
-  provider.registerServiceClient('openuserstatus', OpenUserStatus(config.openuserstatus));
-  provider.registerServiceClient('popsuggest', PopSuggest(config.popsuggest));
-  provider.registerServiceClient('recommendranked', RankedRecommendations(config.recommendranked));
-  provider.registerServiceClient('recommend', Recommendations(config.recommend));
+  RegisterClientOnProvider('borchk', Borchk);
+  RegisterClientOnProvider('ddbcontent', DdbContent);
+  RegisterClientOnProvider('entitysuggest', EntitySuggest);
+  RegisterClientOnProvider('mobilSoegProfile', MobilSoegProfile);
+  RegisterClientOnProvider('moreinfo', MoreInfo);
+  RegisterClientOnProvider('openagency', OpenAgency);
+  RegisterClientOnProvider('openholdingstatus', OpenHoldingStatus);
+  RegisterClientOnProvider('openorder', OpenOrder);
+  RegisterClientOnProvider('opensearch', OpenSearch);
+  RegisterClientOnProvider('opensuggest', OpenSuggest);
+  RegisterClientOnProvider('openuserstatus', OpenUserStatus);
+  RegisterClientOnProvider('popsuggest', PopSuggest);
+  RegisterClientOnProvider('recommendranked', RankedRecommendations);
+  RegisterClientOnProvider('recommend', Recommendations);
 
   // Transforms are autorequired to lessen boilerplate code
   AutoRequire(path.join(__dirname, 'transformers'), 'transform.js').map(provider.registerTransform);

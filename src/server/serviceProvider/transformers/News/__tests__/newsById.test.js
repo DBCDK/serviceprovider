@@ -13,7 +13,9 @@ describe('Test NewsById transform', () => {
       title: 'title 1',
       lead: 'lead 1',
       body: '<p>body 1</p>',
-      image: null
+      image: null,
+      titleImage: null,
+      relatedWorks: ['870970-basis:52037719']
     };
     expect(response).to.deep.equal(expected);
   });

@@ -22,9 +22,11 @@ describe('Test Receipt Component', () => {
   it('Assert type of rendered element', () => {
     const receipt = {
       pickupAgency: '710100',
-      title: 'This is a title',
-      type: 'Bog',
-      ids: ['870970-basis:28183488']
+      work: {
+        title: 'This is a title',
+        type: 'Bog'
+      },
+      q: '870970-basis:28183488'
     };
     render.render(<Receipt receipt={receipt} />);
     const rendered = render.getRenderOutput();
@@ -34,9 +36,11 @@ describe('Test Receipt Component', () => {
   it('Should render headline: \'Bestilling af følgende materiale mislykkedes:\'', () => {
     const receipt = {
       pickupAgency: '710100',
-      title: 'This is a title',
-      type: 'Bog',
-      ids: '870970-basis:28183488'
+      work: {
+        title: 'This is a title',
+        type: 'Bog'
+      },
+      q: '870970-basis:28183488'
     };
 
     const element = React.createElement(Receipt, {receipt: receipt});
@@ -50,9 +54,11 @@ describe('Test Receipt Component', () => {
   it('Should render headline: \'Vi har modtaget din bestilling på:\'', () => {
     const receipt = {
       pickupAgency: '710100',
-      title: 'This is a title',
-      type: 'Bog',
-      ids: '870970-basis:28183488'
+      work: {
+        title: 'This is a title',
+        type: 'Bog'
+      },
+      q: '870970-basis:28183488'
     };
 
     const element = React.createElement(Receipt, {receipt: receipt});

@@ -21,6 +21,7 @@ const TokenSearchField = React.createClass({
   propTypes: {
     change: PropTypes.func,
     focus: PropTypes.func,
+    hasFocus: PropTypes.bool,
     pending: PropTypes.bool,
     placeholder: PropTypes.string,
     query: PropTypes.array.isRequired,
@@ -115,10 +116,18 @@ const TokenSearchField = React.createClass({
     }
   },
 
+  componentDidUpdate() {
+    if (this.state.hasFocus) {
+      ReactDOM.findDOMNode(this.refs.searchfield).focus();
+    }
+    else {
+      ReactDOM.findDOMNode(this.refs.searchfield).blur();
+    }
+  },
+
   render() {
-    const {hasFocus, text} = this.state;
+    const {text} = this.state;
     const {query, pending} = this.props;
-    const tokenClasses = !hasFocus && 'tokens-wrapper' || 'tokens-wrapper hide';
     const spinnerClass = pending ? 'token-searchfield--spinner pending' : 'token-searchfield--spinner';
 
     return (
@@ -129,19 +138,17 @@ const TokenSearchField = React.createClass({
               <div className="row collapse" >
                 <div className="small-20 columns" >
                   <div className='tokens' >
-                    <div className={tokenClasses} >
-                      <TokenList query={query} remove={this.removeElement} translations={this.props.translations} />
-                    </div>
+                    <TokenList hasFocus={this.props.hasFocus} query={query} remove={this.removeElement}
+                               setFocus={(state) => this.setFocus(state)} translations={this.props.translations} />
                   </div>
                   <input className='searchfield'
                          onChange={this.onChange}
-                         onClick={this.setFocus.bind(this, true)}
                          onFocus={this.setFocus.bind(this, true)}
                          placeholder={this.props.placeholder}
                          ref='searchfield'
                          type='text'
-                         value={text || ''}
-                  />
+                         value={this.props.hasFocus && text || ''}
+                    />
                   <span className={`${spinnerClass}`} />
                 </div>
                 <div className="small-4 columns" >

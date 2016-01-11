@@ -6,7 +6,7 @@ import {isEmpty} from 'lodash';
 
 // Components
 import CoverImage from '../CoverImage/CoverImageContainer.component';
-import OrderButton from '../Order/OrderButton/OrderButton.component';
+import OrderButtonsContainerComponent from '../Order/OrderButtons/OrderButtonsContainer.component.js';
 import LikeContainer from '../LikeDislike/LikeContainer.component.js';
 import WorkRecommendation from './WorkRecommendation.component';
 import ToggleExpand from './WorkToggleExpand.component';
@@ -79,24 +79,25 @@ export default class WorkLayout extends React.Component {
   }
 
   renderOrderButton(profile) {
-    // Fake profile to look like old one until refactor!
-    // TODO: REFACTOR!
-    if (profile.userIsLoggedIn && profile.profile.agencyid) {
-      const orderProfile = {
-        userIsLoggedIn: profile.userIsLoggedIn,
-        favoriteLibraries: [{
-          libraryID: profile.profile.agencyid,
-          agencyID: profile.profile.pickup_agency ? profile.profile.pickup_agency : profile.profile.agencyid
-        }]
-      };
+    if (this.props.work.relations) {
+      if (profile.userIsLoggedIn && profile.profile.agencyid) {
+        return (
+          <OrderButtonsContainerComponent
+            agency={profile.profile.agencyid}
+            defaultLibrary={profile.profile.pickup_agency ? profile.profile.pickup_agency : profile.profile.agencyid}
+            manifestations={this.props.specifics}
+            relations={this.props.work.relations}
+          />
+        );
+      }
 
       return (
-        <OrderButton
-          favoriteLibraries={orderProfile.favoriteLibraries}
+        <OrderButtonsContainerComponent
+          agency={''}
+          defaultLibrary={''}
           manifestations={this.props.specifics}
-          profile={orderProfile}
           relations={this.props.work.relations}
-          />
+        />
       );
     }
 

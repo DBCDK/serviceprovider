@@ -15,7 +15,7 @@ export default class DeleteLikesButton extends React.Component {
   render() {
     return (
       <div className="row" >
-        <div className='right' >
+        <div className='column small-12' >
           <a className='button tiny' onClick={this.onButtonDown.bind(this)} >Slet mine likes</a>
         </div>
       </div>

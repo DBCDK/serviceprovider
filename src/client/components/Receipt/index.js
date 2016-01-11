@@ -10,4 +10,5 @@ import Receipt from '../Receipt/Receipt.component';
  * If a querystring from the url exists it is added to the global window object, and should be passed to the client
  */
 
-ReactDOM.render(<Receipt receipt={window.RECEIPT_PROPS || {}} />, document.getElementById('receipt'));
+const order = JSON.parse(window.PAGE_DATA || '') || {};
+ReactDOM.render(<Receipt receipt={order} />, document.getElementById('page'));

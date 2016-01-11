@@ -1,6 +1,12 @@
+
+#header {
+  margin-bottom: 10px;
+}
+
 #logo {
   display: block;
   margin-left: 10px;
+  background-image: url($logo);
   background-Size: contain;
   background-repeat: no-repeat;
   background-position-y: center;

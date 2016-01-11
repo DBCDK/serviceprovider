@@ -69,6 +69,8 @@ $topbar-background-color: #f26304;
 $white: #FFF;
 $work-mattype-icon-background-color: #f6ab0c;
 
+$logo: "/aakb_logo.png";
+
 // We use these as default colors throughout
 // $primary-color: #008CBA;
 // $secondary-color: #e7e7e7;
@@ -105,7 +107,7 @@ $last-child-float: $opposite-direction;
 // d. Media Query Ranges
 // - - - - - - - - - - - - - - - - - - - - - - - - -
 
-$xsmall-breakpoint: em-calc(320);
+$xsmall-breakpoint: em-calc(250);
 $small-breakpoint: em-calc(420);
 $medium-breakpoint: em-calc(640);
 $large-breakpoint: em-calc(1024);

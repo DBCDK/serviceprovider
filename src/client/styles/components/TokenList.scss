@@ -2,24 +2,20 @@ $height: 26px;
 $token-background-color: #222;
 
 .tokens-wrapper {
-  position: relative;
-  width: 100%;
-  white-space: nowrap;
-  padding: 0 3px;
-}
-
-.tokens {
   position: absolute;
-  max-width: 60%;
+  width: 100%;
   left: 0;
   padding: 0 3px;
-  overflow: hidden;
+  overflow-x: scroll;
+  @media  #{$large-up} {
+    overflow: hidden;
+  }
 }
 
 .tokenlist {
   right: 0;
-  text-align: right;
-  direction: rtl;
+  text-align: left;
+  min-width: 100%;
 }
 
 .token {

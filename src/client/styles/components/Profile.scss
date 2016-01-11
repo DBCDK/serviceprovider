@@ -22,77 +22,24 @@ $background-color: #fdfdfd;
 }
 
 .profile--user-status{
-  ul {
-    list-style-type: none;
-    margin-left: 0;
-    li {
-      border-top: 1px solid black;
-      padding: 5px 0;
-      .tiny {
-        margin-bottom: 0;
-      }
-      .overdue {
-         color: red;
-      }
-      .due-soon {
-        color: orange;
-      }
-      .ready {
-        color: green;
-      }
-    }
+
+  padding: 10px;
+
+  h2 {
+    padding:0;
+    margin:0;
+    font-size: 1.3em;
   }
-  .user-status-header {
-    display: inline-block;
-  }
-  .toggle {
+
+  .message-button {
+    @include rounded(8px);
+    @include no-select();
+    padding:1em;
+    //border:1px solid;
     cursor: pointer;
+    text-align:center;
   }
-  .toggle-buttons {
-    display: inline-block;
-    padding: 0 10px;
-    cursor: pointer;
-    .button-collapsed {
-      width: 0; 
-      height: 0; 
-      border-left: 20px solid transparent;
-      border-right: 20px solid transparent;
-      border-top: 20px solid #000000;
-    }
-    .button-not-collapsed {
-      width: 0; 
-      height: 0; 
-      border-left: 20px solid transparent;
-      border-right: 20px solid transparent;
-      border-bottom: 20px solid #000000;
-    }
-  }
-  .collapsed .button-not-collapsed,
-  .not-collapsed .button-collapsed {
-    display: none;
-  }
-  .slider {
-    overflow: hidden;
-    max-height: 1000px;
-  }
-  .slider.slider-not-collapsed {
-    -webkit-transition: all 3000ms cubic-bezier(0.17, 0.04, 0.03, 0.94);
-    transition: all 3000ms cubic-bezier(0.17, 0.04, 0.03, 0.94);
-  }
-  .slider.slider-collapsed {
-    max-height: 0;
-    -webkit-transition: all 300ms cubic-bezier(0.17, 0.04, 0.03, 0.94);
-    transition: all 300ms cubic-bezier(0.17, 0.04, 0.03, 0.94);
-  }
-  .action .column {
-    text-align: center;
-    color: #ffffff;
-    margin-bottom: 5px;
-    div {
-      padding: 10px;
-      cursor: pointer;
-    }
-  }
+
   .pickup {
     background-color: green;
   }
@@ -101,7 +48,7 @@ $background-color: #fdfdfd;
   }
   .debt,
   .expired {
-    background-color: red;
+    background-color: #ff7172;
   }
 
   .selector {
@@ -114,65 +61,64 @@ $background-color: #fdfdfd;
       border-color:green;
     }
     .failure {
-      border-color:red;
+      border-color:#ff7172;
     }
   }
 }
 
-.profile--image-round{
-  @include rounded(50%);
-  width: 50%;
-  margin-left:25%;
-  margin-right:25%;
-}
+// EXPANDING CONTAINERS
 
-.profile--image-full{
-  width: 100%;
-  margin-left:0%;
-  margin-right:0%;
-}
+.expand--button {
+  padding:1em;
+  cursor: pointer;
+  @include no-select();
 
-.profile--image-canvas{
-  margin-left:0%;
-  margin-right:0%;
-}
-
-.profile--displayname{
-  text-align: center;
-}
-
-.profile--header{
-
-  margin-bottom: 15px;
-  text-align: center;
-
-  h2, a{
-    font-size: 1em;
-    padding:0px;
-    cursor: pointer;
+  &.expanded {
+    background: url('/icons/up-alt.svg') right 1em center no-repeat;
+    background-size: 1em;
   }
 
-  h2{
-    display: inline;
-    margin: auto auto;
-  }
-
-  a{
-    display: inline;
-    font-size:0.8em;
-    float: right;
-    @include no-select();
+  &.collapsed {
+    background: url('/icons/forward-alt.svg') right 1em center no-repeat;
+    background-size: 1em;
   }
 }
 
-.profile--socialsummary{
-  text-align:center;
+.expand--container {
 
-  h6{
-    font-size:0.8em;
+  -webkit-transition: all 2s linear;
+  transition: all 2s linear;
+
+  overflow:hidden;
+  margin-bottom: 2px;
+  //border:1px solid grey;
+
+  p {
+    text-align: center;
+    margin-top: 20px;
   }
 
-  p{
-    font-size:1.4em;
+  ul {
+    list-style:none;
+    margin:0;
+    padding:0;
+
+    li {
+      padding:3px;
+      border: 1px solid lightgrey;
+      overflow: hidden;
+
+      &:nth-child(2n) {
+        background-color: white;
+      }
+
+      &:nth-child(2n+1) {
+        background-color: lightgrey;
+      }
+    }
   }
+}
+
+.expand--content {
+  border-top:1px solid lightgrey;
 }

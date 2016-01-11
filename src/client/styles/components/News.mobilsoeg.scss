@@ -1,6 +1,7 @@
 .news {
   background-color: $topbar-background-color;
   padding: 20px 10px;
+  margin-top: 10px;
 }
 
 .news-items {
@@ -38,7 +39,7 @@
     }
   }
 
-  .headline{
+  .headline {
     font-size: rem-calc(18px);
     font-weight: $font-weight-bold;
   }
@@ -57,11 +58,6 @@
   .image {
     @extend %news-item-image;
   }
-  .lead {
-    width: 67%;
-    float: right;
-  }
-
 }
 .news-items-link-container {
   .link {
@@ -81,8 +77,27 @@
     margin-bottom: 10px;
   }
   .image {
-    @extend %news-item-image;
+    height: 200px;
+    overflow: hidden;
+    img {
+      @extend %vertical-align-center;
+    }
   }
+}
+
+.news-page--workList {
+  margin-top: 20px;
+}
+
+.worklist {
+  @include horizontal-list($small-only)
+}
+
+%vertical-align-center {
+  width: 100%;
+  position: relative;
+  top: 50%;
+  transform: translateY(-50%);
 }
 
 %news-item-image {

@@ -61,7 +61,7 @@ describe('Test that dcoument.title is set', () => {
 });
 
 describe('Test the Work component without data', () => {
-  const info = {hits: 0, collections: 0};
+  const info = {hits: '0', collections: '0'};
   const result = {};
   const work = {result: result, info: info, error: []};
   let element = React.createElement(Work, {id: '870970-basis:50822312', work: work, workLayout: WorkLayout});
@@ -81,7 +81,7 @@ describe('Test the Work component without data', () => {
   });
 
   it('should have no hits', ()=> {
-    expect(dom.props.work.info.hits).to.equal(0);
+    expect(dom.props.work.info.hits).to.equal('0');
   });
 });
 

@@ -10,6 +10,13 @@ import CoverImage from '../CoverImage/CoverImageContainer.component';
  *
  * If a querystring from the url exists it is added to the global window object, and should be passed to the client
  */
-const image = <CoverImage pids={window.ORDER_PROPS.coverImageIds.split(',')} prefSize={'detail_500'} />;
+const order = JSON.parse(window.PAGE_DATA) || {};
+const image = <CoverImage pids={[order.q]} prefSize={'detail_500'} />;
 
-ReactDOM.render(<Order coverImage={image} order={window.ORDER_PROPS || {}} />, document.getElementById('order'));
+ReactDOM.render(
+  <Order
+    coverImage={image}
+    order={order.work}
+    orderId={order.q}
+    pickupAgency={order.pickupAgency}
+  />, document.getElementById('page'));

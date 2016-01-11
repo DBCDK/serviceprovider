@@ -5,11 +5,12 @@ html(lang='da')
     include head
 
     body(class=libdata ? libdata.bodyclass : '')
-        #message
+        if message
+          #message
             include message
 
         block top
-          header#header
+          header#header !{headerString}
 
         block content
 

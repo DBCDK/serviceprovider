@@ -6,8 +6,7 @@
  */
 
 import React, {PropTypes} from 'react';
-import ToggleButton from '../ToggleButton.component';
-
+import {isEmpty} from 'lodash';
 
 class FiscalStatus extends React.Component {
 
@@ -18,68 +17,42 @@ class FiscalStatus extends React.Component {
   render() {
 
     let items;
-    const toggleDisplay = this.props.onToggleFiscalDisplay;
 
     if (this.props.items) {
       items = this.props.items.map(function(item) {
 
         return (
-          <li className='row' key={item.title}>
-            <span className='small-12 column'>{item.title}</span>
-            <span className='small-10 column'>Afleveret for sent</span>
-            <span className='small-2 column'>{item.amount + ' ' + item.currency}</span>
+          <li key={item.title}>
+            <span className='small-10 column'>{item.title}</span>
+            <span className='small-9 column'>Afleveret for sent</span>
+            <span className='small-5 column'>{item.amount + ' ' + item.currency}</span>
           </li>
         );
       });
     }
 
-    const listClass = (this.props.collapsed === true) ? 'fiscal-list collapsed' : 'fiscal-list';
 
-    const itemsList = (<ul className={listClass} id='fiscal-list'>
-      {items}
-    </ul>);
-
-    // show this if not results have been returned yet
-    const loadingWheel = (<p>Loading...</p>);
-
-    let header = 'Mellemværender';
-    let arrows = '';
-    let toggleFunc = toggleDisplay;
-    let headerClass = 'user-status-header toggle';
-
-    let listContent = loadingWheel;
-    if (Array.isArray(this.props.items) && this.props.items.length === 0) {
-      header = 'Du har ingen mellemværender';
-      listContent = '';
-      toggleFunc = '';
-      headerClass = 'user-status-header';
+    // insert message if no items are present
+    if (this.props.items === null) {
+      items = (<p>Loading...</p>);
     }
-    else if (this.props.items !== null) {
-      arrows = <ToggleButton collapsed={this.props.collapsed} toggleDisplay={toggleDisplay} />;
-      if (this.props.items.length === 1) {
-        header = this.props.items.length + ' mellemværende';
-      }
-      else {
-        header = this.props.items.length + ' mellemværender';
-      }
-      listContent = itemsList;
+    else if (isEmpty(this.props.items)) {
+      items = (<p>Du har ingen mellemværende</p>);
     }
 
-    const sliderClass = (this.props.collapsed === true) ? 'slider slider-collapsed' : 'slider slider-not-collapsed';
+    let listContent = (
+      <ul className='fiscal-list'>
+        {items}
+      </ul>
+    );
+
     const content = (
-        <div className='row'>
-          <a id='fiscal-scroll' name='fiscal-scroll'></a>
-          <h2 className={headerClass} onClick={toggleFunc}>{header}</h2>
-          {arrows}
-          <div className={sliderClass}>{listContent}</div>
+        <div>
+          {listContent}
         </div>
     );
 
-    const emptyComponent = (<span/>);
-
-    const stuffToBeRendered = Array.isArray(items) && (items.length > 0) ? content : emptyComponent;
-
-    return stuffToBeRendered;
+    return content;
   }
 }
 
