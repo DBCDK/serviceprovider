@@ -132,7 +132,7 @@ describe('Test work store with valid and invalid data', () => {
         info: [],
         error: []
       });
-    } catch (e) {
+    } catch (e) { // eslint-disable-line 
     } // eslint-disable-line
   });
 
