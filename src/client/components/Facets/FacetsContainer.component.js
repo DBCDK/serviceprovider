@@ -50,8 +50,8 @@ export default class FacetsContainer extends React.Component {
     const toggleFunc = this.toggleFacets.bind(this, 'facets');
 
     return (
-      <div>
-        <div className='facets--container small-12 columns' >
+      <div className='facets--container'>
+        <div className='small-12 columns' >
           <span className="facets--result--header" onClick={toggleFunc} >Filtrér</span>
         </div>
         {result}

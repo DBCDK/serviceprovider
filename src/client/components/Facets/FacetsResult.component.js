@@ -6,7 +6,7 @@
  */
 
 import React from 'react';
-import {isArray, isEmpty, forEach} from 'lodash';
+import {isArray, forEach} from 'lodash';
 
 // Actions
 import FacetsActions from './Facets.action';
