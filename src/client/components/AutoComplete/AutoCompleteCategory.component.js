@@ -36,9 +36,9 @@ var AutoCompleteCategory = React.createClass({
 
     const showImage = label && !includes(['Forfatter', 'Emne'], label.props.children);
 
-    const rows = data.map((value, key) => {
+    const rows = data.map((value) => {
       return (
-        <AutoCompleteRow href={value.href} image={value.image} imageComp={value.imageComp} key={key} showImage={showImage} text={value.text} />
+        <AutoCompleteRow href={value.href} image={value.image} imageComp={value.imageComp} key={value.text + value.href} showImage={showImage} text={value.text} />
       );
     });
 
