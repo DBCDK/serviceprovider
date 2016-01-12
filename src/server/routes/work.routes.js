@@ -72,7 +72,6 @@ WorkRoutes.get(['/receipt/:id'], dbcMiddleware.redirectToCallbackWhenLoggedIn((r
     };
 
     contextObject.data = '\'' + JSON.stringify(pagedata) + '\'';
-
     res.render('page', contextObject);
   }, () => {
     res.status(500);
