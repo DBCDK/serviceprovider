@@ -35,7 +35,7 @@ const Receipt = React.createClass({
       this.setState({
         orderPlaced: true,
         headline: 'Vi har modtaget din bestilling på:',
-        libraryInfo: 'Du vil få besked fra dit bibliotek (' + this.props.receipt.pickupAgency + '), når materialet er klar til afhentning.'
+        libraryInfo: 'Du vil få besked fra ' + (this.props.receipt.pickupAgencyTitle || this.props.receipt.pickupAgency) + ', når materialet er klar til afhentning.'
       });
     }
     else {

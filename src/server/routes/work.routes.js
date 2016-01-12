@@ -58,11 +58,17 @@ WorkRoutes.get(['/receipt/:id'], dbcMiddleware.redirectToCallbackWhenLoggedIn((r
     data: '""'
   };
 
-  res.callServiceProvider('getOpenSearchWorkBriefDisplay', {pid: id}, 30000).then((response) => {
+  let pickupAgency = req.user.profile.pickup_agency ? req.user.profile.pickup_agency : req.user.agencyid;
+
+  Promise.all([
+    res.callServiceProvider('getOpenSearchWorkBriefDisplay', {pid: id}, 30000),
+    res.callServiceProvider('getOpenAgency', pickupAgency, 30000)
+  ]).then((response) => {
     let pagedata = {
       q: id,
-      work: response[0].work,
-      pickupAgency: req.user.profile.pickup_agency ? req.user.profile.pickup_agency : req.user.agencyid
+      work: response[0][0].work,
+      pickupAgency: pickupAgency,
+      pickupAgencyTitle: response[1][0].branchNameDan
     };
 
     contextObject.data = '\'' + JSON.stringify(pagedata) + '\'';
