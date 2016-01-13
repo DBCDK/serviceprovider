@@ -107,6 +107,10 @@ export default class WorkLayout extends React.Component {
   renderDetails() {
     return (
       <ToggleExpand label='Detaljer om værket' >
+        <div className='series clearfix' >
+          Serie: {this.props.work.series}
+        </div>
+
         <div className='isbn' >
           {this.props.work.isbns.length > 0 ? 'ISBN: ' + this.props.work.isbns[0] : ''}
         </div>
@@ -240,9 +244,6 @@ export default class WorkLayout extends React.Component {
                 {orderButtonComponent}
               </div>
               <div className='work--description' >{this.props.work.abstract}</div>
-              <div className='series clearfix' >
-                <a href='#' >{this.props.work.series}</a>
-              </div>
             </div>
           </div>
           <div className='work--details' >
