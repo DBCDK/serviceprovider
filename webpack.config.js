@@ -75,5 +75,10 @@ module.exports = [{
 
   watchOptions: {
     poll: true
+  },
+
+  node: {
+    net: 'empty',
+    tls: 'empty'
   }
 }];
