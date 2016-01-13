@@ -79,6 +79,7 @@ module.exports = [{
 
   node: {
     net: 'empty',
-    tls: 'empty'
+    tls: 'empty',
+    fs: 'empty'
   }
 }];
