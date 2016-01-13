@@ -1,7 +1,6 @@
 'use strict';
 
 import React, {PropTypes} from 'react';
-import {take} from 'lodash';
 
 import CoverImage from '../CoverImage/CoverImageContainer.component';
 import BibliographicData from '../ResultListView/DisplayBibliographicData/DisplayBibliographicData.component';
@@ -20,13 +19,13 @@ class WorkRecommendationComponent extends React.Component {
     return (
       <div className={'work--recommendations--' + this.props.type}>
         <ul className="result-list medium-block-grid-2">
-          {take(this.props.recommendations, 6).map((val, index) => {
+          {this.props.recommendations.map((val, index) => {
             return (
               <BibliographicData
                 coverImage={coverImage}
                 creator={val.creator}
                 identifiers={val.identifiers}
-                key={'recommendation_' + this.props.type + '_' + index}
+                key={'recommendation_' + this.props.type + '_' + val.identifiers + '_' + index}
                 title={val.title}
                 workType={val.workType}
               />
