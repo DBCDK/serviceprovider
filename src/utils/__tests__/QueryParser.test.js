@@ -30,7 +30,7 @@ describe('Test Query Util Class', () => {
       {value: 'æble', type: 'term.type', index: 'term.typeæble0'},
       {value: 'banan', type: 'term.type', index: 'term.typebanan1'}
     ];
-    let expectedResult = 'text=kanin|fisk&term.type=æble|banan';
+    let expectedResult = 'text=kanin|fisk&term.type=%C3%A6ble|banan';
     result = Query.objectToString(objects);
     expect(result).to.deep.equal(expectedResult);
   });
