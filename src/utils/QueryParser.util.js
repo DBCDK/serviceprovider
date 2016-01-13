@@ -47,7 +47,9 @@ function groupByType(query) {
  * @returns {*}
  */
 function splitGroupToUrlQuery(group, key) {
-  let values = group.join('|');
+  let values = group.map((elem) => {
+    return encodeURIComponent(elem);
+  }).join('|');
   return `${key}=${values}`;
 }
 
