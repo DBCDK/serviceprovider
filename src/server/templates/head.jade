@@ -18,7 +18,7 @@ head
         if libdata
             style(type='text/css')!=specific_styles
         else
-            link(rel='stylesheet', href='/styles/style.css')
+            link(rel='stylesheet', href='/styles/style.css?v=1.0.0')
 
 
     block scripts
@@ -33,9 +33,9 @@ head
             script(src='/reload/reload.js', type='text/javascript' defer=true)
 
         script(src='https://cdnjs.cloudflare.com/ajax/libs/lodash.js/3.10.1/lodash.min.js', type='text/javascript' defer=true)
-        script(src='/js/common.js', type='text/javascript', defer=true)
-        script(src='/js/header.js', type='text/javascript', defer=true)
-        script(src='/js/footer.js', type='text/javascript', defer=true)
+        script(src='/js/common.js?v=1.0.0', type='text/javascript', defer=true)
+        script(src='/js/header.js?v=1.0.0', type='text/javascript', defer=true)
+        script(src='/js/footer.js?v=1.0.0', type='text/javascript', defer=true)
 
         if libdata
             script window.agencyId = "!{libdata.libraryId}";

@@ -27,6 +27,10 @@ function translateCategories(category) {
   return category;
 }
 
+function filterCategories(category) {
+  return Object.keys(translations).indexOf(category.value) >= 0;
+}
+
 let MaterialTypeStore = Reflux.createStore({
   store: {
     categories: [],
@@ -46,7 +50,10 @@ let MaterialTypeStore = Reflux.createStore({
   onQueryUpdated(self) {
     // Return closure function in order to get correct "this" context from action
     return (store) => {
-      self.store.categories = self.checkForQueryContent(self.store.categories, store).map(translateCategories);
+      self.store.categories = self
+        .checkForQueryContent(self.store.categories, store)
+        .filter(filterCategories)
+        .map(translateCategories);
       self.trigger(self.store);
     };
   },
@@ -54,7 +61,10 @@ let MaterialTypeStore = Reflux.createStore({
   onResponse(self) {
     return (result) => {
       if (!result.pending && result.info.facets) {
-        self.store.categories = self.checkForQueryContent(result.info.facets).map(translateCategories);
+        self.store.categories = self
+          .checkForQueryContent(result.info.facets)
+          .filter(filterCategories)
+          .map(translateCategories);
         self.trigger(self.store);
       }
     };

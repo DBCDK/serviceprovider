@@ -37,7 +37,7 @@ export default class FacetsContainer extends React.Component {
   }
 
   renderFacetsResult() {
-    const facets = this.state.facets ? this.state.facets : null;
+    const facets = this.state.facets ? this.state.facets : [];
 
     const collapsedClass = !this.state.isToggled ? 'collapsed' : '';
 

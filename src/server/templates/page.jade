@@ -2,7 +2,7 @@ extends layout
 
 block prepend footerscripts
    if pagescript
-      script(src="/js/" + pagescript defer=true)
+      script(src="/js/" + pagescript + '?v=1.0.0' defer=true)
 
 
 block content

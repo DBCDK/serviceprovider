@@ -37,7 +37,22 @@ describe('Testing the MaterialType Store', () => {
         MaterialTypeStore.store
       )
     ).to.equal(
-      '{"categories":[{"type":"term","displayValue":"Musik"},{"type":"term","displayValue":"per"}],"translations":{"music":"Musik","movie":"Film","literature":"Bøger","game":"Spil","periodica":"Tidsskrifter","track":"Tracks","article":"Artikler","sheetmusic":"Noder","map":"Kort","review":"Anmeldelser","bookdescription":"Bogbeskrivelser"}}' // eslint-disable-line
+      '{' +
+        '"categories":[],' +
+        '"translations":{' +
+          '"music":"Musik",' +
+          '"movie":"Film",' +
+          '"literature":"Bøger",' +
+          '"game":"Spil",' +
+          '"periodica":"Tidsskrifter",' +
+          '"track":"Tracks",' +
+          '"article":"Artikler",' +
+          '"sheetmusic":"Noder",' +
+          '"map":"Kort",' +
+          '"review":"Anmeldelser",' +
+          '"bookdescription":"Bogbeskrivelser"' +
+        '}' +
+      '}'
     );
   });
 });

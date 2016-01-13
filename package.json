@@ -15,7 +15,7 @@
     "selenium": "mocha -t 20000 selenium/selenium_test.js",
     "selenium:junit": "mocha -t 35000 selenium/selenium_test.js -R mocha-jenkins-reporter",
     "siege": "siege -c500 -d10 -t30M -i -f siegetestendpoints.txt",
-    "siege:live": "siege -c500 -d10 -t30M -i -f siegedemoendpoints.txt",
+    "siege:live": "siege -c50 -d10 -t10M -i -f siegedemoendpoints.txt",
     "start": "node src/main.js",
     "start:watch": "webpack --progress --colors --watch -d",
     "test": "karma start --single-run=true",
