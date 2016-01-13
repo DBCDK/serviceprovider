@@ -11,7 +11,13 @@ function getImagesFromResponse(result) {
       format: '$..imageFormat'
     }]
   };
+
   var transformed = Transform(result, template);
+  transformed.images = transformed.images.map((imgObj) => {
+    imgObj.url = imgObj.url.replace('http:', '');
+    return imgObj;
+  });
+
   return transformed;
 }
 
