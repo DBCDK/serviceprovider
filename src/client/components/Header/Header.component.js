@@ -52,7 +52,7 @@ export default class Header extends React.Component {
     const isLoggedIn = this.state.userIsLoggedIn;
     const buttonData = isLoggedIn ? {url: '/profile'} : {url: '/profile/login'};
 
-    const menu = <Menu isMenuAnimated={isMenuAnimated} isMenuOpen={isMenuOpen}/>;
+    const menu = <Menu isMenuAnimated={isMenuAnimated} isMenuOpen={isMenuOpen} userIsLoggedIn={isLoggedIn} />;
 
     return (
       <div id="header" >
