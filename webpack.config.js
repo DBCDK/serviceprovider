@@ -78,8 +78,7 @@ module.exports = [{
   },
 
   node: {
-    net: 'empty',
-    tls: 'empty',
-    fs: 'empty'
+    fs: 'empty',
+    tls: 'empty'
   }
 }];
