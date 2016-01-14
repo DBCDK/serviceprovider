@@ -187,9 +187,12 @@ export default class WorkLayout extends React.Component {
 
   renderRecommendations() {
     if (!isEmpty(this.state.recommendations.recommendations.personal) || !isEmpty(this.state.recommendations.recommendations.generic)) {
+      const generic = this.state.recommendations.recommendations.generic || [];
+      const personal = this.state.recommendations.recommendations.personal || [];
+
       const recommendations = union(
-        this.state.recommendations.recommendations.generic.splice(6, this.state.recommendations.recommendations.generic.length),
-        this.state.recommendations.recommendations.personal.splice(6, this.state.recommendations.recommendations.personal.length)
+        generic.splice(6, generic.length),
+        personal.splice(6, personal.length)
       );
 
       const personalRecommendations = this.state.profile.userIsLoggedIn ? (
