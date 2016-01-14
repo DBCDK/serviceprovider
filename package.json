@@ -63,7 +63,7 @@
     "dbc-node-ranked-recommendations-client": "^1.0.1",
     "dbc-node-recommendations": "^4.0.1",
     "dbc-node-serviceprovider": "^3.0.4",
-    "dbc-node-serviceprovider-socketclient": "^2.0.1",
+    "dbc-node-serviceprovider-socketclient": "^2.1.2",
     "express": "4.13.3",
     "express-session": "1.12.1",
     "express-validator": "2.18.0",
