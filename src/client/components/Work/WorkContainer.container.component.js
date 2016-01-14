@@ -52,7 +52,7 @@ class WorkContainer extends React.Component {
   }
 
   setTtile(workResult) {
-    if (workResult.fullTitle && workResult.creator) {
+    if (typeof window !== 'undefined' && workResult.fullTitle && workResult.creator) {
       document.title = workResult.fullTitle + ' af ' + workResult.creator;
       if (this.libraryTitle) {
         document.title += ' | ' + this.libraryTitle;
