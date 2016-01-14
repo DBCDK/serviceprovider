@@ -24,6 +24,7 @@ export default class Menu extends React.Component {
     return (
         <div className={'row header--topbar-menu slider ' + animationClass} id='menu'>
           <ul>
+            <li><a href='/'>Forside</a></li>
             <li><a href='/libraries'>Åbningstider</a></li>
             {profile_button}
             {login_logout_button}
