@@ -27,6 +27,7 @@ import WorkRoutes from './server/routes/work.routes.js';
 import NewsRoutes from './server/routes/news.routes.js';
 import LibraryRoutes from './server/routes/library.routes';
 import EventRoutes from './server/routes/event.routes.js';
+import APIRoutes from './server/routes/api.routes.js';
 
 // Middleware
 import mobilsoegmiddleware from './server/middlewares/mobilsoeg.middleware.js';
@@ -210,6 +211,7 @@ module.exports.run = function (worker) {
   app.use('/news', dbcMiddleware.cacheMiddleware, NewsRoutes);
   app.use('/libraries', dbcMiddleware.cacheMiddleware, LibraryRoutes);
   app.use('/event', dbcMiddleware.cacheMiddleware, EventRoutes);
+  app.use('/api', APIRoutes);
 
 
   // If running in dev-mode enable auto reload in browser when the server restarts
