@@ -2,7 +2,7 @@
 
 // Libraries
 import React, {PropTypes} from 'react';
-import {isEmpty, union, take} from 'lodash';
+import {isEmpty, union} from 'lodash';
 
 // Components
 import CoverImage from '../CoverImage/CoverImageContainer.component';
@@ -188,8 +188,8 @@ export default class WorkLayout extends React.Component {
   renderRecommendations() {
     if (!isEmpty(this.state.recommendations.recommendations.personal) || !isEmpty(this.state.recommendations.recommendations.generic)) {
       const recommendations = union(
-        take(this.state.recommendations.recommendations.generic, 6),
-        take(this.state.recommendations.recommendations.personal, 6)
+        this.state.recommendations.recommendations.generic.splice(6, this.state.recommendations.recommendations.generic.length),
+        this.state.recommendations.recommendations.personal.splice(6, this.state.recommendations.recommendations.personal.length)
       );
 
       const personalRecommendations = this.state.profile.userIsLoggedIn ? (
