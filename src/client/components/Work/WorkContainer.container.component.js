@@ -113,7 +113,10 @@ class WorkContainer extends React.Component {
             extent={element.extent}
             identifier={element.identifier}
             isbns={element.isbns}
+            issns={element.issns}
             key={'edition_' + index}
+            partOf={element.partOf}
+            publisher={element.publisher}
             workType={element.type} />
         );
 

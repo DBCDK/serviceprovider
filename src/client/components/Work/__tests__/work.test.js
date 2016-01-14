@@ -132,7 +132,7 @@ describe('Test work store with valid and invalid data', () => {
         info: [],
         error: []
       });
-    } catch (e) { // eslint-disable-line 
+    } catch (e) { // eslint-disable-line
     } // eslint-disable-line
   });
 
@@ -195,12 +195,10 @@ describe('Test work store with valid and invalid data', () => {
 
     const workHtml = ReactDom.findDOMNode(TestUtils.findRenderedComponentWithType(component, Work)).innerHTML;
 
-    expect(workHtml).to.contain('isbn1');
     expect(workHtml).to.contain('actor1');
     expect(workHtml).to.contain('subj1');
     expect(workHtml).to.contain('track1');
 
-    expect(workHtml).to.contain('ISBN: ');
     expect(workHtml).to.contain('Medvirkende: ');
     expect(workHtml).to.contain('Emner: ');
     expect(workHtml).to.contain('Trackliste: ');
