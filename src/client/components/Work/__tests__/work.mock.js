@@ -13,6 +13,7 @@ const forceMajureMockWork = {
   contributers: ['Eddie Izzard'],
   abstract: '',
   isbns: [],
+  issns: [],
   extent: '86 min.',
   actors: [],
   series: '',

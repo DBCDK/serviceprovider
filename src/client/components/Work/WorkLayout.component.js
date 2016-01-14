@@ -108,18 +108,13 @@ export default class WorkLayout extends React.Component {
     return (
       <ToggleExpand label='Detaljer om værket' >
         <div className='series clearfix' >
-          Serie: {this.props.work.series}
+          <span>{this.props.work.series.length > 0 ? 'Serie: ' : ''}</span>
+          {this.props.work.series}
         </div>
-
-        <div className='isbn' >
-          {this.props.work.isbns.length > 0 ? 'ISBN: ' + this.props.work.isbns[0] : ''}
-        </div>
-
-        <div className='extent clearfix' >{this.props.work.extent}</div>
 
         <div className='clearfix' >
           <div className='actors clearfix' >
-            <span>{this.props.work.actors.length > 0 ? 'Medvirkende: ' : ''}</span>
+            <span className="actor-text">{this.props.work.actors.length > 0 ? 'Medvirkende: ' : ''}</span>
             {this.props.work.actors.map((actor, index) => {
               return (
                 <span className='actor' key={'actor_' + index} >
