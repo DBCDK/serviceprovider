@@ -108,7 +108,7 @@ WorkRoutes.get(['/', '/*'], dbcMiddleware.cacheMiddleware, (req, res) => {
       res.locals.title = work.result.fullTitle + ' af ' + work.result.creator + ' | ' + res.locals.title;
     }
 
-    contextObject.data = '\'' + JSON.stringify(work) + '\'';
+    contextObject.data = '\'' + JSON.stringify(work).replace('\'', '\\\'') + '\'';
     contextObject.ssrString = ReactDOM.renderToString(<WorkContainer id={req.query.id} work={work} workLayout={WorkLayout} />);
     res.render('work', contextObject);
   }, () => {

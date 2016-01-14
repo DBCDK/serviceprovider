@@ -209,7 +209,6 @@ export default class WorkLayout extends React.Component {
         </div>
       );
     }
-
   }
 
   goBack() {
