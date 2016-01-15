@@ -10,10 +10,29 @@ import React from 'react';
 import QueryActions from '../../../actions/QueryUpdate.action';
 
 export default class SearchSort extends React.Component {
+  constructor() {
+    super();
+
+    let defaultSort = 'rank_frequency';
+    if (typeof localStorage !== 'undefined') {
+      defaultSort = localStorage.getItem('defaultSearchSort') || defaultSort;
+    }
+
+    this.state = {
+      sort: defaultSort
+    };
+
+    QueryActions.changeQuerySort(this.state.sort);
+  }
+
   sortWasChanged() {
     const e = this.refs.sortSelector;
     const value = e.options[e.selectedIndex].value;
     QueryActions.changeQuerySort(value);
+
+    this.setState({
+      sort: value
+    });
 
     if (typeof localStorage !== 'undefined') {
       localStorage.setItem('defaultSearchSort', value);
@@ -21,11 +40,6 @@ export default class SearchSort extends React.Component {
   }
 
   render() {
-    let defaultSort = 'rank_frequency';
-    if (typeof localStorage !== 'undefined') {
-      defaultSort = localStorage.getItem('defaultSearchSort') || defaultSort;
-    }
-
     const options = [
       {name: 'Almindelig sortering', sort: 'rank_frequency'},
       {name: 'Udgivelsesår - nyeste først', sort: 'date_descending'},
@@ -43,7 +57,7 @@ export default class SearchSort extends React.Component {
 
     return (
       <div className='search-sort-container small-12 columns'>
-        <select defaultValue={defaultSort} onChange={this.sortWasChanged.bind(this)} ref={"sortSelector"}>
+        <select defaultValue={this.state.sort} onChange={this.sortWasChanged.bind(this)} ref={"sortSelector"}>
           {options}
         </select>
       </div>

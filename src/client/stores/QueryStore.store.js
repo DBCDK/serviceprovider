@@ -25,7 +25,7 @@ let QueryStore = Reflux.createStore({
     page: 0,
     worksPerPage: 12,
     search: '',
-    sort: 'default'
+    sort: typeof localStorage !== 'undefined' && localStorage.getItem('defaultSearchSort') || 'default'
   },
 
   listenables: QueryActions,
