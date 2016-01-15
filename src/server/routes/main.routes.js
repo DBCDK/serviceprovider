@@ -60,6 +60,10 @@ MainRoutes.get(['/search', '/search/*'], (req, res) => {
   let query = req.query || [];
   query = stringToObject(query) || [];
 
+  if (!query[0]) {
+    return res.redirect('/');
+  }
+
   // pass input through XSS filter
   query[0].value = inHTMLData(query[0].value);
   query[0].index = inHTMLData(query[0].index);

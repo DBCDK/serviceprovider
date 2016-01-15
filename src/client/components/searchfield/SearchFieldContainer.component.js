@@ -24,8 +24,8 @@ import MaterialTypeStore from '../../stores/MaterialType.store.js';
 
 
 class SearchFieldContainerComponent extends React.Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
 
     this.state = {
       autocomplete: AutoCompleteStore.getInitialState(),
@@ -58,10 +58,10 @@ class SearchFieldContainerComponent extends React.Component {
     ];
 
     this.showPlaceholder.bind(this);
-  }
 
-  componentWillMount() {
-    this.state.query.query = this.props.query ? this.props.query : this.state.query.query;
+    if (props.query) {
+      this.state.query.query = this.state.query.query ? this.state.query.query: props.query;
+    }
   }
 
   componentWillUnmount() {

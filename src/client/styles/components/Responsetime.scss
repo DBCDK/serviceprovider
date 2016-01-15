@@ -1,15 +1,6 @@
-.responsetime--container {
-  right: 0.2em;
-  bottom: 0.2em;
-  position: fixed;
-  height: 20px;
-  width: 300px;
-}
-
+/**
+ * Hide the responsetime, so it's availiable for debugging, but hidden from the end users.
+ */
 .responsetime {
-  /*display: none;*/
-}
-
-.responsetime--container:hover .responsetime {
-  display: block;
+  display: none;
 }
