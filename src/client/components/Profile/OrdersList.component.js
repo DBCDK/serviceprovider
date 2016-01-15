@@ -34,15 +34,15 @@ class OrdersList extends React.Component {
       orderListContent = sortedOrders.map(function(order) {
         const ready = (order.status === 'Available for pickup');
 
-        let actionField = <button className='tiny' onClick={deleteOrder(order.orderId, order.orderType)}>slet</button>;
+        let actionField = <button className='tiny' onClick={deleteOrder(order.orderId, order.orderType)}>Slet</button>;
         if (order.markedForDeletion) {
-          actionField = <button className='tiny' onClick={deleteOrder(order.orderId, order.orderType)}>marked</button>;
+          actionField = <button className='tiny'>Sletter, vent venligst</button>;
 
           if (order.isDeleteConfirmed && !order.isDeleteSuccesful) {
-            actionField = <button className='tiny' onClick={deleteOrder(order.orderId, order.orderType)}>kunne ikke slette reservering</button>;
+            actionField = <button className='tiny'>Kunne ikke slette reservering</button>;
           }
           else if (order.isDeleteConfirmed && order.isDeleteSuccesful) {
-            actionField = <button className='tiny' onClick={deleteOrder(order.orderId, order.orderType)}>reservering slettet</button>;
+            actionField = <button className='tiny'>Reservering slettet</button>;
           }
         }
 
