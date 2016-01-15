@@ -8,18 +8,10 @@ import SocketClient from 'dbc-node-serviceprovider-socketclient';
 import RecommendationsActions from './Recommendations.action';
 
 export const defaultLikes = [
-  '870970-basis:51263146',
-  '870970-basis:51115155',
-  '870970-basis:28394438',
-  '870970-basis:22629344',
-  '870970-basis:25915690',
-  '870970-basis:24929604',
-  '870970-basis:27796664',
-  '870970-basis:26588707',
-  '870970-basis:23372525',
-  '870970-basis:28280041',
-  '870970-basis:51342860',
-  '870970-basis:28290853'
+  '870970-basis:28511663',
+  '870970-basis:29754519',
+  '870970-basis:29060835',
+  '870970-basis:22629344'
 ];
 
 /**
