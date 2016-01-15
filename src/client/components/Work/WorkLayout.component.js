@@ -2,7 +2,7 @@
 
 // Libraries
 import React, {PropTypes} from 'react';
-import {isEmpty, union} from 'lodash';
+import {isEmpty, union, take} from 'lodash';
 
 // Components
 import CoverImage from '../CoverImage/CoverImageContainer.component';
@@ -186,24 +186,16 @@ export default class WorkLayout extends React.Component {
       const personal = this.state.recommendations.recommendations.personal || [];
 
       const recommendations = union(
-        generic.splice(6, generic.length),
-        personal.splice(6, personal.length)
-      );
-
-      const personalRecommendations = this.state.profile.userIsLoggedIn ? (
-        <WorkRecommendation
-          recommendations={recommendations}
-          type='generic' />
-      ) : (
-        <WorkRecommendation
-          recommendations={this.state.recommendations.recommendations.generic}
-          type='generic' />
+        take(personal, 6),
+        take(generic, 6)
       );
 
       return (
         <div className='work--recommendations small-24 medium-24 large-8 columns' >
           <h3 className='work--recommendations--title' >Noget der ligner</h3>
-          {personalRecommendations}
+          <WorkRecommendation
+            recommendations={recommendations}
+            type='generic' />
         </div>
       );
     }
