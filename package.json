@@ -60,7 +60,7 @@
     "dbc-node-opensuggest": "^0.0.5",
     "dbc-node-openuserstatus-client": "^2.0.1",
     "dbc-node-popsuggest": "^2.0.2",
-    "dbc-node-ranked-recommendations-client": "^1.0.1",
+    "dbc-node-ranked-recommendations-client": "^2.0.1",
     "dbc-node-recommendation-meta-client": "^5.1.1",
     "dbc-node-recommendations": "^4.0.1",
     "dbc-node-serviceprovider": "^3.0.4",
