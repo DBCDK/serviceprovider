@@ -38,7 +38,7 @@
   },
   "homepage": "https://github.com/DBCDK/pallesgavebod#readme",
   "dependencies": {
-    "@dbcdk/dbc-config": "^3.1.0",
+    "@dbcdk/dbc-config": "^3.4.0",
     "async": "1.5.0",
     "babel": "5.8.29",
     "babel-core": "5.8.29",
@@ -60,7 +60,7 @@
     "dbc-node-opensuggest": "^0.0.5",
     "dbc-node-openuserstatus-client": "^2.0.1",
     "dbc-node-popsuggest": "^2.0.2",
-    "dbc-node-ranked-recommendations-client": "^2.0.2",
+    "dbc-node-ranked-recommendations-client": "^2.0.3",
     "dbc-node-recommendation-meta-client": "^5.1.1",
     "dbc-node-recommendations": "^4.0.1",
     "dbc-node-serviceprovider": "^3.0.4",
