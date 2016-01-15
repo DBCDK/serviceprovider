@@ -20,8 +20,8 @@ import SearchResultList from '../searchresult/SearchResultList.component';
  * Renders a container for Recommendations
  */
 class RecommendationContainer extends React.Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
 
     this.state = {
       recommendations: RecommendationStore.store,
@@ -72,7 +72,9 @@ class RecommendationContainer extends React.Component {
       }
     });
 
-    RecommendationActions.request({likes: likes, dislikes: dislikes});
+    const isFrontPage = (this.props && this.props.isFrontPage) ? true : false;
+
+    RecommendationActions.request({likes: likes, dislikes: dislikes, isFrontPage: isFrontPage});
   }
 
   gotRecommendations() {
@@ -81,13 +83,14 @@ class RecommendationContainer extends React.Component {
 
   render() {
     return (
-        <SearchResultList data={{results: this.state.recommendations}} layout={this.props.layout} />
+      <SearchResultList data={{results: this.state.recommendations}} layout={this.props.layout} />
     );
   }
 }
 
 RecommendationContainer.displayName = 'RecommendationContainer';
 RecommendationContainer.propTypes = {
+  isFrontPage: React.PropTypes.bool,
   layout: React.PropTypes.func,
   recommendations: React.PropTypes.array
 };

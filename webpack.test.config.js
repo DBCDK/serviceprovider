@@ -43,9 +43,11 @@ module.exports = {
       }
     ]
   },
+
   plugins: [
     extractCss
   ],
+
   node: {
     fs: 'empty',
     tls: 'empty'

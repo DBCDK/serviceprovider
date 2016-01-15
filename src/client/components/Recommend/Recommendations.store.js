@@ -41,8 +41,8 @@ let RecommendationsStore = Reflux.createStore({
     this.listenToMany(RecommendationsActions);
   },
 
-  onDefault() {
-    this.onRequest({likes: defaultLikes, dislikes: []});
+  onDefault(data) {
+    this.onRequest({likes: defaultLikes, dislikes: [], isFrontPage: data.isFrontPage});
   },
 
   onRequest(data) {
@@ -51,7 +51,7 @@ let RecommendationsStore = Reflux.createStore({
       this.request(data);
     }
     else {
-      this.onDefault();
+      this.onDefault(data);
     }
   },
 

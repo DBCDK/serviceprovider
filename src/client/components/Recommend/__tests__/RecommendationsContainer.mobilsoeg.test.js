@@ -34,7 +34,7 @@ describe('Test the RecommendationContainer.component', () => {
     assert.isTrue(RecommendationActions.request.called);
 
     const args = RecommendationActions.request.args[0][0];
-    const expected = {likes: [], dislikes: []};
+    const expected = {likes: [], dislikes: [], isFrontPage: false};
     assert.equal(JSON.stringify(args), JSON.stringify(expected));
   });
 
@@ -46,7 +46,7 @@ describe('Test the RecommendationContainer.component', () => {
     assert.isTrue(RecommendationActions.request.called);
 
     const args = RecommendationActions.request.args[0][0];
-    const expected = {likes: ['1'], dislikes: ['2']};
+    const expected = {likes: ['1'], dislikes: ['2'], isFrontPage: false};
     assert.equal(JSON.stringify(args), JSON.stringify(expected));
   });
 

@@ -29,7 +29,7 @@ export default class FrontPageLayoutMobilsoeg extends React.Component {
               <SearchFieldContainer />
             </div>
             <div className="frontpage-container--search--recommendations" >
-              <RecommendationContainer layout={FrontPageRecommendationsLayout} recommendations={this.props.recommendations} />
+              <RecommendationContainer isFrontPage={true} layout={FrontPageRecommendationsLayout} recommendations={this.props.recommendations} />
             </div>
           </div>
 

@@ -6,8 +6,21 @@ const RecommendationsTransform = {
   },
 
   requestTransform(event, params, connection) {
-    params.libdata = connection.libdata;
-    return this.callServiceClient('recommend', 'getRecommendations', params);
+    let call;
+    if (params.isFrontPage && !connection.request.session.passport) {
+      const filter = connection.libdata.config.provider.services.recommend.filters || ['rec.collectionIdentifier:' + (connection.libdata.libraryId || '716500') + '-katalog'];
+      const metaParams = {
+        filter: filter,
+        profile: 'pop'
+      };
+      call = this.callServiceClient('recommendmeta', 'getRecommendations', metaParams);
+    }
+    else {
+      params.libdata = connection.libdata;
+      call = this.callServiceClient('recommend', 'getRecommendations', params);
+    }
+
+    return call;
   },
 
   responseTransform(data) {

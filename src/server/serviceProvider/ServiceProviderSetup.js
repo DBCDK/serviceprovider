@@ -23,6 +23,7 @@ import OpenUserStatus from 'dbc-node-openuserstatus-client';
 import PopSuggest from 'dbc-node-popsuggest';
 import RankedRecommendations from 'dbc-node-ranked-recommendations-client';
 import Recommendations from 'dbc-node-recommendations';
+import MetaRecommendations from 'dbc-node-recommendation-meta-client';
 
 /**
  * Helper function for registering service clients. If cachetime is defined in config, wrap methods with the
@@ -75,6 +76,7 @@ export default function initProvider(config, logger, sockets) {
   RegisterClientOnProvider('popsuggest', PopSuggest);
   RegisterClientOnProvider('recommendranked', RankedRecommendations);
   RegisterClientOnProvider('recommend', Recommendations);
+  RegisterClientOnProvider('recommendmeta', MetaRecommendations);
 
   // Transforms are autorequired to lessen boilerplate code
   AutoRequire(path.join(__dirname, 'transformers'), 'transform.js').map(provider.registerTransform);
