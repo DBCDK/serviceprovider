@@ -11,7 +11,6 @@ import express from 'express';
 const MainRoutes = express.Router();
 import React from 'react';
 import ReactDOM from 'react-dom/server';
-import {inHTMLData} from 'xss-filters';
 
 import {stringToObject} from '../../utils/QueryParser.util.js';
 
