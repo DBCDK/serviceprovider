@@ -6,7 +6,6 @@
  * Includes utility routes (example: /moreinfo)
  */
 
-import {isEmpty} from 'lodash';
 import express from 'express';
 const MainRoutes = express.Router();
 import React from 'react';
@@ -15,12 +14,8 @@ import ReactDOM from 'react-dom/server';
 import {stringToObject} from '../../utils/QueryParser.util.js';
 
 // loading components
-// import SearchServer from '../../client/components/searchpage/Search.server.js';
-import Search from '../../client/components/searchpage/SearchPageLayout.component.js';
 import {defaultLikes} from '../../client/components/Recommend/Recommendations.store.js';
 import FrontpageContainer from '../../client/components/FrontPage/FrontpageContainer.component.js';
-
-import dbcMiddleware from './../middlewares/middleware.js';
 
 function getRecommendations(res, likes) {
   res.callServiceProvider('getRecommendations', {likes: likes, dislikes: []}, 50).then((recommendations) => {
