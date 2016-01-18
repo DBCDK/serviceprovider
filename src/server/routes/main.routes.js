@@ -18,7 +18,7 @@ import {defaultLikes} from '../../client/components/Recommend/Recommendations.st
 import FrontpageContainer from '../../client/components/FrontPage/FrontpageContainer.component.js';
 
 function getRecommendations(res, likes) {
-  res.callServiceProvider('getRecommendations', {likes: likes, dislikes: []}, 50).then((recommendations) => {
+  res.callServiceProvider('getRecommendations', {likes: likes, dislikes: [], isFrontPage: true}, 50).then((recommendations) => {
     // got recommendations
     const content = ReactDOM.renderToString(<FrontpageContainer application='mobilsoeg' recommendations={recommendations} />);
     res.render('frontpage', {
