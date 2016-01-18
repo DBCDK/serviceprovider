@@ -18,24 +18,24 @@ head
         if libdata
             style(type='text/css')!=specific_styles
         else
-            link(rel='stylesheet', href='/styles/style.css?v=1.0.1')
+            link(rel='stylesheet', href='/styles/style.css?v=1.0.2')
 
 
     block scripts
         if newrelic
             != newrelic.getBrowserTimingHeader()
         if production
-            script(src='//cdnjs.cloudflare.com/ajax/libs/react/0.14.6/react.min.js', type='text/javascript' defer=true)
-            script(src='//cdnjs.cloudflare.com/ajax/libs/react/0.14.6/react-dom.min.js', type='text/javascript' defer=true)
+            script(src='//cdnjs.cloudflare.com/ajax/libs/react/0.14.2/react.min.js', type='text/javascript' defer=true)
+            script(src='//cdnjs.cloudflare.com/ajax/libs/react/0.14.2/react-dom.min.js', type='text/javascript' defer=true)
         else
-            script(src='//cdnjs.cloudflare.com/ajax/libs/react/0.14.6/react.js', type='text/javascript' defer=true)
-            script(src='//cdnjs.cloudflare.com/ajax/libs/react/0.14.6/react-dom.js', type='text/javascript' defer=true)
+            script(src='//cdnjs.cloudflare.com/ajax/libs/react/0.14.2/react.js', type='text/javascript' defer=true)
+            script(src='//cdnjs.cloudflare.com/ajax/libs/react/0.14.2/react-dom.js', type='text/javascript' defer=true)
             script(src='/reload/reload.js', type='text/javascript' defer=true)
 
         script(src='https://cdnjs.cloudflare.com/ajax/libs/lodash.js/3.10.1/lodash.min.js', type='text/javascript' defer=true)
-        script(src='/js/common.js?v=1.0.0', type='text/javascript', defer=true)
-        script(src='/js/header.js?v=1.0.0', type='text/javascript', defer=true)
-        script(src='/js/footer.js?v=1.0.0', type='text/javascript', defer=true)
+        script(src='/js/common.js?v=1.0.2', type='text/javascript', defer=true)
+        script(src='/js/header.js?v=1.0.2', type='text/javascript', defer=true)
+        script(src='/js/footer.js?v=1.0.2', type='text/javascript', defer=true)
 
         if libdata
             script window.agencyId = "!{libdata.libraryId}";

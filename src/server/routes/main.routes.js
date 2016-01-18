@@ -6,21 +6,16 @@
  * Includes utility routes (example: /moreinfo)
  */
 
-import {isEmpty} from 'lodash';
 import express from 'express';
 const MainRoutes = express.Router();
 import React from 'react';
 import ReactDOM from 'react-dom/server';
-import {inHTMLData} from 'xss-filters';
 
 import {stringToObject} from '../../utils/QueryParser.util.js';
 
 // loading components
-import SearchServer from '../../client/components/searchpage/Search.server.js';
 import {defaultLikes} from '../../client/components/Recommend/Recommendations.store.js';
 import FrontpageContainer from '../../client/components/FrontPage/FrontpageContainer.component.js';
-
-import dbcMiddleware from './../middlewares/middleware.js';
 
 function getRecommendations(res, likes) {
   res.callServiceProvider('getRecommendations', {likes: likes, dislikes: []}, 50).then((recommendations) => {
@@ -57,39 +52,9 @@ MainRoutes.get('/', (req, res) => {
 });
 
 MainRoutes.get(['/search', '/search/*'], (req, res) => {
-  let query = req.query || [];
-  query = stringToObject(query) || [];
-
-  if (!query[0]) {
-    return res.redirect('/');
-  }
-
-  // pass input through XSS filter
-  query[0].value = inHTMLData(query[0].value);
-  query[0].index = inHTMLData(query[0].index);
-
-  let recommendations = {
-    result: [],
-    pending: false,
-    info: {more: false}
-  };
-
-  function cbFunc(err, result, timeTaken) {
-    if (result) {
-      recommendations.result = result[0];
-    }
-
-    let properties = SearchServer({query, recommendations});
-    dbcMiddleware.renderPage(res, 'search', properties, timeTaken);
-  }
-
-  if (!isEmpty(query)) {
-    cbFunc(null, null, 'call was deferred');
-  }
-  else {
-    let promiseResponse = req.app.get('serviceProvider').trigger('getRecommendations', {likes: defaultLikes, dislikes: []});
-    dbcMiddleware.setupSSR(req, res, promiseResponse, cbFunc);
-  }
+  res.render('search', {
+    props: JSON.stringify({query: stringToObject(req.query || []) || []})
+  });
 });
 
 MainRoutes.post(['/report-violation'], function(req, res) {

@@ -72,9 +72,9 @@ class RecommendationContainer extends React.Component {
       }
     });
 
-    // const isFrontPage = (this.props && this.props.isFrontPage) ? true : false; // Error in service
+    const isFrontPage = (this.props && this.props.isFrontPage) ? true : false; // Error in service
 
-    RecommendationActions.request({likes: likes, dislikes: dislikes, isFrontPage: false});
+    RecommendationActions.request({likes: likes, dislikes: dislikes, isFrontPage: isFrontPage});
   }
 
   gotRecommendations() {
