@@ -8,9 +8,9 @@ const RecommendationsTransform = {
   requestTransform(event, params, connection) {
     let call;
     if (params.isFrontPage && !connection.request.session.passport) {
-      const filter = connection.libdata.config.provider.services.recommend.filters || ['rec.collectionIdentifier:' + (connection.libdata.libraryId || '716500') + '-katalog'];
+      const filters = connection.libdata.config.provider.services.recommend.filters || ['rec.collectionIdentifier:' + (connection.libdata.libraryId || '716500') + '-katalog'];
       const metaParams = {
-        filter: filter,
+        filters: filters,
         profile: 'pop'
       };
       call = this.callServiceClient('recommendmeta', 'getRecommendations', metaParams);
