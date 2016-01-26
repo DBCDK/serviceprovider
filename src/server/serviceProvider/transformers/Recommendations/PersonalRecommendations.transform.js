@@ -14,7 +14,7 @@ const PersonalRecommendationsTransform = {
       let recs = this.callServiceClient('recommend', 'getRecommendations', {
         likes: [params.work],
         dislikes: [],
-        filters: filters
+        filter: filters
       });
       promises.push(recs);
 
@@ -23,7 +23,7 @@ const PersonalRecommendationsTransform = {
 
         let precs = this.callServiceClient('recommendranked', 'getPersonalRecommendations', {
           like: params.likes,
-          filters: filters
+          filter: filters
         });
         promises.push(precs);
 
