@@ -95,7 +95,7 @@ const ResultListTransform = {
     }
     else {
       work.collection.object.forEach((identifier) => {
-        if (identifier.primaryObjectIdentifier.length || identifier.identifier.length) {
+        if ((identifier.primaryObjectIdentifier && identifier.primaryObjectIdentifier.length) || identifier.identifier.length) {
           identifiers.push(identifier.primaryObjectIdentifier || identifier.identifier);
           title = work.formattedCollection.briefDisplay.manifestation[0].titleFull;
           creator = work.formattedCollection.briefDisplay.manifestation[0].creator;
