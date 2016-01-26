@@ -25,9 +25,11 @@ const WorkTransform = {
   },
 
   requestTransform(event, request, connection) {
-    let pid = 'rec.id=' + inHTMLData(request.pid);
+    let pid = inHTMLData(request.pid);
+    pid = pid.substring(pid.indexOf(':') + 1);
+    let q = 'dkcclterm.id=' + pid;
     return this.getWorkResult({
-      query: pid,
+      query: q,
       start: request.offset,
       stepValue: request.worksPerPage,
       allObjects: request.allManifestations,
