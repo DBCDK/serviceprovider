@@ -20,9 +20,11 @@ const WorkTransform = {
   },
 
   requestTransform(event, request, connection) {
-    let pid = 'rec.id=' + inHTMLData(request.pid);
+    let pid = inHTMLData(request.pid);
+    pid = pid.substring(pid.indexOf(':') + 1);
+    let q = 'dkcclterm.id=' + pid;
     return this.callServiceClient('opensearch', 'getWorkResult', {
-      query: pid,
+      query: q,
       objectFormats: ['briefDisplay'],
       getRelationData: 'none',
       agency: connection.libdata.config.agency
