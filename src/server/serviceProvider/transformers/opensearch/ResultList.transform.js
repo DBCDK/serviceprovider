@@ -88,15 +88,15 @@ const ResultListTransform = {
     let title, creator, workType;
 
     if (no === '1') {
-      identifiers.push(work.collection.object.identifier);
+      identifiers.push(work.collection.object.primaryObjectIdentifier || work.collection.object.identifier);
       title = work.formattedCollection.briefDisplay.manifestation.titleFull;
       creator = work.formattedCollection.briefDisplay.manifestation.creator;
       workType = work.formattedCollection.briefDisplay.manifestation.workType;
     }
     else {
       work.collection.object.forEach((identifier) => {
-        if (identifier.identifier.length) {
-          identifiers.push(identifier.identifier);
+        if ((identifier.primaryObjectIdentifier && identifier.primaryObjectIdentifier.length) || identifier.identifier.length) {
+          identifiers.push(identifier.primaryObjectIdentifier || identifier.identifier);
           title = work.formattedCollection.briefDisplay.manifestation[0].titleFull;
           creator = work.formattedCollection.briefDisplay.manifestation[0].creator;
           workType = work.formattedCollection.briefDisplay.manifestation[0].workType;
