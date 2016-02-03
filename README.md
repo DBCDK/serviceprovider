@@ -11,18 +11,15 @@ As default the application will load on localhost:8080. Se a running example on 
 
 ## How to install and run the application
 ```bash
-// Build and install the application
-git clone https://github.com/DBCDK/pallesgavebod.git
+# Prerequisites
+npm install supervisor -g
+
+# Build and install the application
+git clone https://github.com/DBCDK/mobilsoeg.git
 npm install
 npm run build
 
-// create config file
-mv config.example.js config.js
-
-// fill out the blanks in the config file. 
-// NB! a lot of the services are restricted by DBC
-
-// Start the application
+# Start the application
  npm run serve
 ```
 
