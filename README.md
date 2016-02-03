@@ -11,16 +11,19 @@ As default the application will load on localhost:8080. Se a running example on 
 
 ## How to install and run the application
 ```bash
-# Prerequisites
+ # Prerequisites
 npm install supervisor -g
 
-# Build and install the application
+ # Build and install the application
 git clone https://github.com/DBCDK/mobilsoeg.git
 npm install
 npm run build
 
-# Start the application
- npm run serve
+ # Start the application
+npm run serve
+
+ # Run in development mode (see also other targets in package.json)
+npm run dev:remoteprofile
 ```
 
 ## Environment Varibles
