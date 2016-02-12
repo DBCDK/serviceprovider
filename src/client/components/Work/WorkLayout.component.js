@@ -219,7 +219,7 @@ export default class WorkLayout extends React.Component {
             <BackButton />
             <div className='work--image' >
               <CoverImage noCoverUrl='/covers/no-cover-image-book.png'
-                          pids={[this.props.id]}
+                          pids={[this.props.id, this.props.work.pid]}
                           prefSize='detail_500' />
             </div>
             <div className='work--information' >
