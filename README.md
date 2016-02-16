@@ -22,27 +22,27 @@ This is the repository for the ServiceProvider, ie. the API from [MobilSøg](htt
     - merge authentication from DBCDK/openserviceprovider repository
 
 
+## Installation / getting it to run
+
+**IMPORTANT** the serviceprovider only runs on DBCs internal network as it serve as the gateway to the services.
+
+### Dependencies
+
+- *@dbcdk/dbc-config* contains the configuration to access DBCs services. You need to set up the proper **NPM_TOKEN** environment variable / set `//registry.npmjs.org/:_authToken=...` in `.npmrc`, to get access to this configuration.
+- *supervisor* is used for running the server. `npm install supervisor -g`
+- *siege* is used for load-testing. `apt-get install siege`
+- various dependencies in package.json `npm install`
+
+
+### Building / running it
+
+- `npm run build` uses webpack to build the application
+- `npm run dev:remoteprofile` runs the application in dev-mode
+- `npm run server` runs the application
+
+By default it will run on port 8080 on localhost.
+
 # Documentation in old readme, ie. needs to be looked through, and merged into above
-
-As default the application will load on localhost:8080.
-
-## How to install and run the application
-
-```bash
- # Prerequisites
-npm install supervisor -g
-
- # Build and install the application
-git clone https://github.com/DBCDK/serviceprovider.git
-npm install
-npm run build
-
- # Start the application
-npm run serve
-
- # Run in development mode (see also other targets in package.json)
-npm run dev:remoteprofile
-```
 
 ## Environment Varibles
 The following environment variables can be used to override default settings in the application

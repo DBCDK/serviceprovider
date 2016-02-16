@@ -1,24 +1,0 @@
-Skript påbegyndt fre 08 jan 2016 11:19:19 CET
-]0;matias@dbc4280: ~/mobilsoegmatias@dbc4280:~/mobilsoeg$ <[K          script window.headerData = '!{headerData}';
-Skript påbegyndt, filen er window.headerData
-]0;matias@dbc4280: ~/mobilsoegmatias@dbc4280:~/mobilsoeg$ exit[Knpm rebuild node-sass
-
-> node-sass@3.4.1 install /home/matias/mobilsoeg/node_modules/node-sass
-> node scripts/install.js
-
-Binary downloaded and installed at /home/matias/mobilsoeg/node_modules/node-sass/vendor/linux-x64-43/binding.node
-
-> node-sass@3.4.1 postinstall /home/matias/mobilsoeg/node_modules/node-sass
-> node scripts/build.js
-
-` /home/matias/mobilsoeg/node_modules/node-sass/vendor/linux-x64-43/binding.node ` exists. 
- testing binary.
-Binary is fine; exiting.
-node-sass@3.4.1 /home/matias/mobilsoeg/node_modules/node-sass
-]0;matias@dbc4280: ~/mobilsoegmatias@dbc4280:~/mobilsoeg$ npm rebuild node-sassexit[Ksudo apt-get install inkscapeexit[Knodeexitssh root@46.101.165.89cp matiasrasmussen.com/public/images/matias.jpg root@46.101.165.89:matiasrasmussen/public/images/matias.jpg[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[Csh root@46.101.165.89[Kcd ..[K[3Plscd vortex/git clone https://github.com/matiaslaurarasmussen/vortex.git[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[35Psudo apt-get install gimpexit[Ksudo apt-get install gimpgit clone https://github.com/matiaslaurarasmussen/vortex.git[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[Ccd vortex/[Kls[Kcd ..ssh root@46.101.165.89cp matiasrasmussen.com/public/images/matias.jpg root@46.101.165.89:matiasrasmussen/public/images/matias.jpg[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[Csh root@46.101.165.89[Kexit[Knodeexitsudo apt-get install inkscapeexit[Knpm rebuild node-sass[Kexit
-exit
-Skript færdigt, filen er window.headerData
-]0;matias@dbc4280: ~/mobilsoegmatias@dbc4280:~/mobilsoeg$ exit
-exit
-
-Skript kørt fre 08 jan 2016 11:20:03 CET

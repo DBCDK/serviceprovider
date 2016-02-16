@@ -1,7 +1,7 @@
 {
-  "name": "pallesgavebod",
-  "version": "0.0.61",
-  "description": "Next generation pallesgavebod.dk",
+  "name": "serviceprovider",
+  "version": "0.0.1",
+  "description": "API for accessing DBCs services through sockets and HTTP",
   "main": "src/main.js",
   "scripts": {
     "build": "webpack --progress --colors -p",
@@ -25,18 +25,19 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/DBCDK/pallesgavebod.git"
+    "url": "git+https://github.com/DBCDK/serviceprovider.git"
   },
   "keywords": [
-    "pallesgavebod",
+    "serviceprovider",
+    "API",
     "dbc"
   ],
   "author": "dbcdk",
   "license": "GPL-3.0",
   "bugs": {
-    "url": "https://github.com/DBCDK/pallesgavebod/issues"
+    "url": "https://github.com/DBCDK/serviceprovider/issues"
   },
-  "homepage": "https://github.com/DBCDK/pallesgavebod#readme",
+  "homepage": "https://github.com/DBCDK/serviceprovider#readme",
   "dependencies": {
     "@dbcdk/dbc-config": "^4.0.0",
     "async": "1.5.0",
