@@ -33,3 +33,8 @@ This document has various in-progress notes about the API.
 - saveLikeToMobilSoegProfile
 - savePickupAgencyToMobilSoegProfile
 - updateOrder
+
+## References
+
+- https://openapis.org/ / https://github.com/OAI/OpenAPI-Specification / http://swagger.io 
+- http://www.vinaysahni.com/best-practices-for-a-pragmatic-restful-api
