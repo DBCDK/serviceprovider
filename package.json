@@ -4,6 +4,7 @@
   "description": "API for accessing DBCs services through sockets and HTTP",
   "main": "src/main.js",
   "scripts": {
+    "apitest": "cd apitest; ./apitest.sh",
     "build": "webpack --progress --colors -p",
     "dev": "parallelshell \"npm run start:watch -s\" \"npm run serve -s\"",
     "dev:ddb": "NODE_APPLICATION=ddbmobil npm run dev",
