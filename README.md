@@ -9,18 +9,18 @@
 
 This is the repository for the ServiceProvider, ie. the API from [MobilSøg](https://github.com/DBCDK/mobilsoeg).  It starts out as a copy of the MobilSøg repository, and then the client code will be refactored out, etc.
 
+## Communication with the API
 
-## Tasks
+HTTP endpoints can be accesses on `/api/$ENDPOINT_NAME` with the parameters in a post request, ie.: 
 
-- major directions:
-    - make the ServiceProvider an independent service, and not just a part of mobilsøg
-    - api architecture / standard for transforms
-- subtasks
-    - create repository for independent serviceprovider, move tasks from readme into github issues when we have repository
-    - create an overview of APIs used in the serviceproviders of mobilsøg and biblo
-    - remove mobilsøg, client-code from the ServiceProvider
-    - merge authentication from DBCDK/openserviceprovider repository
+    curl -X POST \
+         -H "Content-Type: application/json" \
+         -d '[{"query":"(1q84)","offset":0,"worksPerPage":12,"sort":"rank_frequency"}]' \
+         http://localhost:8080/api/getOpenSearchResultList
 
+will search for "1q84". 
+
+TODO #1: currently the parameter object for the HTTP-API requests currently needs to be wrapped in an array, and the result is wrapped in two arrays. 
 
 ## Installation / getting it to run
 
