@@ -1,21 +1,39 @@
-# Mobilsøg
+# ServiceProvider
 
-[![GitHub tag](https://img.shields.io/github/tag/DBCDK/pallesgavebod.svg?style=flat-square)](https://github.com/DBCDK/pallesgavebod)
-[![David](https://img.shields.io/david/DBCDK/pallesgavebod.svg?style=flat-square)](https://david-dm.org/DBCDK/pallesgavebod#info=dependencies)
-[![David](https://img.shields.io/david/dev/DBCDK/pallesgavebod.svg?style=flat-square)](https://david-dm.org/DBCDK/pallesgavebod#info=devDependencies)
-[![Build Status](https://travis-ci.org/DBCDK/pallesgavebod.svg?branch=master)](https://travis-ci.org/DBCDK/pallesgavebod)
-[![Coverage Status](https://coveralls.io/repos/DBCDK/pallesgavebod/badge.svg?branch=master&service=github)](https://coveralls.io/github/DBCDK/pallesgavebod?branch=master)
-[![Code Climate](https://codeclimate.com/github/DBCDK/pallesgavebod/badges/gpa.svg)](https://codeclimate.com/github/DBCDK/pallesgavebod)
+[![GitHub tag](https://img.shields.io/github/tag/DBCDK/serviceprovider.svg?style=flat-square)](https://github.com/DBCDK/serviceprovider)
+[![David](https://img.shields.io/david/DBCDK/serviceprovider.svg?style=flat-square)](https://david-dm.org/DBCDK/serviceprovider#info=dependencies)
+[![David](https://img.shields.io/david/dev/DBCDK/serviceprovider.svg?style=flat-square)](https://david-dm.org/DBCDK/serviceprovider#info=devDependencies)
+[![Build Status](https://travis-ci.org/DBCDK/serviceprovider.svg?branch=master)](https://travis-ci.org/DBCDK/serviceprovider)
+[![Coverage Status](https://coveralls.io/repos/DBCDK/serviceprovider/badge.svg?branch=master&service=github)](https://coveralls.io/github/DBCDK/serviceprovider?branch=master)
+[![Code Climate](https://codeclimate.com/github/DBCDK/serviceprovider/badges/gpa.svg)](https://codeclimate.com/github/DBCDK/serviceprovider)
 
-As default the application will load on localhost:8080. Se a running example on [ddbmobil.demo.dbc.dk](https://ddbmobil.demo.dbc.dk)
+This is the repository for the ServiceProvider, ie. the API from [MobilSøg](https://github.com/DBCDK/mobilsoeg).  It starts out as a copy of the MobilSøg repository, and then the client code will be refactored out, etc.
+
+
+## Tasks
+
+- major directions:
+    - make the ServiceProvider an independent service, and not just a part of mobilsøg
+    - api architecture / standard for transforms
+- subtasks
+    - create repository for independent serviceprovider, move tasks from readme into github issues when we have repository
+    - create an overview of APIs used in the serviceproviders of mobilsøg and biblo
+    - remove mobilsøg, client-code from the ServiceProvider
+    - merge authentication from DBCDK/openserviceprovider repository
+
+
+# Documentation in old readme, ie. needs to be looked through, and merged into above
+
+As default the application will load on localhost:8080.
 
 ## How to install and run the application
+
 ```bash
  # Prerequisites
 npm install supervisor -g
 
  # Build and install the application
-git clone https://github.com/DBCDK/mobilsoeg.git
+git clone https://github.com/DBCDK/serviceprovider.git
 npm install
 npm run build
 
