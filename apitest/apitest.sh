@@ -1,3 +1,4 @@
+#!/bin/bash
 rm test.result
 
 IFS=$'\n$'

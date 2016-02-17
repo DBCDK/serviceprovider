@@ -222,19 +222,20 @@ module.exports.run = function (worker) {
   // Graceful handling of errors
   app.use((err, req, res, next) => {
     logger.log('error', 'An error occurred! Got following: ' + err);
-    console.error('error', 'An error occurred! Got following: ' + err); // eslint-disable-line no-console
+    console.error('error', 'An error occurred! Got following: ', err); // eslint-disable-line no-console
+    console.error(err.stack);
     if (res.headersSent) {
       return next(err);
     }
 
     res.status(500);
-    res.render('error', {errorImage: 'https://http.cat/500'});
+    res.end(JSON.stringify({error: String(err)}));
   });
 
   // Handle 404's
   app.use((req, res) => {
     res.status(404);
-    res.render('error', {errorImage: 'https://http.cat/404'});
+    res.end(JSON.stringify({error: "404 Not Found"}));
   });
 
   // Setting logger -- should be placed after routes
