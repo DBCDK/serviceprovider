@@ -3,7 +3,7 @@ findMobilSoegProfile
 getAllAffiliates
 getCoverImage ["870970-basis:28511663"]
 getEventList {"amount":"10"}
-getNewsList {"amount":"10"}
+getNewsList {"amount":"0"}
 getOpenSearchResultList {"query":"(test)","offset":0,"worksPerPage":12,"sort":"rank_frequency"}
 getOpenSearchWorkBriefDisplay {"pid":"870970-basis:23645564"}
 getOpenSearchWork {"pid":"870970-basis:23645564","offset":1,"worksPerPage":1,"allManifestations":true}
@@ -21,3 +21,4 @@ saveLikeToMobilSoegProfile {"item_id":"870970-basis:23645564","action":"like"}
 saveLikeToMobilSoegProfile {"item_id":"870970-basis:23645564","action":"remove","id":532}
 savePickupAgencyToMobilSoegProfile "775130"
 updateOrder {"orderId":"14894443","pickUpAgencyId":"775140"}
+wrongEndpoint
