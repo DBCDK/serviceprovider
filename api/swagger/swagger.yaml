@@ -1,0 +1,56 @@
+swagger: "2.0"
+info:
+  version: "0.0.1"
+  title: DBC Service Provider
+  description: |
+    Public API for DBC Services
+    
+    __NB: Under development, this document does not reflect the actual state of the API__
+basePath: /api/
+schemes:
+  - https
+  - wss
+consumes:
+  - application/json
+produces:
+  - application/json
+paths:
+  /search:
+    post:
+      tags:
+        - search
+      description: Searches for a string using OpenSearch
+      parameters:
+        - name: query
+          in: query
+          description: Query string
+          required: true
+          type: string
+      responses:
+        "200":
+          description: Success
+          schema:
+            $ref: "#/definitions/SearchResponse"
+        # responses may fall through to errors
+        default:
+          description: Error
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+  /swagger:
+    x-swagger-pipe: swagger_raw
+definitions:
+  SearchResponse:
+    required:
+      - results
+    properties:
+      results:
+        type: any
+  ErrorResponse:
+    required:
+      - statusCode
+      - errors
+    properties:
+      statusCode:
+        type: integer
+      errors:
+        type: any
