@@ -34,6 +34,8 @@ The `/v0` is the version of the API. Version 0 is the unstable API under develop
 The production API runs ssl-only (HTTPS/WSS).
 
 English is the main language for naming of methods, as well as API-documentation.
+We will try to minimise the amount of library jargon, in order to make the API more accessible for developers without domain knowledge.
+
 
 ## Transports
 
@@ -51,83 +53,42 @@ Authentication using OAuth 2. TODO document details.
 
 # Notes for the concrete API design
 
-The actual API-design/specification happens in `api/swagger/swagger.yaml`
-
-TODO: decide on whether to document as POST or GET in swagger.yaml, and whether to autogenerate doc for the other HTTP-method, or just document different transports as above.
+The actual API-design/specification happens in `api/swagger/swagger.yaml`. We only document the GET-api directly.
 
 APIs that update state, returns the new state.
-
-## Relevant resources to read
 
 - http://swagger.io/
 - http://www.vinaysahni.com/best-practices-for-a-pragmatic-restful-api
 
-## For biblo and old mobilsoeg
 
-- Biblo version April (probably no overlap with existing transforms)
-    - borrower check
-    - community services (ie. forum)
-    - evt. entity suggest
-- Biblo version June
-    - søg/bestil/anbefalinger/lånerstatus, ie. approx the same functionality as in mobilsoeg
-- API in old mobilsoeg (to be restructured)
-    - cancelOrder
-    - deleteLikesFromMobilSoegProfile
-    - findMobilSoegProfile
-    - getAllAffiliates
-    - getCoverImage
-    - getEventById
-    - getEventList
-    - getNewsById
-    - getNewsList
-    - getOpenAgency
-    - getOpenSearchBriefDisplayList
-    - getOpenSearchFacets
-    - getOpenSearchFacetTerms
-    - getOpenSearchResultList
-    - getOpenSearchWork
-    - getOpenSearchWorkBriefDisplay
-    - getOrderPolicy
-    - getPersonalRecommendations
-    - getPickupAgencyList
-    - getPopSuggestions
-    - getRecommendations
-    - getUserStatus
-    - holdingStatus
-    - isMobilSoegUserLoggedIn
-    - placeOrder
-    - renewLoan
-    - saveLikeToMobilSoegProfile
-    - savePickupAgencyToMobilSoegProfile
-    - updateOrder
+Below is a brainstorm for categories of api-endpoints, including existing usage in mobilsoeg, and  expected use in first version of biblo:
 
-## Brainstorm for mobile APP
-
-- minimal
-    - library info
-        - opening times - location(geo)
-        - news
-        - events
-    - search/work
-        - search
-        - metadata
-        - cover
-        - availability at libraries
-        - order book | link to online version
-    - patron/reservations
-        - login
-        - patron-status (orders)
-        - renew books
-        - cancel order
-- good
-    - likes / remember
-        - like/unlike material
-        - get list of likes
-    - personal recommendations
-    - change delivery library for order / user
-    - filter search, recommendations etc. to available at given libraries
-- extras
-    - recommendations based
+- user
+    - mobilsoeg: `findMobilSoegProfile?` `getPickupAgencyList` `getUserStatus` `savePickupAgencyToMobilSoegProfile` `renewLoan` `isMobilSoegUserLoggedIn`
+    - biblo: TBD, ie. borrower check
+- search
+    - mobilsoeg: `getOpenSearchBriefDisplayList` `getOpenSearchFacets` `getOpenSearchFacetTerms` `getOpenSearchResultList`
+- suggest
+    - mobilsoeg: `getPopSuggestions`
+    - biblo: TBD, ie. entity-suggest
+- order
+    - mobilsoeg: `cancelOrder` `getOrderPolicy?` `placeOrder` `updateOrder`
+    - order book
+    - update order (ie. change expiry, and pickup-library)
+- work
+    - mobilsoeg: `getCoverImage` `getOpenSearchWork` `getOpenSearchBriefDisplay` `getRecomendations` `getHoldingStatus`
+    - meta data
+    - access to electronic resources, ie. link to fulltext, ereolen, etc., 
+- recommendations
+    - mobilsoeg: `saveLikeToMobilSoegProfile` `getPersonalRecommendations `also on work?`` `deleteLikesFromMobilsoegProfile`
+- library (agency/affiliates)
+    - mobilsoeg: `getAllAffiliates` `getEventById` `getEventList` `getNewsById` `getNewsList` `getOpenAgency?`
+    - opening times, geolocation
+- misc apis/notes - forum(biblo), questions(spørgetjeneste etc.)
+    - community services (ie. forum) (biblo)
+    - questions
+    - reviews (voxb)
+    - services: openfindorder
 
 # Ideas, perhaps for later.
 
