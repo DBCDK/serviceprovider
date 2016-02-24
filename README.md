@@ -29,10 +29,8 @@ TODO #1: currently the parameter object for the HTTP-API requests currently need
 ### Dependencies
 
 - *@dbcdk/dbc-config* contains the configuration to access DBCs services. You need to set up the proper **NPM_TOKEN** environment variable / set `//registry.npmjs.org/:_authToken=...` in `.npmrc`, to get access to this configuration.
-- *supervisor* is used for running the server. `npm install supervisor -g`
 - *siege* is used for load-testing. `apt-get install siege`
 - various dependencies in package.json `npm install`
-
 
 ### Building / running it
 
