@@ -21,4 +21,5 @@ saveLikeToMobilSoegProfile {"item_id":"870970-basis:23645564","action":"like"}
 saveLikeToMobilSoegProfile {"item_id":"870970-basis:23645564","action":"remove","id":532}
 savePickupAgencyToMobilSoegProfile "775130"
 updateOrder {"orderId":"14894443","pickUpAgencyId":"775140"}
+getPopSuggestions "api"
 wrongEndpoint

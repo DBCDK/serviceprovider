@@ -12,7 +12,7 @@ Parameters are general across endpoints:
 - `callback` is the callback name when doing a jsonp request on the HTTP-transport
 - `envelope` specifies whether to have the envelope explicit, or implicit (with status code on HTTP). Default is `false` with HTTP transport (and not jsonp), and `true` otherwise.
 - `pretty` determines whether the JSON should be prettyprinted when serialising.
-- `fields` which keys should be in the returned object. Limiting the fields could improve performance, for example by excluding cover image or recommendations when getting information about a creative work.
+- `fields` which keys should be in the returned object.
 - `offset` for paginated results, such as search result.
 - `limit` for paginated results, - number of results per page.
 
@@ -50,7 +50,9 @@ There are several transports:
 
 ## Auth
 
-Authentication using OAuth 2. TODO document details.
+Authentication using OAuth 2. 
+
+TODO document details.
 
 # Notes for the concrete API design
 
@@ -61,7 +63,6 @@ APIs that update state, returns the new state.
 - http://swagger.io/
 - http://www.vinaysahni.com/best-practices-for-a-pragmatic-restful-api
 
-
 Below is a brainstorm for categories of api-endpoints, including existing usage in mobilsoeg, and  expected use in first version of biblo:
 
 - user
@@ -69,6 +70,7 @@ Below is a brainstorm for categories of api-endpoints, including existing usage 
     - biblo: TBD, ie. borrower check
 - search
     - mobilsoeg: `getOpenSearchBriefDisplayList` `getOpenSearchFacets` `getOpenSearchFacetTerms` `getOpenSearchResultList`
+    - parameter: single serviceprovider, across different libraries.
 - suggest
     - mobilsoeg: `getPopSuggestions`
     - biblo: TBD, ie. entity-suggest
@@ -88,33 +90,6 @@ Below is a brainstorm for categories of api-endpoints, including existing usage 
 - misc apis/notes - forum(biblo), questions(spørgetjeneste etc.)
     - community services (ie. forum) (biblo)
     - questions
-    - reviews (voxb)
-    - services: openfindorder
-
-Suggestions for endpoints
-
-- `/user`
-    - query
-        - fields
-    - result
-        - id 
-        - libraries
-        - loans
-        - orders
-        - likes
-- `/search`
-    - query
-    - result
-- `/facet`
-- `/suggest`
-- `/work`
-    - query
-        - id
-        - fields
-    - result
-        - metadata
-        - cover
-- `/order`
 
 # Ideas, perhaps for later.
 

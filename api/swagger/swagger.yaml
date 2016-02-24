@@ -15,6 +15,27 @@ consumes:
 produces:
   - application/json
 paths:
+  /user:
+    get:
+      tags:
+        - user 
+      description: Get information about the currently logged in user
+      parameters:
+        - name: fields
+          in: query
+          description: Field selector, chooses which parts of the user-info object to return.
+          required: true
+          type: string
+      responses:
+        "200":
+          description: Success
+          schema:
+            $ref: "#/definitions/SearchResponse"
+        # responses may fall through to errors
+        default:
+          description: Error
+          schema:
+            $ref: "#/definitions/ErrorResponse"
   /search:
     get:
       tags:
