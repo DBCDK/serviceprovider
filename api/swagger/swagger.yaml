@@ -16,7 +16,7 @@ produces:
   - application/json
 paths:
   /search:
-    post:
+    get:
       tags:
         - search
       description: Searches for a string using OpenSearch
@@ -54,3 +54,6 @@ definitions:
         type: integer
       errors:
         type: any
+externalDocs:
+  description: Extra documentation in the github repository
+  url: https://github.com/DBCDK/serviceprovider/tree/master/doc

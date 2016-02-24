@@ -12,16 +12,17 @@ Parameters are general across endpoints:
 - `callback` is the callback name when doing a jsonp request on the HTTP-transport
 - `envelope` specifies whether to have the envelope explicit, or implicit (with status code on HTTP). Default is `false` with HTTP transport (and not jsonp), and `true` otherwise.
 - `pretty` determines whether the JSON should be prettyprinted when serialising.
-
-TODO: brainstorm/decide about other general parameters, ie. pagination, field-limitation, etc.
+- `fields` which keys should be in the returned object. Limiting the fields could improve performance, for example by excluding cover image or recommendations when getting information about a creative work.
+- `offset` for paginated results, such as search result.
+- `limit` for paginated results, - number of results per page.
 
 __Responses__ are returned within an envelope, usually as a JSON object with the following properties:
 
 - `statusCode` contains the status of the request, ie `200` if it went ok.
 - `data` contains the actual response, if applicable
 - `errors` contains a list of errors, if applicable
-
-TODO: brainstorm/decide about other parameters, ie. API-quota/rate-limit, pagination(=link-header in http) etc.
+- information about rate limit when applicable/implemented
+- maybe paging information
 
 This can also be transferred through HTTP without explicit envelope: the HTTP-status-code is `statusCode`, the HTTP-content is either the `data` (if `statusCode` is 200) or else the `errors`, and some of the HTTP-headers correspond to additional parameters like API-quota/rate-limit, pagination (and the envelope properties is named to match the HTTP-header-names).
 
@@ -64,7 +65,7 @@ APIs that update state, returns the new state.
 Below is a brainstorm for categories of api-endpoints, including existing usage in mobilsoeg, and  expected use in first version of biblo:
 
 - user
-    - mobilsoeg: `findMobilSoegProfile?` `getPickupAgencyList` `getUserStatus` `savePickupAgencyToMobilSoegProfile` `renewLoan` `isMobilSoegUserLoggedIn`
+    - mobilsoeg: `findMobilSoegProfile`? `getPickupAgencyList` `getUserStatus` `savePickupAgencyToMobilSoegProfile` `renewLoan` `isMobilSoegUserLoggedIn`
     - biblo: TBD, ie. borrower check
 - search
     - mobilsoeg: `getOpenSearchBriefDisplayList` `getOpenSearchFacets` `getOpenSearchFacetTerms` `getOpenSearchResultList`
@@ -72,7 +73,7 @@ Below is a brainstorm for categories of api-endpoints, including existing usage 
     - mobilsoeg: `getPopSuggestions`
     - biblo: TBD, ie. entity-suggest
 - order
-    - mobilsoeg: `cancelOrder` `getOrderPolicy?` `placeOrder` `updateOrder`
+    - mobilsoeg: `cancelOrder` `getOrderPolicy`? `placeOrder` `updateOrder`
     - order book
     - update order (ie. change expiry, and pickup-library)
 - work
@@ -80,15 +81,40 @@ Below is a brainstorm for categories of api-endpoints, including existing usage 
     - meta data
     - access to electronic resources, ie. link to fulltext, ereolen, etc., 
 - recommendations
-    - mobilsoeg: `saveLikeToMobilSoegProfile` `getPersonalRecommendations `also on work?`` `deleteLikesFromMobilsoegProfile`
+    - mobilsoeg: `saveLikeToMobilSoegProfile` `getPersonalRecommendations `also on work`? `deleteLikesFromMobilsoegProfile`
 - library (agency/affiliates)
-    - mobilsoeg: `getAllAffiliates` `getEventById` `getEventList` `getNewsById` `getNewsList` `getOpenAgency?`
+    - mobilsoeg: `getAllAffiliates` `getEventById` `getEventList` `getNewsById` `getNewsList` `getOpenAgency`?
     - opening times, geolocation
 - misc apis/notes - forum(biblo), questions(spørgetjeneste etc.)
     - community services (ie. forum) (biblo)
     - questions
     - reviews (voxb)
     - services: openfindorder
+
+Suggestions for endpoints
+
+- `/user`
+    - query
+        - fields
+    - result
+        - id 
+        - libraries
+        - loans
+        - orders
+        - likes
+- `/search`
+    - query
+    - result
+- `/facet`
+- `/suggest`
+- `/work`
+    - query
+        - id
+        - fields
+    - result
+        - metadata
+        - cover
+- `/order`
 
 # Ideas, perhaps for later.
 
