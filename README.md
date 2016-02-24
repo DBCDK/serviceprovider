@@ -30,6 +30,7 @@ TODO #1: currently the parameter object for the HTTP-API requests currently need
 
 - *@dbcdk/dbc-config* contains the configuration to access DBCs services. You need to set up the proper **NPM_TOKEN** environment variable / set `//registry.npmjs.org/:_authToken=...` in `.npmrc`, to get access to this configuration.
 - *siege* is used for load-testing. `apt-get install siege`
+- redis, - current version depends assumes a redis server is running for session-storage, - this will be remove later on
 - various dependencies in package.json `npm install`
 
 ### Building / running it
