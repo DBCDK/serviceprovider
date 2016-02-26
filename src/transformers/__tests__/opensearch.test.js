@@ -2,9 +2,9 @@
 /*eslint-disable */
 import {expect, assert} from 'chai';
 
-const transform = require('../transformers/opensearch/ResultList.transform');
+const transform = require('../opensearch/ResultList.transform');
 
-const worktransform = require('../transformers/opensearch/Work.transform');
+const worktransform = require('../opensearch/Work.transform');
 
 const openSearchWorkMocks = require('./opensearch.mock.js');
 

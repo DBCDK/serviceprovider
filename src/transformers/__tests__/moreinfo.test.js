@@ -4,7 +4,7 @@
 
 import {expect, assert} from 'chai';
 
-const prep = require('../transformers/moreinfo/CoverImage.transform.js');
+const prep = require('../moreinfo/CoverImage.transform.js');
 
 describe('Test transform of MoreInfo responses', () => {
   it('Check positive response', function () {
