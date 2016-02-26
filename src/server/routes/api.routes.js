@@ -12,7 +12,7 @@ export default express.Router().all(['/:event'], (req, res) => {
   if (event === 'swagger.json') {
     require('fs').readFile(
       __dirname + '/../../../api/swagger/swagger.yaml',
-      (err, result) => res.send(JSON.stringify(require('js-yaml').safeLoad(result))))
+      (err, result) => res.send(JSON.stringify(require('js-yaml').safeLoad(result))));
     return;
   }
 

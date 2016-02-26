@@ -223,7 +223,7 @@ module.exports.run = function (worker) {
   app.use((err, req, res, next) => {
     logger.log('error', 'An error occurred! Got following: ' + err);
     console.error('error', 'An error occurred! Got following: ', err); // eslint-disable-line no-console
-    console.error(err.stack);
+    console.error(err.stack); // eslint-disable-line no-console
     if (res.headersSent) {
       return next(err);
     }
@@ -235,7 +235,7 @@ module.exports.run = function (worker) {
   // Handle 404's
   app.use((req, res) => {
     res.status(404);
-    res.end(JSON.stringify({error: "404 Not Found"}));
+    res.end(JSON.stringify({error: '404 Not Found'}));
   });
 
   // Setting logger -- should be placed after routes
