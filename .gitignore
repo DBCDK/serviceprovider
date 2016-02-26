@@ -33,3 +33,8 @@ newrelic.config.js
 config.js
 
 NODE_ENV_DOCKERFILE
+
+# ============
+# MISC
+# ============
+/versions/

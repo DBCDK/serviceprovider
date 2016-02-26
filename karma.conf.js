@@ -6,8 +6,6 @@ module.exports = function(config) {
     frameworks: ['mocha', 'sinon'],
     files: [
       'tests.utils.webpack.js',
-      'tests.stores.webpack.js',
-      'tests.components.webpack.js',
       'tests.serviceprovider.webpack.js'
     ],
     proxies: {
@@ -18,8 +16,6 @@ module.exports = function(config) {
     exclude: [],
     preprocessors: {
       'tests.utils.webpack.js': ['webpack'],
-      'tests.stores.webpack.js': ['webpack'],
-      'tests.components.webpack.js': ['webpack'],
       'tests.serviceprovider.webpack.js': ['webpack']
     },
     reporters: ['mocha', 'junit', 'coverage'],

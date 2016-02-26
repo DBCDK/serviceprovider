@@ -2,7 +2,7 @@
 /*eslint-disable */
 import {assert} from 'chai';
 
-const holdingTransform = require('../transformers/OpenHoldingStatus/HoldingStatus.transform');
+const holdingTransform = require('../OpenHoldingStatus/HoldingStatus.transform');
 
 describe('Test transform of OpenHoldingStatus response', () => {
 

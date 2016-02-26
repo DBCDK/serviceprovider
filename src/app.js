@@ -17,8 +17,7 @@ import path from 'path';
 import Logger from 'dbc-node-logger';
 import RedisStore from 'connect-redis';
 import reload from 'reload';
-import ServiceProviderSetup from './server/serviceProvider/ServiceProviderSetup.js';
-import sass from 'node-sass';
+import ServiceProviderSetup from './ServiceProviderSetup.js';
 
 // Routes
 import MainRoutes from './server/routes/main.routes.js';
@@ -94,25 +93,6 @@ module.exports.run = function (worker) {
     newrelic.agent_enabled = false;
   }
 
-  // Setup dynamic sass compilation
-  let styles = {};
-  function generateStyles(filepath) {
-    return sass.renderSync({
-      outputStyle: 'compressed',
-      file: path.join(__dirname, filepath)
-    }).css.toString();
-  }
-
-  styles.aarhus = generateStyles('client/styles/ddb.scss');
-  styles.albertslund = generateStyles('client/styles/albertslund.ddb.scss');
-  styles.ballerup = generateStyles('client/styles/ballerup.ddb.scss');
-  styles.frederiksberg = generateStyles('client/styles/frederiksberg.ddb.scss');
-  styles.guldborgsund = generateStyles('client/styles/guldborgsund.ddb.scss');
-  styles.herlev = generateStyles('client/styles/herlev.ddb.scss');
-  styles.kobenhavn = generateStyles('client/styles/kobenhavn.ddb.scss');
-  styles.q2fjern = generateStyles('client/styles/ddb.scss');
-  styles.ringe = generateStyles('client/styles/ringe.ddb.scss');
-
   // setting local vars that should be available to our template engine
   app.locals.newrelic = newrelic;
   app.locals.env = ENV;
@@ -121,7 +101,6 @@ module.exports.run = function (worker) {
   app.locals.title = config[process.env.CONFIG_NAME || DEFAULT_CONFIG_NAME].applicationTitle || ''; // eslint-disable-line no-process-env
   app.locals.application = APPLICATION;
   app.locals.faviconUrl = APPLICATION === 'mobilsoeg' ? 'https://www.aakb.dk/sites/www.aakb.dk/files/favicon.ico' : '/favicon.ico';
-  app.locals.styles = styles;
 
   // Setup environments
   let redisConfig;
@@ -223,7 +202,7 @@ module.exports.run = function (worker) {
   app.use((err, req, res, next) => {
     logger.log('error', 'An error occurred! Got following: ' + err);
     console.error('error', 'An error occurred! Got following: ', err); // eslint-disable-line no-console
-    console.error(err.stack);
+    console.error(err.stack); // eslint-disable-line no-console
     if (res.headersSent) {
       return next(err);
     }
@@ -235,7 +214,7 @@ module.exports.run = function (worker) {
   // Handle 404's
   app.use((req, res) => {
     res.status(404);
-    res.end(JSON.stringify({error: "404 Not Found"}));
+    res.end(JSON.stringify({error: '404 Not Found'}));
   });
 
   // Setting logger -- should be placed after routes

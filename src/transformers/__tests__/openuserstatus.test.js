@@ -4,10 +4,10 @@ import {expect, assert} from 'chai';
 
 import {isEqual} from 'lodash';
 
-const userStatusTransform = require('../transformers/OpenUserStatus/GetUserStatus.transform');
-const cancelOrderTransform = require('../transformers/OpenUserStatus/CancelOrder.transform');
-const renewLoanTransform = require('../transformers/OpenUserStatus/RenewLoan.transform');
-const updateOrderTransform = require('../transformers/OpenUserStatus/UpdateOrder.transform');
+const userStatusTransform = require('../OpenUserStatus/GetUserStatus.transform');
+const cancelOrderTransform = require('../OpenUserStatus/CancelOrder.transform');
+const renewLoanTransform = require('../OpenUserStatus/RenewLoan.transform');
+const updateOrderTransform = require('../OpenUserStatus/UpdateOrder.transform');
 
 describe('Test transform of OpenUserStatus response', () => {
 
