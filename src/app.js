@@ -17,7 +17,7 @@ import path from 'path';
 import Logger from 'dbc-node-logger';
 import RedisStore from 'connect-redis';
 import reload from 'reload';
-import ServiceProviderSetup from './server/serviceProvider/ServiceProviderSetup.js';
+import ServiceProviderSetup from './ServiceProviderSetup.js';
 import sass from 'node-sass';
 
 // Routes

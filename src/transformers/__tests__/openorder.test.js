@@ -2,8 +2,8 @@
 /*eslint-disable */
 import {expect, assert} from 'chai';
 
-const policyTransform = require('../transformers/OpenOrder/CheckOrderPolicy.transform');
-const orderTransform = require('../transformers/OpenOrder/PlaceOrder.transform');
+const policyTransform = require('../OpenOrder/CheckOrderPolicy.transform');
+const orderTransform = require('../OpenOrder/PlaceOrder.transform');
 
 describe('Test transform of OpenOrder response', () => {
   
