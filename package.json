@@ -6,6 +6,7 @@
   "scripts": {
     "apitest": "cd apitest; ./apitest.sh",
     "build": "webpack --progress --colors -p",
+    "dev:build": "webpack --progress --colors",
     "dev": "parallelshell \"npm run start:watch -s\" \"npm run serve -s\"",
     "dev:ddb": "NODE_APPLICATION=ddbmobil npm run dev",
     "dev:remoteprofile": "PROFILE_SERVICE_URL=\"http://profile-i01.dbc.dk:3001/\" npm run dev",
