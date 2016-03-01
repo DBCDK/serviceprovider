@@ -1,4 +1,4 @@
-"use strict";
+'use strict';
 export default function() {
   let fs = require('fs');
   let yaml = require('js-yaml');
