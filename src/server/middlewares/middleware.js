@@ -11,8 +11,6 @@ import {isArray} from 'lodash';
 import React from 'react';
 import ReactDOM from 'react-dom/server';
 
-import Footer from '../../client/components/Footer/Footer.component';
-import Header from '../../client/components/Header/Header.component';
 
 /*
  * @function
@@ -187,7 +185,7 @@ function ssrFooter (req, res, next) {
   })]).then((libraries) => {
     if (libraries) {
       res.locals.footerData = JSON.stringify({libraries: libraries});
-      res.locals.footerString = ReactDOM.renderToString(<Footer libraryData={{libraries: libraries}} />);
+      //res.locals.footerString = ReactDOM.renderToString(<Footer libraryData={{libraries: libraries}} />);
     }
     next();
   }, () => next()); // On reject, just call next function
@@ -201,7 +199,7 @@ function ssrFooter (req, res, next) {
  * @param next
  */
 function ssrHeader (req, res, next) {
-  res.locals.headerString = ReactDOM.renderToString(<Header/>);
+  // res.locals.headerString = ReactDOM.renderToString(<Header/>);
   next();
 }
 
