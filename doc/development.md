@@ -27,3 +27,9 @@ npm run test
 npm run lint
 npm run lint:checkstyle
 ```
+
+In addition, the generated swagger-file can be tested with:
+
+```
+curl localhost:8080/api/swagger.json | swagger validate
+```
