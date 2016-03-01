@@ -12,9 +12,9 @@ export default express.Router().all(['/:event'], (req, res) => {
   const event = req.params.event;
   if (event === 'swagger.json') {
     return swaggerFromSpec().then((response) => {
-      res.send(JSON.stringify(response));
+      res.json(response);
     }, (error) => {
-      res.send(JSON.stringify(error));
+      res.json(error);
     });
   }
 
@@ -24,8 +24,8 @@ export default express.Router().all(['/:event'], (req, res) => {
   let prom = res.callServiceProvider(event, query, 900000);
   prom = Array.isArray(prom) ? prom : [prom];
   Promise.all(prom).then((response) => {
-    res.send(JSON.stringify(response));
+    res.json(response);
   }, (error) => {
-    res.send(JSON.stringify(error));
+    res.json(error);
   });
 });

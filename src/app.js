@@ -197,13 +197,15 @@ module.exports.run = function (worker) {
     }
 
     res.status(500);
-    res.end(JSON.stringify({error: String(err)}));
+    res.json({error: String(err)});
+    res.end();
   });
 
   // Handle 404's
   app.use((req, res) => {
     res.status(404);
-    res.end(JSON.stringify({error: '404 Not Found'}));
+    res.json({error: '404 Not Found'});
+    res.end();
   });
 
   // Setting logger -- should be placed after routes
