@@ -8,10 +8,6 @@ const loginUrl = '/profile/login';
 import * as logger from 'dbc-node-logger';
 import {isArray} from 'lodash';
 
-import React from 'react';
-import ReactDOM from 'react-dom/server';
-
-
 /*
  * @function
  * Middleware which lets you carry on if you're logged in, else it redirects you to the login page
@@ -185,7 +181,6 @@ function ssrFooter (req, res, next) {
   })]).then((libraries) => {
     if (libraries) {
       res.locals.footerData = JSON.stringify({libraries: libraries});
-      //res.locals.footerString = ReactDOM.renderToString(<Footer libraryData={{libraries: libraries}} />);
     }
     next();
   }, () => next()); // On reject, just call next function
@@ -199,7 +194,6 @@ function ssrFooter (req, res, next) {
  * @param next
  */
 function ssrHeader (req, res, next) {
-  // res.locals.headerString = ReactDOM.renderToString(<Header/>);
   next();
 }
 

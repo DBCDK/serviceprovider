@@ -21,7 +21,7 @@ import ServiceProviderSetup from './ServiceProviderSetup.js';
 
 // Routes
 import MainRoutes from './server/routes/main.routes.js';
-import APIRoutes from './server/routes/api.routes.js';
+import APIRoutes from './api.routes.js';
 
 // Middleware
 import mobilsoegmiddleware from './server/middlewares/mobilsoeg.middleware.js';

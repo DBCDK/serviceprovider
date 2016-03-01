@@ -1,3 +1,4 @@
+swagger.json
 cancelOrder {"orderId":"14894443","orderType":"Hold"}
 findMobilSoegProfile
 getAllAffiliates

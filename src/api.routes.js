@@ -6,14 +6,16 @@
  */
 
 import express from 'express';
+import swaggerFromSpec from './swaggerFromSpec.js';
 
 export default express.Router().all(['/:event'], (req, res) => {
   const event = req.params.event;
   if (event === 'swagger.json') {
-    require('fs').readFile(
-      __dirname + '/../../../api/swagger/swagger.yaml',
-      (err, result) => res.send(JSON.stringify(require('js-yaml').safeLoad(result))));
-    return;
+    return swaggerFromSpec().then((response) => {
+      res.send(JSON.stringify(response));
+    }, (error) => {
+      res.send(JSON.stringify(error));
+    });
   }
 
   const query = req.body[0];

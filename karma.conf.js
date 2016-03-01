@@ -5,7 +5,6 @@ module.exports = function(config) {
     basePath: '',
     frameworks: ['mocha', 'sinon'],
     files: [
-      'tests.utils.webpack.js',
       'tests.serviceprovider.webpack.js'
     ],
     proxies: {
@@ -15,7 +14,6 @@ module.exports = function(config) {
     },
     exclude: [],
     preprocessors: {
-      'tests.utils.webpack.js': ['webpack'],
       'tests.serviceprovider.webpack.js': ['webpack']
     },
     reporters: ['mocha', 'junit', 'coverage'],
