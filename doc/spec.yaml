@@ -16,6 +16,22 @@ search:
         description: Order of results, either "default", "..." or "..."
         type: string
         default: "default"
+    result:
+      type: array
+      items:
+        type: object
+        properties:
+          identifiers:
+            type: array
+            items:
+              type: string
+          title:
+            type: string
+          creator:
+            type: string
+          workType:
+            type: string
+            x-values: ["book", "movie"]
     examples:
       - {"query":"(ost)","offset":0,"worksPerPage":12,"sort":"default"}
       - {"query":"(harry and potter)","offset":0,"worksPerPage":12,"sort":"default"}
