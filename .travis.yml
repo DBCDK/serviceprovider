@@ -9,7 +9,8 @@ before_install:
 after_success:
   - cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js
   - ./node_modules/codeclimate-test-reporter/bin/codeclimate.js < ./coverage/lcov.info
-install: true
+install: 
+  - npm install eslint eslint-loader eslint-plugin-react babel-eslint
 script:
 #  - npm run serve & npm test
   - npm run lint
