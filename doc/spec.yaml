@@ -1,1 +1,49 @@
-hello: world
+search:
+  getOpenSearchResultList:
+    description: Search for a library material
+    required:
+      - query
+    properties:
+      query:
+        description: CQL query to search for
+        type: string
+      offset:
+        description: Starting position in search result
+        type: number
+      worksPerPage:
+        type: number
+        description: number of results returned
+      sort:
+        description: Order of results, either "default", "..." or "..."
+        type: string
+    result:
+      type: array
+      items:
+        type: object
+        properties:
+          identifiers:
+            type: array
+            items:
+              type: string
+          title:
+            type: string
+          creator:
+            type: string
+          workType:
+            type: string
+            x-values: ["book", "movie"]
+    examples:
+      - {"query":"(ost)","offset":0,"worksPerPage":12,"sort":"default"}
+      - {"query":"(harry and potter)","offset":0,"worksPerPage":12,"sort":"default"}
+  getOpenSearchFacets:
+    examples:
+      - {"query":"(ost)","number":5}
+library:
+  getAllAffiliatesRequest:
+    examples:
+      - {}
+work:
+  getCoverImage:
+    examples:
+      - ["870970-basis:51329465"]
+      - ["870970-basis:27181406"]
