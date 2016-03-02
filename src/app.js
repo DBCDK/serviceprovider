@@ -21,7 +21,6 @@ import ServiceProviderSetup from './ServiceProviderSetup.js';
 
 // Routes
 import MainRoutes from './server/routes/main.routes.js';
-import APIRoutes from './api.routes.js';
 
 // Middleware
 import mobilsoegmiddleware from './server/middlewares/mobilsoeg.middleware.js';
@@ -35,6 +34,9 @@ import dbcMiddleware from './server/middlewares/middleware';
 
 // Passport
 import * as PassportStrategies from './server/PassportStrategies/strategies.passport';
+
+// Generation of swagger specification
+import swaggerFromSpec from './swaggerFromSpec.js';
 
 module.exports.run = function (worker) {
   // Setup
@@ -180,7 +182,29 @@ module.exports.run = function (worker) {
 
   // Setup Routes
   app.use('/', dbcMiddleware.cacheMiddleware, MainRoutes);
-  app.use('/api', APIRoutes);
+
+  // Actual used route
+  app.use('/api', express.Router().all(['/:event'], (req, res) => {
+    const event = req.params.event;
+    if (event === 'swagger.json') {
+      return swaggerFromSpec().then((response) => {
+        res.json(response);
+      }, (error) => {
+        res.json(error);
+      });
+    }
+
+    const query = req.body[0];
+
+    // very long timeout
+    let prom = res.callServiceProvider(event, query, 900000);
+    prom = Array.isArray(prom) ? prom : [prom];
+    Promise.all(prom).then((response) => {
+      res.json(response);
+    }, (error) => {
+      res.json(error);
+    });
+  }));
 
   // If running in dev-mode enable auto reload in browser when the server restarts
   if (ENV === 'development' && !process.env.DISABLE_SOCKET_RELOAD) { // eslint-disable-line no-process-env
