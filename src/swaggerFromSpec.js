@@ -5,6 +5,13 @@ function specToPaths(specs) {
   for (let tag in specs) { // eslint-disable-line guard-for-in
     for (let method in specs[tag]) { // eslint-disable-line guard-for-in
       let spec = specs[tag][method];
+      spec.properties = spec.properties || {};
+      spec.required = spec.required || [];
+      spec.required.push('access_token');
+      spec.properties.access_token = {
+        type: 'string',
+        description: 'Access token from the OAuth2 server'
+      };
       let request = {
         name: 'request',
         description: 'Request object',
