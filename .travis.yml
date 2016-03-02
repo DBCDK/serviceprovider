@@ -9,11 +9,12 @@ before_install:
 after_success:
   - cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js
   - ./node_modules/codeclimate-test-reporter/bin/codeclimate.js < ./coverage/lcov.info
+install: true
 script:
-  - npm run serve & npm test
+#  - npm run serve & npm test
   - npm run lint
   - npm run lint:checkstyle
-  - npm run swagger:validate
+#  - npm run swagger:validate
 addons:
   apt:
     sources:
