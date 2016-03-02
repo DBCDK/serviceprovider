@@ -1,17 +1,19 @@
 language: node_js
 node_js:
-- '4.1'
+  - '4.1'
 cache:
   directories:
   - node_modules
-branches:
-  only:
-  - master
 before_install:
-- npm config set //registry.npmjs.org/:_authToken $NPM_KEY
+  - npm config set //registry.npmjs.org/:_authToken $NPM_KEY
 after_success:
-- cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js
-- ./node_modules/codeclimate-test-reporter/bin/codeclimate.js < ./coverage/lcov.info
+  - cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js
+  - ./node_modules/codeclimate-test-reporter/bin/codeclimate.js < ./coverage/lcov.info
+script:
+  - npm run serve & npm test
+  - npm run lint
+  - npm run lint:checkstyle
+  - npm run swagger:validate
 addons:
   apt:
     sources:
