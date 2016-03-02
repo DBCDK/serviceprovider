@@ -5,7 +5,9 @@
  * Setup service provicer
  */
 
-import {Provider, AutoRequire, ClientCache} from 'dbc-node-serviceprovider';
+import Provider from './provider/Provider.js';
+import AutoRequire from './provider/lib/AutoRequire.js';
+import ClientCache from './provider/lib/ClientCache.js';
 import path from 'path';
 
 // import clients

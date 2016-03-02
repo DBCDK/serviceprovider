@@ -31,7 +31,8 @@ function registerEventOnConnection(transform, logger, connection) {
           // we have a plain js object, and also throws if it is cyclic etc.
           try {
             error = JSON.parse(JSON.stringify(error));
-          } catch (_) {
+          }
+          catch (_) {
             error = 'unserialisable error';
           }
 
