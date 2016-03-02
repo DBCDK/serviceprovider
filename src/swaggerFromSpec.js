@@ -1,17 +1,65 @@
 'use strict';
-export default function() {
+
+function specToPaths(specs) {
+  let paths = {};
+  for (let tag in specs) { // eslint-disable-line guard-for-in
+    for (let method in specs[tag]) { // eslint-disable-line guard-for-in
+      let spec = specs[tag][method];
+      let request = {
+        name: 'request',
+        description: 'Request object',
+        in: 'body',
+        required: true,
+        schema: {
+          type: 'object',
+          required: spec.required,
+          properties: spec.properties
+        }};
+      let obj = {
+        description: spec.description || '',
+        parameters: [request],
+        responses: {
+          default: {
+            description: 'Response envelope',
+            schema: {
+              type: 'object',
+              required: ['statusCode'],
+              properties: {
+                statusCode: {type: 'integer'},
+                data: spec.response || {
+                  type: 'object',
+                  properties: {}
+                },
+                errors: {
+                  type: 'array',
+                  items: {
+                    type: 'object',
+                    properties: {}
+                  }
+                }
+              }
+            }
+          }
+        }
+      };
+      paths['/' + method] = {post: obj};
+    }
+  }
+  return paths;
+}
+
+export default function(specName = 'spec') {
   let fs = require('fs');
   let yaml = require('js-yaml');
   let path = __dirname + '/../doc/';
 
   return Promise.all(
       [new Promise((resolve, reject) =>
-        fs.readFile(path + 'spec.yaml', 'utf-8', (err, result) => err ? reject(err) : resolve(yaml.safeLoad(result)))),
+        fs.readFile(path + specName + '.yaml', 'utf-8', (err, result) => err ? reject(err) : resolve(yaml.safeLoad(result)))),
       new Promise((resolve, reject) =>
         fs.readFile(path + 'description.md', 'utf-8', (err, result) => err ? reject(err) : resolve(result)))])
     .then(([spec, desc]) => {
       return {
-        'x-spec': spec,
         swagger: '2.0',
         info: {
           version: '0.0.1',
@@ -22,48 +70,7 @@ export default function() {
         schemes: ['https', 'wss'],
         consumes: ['application/json'],
         produces: ['application/json'],
-        paths: {
-          '/foo': {
-            post: {
-              description: 'Some description',
-              parameters: [{
-                name: 'someparam',
-                in: 'body',
-                description: 'param desc',
-                required: true,
-                schema: {
-                  type: 'object',
-                  properties: {
-                    a: {
-                      type: 'integer',
-                      format: 'int32'
-                    },
-                    b: {
-                      type: 'string'
-                    }
-                  }
-                }
-              }],
-              responses: {
-                200: {
-                  description: 'result desc...',
-                  schema: {
-                    type: 'string'
-                  }
-                },
-                default: {
-                  description: 'error',
-                  schema: {
-                    type: 'array',
-                    items: {
-                      type: 'string'
-                    }
-                  }
-                }
-              }
-            }
-          }
-        },
+        paths: specToPaths(spec),
         definitions: {
         },
         externalDocs: {
