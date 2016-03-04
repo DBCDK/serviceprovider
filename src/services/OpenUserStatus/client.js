@@ -31,7 +31,8 @@ function sendOpenUserStatusRequest(endpoint, params) {
             resolve(res);
           }
         });
-      } else {
+      }
+      else {
         let res = {
           type: 'Error',
           statusCode: response.statusCode,

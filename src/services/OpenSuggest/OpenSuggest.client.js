@@ -15,7 +15,8 @@ function getSuggestions(parameters) {
     client.methods.getSuggestions({parameters}, (data, response) => {
       if (response.statusCode === 200) {
         resolve(data);
-      } else {
+      }
+      else {
         reject(response);
       }
     });

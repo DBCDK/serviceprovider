@@ -23,7 +23,8 @@ function sendOpenOrderRequest(endpoint, params) {
             resolve(res);
           }
         });
-      } else {
+      }
+      else {
         reject({
           type: 'Error',
           statusCode: response.statusCode,
