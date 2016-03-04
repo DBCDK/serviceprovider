@@ -12,7 +12,7 @@ import path from 'path';
 
 // import clients
 import Borchk from './services/BorrowerCheck/client.js';
-import DdbContent from 'dbc-node-ddbcontent-client';
+import DdbContent from './services/DDBContent/client.js';
 import EntitySuggest from 'dbc-node-entitysuggest';
 import MobilSoegProfile from 'dbc-node-mobilsoeg-profile-client';
 import MoreInfo from 'dbc-node-moreinfo-client';
