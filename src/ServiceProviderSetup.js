@@ -11,7 +11,7 @@ import ClientCache from './provider/lib/ClientCache.js';
 import path from 'path';
 
 // import clients
-import Borchk from 'dbc-node-borchk';
+import Borchk from './services/BorrowerCheck/client.js';
 import DdbContent from 'dbc-node-ddbcontent-client';
 import EntitySuggest from 'dbc-node-entitysuggest';
 import MobilSoegProfile from 'dbc-node-mobilsoeg-profile-client';
