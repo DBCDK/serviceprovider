@@ -53,7 +53,6 @@
     "connect-redis": "3.0.0",
     "css-loader": "0.22.0",
     "dbc-node-basesoap-client": "^1.1.1",
-    "dbc-node-entitysuggest": "^2.0.1",
     "dbc-node-logger": "^1.4.6",
     "dbc-node-mobilsoeg-profile-client": "^2.0.1",
     "dbc-node-moreinfo-client": "^2.0.1",
