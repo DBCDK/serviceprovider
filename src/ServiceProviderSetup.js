@@ -11,21 +11,21 @@ import ClientCache from './provider/lib/ClientCache.js';
 import path from 'path';
 
 // import clients
-import Borchk from 'dbc-node-borchk';
-import DdbContent from 'dbc-node-ddbcontent-client';
-import EntitySuggest from 'dbc-node-entitysuggest';
-import MobilSoegProfile from 'dbc-node-mobilsoeg-profile-client';
-import MoreInfo from 'dbc-node-moreinfo-client';
-import OpenAgency from 'dbc-node-openagency-client';
-import OpenHoldingStatus from 'dbc-node-openholdingstatus-client';
-import OpenOrder from 'dbc-node-openorder-client';
-import OpenSearch from 'dbc-node-opensearch-client';
-import OpenSuggest from 'dbc-node-opensuggest';
-import OpenUserStatus from 'dbc-node-openuserstatus-client';
-import PopSuggest from 'dbc-node-popsuggest';
-import RankedRecommendations from 'dbc-node-ranked-recommendations-client';
-import Recommendations from 'dbc-node-recommendations';
-import MetaRecommendations from 'dbc-node-recommendation-meta-client';
+import Borchk from './services/BorrowerCheck/client.js';
+import DdbContent from './services/DDBContent/client.js';
+import EntitySuggest from './services/EntitySuggest/client.js';
+import MobilSoegProfile from './services/MobilSoegProfile/client.js';
+import MoreInfo from './services/MoreInfo/client.js';
+import OpenAgency from './services/OpenAgency/client.js';
+import OpenHoldingStatus from './services/OpenHoldingStatus/client.js';
+import OpenOrder from './services/OpenOrder/client.js';
+import OpenSearch from './services/OpenSearch/client.js';
+import OpenSuggest from './services/OpenSuggest/OpenSuggest.client.js';
+import OpenUserStatus from './services/OpenUserStatus/client.js';
+import PopSuggest from './services/PopSuggest/client.js';
+import RankedRecommendations from './services/RankedRecommendations/RankedRecommendation.client.js';
+import Recommendations from './services/Recommendations/Recommendation.client.js';
+import MetaRecommendations from './services/MetaRecommendations/Recommendation.client.js';
 
 /**
  * Helper function for registering service clients. If cachetime is defined in config, wrap methods with the
