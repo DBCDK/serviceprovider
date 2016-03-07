@@ -1,6 +1,5 @@
 'use strict';
 
-import {Promise} from 'es6-promise';
 import {Client} from 'node-rest-client';
 let client = new Client();
 
