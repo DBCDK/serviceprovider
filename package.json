@@ -24,6 +24,8 @@
     "swagger:validate": "curl localhost:8080/api/swagger.json | swagger validate",
     "test": "karma start --single-run=true",
     "test:watch": "karma start",
+    "test:mocha": "mocha --compilers js:babel/register --recursive src/**/__tests__/*",
+    "test:mocha-single": "mocha --compilers js:babel/register",
     "tail": "tail -f log.log",
     "tail:timer": "tail -f log.log | awk '(/event/ || /time_delta/ || /TIMER/) && !/result/'"
   },
