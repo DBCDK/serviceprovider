@@ -79,7 +79,6 @@
     "react-addons-test-utils": "0.14.6",
     "react-dom": "0.14.6",
     "reflux": "0.3.0",
-    "reload": "0.7.0",
     "request": "^2.60.0",
     "sanitize-html": "^1.11.2",
     "sass-loader": "3.1.1",

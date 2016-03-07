@@ -16,7 +16,6 @@ import express from 'express';
 import path from 'path';
 import Logger from 'dbc-node-logger';
 import RedisStore from 'connect-redis';
-import reload from 'reload';
 import ServiceProviderSetup from './ServiceProviderSetup.js';
 
 // Routes
@@ -205,11 +204,6 @@ module.exports.run = function (worker) {
       res.json(error);
     });
   }));
-
-  // If running in dev-mode enable auto reload in browser when the server restarts
-  if (ENV === 'development' && !process.env.DISABLE_SOCKET_RELOAD) { // eslint-disable-line no-process-env
-    reload(server, app, 1000, true);
-  }
 
   // Graceful handling of errors
   app.use((err, req, res, next) => {
