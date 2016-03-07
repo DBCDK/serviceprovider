@@ -19,6 +19,7 @@
     "siege": "siege -c500 -d10 -t30M -i -f siegetestendpoints.txt",
     "siege:live": "siege -c50 -d10 -t10M -i -f siegedemoendpoints.txt",
     "start": "node src/main.js",
+    "transformer-proto": "node src/transformer-proto.js",
     "start:watch": "webpack --progress --colors --watch -d",
     "swagger:validate": "curl localhost:8080/api/swagger.json | swagger validate",
     "test": "karma start --single-run=true",
