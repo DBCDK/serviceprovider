@@ -71,7 +71,8 @@ module.exports.run = function (worker) {
   const EMAIL_REDIRECT = process.env.EMAIL_REDIRECT || 'localhost:' + app.get('port'); // eslint-disable-line no-process-env
 
   // Configure app variables
-  app.set('serviceProvider', ServiceProviderSetup(config[process.env.CONFIG_NAME || DEFAULT_CONFIG_NAME], logger, worker)); // eslint-disable-line no-process-env
+  let serviceProvider = ServiceProviderSetup(config[process.env.CONFIG_NAME || DEFAULT_CONFIG_NAME], logger, worker); // eslint-disable-line no-process-env
+  app.set('serviceProvider', serviceProvider);
   app.set('logger', logger);
   app.set('EMAIL_REDIRECT', EMAIL_REDIRECT);
   app.set('APPLICATION', APPLICATION);
@@ -195,9 +196,23 @@ module.exports.run = function (worker) {
 
     const query = req.body[0];
 
-    // very long timeout
-    let prom = res.callServiceProvider(event, query, 900000);
-    prom = Array.isArray(prom) ? prom : [prom];
+
+    // TODO: currently context is connection-like object,
+    // - should be refactored to be a simple transport-independent context.
+    let connection = {
+      request: { session: req.session },
+      libdata: res.locals.libdata
+    };
+    let prom = serviceProvider.trigger(event, query, connection)
+
+    // TODO: result from serviceProvider should just be a single promise.
+    if(Array.isArray(prom)) {
+      console.log('warning', 'result is array, instead of single promise', event); // eslint-disable-line no-console
+      if(prom.length !== 1) {
+        console.error('error', 'result length is ', prom.length); // eslint-disable-line no-console
+      }
+      prom = Array.isArray(prom) ? prom : [prom];
+    }
     Promise.all(prom).then((response) => {
       res.json(response);
     }, (error) => {
