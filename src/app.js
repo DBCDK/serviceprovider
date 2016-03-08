@@ -16,21 +16,12 @@ import Logger from 'dbc-node-logger';
 import RedisStore from 'connect-redis';
 import ServiceProviderSetup from './ServiceProviderSetup.js';
 
-// Routes
-import MainRoutes from './server/routes/main.routes.js';
-
 // Middleware
-import mobilsoegmiddleware from './server/middlewares/mobilsoeg.middleware.js';
 import bodyParser from 'body-parser';
 import expressValidator from 'express-validator';
 import compression from 'compression';
 import expressSession from 'express-session';
 import helmet from 'helmet';
-import {GlobalsMiddleware} from './server/middlewares/globals.middleware';
-import dbcMiddleware from './server/middlewares/middleware';
-
-// Passport
-import * as PassportStrategies from './server/PassportStrategies/strategies.passport';
 
 // Generation of swagger specification
 import swaggerFromSpec from './swaggerFromSpec.js';
@@ -39,7 +30,6 @@ module.exports.run = function (worker) {
   // Setup
   const app = express();
   const server = worker.httpServer;
-  const scServer = worker.getSCServer();
   const ENV = app.get('env');
   const PRODUCTION = ENV === 'production';
   const APP_NAME = process.env.NEW_RELIC_APP_NAME || 'app_name'; // eslint-disable-line no-process-env
@@ -152,28 +142,6 @@ module.exports.run = function (worker) {
   // Setting sessions
   app.use(sessionMiddleware);
 
-  scServer.addMiddleware(scServer.MIDDLEWARE_EMIT, (req, next) => {
-    sessionMiddleware(req.socket.request, {}, next);
-  });
-
-  // Detect library and set context
-  app.use(mobilsoegmiddleware.libraryStyleWare);
-
-  scServer.addMiddleware(scServer.MIDDLEWARE_EMIT, (req, next) => {
-    mobilsoegmiddleware.librarySocketWare(config, req.socket, next);
-  });
-
-  // Setup passport
-  PassportStrategies.MobilSoegPassportConfig(app);
-
-  // Setting middleware
-  app.use('*', GlobalsMiddleware); // should be placed after PassportStrategies.MobilSoegPassportConfig
-
-  // SSR middleware to add utility methods, and render footer automatically.
-  app.use('*', dbcMiddleware.ssrMiddleware, dbcMiddleware.ssrFooter, dbcMiddleware.ssrHeader);
-
-  // Setup Routes
-  app.use('/', dbcMiddleware.cacheMiddleware, MainRoutes);
 
   // DUMMY context, - TODO: get this from the auth server through token, and preserve through sessions
   let dummyContext = {
