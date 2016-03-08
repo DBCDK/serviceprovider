@@ -2,7 +2,7 @@ swagger.json
 cancelOrder {"orderId":"14894443","orderType":"Hold"}
 findMobilSoegProfile
 getAllAffiliates
-getCoverImage ["870970-basis:28511663"]
+getCoverImage [["870970-basis:28511663"]]
 getEventList {"amount":"10"}
 getNewsList {"amount":"0"}
 getOpenSearchResultList {"query":"(test)","offset":0,"worksPerPage":12,"sort":"rank_frequency"}
@@ -12,15 +12,15 @@ getOrderPolicy {"agencyId":"","pids":["775100-katalog:28370334"]}
 getOrderPolicy {"agencyId":"","pids":["775100-katalog:29372365","775100-katalog:23645564"]}
 getPersonalRecommendations {"work":"870970-basis:23645564","likes":[],"dislikes":[]}
 getPickupAgencyList
-getPickupAgencyList "775150"
+getPickupAgencyList ["775150"]
 getRecommendations {"likes":["870970-basis:28511663","870970-basis:29754519","870970-basis:29060835","870970-basis:22629344"],"dislikes":[],"isFrontPage":true}
 getUserStatus
-holdingStatus "775100-katalog:29372365"
+holdingStatus ["775100-katalog:29372365"]
 isMobilSoegUserLoggedIn
 placeOrder {"agencyId":"775150","pids":"XXX775100-katalog:28370334XXXX"}
 saveLikeToMobilSoegProfile {"item_id":"870970-basis:23645564","action":"like"}
 saveLikeToMobilSoegProfile {"item_id":"870970-basis:23645564","action":"remove","id":532}
 savePickupAgencyToMobilSoegProfile "775130"
 updateOrder {"orderId":"14894443","pickUpAgencyId":"775140"}
-getPopSuggestions "api"
+getPopSuggestions ["api"]
 wrongEndpoint

@@ -16,12 +16,10 @@ import express from 'express';
 import path from 'path';
 import Logger from 'dbc-node-logger';
 import RedisStore from 'connect-redis';
-import reload from 'reload';
 import ServiceProviderSetup from './ServiceProviderSetup.js';
 
 // Routes
 import MainRoutes from './server/routes/main.routes.js';
-import APIRoutes from './api.routes.js';
 
 // Middleware
 import mobilsoegmiddleware from './server/middlewares/mobilsoeg.middleware.js';
@@ -35,6 +33,9 @@ import dbcMiddleware from './server/middlewares/middleware';
 
 // Passport
 import * as PassportStrategies from './server/PassportStrategies/strategies.passport';
+
+// Generation of swagger specification
+import swaggerFromSpec from './swaggerFromSpec.js';
 
 module.exports.run = function (worker) {
   // Setup
@@ -70,7 +71,8 @@ module.exports.run = function (worker) {
   const EMAIL_REDIRECT = process.env.EMAIL_REDIRECT || 'localhost:' + app.get('port'); // eslint-disable-line no-process-env
 
   // Configure app variables
-  app.set('serviceProvider', ServiceProviderSetup(config[process.env.CONFIG_NAME || DEFAULT_CONFIG_NAME], logger, worker)); // eslint-disable-line no-process-env
+  let serviceProvider = ServiceProviderSetup(config[process.env.CONFIG_NAME || DEFAULT_CONFIG_NAME], logger, worker); // eslint-disable-line no-process-env
+  app.set('serviceProvider', serviceProvider);
   app.set('logger', logger);
   app.set('EMAIL_REDIRECT', EMAIL_REDIRECT);
   app.set('APPLICATION', APPLICATION);
@@ -180,12 +182,44 @@ module.exports.run = function (worker) {
 
   // Setup Routes
   app.use('/', dbcMiddleware.cacheMiddleware, MainRoutes);
-  app.use('/api', APIRoutes);
 
-  // If running in dev-mode enable auto reload in browser when the server restarts
-  if (ENV === 'development' && !process.env.DISABLE_SOCKET_RELOAD) { // eslint-disable-line no-process-env
-    reload(server, app, 1000, true);
-  }
+  // Actual used route
+  app.use('/api', express.Router().all(['/:event'], (req, res) => {
+    const event = req.params.event;
+    if (event === 'swagger.json') {
+      return swaggerFromSpec().then((response) => {
+        res.json(response);
+      }, (error) => {
+        res.json(error);
+      });
+    }
+
+    // TODO: should just be req.body, when all endpoints accept object-only as parameter, until then, this hack supports legacy transforms
+    const query = Array.isArray(req.body) ? req.body[0] : req.body;
+
+    // TODO: currently context is connection-like object,
+    // - should be refactored to be a simple transport-independent context.
+    let connection = {
+      request: {session: req.session},
+      libdata: res.locals.libdata
+    };
+    let prom = serviceProvider.trigger(event, query, connection);
+
+    // TODO: result from serviceProvider should just be a single promise.
+    if (Array.isArray(prom)) {
+      console.log('warning', 'result is array, instead of single promise', event); // eslint-disable-line no-console
+      if (prom.length !== 1) {
+        console.error('error', 'result length is ', prom.length); // eslint-disable-line no-console
+      }
+      prom = Array.isArray(prom) ? prom : [prom];
+    }
+
+    prom[0].then((response) => {
+      res.json(response);
+    }, (error) => {
+      res.json(error);
+    });
+  }));
 
   // Graceful handling of errors
   app.use((err, req, res, next) => {
