@@ -194,8 +194,8 @@ module.exports.run = function (worker) {
       });
     }
 
-    const query = req.body[0];
-
+    // TODO: should just be req.body, when all endpoints accept object-only as parameter, until then, this hack supports legacy transforms
+    const query = Array.isArray(req.body) ? req.body[0] : req.body;
 
     // TODO: currently context is connection-like object,
     // - should be refactored to be a simple transport-independent context.
@@ -213,7 +213,8 @@ module.exports.run = function (worker) {
       }
       prom = Array.isArray(prom) ? prom : [prom];
     }
-    Promise.all(prom).then((response) => {
+
+    prom[0].then((response) => {
       res.json(response);
     }, (error) => {
       res.json(error);
