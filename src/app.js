@@ -18,7 +18,6 @@ import ServiceProviderSetup from './ServiceProviderSetup.js';
 
 // Middleware
 import bodyParser from 'body-parser';
-import expressValidator from 'express-validator';
 import compression from 'compression';
 import expressSession from 'express-session';
 import helmet from 'helmet';
@@ -33,7 +32,6 @@ module.exports.run = function (worker) {
   const ENV = app.get('env');
   const PRODUCTION = ENV === 'production';
   const APP_NAME = process.env.NEW_RELIC_APP_NAME || 'app_name'; // eslint-disable-line no-process-env
-  const APPLICATION = 'mobilsoeg';
   const DEFAULT_CONFIG_NAME = 'aarhus'; // used as a fallback config, if none is set by a url.
   const logger = new Logger({app_name: APP_NAME});
   const expressLoggers = logger.getExpressLoggers();
@@ -55,35 +53,13 @@ module.exports.run = function (worker) {
   // Port config
   app.set('port', process.env.PORT || 8080); // eslint-disable-line no-process-env
 
-  // EMAIL Redirect requires port to be defined therefore it must come after
-  const EMAIL_REDIRECT = process.env.EMAIL_REDIRECT || 'localhost:' + app.get('port'); // eslint-disable-line no-process-env
-
   // Configure app variables
   let serviceProvider = ServiceProviderSetup(config[process.env.CONFIG_NAME || DEFAULT_CONFIG_NAME], logger, worker); // eslint-disable-line no-process-env
   app.set('serviceProvider', serviceProvider);
   app.set('logger', logger);
-  app.set('EMAIL_REDIRECT', EMAIL_REDIRECT);
-  app.set('APPLICATION', APPLICATION);
-  app.set('Configuration', config);
-
-  // Configure templating
-  app.set('views', path.join(__dirname, 'server/templates'));
-  app.set('view engine', 'jade');
-
-  // Setting proxy
-  app.enable('trust proxy');
-
-  // setting local vars that should be available to our template engine
-  app.locals.env = ENV;
-  app.locals.version = version;
-  app.locals.production = PRODUCTION;
-  app.locals.title = config[process.env.CONFIG_NAME || DEFAULT_CONFIG_NAME].applicationTitle || ''; // eslint-disable-line no-process-env
-  app.locals.application = APPLICATION;
-  app.locals.faviconUrl = APPLICATION === 'mobilsoeg' ? 'https://www.aakb.dk/sites/www.aakb.dk/files/favicon.ico' : '/favicon.ico';
 
   // Setup environments
   let redisConfig;
-  let fileHeaders = {};
 
   // Redis
   switch (ENV) {
@@ -92,7 +68,6 @@ module.exports.run = function (worker) {
       break;
     case 'production':
       redisConfig = config[process.env.CONFIG_NAME || DEFAULT_CONFIG_NAME].sessionStores.redis.production; // eslint-disable-line no-process-env
-      fileHeaders = {index: false, dotfiles: 'ignore', maxAge: '5 days'};
       break;
     default:
       redisConfig = config[process.env.CONFIG_NAME || DEFAULT_CONFIG_NAME].sessionStores.redis.local; // eslint-disable-line no-process-env
@@ -123,21 +98,10 @@ module.exports.run = function (worker) {
   app.use(compression());
 
   // Setting paths
-  app.use(express.static(path.join(__dirname, '../public'), fileHeaders));
-  app.use(express.static(path.join(__dirname, '../static'), fileHeaders));
+  app.use(express.static(path.join(__dirname, '../static')));
 
   // Setting logger
   app.use(expressLoggers.logger);
-
-  // Setting Input Validation
-  const validatorOptions = {
-    customValidators: {
-      isEqual: (a, b) => {
-        return a === b;
-      }
-    }
-  };
-  app.use(expressValidator(validatorOptions));
 
   // Setting sessions
   app.use(sessionMiddleware);
@@ -147,7 +111,7 @@ module.exports.run = function (worker) {
   let dummyContext = {
     request: {session: {}},
     libdata: {
-      kommune: '',
+      kommune: 'aarhus',
       config: config.aarhus,
       libraryId: (config.aarhus || {}).agency
     }
@@ -228,8 +192,6 @@ module.exports.run = function (worker) {
   logger.log('debug', '>> Worker PID: ' + process.pid);
   logger.log('debug', 'Server listening on port ' + app.get('port'));
   logger.log('debug', 'NEW_RELIC_APP_NAME: ' + APP_NAME);
-  logger.log('debug', 'APPLICATION: ' + APPLICATION);
-  logger.log('debug', 'EMAIL_REDIRECT: ' + EMAIL_REDIRECT);
   logger.log('info', 'Versions: ', process.versions);
   logger.log('info', version + ' is up and running');
 };
