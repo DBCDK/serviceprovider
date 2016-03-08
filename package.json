@@ -5,25 +5,19 @@
   "main": "src/main.js",
   "scripts": {
     "apitest": "cd apitest; ./apitest.sh",
-    "build": "webpack --progress --colors -p",
-    "dev:build": "webpack --progress --colors",
-    "dev": "parallelshell \"npm run start:watch -s\" \"npm run serve -s\"",
-    "dev:ddb": "NODE_APPLICATION=ddbmobil npm run dev",
+    "dev": "supervisor -w src,node_modules src/main.js",
     "dev:remoteprofile": "PROFILE_SERVICE_URL=\"http://profile-i01.dbc.dk:3001/\" npm run dev",
-    "dev:ddb:remoteprofile": "CONFIG_NAME=aarhus NODE_APPLICATION=ddbmobil PROFILE_SERVICE_URL=\"http://profile-i01.dbc.dk:3001/\" npm run dev",
     "lint": "eslint ./src",
     "lint:checkstyle": "eslint ./src  -o report.xml -f checkstyle",
-    "serve": "supervisor -w src,node_modules src/main.js",
     "siege": "siege -c500 -d10 -t30M -i -f siegetestendpoints.txt",
     "siege:live": "siege -c50 -d10 -t10M -i -f siegedemoendpoints.txt",
     "start": "node src/main.js",
-    "transformer-proto": "node src/transformer-proto.js",
-    "start:watch": "webpack --progress --colors --watch -d",
     "swagger:validate": "curl localhost:8080/api/swagger.json | swagger validate",
     "test": "mocha --compilers js:babel/register --recursive src/**/__tests__/*",
     "test:single": "mocha --compilers js:babel/register",
     "tail": "tail -f log.log",
-    "tail:timer": "tail -f log.log | awk '(/event/ || /time_delta/ || /TIMER/) && !/result/'"
+    "tail:timer": "tail -f log.log | awk '(/event/ || /time_delta/ || /TIMER/) && !/result/'",
+    "transformer-proto": "node src/transformer-proto.js"
   },
   "repository": {
     "type": "git",
