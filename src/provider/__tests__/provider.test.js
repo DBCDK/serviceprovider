@@ -1,7 +1,7 @@
 'use strict';
 
 /**
- * @file Testing the Dispatcher class in dispatcher.js
+ * @file Testing the provider
  */
 import Provider from '../Provider.js';
 import {expect, assert} from 'chai';

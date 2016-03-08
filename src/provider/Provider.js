@@ -2,11 +2,9 @@
 
 /**
  * @file
- * Basic service provider. Discovers and initializes the transforms and
- * initializes the dispatcher if sockets are available.
+ * Basic service provider. Discovers and initializes the transforms.
  */
 
-import Dispatcher from './lib/Dispatcher';
 import Transform from './lib/Transforms';
 
 /**
@@ -61,18 +59,6 @@ export default function Provider(logger) {
     return clients;
   }
 
-  /**
-   * Initializes the use of sockets
-   *
-   * @param {Socket} socket If communication with the parent application should
-   * go through a socket it should be provided here. Currently there's no
-   * alternative to using socket.
-   * @api public
-   */
-  function dispatcher(io) {
-    Dispatcher(transforms, logger, io);
-  }
-
   function trigger(event, params, context) {
     return transforms.get(event).trigger(params, context);
   }
@@ -84,7 +70,6 @@ export default function Provider(logger) {
   return {
     registerTransform,
     registerServiceClient,
-    dispatcher,
     availableTransforms,
     trigger
   };
