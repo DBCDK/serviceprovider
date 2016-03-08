@@ -6,7 +6,7 @@
  */
 
 var newrelicName = process.env.NEW_RELIC_APP_NAME || 'app_name'; // eslint-disable-line no-process-env
-if(process.env.NEW_RELIC_APP_NAME) { // eslint-disable-line no-process-env
+if (process.env.NEW_RELIC_APP_NAME) { // eslint-disable-line no-process-env
   require('newrelic');
 }
 

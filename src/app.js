@@ -200,15 +200,15 @@ module.exports.run = function (worker) {
     // TODO: currently context is connection-like object,
     // - should be refactored to be a simple transport-independent context.
     let connection = {
-      request: { session: req.session },
+      request: {session: req.session},
       libdata: res.locals.libdata
     };
-    let prom = serviceProvider.trigger(event, query, connection)
+    let prom = serviceProvider.trigger(event, query, connection);
 
     // TODO: result from serviceProvider should just be a single promise.
-    if(Array.isArray(prom)) {
+    if (Array.isArray(prom)) {
       console.log('warning', 'result is array, instead of single promise', event); // eslint-disable-line no-console
-      if(prom.length !== 1) {
+      if (prom.length !== 1) {
         console.error('error', 'result length is ', prom.length); // eslint-disable-line no-console
       }
       prom = Array.isArray(prom) ? prom : [prom];
