@@ -7,8 +7,6 @@
 
 // Config
 import config from '@dbcdk/dbc-config';
-// newrelic needs to be required the es5 way because we only wants to load new relic if specified in config.js
-const newrelic = config.palle.newrelic && require('newrelic') || null;
 import {version} from '../package.json';
 
 // Libraries
@@ -85,13 +83,7 @@ module.exports.run = function (worker) {
   // Setting proxy
   app.enable('trust proxy');
 
-  // settings production specific options
-  if (!PRODUCTION && newrelic) {
-    newrelic.agent_enabled = false;
-  }
-
   // setting local vars that should be available to our template engine
-  app.locals.newrelic = newrelic;
   app.locals.env = ENV;
   app.locals.version = version;
   app.locals.production = PRODUCTION;
