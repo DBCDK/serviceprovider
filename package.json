@@ -100,6 +100,7 @@
     "node-libs-browser": "^0.5.2",
     "parallelshell": "^2.0.0",
     "sinon": "^1.17.2",
+    "socketcluster-client": "^4.3.7",
     "wallaby-webpack": "0.0.10"
   }
 }

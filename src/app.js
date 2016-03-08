@@ -16,21 +16,12 @@ import Logger from 'dbc-node-logger';
 import RedisStore from 'connect-redis';
 import ServiceProviderSetup from './ServiceProviderSetup.js';
 
-// Routes
-import MainRoutes from './server/routes/main.routes.js';
-
 // Middleware
-import mobilsoegmiddleware from './server/middlewares/mobilsoeg.middleware.js';
 import bodyParser from 'body-parser';
 import expressValidator from 'express-validator';
 import compression from 'compression';
 import expressSession from 'express-session';
 import helmet from 'helmet';
-import {GlobalsMiddleware} from './server/middlewares/globals.middleware';
-import dbcMiddleware from './server/middlewares/middleware';
-
-// Passport
-import * as PassportStrategies from './server/PassportStrategies/strategies.passport';
 
 // Generation of swagger specification
 import swaggerFromSpec from './swaggerFromSpec.js';
@@ -39,7 +30,6 @@ module.exports.run = function (worker) {
   // Setup
   const app = express();
   const server = worker.httpServer;
-  const scServer = worker.getSCServer();
   const ENV = app.get('env');
   const PRODUCTION = ENV === 'production';
   const APP_NAME = process.env.NEW_RELIC_APP_NAME || 'app_name'; // eslint-disable-line no-process-env
@@ -152,30 +142,49 @@ module.exports.run = function (worker) {
   // Setting sessions
   app.use(sessionMiddleware);
 
-  scServer.addMiddleware(scServer.MIDDLEWARE_EMIT, (req, next) => {
-    sessionMiddleware(req.socket.request, {}, next);
+
+  // DUMMY context, - TODO: get this from the auth server through token, and preserve through sessions
+  let dummyContext = {
+    request: {session: {}},
+    libdata: {
+      kommune: '',
+      config: config.aarhus,
+      libraryId: (config.aarhus || {}).agency
+    }
+    // request: {session: req.session},
+    // libdata: res.locals.libdata
+  };
+
+  // Execute transform
+  function callApi(event, query, context, callback) {
+    let prom = serviceProvider.trigger(event, query, context);
+
+    // TODO: result from serviceProvider should just be a single promise.
+    // fix this in provider
+    if (Array.isArray(prom)) {
+      console.log('warning', 'result is array, instead of single promise', event); // eslint-disable-line no-console
+      if (prom.length !== 1) {
+        console.error('error', 'result length is ', prom.length); // eslint-disable-line no-console
+      }
+      prom = Array.isArray(prom) ? prom : [prom];
+    }
+    prom[0].then((response) => {
+      callback(response);
+    }, (error) => {
+      callback(error);
+    });
+  }
+
+  // WebSocket/SocketCluster transport
+  worker.on('connection', (connection) => {
+    for (let key of serviceProvider.availableTransforms()) {
+      connection.on(key, (data, callback) => { // eslint-disable-line no-loop-func
+        callApi(key, data, dummyContext, callback);
+      });
+    }
   });
 
-  // Detect library and set context
-  app.use(mobilsoegmiddleware.libraryStyleWare);
-
-  scServer.addMiddleware(scServer.MIDDLEWARE_EMIT, (req, next) => {
-    mobilsoegmiddleware.librarySocketWare(config, req.socket, next);
-  });
-
-  // Setup passport
-  PassportStrategies.MobilSoegPassportConfig(app);
-
-  // Setting middleware
-  app.use('*', GlobalsMiddleware); // should be placed after PassportStrategies.MobilSoegPassportConfig
-
-  // SSR middleware to add utility methods, and render footer automatically.
-  app.use('*', dbcMiddleware.ssrMiddleware, dbcMiddleware.ssrFooter, dbcMiddleware.ssrHeader);
-
-  // Setup Routes
-  app.use('/', dbcMiddleware.cacheMiddleware, MainRoutes);
-
-  // Actual used route
+  // HTTP Transport
   app.use('/api', express.Router().all(['/:event'], (req, res) => {
     const event = req.params.event;
     if (event === 'swagger.json') {
@@ -189,28 +198,7 @@ module.exports.run = function (worker) {
     // TODO: should just be req.body, when all endpoints accept object-only as parameter, until then, this hack supports legacy transforms
     const query = Array.isArray(req.body) ? req.body[0] : req.body;
 
-    // TODO: currently context is connection-like object,
-    // - should be refactored to be a simple transport-independent context.
-    let connection = {
-      request: {session: req.session},
-      libdata: res.locals.libdata
-    };
-    let prom = serviceProvider.trigger(event, query, connection);
-
-    // TODO: result from serviceProvider should just be a single promise.
-    if (Array.isArray(prom)) {
-      console.log('warning', 'result is array, instead of single promise', event); // eslint-disable-line no-console
-      if (prom.length !== 1) {
-        console.error('error', 'result length is ', prom.length); // eslint-disable-line no-console
-      }
-      prom = Array.isArray(prom) ? prom : [prom];
-    }
-
-    prom[0].then((response) => {
-      res.json(response);
-    }, (error) => {
-      res.json(error);
-    });
+    callApi(event, query, dummyContext, response => res.json(response));
   }));
 
   // Graceful handling of errors
