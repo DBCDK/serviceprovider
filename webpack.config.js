@@ -16,10 +16,6 @@ var entries = {
 };
 
 
-if (NODE_ENV === 'development') {
-  entries.terminal = './src/utils/Terminal';
-}
-
 module.exports = [{
   name: 'browser',
 
