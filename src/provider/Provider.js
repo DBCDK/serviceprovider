@@ -77,11 +77,15 @@ export default function Provider(logger) {
     return transforms.get(event).trigger(params, context);
   }
 
+  function availableTransforms() {
+    return transforms.keys();
+  }
 
   return {
     registerTransform,
     registerServiceClient,
     dispatcher,
+    availableTransforms,
     trigger
   };
 }

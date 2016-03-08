@@ -57,9 +57,8 @@ function registerServiceClient(provider, config, clientCache, clientName, client
  * @param sockets
  * @returns {Provider}
  */
-export default function initProvider(config, logger, sockets) {
+export default function initProvider(config, logger) {
   const provider = Provider(logger);
-  provider.dispatcher(sockets);
 
   const RegisterClientOnProvider = registerServiceClient.bind(null, provider, config.provider.services, ClientCache(config.cache));
 

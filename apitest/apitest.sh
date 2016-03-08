@@ -1,10 +1,11 @@
 #!/bin/bash
 
-rm -f test.results.http
+rm -f test.result*
+
 IFS=$'\n$'
 for line in `cat requests.lst`
 do
-  printf "\n\n$line \n" >> test.result.http
+  printf "\n\n$line\n" >> test.results.http
   curl -H "Content-Type: application/json" \
        -X POST \
        -d "`echo $line | sed -e 's/[^ ]*//'`" \

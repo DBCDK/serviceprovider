@@ -1,4 +1,3 @@
-
 function identity(x) { return x; }
 
 var reqs = require('fs')
@@ -16,18 +15,17 @@ var sc = require('socketcluster-client')
   .connect({port:8080, hostname:'localhost'});
 
 function next() {
-  if(!reqs.length) {
-    return;
-  }
   var req = reqs.pop();
   console.log('\n' + req[0] + ' ' + JSON.stringify(req[1]));
-  sc.emit(req[0], req[1], function(a, b) {
-    console.log(a, b);
-    next();
+  console.error('executing:', req[0]);
+  sc.emit(req[0], req[1], function(result) {
+    console.log(JSON.stringify([result]).slice(1,-1));
+    if(reqs.length) {
+      next();
+    } else {
+      process.exit(0);
+    }
   });
 }
 
-sc.on('connect', function() {
-  console.log('connected');
-  next();
-});
+sc.on('connect', function() { next(); });
