@@ -1,5 +1,7 @@
 function identity(x) { return x; }
 
+var majorVersion = parseInt(require('../package.json').version, 10);
+
 var reqs = require('fs')
   .readFileSync('requests.lst', 'utf-8')
   .split('\n')
@@ -12,7 +14,7 @@ var reqs = require('fs')
   .reverse();
 
 var sc = require('socketcluster-client')
-  .connect({port:8080, hostname:'localhost'});
+  .connect({port:8080, hostname:'localhost', path: '/v' + majorVersion + '/socketcluster/'});
 
 function next() {
   var req = reqs.pop();

@@ -49,11 +49,14 @@ function specToPaths(specs) {
           }
         }
       };
-      paths['/' + method] = {post: obj};
+      paths[method] = {post: obj};
     }
   }
   return paths;
 }
+
+const version = require('../package.json').version;
+const majorVersion = parseInt(version, 10);
 
 export default function(specName = 'spec') {
   let fs = require('fs');
@@ -69,11 +72,11 @@ export default function(specName = 'spec') {
       return {
         swagger: '2.0',
         info: {
-          version: '0.0.1',
+          version: version,
           title: 'DBC ServiceProvider',
           description: desc
         },
-        basePath: '/api',
+        basePath: '/v' + majorVersion + '/',
         schemes: ['https', 'wss'],
         consumes: ['application/json'],
         produces: ['application/json'],

@@ -2,6 +2,7 @@
 
 rm -f test.result*
 
+export API_VERSION=`node -e "console.log(parseInt(require('../package.json').version, 10))"`
 IFS=$'\n$'
 for line in `cat requests.lst`
 do
@@ -9,7 +10,7 @@ do
   curl -H "Content-Type: application/json" \
        -X POST \
        -d "`echo $line | sed -e 's/[^ ]*//'`" \
-       "http://localhost:8080/api/`echo $line | sed -e s/' .*//'`" \
+       "http://localhost:8080/v$API_VERSION/`echo $line | sed -e s/' .*//'`" \
        >> test.results.http
 done
 
