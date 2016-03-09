@@ -6,12 +6,12 @@
  */
 
 // Config
-import config from '@dbcdk/dbc-config';
 import {version} from '../package.json';
 // majorVersion is used for determining the API-endpoint, ie /v0, /v1, or ..
 const majorVersion = parseInt(version, 10);
 
 // Libraries
+import fs from 'fs';
 import express from 'express';
 import path from 'path';
 import Logger from 'dbc-node-logger';
@@ -34,9 +34,14 @@ module.exports.run = function (worker) {
   const ENV = app.get('env');
   const PRODUCTION = ENV === 'production';
   const APP_NAME = process.env.NEW_RELIC_APP_NAME || 'app_name'; // eslint-disable-line no-process-env
-  const DEFAULT_CONFIG_NAME = 'aarhus'; // used as a fallback config, if none is set by a url.
   const logger = new Logger({app_name: APP_NAME});
   const expressLoggers = logger.getExpressLoggers();
+
+  // Old config, currently stored in config.json, should be delivered from auth-server, etc. later on
+  const config = JSON.parse(
+        fs.readFileSync(
+          process.env.CONFIG_FILE || // eslint-disable-line no-process-env
+            __dirname + '/../config.json', 'utf8'));
 
   // Direct requests to app
   server.on('request', app);
@@ -56,7 +61,7 @@ module.exports.run = function (worker) {
   app.set('port', process.env.PORT || 8080); // eslint-disable-line no-process-env
 
   // Configure app variables
-  let serviceProvider = ServiceProviderSetup(config[process.env.CONFIG_NAME || DEFAULT_CONFIG_NAME], logger, worker); // eslint-disable-line no-process-env
+  let serviceProvider = ServiceProviderSetup(config, logger, worker);
   app.set('serviceProvider', serviceProvider);
   app.set('logger', logger);
 
@@ -66,13 +71,13 @@ module.exports.run = function (worker) {
   // Redis
   switch (ENV) {
     case 'development':
-      redisConfig = config[process.env.CONFIG_NAME || DEFAULT_CONFIG_NAME].sessionStores.redis.development; // eslint-disable-line no-process-env
+      redisConfig = config.sessionStores.redis.development; // eslint-disable-line no-process-env
       break;
     case 'production':
-      redisConfig = config[process.env.CONFIG_NAME || DEFAULT_CONFIG_NAME].sessionStores.redis.production; // eslint-disable-line no-process-env
+      redisConfig = config.sessionStores.redis.production; // eslint-disable-line no-process-env
       break;
     default:
-      redisConfig = config[process.env.CONFIG_NAME || DEFAULT_CONFIG_NAME].sessionStores.redis.local; // eslint-disable-line no-process-env
+      redisConfig = config.sessionStores.redis.local; // eslint-disable-line no-process-env
       break;
   }
 
@@ -115,8 +120,8 @@ module.exports.run = function (worker) {
     request: {session: {}},
     libdata: {
       kommune: 'aarhus',
-      config: config.aarhus,
-      libraryId: (config.aarhus || {}).agency
+      config: config,
+      libraryId: (config || {}).agency
     }
     // request: {session: req.session},
     // libdata: res.locals.libdata
