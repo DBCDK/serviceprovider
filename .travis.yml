@@ -1,22 +1,19 @@
 language: node_js
 sudo: false
 node_js: '4.1'
-compiler:
-  - gcc
-install:
-  - if [ "$CXX" = "g++" ]; then export CXX="g++-4.8" CC="gcc-4.8"; fi
+env:
+  - CXX=g++-4.8
+addons:
+  apt:
+    sources:
+      - ubuntu-toolchain-r-test
+    packages:
+      - g++-4.8
 script:
   - npm run serve & npm test
   - npm run lint
   - npm run lint:checkstyle
   - npm run swagger:validate
-addons:
-  apt:
-    sources:
-    - ubuntu-toolchain-r-test
-    packages:
-    - gcc-4.8
-    - g++-4.8
 notifications:
   slack:
       secure: x5VInJNsQnnyYiZ6PDCh4A1FHw/PuFT3VwbH0XBrFDIcEbgbibkUk4I/BKwHb57onwcNQwNkzfnsgB50eu93U6o8iqQ8yCHN1+bfYIBdkuVDG2kVD69Qfs9zMkT0tw0S/OPF1+p/X25+AOwes5aeQoUvfsQGvwBYroY/YHsDa91bCxO88lT+7RgNoVM2eDQkqPfwuhrHuPKtXUHYNc71XIvmyjCVG4ANVyMVxYWGna8aLqLUQHRDThwytUKxe+SEo14paPgbwuy8CMsMnVSROxMaDawkp/SqXSrx5tjd54D8DUtLLuD/sSOaTiWvJ8ZE7yLoAKCVmHdRfeW+S2wDR3K6271Ne0GD2XCcDBC+UKm+j7AWvMJbYg7eD0xfnCb5RQTRvNVnQnR/nypn01/nAhkmv2Fl3a7Rn7rvHzEnpTf2+cSM1+uFgy7wuocQwn3gociwNrAqjm4V+gsI8bSwhvTjfXBRWiutrbPDSw6R3uGctYclbvL+j8+tcCRlE5WhEyfq9h2Jzjwju7qsBjsAOWfVF5NyqEFkCxFspHZIWuqIBpA0XFUtx0TuREgVAizkZCX+3hnhBtxlCg2gXHTObnrPEplHj44zkYV6mKHZhNN6wM01tdy9q17PV5zAHe0SThYKdlPGmF/3mYjjQN2BK01Z34sjax+0pS8uEAP+WFg=
