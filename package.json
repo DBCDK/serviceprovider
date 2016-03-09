@@ -4,6 +4,7 @@
   "description": "API for accessing DBCs services through sockets and HTTP",
   "main": "src/main.js",
   "scripts": {
+    "preinstall": "cp -n config.json.sample config.json",
     "apitest": "cd apitest; ./apitest.sh",
     "dev": "supervisor -w src,node_modules src/main.js",
     "dev:remoteprofile": "PROFILE_SERVICE_URL=\"http://profile-i01.dbc.dk:3001/\" npm run dev",
@@ -35,7 +36,6 @@
   },
   "homepage": "https://github.com/DBCDK/serviceprovider#readme",
   "dependencies": {
-    "@dbcdk/dbc-config": "^4.0.0",
     "async": "1.5.0",
     "babel": "5.8.29",
     "babel-core": "5.8.29",
