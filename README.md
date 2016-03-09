@@ -15,20 +15,23 @@ HTTP endpoints can be accesses on `/api/$ENDPOINT_NAME` with the parameters in a
 
     curl -X POST \
          -H "Content-Type: application/json" \
-         -d '[{"query":"(1q84)","offset":0,"worksPerPage":12,"sort":"rank_frequency"}]' \
+         -d '{"query":"(1q84)","offset":0,"worksPerPage":12,"sort":"rank_frequency"}' \
          http://localhost:8080/api/getOpenSearchResultList
 
 will search for "1q84". 
-
-TODO #1: currently the parameter object for the HTTP-API requests currently needs to be wrapped in an array, and the result is wrapped in two arrays. 
 
 ## Installation / getting it to run
 
 **IMPORTANT** the serviceprovider only runs on DBCs internal network as it serve as the gateway to the services.
 
+The current version depends on the existance for `config.json`, which has the list of internal DBC-services etc. 
+These information should be delivered through environment or the authentification server later on.
+A sample file without passwords etc. is: `config.json.sample`, and that one can also be used for building / running tests when outside of DBCs network.
+The full config for running on the internal network lies in `config.json.nc` and is encrypted (with the password that was also previously used to get access to the config).
+The `config.json.sample` is automatically copied to `config.json` on npm install.
+
 ### Dependencies
 
-- *@dbcdk/dbc-config* contains the configuration to access DBCs services. You need to set up the proper **NPM_TOKEN** environment variable / set `//registry.npmjs.org/:_authToken=...` in `.npmrc`, to get access to this configuration.
 - *siege* is used for load-testing. `apt-get install siege`
 - redis, - current version depends assumes a redis server is running for session-storage, - this will be remove later on
 - various dependencies in package.json `npm install`
