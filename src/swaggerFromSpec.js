@@ -49,7 +49,7 @@ function specToPaths(specs) {
           }
         }
       };
-      paths[method] = {post: obj};
+      paths['/' + method] = {post: obj};
     }
   }
   return paths;
