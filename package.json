@@ -13,7 +13,7 @@
     "siege": "siege -c500 -d10 -t30M -i -f siegetestendpoints.txt",
     "siege:live": "siege -c50 -d10 -t10M -i -f siegedemoendpoints.txt",
     "start": "node src/main.js",
-    "swagger:validate": "curl localhost:8080/api/swagger.json | swagger validate",
+    "swagger:validate": "curl localhost:8080/v0/swagger.json | swagger validate",
     "test": "mocha --compilers js:babel/register --recursive src/**/__tests__/*",
     "test:single": "mocha --compilers js:babel/register",
     "tail": "tail -f log.log",
