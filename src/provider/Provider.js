@@ -64,10 +64,10 @@ export default function Provider(logger) {
   }
 
   // we are going to reimplement a simpler mechanism to call the transformers
-  function execute(name, params, context){
+  function execute(name, params, context) { // eslint-disable-line no-unused-vars
     return {};
   }
-    
+
   function availableTransforms() {
     return transforms.keys();
   }
@@ -76,6 +76,7 @@ export default function Provider(logger) {
     registerTransform,
     registerServiceClient,
     availableTransforms,
+    execute,
     trigger
   };
 }
