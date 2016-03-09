@@ -8,6 +8,8 @@
 // Config
 import config from '@dbcdk/dbc-config';
 import {version} from '../package.json';
+// majorVersion is used for determining the API-endpoint, ie /v0, /v1, or ..
+const majorVersion = parseInt(version, 10);
 
 // Libraries
 import express from 'express';
@@ -98,7 +100,8 @@ module.exports.run = function (worker) {
   app.use(compression());
 
   // Setting paths
-  app.use(express.static(path.join(__dirname, '../static')));
+  app.all('/', (req, res) => res.redirect('/v' + majorVersion));
+  app.use('/v' + majorVersion, express.static(path.join(__dirname, '../static')));
 
   // Setting logger
   app.use(expressLoggers.logger);
@@ -149,21 +152,22 @@ module.exports.run = function (worker) {
   });
 
   // HTTP Transport
-  app.use('/api', express.Router().all(['/:event'], (req, res) => {
-    const event = req.params.event;
-    if (event === 'swagger.json') {
-      return swaggerFromSpec().then((response) => {
-        res.json(response);
-      }, (error) => {
-        res.json(error);
-      });
-    }
+  for (let event of serviceProvider.availableTransforms()) {
+    app.post('/v' + majorVersion + '/' + event, (req, res) => { // eslint-disable-line no-loop-func
+      // TODO: should just be req.body, when all endpoints accept object-only as parameter, until then, this hack supports legacy transforms
+      const query = Array.isArray(req.body) ? req.body[0] : req.body;
 
-    // TODO: should just be req.body, when all endpoints accept object-only as parameter, until then, this hack supports legacy transforms
-    const query = Array.isArray(req.body) ? req.body[0] : req.body;
+      callApi(event, query, dummyContext, response => res.json(response));
+    });
+  }
 
-    callApi(event, query, dummyContext, response => res.json(response));
-  }));
+  app.all('/v' + majorVersion + '/swagger.json', (req, res) => {
+    return swaggerFromSpec().then((response) => {
+      res.json(response);
+    }, (error) => {
+      res.json(error);
+    });
+  });
 
   // Graceful handling of errors
   app.use((err, req, res, next) => {
