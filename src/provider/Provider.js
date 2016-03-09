@@ -63,6 +63,11 @@ export default function Provider(logger) {
     return transforms.get(event).trigger(params, context);
   }
 
+  // we are going to reimplement a simpler mechanism to call the transformers
+  function execute(name, params, context){
+    return {};
+  }
+    
   function availableTransforms() {
     return transforms.keys();
   }
