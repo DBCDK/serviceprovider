@@ -42,6 +42,7 @@ module.exports.run = function (worker) {
         fs.readFileSync(
           process.env.CONFIG_FILE || // eslint-disable-line no-process-env
             __dirname + '/../config.json', 'utf8'));
+  config.cache.store = require('cache-manager-redis');
 
   // Direct requests to app
   server.on('request', app);
