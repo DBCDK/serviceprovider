@@ -35,7 +35,6 @@
   },
   "homepage": "https://github.com/DBCDK/serviceprovider#readme",
   "dependencies": {
-    "@dbcdk/dbc-config": "^4.0.0",
     "async": "1.5.0",
     "babel": "5.8.29",
     "babel-core": "5.8.29",
