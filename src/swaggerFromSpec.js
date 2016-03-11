@@ -2,9 +2,8 @@
 
 function specToPaths(specs) {
   let paths = {};
-  for (let tag in specs) { // eslint-disable-line guard-for-in
-    for (let method in specs[tag]) { // eslint-disable-line guard-for-in
-      let spec = specs[tag][method];
+    for (let method in specs.api) { // eslint-disable-line guard-for-in
+      let spec = specs.api[method];
       spec.properties = spec.properties || {};
       spec.required = spec.required || [];
       spec.required.push('access_token');
@@ -51,7 +50,6 @@ function specToPaths(specs) {
       };
       paths['/' + method] = {post: obj};
     }
-  }
   return paths;
 }
 
