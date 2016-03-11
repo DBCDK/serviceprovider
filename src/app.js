@@ -159,19 +159,30 @@ module.exports.run = function (worker) {
 
   // HTTP Transport
   for (let event of serviceProvider.availableTransforms()) {
-    app.post(apiPath + event, (req, res) => { // eslint-disable-line no-loop-func
+    app.all(apiPath + event, (req, res) => { // eslint-disable-line no-loop-func
       // TODO: should just be req.body, when all endpoints accept object-only as parameter, until then, this hack supports legacy transforms
-      const query = Array.isArray(req.body) ? req.body[0] : req.body;
+      let query = Array.isArray(req.body) ? req.body[0] : req.body;
 
-      callApi(event, query, dummyContext, response => res.json(response));
+      query = query || {};
+      for(let key in req.query) {
+        try {
+          query[key] = JSON.parse(req.query[key]);
+        } catch (_) {
+          query[key] = req.query.key;
+        }
+      }
+      callApi(event, query, dummyContext, response => {
+        app.set('json spaces', query.pretty ? 2 : null);
+        res.jsonp(response);
+      });
     });
   }
 
   app.all(apiPath + 'swagger.json', (req, res) => {
     return swaggerFromSpec().then((response) => {
-      res.json(response);
+      res.jsonp(response);
     }, (error) => {
-      res.json(error);
+      res.jsonp(error);
     });
   });
 
@@ -185,14 +196,14 @@ module.exports.run = function (worker) {
     }
 
     res.status(500);
-    res.json({error: String(err)});
+    res.jsonp({error: String(err)});
     res.end();
   });
 
   // Handle 404's
   app.use((req, res) => {
     res.status(404);
-    res.json({error: '404 Not Found'});
+    res.jsonp({error: '404 Not Found'});
     res.end();
   });
 
