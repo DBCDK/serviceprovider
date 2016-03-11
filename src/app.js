@@ -164,10 +164,11 @@ module.exports.run = function (worker) {
       let query = Array.isArray(req.body) ? req.body[0] : req.body;
 
       query = query || {};
-      for(let key in req.query) {
+      for (let key in req.query) { // eslint-disable-line guard-for-in
         try {
           query[key] = JSON.parse(req.query[key]);
-        } catch (_) {
+        }
+        catch (_) {
           query[key] = req.query.key;
         }
       }
