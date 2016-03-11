@@ -1,18 +1,22 @@
-search:
-  getOpenSearchResultList:
+api:
+  search:
     description: Search for a library material
     required:
-      - query
+      - q
     properties:
-      query:
-        description: CQL query to search for
+      q:
+        description: Query to search for. TODO description of query language
         type: string
       offset:
         description: Starting position in search result
         type: number
-      worksPerPage:
+      limit:
         type: number
-        description: number of results returned
+        description: maximum number of results returned
+      fields:
+        description: which meta-information to include in the search results
+        type: array
+        items: {type: "string"}
       sort:
         description: Order of results, either "default", "..." or "..."
         type: string
@@ -21,29 +25,59 @@ search:
       items:
         type: object
         properties:
-          identifiers:
-            type: array
-            items:
-              type: string
-          title:
-            type: string
-          creator:
-            type: string
-          workType:
-            type: string
-            x-values: ["book", "movie"]
+          identifiers: {type: "array", items: {type: "string"}}
+          title: {type: "string"}
+          creator: {type: "string"}
+          workType: {type: "string", x-values: ["book", "movie"]}
     examples:
       - {"query":"(ost)","offset":0,"worksPerPage":12,"sort":"default"}
       - {"query":"(harry and potter)","offset":0,"worksPerPage":12,"sort":"default"}
-  getOpenSearchFacets:
-    examples:
-      - {"query":"(ost)","number":5}
-library:
-  getAllAffiliatesRequest:
-    examples:
-      - {}
-work:
-  getCoverImage:
-    examples:
-      - ["870970-basis:51329465"]
-      - ["870970-basis:27181406"]
+  suggest:
+    description: Suggestions for completing a query string
+    required:
+      - q
+    properties:
+      q:
+        description: Query to complete
+        type: string
+      limit:
+        description: Maximum number of suggestions returned
+        type: number
+      types:
+        description: The desired type of suggestions, possible values are `library`, `title`, `keyword`, `creator`
+        type: array
+        items: {type: "string"}
+  order: {}
+  work: {}
+  availability: {}
+  recommend: {}
+  facets: {}
+  user: {}
+  renew: {}
+  news: {}
+  events: {}
+  libraries: {}
+models:
+  work:
+    creator: {description: "Creator", type: "string"}
+    title: {description: "Title", type: "string"}
+    description: {description: "Description", type: "string"}
+  library:
+    id:
+      description: Library id
+      type: string
+    name:
+      description: Library name
+      type: string
+    lat:
+      description: Geocoordinate - latitiude
+      type: number
+    lng:
+      description: Geocoordinate - longitude
+      type: number
+    opening_hours:
+      description: Opening hours
+      type: array
+      items:
+        type: object
+        properties: {}
