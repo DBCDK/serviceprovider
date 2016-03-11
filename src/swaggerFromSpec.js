@@ -2,54 +2,54 @@
 
 function specToPaths(specs) {
   let paths = {};
-    for (let method in specs.api) { // eslint-disable-line guard-for-in
-      let spec = specs.api[method];
-      spec.properties = spec.properties || {};
-      spec.required = spec.required || [];
-      spec.required.push('access_token');
-      spec.properties.access_token = {
-        type: 'string',
-        description: 'Access token from the OAuth2 server'
-      };
-      let request = {
-        name: 'request',
-        description: 'Request object',
-        in: 'body',
-        required: true,
-        schema: {
-          type: 'object',
-          required: spec.required,
-          properties: spec.properties
-        }};
-      let obj = {
-        description: spec.description || '',
-        parameters: [request],
-        responses: {
-          default: {
-            description: 'Response envelope',
-            schema: {
-              type: 'object',
-              required: ['statusCode'],
-              properties: {
-                statusCode: {type: 'integer'},
-                data: spec.response || {
+  for (let method in specs.api) { // eslint-disable-line guard-for-in
+    let spec = specs.api[method];
+    spec.properties = spec.properties || {};
+    spec.required = spec.required || [];
+    spec.required.push('access_token');
+    spec.properties.access_token = {
+      type: 'string',
+      description: 'Access token from the OAuth2 server'
+    };
+    let request = {
+      name: 'request',
+      description: 'Request object',
+      in: 'body',
+      required: true,
+      schema: {
+        type: 'object',
+        required: spec.required,
+        properties: spec.properties
+      }};
+    let obj = {
+      description: spec.description || '',
+      parameters: [request],
+      responses: {
+        default: {
+          description: 'Response envelope',
+          schema: {
+            type: 'object',
+            required: ['statusCode'],
+            properties: {
+              statusCode: {type: 'integer'},
+              data: spec.response || {
+                type: 'object',
+                properties: {}
+              },
+              errors: {
+                type: 'array',
+                items: {
                   type: 'object',
                   properties: {}
-                },
-                errors: {
-                  type: 'array',
-                  items: {
-                    type: 'object',
-                    properties: {}
-                  }
                 }
               }
             }
           }
         }
-      };
-      paths['/' + method] = {post: obj};
-    }
+      }
+    };
+    paths['/' + method] = {post: obj};
+  }
   return paths;
 }
 
