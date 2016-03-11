@@ -7,8 +7,8 @@
 
 // Config
 import {version} from '../package.json';
-// majorVersion is used for determining the API-endpoint, ie /v0, /v1, or ..
-const majorVersion = parseInt(version, 10);
+// path for the API-endpoint, ie /v0/, /v1/, or ..
+const apiPath = '/v' + parseInt(version, 10) + '/';
 
 // Libraries
 import fs from 'fs';
@@ -106,8 +106,8 @@ module.exports.run = function (worker) {
   app.use(compression());
 
   // Setting paths
-  app.all('/', (req, res) => res.redirect('/v' + majorVersion));
-  app.use('/v' + majorVersion, express.static(path.join(__dirname, '../static')));
+  app.all('/', (req, res) => res.redirect(apiPath));
+  app.use(apiPath, express.static(path.join(__dirname, '../static')));
 
   // Setting logger
   app.use(expressLoggers.logger);
@@ -159,7 +159,7 @@ module.exports.run = function (worker) {
 
   // HTTP Transport
   for (let event of serviceProvider.availableTransforms()) {
-    app.post('/v' + majorVersion + '/' + event, (req, res) => { // eslint-disable-line no-loop-func
+    app.post(apiPath + event, (req, res) => { // eslint-disable-line no-loop-func
       // TODO: should just be req.body, when all endpoints accept object-only as parameter, until then, this hack supports legacy transforms
       const query = Array.isArray(req.body) ? req.body[0] : req.body;
 
@@ -167,7 +167,7 @@ module.exports.run = function (worker) {
     });
   }
 
-  app.all('/v' + majorVersion + '/swagger.json', (req, res) => {
+  app.all(apiPath + 'swagger.json', (req, res) => {
     return swaggerFromSpec().then((response) => {
       res.json(response);
     }, (error) => {
