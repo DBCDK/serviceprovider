@@ -80,6 +80,30 @@ Below is a brainstorm for categories of api-endpoints, including existing usage 
     - community services (ie. forum) (biblo)
     - questions
 
+List of transforms: getOpenSearchBriefDisplayList getOpenSearchWorkBriefDisplay getOpenSearchFacets getOpenSearchResultList getOpenSearchFacetTerms getOpenSearchWork getCoverImage getPersonalRecommendations getRecommendations commentOnGroupPost createGroup createGroupPost createProfile deleteGroupPost getGroup getGroupPost getProfile joinGroup leaveGroup saveLike loginProfile logoutProfile queryGroups resetLikes updateGroup updateGroupPost updateProfile verifyEmail getPopSuggestions cancelOrder getUserStatus renewLoan updateOrder getFilterGuides getOrderPolicy placeOrder holdingStatus getMultiOpenAgency getOpenAgency getPickupAgencyList searchOpenAgency getEventById getEventList getNewsById getNewsList deleteLikesFromMobilSoegProfile findMobilSoegProfile isMobilSoegUserLoggedIn savePickupAgencyToMobilSoegProfile saveLikeToMobilSoegProfile getAllAffiliates getEntitySuggestions checkBorrower checkBorrowerAndSaveToProfile
+
+
+Ideas for api-endpoints:
+
+- `/search`
+    - possibility to search 
+- `/suggest`
+    - library-suggestions, different kinds of search query suggestions,
+- `/order` - create/update/delete an order
+- `/work` - information the creative work
+- `/availability` - holdings
+    - limit holding check to certain libraries
+- `/recommend`
+    - possibility to limit results to materials available at the current library.
+- `/facets`
+- `/user`
+    - user status, including arrived loans, orders, etc.
+    - set user status (ie. supply default library)
+- `/renew`
+- `/news`
+- `/events`
+- `/libraries`
+
 # Random thoughts/ideas, perhaps for later.
 
 - swagger autogenerate server-code..
