@@ -1,6 +1,4 @@
 'use strict';
-require('babel/register');
-
 
 function functionName(fun) {
   let ret = fun.toString();
