@@ -19,7 +19,7 @@
     "tail": "tail -f log.log",
     "tail:timer": "tail -f log.log | awk '(/event/ || /time_delta/ || /TIMER/) && !/result/'",
     "transformer-proto": "node src/transformer-proto.js",
-    "gtrans": "node src/genericTransformer.js"
+    "gtrans": "node src/genericTransformerExample.js"
   },
   "repository": {
     "type": "git",
