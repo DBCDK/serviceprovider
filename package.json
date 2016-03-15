@@ -19,7 +19,8 @@
     "tail": "tail -f log.log",
     "tail:timer": "tail -f log.log | awk '(/event/ || /time_delta/ || /TIMER/) && !/result/'",
     "transformer-proto": "node src/transformer-proto.js",
-    "gtrans": "node src/genericTransformerExample.js"
+    "gtrans": "node src/genericTransformerExample.js",
+    "coverage": "istanbul cover _mocha --report lcovonly --report cobertura --report html -- --compilers js:babel/register src/**/__tests__/*.test.js"
   },
   "repository": {
     "type": "git",
@@ -89,6 +90,7 @@
     "eslint": "^1.0.0",
     "eslint-loader": "^1.0.0",
     "isparta-loader": "^1.0.0",
+    "istanbul": "^0.3.22",
     "json-loader": "^0.5.4",
     "mocha": "^2.2.4",
     "mocha-jenkins-reporter": "^0.1.9",
