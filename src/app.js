@@ -130,7 +130,15 @@ module.exports.run = function (worker) {
 
   // Execute transform
   function callApi(event, query, context, callback) {
-    let prom = serviceProvider.trigger(event, query, context);
+    let prom;
+    if (event === 'getRecommendations') {
+      console.log('Neo Event called: ' + event); // eslint-disable-line no-console
+      // The below expects an array. We will give it what it asks for!
+      prom = [serviceProvider.execute(event, query, context)];
+    } else { // eslint-disable-line brace-style
+      console.log('Old-School Event called: ' + event); // eslint-disable-line no-console
+      prom = serviceProvider.trigger(event, query, context);
+    }
 
     // TODO: result from serviceProvider should just be a single promise.
     // fix this in provider

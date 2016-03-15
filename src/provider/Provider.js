@@ -6,6 +6,7 @@
  */
 
 import Transform from './lib/Transforms';
+import recommendTransformer from './neoRecommendTransform.js';
 
 /**
  * Initialization of the provider and the underlying services.
@@ -28,6 +29,13 @@ export default function Provider(logger) {
    * @type {Map}
    */
   const transforms = new Map();
+
+  /**
+   * Structure containing all the new transformers.
+   */
+  const transformerMap = {
+    getRecommendations: recommendTransformer()
+  };
 
   /**
    * Method for registering a single transform
@@ -65,7 +73,7 @@ export default function Provider(logger) {
 
   // we are going to reimplement a simpler mechanism to call the transformers
   function execute(name, params, context) { // eslint-disable-line no-unused-vars
-    return {};
+    return transformerMap[name](params, context);
   }
 
   function availableTransforms() {
