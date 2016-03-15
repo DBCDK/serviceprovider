@@ -1,5 +1,5 @@
 'use strict';
-const createTest = require('./createTest.js')
+const createTest = require('./createTest.js');
 
 /**
  * Generic transformer function designed to build a specific transformer.
@@ -26,7 +26,7 @@ export default function genericTransformer(requestTransformer, responseTransform
 
     return response.then((result) => {
 
-      let transformedResponse = responseTransformer(result, context);      
+      let transformedResponse = responseTransformer(result, context);
       if (context.createTest === true) {
 
         createTest(clientFunction, requestTransformer, responseTransformer,
