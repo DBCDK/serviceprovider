@@ -48,7 +48,7 @@
     "connect-redis": "3.0.2",
     "css-loader": "0.22.0",
     "dbc-node-basesoap-client": "^1.1.3",
-    "dbc-node-logger": "^1.4.6",
+    "dbc-node-logger": "^1.4.9",
     "dbc-node-serviceprovider-socketclient": "^2.1.2",
     "express": "4.13.3",
     "express-session": "1.12.1",
