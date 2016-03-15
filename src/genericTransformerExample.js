@@ -61,7 +61,9 @@ function esResponseTransformer(response) {
 
 let es_config = {
   endpoint: 'http://xptest.dbc.dk/ms/entity-suggest/v1/',
-  createTest: true
+  createTest: true,
+  createTestPath: '/home/shm/repos/serviceprovider/TESTS/myTest.js',
+  createTestDescription: 'foo the bar'
 };
 
 
