@@ -130,7 +130,20 @@ module.exports.run = function (worker) {
 
   // Execute transform
   function callApi(event, query, context, callback) {
-    let prom = serviceProvider.trigger(event, query, context);
+    let prom;
+    // Currently it is needed to run the old-school version of getRecommendations,
+    // since the apitests uses the property isFrontPage=true, which calls the meta-recommender.
+    // But only the regular recommender is implemented in the current neoGetRecommendations.
+    prom = serviceProvider.trigger(event, query, context);
+    // When the above mentioned is fixed, the below will make use of neoGetRecommendations!
+    // if (event === 'getRecommendations') {
+    //   console.log('Neo Event called: ' + event); // eslint-disable-line no-console
+    //   // The below expects an array. We will give it what it asks for!
+    //   prom = [serviceProvider.execute(event, query, context)];
+    // } else { // eslint-disable-line brace-style
+    //   console.log('Old-School Event called: ' + event); // eslint-disable-line no-console
+    //   prom = serviceProvider.trigger(event, query, context);
+    // }
 
     // TODO: result from serviceProvider should just be a single promise.
     // fix this in provider
