@@ -45,7 +45,7 @@
     "compression": "1.6.1",
     "cache-manager": "^1.0.0",
     "cache-manager-redis": "0.2.2",
-    "connect-redis": "3.0.0",
+    "connect-redis": "3.0.2",
     "css-loader": "0.22.0",
     "dbc-node-basesoap-client": "^1.1.1",
     "dbc-node-logger": "^1.4.6",
