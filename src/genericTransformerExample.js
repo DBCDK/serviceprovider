@@ -3,7 +3,7 @@ require('babel/register');
 
 const openAgency = require('./services/OpenAgency/client.js');
 const entitySuggest = require('./services/EntitySuggest/client.js');
-const genericTransformer = require('./genericTransformer.js')
+const genericTransformer = require('./genericTransformer.js');
 
 // split
 function oa_func(config) {
@@ -14,11 +14,11 @@ function oa_func(config) {
   };
 }
 
-function oaRequestTransformer(query, config) {
+function oaRequestTransformer(query, config) { // eslint-disable-line no-unused-vars
   return {query: query};
 }
 
-function oaResponseTransformer(response, config) {
+function oaResponseTransformer(response, config) { // eslint-disable-line no-unused-vars
   return JSON.stringify(response.pickupAgency);
 }
 
