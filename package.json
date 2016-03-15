@@ -49,7 +49,7 @@
     "css-loader": "0.22.0",
     "dbc-node-basesoap-client": "^1.1.3",
     "dbc-node-logger": "^1.4.9",
-    "dbc-node-serviceprovider-socketclient": "^2.1.2",
+    "dbc-node-serviceprovider-socketclient": "^2.1.3",
     "express": "4.13.3",
     "express-session": "1.12.1",
     "extract-text-webpack-plugin": "0.9.1",
