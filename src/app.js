@@ -33,7 +33,7 @@ module.exports.run = function (worker) {
   const server = worker.httpServer;
   const ENV = app.get('env');
   const PRODUCTION = ENV === 'production';
-  const APP_NAME = process.env.NEW_RELIC_APP_NAME || 'app_name'; // eslint-disable-line no-process-env
+  const APP_NAME = process.env.APP_NAME || 'app_name'; // eslint-disable-line no-process-env
   const logger = new Logger({app_name: APP_NAME});
   const expressLoggers = logger.getExpressLoggers();
 
@@ -213,7 +213,7 @@ module.exports.run = function (worker) {
 
   logger.log('debug', '>> Worker PID: ' + process.pid);
   logger.log('debug', 'Server listening on port ' + app.get('port'));
-  logger.log('debug', 'NEW_RELIC_APP_NAME: ' + APP_NAME);
+  logger.log('debug', 'APP_NAME: ' + APP_NAME);
   logger.log('info', 'Versions: ', process.versions);
   logger.log('info', version + ' is up and running');
 };
