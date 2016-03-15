@@ -102,10 +102,6 @@ Defines if a worker reboots on crash. (This does not apply to the whole applicat
 
   The default value is `true`
 
-## New Relic
-As New Relic is used by DBC A/S this application requires New Relic to be configured.  
-If you want to run the application but can't provide a New Relic configuration you can start the application with `NEW_RELIC_NO_CONFIG_FILE=true` which will throw an error but wont crash your application.
-
 ## Testing
 
 ### Unit tests
