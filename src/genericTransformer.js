@@ -7,6 +7,10 @@ const createTest = require('./createTest.js');
  * request and context. If the context contains a field called
  * createTest that is set to true, the input/output of the
  * request/response transformers are recorded, and dumped as tests.
+ * Apart from the createTest field, the context must also define a
+ * createTestPath which is the path where the test will be dumped.
+ * An optional createTestDescription can be present in the context,
+ * and if provided will be used instead of the default.
  *
  * @param {function} requestTransformer for transforming request
  *        before it is given to the clientFunction
@@ -17,6 +21,12 @@ const createTest = require('./createTest.js');
  *
  * @returns
  */
+
+function die(string) {
+  console.log('ERROR: ' + string); // eslint-disable-line
+  throw (string);
+}
+
 export default function genericTransformer(requestTransformer, responseTransformer, clientFunction) {
 
   return function(request, context) {
@@ -29,8 +39,12 @@ export default function genericTransformer(requestTransformer, responseTransform
       let transformedResponse = responseTransformer(result, context);
       if (context.createTest === true) {
 
+        if (context.createTestPath === 'undefined') {
+          die('Need testPath in context when creating test (context.createTest is true)');
+        }
         createTest(clientFunction, requestTransformer, responseTransformer,
-                   request, transformedRequest, result, transformedResponse);
+                   request, transformedRequest, result, transformedResponse,
+                   context.createTestPath, context.createTestDescription);
       }
       return transformedResponse;
 
