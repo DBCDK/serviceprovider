@@ -47,8 +47,7 @@ module.exports = [{
   externals: {
     react: 'React',
     'react-dom': 'ReactDOM',
-    lodash: '_',
-    newrelic: 'newrelic'
+    lodash: '_'
   },
 
   plugins: [
