@@ -17,7 +17,7 @@ api:
         description: maximum number of results returned
         type: number
       fields:
-        example: ["title", "creator", "id"]
+        example: ["title", "creator", "pid"]
         description: which meta-information to include in the search results
         type: array
         items: {type: "string"}
@@ -59,7 +59,7 @@ api:
   order:
     description: Order a library material, or modify/remove an existing order
     required: 
-      - id
+      - pid
     $ref: "#/definitions/Order"
     response:
       $ref: "#/definitions/Order"
@@ -75,8 +75,8 @@ definitions:
   Order:
     type: object
     properties:
-      id:
-        description: id of the material ordered
+      pid:
+        description: pid of the material ordered
         type: string
       library:
         description: library where the material should be delivered to
