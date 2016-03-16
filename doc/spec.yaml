@@ -47,8 +47,13 @@ api:
         description: The desired type of suggestions, possible values are `library`, `title`, `keyword`, `creator`
         type: array
         items: {type: "string"}
-  order: {}
-  work: {}
+  order:
+    description: Order a library material, or modify/remove an existing order
+  work:
+    description: Retrieve meta information about a creative work
+    properties:
+      fields:
+        description: Which fields to return. Limiting the fields can also yield a performance improvement
   availability: {}
   recommend: {}
   facets: {}
