@@ -5,30 +5,30 @@ api:
       - q
     properties:
       q:
+        example: "(ost)"
         description: Query to search for. TODO description of query language
         type: string
       offset:
+        example: 0
         description: Starting position in search result
         type: number
       limit:
-        type: number
+        example: 10
         description: maximum number of results returned
+        type: number
       fields:
+        example: ["title", "creator", "id"]
         description: which meta-information to include in the search results
         type: array
         items: {type: "string"}
       sort:
+        example: "ranking"
         description: Order of results, either "default", "..." or "..."
         type: string
-    result:
+    response:
       type: array
       items:
-        type: object
-        properties:
-          identifiers: {type: "array", items: {type: "string"}}
-          title: {type: "string"}
-          creator: {type: "string"}
-          workType: {type: "string", x-values: ["book", "movie"]}
+        $ref: "#/definitions/Work"
     examples:
       - {"query":"(ost)","offset":0,"worksPerPage":12,"sort":"default"}
       - {"query":"(harry and potter)","offset":0,"worksPerPage":12,"sort":"default"}
@@ -47,10 +47,33 @@ api:
         description: The desired type of suggestions, possible values are `library`, `title`, `keyword`, `creator`, `all`
         type: array
         items: {type: "string"}
+  work:
+    description: Retrieve meta information about a creative work
+    properties:
+      fields:
+        description: Which fields to return. Limiting the fields can also yield a performance improvement
+  availability: {}
+  recommend: {}
+  facets: {}
+  user: {}
   order:
     description: Order a library material, or modify/remove an existing order
     required: 
       - id
+    $ref: "#/definitions/Order"
+    response:
+      $ref: "#/definitions/Order"
+  renew: {}
+  news: {}
+  events: {}
+  libraries: 
+    response:
+      type: array
+      items:
+        $ref: "#/definitions/Library"
+definitions:
+  Order:
+    type: object
     properties:
       id:
         description: id of the material ordered
@@ -61,41 +84,177 @@ api:
       expires:
         description: when does the order expires if not fulfulled.
         type: string
-        formate: date-time
-  work:
-    description: Retrieve meta information about a creative work
+        format: date-time
+  Work:
+    type: object
     properties:
-      fields:
-        description: Which fields to return. Limiting the fields can also yield a performance improvement
-  availability: {}
-  recommend: {}
-  facets: {}
-  user: {}
-  renew: {}
-  news: {}
-  events: {}
-  libraries: {}
-models:
-  work:
-    creator: {description: "Creator", type: "string"}
-    title: {description: "Title", type: "string"}
-    description: {description: "Description", type: "string"}
-  library:
-    id:
-      description: Library id
-      type: string
-    name:
-      description: Library name
-      type: string
-    lat:
-      description: Geocoordinate - latitiude
-      type: number
-    lng:
-      description: Geocoordinate - longitude
-      type: number
-    opening_hours:
-      description: Opening hours
-      type: array
-      items:
+      pid:
+        type: string
+        example: 775100-katalog:29372365
+      title:
+        type: string
+        example: Trækopfuglens krønike
+      fullTitle:
+        type: string
+        example: Trækopfuglens krønike
+      alternativeTitle:
+        type: string
+        example: ''
+      creator:
+        type: string
+        example: Haruki Murakami
+      contributers:
+        example: [ "Mette Holm", "Aksel Hundslev" ]
+        type: array
+        items:
+          type: string
+      abstract:
+        type: string
+        example: Først forsvinder Toru Okadas kat, dernæst hans kone Kumiko. Hans søgen
+          efter begge bliver en mystisk, magisk rejse i det japanske samfund og sindets
+          afkroge
+      isbns:
+        type: array
+        items: 
+          type: string
+      extent:
+        type: string
+        example: ''
+      actors:
+        type: array
+        items: {}
+      series:
+        type: string
+        example: ''
+      subjects:
+        type: array
+        example: [ "magisk realisme", "mænd", "Japan", "1990-1999" ]
+        items:
+          type: string
+      dk5s:
+        type: array
+        items:
+          type: object
+          properties:
+            text:
+              type: string
+              example: Skønlitteratur
+            value:
+              type: string
+              example: sk
+      audience:
         type: object
-        properties: {}
+        properties:
+          age:
+            type: array
+            items: {}
+          pegi:
+            type: string
+            example: ''
+          medieraad:
+            type: string
+            example: ''
+          type:
+            type: string
+            example: voksenmaterialer
+      tracks:
+        type: array
+        items: {}
+      languages:
+        type: array
+        items:
+          type: string
+          example: Dansk
+      editions:
+        type: array
+        items:
+          type: object
+          properties:
+            accessType:
+              type: string
+              example: online
+            creator:
+              type: string
+              example: Haruki Murakami
+            date:
+              type: string
+              example: '2011'
+            edition:
+              type: string
+              example: ''
+            extent:
+              type: string
+              example: 27 t., 53 min.
+            identifier:
+              type: string
+              example: 870970-basis:28993285
+            isbns:
+              type: array
+              items:
+                type: string
+                example: '9788779559516'
+            issns:
+              type: array
+              items: {}
+            link:
+              type: array
+              items:
+                type: string
+                example: https://ereolen.dk/ting/object/870970-basis:28993285
+            partOf:
+              type: array
+              items: {}
+            publisher:
+              type: string
+              example: Klim
+            title:
+              type: string
+              example: Trækopfuglens krønike
+            type:
+              type: string
+              example: Lydbog (net)
+            workType:
+              type: string
+              example: audiobook
+      relations:
+        type: array
+        items:
+          type: object
+          properties:
+            link:
+              type: string
+              example: 150015-forlag:9788779559516
+            type:
+              type: string
+              example: dbcaddi:hasDescriptionFromPublisher
+            access:
+              type: string
+              example: ''
+            accessType:
+              type: string
+              example: ''
+            collection:
+              type: array
+              items: {}
+  Library:
+    type: object
+    properties:
+      id:
+        description: Library id
+        type: string
+      name:
+        description: Library name
+        type: string
+      lat:
+        description: Geocoordinate - latitiude
+        type: number
+      lng:
+        description: Geocoordinate - longitude
+        type: number
+      opening_hours:
+        description: Opening hours
+        type: array
+        items:
+          type: object
+          properties: {}
+    

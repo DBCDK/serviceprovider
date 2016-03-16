@@ -4,8 +4,22 @@ function specToPaths(specs) {
   let paths = {};
   for (let method in specs.api) { // eslint-disable-line guard-for-in
     let spec = specs.api[method];
-    spec.properties = spec.properties || {};
-    spec.required = spec.required || [];
+    let ref = {
+      properties: {},
+      required: []
+    };
+    if (spec.$ref) {
+      if (!spec.$ref.startsWith('#/definitions/')) {
+        throw 'Unexpected $ref prefix';
+      }
+      let definitionName = spec.$ref.slice('#/definitions/'.length);
+      ref = specs.definitions[definitionName];
+      if (!ref) {
+        throw 'Missing definition';
+      }
+    }
+    spec.properties = Object.assign({}, spec.properties, ref.properties);
+    spec.required = spec.required || ref.required;
     spec.required.push('access_token');
     spec.properties.access_token = {
       type: 'string',
@@ -79,12 +93,13 @@ export default function(specName = 'spec') {
         consumes: ['application/json'],
         produces: ['application/json'],
         paths: specToPaths(spec),
-        definitions: {
-        },
+        definitions: spec.definitions,
         externalDocs: {
           description: 'Extra documentation in the github repository',
           url: 'https://github.com/DBCDK/serviceprovider/tree/master/doc'
         }
       };
+    }).catch(e => {
+      return {error: e};
     });
 }
