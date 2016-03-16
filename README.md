@@ -38,9 +38,7 @@ The `config.json.sample` is automatically copied to `config.json` on npm install
 
 ### Building / running it
 
-- `npm run build` uses webpack to build the application
-- `npm run dev:remoteprofile` runs the application in dev-mode
-- `npm run server` runs the application
+- `npm run dev` runs the application in dev-mode
 
 By default it will run on port 8080 on localhost.
 
