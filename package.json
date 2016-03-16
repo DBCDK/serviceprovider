@@ -48,7 +48,6 @@
     "dbc-node-logger": "^1.4.9",
     "express": "4.13.4",
     "express-session": "1.13.0",
-    "extract-text-webpack-plugin": "0.9.1",
     "helmet": "0.14.0",
     "helmet-csp": "0.3.0",
     "js-yaml": "^3.5.3",
@@ -66,7 +65,6 @@
     "swagger": "^0.7.5",
     "swagger-ui": "^2.1.4",
     "walk": "^2.3.9",
-    "webpack": "1.12.14",
     "xml2js": "^0.4.10",
     "xmldom": "^0.1.19",
     "xpath": "0.0.9",
@@ -83,7 +81,6 @@
     "istanbul": "^0.3.22",
     "mocha": "^2.2.4",
     "sinon": "^1.17.2",
-    "socketcluster-client": "^4.3.9",
-    "wallaby-webpack": "0.0.10"
+    "socketcluster-client": "^4.3.9"
   }
 }

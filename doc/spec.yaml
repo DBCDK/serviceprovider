@@ -44,11 +44,29 @@ api:
         description: Maximum number of suggestions returned
         type: number
       types:
-        description: The desired type of suggestions, possible values are `library`, `title`, `keyword`, `creator`
+        description: The desired type of suggestions, possible values are `library`, `title`, `keyword`, `creator`, `all`
         type: array
         items: {type: "string"}
-  order: {}
-  work: {}
+  order:
+    description: Order a library material, or modify/remove an existing order
+    required: 
+      - id
+    properties:
+      id:
+        description: id of the material ordered
+        type: string
+      library:
+        description: library where the material should be delivered to
+        type: string
+      expires:
+        description: when does the order expires if not fulfulled.
+        type: string
+        formate: date-time
+  work:
+    description: Retrieve meta information about a creative work
+    properties:
+      fields:
+        description: Which fields to return. Limiting the fields can also yield a performance improvement
   availability: {}
   recommend: {}
   facets: {}
