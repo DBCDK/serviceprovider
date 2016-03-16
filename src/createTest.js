@@ -83,34 +83,4 @@ export default function createTest(clientFunction, requestTransformer, responseT
                  '});'].join('\n');
 
   writeToFile(path, content);
-  // console.log('// START RECORD TEST'); // eslint-disable-line
-  // console.log(['\'use strict\';', // eslint-disable-line
-  //              'import {expect} from \'chai\';',
-  //              '// PLEASE INSERT NECESSARY REQUIRES FOR THE FOLLOWING FUNCTIONS: ',
-  //              '// ' + cf_name,
-  //              '// ' + reqt_name,
-  //              '// ' + rept_name,
-  //              '',
-  //              'describe(\'Test Transformers used with client "' + cf_name + '"\', () => {',
-  //              '',
-  //              '  it(\'Testing requestTransformer "' + reqt_name + '"\', (done) => {',
-  //              '    let requestTransformer = ' + reqt_name + ';',
-  //              '    let requestTransformerInput = ' + JSON.stringify(request) + ';',
-  //              '    let requestTransformeroutput = ' + JSON.stringify(transformedRequest) + ';',
-  //              '',
-  //              '    expect(requestTransformer(requestTransformerInput)).to.equal(requestTransformeroutput);',
-  //              '    done();',
-  //              '  });',
-  //              '',
-  //              '  it(\'Testing responseTransformer "' + rept_name + '"\', (done) => {',
-  //              '    let responseTransformer = ' + rept_name + ';',
-  //              '    let responseTransformerInput = ' + JSON.stringify(response) + ';',
-  //              '    let responseTransformeroutput = ' + JSON.stringify(transformedResponse) + ';',
-  //              '',
-  //              '    expect(responseTransformer(responseTransformerInput)).to.equal(responseTransformeroutput);',
-  //              '    done();',
-  //              '  });',
-  //              '});'].join('\n'));
-
-  // console.log('// END RECORD TEST'); // eslint-disable-line
 }
