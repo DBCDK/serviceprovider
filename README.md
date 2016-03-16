@@ -67,9 +67,8 @@ This defines which topic in Kafka the log messages should be associated with
 (inherited from [dbc-node-logger](https://www.npmjs.com/package/dbc-node-logger))  
 String that defines the Zookeeper connectionstring. Should be defined as `host:port`. see [winston-kafka-transport](https://www.npmjs.com/package/winston-kafka-transport) and [dbc-node-logger](https://www.npmjs.com/package/dbc-node-logger) 
 
-- __NEW_RELIC_APP_NAME__  
-This variable is used to configure the name with which the application should appear in New Relic but also elsewhere.
-Currently this value is also used to identify the application in logs and appended to secrets used in Redis.  
+- __APP_NAME__
+This variable is used to configure the name with which the application should appear in logs, and is also appended to secrets used in Redis.  
   
   The default value is `app_name`
 
