@@ -1,6 +1,6 @@
 'use strict';
 const createTest = require('./createTest.js');
-
+const utils = require('./utils.js');
 /**
  * Generic transformer function designed to build a specific transformer.
  * The Returned transformer is a function that takes two arguments:
@@ -22,11 +22,6 @@ const createTest = require('./createTest.js');
  * @returns
  */
 
-function die(string) {
-  console.log('ERROR: ' + string); // eslint-disable-line
-  throw (string);
-}
-
 export default function genericTransformer(requestTransformer, responseTransformer, clientFunction) {
 
   return function(request, context) {
@@ -40,7 +35,7 @@ export default function genericTransformer(requestTransformer, responseTransform
       if (context.createTest === true) {
 
         if (context.createTestPath === 'undefined') {
-          die('Need testPath in context when creating test (context.createTest is true)');
+          utils.die('Need testPath in context when creating test (context.createTest is true)');
         }
         createTest(clientFunction, requestTransformer, responseTransformer,
                    request, transformedRequest, result, transformedResponse,
