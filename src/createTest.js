@@ -1,53 +1,28 @@
 'use strict';
 const fs = require('fs');
 const fpath = require('path');
+const utils = require('./utils.js');
 
 
-function die(string) {
-  console.log('ERROR: ' + string); // eslint-disable-line
-  throw (string);
-}
-
-
-function writeToFile(path, content) {
+function writeTestToFile(path, content) {
   fs.writeFile(path, content, (err) => {
     if (err) {
-      die(err);
+      utils.die(err);
     }
     console.log('Test written to ' + path); // eslint-disable-line
   });
 }
 
-
-function isDir(path) {
-  try {
-    let stats = fs.lstatSync(path);
-    if (stats.isDirectory()) {
-      return true;
-    }
-  }
-    catch (e) {} // eslint-disable-line
-  return false;
-}
-
-
-function functionName(fun) {
-  let ret = fun.toString();
-  ret = ret.substr('function '.length);
-  ret = ret.substr(0, ret.indexOf('('));
-  return ret;
-}
-
 export default function createTest(clientFunction, requestTransformer, responseTransformer,
                                    request, transformedRequest, response, transformedResponse, path, description) {
 
-  if (isDir(fpath.dirname(path)) === false) {
-    die('Test directory ' + fpath.dirname(path) + ' dosn\'t exist');
+  if (utils.isDir(fpath.dirname(path)) === false) {
+    utils.die('Test directory ' + fpath.dirname(path) + ' dosn\'t exist');
   }
 
-  var cf_name = functionName(clientFunction);
-  var reqt_name = functionName(requestTransformer);
-  var rept_name = functionName(responseTransformer);
+  var cf_name = utils.functionName(clientFunction);
+  var reqt_name = utils.functionName(requestTransformer);
+  var rept_name = utils.functionName(responseTransformer);
 
   if (description === 'undefined') {
     description = 'Test Transformers (' + reqt_name + ' and ' + rept_name + ') used with client "' + cf_name + '"';
@@ -82,5 +57,5 @@ export default function createTest(clientFunction, requestTransformer, responseT
                  '  });',
                  '});'].join('\n');
 
-  writeToFile(path, content);
+  writeTestToFile(path, content);
 }
