@@ -84,27 +84,45 @@ Below is a brainstorm for categories of api-endpoints, including existing usage 
 List of transforms: getOpenSearchBriefDisplayList getOpenSearchWorkBriefDisplay getOpenSearchFacets getOpenSearchResultList getOpenSearchFacetTerms getOpenSearchWork getCoverImage getPersonalRecommendations getRecommendations commentOnGroupPost createGroup createGroupPost createProfile deleteGroupPost getGroup getGroupPost getProfile joinGroup leaveGroup saveLike loginProfile logoutProfile queryGroups resetLikes updateGroup updateGroupPost updateProfile verifyEmail getPopSuggestions cancelOrder getUserStatus renewLoan updateOrder getFilterGuides getOrderPolicy placeOrder holdingStatus getMultiOpenAgency getOpenAgency getPickupAgencyList searchOpenAgency getEventById getEventList getNewsById getNewsList deleteLikesFromMobilSoegProfile findMobilSoegProfile isMobilSoegUserLoggedIn savePickupAgencyToMobilSoegProfile saveLikeToMobilSoegProfile getAllAffiliates getEntitySuggestions checkBorrower checkBorrowerAndSaveToProfile
 
 
-Ideas for api-endpoints:
-
-- `/search`
-    - possibility to search 
-- `/suggest`
-    - library-suggestions, different kinds of search query suggestions,
-- `/order` - create/update/delete an order
-- `/work` - information the creative work
-- `/availability` - holdings
-    - limit holding check to certain libraries
-- `/recommend`
-    - possibility to limit results to materials available at the current library.
-- `/facets`
-- `/user`
-    - user status, including arrived loans, orders, etc.
-    - set user status (ie. supply default library)
-- `/renew`
-- `/news`
-- `/events`
-- `/libraries`
-
+# Concrete API design draft
+    
+- API-endpoints
+    - `/search` query
+        - opensearch
+            - collectionType: manifest | work-1 (if "collection" in fields)
+        - possibility to search 
+        - default-fields: those from "briefDisplay" format + collection
+        - optional: limit search to books available on given library
+    - `/work` pid + fields -> metadata
+        - information the creative work
+        - default-fields: all
+    - `/suggest`
+        - library-suggestions, different kinds of search query suggestions,
+    - `/order` - create/update/delete an order
+        - NB: dummy service for testing
+    - `/availability` - holdings
+        - limit holding check to certain libraries
+    - `/recommend`
+        - possibility to limit results to materials available at the current library.
+    - `/facets`
+    - `/user`
+        - user status, including arrived loans, orders, etc.
+        - set user status (ie. supply default library)
+    - `/renew`
+    - `/news`
+    - `/events`
+    - `/libraries`
+    - `/batch` several queries in one http-request, for efficient-non-socket queries
+- data
+    - "work": getObject + moreInfo
+        - used both for search results, and getting individual works by pid
+        - formats/services
+            - "collection" - opensearch-værkmatch
+            - DKABM-fields (fedora)
+            - briefDisplay-fields (solr)
+            - moreInfo cover-url, and also actual image (CORS or base64 encoded cover for offline use)
+        - default-fields: those from DKABM + briefDisplay
+    
 # Random thoughts/ideas, perhaps for later.
 
 - swagger autogenerate server-code..
