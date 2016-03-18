@@ -43,10 +43,9 @@ api:
       limit:
         description: Maximum number of suggestions returned
         type: number
-      types:
-        description: The desired type of suggestions, possible values are `library`, `title`, `keyword`, `creator`, `all`
-        type: array
-        items: {type: "string"}
+      type:
+        description: The desired type of suggestions, possible values are `library`, `title`, `subject`, `creator`
+        type: string
   work:
     description: Retrieve meta information about a creative work
     properties:
