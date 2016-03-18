@@ -2,6 +2,7 @@
 
 import request from 'request';
 import {curry, extend} from 'lodash';
+import {log} from '../../utils';
 
 /**
  * Retrieves data from the webservice based on the parameters given
@@ -11,18 +12,18 @@ import {curry, extend} from 'lodash';
  * @return {Promise}
  */
 function sendRequest(defaults, method, query) {
-  const {url, logger, lt} = defaults;
+  const {url, lt} = defaults;
   return new Promise((resolve, reject) => {
     const uri = `${url}/${method}`;
     const qs = extend({lt}, query);
-    logger.log('entity-suggest client request with params', qs);
+    log.info('entity-suggest client request', {params: qs});
     request.get({uri, qs}, (err, response, body) => {
       if (err) {
-        logger.error('suggest client responded with an error', {err});
+        log.error('suggest client responded with an error', {err: err});
         reject(err);
       }
       else if (response.statusCode !== 200) {
-        logger.error('uri responds with fail statusCode', {path: uri, statusCode: response.statusCode});
+        log.error('uri responds with fail statusCode', {path: uri, statusCode: response.statusCode});
         reject(response);
       }
       else {
@@ -35,7 +36,7 @@ function sendRequest(defaults, method, query) {
         };
         const responseData = extend(data, {params});
         resolve(responseData);
-        logger.info('suggest client responded with data', {path: uri, params: qs, data: data});
+        log.info('suggest client responded with data', {path: uri, params: qs, data: data});
       }
     });
   });
@@ -59,8 +60,7 @@ export default function EntitySuggestClient(config) {
 
   const defaults = {
     lt: config.libraryType || 'folkebibliotek',
-    url: config.endpoint,
-    logger: config.logger || console
+    url: config.endpoint
   };
 
   return {

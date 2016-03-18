@@ -65,7 +65,7 @@ module.exports.run = function (worker) {
   app.set('port', process.env.PORT || 8080); // eslint-disable-line no-process-env
 
   // Configure app variables
-  let serviceProvider = ServiceProviderSetup(config, logger);
+  let serviceProvider = ServiceProviderSetup(config);
   app.set('serviceProvider', serviceProvider);
   app.set('logger', logger);
 

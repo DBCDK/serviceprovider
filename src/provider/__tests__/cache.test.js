@@ -3,13 +3,7 @@ import ClientCache from '../lib/ClientCache.js';
 import {expect} from 'chai';
 
 describe('CacheManager wrap method', () => {
-  const loggerMock = {
-    log: () => {},
-    error: () => {},
-    info: () => {}
-  };
-
-  const clientCacheWrapper = ClientCache({store: 'memory', ttl: 100}, loggerMock);
+  const clientCacheWrapper = ClientCache({store: 'memory', ttl: 100});
   let returnText;
   const methods = {
     test() {

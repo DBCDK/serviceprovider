@@ -7,6 +7,7 @@
 
 import {mapValues, isArray} from 'lodash';
 import cacheManager from 'cache-manager';
+import {log} from '../../utils';
 
 /**
  * Converts a promise to a callback. Is needed to use cachemanager.wrap that expects a callback
@@ -41,7 +42,7 @@ function promiseAsCallback(promise, callback) {
  * @returns {{wrap: wrap, store: *}}
  * @constructor
  */
-export default function ClientCache(config, logger = console) {
+export default function ClientCache(config) {
   const manager = cacheManager.caching(config);
 
   /**
@@ -62,7 +63,7 @@ export default function ClientCache(config, logger = console) {
         promiseAsCallback(fn(params), cb);
       }, {ttl}, (err, result) => {
         if (err) {
-          logger.error('Promise was rejected in cachePromiseCallback', {error: err, params: params});
+          log.error('Promise was rejected in cachePromiseCallback', {error: err, params: params});
           reject(err);
         }
         else {
