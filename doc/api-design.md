@@ -80,7 +80,7 @@ The bibliographic object is represented as a JSON-object with fields from:
 - DKABM - defined on biblstandard.dk. Probably encoded in object with keys such as `acIdentifier`, `dcLanguage` or `dcLanguageISO639-2`, or `dcTitleFull`, (assuming there are no namespace-collisions of types, otherwise we need to rethink mapping into object).
 - Relations - http://danbib.dk/index.php?doc=broend3_relationer - probably encoded in object with keys such as `relIsPartOfManifestation`, `relDiscusses`, ... 
 - `collection` list of pids in same "værk" within opensearch search
-- moreInfo - covers as url and dataurl, - as `coverUrlXXX` or `coverDataUrlXXX` where `XXX` is one of the sizes of the cover image.
+- moreInfo - covers as url and dataurl, - as `coverUrlXXX` or `coverDataUrlXXX` where `XXX` is one of `42`, `117`, `207`, `500`, `Thumbnail` or `Full`, ie. `coverUrl42`.
 
 Each key present in the json-object, should contain an array of values. Example: if the bibliographic xml-object contains:
 
