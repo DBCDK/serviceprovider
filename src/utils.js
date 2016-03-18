@@ -66,7 +66,6 @@ function getCurrentLogLevel() {
 
 function getNumericalLogLevel(logLevel) {
   var logLevels = {
-    // do NOT use 0 here. :-)
     ERROR: 1,
     WARN: 2,
     WARNING: 2,
