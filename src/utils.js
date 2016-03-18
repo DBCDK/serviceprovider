@@ -106,6 +106,7 @@ function doLog(level, msg, args) {
 }
 
 export const log = {
+  log: doLog,
   info: (msg, args) => doLog('info', msg, args),
   warn: (msg, args) => doLog('warn', msg, args),
   error: (msg, args) => doLog('error', msg, args),
