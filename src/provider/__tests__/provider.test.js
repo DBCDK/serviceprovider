@@ -6,28 +6,21 @@
 import Provider from '../Provider.js';
 import {expect, assert} from 'chai';
 
-const loggerMock = {
-  log: () => {
-  },
-  error: () => {
-  }
-};
-
 describe('Testing methods on the Provider', () => {
 
   it('assert methods are accessible', () => {
     assert.isNotNull(Provider);
     assert.isFunction(Provider);
-    assert.isNotNull(Provider({}, loggerMock).registerTransform);
-    assert.isFunction(Provider({}, loggerMock).registerTransform);
+    assert.isNotNull(Provider({}).registerTransform);
+    assert.isFunction(Provider({}).registerTransform);
   });
 
   it('Test the constructor method', () => {
-    expect(() => Provider({}, loggerMock)).to.not.throw(Error);
+    expect(() => Provider({})).to.not.throw(Error);
   });
 
   it('Test the registerTransform method', () => {
-    let provider = Provider({}, loggerMock);
+    let provider = Provider({});
     let test = {
       event() {
         return 'testEvent';
@@ -41,7 +34,6 @@ describe('Testing methods on the Provider', () => {
       'callServiceClient',
       'clients',
       'event',
-      'logger',
       'requestTransform',
       'responseTransform',
       'someMethod',
@@ -55,7 +47,7 @@ describe('Testing methods on the Provider', () => {
         return 'testClientMethod';
       }
     };
-    const provider = Provider(loggerMock);
+    const provider = Provider();
     expect(() => provider.registerServiceClient('test', client)).to.not.throw(Error);
     expect(() => provider.registerServiceClient('test', client)).to.throw(Error);
 
@@ -64,7 +56,7 @@ describe('Testing methods on the Provider', () => {
   });
 
   describe('Test the trigger function', () => {
-    const provider = Provider(loggerMock);
+    const provider = Provider();
     // No event has been reqistered
     it('Throws an error on unsupported events', () => {
       expect(() => provider.trigger('testEvent', {test: 'testEvent is triggered'})).to.throw(Error);
@@ -113,7 +105,7 @@ describe('Testing methods on the Provider', () => {
         return response;
       }
     };
-    const provider = Provider({services: {testClient: {}}}, loggerMock);
+    const provider = Provider({services: {testClient: {}}});
     provider.registerServiceClient('testClient', testClient);
     provider.registerTransform(testTransform);
 

@@ -12,11 +12,10 @@ import recommendTransformer from './neoRecommendTransform.js';
  * Initialization of the provider and the underlying services.
  *
  * @param {Object} config Object containing the necessary parameters.
- * @param {Object} logger logger object with methods for logging.
  *
  * @api public
  */
-export default function Provider(logger) {
+export default function Provider() {
 
   /**
    * Object with all clients registered on the provider
@@ -46,7 +45,7 @@ export default function Provider(logger) {
     if (transforms.has(name)) {
       throw new Error(`Event '${name}' already registered`);
     }
-    const transform = Transform(transformObject, clients, logger);
+    const transform = Transform(transformObject, clients);
     transforms.set(name, transform);
 
     return transform;

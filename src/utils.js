@@ -66,7 +66,7 @@ function getCurrentLogLevel() {
 
 function getNumericalLogLevel(logLevel) {
   var logLevels = {
-    // do NOT use 0 here. :-)
+    OFF: 0,
     ERROR: 1,
     WARN: 2,
     WARNING: 2,
@@ -106,6 +106,7 @@ function doLog(level, msg, args) {
 }
 
 export const log = {
+  log: doLog,
   info: (msg, args) => doLog('info', msg, args),
   warn: (msg, args) => doLog('warn', msg, args),
   error: (msg, args) => doLog('error', msg, args),

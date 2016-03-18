@@ -7,6 +7,7 @@
 
 import {isArray} from 'lodash';
 import {now} from './Utils.js';
+import {log} from '../../utils';
 
 /**
  * Validate the transform object.
@@ -35,13 +36,11 @@ function validateTransform(transform) {
  *
  * @param transform
  * @param clients
- * @param logger
  * @returns {trigger}
  */
-export default function Transform(transform, clients, logger = console) {
+export default function Transform(transform, clients) {
   validateTransform(transform);
   transform.clients = clients;
-  transform.logger = logger;
 
   /**
    *
@@ -74,7 +73,7 @@ export default function Transform(transform, clients, logger = console) {
         .then((response) => {
           const transformedResponse = transform.responseTransform(response, params, context);
           const requestStop = now();
-          logger.log('info', 'Transform has been triggered', {
+          log.info('Transform has been triggered', {
             event: event,
             timing: requestStop - requestStart,
             request: params,

@@ -53,12 +53,11 @@ function registerServiceClient(provider, config, clientCache, clientName, client
  * Method for initializing all service clients and transforms
  *
  * @param config
- * @param logger
  * @param sockets
  * @returns {Provider}
  */
-export default function initProvider(config, logger) {
-  const provider = Provider(logger);
+export default function initProvider(config) {
+  const provider = Provider();
 
   const RegisterClientOnProvider = registerServiceClient.bind(null, provider, config.provider.services, ClientCache(config.cache));
 
