@@ -42,6 +42,8 @@ The `config.json.sample` is automatically copied to `config.json` on npm install
 
 By default it will run on port 8080 on localhost.
 
+Optionally run `mdecrypt config.json.nc`, to decrypt the config for within DBCs network.
+
 # Documentation in old readme, ie. needs to be looked through, and merged into above
 
 ## Environment Varibles
