@@ -1,6 +1,7 @@
 'use strict';
 
 import * as BaseSoapClient from 'dbc-node-basesoap-client';
+import {log} from '../../utils';
 
 /**
  * Constructs the object of parameters for search result request.
@@ -94,9 +95,7 @@ export default function OpenSearch (config) {
     profile: config.profile
   };
 
-  const logger = config.logger || null;
-
-  const opensearchClient = BaseSoapClient.client(config.wsdl, defaults, logger);
+  const opensearchClient = BaseSoapClient.client(config.wsdl, defaults, log);
 
   return {
     getFacetResult: getFacetResult.bind(null, opensearchClient),

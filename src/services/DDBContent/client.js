@@ -2,6 +2,7 @@
 
 import request from 'request';
 import {extend} from 'lodash';
+import {log} from '../../utils';
 
 /**
  * Retrieves data from the webservice based on the parameters given
@@ -10,22 +11,22 @@ import {extend} from 'lodash';
  * @param {string} service
  * @return {Promise}
  */
-function sendRequest(endpoint, method, qs, logger = console) {
+function sendRequest(endpoint, method, qs) {
   return new Promise((resolve, reject) => {
     const uri = `${endpoint}/${method}`;
-    logger.log('info', 'ddbContent client request with params', qs);
+    log.info('ddbContent client request', {params: qs});
     request.get({uri, qs}, (err, response, body) => {
       if (err) {
-        logger.error('ddbContent client responded with an error', {err});
+        log.error('ddbContent client responded with an error', {err: err});
         reject({error: err});
       }
       else if (response.statusCode !== 200) {
-        logger.error('ddbContent client responds with fail statusCode', {path: uri, statusCode: response.statusCode});
+        log.error('ddbContent client responds with fail statusCode', {path: uri, statusCode: response.statusCode});
         reject({error: response});
       }
       else {
         const data = JSON.parse(body);
-        logger.log('info', 'ddbContent client responded with data', {path: uri, params: qs, data: data});
+        log.info('ddbContent client responded with data', {path: uri, params: qs, data: data});
         resolve(data);
       }
     });
@@ -45,7 +46,7 @@ function getContentById(config, query) {
   }
 
   const credentials = {key: config.key, agency: config.agency};
-  return sendRequest(config.endpoint, 'content/fetch', extend(query, credentials), config.logger);
+  return sendRequest(config.endpoint, 'content/fetch', extend(query, credentials));
 }
 
 /**
@@ -62,7 +63,7 @@ function getContentList(config, query) {
     agency: config.agency
   };
 
-  return sendRequest(config.endpoint, 'content/fetch', extend(credentials, defaults, query), config.logger);
+  return sendRequest(config.endpoint, 'content/fetch', extend(credentials, defaults, query));
 }
 
 /**
@@ -92,8 +93,6 @@ function isConfigValid(config, requiredKeys) {
  */
 export default function DdbContentClient(config) {
   isConfigValid(config, ['endpoint', 'agency', 'key']);
-
-  config.logger = config.logger || console;
 
   return {
     getContentById: getContentById.bind(null, config),
