@@ -66,6 +66,7 @@ function getCurrentLogLevel() {
 
 function getNumericalLogLevel(logLevel) {
   var logLevels = {
+    OFF: 0,
     ERROR: 1,
     WARN: 2,
     WARNING: 2,
