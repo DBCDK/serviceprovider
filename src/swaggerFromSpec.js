@@ -35,34 +35,59 @@ function specToPaths(specs) {
         required: spec.required,
         properties: spec.properties
       }};
-    let obj = {
-      description: spec.description || '',
-      parameters: [request],
-      responses: {
-        default: {
-          description: 'Response envelope',
-          schema: {
-            type: 'object',
-            required: ['statusCode'],
-            properties: {
-              statusCode: {type: 'integer'},
-              data: spec.response || {
+
+    // Document response object
+    let responses = {
+      default: {
+        description: 'Response envelope',
+        schema: {
+          type: 'object',
+          required: ['statusCode'],
+          properties: {
+            statusCode: {type: 'integer'},
+            data: spec.response || {
+              type: 'object',
+              properties: {}
+            },
+            errors: {
+              type: 'array',
+              items: {
                 type: 'object',
                 properties: {}
-              },
-              errors: {
-                type: 'array',
-                items: {
-                  type: 'object',
-                  properties: {}
-                }
               }
             }
           }
         }
       }
     };
-    paths['/' + method] = {post: obj};
+
+    // Create parameter list for GET-requests
+    let params = [];
+    if (request.schema && request.schema.properties) {
+      for (let param in request.schema.properties) { // eslint-disable-line guard-for-in
+        let schema = request.schema.properties[param];
+        params.push({
+          name: param,
+          description: schema.description,
+          in: 'query',
+          required: (request.schema.required || []).includes(param),
+          schema: schema
+        });
+      }
+    }
+
+    paths['/' + method] = {
+      post: {
+        description: spec.description || '',
+        parameters: [request],
+        responses: responses
+      },
+      get: {
+        description: spec.description || '',
+        parameters: params,
+        responses: responses
+      }
+    };
   }
   return paths;
 }
