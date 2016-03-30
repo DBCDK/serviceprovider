@@ -157,8 +157,13 @@ module.exports.run = function (worker) {
       }
       prom = Array.isArray(prom) ? prom : [prom];
     }
+
+    if (typeof query.fields === 'string') {
+      query.fields = query.fields.split(',');
+    }
+
     prom[0].then((response) => {
-      if (!Object.isObject(response) ||
+      if ((typeof response !== 'object') ||
           !(response.statusCode === 200 && response.data) ||
           !(response.statusCode && response.errors)) {
         log.warn('response is not wrapped in an envelope', {response: response});
@@ -168,7 +173,6 @@ module.exports.run = function (worker) {
           errors: [{warning: 'missing envelope'}]
         };
       }
-
       function fieldsFilter(obj) {
         if (!Array.isArray(query.fields) || (typeof obj !== 'object')) {
           return obj;
@@ -178,6 +182,7 @@ module.exports.run = function (worker) {
           return obj.map(fieldsFilter);
         }
 
+
         let result = {};
         query.fields.forEach(key => {
           if (typeof obj[key] !== 'undefined') {
@@ -186,13 +191,15 @@ module.exports.run = function (worker) {
         });
         return result;
       }
-      if (typeof response.dat === 'object') {
+      if (typeof response.data === 'object') {
         response.data = fieldsFilter(response.data);
       }
 
       callback(response);
     }, (error) => {
       callback(error);
+    }).catch((err) => {
+      log.error(String(err), {stacktrace: err.stack});
     });
   }
 
@@ -217,7 +224,7 @@ module.exports.run = function (worker) {
           query[key] = JSON.parse(req.query[key]);
         }
         catch (_) {
-          query[key] = req.query.key;
+          query[key] = req.query[key];
         }
       }
       callApi(event, query, dummyContext, response => {
