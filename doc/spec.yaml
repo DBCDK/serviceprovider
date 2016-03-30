@@ -1,4 +1,87 @@
 api:
+  availability:
+    description: Get availability of material at the library
+    required:
+      - pid
+    properties:
+      pid:
+        description: pid of the work to order
+        type: string
+      fields:
+        descriptions: the libraries to check availability at
+        type: array
+        items: {type: "string"}
+  events:
+    description: List of events at the libraries
+    properties:
+      ids:
+        description: to fetch events specified by ids
+        type: array
+        items: {type: "string"}
+      limit:
+        description: number of events to get
+        type: number
+      offset:
+        description: offset to first event to get events chronological
+        type: number
+  facets:
+    description: Facets of a search result
+    required:
+      - q
+    properties:
+      q:
+        description: CQL-query to get facets for.
+        type: string
+      fields:
+        description: limits the facets fetched
+        type: array
+        items: {type: "string"}
+  libraries:
+    description: list/information about libraries
+    properties:
+      ids:
+        description: ids ("AgencyIds") of libraries to fetch, - return all libraries if omitted.
+        type: array
+        items: {type: "string"}
+    response:
+      type: array
+      items:
+        $ref: "#/definitions/Library"
+  news:
+    description: news-posts about the library
+    properties:
+      ids:
+        description: to fetch news specified by ids
+        type: array
+        items: {type: "string"}
+      limit:
+        description: number of news to get
+        type: number
+      offset:
+        description: offset to first news to get events chronological
+        type: number
+  order:
+    description: Order a library material, or modify/remove an existing order
+    required:
+      - pid
+    $ref: "#/definitions/Order"
+    response:
+      $ref: "#/definitions/Order"
+  recommend:
+    description: Get recommendations based on a list of likes
+    required:
+      - ids
+    properties:
+      ids:
+        description: list of materials used as basis for the recommendation
+        type: array
+        items: {type: "string"}
+  renew:
+    description: Renew a material
+    properties:
+      id:
+        description: id of the material to renew
+        type: string
   search:
     description: Search for a library material
     required:
@@ -46,30 +129,16 @@ api:
       type:
         description: The desired type of suggestions, possible values are `library`, `title`, `subject`, `creator`
         type: string
+  user:
+    properties: {}
   work:
     description: Retrieve meta information about a creative work
     properties:
+      id:
+        description: the id of the material
+        type: string
       fields:
         description: Which fields to return. Limiting the fields can also yield a performance improvement
-  availability: {}
-  recommend: {}
-  facets: {}
-  user: {}
-  order:
-    description: Order a library material, or modify/remove an existing order
-    required: 
-      - pid
-    $ref: "#/definitions/Order"
-    response:
-      $ref: "#/definitions/Order"
-  renew: {}
-  news: {}
-  events: {}
-  libraries: 
-    response:
-      type: array
-      items:
-        $ref: "#/definitions/Library"
 definitions:
   Order:
     type: object
@@ -80,8 +149,8 @@ definitions:
       library:
         description: library where the material should be delivered to
         type: string
-      expires:
-        description: when does the order expires if not fulfulled.
+      delete:
+        description: when does the order expires if not fulfulled. Delete the order if set to true.
         type: string
         format: date-time
   Work:
@@ -114,7 +183,7 @@ definitions:
           afkroge
       isbns:
         type: array
-        items: 
+        items:
           type: string
       extent:
         type: string
@@ -256,4 +325,4 @@ definitions:
         items:
           type: object
           properties: {}
-    
+   
