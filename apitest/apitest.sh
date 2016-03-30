@@ -9,6 +9,7 @@ do
   printf "\n\n$line\n" >> test.results.http
   curl -H "Content-Type: application/json" \
        -X POST \
+       --max-time 10 \
        -d "`echo $line | sed -e 's/[^ ]*//'`" \
        "http://localhost:8080/v$API_VERSION/`echo $line | sed -e s/' .*//'`" \
        >> test.results.http
