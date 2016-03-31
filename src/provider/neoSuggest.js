@@ -33,14 +33,16 @@ function changeKey(obj, fromKey, toKey) {
   return obj;
 }
 
+
 function subjectSuggestRequest(request, context) { // eslint-disable-line no-unused-vars
-  changeKey(request, 'q', 'query');
-  changeKey(request, 'limit', 'n');
-  return request;
+  let clientRequest = {query: request.q, n: request.limit};
+  return clientRequest;
 }
 
 function subjectSuggestResponse(response, context) { // eslint-disable-line no-unused-vars
-  return response;
+  return response.response.suggestions.map((obj) => {
+    return {str: obj.suggestion};
+  });
 }
 
 function subjectSuggestFunction(context) {
@@ -60,13 +62,14 @@ function subjectSuggestTransformer() {
 
 
 function creatorSuggestRequest(request, context) { // eslint-disable-line no-unused-vars
-  changeKey(request, 'q', 'query');
-  changeKey(request, 'limit', 'n');
-  return request;
+  let clientRequest = {query: request.q, n: request.limit};
+  return clientRequest;
 }
 
 function creatorSuggestResponse(response, context) { // eslint-disable-line no-unused-vars
-  return response;
+  return response.response.suggestions.map((obj) => {
+    return {str: obj.suggestion};
+  });
 }
 
 function creatorSuggestFunction(context) {
@@ -86,9 +89,8 @@ function creatorSuggestTransformer() {
 
 
 function librarySuggestRequest(request, context) { // eslint-disable-line no-unused-vars
-  changeKey(request, 'q', 'query');
-  changeKey(request, 'limit', 'n');
-  return request;
+  let clientRequest = {query: request.q, n: request.limit};
+  return clientRequest;
 }
 
 function librarySuggestResponse(response, context) { // eslint-disable-line no-unused-vars
@@ -112,13 +114,14 @@ function librarySuggestTransformer() {
 
 
 function popSuggestRequest(request, context) { // eslint-disable-line no-unused-vars
-  changeKey(request, 'q', 'query');
-  changeKey(request, 'limit', 'rows');
-  return request;
+  let clientRequest = {query: request.q, rows: request.limit, fields: request.fields};
+  return clientRequest;
 }
 
 function popSuggestResponse(response, context) { // eslint-disable-line no-unused-vars
-  return response;
+  return response.response.docs.map((obj) => {
+    return {str: obj['display.title'][0], id: obj.fedoraPid};
+  });
 }
 
 function popSuggestFunction(context) {
@@ -138,14 +141,15 @@ function popSuggestTransformer() {
 
 
 function suggestRequest(request, context) { // eslint-disable-line no-unused-vars
-  changeKey(request, 'q', 'query');
-  let requestEnvelope = {type: request.type, request: request};
-  delete requestEnvelope.request.type;
+  
+  let requestEnvelope = {type: request.type,
+                         request: {q: request.q,
+                                   limit: request.limit}};
 
   if (requestEnvelope.type === 'title') {
-    requestEnvelope.request.fields = 'display.title';
-    requestEnvelope.request.query = 'display.title:{!complexphrase inOrder=true df=display.title}' +
-                                    requestEnvelope.request.query;
+    requestEnvelope.request.fields = 'display.title,fedoraPid';
+    requestEnvelope.request.q = 'display.title:{!complexphrase inOrder=true df=display.title}' +
+                                requestEnvelope.request.q;
   }
   return requestEnvelope;
 }
