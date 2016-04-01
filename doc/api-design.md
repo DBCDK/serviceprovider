@@ -56,15 +56,15 @@ TODO clarify/document details.
 - `/search` opensearch - collectionType: manifest | work-1 (if "collection" in fields) - default-fields: those from "briefDisplay" format + collection - maybe: limit search to books available on given library
 - `/work` pid + fields -> metadata - information the creative work - default-fields: dkabm, brief, relations
 - `/suggest` - library-suggestions, different kinds of search query suggestions,
-- `/order` - create/update/delete an order 
-- `/availability` - holdings - limit holding check to certain libraries
+- `/order` - create/update/delete an order , NB: delete, expires
+- `/availability` - holdings - limit holding check to certain libraries. NB: openholding+openpolicy. (pid + agency-list -> ([tilgængelig + dato + orderable]))
 - `/recommend` - maybe possibility to limit results to materials available at the current library.
 - `/facets`
 - `/user` - user status, including arrived loans, orders, etc.
 - `/renew`
 - `/news`
 - `/events`
-- `/libraries`
+- `/libraries` evt. filtrering af væsener
 - `/batch` several queries in one http-request, for efficient-non-socket queries
 
 - NB: we probably dummy `/order` service for testing
@@ -121,8 +121,8 @@ In the example above, the `@id` would be something like `https://serviceprovider
     - `Smaug` - openauth login - password-credentials and client-credential
     - `/availability`
     - `/libraries` - list of libraries - geocoordinates - opening times - address/tel - html-info
-    - `/order`
-    - `/renew`
+    - `/order` - +orderId (krav i første-udgave)
+    - `/renew` (agencyid, loan-id, userid) open user status
     - `/search - work-1 with collection
     - `/user` - lånerstatus (hjemkomne, bestillinger, udestående) - unique id for agency/user combination
     - `/work` - DKABM, Relations, BriefDisplay, `coverUrlXXX`
