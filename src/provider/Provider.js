@@ -7,6 +7,7 @@
 
 import Transform from './lib/Transforms';
 import recommendTransformer from './neoRecommendTransform.js';
+import {suggestTransformer} from './neoSuggest.js';
 
 /**
  * Initialization of the provider and the underlying services.
@@ -34,7 +35,8 @@ export default function Provider(logger) {
    * Structure containing all the new transformers.
    */
   const transformerMap = {
-    getRecommendations: recommendTransformer()
+    getRecommendations: recommendTransformer(),
+    getSuggestions: suggestTransformer()
   };
 
   /**
@@ -77,7 +79,11 @@ export default function Provider(logger) {
   }
 
   function availableTransforms() {
-    return transforms.keys();
+    return Array(transforms.keys()).concat(['getSuggestions']);
+  }
+
+  function hasTransformer(name) {
+    return transformerMap.hasOwnProperty(name);
   }
 
   return {
@@ -85,6 +91,7 @@ export default function Provider(logger) {
     registerServiceClient,
     availableTransforms,
     execute,
-    trigger
+    trigger,
+    hasTransformer
   };
 }
