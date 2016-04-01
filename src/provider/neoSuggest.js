@@ -54,7 +54,7 @@ function subjectSuggestFunction(context) {
   };
 }
 
-function subjectSuggestTransformer() {
+export function subjectSuggestTransformer() {
   return genericTransformer(subjectSuggestRequest,
                             subjectSuggestResponse,
                             subjectSuggestFunction);
@@ -81,7 +81,7 @@ function creatorSuggestFunction(context) {
   };
 }
 
-function creatorSuggestTransformer() {
+export function creatorSuggestTransformer() {
   return genericTransformer(creatorSuggestRequest,
                             creatorSuggestResponse,
                             creatorSuggestFunction);
@@ -106,7 +106,7 @@ function librarySuggestFunction(context) {
   };
 }
 
-function librarySuggestTransformer() {
+export function librarySuggestTransformer() {
   return genericTransformer(librarySuggestRequest,
                             librarySuggestResponse,
                             librarySuggestFunction);
@@ -133,7 +133,7 @@ function popSuggestFunction(context) {
   };
 }
 
-function popSuggestTransformer() {
+export function popSuggestTransformer() {
   return genericTransformer(popSuggestRequest,
                             popSuggestResponse,
                             popSuggestFunction);
@@ -141,7 +141,7 @@ function popSuggestTransformer() {
 
 
 function suggestRequest(request, context) { // eslint-disable-line no-unused-vars
-  
+
   let requestEnvelope = {type: request.type,
                          request: {q: request.q,
                                    limit: request.limit}};
@@ -175,14 +175,8 @@ function suggestFunction(context) {
 }
 
 
-function suggestTransformer() {
+export function suggestTransformer() {
   return genericTransformer(suggestRequest,
                             suggestResponse,
                             suggestFunction);
 }
-
-module.exports.subjectSuggestTransformer = subjectSuggestTransformer;
-module.exports.creatorSuggestTransformer = creatorSuggestTransformer;
-module.exports.librarySuggestTransformer = librarySuggestTransformer;
-module.exports.popSuggestTransformer = popSuggestTransformer;
-module.exports.suggestTransformer = suggestTransformer;
