@@ -13,6 +13,7 @@ Parameters are general across endpoints:
 - `limit` for paginated results, - number of results per page.
 - `pretty` determines whether the JSON should be prettyprinted when serialising.
 - `callback` is the callback name when doing a jsonp request on the HTTP-transport
+- `fields` which keys should be in the returned object.
 
 __Responses__ are returned within an envelope, usually as a JSON object with the following properties:
 
@@ -123,7 +124,7 @@ In the example above, the `@id` would be something like `https://serviceprovider
     - `/libraries` - list of libraries - geocoordinates - opening times - address/tel - html-info
     - `/order` - +orderId (krav i første-udgave)
     - `/renew` (agencyid, loan-id, userid) open user status
-    - `/search - work-1 with collection
+    - `/search` - work-1 with collection
     - `/user` - lånerstatus (hjemkomne, bestillinger, udestående) - unique id for agency/user combination
     - `/work` - DKABM, Relations, BriefDisplay, `coverUrlXXX`
 2. Must/should:
@@ -202,7 +203,6 @@ List of transforms: getOpenSearchBriefDisplayList getOpenSearchWorkBriefDisplay 
 - swagger autogenerate server-code..
 - look into graphql, and possibilities to use some of this...
 - parameters
-    - `fields` which keys should be in the returned object.
     - `envelope` specifies whether to have the envelope explicit, or implicit (with status code on HTTP). 
 - response
     - paging information
