@@ -30,7 +30,7 @@ api:
       - q
     properties:
       q:
-        description: CQL-query to get facets for.
+        description: Query to find facets for. The query is expressed in CQL, see http://zing.z3950.org/cql/.
         type: string
       fields:
         description: limits the facets fetched
@@ -83,13 +83,14 @@ api:
         description: id of the material to renew
         type: string
   search:
-    description: Search for a library material
+    description: Search for a library material.
     required:
       - q
     properties:
       q:
         example: "(ost)"
-        description: Query to search for. TODO description of query language
+        description: |
+           Query to search for. The query is expressed in CQL, see http://zing.z3950.org/cql/.
         type: string
       offset:
         example: 0
