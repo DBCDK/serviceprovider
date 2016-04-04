@@ -25,6 +25,10 @@ import entitySuggest from '../services/EntitySuggest/neoClient.js';
 import popSuggest from '../services/PopSuggest/client.js';
 import utils from '../utils.js';
 
+
+/**
+* Helper function to change key name in an object
+*/
 function changeKey(obj, fromKey, toKey) {
   if (obj.hasOwnProperty(fromKey)) {
     obj[toKey] = obj[fromKey];
@@ -93,8 +97,12 @@ function librarySuggestRequest(request, context) { // eslint-disable-line no-unu
   return clientRequest;
 }
 
+
 function librarySuggestResponse(response, context) { // eslint-disable-line no-unused-vars
-  return response;
+  return response.response.suggestions.map((obj) => {
+    obj.suggestion.str = obj.suggestion.navn + ', ' + obj.suggestion.by;
+    return obj.suggestion;
+  });
 }
 
 function librarySuggestFunction(context) {
@@ -119,9 +127,7 @@ function popSuggestRequest(request, context) { // eslint-disable-line no-unused-
 }
 
 function popSuggestResponse(response, context) { // eslint-disable-line no-unused-vars
-  return response.response.docs.map((obj) => {
-    return {str: obj['display.title'][0], id: obj.fedoraPid};
-  });
+  return response;
 }
 
 function popSuggestFunction(context) {
@@ -140,42 +146,50 @@ export function popSuggestTransformer() {
 }
 
 
-function suggestRequest(request, context) { // eslint-disable-line no-unused-vars
-
-  let requestEnvelope = {type: request.type,
-                         request: {q: request.q,
-                                   limit: request.limit}};
-
-  if (requestEnvelope.type === 'title') {
-    requestEnvelope.request.fields = 'display.title,fedoraPid';
-    requestEnvelope.request.q = 'display.title:{!complexphrase inOrder=true df=display.title}' +
-                                requestEnvelope.request.q;
-  }
-  return requestEnvelope;
-}
-
-function suggestResponse(response, context) { // eslint-disable-line no-unused-vars
-  return response;
-}
-
-
-function suggestFunction(context) {
-
-  let transformers = {subject: subjectSuggestTransformer(),
-                      creator: creatorSuggestTransformer(),
-                      library: librarySuggestTransformer(),
-                      title: popSuggestTransformer()};
-
-  return (requestEnvelope, localContext) => { // eslint-disable-line no-unused-vars
-    if (!transformers.hasOwnProperty(requestEnvelope.type)) {
-      utils.die('SuggestFunction "' + requestEnvelope.type + '" is unknown');
-    }
-    return transformers[requestEnvelope.type](requestEnvelope.request, context);
-  };
-}
-
 
 export function suggestTransformer() {
+
+  let common = {};
+
+  function suggestRequest(request, context) { // eslint-disable-line no-unused-vars
+
+    common.type = request.type;
+    let requestEnvelope = {type: request.type,
+                           request: {q: request.q,
+                                     limit: request.limit}};
+
+    if (requestEnvelope.type === 'title') {
+      requestEnvelope.request.fields = 'display.title,fedoraPid';
+      requestEnvelope.request.q = 'display.title:{!complexphrase inOrder=true}' +
+                                  requestEnvelope.request.q;
+    }
+    return requestEnvelope;
+  }
+
+  function suggestResponse(response, context) { // eslint-disable-line no-unused-vars    
+    if (common.type === 'title') {
+      response = response.response.docs.map((obj) => {
+        return {str: obj['display.title'][0], id: obj.fedoraPid};
+      });
+    }
+    return response;
+  }
+
+  function suggestFunction(context) {
+
+    let transformers = {subject: subjectSuggestTransformer(),
+                        creator: creatorSuggestTransformer(),
+                        library: librarySuggestTransformer(),
+                        title: popSuggestTransformer()};
+
+    return (requestEnvelope, localContext) => { // eslint-disable-line no-unused-vars
+      if (!transformers.hasOwnProperty(requestEnvelope.type)) {
+        utils.die('SuggestFunction "' + requestEnvelope.type + '" is unknown');
+      }
+      return transformers[requestEnvelope.type](requestEnvelope.request, context);
+    };
+  }
+
   return genericTransformer(suggestRequest,
                             suggestResponse,
                             suggestFunction);
