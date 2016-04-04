@@ -140,19 +140,19 @@ module.exports.run = function (worker) {
     // When the above mentioned is fixed, the below will make use of neoGetRecommendations!
     // if (event === 'getRecommendations') {
     if (serviceProvider.hasTransformer(event)) {
-      console.log('Neo Event called: ' + event); // eslint-disable-line no-console
+      log.info('Neo Event called: ' + event); // eslint-disable-line no-console
       // The below expects an array. We will give it what it asks for!
       prom = [serviceProvider.execute(event, query, context)];
     } else { // eslint-disable-line brace-style
-      console.log('Old-School Event called: ' + event); // eslint-disable-line no-console
+      log.info('Old-School Event called: ' + event); // eslint-disable-line no-console
       prom = serviceProvider.trigger(event, query, context);
     }
     // TODO: result from serviceProvider should just be a single promise.
     // fix this in provider
     if (Array.isArray(prom)) {
-      console.log('warning', 'result is array, instead of single promise', event); // eslint-disable-line no-console
+      log.info('warning', 'result is array, instead of single promise', event); // eslint-disable-line no-console
       if (prom.length !== 1) {
-        console.error('error', 'result length is ', prom.length); // eslint-disable-line no-console
+        log.error('error', 'result length is ', prom.length); // eslint-disable-line no-console
       }
       prom = Array.isArray(prom) ? prom : [prom];
     }
