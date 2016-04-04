@@ -158,16 +158,55 @@ module.exports.run = function (worker) {
     // TODO: result from serviceProvider should just be a single promise.
     // fix this in provider
     if (Array.isArray(prom)) {
-      console.log('warning', 'result is array, instead of single promise', event); // eslint-disable-line no-console
+      log.warn('result is array, instead of single promise', {event: event});
       if (prom.length !== 1) {
-        console.error('error', 'result length is ', prom.length); // eslint-disable-line no-console
+        log.error('result-length is not 1', {length: prom.length});
       }
       prom = Array.isArray(prom) ? prom : [prom];
     }
+
+    if (typeof query.fields === 'string') {
+      query.fields = query.fields.split(',');
+    }
+
     prom[0].then((response) => {
+      if ((typeof response !== 'object') ||
+          !(response.statusCode === 200 && response.data) ||
+          !(response.statusCode && response.errors)) {
+        log.warn('response is not wrapped in an envelope', {response: response});
+        response = {
+          statusCode: 200,
+          data: response,
+          errors: [{warning: 'missing envelope'}]
+        };
+      }
+      function fieldsFilter(obj) {
+        if (!Array.isArray(query.fields) || (typeof obj !== 'object')) {
+          return obj;
+        }
+
+        if (Array.isArray(obj)) {
+          return obj.map(fieldsFilter);
+        }
+
+
+        let result = {};
+        query.fields.forEach(key => {
+          if (typeof obj[key] !== 'undefined') {
+            result[key] = obj[key];
+          }
+        });
+        return result;
+      }
+      if (typeof response.data === 'object') {
+        response.data = fieldsFilter(response.data);
+      }
+
       callback(response);
     }, (error) => {
       callback(error);
+    }).catch((err) => {
+      log.error(String(err), {stacktrace: err.stack});
     });
   }
 
@@ -192,7 +231,7 @@ module.exports.run = function (worker) {
           query[key] = JSON.parse(req.query[key]);
         }
         catch (_) {
-          query[key] = req.query.key;
+          query[key] = req.query[key];
         }
       }
       callApi(event, query, dummyContext, response => {
