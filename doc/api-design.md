@@ -48,27 +48,69 @@ Authentication using OAuth 2.
 
 The authentification server is called Smaug, and lives in another repository: https://github.com/dbcdk/smaug/.
 
-In the first version it will support logins via "Resource Owner Password Credentials" for users, and "Client Credentials" for anonymous access.
+In the first version it will support logins via "Resource Owner Password Credentials".
 
 TODO clarify/document details.
 
-# API endpoints
+# API endpoints notes
 
-- `/search` opensearch - collectionType: manifest | work-1 (if "collection" in fields) - default-fields: those from "briefDisplay" format + collection - maybe: limit search to books available on given library
-- `/work` pid + fields -> metadata - information the creative work - default-fields: dkabm, brief, relations
-- `/suggest` - library-suggestions, different kinds of search query suggestions,
-- `/order` - create/update/delete an order , NB: delete, expires
-- `/availability` - holdings - limit holding check to certain libraries. NB: openholding+openpolicy. (pid + agency-list -> ([tilgængelig + dato + orderable]))
-- `/recommend` - maybe possibility to limit results to materials available at the current library.
-- `/facets`
-- `/user` - user status, including arrived loans, orders, etc.
-- `/renew`
-- `/news`
-- `/events`
-- `/libraries` evt. filtrering af væsener
-- `/batch` several queries in one http-request, for efficient-non-socket queries
+## `/availability` 
 
-- NB: we probably dummy `/order` service for testing
+- holdings - limit holding check to certain libraries. NB: openholding+openpolicy. (pid + agency-list -> ([tilgængelig + dato + orderable]))
+
+NB: indeholder ikke opstillings-data
+
+
+## `/ddbcms` (2.) 
+
+- news, events and library info 
+- could be implemented as just a cors-proxy for the site
+
+## `/facets` (2.)
+
+- query
+- fields - filtrer på bibliotek
+
+## `/libraries` 
+
+evt. filtrering af væsener
+
+## `/order` 
+
+- create/update/delete an order , NB: delete, expires
+- NB: we probably need dummy user for `/order` service for test/development
+
+## `/recommend` (3.)
+
+- maybe possibility to limit results to materials available at the current library.
+
+- req: filter(optional), profil(optional), pids
+- result: title, creator, weight, pids, fromPid
+
+## `/renew`
+
+## `/search` 
+
+opensearch - collectionType: manifest | work-1 (if "collection" in fields) - default-fields: those from "briefDisplay" format + collection - maybe: limit search to books available on given library
+
+## `/suggest` 
+
+- library-suggestions, different kinds of search query suggestions,
+- fields: default: string and id
+
+## `/user` 
+
+- user status, including arrived loans, orders, etc.
+
+## `/work` 
+
+pid + fields -> metadata - information the creative work - default-fields: dkabm, brief, relations
+
+## `/?` 
+
+community services etc. needed by biblo
+
+## `/batch` (later)  several queries in one http-request, for efficient-non-socket queries
 
 # Bibliographic Data Model
 
