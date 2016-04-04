@@ -146,7 +146,6 @@ export function popSuggestTransformer() {
 }
 
 
-
 export function suggestTransformer() {
 
   let common = {};
@@ -166,7 +165,7 @@ export function suggestTransformer() {
     return requestEnvelope;
   }
 
-  function suggestResponse(response, context) { // eslint-disable-line no-unused-vars    
+  function suggestResponse(response, context) { // eslint-disable-line no-unused-vars
     if (common.type === 'title') {
       response = response.response.docs.map((obj) => {
         return {str: obj['display.title'][0], id: obj.fedoraPid};
