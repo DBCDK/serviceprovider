@@ -16,6 +16,7 @@ import express from 'express';
 import path from 'path';
 import Logger from 'dbc-node-logger';
 import RedisStore from 'connect-redis';
+import request from 'request';
 import ServiceProviderSetup from './ServiceProviderSetup.js';
 
 // Middleware
@@ -35,6 +36,8 @@ module.exports.run = function (worker) {
   const ENV = app.get('env');
   const PRODUCTION = ENV === 'production';
   const APP_NAME = process.env.APP_NAME || 'app_name'; // eslint-disable-line no-process-env
+  const SMAUG_LOCATION = process.env.SMAUG; // eslint-disable-line no-process-env
+  const USE_SMAUG = typeof SMAUG_LOCATION !== 'undefined';
   const logger = new Logger({app_name: APP_NAME});
   const expressLoggers = logger.getExpressLoggers();
 
@@ -125,7 +128,6 @@ module.exports.run = function (worker) {
   // Setting sessions
   app.use(sessionMiddleware);
 
-
   // DUMMY context, - TODO: get this from the auth server through token, and preserve through sessions
   let dummyContext = {
     request: {session: {}},
@@ -137,6 +139,47 @@ module.exports.run = function (worker) {
     // request: {session: req.session},
     // libdata: res.locals.libdata
   };
+
+  const getContext = function(req, res, next) {
+    if (!USE_SMAUG) {
+      req.context = dummyContext;
+      return next();
+    }
+
+    var authHeader = req.get('authorization');
+    if (typeof authHeader === 'undefined') {
+      return next();
+    }
+
+    var authType = authHeader.split(' ', 2)[0];
+    var bearerToken = authHeader.split(' ', 2)[1];
+
+    if (authType !== 'Bearer') {
+      return next();
+    }
+
+    request.get({
+      uri: SMAUG_LOCATION + '/configuration',
+      qs: {token: bearerToken}
+    }, (err, response, body) => {
+      if (!err && response.statusCode === 200) {
+        req.authorized = true;
+        req.context = JSON.parse(body);
+      }
+      return next();
+    });
+  };
+
+  const isAuthorized = function(req, res, next) {
+    if (!USE_SMAUG || req.authorized) {
+      return next();
+    }
+
+    res.sendStatus(403);
+  };
+
+  app.use(getContext);
+  app.use(isAuthorized);
 
   // Execute transform
   function callApi(event, query, context, callback) {
@@ -235,7 +278,7 @@ module.exports.run = function (worker) {
           query[key] = req.query[key];
         }
       }
-      callApi(event, query, dummyContext, response => {
+      callApi(event, query, req.context, response => {
         app.set('json spaces', query.pretty ? 2 : null);
         res.jsonp(response);
       });
