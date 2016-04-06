@@ -212,15 +212,16 @@ module.exports.run = function (worker) {
 
   // WebSocket/SocketCluster transport
   worker.on('connection', (connection) => {
-    for (let key of serviceProvider.availableTransforms()) {
+
+    serviceProvider.availableTransforms().forEach(key => {
       connection.on(key, (data, callback) => { // eslint-disable-line no-loop-func
         callApi(key, data, dummyContext, callback);
       });
-    }
+    });
   });
 
   // HTTP Transport
-  for (let event of serviceProvider.availableTransforms()) {
+  serviceProvider.availableTransforms().forEach(event => {
     app.all(apiPath + event, (req, res) => { // eslint-disable-line no-loop-func
       // TODO: should just be req.body, when all endpoints accept object-only as parameter, until then, this hack supports legacy transforms
       let query = Array.isArray(req.body) ? req.body[0] : req.body;
@@ -239,7 +240,7 @@ module.exports.run = function (worker) {
         res.jsonp(response);
       });
     });
-  }
+  });
 
   app.all(apiPath + 'swagger.json', (req, res) => {
     return swaggerFromSpec().then((response) => {
