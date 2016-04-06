@@ -50,7 +50,7 @@ export function subjectSuggestTransformer() {
   }
 
   function subjectSuggestResponse(response, context, state) { // eslint-disable-line no-unused-vars
-    return {status: 200, data: response.response.suggestions.map((obj) => {
+    return {statusCode: 200, data: response.response.suggestions.map((obj) => {
       return {str: obj.suggestion};
     })};
   }
@@ -82,7 +82,7 @@ function creatorSuggestRequest(request, context, state) { // eslint-disable-line
 }
 
 function creatorSuggestResponse(response, context, state) { // eslint-disable-line no-unused-vars
-  return {status: 200, data: response.response.suggestions.map((obj) => {
+  return {statusCode: 200, data: response.response.suggestions.map((obj) => {
     return {str: obj.suggestion};
   })};
 }
@@ -115,7 +115,7 @@ function librarySuggestRequest(request, context, state) { // eslint-disable-line
 
 
 function librarySuggestResponse(response, context, state) { // eslint-disable-line no-unused-vars
-  return {status: 200, data: response.response.suggestions.map((obj) => {
+  return {statusCode: 200, data: response.response.suggestions.map((obj) => {
     obj.suggestion.str = obj.suggestion.navn + ', ' + obj.suggestion.by;
     return obj.suggestion;
   })};
@@ -148,7 +148,7 @@ function popSuggestRequest(request, context, state) { // eslint-disable-line no-
 }
 
 function popSuggestResponse(response, context, state) { // eslint-disable-line no-unused-vars
-  return {status: 200, data: response};
+  return {statusCode: 200, data: response};
 }
 
 function popSuggestFunction(context) {
@@ -193,7 +193,7 @@ function suggestRequest(request, context, state) { // eslint-disable-line no-unu
 }
 
 function suggestResponse(response, context, state) { // eslint-disable-line no-unused-vars
-  let status = response.status;
+  let statusCode = response.statusCode;
   if (state.type === 'title') {
     response = response.data.response.docs.map((obj) => {
       let retObj = {str: obj['display.title'][0], id: obj.fedoraPid};
@@ -206,7 +206,7 @@ function suggestResponse(response, context, state) { // eslint-disable-line no-u
       return retObj;
     });
   }
-  return {status: status, data: response};
+  return {statusCode: statusCode, data: response.data};
 }
 
 function suggestFunction(context) {
