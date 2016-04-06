@@ -280,7 +280,7 @@ Response:
     "navn": "Køge Bibliotek",
     "bibliotekstype": "Folkebibliotek",
     "by": "Køge",
-    "str": "Køge Bibliotek, Køge"}]
+    "term": "Køge Bibliotek, Køge"}]
 ```
 
 
