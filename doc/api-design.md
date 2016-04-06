@@ -65,7 +65,7 @@ Only contains info from DBCs services, so no "opstillingsdata fra intelligent-ma
 
 Request:
 ```json
-{ "pid": "
+{ "id": "870970-basis:24284565",
   "fields": ["700400", "710100", "710100"]}
 ```
 Fields is optional, with defaulting to branches of current logged-in agency.
@@ -185,12 +185,106 @@ Mapping from OpenAgency xml to json, happens in a similar way to how we map bibl
 
 ## `/search` 
 
-opensearch - collectionType: manifest | work-1 (if "collection" in fields) - default-fields: those from "briefDisplay" format + collection - maybe: limit search to books available on given library
+search result
+
+----
+
+Request:
+```json
+{ "q": "harry AND potter",
+  "fields": ["id", "dcTitle", "collection", "dcSubjectDBCF", "relHasAdaptation", "coverUrlFull"],
+  "sort": "default,
+  "offset": 1,
+  "limit": 2 }
+```
+
+If `fields` are omitted, it will return those that easily comes from opensearch, ie DKABM-fields, collection, relations. And not coverUrls etc.
+
+TODO: figure out if opensearch can return both BriefDisplay and DKABM, in that case fields from BriefDisplay is also included by default in search, - as that is also fast.
+
+Later version of the api might also have an option to switch between manifest and work-1.
+
+Response:
+```json
+[{"id": ["300185-katalog:100562332"],
+  "dcTitle": ["Harry Potter og Fønixordenen DVD"],
+  "coverUrlFull": ["//..."]},
+ {"id": ["870970-basis:51989252"],
+  "dcTitle": ["Harry Potter og de vises sten"],
+  "collection": ["300185-katalog:100562332", "870970-basis:51989252", "870971-forfweb:86203219", 
+                 "870970-basis:24284514", "870970-basis:24284565", ...]]
+  "dcSubjectDBCF": ["fantasy", "magi", "troldmænd"],
+  "relHasAdaption": ["870970-basis:27123279", "870970-basis:27963390"],
+  "coverUrlFull": ["//..."]}]
+```
 
 ## `/suggest` 
 
-- library-suggestions, different kinds of search query suggestions,
-- fields: default: string and id
+Suggestion for library, title, creator, or subject
+----
+
+Request:
+```json
+{ "q": "harry pot",
+  "type": "title",
+  "fields": ["term", "id", "creator", "type"],
+  "limit": 2 }
+```
+
+Response:
+```json
+[ { "term": "Harry Potter og Hemmelighedernes Kammer",
+    "id": "870970-basis:22375733",
+    "creator": "Joanne K. Rowling",
+    "type": "book"},
+  { "term": "Harry Potter og fangen fra Azkaban",
+    "id": "870970-basis:22639862",
+    "creator": "Joanne K. Rowling",
+    "type": "book" }]
+```
+
+----
+
+Request:
+```json
+{ "q": "harry",
+  "type": "creator",
+  "limit": 2 }
+```
+
+Response:
+```json
+[ { "term": "Harry Nilsson"},
+  { "term": "Harry Belafonte"}]
+```
+
+----
+
+Request:
+```json
+{ "q": "køge",
+  "type": "library",
+  "fields": ["term", "væsensnavn", "adresse", "id", "postnr", "geolokation", "navn", "bibliotekstype", "by"],
+  "limit": 1 }
+```
+
+Response:
+```json
+[ { "væsensnavn": "KøgeBibliotekerne",
+    "adresse": "Kirkestræde 18",
+    "id": "725900",
+    "postnr": "4600",
+    "geolokation": 
+    { "lat": 55.45783460000001,
+      "lng": 12.1822443 },
+    "navn": "Køge Bibliotek",
+    "bibliotekstype": "Folkebibliotek",
+    "by": "Køge",
+    "str": "Køge Bibliotek, Køge"}]
+```
+
+
+
 
 ## `/user` 
 
@@ -198,7 +292,23 @@ opensearch - collectionType: manifest | work-1 (if "collection" in fields) - def
 
 ## `/work` 
 
-pid + fields -> metadata - information the creative work - default-fields: dkabm, brief, relations
+Request:
+```json
+{ "id": ""870970-basis:51989252"",
+  "fields": ["dcTitle", "collection", "dcSubjectDBCF", "relHasAdaptation", "coverUrlFull"]}
+```
+
+If `fields` are omitted, it will return those that easily comes from getinfo, ie DKABM-fields, relations. And not collection, coverUrls etc.
+
+Response:
+```json
+{ "dcTitle": ["Harry Potter og de vises sten"],
+  "collection": ["300185-katalog:100562332", "870970-basis:51989252", "870971-forfweb:86203219", 
+                 "870970-basis:24284514", "870970-basis:24284565", ...]]
+  "dcSubjectDBCF": ["fantasy", "magi", "troldmænd"],
+  "relHasAdaption": ["870970-basis:27123279", "870970-basis:27963390"],
+  "coverUrlFull": ["//..."]}
+```
 
 ## `/?` 
 
@@ -209,14 +319,15 @@ community services etc. needed by biblo
 # Bibliographic Data Model
 
 Bibliographic objects are returned from both the `/work` and `/search` endpoints. 
-They are identified by a *pid*, - an example would be "775100-katalog:29372365".
+They are identified by a *id*, - an example would be "775100-katalog:29372365".
 
 The bibliographic object is represented as a JSON-object with fields from:
 
-- BriefDisplay - ¿Where is this format documented? - Probably encoded in object with keys such as `title`, `creator`, `workType`, `titleFull` ...
+- `id` - ie. identifier from opensearch.
+- BriefDisplay - ¿Where is this format documented? - Probably encoded in object with keys such as `title`, `creator`, `workType`, `titleFull` .... Evt. just identifier, if not easy to get together with dkabm from opensearch
 - DKABM - defined on biblstandard.dk. Probably encoded in object with keys such as `acIdentifier`, `dcLanguage` or `dcLanguageISO639-2`, or `dcTitleFull`, (assuming there are no namespace-collisions of types, otherwise we need to rethink mapping into object).
 - Relations - http://danbib.dk/index.php?doc=broend3_relationer - probably encoded in object with keys such as `relIsPartOfManifestation`, `relDiscusses`, ... 
-- `collection` list of pids in same "værk" within opensearch search
+- `collection` list of ids in same "værk" within opensearch search
 - moreInfo - covers as url and dataurl, - as `coverUrlXXX` or `coverDataUrlXXX` where `XXX` is one of `42`, `117`, `207`, `500`, `Thumbnail` or `Full`, ie. `coverUrl42`.
 
 Each key present in the json-object, should contain an array of values. Example: if the bibliographic xml-object contains:
