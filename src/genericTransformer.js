@@ -26,12 +26,12 @@ export default function genericTransformer(requestTransformer, responseTransform
 
   return function(request, context) {
     let client = clientFunction(context);
-    let transformedRequest = requestTransformer(request, context);
-    let response = client(transformedRequest);
+    let {transformedRequest, state} = requestTransformer(request, context, {});
+    let clientResponse = client(transformedRequest, context, state);
 
-    return response.then((result) => {
+    return clientResponse.response.then((result) => {
 
-      let transformedResponse = responseTransformer(result, context);
+      let transformedResponse = responseTransformer(result, context, clientResponse.state);
       if (context.createTest === true) {
 
         if (context.createTestPath === 'undefined') {
