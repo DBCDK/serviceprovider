@@ -191,11 +191,11 @@ module.exports.run = function (worker) {
     // When the above mentioned is fixed, the below will make use of neoGetRecommendations!
     // if (event === 'getRecommendations') {
     if (serviceProvider.hasTransformer(event)) {
-      console.log('Neo Event called: ' + event); // eslint-disable-line no-console
+      log.info('Neo Event called: ', event);
       // The below expects an array. We will give it what it asks for!
       prom = [serviceProvider.execute(event, query, context)];
     } else { // eslint-disable-line brace-style
-      console.log('Old-School Event called: ' + event); // eslint-disable-line no-console
+      log.info('Old-School Event called: ', event);
       prom = serviceProvider.trigger(event, query, context);
     }
     // TODO: result from serviceProvider should just be a single promise.
