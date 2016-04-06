@@ -13,6 +13,7 @@ Parameters are general across endpoints:
 - `limit` for paginated results, - number of results per page.
 - `pretty` determines whether the JSON should be prettyprinted when serialising.
 - `callback` is the callback name when doing a jsonp request on the HTTP-transport
+- `fields` which keys should be in the returned object.
 
 __Responses__ are returned within an envelope, usually as a JSON object with the following properties:
 
@@ -47,39 +48,286 @@ Authentication using OAuth 2.
 
 The authentification server is called Smaug, and lives in another repository: https://github.com/dbcdk/smaug/.
 
-In the first version it will support logins via "Resource Owner Password Credentials" for users, and "Client Credentials" for anonymous access.
+In the first version it will support logins via "Resource Owner Password Credentials".
 
 TODO clarify/document details.
 
 # API endpoints
 
-- `/search` opensearch - collectionType: manifest | work-1 (if "collection" in fields) - default-fields: those from "briefDisplay" format + collection - maybe: limit search to books available on given library
-- `/work` pid + fields -> metadata - information the creative work - default-fields: dkabm, brief, relations
-- `/suggest` - library-suggestions, different kinds of search query suggestions,
-- `/order` - create/update/delete an order 
-- `/availability` - holdings - limit holding check to certain libraries
-- `/recommend` - maybe possibility to limit results to materials available at the current library.
-- `/facets`
-- `/user` - user status, including arrived loans, orders, etc.
-- `/renew`
-- `/news`
-- `/events`
-- `/libraries`
-- `/batch` several queries in one http-request, for efficient-non-socket queries
+Endpoints sorted alphabetical. Numbers in parenthesis reflect that they are secondery, or tertiary priority, as mentioned in the prioritisation later in this document.
 
-- NB: we probably dummy `/order` service for testing
+## `/availability` 
+
+Whether a material can be ordered / are available from the library.
+Only contains info from DBCs services, so no "opstillingsdata fra intelligent-materialestyring" or similar.
+
+--- 
+
+Request:
+```json
+{ "id": "870970-basis:24284565",
+  "fields": ["700400", "710100", "710100"]}
+```
+Fields is optional, with defaulting to branches of current logged-in agency.
+
+
+Response:
+```json
+{ TODO:NEEDS_EXAMPLE
+  ...}
+```
+
+`...` represents that it returns the data of openholding and openpolicy, so essentially json of the data they return. (Tilgængelighed + dato + orderable).
+
+
+## `/ddbcms` (2.) 
+
+Access to news, events, library-details unavailable from openagency, etc. 
+This info comes from the APIs outside our control.
+
+This webservice just proxies local DDBCMS instance(based on the agency for the logged in user).
+
+----
+
+Request:
+```json
+{ "path": "getContentList",
+  "query": { "type": "ding_event" } }
+```
+
+NB: `agency`, and `key` is appended to the `query` by the ServiceProvider.
+
+Response:
+```json
+{ TODO:NEEDS_EXAMPLE
+  ...}
+```
+
+It just returns the result from the ddbcms-service.
+
+----
+
+NOTE: where is the api for the DDBCMS specified? 
+
+## `/facets` (2.)
+
+Get a list of facets from a search
+
+----
+
+Request:
+```json
+{ "q": "danmark",
+  "fields": ["creator", "subject", "type"],
+  "limit": 2 }
+```
+
+Response:
+```json
+{ "creator":
+  [{ "term": "nordisk ministerråd", "frequency": 2708},
+   { "term": "nordisk råd", "frequency": 2463}],
+  "subject":
+  [{ "term": "danmark", "frequency": 188792},
+   { "term": "historie", "frequency": 19867}],
+  "type":
+  [{ "term": "avisartikel", "frequency": 83786},
+   { "term": "tidsskriftsartikel", "frequency": 77618}]}
+```
+
+## `/libraries` 
+
+Request:
+```json
+{ "fields": ["branchId", "city", "longitude", "latitude"]}
+```
+
+Response:
+```json
+[ {"branchId": "700401", "city": "Flensburg", "longitude": "54.4801716", "latitude": "9.0467115"},
+  {"branchId": "710104", "city": "København N", "longitude": "55.680887", "latitude": "12.573619"},
+  "..."  ]
+```
+
+The response comes from openagency, and has the possible fields from there. The result list has duplicate removed.
+
+----
+
+Request:
+```json
+{ "branchIds": ["700401", "710104"],
+  "fields": ["branchId", "city", "longitude", "latitude"]}
+```
+
+Response:
+```json
+[ {"branchId": "700401", "city": "Flensburg", "longitude": "54.4801716", "latitude": "9.0467115"},
+  {"branchId": "710104", "city": "København N", "longitude": "55.680887", "latitude": "12.573619"},
+  "..."  ]
+```
+----
+
+Mapping from OpenAgency xml to json, happens in a similar way to how we map bibliographic objects to json, but with no `oa`-prefix.
+
+## `/order` 
+
+- create/update/delete an order , NB: delete, expires
+- NB: we probably need dummy user for `/order` service for test/development
+
+## `/recommend` (3.)
+
+- maybe possibility to limit results to materials available at the current library.
+
+- req: filter(optional), profil(optional), pids
+- result: title, creator, weight, pids, fromPid
+
+## `/renew`
+
+## `/search` 
+
+search result
+
+----
+
+Request:
+```json
+{ "q": "harry AND potter",
+  "fields": ["id", "dcTitle", "collection", "dcSubjectDBCF", "relHasAdaptation", "coverUrlFull"],
+  "sort": "default",
+  "offset": 1,
+  "limit": 2 }
+```
+
+If `fields` are omitted, it will return those that easily comes from opensearch, ie DKABM-fields, collection, relations. And not coverUrls etc.
+
+TODO: figure out if opensearch can return both BriefDisplay and DKABM, in that case fields from BriefDisplay is also included by default in search, - as that is also fast.
+
+Later version of the api might also have an option to switch between manifest and work-1.
+
+Response:
+```json
+[{"id": ["300185-katalog:100562332"],
+  "dcTitle": ["Harry Potter og Fønixordenen DVD"],
+  "coverUrlFull": ["//..."]},
+ {"id": ["870970-basis:51989252"],
+  "dcTitle": ["Harry Potter og de vises sten"],
+  "collection": ["300185-katalog:100562332", "870970-basis:51989252", "870971-forfweb:86203219", 
+                 "870970-basis:24284514", "870970-basis:24284565", "..."],
+  "dcSubjectDBCF": ["fantasy", "magi", "troldmænd"],
+  "relHasAdaption": ["870970-basis:27123279", "870970-basis:27963390"],
+  "coverUrlFull": ["//..."]}]
+```
+
+## `/suggest` 
+
+Suggestion for library, title, creator, or subject
+----
+
+Request:
+```json
+{ "q": "harry pot",
+  "type": "title",
+  "fields": ["term", "id", "creator", "type"],
+  "limit": 2 }
+```
+
+Response:
+```json
+[ { "term": "Harry Potter og Hemmelighedernes Kammer",
+    "id": "870970-basis:22375733",
+    "creator": "Joanne K. Rowling",
+    "type": "book"},
+  { "term": "Harry Potter og fangen fra Azkaban",
+    "id": "870970-basis:22639862",
+    "creator": "Joanne K. Rowling",
+    "type": "book" }]
+```
+
+----
+
+Request:
+```json
+{ "q": "harry",
+  "type": "creator",
+  "limit": 2 }
+```
+
+Response:
+```json
+[ { "term": "Harry Nilsson"},
+  { "term": "Harry Belafonte"}]
+```
+
+----
+
+Request:
+```json
+{ "q": "køge",
+  "type": "library",
+  "fields": ["term", "væsensnavn", "adresse", "id", "postnr", "geolokation", "navn", "bibliotekstype", "by"],
+  "limit": 1 }
+```
+
+Response:
+```json
+[ { "væsensnavn": "KøgeBibliotekerne",
+    "adresse": "Kirkestræde 18",
+    "id": "725900",
+    "postnr": "4600",
+    "geolokation": 
+    { "lat": 55.45783460000001,
+      "lng": 12.1822443 },
+    "navn": "Køge Bibliotek",
+    "bibliotekstype": "Folkebibliotek",
+    "by": "Køge",
+    "term": "Køge Bibliotek, Køge"}]
+```
+
+
+
+
+## `/user` 
+
+- user status, including arrived loans, orders, etc.
+
+## `/work` 
+
+Request:
+```json
+{ "id": "870970-basis:51989252",
+  "fields": ["dcTitle", "collection", "dcSubjectDBCF", "relHasAdaptation", "coverUrlFull"]}
+```
+
+If `fields` are omitted, it will return those that easily comes from getinfo, ie DKABM-fields, relations. And not collection, coverUrls etc.
+
+Response:
+```json
+{ "dcTitle": ["Harry Potter og de vises sten"],
+  "collection": ["300185-katalog:100562332", "870970-basis:51989252", "870971-forfweb:86203219", 
+                 "870970-basis:24284514", "870970-basis:24284565", "..."],
+  "dcSubjectDBCF": ["fantasy", "magi", "troldmænd"],
+  "relHasAdaption": ["870970-basis:27123279", "870970-basis:27963390"],
+  "coverUrlFull": ["//..."]}
+```
+
+## `/?` 
+
+community services etc. needed by biblo
+
+## `/batch` (later)  several queries in one http-request, for efficient-non-socket queries
 
 # Bibliographic Data Model
 
 Bibliographic objects are returned from both the `/work` and `/search` endpoints. 
-They are identified by a *pid*, - an example would be "775100-katalog:29372365".
+They are identified by a *id*, - an example would be "775100-katalog:29372365".
 
 The bibliographic object is represented as a JSON-object with fields from:
 
-- BriefDisplay - ¿Where is this format documented? - Probably encoded in object with keys such as `title`, `creator`, `workType`, `titleFull` ...
+- `id` - ie. identifier from opensearch.
+- BriefDisplay - ¿Where is this format documented? - Probably encoded in object with keys such as `title`, `creator`, `workType`, `titleFull` .... Evt. just identifier, if not easy to get together with dkabm from opensearch
 - DKABM - defined on biblstandard.dk. Probably encoded in object with keys such as `acIdentifier`, `dcLanguage` or `dcLanguageISO639-2`, or `dcTitleFull`, (assuming there are no namespace-collisions of types, otherwise we need to rethink mapping into object).
 - Relations - http://danbib.dk/index.php?doc=broend3_relationer - probably encoded in object with keys such as `relIsPartOfManifestation`, `relDiscusses`, ... 
-- `collection` list of pids in same "værk" within opensearch search
+- `collection` list of ids in same "værk" within opensearch search
 - moreInfo - covers as url and dataurl, - as `coverUrlXXX` or `coverDataUrlXXX` where `XXX` is one of `42`, `117`, `207`, `500`, `Thumbnail` or `Full`, ie. `coverUrl42`.
 
 Each key present in the json-object, should contain an array of values. Example: if the bibliographic xml-object contains:
@@ -121,9 +369,9 @@ In the example above, the `@id` would be something like `https://serviceprovider
     - `Smaug` - openauth login - password-credentials and client-credential
     - `/availability`
     - `/libraries` - list of libraries - geocoordinates - opening times - address/tel - html-info
-    - `/order`
-    - `/renew`
-    - `/search - work-1 with collection
+    - `/order` - +orderId (krav i første-udgave)
+    - `/renew` (agencyid, loan-id, userid) open user status
+    - `/search` - work-1 with collection
     - `/user` - lånerstatus (hjemkomne, bestillinger, udestående) - unique id for agency/user combination
     - `/work` - DKABM, Relations, BriefDisplay, `coverUrlXXX`
 2. Must/should:
@@ -202,7 +450,6 @@ List of transforms: getOpenSearchBriefDisplayList getOpenSearchWorkBriefDisplay 
 - swagger autogenerate server-code..
 - look into graphql, and possibilities to use some of this...
 - parameters
-    - `fields` which keys should be in the returned object.
     - `envelope` specifies whether to have the envelope explicit, or implicit (with status code on HTTP). 
 - response
     - paging information
