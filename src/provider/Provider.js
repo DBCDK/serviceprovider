@@ -78,7 +78,12 @@ export default function Provider() {
   }
 
   function availableTransforms() {
-    return Array(transforms.keys()).concat(['getSuggestions']);
+    let result = [];
+    for (let key of transforms.keys()) {
+      result.push(key);
+    }
+    result.push('getSuggestions');
+    return result;
   }
 
   function hasTransformer(name) {
