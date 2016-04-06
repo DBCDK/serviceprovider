@@ -91,7 +91,7 @@ This webservice just proxies local DDBCMS instance(based on the agency for the l
 
 Request:
 ```json
-{ "path": "getContentList"
+{ "path": "getContentList",
   "query": { "type": "ding_event" } }
 ```
 
@@ -131,7 +131,7 @@ Response:
   [{ "term": "danmark", "frequency": 188792},
    { "term": "historie", "frequency": 19867}],
   "type":
-  [{ "term": "avisartikel", "frequency": 83786}..
+  [{ "term": "avisartikel", "frequency": 83786},
    { "term": "tidsskriftsartikel", "frequency": 77618}]}
 ```
 
@@ -145,8 +145,8 @@ Request:
 Response:
 ```json
 [ {"branchId": "700401", "city": "Flensburg", "longitude": "54.4801716", "latitude": "9.0467115"},
-  {"branchId": "710104", "city": "København N", "longitude": "55.680887", "latitude": "12.573619"}
-  ...  ]
+  {"branchId": "710104", "city": "København N", "longitude": "55.680887", "latitude": "12.573619"},
+  "..."  ]
 ```
 
 The response comes from openagency, and has the possible fields from there. The result list has duplicate removed.
@@ -162,8 +162,8 @@ Request:
 Response:
 ```json
 [ {"branchId": "700401", "city": "Flensburg", "longitude": "54.4801716", "latitude": "9.0467115"},
-  {"branchId": "710104", "city": "København N", "longitude": "55.680887", "latitude": "12.573619"}
-  ...  ]
+  {"branchId": "710104", "city": "København N", "longitude": "55.680887", "latitude": "12.573619"},
+  "..."  ]
 ```
 ----
 
@@ -193,7 +193,7 @@ Request:
 ```json
 { "q": "harry AND potter",
   "fields": ["id", "dcTitle", "collection", "dcSubjectDBCF", "relHasAdaptation", "coverUrlFull"],
-  "sort": "default,
+  "sort": "default",
   "offset": 1,
   "limit": 2 }
 ```
@@ -212,7 +212,7 @@ Response:
  {"id": ["870970-basis:51989252"],
   "dcTitle": ["Harry Potter og de vises sten"],
   "collection": ["300185-katalog:100562332", "870970-basis:51989252", "870971-forfweb:86203219", 
-                 "870970-basis:24284514", "870970-basis:24284565", ...]]
+                 "870970-basis:24284514", "870970-basis:24284565", "..."],
   "dcSubjectDBCF": ["fantasy", "magi", "troldmænd"],
   "relHasAdaption": ["870970-basis:27123279", "870970-basis:27963390"],
   "coverUrlFull": ["//..."]}]
@@ -294,7 +294,7 @@ Response:
 
 Request:
 ```json
-{ "id": ""870970-basis:51989252"",
+{ "id": "870970-basis:51989252",
   "fields": ["dcTitle", "collection", "dcSubjectDBCF", "relHasAdaptation", "coverUrlFull"]}
 ```
 
@@ -304,7 +304,7 @@ Response:
 ```json
 { "dcTitle": ["Harry Potter og de vises sten"],
   "collection": ["300185-katalog:100562332", "870970-basis:51989252", "870971-forfweb:86203219", 
-                 "870970-basis:24284514", "870970-basis:24284565", ...]]
+                 "870970-basis:24284514", "870970-basis:24284565", "..."],
   "dcSubjectDBCF": ["fantasy", "magi", "troldmænd"],
   "relHasAdaption": ["870970-basis:27123279", "870970-basis:27963390"],
   "coverUrlFull": ["//..."]}
