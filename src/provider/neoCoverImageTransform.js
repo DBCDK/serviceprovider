@@ -3,37 +3,7 @@
 import genericTransformer from '../genericTransformer.js';
 import Transform from 'jsonpath-object-transform';
 import moreInfoClient from '../services/MoreInfo/client';
-
-function getImagesFromResponse(result) {
-  var template = {
-    images: ['$.identifierInformation..coverImage.*', {
-      url: '$..$value',
-      size: '$..imageSize',
-      format: '$..imageFormat'
-    }]
-  };
-
-  var transformed = Transform(result, template);
-  transformed.images = transformed.images.map((imgObj) => {
-    imgObj.url = imgObj.url.replace('http:', '');
-    return imgObj;
-  });
-
-  return transformed;
-}
-
-function requestTransform(request, data) { // eslint-disable-line no-unused-vars
-  let identifiers = [];
-  data.forEach((pid) => {
-    try {
-      const faust = pid.split(':').pop();
-      identifiers.push(faust);
-    }
-    catch(e) { // eslint-disable-line
-    }
-  });
-  return this.callServiceClient('moreinfo', 'getMoreInfoResult', {identifiers});
-}
+import _ from 'lodash';
 
 function checkResponse(response) {
   let error = null;
@@ -78,13 +48,6 @@ function checkResponse(response) {
   return error;
 }
 
-function responseTransform(response, identifiers) { // eslint-disable-line no-unused-vars
-  let result = checkResponse(response) || getImagesFromResponse(response);
-  return {
-    identifiers,
-    result
-  };
-}
 
 function pidSplitter(pid) {
   let pid_array = pid.split(':');
@@ -102,10 +65,9 @@ function pidSplitter(pid) {
   return id;
 }
 
-let transformer = function() {
-  let that = {};
+export default function () {
 
-  that.requestTransform = function(request, context) { // eslint-disable-line no-unused-vars
+  function requestTransform(request, context) { // eslint-disable-line no-unused-vars
     let pid = request[0].pid;
     let pid_obj = pidSplitter(pid);
     let params = {};
@@ -115,27 +77,82 @@ let transformer = function() {
     identifier.libraryCode = pid_obj.agency;
     params.identifier.push(identifier);
     return params;
-  };
+  }
 
-  that.responseTransform = function(response, context) { // eslint-disable-line no-unused-vars
+  function responseTransform(response, context) { // eslint-disable-line no-unused-vars
     return new Promise((request, resolve) => {
-      return resolve({});
-    });
-  };
+    if (!_.has(response, 'requestStatus.statusEnum')) {
+      throw "Malformed response: " + response;
+    } else {
+      console.log("OH YEAH!");
+    }
 
-  that.moreInfoFunc = function(context) {
+    if (!_.has(response, 'identifierInformation')) {
+      throw "Malformed response. Could not find ...'"
+    } else {
+      console.log("More OH YEAH!");
+    }
+
+    if (response.identifierInformation.length === 0) {
+      throw "No identifierInformation";
+    }
+    console.log("Even more OH YEAH!");
+
+    if(response.identifierInformation.length > 1) {
+      throw "Too much info in identifierInformation";
+    }
+    console.log("OH YEAH! ... Again");
+
+    let idInfo = response.identifierInformation[0];
+
+    if(!_.has(idInfo, 'identifierKnown') || !idInfo.identifierKnown === true) {
+      // no identifierKnown attribute. should this be the same as 'identifier not known'?
+    }
+
+    if(!_.has(idInfo, 'coverImage') || idInfo.coverImage.length === 0) {
+      // no coverimages found.
+    }
+
+    // get coverImages:
+    let IMAGE_SIZES = {
+      "detail_42": "coverUrl42",
+      "detail_117": "coverUrl117",
+      "detail_207": "coverUrl207",
+      "detail_500": "coverUrl500",
+      "thumbnail": "coverUrlThumbnail",
+      "detail": "coverUrlFull"
+    };
+    let Y = idInfo.coverImage.map(x => {
+      let res = {};
+      if(_.has(x, 'attributes.imageSize') && _.has(x, '$value')) {
+        let is = IMAGE_SIZES[x.attributes.imageSize];
+        res[is] = x['$value'].replace('http:', '');
+      }
+      return res;
+    });
+
+    console.log("Y: " + JSON.stringify(Y, null, 4));
+
+      let Z = {};
+      Y.forEach(z => {
+        _.extend(Z, z);
+      });
+
+    console.log("Z: " + JSON.stringify(Z, null, 4));
+
+
+      return resolve(Z);
+    });
+  }
+
+  function moreInfoFunc(context) {
     let neoContext = context.libdata.config.provider.services.moreinfo;
     let client = moreInfoClient(neoContext);
 
-    return function(request, local_context) { // eslint-disable-line no-unused-vars
+    return function (request, local_context) { // eslint-disable-line no-unused-vars
       return client.getMoreInfoResultNeo(request);
     };
-  };
+  }
 
-  return that;
-};
-
-export default function coverImageTransformer() {
-  let cit = transformer();
-  return genericTransformer(cit.requestTransform, cit.responseTransform, cit.moreInfoFunc);
+  return genericTransformer(requestTransform, responseTransform, moreInfoFunc);
 }
