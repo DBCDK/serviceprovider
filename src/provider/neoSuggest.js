@@ -50,9 +50,9 @@ export function subjectSuggestTransformer() {
   }
 
   function subjectSuggestResponse(response, context, state) { // eslint-disable-line no-unused-vars
-    return response.response.suggestions.map((obj) => {
+    return {status: 200, data: response.response.suggestions.map((obj) => {
       return {str: obj.suggestion};
-    });
+    })};
   }
 
   function subjectSuggestFunction(context) {
@@ -82,9 +82,9 @@ function creatorSuggestRequest(request, context, state) { // eslint-disable-line
 }
 
 function creatorSuggestResponse(response, context, state) { // eslint-disable-line no-unused-vars
-  return response.response.suggestions.map((obj) => {
+  return {status: 200, data: response.response.suggestions.map((obj) => {
     return {str: obj.suggestion};
-  });
+  })};
 }
 
 function creatorSuggestFunction(context) {
@@ -115,10 +115,10 @@ function librarySuggestRequest(request, context, state) { // eslint-disable-line
 
 
 function librarySuggestResponse(response, context, state) { // eslint-disable-line no-unused-vars
-  return response.response.suggestions.map((obj) => {
+  return {status: 200, data: response.response.suggestions.map((obj) => {
     obj.suggestion.str = obj.suggestion.navn + ', ' + obj.suggestion.by;
     return obj.suggestion;
-  });
+  })};
 }
 
 function librarySuggestFunction(context) {
@@ -148,7 +148,7 @@ function popSuggestRequest(request, context, state) { // eslint-disable-line no-
 }
 
 function popSuggestResponse(response, context, state) { // eslint-disable-line no-unused-vars
-  return response;
+  return {status: 200, data: response};
 }
 
 function popSuggestFunction(context) {
@@ -193,8 +193,9 @@ function suggestRequest(request, context, state) { // eslint-disable-line no-unu
 }
 
 function suggestResponse(response, context, state) { // eslint-disable-line no-unused-vars
+  let status = response.status;
   if (state.type === 'title') {
-    response = response.response.docs.map((obj) => {
+    response = response.data.response.docs.map((obj) => {
       let retObj = {str: obj['display.title'][0], id: obj.fedoraPid};
       if (obj.hasOwnProperty('display.creator')) {
         retObj.creator = obj['display.creator'][0];
@@ -205,7 +206,7 @@ function suggestResponse(response, context, state) { // eslint-disable-line no-u
       return retObj;
     });
   }
-  return response;
+  return {status: status, data: response};
 }
 
 function suggestFunction(context) {
