@@ -52,28 +52,122 @@ In the first version it will support logins via "Resource Owner Password Credent
 
 TODO clarify/document details.
 
-# API endpoints notes
+# API endpoints
+
+Endpoints sorted alphabetical. Numbers in parenthesis reflect that they are secondery, or tertiary priority, as mentioned in the prioritisation later in this document.
 
 ## `/availability` 
 
-- holdings - limit holding check to certain libraries. NB: openholding+openpolicy. (pid + agency-list -> ([tilgængelig + dato + orderable]))
+Whether a material can be ordered / are available from the library.
+Only contains info from DBCs services, so no "opstillingsdata fra intelligent-materialestyring" or similar.
 
-NB: indeholder ikke opstillings-data
+--- 
+
+Request:
+```json
+{ "pid": "
+  "fields": ["700400", "710100", "710100"]}
+```
+Fields is optional, with defaulting to branches of current logged-in agency.
+
+
+Response:
+```json
+{ TODO:NEEDS_EXAMPLE
+  ...}
+```
+
+`...` represents that it returns the data of openholding and openpolicy, so essentially json of the data they return. (Tilgængelighed + dato + orderable).
 
 
 ## `/ddbcms` (2.) 
 
-- news, events and library info 
-- could be implemented as just a cors-proxy for the site
+Access to news, events, library-details unavailable from openagency, etc. 
+This info comes from the APIs outside our control.
+
+This webservice just proxies local DDBCMS instance(based on the agency for the logged in user).
+
+----
+
+Request:
+```json
+{ "path": "getContentList"
+  "query": { "type": "ding_event" } }
+```
+
+NB: `agency`, and `key` is appended to the `query` by the ServiceProvider.
+
+Response:
+```json
+{ TODO:NEEDS_EXAMPLE
+  ...}
+```
+
+It just returns the result from the ddbcms-service.
+
+----
+
+NOTE: where is the api for the DDBCMS specified? 
 
 ## `/facets` (2.)
 
-- query
-- fields - filtrer på bibliotek
+Get a list of facets from a search
+
+----
+
+Request:
+```json
+{ "q": "danmark",
+  "fields": ["creator", "subject", "type"],
+  "limit": 2 }
+```
+
+Response:
+```json
+{ "creator":
+  [{ "term": "nordisk ministerråd", "frequency": 2708},
+   { "term": "nordisk råd", "frequency": 2463}],
+  "subject":
+  [{ "term": "danmark", "frequency": 188792},
+   { "term": "historie", "frequency": 19867}],
+  "type":
+  [{ "term": "avisartikel", "frequency": 83786}..
+   { "term": "tidsskriftsartikel", "frequency": 77618}]}
+```
 
 ## `/libraries` 
 
-evt. filtrering af væsener
+Request:
+```json
+{ "fields": ["branchId", "city", "longitude", "latitude"]}
+```
+
+Response:
+```json
+[ {"branchId": "700401", "city": "Flensburg", "longitude": "54.4801716", "latitude": "9.0467115"},
+  {"branchId": "710104", "city": "København N", "longitude": "55.680887", "latitude": "12.573619"}
+  ...  ]
+```
+
+The response comes from openagency, and has the possible fields from there. The result list has duplicate removed.
+
+----
+
+Request:
+```json
+{ "branchIds": ["700401", "710104"],
+  "fields": ["branchId", "city", "longitude", "latitude"]}
+```
+
+Response:
+```json
+[ {"branchId": "700401", "city": "Flensburg", "longitude": "54.4801716", "latitude": "9.0467115"},
+  {"branchId": "710104", "city": "København N", "longitude": "55.680887", "latitude": "12.573619"}
+  ...  ]
+```
+----
+
+Mapping from OpenAgency xml to json, happens in a similar way to how we map bibliographic objects to json, but with no `oa`-prefix.
 
 ## `/order` 
 
