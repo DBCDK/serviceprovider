@@ -7,7 +7,7 @@ import lodash from 'lodash';
 function requestTransform(request, context) {
   const filter = context.libdata.config.provider.services.recommend.filters || ['rec.collectionIdentifier:' + (context.libdata.libraryId || '716500') + '-katalog'];
   let result;
-  if (request.isFrontPage) {
+  if (request.isFrontPage && !context.request.session.passport) {
     const metaParams = {
       filter: filter,
       profile: 'pop'

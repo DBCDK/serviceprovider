@@ -15,12 +15,14 @@ import fs from 'fs';
 import express from 'express';
 import path from 'path';
 import Logger from 'dbc-node-logger';
+import RedisStore from 'connect-redis';
 import request from 'request';
 import ServiceProviderSetup from './ServiceProviderSetup.js';
 
 // Middleware
 import bodyParser from 'body-parser';
 import compression from 'compression';
+import expressSession from 'express-session';
 import helmet from 'helmet';
 import {log} from './utils';
 
@@ -31,6 +33,8 @@ module.exports.run = function (worker) {
   // Setup
   const app = express();
   const server = worker.httpServer;
+  const ENV = app.get('env');
+  const PRODUCTION = ENV === 'production';
   const APP_NAME = process.env.APP_NAME || 'app_name'; // eslint-disable-line no-process-env
   const SMAUG_LOCATION = process.env.SMAUG; // eslint-disable-line no-process-env
   const USE_SMAUG = typeof SMAUG_LOCATION !== 'undefined';
@@ -42,6 +46,7 @@ module.exports.run = function (worker) {
         fs.readFileSync(
           process.env.CONFIG_FILE || // eslint-disable-line no-process-env
             __dirname + '/../config.json', 'utf8'));
+  config.cache.store = require('cache-manager-redis');
 
   // Direct requests to app
   server.on('request', app);
@@ -74,6 +79,42 @@ module.exports.run = function (worker) {
   app.set('serviceProvider', serviceProvider);
   app.set('logger', logger);
 
+  // Setup environments
+  let redisConfig;
+
+  // Redis
+  switch (ENV) {
+    case 'development':
+      redisConfig = config.sessionStores.redis.development; // eslint-disable-line no-process-env
+      break;
+    case 'production':
+      redisConfig = config.sessionStores.redis.production; // eslint-disable-line no-process-env
+      break;
+    default:
+      redisConfig = config.sessionStores.redis.local; // eslint-disable-line no-process-env
+      break;
+  }
+
+  let redisStore = RedisStore(expressSession);
+
+  let sessionMiddleware = expressSession({
+    store: new redisStore({
+      host: redisConfig.host,
+      port: redisConfig.port,
+      prefix: APP_NAME + '_session_'
+    }),
+    secret: redisConfig.secret + APP_NAME,
+    name: APP_NAME,
+    rolling: true,
+    resave: false,
+    saveUninitialized: false,
+    cookie: {
+      path: '/',
+      httpOnly: true,
+      secure: PRODUCTION
+    }
+  });
+
   // Adding gzip'ing
   app.use(compression());
 
@@ -84,15 +125,18 @@ module.exports.run = function (worker) {
   // Setting logger
   app.use(expressLoggers.logger);
 
-  // DUMMY context
+  // Setting sessions
+  app.use(sessionMiddleware);
+
+  // DUMMY context, - TODO: get this from the auth server through token, and preserve through sessions
   let dummyContext = {
-    request: {},
+    request: {session: {}},
     libdata: {
       kommune: 'aarhus',
       config: config,
       libraryId: (config || {}).agency
     }
-    // request: {},
+    // request: {session: req.session},
     // libdata: res.locals.libdata
   };
 
