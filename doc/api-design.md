@@ -149,7 +149,10 @@ Response:
   "..."  ]
 ```
 
-The response comes from openagency, and has the possible fields from there. The result list has duplicate removed.
+The response comes from openagency, and has the possible fields from there.  
+This includes TODO:field-names, which are used to determine what information is requiring when ordering a book from the library.
+If `fields` are omitted, then all library information from openagency is included.
+The result list has duplicate removed. 
 
 ----
 
@@ -171,48 +174,52 @@ Mapping from OpenAgency xml to json, happens in a similar way to how we map bibl
 
 ## `/order` 
 
-NB: 
 
-                  'LD_CPR' => 'cpr',
-                  'LD_ID' => 'userId',
-                  'LD_TXT' => 'customId',
-                  'LD_LKST' => 'barcode',
-                  'LD_KLNR' => 'cardno',
-                  'LD_PIN' => 'pincode',
-                  'LD_DATO' => 'userDateOfBirth',
-                  'LD_NAVN' => 'userName',
-                  'LD_ADR' => 'userAddress',
-                  'LD_EMAIL' => 'userMail',
-                  'LD_TLF' => 'userTelephone'
+TODO: test users needed, to be able to try out this service. We should also document test-username/password
+- : we probably need dummy user for `/order` service for test/development
 
 --- 
 
 Request:
 ```json
 { "id": "870970-basis:51989252",
-  "TODOafhentningssted": "TODO",
-  "expires": "TODO"}
+  "library": "700401",
+  "name": "Jens Jensen",
+  "address": "Kirkestræde 1, 1234 Landsby"
+  "email": "jens.jensen@example.com",
+  "phone": "12345678",
+  "expires": "2016-06-24T18:25:43.511Z"}
 }
 ```
 
+Whether `name`, `address`, `email` or `phone` is required, can be seen given the result of `/libraries`-endpoint for the relevant library.
+
+TODO Note: `'LD_CPR' => 'cpr', 'LD_ID' => 'userId', 'LD_TXT' => 'customId', 'LD_LKST' => 'barcode', 'LD_KLNR' => 'cardno', 'LD_PIN' => 'pincode', 'LD_DATO' => 'userDateOfBirth', 'LD_NAVN' => 'userName', 'LD_ADR' => 'userAddress', 'LD_EMAIL' => 'userMail', 'LD_TLF' => 'userTelephone'` are the values in openagency about required properties. I assume that those not name/address/email/phone, can be derived from the context, otherwise `/order` needs extra parameter.
+
 Response:
 ```json
-{ "id": "870970-basis:51989252",
-  "orderId": "1234",
-  "TODOafhentningssted": "TODO",
-  "expires": "TODO"}
+{ "orderId": "1234",
+  "id": "870970-basis:51989252",
+  "library": "700401",
+  "expires": "2016-06-24T18:25:43.511Z"}
+}
 ```
+
 --- 
 
 Request:
 ```json
 { "orderId": "1234",
-  "TODOafhentningssted": "TODO",
-  "expires": "TODO"}
+  "library": "710104",
+  "expires": "2016-12-24T18:25:43.511Z"}
 ```
 
 Response:
 ```json
+{ "orderId": "1234",
+  "id": "870970-basis:51989252",
+  "library": "700401",
+  "expires": "2016-12-24T18:25:43.511Z"}
 ```
 
 --- 
@@ -225,10 +232,9 @@ Request:
 
 Response:
 ```json
+{ "orderId": "1234",
+  "deleted": true }
 ```
-
-- create/update/delete an order , NB: delete, expires
-- NB: we probably need dummy user for `/order` service for test/development
 
 ## `/rank` (.3)
 
