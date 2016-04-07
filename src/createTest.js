@@ -62,8 +62,9 @@ export default function createTest(clientFunction, requestTransformer, responseT
   else {
 
     let newContent = fs.readFileSync(path, 'utf8');
-    let contentSplit = newContent.split(/(\/\/(\/|[\s\S])*\/\/.*)/);
-    contentSplit[1] += '\n// ' + cf_name + '\n// ' + reqt_name +'\n// ' + rept_name;
+    let contentSplit = newContent.split(/(\/\/(\/|[\s\S])*\/\/.*)\n\n/);
+
+    contentSplit[1] += '\n// ' + cf_name + '\n// ' + reqt_name +'\n// ' + rept_name + '\n';
     newContent = contentSplit.join('');
 
     contentSplit = newContent.split('\n');
