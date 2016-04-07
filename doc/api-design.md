@@ -64,7 +64,7 @@ Design-status - example requests:
 - libraries: draft ready, except document openagency-order-requirements details
 - order: draft ready, has notes to be cleaned up + needs review
 - rank: draft ready
-- recommend: draft ready, except needs examplepids
+- recommend: draft ready, except needs example-pids
 - renew: todo
 - search: ready
 - suggest: ready
@@ -72,6 +72,14 @@ Design-status - example requests:
 - work: ready
 
 An `access_token` is needed either in the header or as part of the query. This has been omitted in the examples below.
+
+
+Questions:
+
+- what do we get from openholdings / openpolicy?
+- what should the format of the openagency-order-requirements in library be?
+- how is outstanding debts for the user represented?
+- should we call the work identifier id, pid, or something else. Pid makes good sense as we use it internally, but then we should probably explain that it is a post-id?
 
 ## `/availability` 
 
@@ -82,7 +90,7 @@ Only contains info from DBCs services, so no "opstillingsdata fra intelligent-ma
 
 Request:
 ```json
-{ "id": "870970-basis:24284565",
+{ "pid": "870970-basis:24284565",
   "fields": ["700400", "710100", "710100"]}
 ```
 Fields is optional, with defaulting to branches of current logged-in agency.
@@ -198,7 +206,7 @@ TODO: test users needed, to be able to try out this service. We should also docu
 
 Request:
 ```json
-{ "ids": ["870970-basis:51989252"],
+{ "pids": ["870970-basis:51989252"],
   "library": "700401",
   "name": "Jens Jensen",
   "address": "Kirkestræde 1, 1234 Landsby"
@@ -216,7 +224,7 @@ TODO Note: `'LD_CPR' => 'cpr', 'LD_ID' => 'userId', 'LD_TXT' => 'customId', 'LD_
 Response:
 ```json
 { "orderId": "1234",
-  "ids": ["870970-basis:51989252"],
+  "pids": ["870970-basis:51989252"],
   "library": "700401",
   "expires": "2016-06-24T18:25:43.511Z"}
 }
@@ -234,7 +242,7 @@ Request:
 Response:
 ```json
 { "orderId": "1234",
-  "id": "870970-basis:51989252",
+  "pid": "870970-basis:51989252",
   "library": "700401",
   "expires": "2016-12-24T18:25:43.511Z"}
 ```
@@ -265,7 +273,7 @@ request:
   "dislikes": [],
   "known": [],
   "discard": [],
-  "ids": ["..."],
+  "pids": ["..."],
   }
 ```
 
@@ -307,6 +315,18 @@ response:
 ```
    
 ## `/renew`
+
+request:
+
+```json
+{"loanId": "7890"}
+```
+
+response: 
+```json
+{"loanId": "7890",
+ "returnDate": "..."}
+```
 
 ## `/search` 
 
@@ -361,17 +381,17 @@ Response:
 Request:
 ```json
 { "q": "harry pot", "type": "title", "limit": 2,
-  "fields": ["term", "id", "creator", "type"]}
+  "fields": ["term", "pid", "creator", "type"]}
 ```
 
 Response:
 ```json
 [ { "term": "Harry Potter og Hemmelighedernes Kammer",
-    "id": "870970-basis:22375733",
+    "pid": "870970-basis:22375733",
     "creator": "Joanne K. Rowling",
     "type": "book"},
   { "term": "Harry Potter og fangen fra Azkaban",
-    "id": "870970-basis:22639862",
+    "pid": "870970-basis:22639862",
     "creator": "Joanne K. Rowling",
     "type": "book" }]
 ```
@@ -415,8 +435,8 @@ Response:
 ```json
 { "id": "U2VydmljZVByb3ZpZGVy",
   "registered": true,
-  "orders": [],
-  "loans": [],
+  "orders": [{"orderId": "1234", "pid": "870970-basis:51989252", "library": "700401", "expires": "2016-12-24"}],
+  "loans": [{"loanId": "7890", "pid": "870970-basis:5123456", "returnDate": "2016-31-5"}],
   "debt": [],
 }
 ```
@@ -427,7 +447,7 @@ Response:
 
 Request:
 ```json
-{ "ids": "870970-basis:51989252",
+{ "id": "870970-basis:51989252",
   "fields": ["dcTitle", "collection", "dcSubjectDBCF", "relHasAdaptation", "coverUrlFull"]}
 ```
 
@@ -454,8 +474,8 @@ several queries in one http-request, needed on non-socket clients for efficiency
 request:
 
 ```json
-[{"endpoint": "work", "id": "870970-basis"},
- {"endpoint": "work", "id": "870970-basis:24284565"},
+[{"endpoint": "work", "pid": "870970-basis:12345678"},
+ {"endpoint": "work", "pid": "870970-basis:24284565"},
  {"endpoint": "suggest", "type": "subject", "q": "hej"},
  "..."]
 ```
