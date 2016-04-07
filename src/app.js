@@ -214,8 +214,9 @@ module.exports.run = function (worker) {
 
     prom[0].then((response) => {
       if ((typeof response !== 'object') ||
-          !(response.statusCode === 200 && response.data) ||
-          !(response.statusCode && response.errors)) {
+          (typeof response.statusCode !== 'number') ||
+          (response.statusCode === 200 && !response.data) ||
+          (response.statusCode !== 200 && !response.error)) {
         log.warn('response is not wrapped in an envelope', {response: response});
         response = {
           statusCode: 200,
