@@ -171,10 +171,82 @@ Mapping from OpenAgency xml to json, happens in a similar way to how we map bibl
 
 ## `/order` 
 
+NB: 
+
+                  'LD_CPR' => 'cpr',
+                  'LD_ID' => 'userId',
+                  'LD_TXT' => 'customId',
+                  'LD_LKST' => 'barcode',
+                  'LD_KLNR' => 'cardno',
+                  'LD_PIN' => 'pincode',
+                  'LD_DATO' => 'userDateOfBirth',
+                  'LD_NAVN' => 'userName',
+                  'LD_ADR' => 'userAddress',
+                  'LD_EMAIL' => 'userMail',
+                  'LD_TLF' => 'userTelephone'
+
+--- 
+
+Request:
+```json
+{ "id": "870970-basis:51989252",
+  "TODOafhentningssted": "TODO",
+  "expires": "TODO"}
+}
+```
+
+Response:
+```json
+{ "id": "870970-basis:51989252",
+  "orderId": "1234",
+  "TODOafhentningssted": "TODO",
+  "expires": "TODO"}
+```
+--- 
+
+Request:
+```json
+{ "orderId": "1234",
+  "TODOafhentningssted": "TODO",
+  "expires": "TODO"}
+```
+
+Response:
+```json
+```
+
+--- 
+
+Request:
+```json
+{ "orderId": "1234",
+  "delete": true }
+```
+
+Response:
+```json
+```
+
 - create/update/delete an order , NB: delete, expires
 - NB: we probably need dummy user for `/order` service for test/development
 
+## `/rank` (.3)
+
+Similar to recommend, but sorts a list of ids, instead of finding related ids
+
 ## `/recommend` (3.)
+
+```json
+{ "filter": 
+  { "libraries": ["700401", "710104"],
+type: bog
+
+defaul, pop, similar-peronal
+    "profil",
+
+filter: 
+profil: 
+```
 
 - maybe possibility to limit results to materials available at the current library.
 
@@ -193,9 +265,7 @@ Request:
 ```json
 { "q": "harry AND potter",
   "fields": ["id", "dcTitle", "collection", "dcSubjectDBCF", "relHasAdaptation", "coverUrlFull"],
-  "sort": "default",
-  "offset": 1,
-  "limit": 2 }
+  "sort": "default", "offset": 2, "limit": 2 }
 ```
 
 If `fields` are omitted, it will return those that easily comes from opensearch, ie DKABM-fields, collection, relations. And not coverUrls etc.
@@ -221,14 +291,26 @@ Response:
 ## `/suggest` 
 
 Suggestion for library, title, creator, or subject
+
 ----
 
 Request:
 ```json
-{ "q": "harry pot",
-  "type": "title",
-  "fields": ["term", "id", "creator", "type"],
-  "limit": 2 }
+{ "q": "harry", "type": "creator", "limit": 2 }
+```
+
+Response:
+```json
+[ { "term": "Harry Nilsson"},
+  { "term": "Harry Belafonte"}]
+```
+
+----
+
+Request:
+```json
+{ "q": "harry pot", "type": "title", "limit": 2,
+  "fields": ["term", "id", "creator", "type"]}
 ```
 
 Response:
@@ -245,27 +327,11 @@ Response:
 
 ----
 
-Request:
-```json
-{ "q": "harry",
-  "type": "creator",
-  "limit": 2 }
-```
-
-Response:
-```json
-[ { "term": "Harry Nilsson"},
-  { "term": "Harry Belafonte"}]
-```
-
-----
 
 Request:
 ```json
-{ "q": "køge",
-  "type": "library",
-  "fields": ["term", "væsensnavn", "adresse", "id", "postnr", "geolokation", "navn", "bibliotekstype", "by"],
-  "limit": 1 }
+{ "q": "køge", "type": "library", "limit": 1,
+  "fields": ["term", "væsensnavn", "adresse", "id", "postnr", "geolokation", "navn", "bibliotekstype", "by"]}
 ```
 
 Response:
@@ -283,12 +349,23 @@ Response:
     "term": "Køge Bibliotek, Køge"}]
 ```
 
-
-
-
 ## `/user` 
 
 - user status, including arrived loans, orders, etc.
+
+Request:
+```json
+{}
+```
+
+Response:
+```json
+{ "id": "U2VydmljZVByb3ZpZGVy",
+  "orders": []
+  "loans": []
+  "debt": []
+  }
+```
 
 ## `/work` 
 
