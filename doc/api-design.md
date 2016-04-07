@@ -286,7 +286,7 @@ request:
 ```json
 { "filter": 
   { "libraries": ["700401", "710104"],
-    "type": ["artikel", "tidskriftsartikel"]}
+    "types": ["artikel", "tidskriftsartikel"]}
   "profile": "pop",
   "likes": ["..."]
   "dislikes": []
