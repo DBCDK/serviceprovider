@@ -54,7 +54,24 @@ TODO clarify/document details.
 
 # API endpoints
 
-Endpoints sorted alphabetical. Numbers in parenthesis reflect that they are secondery, or tertiary priority, as mentioned in the prioritisation later in this document.
+Endpoints sorted alphabetical. Numbers in parenthesis reflect that they are secondary, or tertiary priority, as mentioned in the prioritisation later in this document.
+
+Design-status - example requests:
+
+- availability: needs details on result
+- ddbcms: draft ready
+- facets: draft ready
+- libraries: draft ready, except document openagency-order-requirements details
+- order: draft ready, has notes to be cleaned up + needs review
+- rank: draft ready
+- recommend: draft ready, except needs examplepids
+- renew: todo
+- search: ready
+- suggest: ready
+- user: needs details
+- work: ready
+
+An `access_token` is needed either in the header or as part of the query. This has been omitted in the examples below.
 
 ## `/availability` 
 
@@ -99,8 +116,7 @@ NB: `agency`, and `key` is appended to the `query` by the ServiceProvider.
 
 Response:
 ```json
-{ TODO:NEEDS_EXAMPLE
-  ...}
+"..."
 ```
 
 It just returns the result from the ddbcms-service.
@@ -182,7 +198,7 @@ TODO: test users needed, to be able to try out this service. We should also docu
 
 Request:
 ```json
-{ "id": "870970-basis:51989252",
+{ "ids": ["870970-basis:51989252"],
   "library": "700401",
   "name": "Jens Jensen",
   "address": "Kirkestræde 1, 1234 Landsby"
@@ -192,14 +208,15 @@ Request:
 }
 ```
 
-Whether `name`, `address`, `email` or `phone` is required, can be seen given the result of `/libraries`-endpoint for the relevant library.
+Whether `name`, `address`, `email` or `phone` is required, can be seen given the result of `/libraries`-endpoint for the relevant library. It include one or more `ids`, of which one is ordered. This is useful for for ordering a book where there is several possible editions.
 
 TODO Note: `'LD_CPR' => 'cpr', 'LD_ID' => 'userId', 'LD_TXT' => 'customId', 'LD_LKST' => 'barcode', 'LD_KLNR' => 'cardno', 'LD_PIN' => 'pincode', 'LD_DATO' => 'userDateOfBirth', 'LD_NAVN' => 'userName', 'LD_ADR' => 'userAddress', 'LD_EMAIL' => 'userMail', 'LD_TLF' => 'userTelephone'` are the values in openagency about required properties. I assume that those not name/address/email/phone, can be derived from the context, otherwise `/order` needs extra parameter.
+
 
 Response:
 ```json
 { "orderId": "1234",
-  "id": "870970-basis:51989252",
+  "ids": ["870970-basis:51989252"],
   "library": "700401",
   "expires": "2016-06-24T18:25:43.511Z"}
 }
@@ -236,29 +253,59 @@ Response:
   "deleted": true }
 ```
 
-## `/rank` (.3)
+## `/rank` (3.)
 
-Similar to recommend, but sorts a list of ids, instead of finding related ids
+Similar to recommend, but sorts a list of ids in order of relevance, given a recommender with likes, dislikes and so on.
 
+request: 
+
+```json
+{ "profile": "pop",
+  "likes": ["..."],
+  "dislikes": [],
+  "known": [],
+  "discard": [],
+  "ids": ["..."],
+  }
+```
+
+response:
+```json
+[ { "title": "Harry Potter og Fønixordenen",
+    "creator": "...",
+    "weight": 123,
+    "pid": "300185-katalog:100562332",
+    "fromPid": "870970-basis:51989252"},
+  "..."]
+```
+   
 ## `/recommend` (3.)
+
+request: 
 
 ```json
 { "filter": 
   { "libraries": ["700401", "710104"],
-type: bog
-
-defaul, pop, similar-peronal
-    "profil",
-
-filter: 
-profil: 
+    "type": ["artikel", "tidskriftsartikel"]}
+  "profile": "pop",
+  "likes": ["..."]
+  "dislikes": []
+  "known": []
+  "discard": []}
 ```
 
-- maybe possibility to limit results to materials available at the current library.
+Currently profile is either: default, pop, or similar-peronal. This naming will probably change, so best to omit it, to just take the default.
 
-- req: filter(optional), profil(optional), pids
-- result: title, creator, weight, pids, fromPid
-
+response:
+```json
+[ { "title": "Harry Potter og Fønixordenen",
+    "creator": "...",
+    "weight": 123,
+    "pid": "300185-katalog:100562332",
+    "fromPid": "870970-basis:51989252"},
+  "..."]
+```
+   
 ## `/renew`
 
 ## `/search` 
@@ -270,28 +317,26 @@ search result
 Request:
 ```json
 { "q": "harry AND potter",
-  "fields": ["id", "dcTitle", "collection", "dcSubjectDBCF", "relHasAdaptation", "coverUrlFull"],
+  "fields": ["identifier", "dcTitle", "collection", "dcSubjectDBCF", "relHasAdaptation", "coverUrlFull"],
   "sort": "default", "offset": 2, "limit": 2 }
 ```
 
 If `fields` are omitted, it will return those that easily comes from opensearch, ie DKABM-fields, collection, relations. And not coverUrls etc.
 
-TODO: figure out if opensearch can return both BriefDisplay and DKABM, in that case fields from BriefDisplay is also included by default in search, - as that is also fast.
-
 Later version of the api might also have an option to switch between manifest and work-1.
 
 Response:
 ```json
-[{"id": ["300185-katalog:100562332"],
+[{"identifier": ["300185-katalog:100562332"],
   "dcTitle": ["Harry Potter og Fønixordenen DVD"],
-  "coverUrlFull": ["//..."]},
- {"id": ["870970-basis:51989252"],
+  "coverUrlFull": ["https://moreinfo.addi.dk/2.1/more_info_get.php?id=36565894&type=forside_500&key=55d553c259c9e46291a4"]},
+ {"identifier": ["870970-basis:51989252"],
   "dcTitle": ["Harry Potter og de vises sten"],
   "collection": ["300185-katalog:100562332", "870970-basis:51989252", "870971-forfweb:86203219", 
                  "870970-basis:24284514", "870970-basis:24284565", "..."],
   "dcSubjectDBCF": ["fantasy", "magi", "troldmænd"],
   "relHasAdaption": ["870970-basis:27123279", "870970-basis:27963390"],
-  "coverUrlFull": ["//..."]}]
+  "coverUrlFull": ["https://moreinfo.addi.dk/2.1/more_info_get.php?id=36565894&type=forside_500&key=55d553c259c9e46291a4"]}]
 ```
 
 ## `/suggest` 
@@ -331,6 +376,8 @@ Response:
     "type": "book" }]
 ```
 
+Notice that suggest/completion index is not real-time, so there is no guarantee that the `id` matches a bibliographic object in the `/work` endpoint, - though usually there will be one (they will be sync'ed every week).
+
 ----
 
 
@@ -367,17 +414,20 @@ Request:
 Response:
 ```json
 { "id": "U2VydmljZVByb3ZpZGVy",
-  "orders": []
-  "loans": []
-  "debt": []
-  }
+  "registered": true,
+  "orders": [],
+  "loans": [],
+  "debt": [],
+}
 ```
+
+`registered` tells whether the user has been created / is registered at the library. 
 
 ## `/work` 
 
 Request:
 ```json
-{ "id": "870970-basis:51989252",
+{ "ids": "870970-basis:51989252",
   "fields": ["dcTitle", "collection", "dcSubjectDBCF", "relHasAdaptation", "coverUrlFull"]}
 ```
 
@@ -390,14 +440,34 @@ Response:
                  "870970-basis:24284514", "870970-basis:24284565", "..."],
   "dcSubjectDBCF": ["fantasy", "magi", "troldmænd"],
   "relHasAdaption": ["870970-basis:27123279", "870970-basis:27963390"],
-  "coverUrlFull": ["//..."]}
+  "coverUrlFull": ["https://moreinfo.addi.dk/2.1/more_info_get.php?id=36565894&type=forside_500&key=55d553c259c9e46291a4"]}
 ```
 
-## `/?` 
+## `/unknown endpoints` (maybe later)
 
-community services etc. needed by biblo
+community services/profile etc. needed by biblo.
 
-## `/batch` (later)  several queries in one http-request, for efficient-non-socket queries
+## `/batch` (maybe later)  
+
+several queries in one http-request, needed on non-socket clients for efficiency
+
+request:
+
+```json
+[{"endpoint": "work", "id": "870970-basis"},
+ {"endpoint": "work", "id": "870970-basis:24284565"},
+ {"endpoint": "suggest", "type": "subject", "q": "hej"},
+ "..."]
+```
+
+response:
+```json
+[{"dc
+ {"title": "Harry Potter", "...":"..."},
+ {"title": "Danmark", "...":"..."},
+ [{"term":"..."}, "..."]
+ "..."]
+```
 
 # Bibliographic Data Model
 
@@ -406,12 +476,11 @@ They are identified by a *id*, - an example would be "775100-katalog:29372365".
 
 The bibliographic object is represented as a JSON-object with fields from:
 
-- `id` - ie. identifier from opensearch.
-- BriefDisplay - ¿Where is this format documented? - Probably encoded in object with keys such as `title`, `creator`, `workType`, `titleFull` .... Evt. just identifier, if not easy to get together with dkabm from opensearch
+- BriefDisplay - ¿Where is this format documented? - Probably encoded in object with keys such as `identifier`, `title`, `creator`, `workType`, `titleFull` .... Evt. just identifier, if not easy to get together with dkabm from opensearch
 - DKABM - defined on biblstandard.dk. Probably encoded in object with keys such as `acIdentifier`, `dcLanguage` or `dcLanguageISO639-2`, or `dcTitleFull`, (assuming there are no namespace-collisions of types, otherwise we need to rethink mapping into object).
 - Relations - http://danbib.dk/index.php?doc=broend3_relationer - probably encoded in object with keys such as `relIsPartOfManifestation`, `relDiscusses`, ... 
 - `collection` list of ids in same "værk" within opensearch search
-- moreInfo - covers as url and dataurl, - as `coverUrlXXX` or `coverDataUrlXXX` where `XXX` is one of `42`, `117`, `207`, `500`, `Thumbnail` or `Full`, ie. `coverUrl42`.
+- moreInfo - covers as url and dataurl, - as `coverUrlXXX` or `coverDataUrlXXX` where `XXX` is one of `42`, `117`, `207`, `500`, `Back`, `Thumbnail` or `Full`, ie. `coverUrl42`.
 
 Each key present in the json-object, should contain an array of values. Example: if the bibliographic xml-object contains:
 
