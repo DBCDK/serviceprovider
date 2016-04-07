@@ -7,7 +7,6 @@
 
 import Provider from './provider/Provider.js';
 import AutoRequire from './provider/lib/AutoRequire.js';
-import ClientCache from './provider/lib/ClientCache.js';
 import path from 'path';
 
 // import clients
@@ -33,20 +32,12 @@ import MetaRecommendations from './services/MetaRecommendations/Recommendation.c
  *
  * @param provider
  * @param config
- * @param clientCache
  * @param clientName
  * @param client
  */
-function registerServiceClient(provider, config, clientCache, clientName, client) {
+function registerServiceClient(provider, config, clientName, client) {
   const methods = client(config[clientName]);
-  const cache = config[clientName].cache || null;
-  if (cache) {
-    provider.registerServiceClient(clientName, clientCache(methods, cache));
-  }
-  else {
-    provider.registerServiceClient(clientName, methods);
-  }
-
+  provider.registerServiceClient(clientName, methods);
 }
 
 /**
@@ -59,7 +50,7 @@ function registerServiceClient(provider, config, clientCache, clientName, client
 export default function initProvider(config) {
   const provider = Provider();
 
-  const RegisterClientOnProvider = registerServiceClient.bind(null, provider, config.provider.services, ClientCache(config.cache));
+  const RegisterClientOnProvider = registerServiceClient.bind(null, provider, config.provider.services);
 
   // Register all clients
   RegisterClientOnProvider('borchk', Borchk);
