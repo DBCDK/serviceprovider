@@ -71,46 +71,57 @@ function getIdentifierInformationList(response) {
   return response.identifierInformation;
 }
 
-function getCoverUrlsFromIdentifierInformation(idInfo, state) {
-
+function doIdentifierInformationContainsCoverImages(idInfo) {
+  let res = true;
   if (!_.has(idInfo, 'identifierKnown') || !idInfo.identifierKnown === true || !_.has(idInfo, 'coverImage') || idInfo.coverImage.length === 0) {
     // no identifierKnown attribute. should this be the same as 'identifier not known'?
     if (_.has(idInfo, 'identifier.localIdentifier') && _.has(idInfo, 'identifier.libraryCode')) {
-      let pid = idInfo.identifier.libraryCode + ":" + idInfo.identifier.localIdentifier;
+      let pid = id2parameter(idInfo.identifier.libraryCode,idInfo.identifier.localIdentifier);
       console.log("Could not find covers for identifier: " + pid);
     } else {
       console.log("Could not find covers for unknown identifier: " + JSON.stringify(idInfo, null, 4));
     }
-    return {};
+    res = false;
   }
+  return res;
+}
 
-  let stateId = id2parameter(idInfo.identifier.libraryCode, idInfo.identifier.localIdentifier);
+function getPid(libCode, localId, state) {
+  let stateId = id2parameter(libCode, localId);
   let pid = state[stateId];
   console.log("pid: " + JSON.stringify(pid, null, 4));
+  return pid;
+}
 
-  // get coverImages:
-  let IMAGE_SIZES = {
-    "detail_42": "coverUrl42",
-    "detail_117": "coverUrl117",
-    "detail_207": "coverUrl207",
-    "detail_500": "coverUrl500",
-    "thumbnail": "coverUrlThumbnail",
-    "detail": "coverUrlFull"
-  };
+const IMAGE_SIZES = {
+  "detail_42": "coverUrl42",
+  "detail_117": "coverUrl117",
+  "detail_207": "coverUrl207",
+  "detail_500": "coverUrl500",
+  "thumbnail": "coverUrlThumbnail",
+  "detail": "coverUrlFull"
+};
 
-  let Y = idInfo.coverImage.map(x => {
+function getImageSizeAndUrl(x) {
     let res = {};
     if (_.has(x, 'attributes.imageSize') && _.has(x, '$value')) {
       let is = IMAGE_SIZES[x.attributes.imageSize];
       res[is] = x['$value'].replace('http:', '');
     }
     return res;
-  });
+}
 
-  let Z = {};
-  Y.forEach(z => _.extend(Z, z));
+function getCoverUrlsFromIdentifierInformation(idInfo, state) {
 
-  return {pid: pid, urls: Z};
+  if(!doIdentifierInformationContainsCoverImages(idInfo)) {
+    return {};
+  }
+
+  let pid = getPid(idInfo.identifier.libraryCode, idInfo.identifier.localIdentifier, state);
+  let imageUrlsList = idInfo.coverImage.map(x => getImageSizeAndUrl(x));
+  let imageUrls = imageUrlsList.reduce(_.extend, {});
+
+  return {pid: pid, urls: imageUrls};
 }
 
 function handleError(e) {
