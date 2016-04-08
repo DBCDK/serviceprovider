@@ -54,6 +54,7 @@ TODO clarify/document details.
 
 # API endpoints
 
+This is mainly implementation notes, see the actual specification in spec.yml, and in the running serviceprovider (http://localhost:8080/ locally, or TODO:url-for-public-endpoint)
 Endpoints sorted alphabetical. Numbers in parenthesis reflect that they are secondary, or tertiary priority, as mentioned in the prioritisation later in this document.
 
 Design-status - example requests:
@@ -73,7 +74,6 @@ Design-status - example requests:
 - work: ready
 
 An `access_token` is needed either in the header or as part of the query. This has been omitted in the examples below.
-
 
 Questions:
 
@@ -387,7 +387,7 @@ search result
 Request:
 ```json
 { "q": "harry AND potter",
-  "fields": ["identifier", "dcTitle", "collection", "dcSubjectDBCF", "relHasAdaptation", "coverUrlFull"],
+  "fields": ["identifier", "title", "collection", "subjectDBCF", "relHasAdaptation", "coverUrlFull"],
   "sort": "default", "offset": 2, "limit": 2 }
 ```
 
@@ -398,13 +398,13 @@ Later version of the api might also have an option to switch between manifest an
 Response:
 ```json
 [{"identifier": ["300185-katalog:100562332"],
-  "dcTitle": ["Harry Potter og Fønixordenen DVD"],
+  "title": ["Harry Potter og Fønixordenen DVD"],
   "coverUrlFull": ["https://moreinfo.addi.dk/2.1/more_info_get.php?id=36565894&type=forside_500&key=55d553c259c9e46291a4"]},
  {"identifier": ["870970-basis:51989252"],
-  "dcTitle": ["Harry Potter og de vises sten"],
+  "title": ["Harry Potter og de vises sten"],
   "collection": ["300185-katalog:100562332", "870970-basis:51989252", "870971-forfweb:86203219", 
                  "870970-basis:24284514", "870970-basis:24284565", "..."],
-  "dcSubjectDBCF": ["fantasy", "magi", "troldmænd"],
+  "subjectDBCF": ["fantasy", "magi", "troldmænd"],
   "relHasAdaption": ["870970-basis:27123279", "870970-basis:27963390"],
   "coverUrlFull": ["https://moreinfo.addi.dk/2.1/more_info_get.php?id=36565894&type=forside_500&key=55d553c259c9e46291a4"]}]
 ```
@@ -499,17 +499,17 @@ Response:
 Request:
 ```json
 { "pids": ["870970-basis:51989252",]
-  "fields": ["dcTitle", "collection", "dcSubjectDBCF", "relHasAdaptation", "coverUrlFull"]}
+  "fields": ["title", "collection", "subjectDBCF", "relHasAdaptation", "coverUrlFull"]}
 ```
 
 If `fields` are omitted, it will return those that easily comes from getinfo, ie DKABM-fields, relations. And not collection, coverUrls etc.
 
 Response:
 ```json
-[{"dcTitle": ["Harry Potter og de vises sten"],
+[{"title": ["Harry Potter og de vises sten"],
   "collection": ["300185-katalog:100562332", "870970-basis:51989252", "870971-forfweb:86203219", 
                  "870970-basis:24284514", "870970-basis:24284565", "..."],
-  "dcSubjectDBCF": ["fantasy", "magi", "troldmænd"],
+  "subjectDBCF": ["fantasy", "magi", "troldmænd"],
   "relHasAdaption": ["870970-basis:27123279", "870970-basis:27963390"],
   "coverUrlFull": ["https://moreinfo.addi.dk/2.1/more_info_get.php?id=36565894&type=forside_500&key=55d553c259c9e46291a4"]}]
 ```
@@ -578,10 +578,12 @@ They are identified by a *id*, - an example would be "775100-katalog:29372365".
 The bibliographic object is represented as a JSON-object with fields from:
 
 - BriefDisplay - ¿Where is this format documented? - Probably encoded in object with keys such as `identifier`, `title`, `creator`, `workType`, `titleFull` .... Evt. just identifier, if not easy to get together with dkabm from opensearch
-- DKABM - defined on biblstandard.dk. Probably encoded in object with keys such as `acIdentifier`, `dcLanguage` or `dcLanguageISO639-2`, or `dcTitleFull`, (assuming there are no namespace-collisions of types, otherwise we need to rethink mapping into object).
+- DKABM - defined on biblstandard.dk. Probably encoded in object with keys such as `identifier`, `language` or `languageISO639-2`, or `titleFull`, (assuming there are no namespace-collisions of types, otherwise we need to rethink mapping into object).
 - Relations - http://danbib.dk/index.php?doc=broend3_relationer - probably encoded in object with keys such as `relIsPartOfManifestation`, `relDiscusses`, ... 
 - `collection` list of ids in same "værk" within opensearch search
 - moreInfo - covers as url and dataurl, - as `coverUrlXXX` or `coverDataUrlXXX` where `XXX` is one of `42`, `117`, `207`, `500`, `Back`, `Thumbnail` or `Full`, ie. `coverUrl42`.
+
+List of the possible keys can be seen on: https://github.com/DBCDK/serviceprovider/blob/master/doc/work-context.jsonld
 
 Each key present in the json-object, should contain an array of values. Example: if the bibliographic xml-object contains:
 
@@ -596,9 +598,9 @@ Each key present in the json-object, should contain an array of values. Example:
 it would map to json like:
 
 ```json
-{ "dcSubjectDBCN": ["for 7 år", "for 8 år"],
-  "dctermsAudience": ["børnematerialer"],
-  "dcTitle": ["Danmark"]}
+{ "subjectDBCN": ["for 7 år", "for 8 år"],
+  "audience": ["børnematerialer"],
+  "title": ["Danmark"]}
 ```
 
 This encoding is both easy to work directly with in client code, and will also be a JSON-LD encoding, when adding an `@context` with a _link_ to a general context description and an `@id` with the id of the object - which makes the endpoint deliver proper linked data. 
@@ -609,11 +611,11 @@ In the example above, the `@id` would be something like `https://serviceprovider
 { "dc": "http://purl.org/dc/elements/1.1/",
   "dkdcplus": "http://biblstandard.dk/abm/namespace/dkdcplus/",
   "dcterms": "http://purl.org/dc/terms/1.1/" ,
-  "dcSubjectDBCN": 
+  "subjectDBCN": 
   { "@id": "dc:subject",
     "@type": "dkdcplus:DBCN"},
-  "dctermsAudience": "dcterms:audience",
-  "dcTitle": "dc:title"}
+  "audience": "dcterms:audience",
+  "title": "dc:title"}
 ```
 
 # Priorities of features
