@@ -39,6 +39,7 @@ export default function genericTransformer(requestTransformer, responseTransform
         }
         createTest(clientFunction, requestTransformer, responseTransformer,
                    request, transformedRequest, result, transformedResponse,
+                   context, clientResponse.state,
                    context.createTestPath, context.createTestDescription);
       }
       return transformedResponse;
