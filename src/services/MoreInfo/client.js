@@ -10,7 +10,6 @@ import * as BaseSoapClient from 'dbc-node-basesoap-client';
  */
 function getMoreInfoResultNeo(client, identifiers) {
   let params = identifiers;
-  console.log("HIP HOP!");
   return client.request('moreInfo', params, null, true);
 }
 
@@ -58,4 +57,3 @@ export default function MoreInfoClient(config) {
     getMoreInfoResultNeo: getMoreInfoResultNeo.bind(null, client)
   };
 }
-

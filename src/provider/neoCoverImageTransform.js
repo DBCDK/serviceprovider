@@ -25,8 +25,6 @@ function pidSplitter(pid) {
   return id;
 }
 
-
-
 /**
  * Detects the value from requestStatus.statusEnum.
  * If the value is an error/errorcode of some kind, or if the property
@@ -109,12 +107,9 @@ function getCoverUrlsFromIdentifierInformation(idInfo, state) {
     return res;
   });
 
-  //console.log("Y: " + JSON.stringify(Y, null, 4));
-
   let Z = {};
   Y.forEach(z => _.extend(Z, z));
 
-  //console.log("Z: " + JSON.stringify(Z, null, 4));
   return {pid: pid, urls: Z};
 }
 
