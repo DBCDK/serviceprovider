@@ -59,9 +59,10 @@ Endpoints sorted alphabetical. Numbers in parenthesis reflect that they are seco
 Design-status - example requests:
 
 - availability: needs details on result
-- ddbcms: draft ready
+- events: draft ready
 - facets: draft ready
-- libraries: draft ready, except document openagency-order-requirements details
+- libraries: draft ready, except document openagency-order-requirements details, and document content from ddbcms
+- news: draft ready
 - order: draft ready, has notes to be cleaned up + needs review
 - rank: draft ready
 - recommend: draft ready, except needs example-pids
@@ -105,33 +106,46 @@ Response:
 `...` represents that it returns the data of openholding and openpolicy, so essentially json of the data they return. (Tilgængelighed + dato + orderable).
 
 
-## `/ddbcms` (2.) 
+## `/events`
 
-Access to news, events, library-details unavailable from openagency, etc. 
-This info comes from the APIs outside our control.
+request:
 
-This webservice just proxies local DDBCMS instance(based on the agency for the logged in user).
+```json
+{"offset": 0,
+ "limit": 2,
+ "fields": ["nid", "title"]}
+```
+
+Note: the field comes from ddbcms, which is also why the id is called nid.
+
+Here should be a link to the specification of the DDBCMS-api.
+
+response: 
+```json
+[{"nid": "15", "title": "Mød forfatteren: Tim Buk-Swienty"},
+ {"nid": "38", "title": "MC test event"},
+ "..."]
+```
 
 ----
 
-Request:
+request:
+
 ```json
-{ "path": "getContentList",
-  "query": { "type": "ding_event" } }
+{"nids": ["15"]}
 ```
 
-NB: `agency`, and `key` is appended to the `query` by the ServiceProvider.
-
-Response:
+response: 
 ```json
-"..."
+[{"nid": "15", 
+  "title": "Mød forfatteren: Tim Buk-Swienty",
+  "start": "2016-05-15 08:30:00",
+  "lead": "...",
+  "image": "/files/775100/...",
+  "id": "56b0687313e4eefa60ef18cd",
+  "body": "<p>Nunc ullamcorper pulvinar pharetra. Aliquam ma..."
+}]
 ```
-
-It just returns the result from the ddbcms-service.
-
-----
-
-NOTE: where is the api for the DDBCMS specified? 
 
 ## `/facets` (2.)
 
@@ -195,6 +209,42 @@ Response:
 ----
 
 Mapping from OpenAgency xml to json, happens in a similar way to how we map bibliographic objects to json, but with no `oa`-prefix.
+
+## `/news`
+
+request:
+
+```json
+{"offset": 0,
+ "limit": 2,
+ "fields": ["nid", "title"]}
+```
+
+response: 
+```json
+[{"nid": "19", "title": "Sportsstjerner - bag facaden"},
+ {"nid": "40", "title": "Bagud med danskopgaven ? her er hjælp til dig"},
+ "..."]
+```
+
+----
+
+request:
+
+```json
+{"nids": ["19"]}
+```
+
+response: 
+```json
+[{"nid": "19", 
+  "title": "Sportsstjerner - bag facaden",
+  "lead": "...",
+  "image": "/files/775100/...",
+  "id": "56b0687313e4eefa60ef18cd",
+  "body": "<p>Nunc ullamcorper pulvinar pharetra. Aliquam ma..."
+}]
+```
 
 ## `/order` 
 
@@ -488,6 +538,32 @@ response:
  [{"term":"..."}, "..."]
  "..."]
 ```
+
+## `/ddbcms` (not implemented, use news, events, and libraries instead) 
+
+(keeping documentation of the api-ideas here, as it might be useful to add this endpoint later on, to have a general way to get info from the cms)
+
+Access to news, events, library-details unavailable from openagency, etc. 
+This info comes from the APIs outside our control.
+
+This webservice just proxies local DDBCMS instance(based on the agency for the logged in user).
+
+----
+
+Request:
+```json
+{ "path": "getContentList",
+  "query": { "type": "ding_event" } }
+```
+
+NB: `agency`, and `key` is appended to the `query` by the ServiceProvider.
+
+Response:
+```json
+"..."
+```
+
+It just returns the result from the ddbcms-service.
 
 # Bibliographic Data Model
 
