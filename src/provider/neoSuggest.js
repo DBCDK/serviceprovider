@@ -62,7 +62,6 @@ export function subjectSuggestFunction(context) {
   };
 }
 
-
 export function subjectSuggestTransformer() {
   return genericTransformer(subjectSuggestRequest,
                             subjectSuggestResponse,
