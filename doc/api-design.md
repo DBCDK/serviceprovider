@@ -156,6 +156,7 @@ Get a list of facets from a search
 Request:
 ```json
 { "q": "danmark",
+  "sort": "default",
   "fields": ["creator", "subject", "type"],
   "limit": 2 }
 ```
@@ -203,8 +204,7 @@ Request:
 Response:
 ```json
 [ {"branchId": "700401", "city": "Flensburg", "longitude": "54.4801716", "latitude": "9.0467115"},
-  {"branchId": "710104", "city": "København N", "longitude": "55.680887", "latitude": "12.573619"},
-  "..."  ]
+  {"branchId": "710104", "city": "København N", "longitude": "55.680887", "latitude": "12.573619"}]
 ```
 ----
 
@@ -488,6 +488,7 @@ Response:
   "orders": [{"orderId": "1234", "pid": "870970-basis:51989252", "library": "700401", "expires": "2016-12-24"}],
   "loans": [{"loanId": "7890", "pid": "870970-basis:5123456", "returnDate": "2016-31-5"}],
   "debt": [],
+  "..."
 }
 ```
 
@@ -497,7 +498,7 @@ Response:
 
 Request:
 ```json
-{ "id": "870970-basis:51989252",
+{ "pids": ["870970-basis:51989252",]
   "fields": ["dcTitle", "collection", "dcSubjectDBCF", "relHasAdaptation", "coverUrlFull"]}
 ```
 
@@ -505,12 +506,12 @@ If `fields` are omitted, it will return those that easily comes from getinfo, ie
 
 Response:
 ```json
-{ "dcTitle": ["Harry Potter og de vises sten"],
+[{"dcTitle": ["Harry Potter og de vises sten"],
   "collection": ["300185-katalog:100562332", "870970-basis:51989252", "870971-forfweb:86203219", 
                  "870970-basis:24284514", "870970-basis:24284565", "..."],
   "dcSubjectDBCF": ["fantasy", "magi", "troldmænd"],
   "relHasAdaption": ["870970-basis:27123279", "870970-basis:27963390"],
-  "coverUrlFull": ["https://moreinfo.addi.dk/2.1/more_info_get.php?id=36565894&type=forside_500&key=55d553c259c9e46291a4"]}
+  "coverUrlFull": ["https://moreinfo.addi.dk/2.1/more_info_get.php?id=36565894&type=forside_500&key=55d553c259c9e46291a4"]}]
 ```
 
 ## `/unknown endpoints` (maybe later)
@@ -566,6 +567,10 @@ Response:
 It just returns the result from the ddbcms-service.
 
 # Bibliographic Data Model
+
+
+
+
 
 Bibliographic objects are returned from both the `/work` and `/search` endpoints. 
 They are identified by a *id*, - an example would be "775100-katalog:29372365".
