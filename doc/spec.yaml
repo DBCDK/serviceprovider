@@ -1,3 +1,12 @@
+# TODO
+#
+# - result from availability
+# - sort-types in facets and sort
+# - document info about paging in header
+# - make sure general fields are documented
+# - document suggest types, ie. properties in library suggest
+# - result from user
+#
 api:
   availability:
     description: Get availability of material at the library
@@ -7,23 +16,35 @@ api:
       pid:
         description: pid of the work to order
         type: string
+        example: "870970-basis:24284565"
       fields:
         descriptions: the libraries to check availability at
         type: array
         items: {type: "string"}
+        example: ["700400", "710100", "710100"]
   events:
-    description: List of events at the libraries
+    description: List of events at the library where the application is logged in
     properties:
-      ids:
+      nids:
         description: to fetch events specified by ids
         type: array
         items: {type: "string"}
+        example: ["15"]
       limit:
         description: number of events to get
         type: number
+        example: 2
       offset:
         description: offset to first event to get events chronological
         type: number
+        example: 2
+      fields:
+        description: which parts of the response to get
+        type: array
+        items: {type: "string"}
+        example: ["nid", "title"]
+    response:
+      example: [{"nid": "15", "title": "Mød forfatteren: Tim Buk-Swienty", "start": "2016-05-15 08:30:00", "lead": "...", "image": "/files/775100/...", "id": "56b0687313e4eefa60ef18cd", "body": "<p>Nunc ullamcorper pulvinar pharetra. Aliquam ma..." }]
   facets:
     description: Facets of a search result
     required:
@@ -32,25 +53,38 @@ api:
       q:
         description: Query to find facets for. The query is expressed in CQL, see http://zing.z3950.org/cql/.
         type: string
+      sort:
+        example: "default"
+        description: Order of results, either "default", "..." or "..."
+        type: string
       fields:
         description: limits the facets fetched
         type: array
         items: {type: "string"}
+        example: ["creator", "subject", "type"]
+      limit:
+        description: number of facets per type
+        example: 2
+    response:
+      example: { "creator": [{ "term": "nordisk ministerråd", "frequency": 2708}, { "term": "nordisk råd", "frequency": 2463}], "subject": [{ "term": "danmark", "frequency": 188792}, { "term": "historie", "frequency": 19867}], "type": [{ "term": "avisartikel", "frequency": 83786}, { "term": "tidsskriftsartikel", "frequency": 77618}]}
   libraries:
     description: list/information about libraries
     properties:
-      ids:
-        description: ids ("AgencyIds") of libraries to fetch, - return all libraries if omitted.
+      branchIds:
+        description: ids of libraries to fetch, - return all libraries if omitted.
         type: array
         items: {type: "string"}
+      fields:
+        description: which information about the library that is needed
+        type: array
+        items: {type: "string"}
+        example: ["branchId", "city", "longitude", "latitude"]
     response:
-      type: array
-      items:
-        $ref: "#/definitions/Library"
+      example: [ {"branchId": "700401", "city": "Flensburg", "longitude": "54.4801716", "latitude": "9.0467115"}, {"branchId": "710104", "city": "København N", "longitude": "55.680887", "latitude": "12.573619"}, "..."  ]
   news:
     description: news-posts about the library
     properties:
-      ids:
+      nids:
         description: to fetch news specified by ids
         type: array
         items: {type: "string"}
@@ -60,35 +94,110 @@ api:
       offset:
         description: offset to first news to get events chronological
         type: number
-  order:
-    description: Order a library material, or modify/remove an existing order
-    required:
-      - pid
-    $ref: "#/definitions/Order"
     response:
-      $ref: "#/definitions/Order"
-  recommend:
-    description: Get recommendations based on a list of likes
-    required:
-      - ids
+      example: [{"nid": "19", "title": "Sportsstjerner - bag facaden", "lead": "...", "image": "/files/775100/...", "id": "56b0687313e4eefa60ef18cd", "body": "<p>Nunc ullamcorper pulvinar pharetra. Aliquam ma..."}, {"nid": "40", "...": "..."}, "..."]
+  order:
+    description: Order a library material, or modify/remove an existing order. 
     properties:
-      ids:
-        description: list of materials used as basis for the recommendation
+      orderId:
+        description: The identifier for the order, required when updating or deleting an order.
+        type: string
+        example: "1234"
+      pids:
+        description: The pids of the material to order. Several pids can be given, for example if you want to order a book, but does not care which of the editions. Required, and only applicable to new orders when making a new order.
+        example: ["870970-basis:51989252"]
         type: array
         items: {type: "string"}
+      library:
+        description: The library to deliver to. Required when making a new order.
+        type: string
+        example: "700401"
+      name:
+        description: The full name of the user. Required when making new order for some libraries, - check the /libraries endpoint.
+        type: string
+        example: Jens Jensen
+      address:
+        description: The address of the user. Required when making new order for some libraries, - check the /libraries endpoint.
+        example: Kirkestræde 1, 1234 Landsby
+        type: string
+      email:
+        description: The email of the user. Required when making new order for some libraries, - check the /libraries endpoint.
+        example: jens.jensen@example.com
+        type: string
+      phone:
+        description: The phone number of the user. Required when making new order for some libraries, - check the /libraries endpoint.
+        example: 12345678
+        type: string
+      expires:
+        description: When the order expires if not fullfilled. Required when making a new order.
+        type: string
+        example: 2016-06-24
+        format: date-time
+      delete:
+        description: whether to delete an order, - not applicable to new orders.
+        type: bool
+        example: true
+    response:
+      example: { "orderId": "1234", "pids": ["870970-basis:51989252"], "library": "700401", "expires": "2016-06-24T18:25:43.511Z"}
+  recommend:
+    description: Get recommendations based on a list of likes
+    properties:
+      filter:
+        description: filter the likes by library or material type
+        type: object
+        properties:
+          libraries: 
+            description: list of libraries
+            type: array
+            items: {type: "string"}
+            example: ["700401", "710104"]
+          types: 
+            description: types of materials
+            type: array
+            items: {type: "string"}
+            example: ["artikel", "tidskriftsartikel"]
+      recommender:
+        description: the type of recommender, such as default or popular
+        type: string
+        example: default
+      likes:
+        description: list of liked materials
+        type: array
+        items: {type: "string"}
+        examples: ["870970-basis:12345678", "..."]
+      dislikes:
+        description: list of disliked materials
+        type: array
+        items: {type: "string"}
+        examples: ["870970-basis:12345678", "..."]
+      known:
+        description: list of materials that is related to the user
+        type: array
+        items: {type: "string"}
+        examples: ["870970-basis:12345678", "..."]
+      discard:
+        description: list of materials that should not be returned from the recommender
+        type: array
+        items: {type: "string"}
+        examples: ["870970-basis:12345678", "..."]
+    response:
+      example: [ { "title": "Harry Potter og Fønixordenen", "creator": "...", "weight": 123, "pid": "300185-katalog:100562332", "fromPid": "870970-basis:51989252"}, "..."]
   renew:
     description: Renew a material
     properties:
-      id:
-        description: id of the material to renew
+      loanId:
+        description: id of the loan to renew
         type: string
+        example: "7890"
+    response:
+      example: {"loanId": "7890", "returnDate": "2016-09-12"}
   search:
     description: Search for a library material.
     required:
       - q
     properties:
       q:
-        example: "(ost)"
+        example: "harry AND potter"
         description: |
            Query to search for. The query is expressed in CQL, see http://zing.z3950.org/cql/.
         type: string
@@ -106,16 +215,13 @@ api:
         type: array
         items: {type: "string"}
       sort:
-        example: "ranking"
+        example: "default"
         description: Order of results, either "default", "..." or "..."
         type: string
     response:
       type: array
-      items:
-        $ref: "#/definitions/Work"
-    examples:
-      - {"query":"(ost)","offset":0,"worksPerPage":12,"sort":"default"}
-      - {"query":"(harry and potter)","offset":0,"worksPerPage":12,"sort":"default"}
+      #items: {$ref: "#/definitions/Work"}
+      example: [{"identifier": ["300185-katalog:100562332"], "dcTitle": ["Harry Potter og Fønixordenen DVD"], "coverUrlFull": ["https://moreinfo.addi.dk/2.1/more_info_get.php?id=36565894&type=forside_500&key=55d553c259c9e46291a4"]}, {"identifier": ["870970-basis:51989252"], "dcTitle": ["Harry Potter og de vises sten"], "collection": ["300185-katalog:100562332", "870970-basis:51989252", "870971-forfweb:86203219", "870970-basis:24284514", "870970-basis:24284565", "..."], "dcSubjectDBCF": ["fantasy", "magi", "troldmænd"], "relHasAdaption": ["870970-basis:27123279", "870970-basis:27963390"], "coverUrlFull": ["https://moreinfo.addi.dk/2.1/more_info_get.php?id=36565894&type=forside_500&key=55d553c259c9e46291a4"]}]
   suggest:
     description: Suggestions for completing a query string
     required:
@@ -124,206 +230,53 @@ api:
       q:
         description: Query to complete
         type: string
+        example: "harry"
       limit:
         description: Maximum number of suggestions returned
         type: number
+        example: 10
       type:
         description: The desired type of suggestions, possible values are `library`, `title`, `subject`, `creator`
         type: string
+        example: "title"
+      fields:
+        description: fields to return, defaults to `term`
+        type: array
+        items: {type: "string"}
+        example: ["term", "pid", "creator", "type"]
+    response:
+      example: [ { "term": "Harry Potter og Hemmelighedernes Kammer", "pid": "870970-basis:22375733", "creator": "Joanne K. Rowling", "type": "book"}, { "term": "Harry Potter og fangen fra Azkaban", "pid": "870970-basis:22639862", "creator": "Joanne K. Rowling", "type": "book" }]
   user:
-    properties: {}
+    description: info about current logged-in user
+    properties:
+      fields:
+        description: filter user info
+        example: ["id", "registered"]
+    example: {}
+    response:
+      example: { "id": "U2VydmljZVByb3ZpZGVy", "registered": true, "orders": [{"orderId": "1234", "pid": "870970-basis:51989252", "library": "700401", "expires": "2016-12-24"}], "loans": [{"loanId": "7890", "pid": "870970-basis:5123456", "returnDate": "2016-31-5"}], "debt": [], "...": "..." }
   work:
     description: Retrieve meta information about a creative work
     properties:
-      id:
+      pids:
         description: the id of the material
-        type: string
+        type: array
+        items: {type: "string"}
+        example: ["870970-basis:51989252"]
       fields:
         description: Which fields to return. Limiting the fields can also yield a performance improvement
+        type: array
+        items: {type: "string"}
+        example: ["title", "collection", "dcSubjectDBCF", "relHasAdaptation", "coverUrlFull"]
+    response:
+      example: [{ "dcTitle": ["Harry Potter og de vises sten"], "collection": ["300185-katalog:100562332", "870970-basis:51989252", "870971-forfweb:86203219", "870970-basis:24284514", "870970-basis:24284565", "..."], "dcSubjectDBCF": ["fantasy", "magi", "troldmænd"], "relHasAdaption": ["870970-basis:27123279", "870970-basis:27963390"], "coverUrlFull": ["https://moreinfo.addi.dk/2.1/more_info_get.php?id=36565894&type=forside_500&key=55d553c259c9e46291a4"]}] 
 definitions:
-  Order:
-    type: object
-    properties:
-      pid:
-        description: pid of the material ordered
-        type: string
-      library:
-        description: library where the material should be delivered to
-        type: string
-      delete:
-        description: when does the order expires if not fulfulled. Delete the order if set to true.
-        type: string
-        format: date-time
   Work:
+    example: { "dcTitle": ["Harry Potter og de vises sten"], "collection": ["300185-katalog:100562332", "870970-basis:51989252", "870971-forfweb:86203219", "870970-basis:24284514", "870970-basis:24284565", "..."], "dcSubjectDBCF": ["fantasy", "magi", "troldmænd"], "relHasAdaption": ["870970-basis:27123279", "870970-basis:27963390"], "coverUrlFull": ["https://moreinfo.addi.dk/2.1/more_info_get.php?id=36565894&type=forside_500&key=55d553c259c9e46291a4"]}
     type: object
     properties:
-      pid:
-        type: string
-        example: 775100-katalog:29372365
-      title:
-        type: string
-        example: Trækopfuglens krønike
-      fullTitle:
-        type: string
-        example: Trækopfuglens krønike
-      alternativeTitle:
-        type: string
-        example: ''
-      creator:
-        type: string
-        example: Haruki Murakami
-      contributers:
-        example: [ "Mette Holm", "Aksel Hundslev" ]
-        type: array
-        items:
-          type: string
-      abstract:
-        type: string
-        example: Først forsvinder Toru Okadas kat, dernæst hans kone Kumiko. Hans søgen
-          efter begge bliver en mystisk, magisk rejse i det japanske samfund og sindets
-          afkroge
-      isbns:
-        type: array
-        items:
-          type: string
-      extent:
-        type: string
-        example: ''
-      actors:
-        type: array
-        items: {}
-      series:
-        type: string
-        example: ''
-      subjects:
-        type: array
-        example: [ "magisk realisme", "mænd", "Japan", "1990-1999" ]
-        items:
-          type: string
-      dk5s:
-        type: array
-        items:
-          type: object
-          properties:
-            text:
-              type: string
-              example: Skønlitteratur
-            value:
-              type: string
-              example: sk
-      audience:
-        type: object
-        properties:
-          age:
-            type: array
-            items: {}
-          pegi:
-            type: string
-            example: ''
-          medieraad:
-            type: string
-            example: ''
-          type:
-            type: string
-            example: voksenmaterialer
-      tracks:
-        type: array
-        items: {}
-      languages:
-        type: array
-        items:
-          type: string
-          example: Dansk
-      editions:
-        type: array
-        items:
-          type: object
-          properties:
-            accessType:
-              type: string
-              example: online
-            creator:
-              type: string
-              example: Haruki Murakami
-            date:
-              type: string
-              example: '2011'
-            edition:
-              type: string
-              example: ''
-            extent:
-              type: string
-              example: 27 t., 53 min.
-            identifier:
-              type: string
-              example: 870970-basis:28993285
-            isbns:
-              type: array
-              items:
-                type: string
-                example: '9788779559516'
-            issns:
-              type: array
-              items: {}
-            link:
-              type: array
-              items:
-                type: string
-                example: https://ereolen.dk/ting/object/870970-basis:28993285
-            partOf:
-              type: array
-              items: {}
-            publisher:
-              type: string
-              example: Klim
-            title:
-              type: string
-              example: Trækopfuglens krønike
-            type:
-              type: string
-              example: Lydbog (net)
-            workType:
-              type: string
-              example: audiobook
-      relations:
-        type: array
-        items:
-          type: object
-          properties:
-            link:
-              type: string
-              example: 150015-forlag:9788779559516
-            type:
-              type: string
-              example: dbcaddi:hasDescriptionFromPublisher
-            access:
-              type: string
-              example: ''
-            accessType:
-              type: string
-              example: ''
-            collection:
-              type: array
-              items: {}
-  Library:
-    type: object
-    properties:
-      id:
-        description: Library id
-        type: string
-      name:
-        description: Library name
-        type: string
-      lat:
-        description: Geocoordinate - latitiude
-        type: number
-      lng:
-        description: Geocoordinate - longitude
-        type: number
-      opening_hours:
-        description: Opening hours
-        type: array
-        items:
-          type: object
-          properties: {}
-   
+      pid: {type: "array", items: {type: "string"}}
+      collection: {type: "array", items: {type: "string"}}
+      title: {type: "array", items: {type: "string"}}
+      creator: {type: "array", items: {type: "string"}}
+      "...": "..."
