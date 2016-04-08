@@ -42,28 +42,28 @@ function changeKey(obj, fromKey, toKey) {
 * This transformer calls the entitySuggest client and returns subject
 * suggestions
 */
+export function subjectSuggestRequest(request, context, state) { // eslint-disable-line no-unused-vars
+  let clientRequest = {query: request.q, n: request.limit};
+  return {transformedRequest: clientRequest, state: state};
+}
+
+export function subjectSuggestResponse(response, context, state) { // eslint-disable-line no-unused-vars
+  return {statusCode: 200, data: response.response.suggestions.map((obj) => {
+    return {str: obj.suggestion};
+  })};
+}
+
+export function subjectSuggestFunction(context) {
+  let contextCopy = clone(context);
+  changeKey(contextCopy, 'entityEndpoint', 'endpoint');
+  let client = entitySuggest(contextCopy);
+  return (request, localContext, state) => { // eslint-disable-line no-unused-vars
+    return {response: client.getSubjectSuggestions(request), state: state};
+  };
+}
+
+
 export function subjectSuggestTransformer() {
-
-  function subjectSuggestRequest(request, context, state) { // eslint-disable-line no-unused-vars
-    let clientRequest = {query: request.q, n: request.limit};
-    return {transformedRequest: clientRequest, state: state};
-  }
-
-  function subjectSuggestResponse(response, context, state) { // eslint-disable-line no-unused-vars
-    return {statusCode: 200, data: response.response.suggestions.map((obj) => {
-      return {str: obj.suggestion};
-    })};
-  }
-
-  function subjectSuggestFunction(context) {
-    let contextCopy = clone(context);
-    changeKey(contextCopy, 'entityEndpoint', 'endpoint');
-    let client = entitySuggest(contextCopy);
-    return (request, localContext, state) => { // eslint-disable-line no-unused-vars
-      return {response: client.getSubjectSuggestions(request), state: state};
-    };
-  }
-
   return genericTransformer(subjectSuggestRequest,
                             subjectSuggestResponse,
                             subjectSuggestFunction);
@@ -76,18 +76,18 @@ export function subjectSuggestTransformer() {
 * suggestions
 */
 
-function creatorSuggestRequest(request, context, state) { // eslint-disable-line no-unused-vars
+export function creatorSuggestRequest(request, context, state) { // eslint-disable-line no-unused-vars
   let clientRequest = {query: request.q, n: request.limit};
   return {transformedRequest: clientRequest, state: state};
 }
 
-function creatorSuggestResponse(response, context, state) { // eslint-disable-line no-unused-vars
+export function creatorSuggestResponse(response, context, state) { // eslint-disable-line no-unused-vars
   return {statusCode: 200, data: response.response.suggestions.map((obj) => {
     return {str: obj.suggestion};
   })};
 }
 
-function creatorSuggestFunction(context) {
+export function creatorSuggestFunction(context) {
   let contextCopy = clone(context);
   changeKey(contextCopy, 'entityEndpoint', 'endpoint');
   let client = entitySuggest(contextCopy);
@@ -108,20 +108,20 @@ export function creatorSuggestTransformer() {
 * This transformer calls the entitySuggest client and returns library
 * suggestions
 */
-function librarySuggestRequest(request, context, state) { // eslint-disable-line no-unused-vars
+export function librarySuggestRequest(request, context, state) { // eslint-disable-line no-unused-vars
   let clientRequest = {query: request.q, n: request.limit};
   return {transformedRequest: clientRequest, state: state};
 }
 
 
-function librarySuggestResponse(response, context, state) { // eslint-disable-line no-unused-vars
+export function librarySuggestResponse(response, context, state) { // eslint-disable-line no-unused-vars
   return {statusCode: 200, data: response.response.suggestions.map((obj) => {
     obj.suggestion.str = obj.suggestion.navn + ', ' + obj.suggestion.by;
     return obj.suggestion;
   })};
 }
 
-function librarySuggestFunction(context) {
+export function librarySuggestFunction(context) {
   let contextCopy = clone(context);
   changeKey(contextCopy, 'entityEndpoint', 'endpoint');
   let client = entitySuggest(contextCopy);
@@ -142,16 +142,16 @@ export function librarySuggestTransformer() {
 * This transformer calls the popSuggestion client and returns solr
 * document suggestions
 */
-function popSuggestRequest(request, context, state) { // eslint-disable-line no-unused-vars
+export function popSuggestRequest(request, context, state) { // eslint-disable-line no-unused-vars
   let clientRequest = {query: request.q, rows: request.limit, fields: request.fields};
   return {transformedRequest: clientRequest, state: state};
 }
 
-function popSuggestResponse(response, context, state) { // eslint-disable-line no-unused-vars
+export function popSuggestResponse(response, context, state) { // eslint-disable-line no-unused-vars
   return {statusCode: 200, data: response};
 }
 
-function popSuggestFunction(context) {
+export function popSuggestFunction(context) {
   let contextCopy = clone(context);
   changeKey(contextCopy, 'popEndpoint', 'endpoint');
   let client = popSuggest(contextCopy);
@@ -178,7 +178,7 @@ export function popSuggestTransformer() {
 */
 
 
-function suggestRequest(request, context, state) { // eslint-disable-line no-unused-vars
+export function suggestRequest(request, context, state) { // eslint-disable-line no-unused-vars
 
   state.type = request.type;
   let requestEnvelope = {type: request.type,
@@ -192,7 +192,7 @@ function suggestRequest(request, context, state) { // eslint-disable-line no-unu
   return {transformedRequest: requestEnvelope, state: state};
 }
 
-function suggestResponse(response, context, state) { // eslint-disable-line no-unused-vars
+export function suggestResponse(response, context, state) { // eslint-disable-line no-unused-vars
   let statusCode = response.statusCode;
   if (state.type === 'title') {
     response = response.data.response.docs.map((obj) => {
@@ -209,7 +209,7 @@ function suggestResponse(response, context, state) { // eslint-disable-line no-u
   return {statusCode: statusCode, data: response.data};
 }
 
-function suggestFunction(context) {
+export function suggestFunction(context) {
 
   let transformers = {subject: subjectSuggestTransformer(),
                       creator: creatorSuggestTransformer(),
