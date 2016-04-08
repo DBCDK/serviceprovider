@@ -87,6 +87,9 @@ function getNumericalLogLevel(logLevel) {
 function doLog(level, msg, args) {
   var currentNumericalLogLevel = getNumericalLogLevel(getCurrentLogLevel());
   var targetNumericalLogLevel = getNumericalLogLevel(level);
+  if (currentNumericalLogLevel < targetNumericalLogLevel) {
+    return; // level low, do nothing
+  }
 
   var blob = {
     '@timestamp': (new Date()).toISOString(),
@@ -98,10 +101,7 @@ function doLog(level, msg, args) {
     pid: process.pid,
     msg: msg
   };
-
-  if (currentNumericalLogLevel >= targetNumericalLogLevel) {
-    console.log(JSON.stringify(Object.assign(blob, args))); // eslint-disable-line no-console
-  }
+  console.log(JSON.stringify(Object.assign(blob, args))); // eslint-disable-line no-console
 }
 
 export const log = {
