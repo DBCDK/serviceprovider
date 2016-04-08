@@ -25,6 +25,8 @@ function pidSplitter(pid) {
   return id;
 }
 
+
+
 /**
  * Detects the value from requestStatus.statusEnum.
  * If the value is an error/errorcode of some kind, or if the property
@@ -71,7 +73,7 @@ function getIdentifierInformationList(response) {
   return response.identifierInformation;
 }
 
-function getCoverUrlsFromIdentifierInformation(idInfo) {
+function getCoverUrlsFromIdentifierInformation(idInfo, state) {
 
   if (!_.has(idInfo, 'identifierKnown') || !idInfo.identifierKnown === true || !_.has(idInfo, 'coverImage') || idInfo.coverImage.length === 0) {
     // no identifierKnown attribute. should this be the same as 'identifier not known'?
@@ -83,6 +85,10 @@ function getCoverUrlsFromIdentifierInformation(idInfo) {
     }
     return {};
   }
+
+  let stateId = id2parameter(idInfo.identifier.libraryCode, idInfo.identifier.localIdentifier);
+  let pid = state[stateId];
+  console.log("pid: " + JSON.stringify(pid, null, 4));
 
   // get coverImages:
   let IMAGE_SIZES = {
@@ -103,13 +109,13 @@ function getCoverUrlsFromIdentifierInformation(idInfo) {
     return res;
   });
 
-  console.log("Y: " + JSON.stringify(Y, null, 4));
+  //console.log("Y: " + JSON.stringify(Y, null, 4));
 
   let Z = {};
   Y.forEach(z => _.extend(Z, z));
 
-  console.log("Z: " + JSON.stringify(Z, null, 4));
-  return Z;
+  //console.log("Z: " + JSON.stringify(Z, null, 4));
+  return {pid: pid, urls: Z};
 }
 
 function handleError(e) {
@@ -129,6 +135,10 @@ function handleError(e) {
   return errorEnvelope;
 }
 
+function id2parameter(libCode, localId) {
+  return libCode + ":" + localId;
+}
+
 /*
  request:
  { "pids": ["pid1", "pid2", .... , "pid_n" ] }
@@ -144,19 +154,21 @@ export default function () {
   function requestTransform(request, context) { // eslint-disable-line no-unused-vars
     let pids = request[0].pids;
     let params = {};
+    let state = {};
     params.identifier = pids.map(pid => {
       let pid_obj = pidSplitter(pid);
       let identifier = {};
       identifier.localIdentifier = pid_obj.localid;
       identifier.libraryCode = pid_obj.agency;
+      state[id2parameter(identifier.libraryCode, identifier.localIdentifier)] = pid;
       return identifier;
     });
 
     console.log("PARAMS: " + JSON.stringify(params, null, 4));
-    return params;
+    return {transformedRequest: params, state: state};
   }
 
-  function responseTransform(response, context) { // eslint-disable-line no-unused-vars
+  function responseTransform(response, context, state) { // eslint-disable-line no-unused-vars
     return new Promise((request, resolve) => {
 
       /// The below should probably be converted to some kind of tests.
@@ -173,10 +185,18 @@ export default function () {
         errorCodeInResponse(response);
 
         let identifierInformation = getIdentifierInformationList(response);
-        let idInfo = identifierInformation[0];
 
-        let Z = getCoverUrlsFromIdentifierInformation(idInfo);
-        return resolve(Z);
+        let data = {};
+        identifierInformation.forEach( (idInfo) => {
+          let {pid: pid, urls: Z} = getCoverUrlsFromIdentifierInformation(idInfo, state);
+          data[pid] = Z;
+        });
+        let envelope = {
+          "statusCode": 200,
+          "data": data
+        };
+        console.log("RES: " + JSON.stringify(envelope, null, 4));
+        return resolve(envelope);
       } catch (e) {
         let errorEnvelope = handleError(e);
         resolve(errorEnvelope);
@@ -190,8 +210,8 @@ export default function () {
 
     let client = moreInfoClient(neoContext);
 
-    return function (request, local_context) { // eslint-disable-line no-unused-vars
-      return client.getMoreInfoResultNeo(request);
+    return function (request, local_context, state) { // eslint-disable-line no-unused-vars
+      return {response: client.getMoreInfoResultNeo(request), state: state };
     };
   }
 
