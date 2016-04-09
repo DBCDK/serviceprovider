@@ -54,8 +54,11 @@ TODO clarify/document details.
 
 # API endpoints
 
-This is mainly implementation notes, see the actual specification in spec.yml, and in the running serviceprovider (http://localhost:8080/ locally, or TODO:url-for-public-endpoint)
-Endpoints sorted alphabetical. Numbers in parenthesis reflect that they are secondary, or tertiary priority, as mentioned in the prioritisation later in this document.
+**The actual API-specification is in `spec.yml`, these are notes leading to that file, including extra examples**
+
+Generated documentation from the specification can be seen in the running serviceprovider (http://localhost:8080/ locally, or TODO:url-for-public-endpoint)
+
+Endpoints below are sorted alphabetical. Numbers in parenthesis reflect that they are secondary, or tertiary priority, as mentioned in the prioritisation later in this document.
 
 Design-status - example requests:
 
@@ -567,10 +570,6 @@ Response:
 It just returns the result from the ddbcms-service.
 
 # Bibliographic Data Model
-
-
-
-
 
 Bibliographic objects are returned from both the `/work` and `/search` endpoints. 
 They are identified by a *id*, - an example would be "775100-katalog:29372365".
