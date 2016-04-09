@@ -95,10 +95,10 @@ api:
     response:
       example: [{"nid": "19", "title": "Sportsstjerner - bag facaden", "lead": "...", "image": "/files/775100/...", "id": "56b0687313e4eefa60ef18cd", "body": "<p>Nunc ullamcorper pulvinar pharetra. Aliquam ma..."}, {"nid": "40", "...": "..."}, "..."]
   order:
-    description: Order a library material, or modify/remove an existing order. 
+    description: Order a library material, or modify/remove an existing order.
     properties:
       orderId:
-        description: The identifier for the order, required when updating or deleting an order.
+        description: The identifier for the order, required when updating or deleting an order. You get this from `/user`-status. Depending on the kind of order, it can take a long time from ordering, until the material with the orderId appears in the user status.
         type: string
         example: "1234"
       pids:
@@ -136,7 +136,7 @@ api:
         type: bool
         example: true
     response:
-      example: { "orderId": "1234", "pids": ["870970-basis:51989252"], "library": "700401", "expires": "2016-06-24T18:25:43.511Z"}
+      example: { "pids": ["870970-basis:51989252"], "library": "700401", "expires": "2016-06-24T18:25:43.511Z"}
   recommend:
     description: Get recommendations based on a list of likes
     properties:
