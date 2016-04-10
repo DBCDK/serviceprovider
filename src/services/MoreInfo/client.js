@@ -19,8 +19,6 @@ function getMoreInfoResult(client, identifiers) {
     return {faust: id};
   });
 
-  console.log("PARAMS: " + JSON.stringify(params, null, 4));
-
   return client.request('moreInfo', params, null, true);
 }
 
