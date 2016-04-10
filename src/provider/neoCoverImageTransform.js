@@ -1,13 +1,31 @@
 'use strict';
 
+/**
+ * A Transformer for retreiving cover-image-urls from
+ * the DBC moreinfo service.
+ *
+ * The transformer can take a list of pids and returns
+ * an object containing pids and coverurl-size-types and coverurls.
+ *
+ * request:
+ *   { "pids": ["pid1", "pid2", .... , "pid_n" ] }
+ *
+ * response:
+ *   {
+ *     "pid1": [ "coverUrlFull": "URL", "coverUrl42": "URL", ... ],
+ *     "pid2": [ ... ]
+ *   }
+ */
+
 import genericTransformer from '../genericTransformer.js';
 import moreInfoClient from '../services/MoreInfo/client';
 import _ from 'lodash';
+import {log} from '../utils.js';
 
 /**
  * Splits a PID into: type, agencyid and localid.
- * @param pid
- * @returns {{}}
+ * This functionality is needed as long as moreinfo
+ * can not accept pids as identifiers.
  */
 function pidSplitter(pid) {
   let pid_array = pid.split(':');
@@ -24,6 +42,39 @@ function pidSplitter(pid) {
   id.type = agency_type[1];
   return id;
 }
+
+/**
+ * Returns a String representing an identifier given a libraryCode and a localIdentifier.
+ * Used for lookup in the state-object.
+ */
+function id2parameter(libCode, localId) {
+  return libCode + ":" + localId;
+}
+
+/**
+ * Retrieves a PID from a state-object, given a libraryCode and a localIdentifier.
+ * The state-object must be contain key-values where the keys are constructed
+ * from id2parameter with the libraryCode and localIdentifier. The values are the PIDs.
+ *
+ * This function is needed as long as more-info does not take PIDs as identifiers.
+ */
+function getPid(libCode, localId, state) {
+  let stateId = id2parameter(libCode, localId);
+  let pid = state[stateId];
+  return pid;
+}
+
+/**
+ * A const object for looking up image-sizes as returned from moreinfo.
+ */
+const IMAGE_SIZES = {
+  "detail_42": "coverUrl42",
+  "detail_117": "coverUrl117",
+  "detail_207": "coverUrl207",
+  "detail_500": "coverUrl500",
+  "thumbnail": "coverUrlThumbnail",
+  "detail": "coverUrlFull"
+};
 
 /**
  * Detects the value from requestStatus.statusEnum.
@@ -49,6 +100,10 @@ function errorCodeInResponse(response) {
   }
 }
 
+/**
+ * Finds the list of identifierInformation, or throws
+ * an error if the property cannot be found or the length is 0.
+ */
 function getIdentifierInformationList(response) {
   if (!_.has(response, 'identifierInformation')) {
     throw {
@@ -71,12 +126,19 @@ function getIdentifierInformationList(response) {
   return response.identifierInformation;
 }
 
+/**
+ * Tests whether the identifierInformation contains any cover-images.
+ * Returns true if any cover-images are contained. False otherwise.
+ */
 function doIdentifierInformationContainsCoverImages(idInfo) {
   let res = true;
-  if (!_.has(idInfo, 'identifierKnown') || !idInfo.identifierKnown === true || !_.has(idInfo, 'coverImage') || idInfo.coverImage.length === 0) {
+  if (!_.has(idInfo, 'identifierKnown')
+    || !idInfo.identifierKnown === true
+    || !_.has(idInfo, 'coverImage')
+    || idInfo.coverImage.length === 0) {
     // no identifierKnown attribute. should this be the same as 'identifier not known'?
     if (_.has(idInfo, 'identifier.localIdentifier') && _.has(idInfo, 'identifier.libraryCode')) {
-      let pid = id2parameter(idInfo.identifier.libraryCode,idInfo.identifier.localIdentifier);
+      let pid = id2parameter(idInfo.identifier.libraryCode, idInfo.identifier.localIdentifier);
       console.log("Could not find covers for identifier: " + pid);
     } else {
       console.log("Could not find covers for unknown identifier: " + JSON.stringify(idInfo, null, 4));
@@ -86,34 +148,27 @@ function doIdentifierInformationContainsCoverImages(idInfo) {
   return res;
 }
 
-function getPid(libCode, localId, state) {
-  let stateId = id2parameter(libCode, localId);
-  let pid = state[stateId];
-  console.log("pid: " + JSON.stringify(pid, null, 4));
-  return pid;
-}
-
-const IMAGE_SIZES = {
-  "detail_42": "coverUrl42",
-  "detail_117": "coverUrl117",
-  "detail_207": "coverUrl207",
-  "detail_500": "coverUrl500",
-  "thumbnail": "coverUrlThumbnail",
-  "detail": "coverUrlFull"
-};
-
+/**
+ * Returns an object containing { "coverUrlxxx": "URL" }
+ * where "coverUrlxxx is one of the values in IMAGE_SIZES
+ * and "URL" is the coverImageUrl returned from moreinfo.
+ */
 function getImageSizeAndUrl(x) {
-    let res = {};
-    if (_.has(x, 'attributes.imageSize') && _.has(x, '$value')) {
-      let is = IMAGE_SIZES[x.attributes.imageSize];
-      res[is] = x['$value'].replace('http:', '');
-    }
-    return res;
+  let res = {};
+  if (_.has(x, 'attributes.imageSize') && _.has(x, '$value')) {
+    let is = IMAGE_SIZES[x.attributes.imageSize];
+    res[is] = x['$value'].replace('http:', '');
+  }
+  return res;
 }
 
+/**
+ * Retrieves the cover-urls and image-size from the identifierInformation.
+ * Returns the pid and a list of coverimage-urls and imageSizes according to IMAGE_SIZES.
+ */
 function getCoverUrlsFromIdentifierInformation(idInfo, state) {
 
-  if(!doIdentifierInformationContainsCoverImages(idInfo)) {
+  if (!doIdentifierInformationContainsCoverImages(idInfo)) {
     return {};
   }
 
@@ -124,6 +179,9 @@ function getCoverUrlsFromIdentifierInformation(idInfo, state) {
   return {pid: pid, urls: imageUrls};
 }
 
+/**
+ * Writes out the error to log, and returns an error envelope
+ */
 function handleError(e) {
   let errorEnvelope = {
     statusCode: 500,
@@ -131,29 +189,15 @@ function handleError(e) {
   };
 
   try {
-    console.log("ERROR: [" + e.name + "] : " + e.message);
-    console.log("Response: " + JSON.stringify(e.response, null, 4));
-    console.log(e.stack);
-    console.log("******** END ERROR");
+    log.error("ERROR: [" + e.name + "] : " + e.message);
+    log.error("Response: " + JSON.stringify(e.response, null, 0));
+    log.error(e.stack);
+    log.error("******** END ERROR");
   } catch (e) {
     // We dont care about an error here!
   }
   return errorEnvelope;
 }
-
-function id2parameter(libCode, localId) {
-  return libCode + ":" + localId;
-}
-
-/*
- request:
- { "pids": ["pid1", "pid2", .... , "pid_n" ] }
-
- response
- { "pid1": [ "coverUrlFull": "URL", "coverUrl42": "URL", ... ],
- "pid2": [ ... ]
- }
- */
 
 export default function () {
 
@@ -170,7 +214,6 @@ export default function () {
       return identifier;
     });
 
-    console.log("PARAMS: " + JSON.stringify(params, null, 4));
     return {transformedRequest: params, state: state};
   }
 
@@ -187,13 +230,14 @@ export default function () {
       // response.identifierInformation[0].coverImage = [];
       // console.log("RESP: " + JSON.stringify(response, null, 4));
 
+
       try {
         errorCodeInResponse(response);
 
         let identifierInformation = getIdentifierInformationList(response);
 
         let data = {};
-        identifierInformation.forEach( (idInfo) => {
+        identifierInformation.forEach((idInfo) => {
           let {pid: pid, urls: Z} = getCoverUrlsFromIdentifierInformation(idInfo, state);
           data[pid] = Z;
         });
@@ -201,7 +245,6 @@ export default function () {
           "statusCode": 200,
           "data": data
         };
-        console.log("RES: " + JSON.stringify(envelope, null, 4));
         return resolve(envelope);
       } catch (e) {
         let errorEnvelope = handleError(e);
@@ -212,12 +255,10 @@ export default function () {
 
   function moreInfoFunc(context) {
     let neoContext = context.libdata.config.provider.services.moreinfo;
-    console.log("context: " + JSON.stringify(neoContext, null, 4));
-
     let client = moreInfoClient(neoContext);
 
     return function (request, local_context, state) { // eslint-disable-line no-unused-vars
-      return {response: client.getMoreInfoResultNeo(request), state: state };
+      return {response: client.getMoreInfoResultNeo(request), state: state};
     };
   }
 
