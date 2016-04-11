@@ -9,6 +9,7 @@ import Transform from './lib/Transforms';
 import recommendTransformer from './neoRecommendTransform.js';
 import {suggestTransformer} from './neoSuggest.js';
 import coverImageTransformer from './neoCoverImageTransform.js';
+import openSearchWorkTransformer from './neoOpenSearchWorkTransformer.js';
 
 /**
  * Initialization of the provider and the underlying services.
@@ -37,7 +38,8 @@ export default function Provider() {
   const transformerMap = {
     getRecommendations: recommendTransformer(),
     getSuggestions: suggestTransformer(),
-    getCoverImageNeo: coverImageTransformer()
+    getCoverImageNeo: coverImageTransformer(),
+    getOpenSearchWorkNeo: openSearchWorkTransformer()
   };
 
   /**
@@ -86,6 +88,7 @@ export default function Provider() {
     }
     result.push('getSuggestions');
     result.push('getCoverImageNeo');
+    result.push('getOpenSearchWorkNeo');
     return result;
   }
 
