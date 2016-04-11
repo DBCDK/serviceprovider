@@ -39,6 +39,10 @@ function getSearchResult(client, values) {
   return client.request('search', params, null, true);
 }
 
+function getResultNeo(client, request) {
+  return client.request('search', request.params, request.opts, true);
+}
+
 /**
  * Constructs the object of parameters for work request.
  *
@@ -60,8 +64,14 @@ function getWorkResult(client, values) {
     relationData: values.getRelationData || 'full'
   };
 
+  console.log("PARAMS: " + JSON.stringify(params, null, 4));
+  console.log("OPTS  : " + JSON.stringify(opts, null, 4));
+
   return client.request('search', params, opts, true);
+
 }
+
+
 
 /**
  * Setting the necessary paramerters for the client to be usable.
@@ -72,6 +82,8 @@ function getWorkResult(client, values) {
  * the webservice
  */
 export default function OpenSearch (config) {
+
+  console.log("config: " + JSON.stringify(config, null, 4));
 
   if (typeof config !== 'object') {
     throw new Error('A config object should be provided');
@@ -100,6 +112,7 @@ export default function OpenSearch (config) {
   return {
     getFacetResult: getFacetResult.bind(null, opensearchClient),
     getSearchResult: getSearchResult.bind(null, opensearchClient),
-    getWorkResult: getWorkResult.bind(null, opensearchClient)
+    getWorkResult: getWorkResult.bind(null, opensearchClient),
+    getResultNeo: getResultNeo.bind(null, opensearchClient)
   };
 }
