@@ -25,6 +25,18 @@ function specToPaths(specs) {
       type: 'string',
       description: 'Access token from the OAuth2 server'
     };
+    if (!spec.properties.fields) {
+      spec.properties.fields = {
+        description: 'filter the keys in the result objects, to only contain these fields',
+        type: 'array',
+        items: {type: 'string'}
+      };
+    }
+    spec.properties.pretty = {
+      description: 'whether to prettyprint the resulting json',
+      type: 'bool',
+      example: true
+    };
     let request = {
       name: 'request',
       description: 'Request object',
