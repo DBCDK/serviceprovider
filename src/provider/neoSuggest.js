@@ -23,7 +23,7 @@ import {clone} from 'lodash';
 import genericTransformer from '../genericTransformer.js';
 import entitySuggest from '../services/EntitySuggest/neoClient.js';
 import popSuggest from '../services/PopSuggest/client.js';
-import utils from '../utils.js';
+import {die, functionName, log} from '../../utils';
 
 
 /**
@@ -217,7 +217,7 @@ export function suggestFunction(context) {
 
   return (requestEnvelope, localContext, state) => { // eslint-disable-line no-unused-vars
     if (!transformers.hasOwnProperty(requestEnvelope.type)) {
-      utils.die('SuggestFunction "' + requestEnvelope.type + '" is unknown');
+      die('SuggestFunction "' + requestEnvelope.type + '" is unknown');
     }
 
     return {response: transformers[requestEnvelope.type](requestEnvelope.request, context),
