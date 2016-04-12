@@ -199,69 +199,72 @@ function handleError(e) {
   return errorEnvelope;
 }
 
-export default function () {
+export function moreInfoRequest(request, context) { // eslint-disable-line no-unused-vars
+  let pids = request[0].pids;
+  let params = {};
+  let state = {};
+  params.identifier = pids.map(pid => {
+    let pid_obj = pidSplitter(pid);
+    let identifier = {};
+    identifier.localIdentifier = pid_obj.localid;
+    identifier.libraryCode = pid_obj.agency;
+    state[id2parameter(identifier.libraryCode, identifier.localIdentifier)] = pid;
+    return identifier;
+  });
+  
+  return {transformedRequest: params, state: state};
+}
 
-  function requestTransform(request, context) { // eslint-disable-line no-unused-vars
-    let pids = request[0].pids;
-    let params = {};
-    let state = {};
-    params.identifier = pids.map(pid => {
-      let pid_obj = pidSplitter(pid);
-      let identifier = {};
-      identifier.localIdentifier = pid_obj.localid;
-      identifier.libraryCode = pid_obj.agency;
-      state[id2parameter(identifier.libraryCode, identifier.localIdentifier)] = pid;
-      return identifier;
-    });
+export function moreInfoResponse(response, context, state) { // eslint-disable-line no-unused-vars
+  return new Promise((request, resolve) => {
+    
+    // The below should probably be converted to some kind of tests:
+    //
+    // response.identifierInformation = [];
+    // delete response.identifierInformation;
+    // delete response.requestStatus.statusEnum;
+    // response.identifierInformation[0].identifierKnown = false;
+    // delete response.identifierInformation[0].identifier.localIdentifier;
+    // delete response.identifierInformation[0].coverImage;
+    // response.identifierInformation[0].coverImage = [];
+    // console.log('RESP: ' + JSON.stringify(response, null, 4));
+    
+    
+    try {
+      errorCodeInResponse(response);
+      
+      let identifierInformation = getIdentifierInformationList(response);
+      
+      let data = {};
+      identifierInformation.forEach((idInfo) => {
+        let {pid: pid, urls: Z} = getCoverUrlsFromIdentifierInformation(idInfo, state);
+        data[pid] = Z;
+      });
+      let envelope = {
+        statusCode: 200,
+        data: data
+      };
+      return resolve(envelope);
+    } catch (e) { // eslint-disable-line brace-style
+      let errorEnvelope = handleError(e);
+      resolve(errorEnvelope);
+    }
+  });
+}
 
-    return {transformedRequest: params, state: state};
-  }
-
-  function responseTransform(response, context, state) { // eslint-disable-line no-unused-vars
-    return new Promise((request, resolve) => {
-
-      // The below should probably be converted to some kind of tests:
-      //
-      // response.identifierInformation = [];
-      // delete response.identifierInformation;
-      // delete response.requestStatus.statusEnum;
-      // response.identifierInformation[0].identifierKnown = false;
-      // delete response.identifierInformation[0].identifier.localIdentifier;
-      // delete response.identifierInformation[0].coverImage;
-      // response.identifierInformation[0].coverImage = [];
-      // console.log('RESP: ' + JSON.stringify(response, null, 4));
+export function moreInfoFunc(context) {
+  let neoContext = context.libdata.config.provider.services.moreinfo;
+  let client = moreInfoClient(neoContext);
+  
+  return function (request, local_context, state) { // eslint-disable-line no-unused-vars
+    return {response: client.getMoreInfoResultNeo(request), state: state};
+  };
+}
 
 
-      try {
-        errorCodeInResponse(response);
+export default function moreInfoTransformer() {
 
-        let identifierInformation = getIdentifierInformationList(response);
-
-        let data = {};
-        identifierInformation.forEach((idInfo) => {
-          let {pid: pid, urls: Z} = getCoverUrlsFromIdentifierInformation(idInfo, state);
-          data[pid] = Z;
-        });
-        let envelope = {
-          statusCode: 200,
-          data: data
-        };
-        return resolve(envelope);
-      } catch (e) { // eslint-disable-line brace-style
-        let errorEnvelope = handleError(e);
-        resolve(errorEnvelope);
-      }
-    });
-  }
-
-  function moreInfoFunc(context) {
-    let neoContext = context.libdata.config.provider.services.moreinfo;
-    let client = moreInfoClient(neoContext);
-
-    return function (request, local_context, state) { // eslint-disable-line no-unused-vars
-      return {response: client.getMoreInfoResultNeo(request), state: state};
-    };
-  }
-
-  return genericTransformer(requestTransform, responseTransform, moreInfoFunc);
+  return genericTransformer(moreInfoRequest,
+                            moreInfoResponse,
+                            moreInfoFunc);
 }
