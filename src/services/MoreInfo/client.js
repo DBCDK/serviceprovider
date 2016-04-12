@@ -8,6 +8,11 @@ import * as BaseSoapClient from 'dbc-node-basesoap-client';
  * @param {Array} an array of one or more identifiers (faust)
  * @return {Promise} A promise is returned
  */
+function getMoreInfoResultNeo(client, identifiers) {
+  let params = identifiers;
+  return client.request('moreInfo', params, null, true);
+}
+
 function getMoreInfoResult(client, identifiers) {
   let params = {};
   params.identifier = identifiers.identifiers.map((id) => {
@@ -46,7 +51,7 @@ export default function MoreInfoClient(config) {
   const client = BaseSoapClient.client(config.wsdl, defaults, '');
 
   return {
-    getMoreInfoResult: getMoreInfoResult.bind(null, client)
+    getMoreInfoResult: getMoreInfoResult.bind(null, client),
+    getMoreInfoResultNeo: getMoreInfoResultNeo.bind(null, client)
   };
 }
-
