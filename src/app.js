@@ -96,7 +96,7 @@ module.exports.run = function (worker) {
     // libdata: res.locals.libdata
   };
 
-  const allowAlways = function(req, res, next) {
+  const unprotected = function(req, res, next) {
     req.authorized = true;
     return next();
   };
@@ -143,8 +143,7 @@ module.exports.run = function (worker) {
     res.sendStatus(403);
   };
 
-  app.use('/', allowAlways);
-  app.use(apiPath, allowAlways);
+  app.use('/', unprotected);
 
   app.use(getContext);
   app.use(isAuthorized);
