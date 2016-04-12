@@ -1,5 +1,5 @@
 'use strict';
-import {die, functionName, log, timingDecorator} from './utils.js';
+import {die, timingDecorator} from './utils.js';
 const createTest = require('./createTest.js');
 
 /**
@@ -28,7 +28,7 @@ export default function genericTransformer(requestTransformer, responseTransform
   requestTransformer = timingDecorator(requestTransformer);
   responseTransformer = timingDecorator(responseTransformer);
   clientFunction = timingDecorator(clientFunction);
-  
+
   return function(request, context) {
     let client = clientFunction(context);
     let {transformedRequest, state} = requestTransformer(request, context, {});

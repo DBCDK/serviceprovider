@@ -23,7 +23,7 @@ import {clone} from 'lodash';
 import genericTransformer from '../genericTransformer.js';
 import entitySuggest from '../services/EntitySuggest/neoClient.js';
 import popSuggest from '../services/PopSuggest/client.js';
-import {die, functionName, log} from '../utils.js';
+import {die} from '../utils.js';
 
 
 /**
@@ -36,6 +36,7 @@ function changeKey(obj, fromKey, toKey) {
   }
   return obj;
 }
+
 
 /**
 * Transformer for subjectSuggest endpoint.
@@ -74,7 +75,6 @@ export function subjectSuggestTransformer() {
 * This transformer calls the entitySuggest client and returns creator
 * suggestions
 */
-
 export function creatorSuggestRequest(request, context, state) { // eslint-disable-line no-unused-vars
   let clientRequest = {query: request.q, n: request.limit};
   return {transformedRequest: clientRequest, state: state};
@@ -111,7 +111,6 @@ export function librarySuggestRequest(request, context, state) { // eslint-disab
   let clientRequest = {query: request.q, n: request.limit};
   return {transformedRequest: clientRequest, state: state};
 }
-
 
 export function librarySuggestResponse(response, context, state) { // eslint-disable-line no-unused-vars
   return {statusCode: 200, data: response.response.suggestions.map((obj) => {

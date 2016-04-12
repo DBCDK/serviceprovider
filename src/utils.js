@@ -23,20 +23,6 @@ export function functionName(fun) {
   return ret;
 }
 
-/** 
- * Timingdecorator.
- * returns new function that logs time usage of function.
- *
- */
-export function timingDecorator(f) {
-  return function() {
-    let start = Date.now();
-    let r = f.apply(this, arguments);
-    log.debug('timing', {timing: {function: functionName(f), time: (Date.now() - start)}});
-    return r;
-  };
-}
-
 /**
 * return true if the given path is an existing directory, false
 * otherwise.
@@ -116,3 +102,17 @@ export const log = {
   error: (msg, args) => doLog('error', msg, args),
   debug: (msg, args) => doLog('debug', msg, args)
 };
+
+/**
+ * Timingdecorator.
+ * returns new function that logs time usage of function.
+ *
+ */
+export function timingDecorator(f) {
+  return function() {
+    let start = Date.now();
+    let r = f.apply(this, arguments);
+    log.debug('timing', {timing: {function: functionName(f), time: (Date.now() - start)}});
+    return r;
+  };
+}
