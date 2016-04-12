@@ -211,13 +211,13 @@ export function moreInfoRequest(request, context) { // eslint-disable-line no-un
     state[id2parameter(identifier.libraryCode, identifier.localIdentifier)] = pid;
     return identifier;
   });
-  
+
   return {transformedRequest: params, state: state};
 }
 
 export function moreInfoResponse(response, context, state) { // eslint-disable-line no-unused-vars
   return new Promise((request, resolve) => {
-    
+
     // The below should probably be converted to some kind of tests:
     //
     // response.identifierInformation = [];
@@ -228,13 +228,13 @@ export function moreInfoResponse(response, context, state) { // eslint-disable-l
     // delete response.identifierInformation[0].coverImage;
     // response.identifierInformation[0].coverImage = [];
     // console.log('RESP: ' + JSON.stringify(response, null, 4));
-    
-    
+
+
     try {
       errorCodeInResponse(response);
-      
+
       let identifierInformation = getIdentifierInformationList(response);
-      
+
       let data = {};
       identifierInformation.forEach((idInfo) => {
         let {pid: pid, urls: Z} = getCoverUrlsFromIdentifierInformation(idInfo, state);
@@ -255,7 +255,7 @@ export function moreInfoResponse(response, context, state) { // eslint-disable-l
 export function moreInfoFunc(context) {
   let neoContext = context.libdata.config.provider.services.moreinfo;
   let client = moreInfoClient(neoContext);
-  
+
   return function (request, local_context, state) { // eslint-disable-line no-unused-vars
     return {response: client.getMoreInfoResultNeo(request), state: state};
   };
