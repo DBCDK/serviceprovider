@@ -23,7 +23,7 @@ import {clone} from 'lodash';
 import genericTransformer from '../genericTransformer.js';
 import entitySuggest from '../services/EntitySuggest/neoClient.js';
 import popSuggest from '../services/PopSuggest/client.js';
-import {die, functionName, log} from '../../utils';
+import {die, functionName, log} from '../utils.js';
 
 
 /**
