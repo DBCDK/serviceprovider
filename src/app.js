@@ -272,5 +272,5 @@ module.exports.run = function (worker) {
   // Setting logger -- should be placed after routes
   app.use(expressLoggers.errorLogger);
 
-  log.info('started', {event: 'started', port: app.get('port'), versions: process.versions});
+  log.info('started', {event: 'started', port: app.get('port'), versions: process.versions, smaug: (SMAUG_LOCATION || false)});
 };
