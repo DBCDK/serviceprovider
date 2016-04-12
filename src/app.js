@@ -96,7 +96,16 @@ module.exports.run = function (worker) {
     // libdata: res.locals.libdata
   };
 
+  const allowAlways = function(req, res, next) {
+    req.authorized = true;
+    return next();
+  };
+
   const getContext = function(req, res, next) {
+    if (req.authorized === true) {
+      return next();
+    }
+
     if (!USE_SMAUG) {
       req.context = dummyContext;
       return next();
@@ -133,6 +142,9 @@ module.exports.run = function (worker) {
 
     res.sendStatus(403);
   };
+
+  app.use('/', allowAlways);
+  app.use(apiPath, allowAlways);
 
   app.use(getContext);
   app.use(isAuthorized);
