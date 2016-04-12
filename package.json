@@ -1,6 +1,6 @@
 {
   "name": "serviceprovider",
-  "version": "0.0.1",
+  "version": "1.0.0",
   "description": "API for accessing DBCs services through sockets and HTTP",
   "main": "src/main.js",
   "scripts": {
