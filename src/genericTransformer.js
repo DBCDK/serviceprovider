@@ -1,6 +1,7 @@
 'use strict';
+import {die, timingDecorator} from './utils.js';
 const createTest = require('./createTest.js');
-const utils = require('./utils.js');
+
 /**
  * Generic transformer function designed to build a specific transformer.
  * The Returned transformer is a function that takes two arguments:
@@ -24,6 +25,10 @@ const utils = require('./utils.js');
 
 export default function genericTransformer(requestTransformer, responseTransformer, clientFunction) {
 
+  requestTransformer = timingDecorator(requestTransformer);
+  responseTransformer = timingDecorator(responseTransformer);
+  clientFunction = timingDecorator(clientFunction);
+
   return function(request, context) {
     let client = clientFunction(context);
     let {transformedRequest, state} = requestTransformer(request, context, {});
@@ -35,7 +40,7 @@ export default function genericTransformer(requestTransformer, responseTransform
       if (context.createTest === true) {
 
         if (context.createTestPath === 'undefined') {
-          utils.die('Need testPath in context when creating test (context.createTest is true)');
+          die('Need testPath in context when creating test (context.createTest is true)');
         }
         createTest(clientFunction, requestTransformer, responseTransformer,
                    request, transformedRequest, result, transformedResponse,
