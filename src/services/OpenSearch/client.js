@@ -40,7 +40,7 @@ function getSearchResult(client, values) {
 }
 
 function getResultNeo(client, request) {
-  return client.request('search', request.params, request.opts, true);
+  return client.request('getObject', request.params, request.opts, true);
 }
 
 /**
@@ -107,7 +107,7 @@ export default function OpenSearch (config) {
     profile: config.profile
   };
 
-  const opensearchClient = BaseSoapClient.client(config.wsdl, defaults, log);
+  const opensearchClient = BaseSoapClient.client(config.wsdl, defaults, console);
 
   return {
     getFacetResult: getFacetResult.bind(null, opensearchClient),
