@@ -23,13 +23,18 @@ export function functionName(fun) {
   return ret;
 }
 
-/**
- * Logs object to console as JSON.
- * The function adds a timestamp to the json object (key=logTimestamp)
+/** 
+ * Timingdecorator.
+ * returns new function that logs time usage of function.
+ *
  */
-export function logJSON(object) {
-  object.logTimestamp = Math.floor(new Date() / 1000);
-  console.log(JSON.stringify(object)); // eslint-disable-line
+export function timingDecorator(f) {
+  return function() {
+    let start = Date.now();
+    let r = f.apply(this, arguments);
+    log.debug('timing', {timing: {function: functionName(f), time: (Date.now() - start)}});
+    return r;
+  };
 }
 
 /**
