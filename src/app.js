@@ -116,16 +116,13 @@ module.exports.run = function (worker) {
     });
   };
 
-  const isAuthorized = function(req, res, next) {
+  const requireAuthorized = function(req, res, next) {
     if (!USE_SMAUG || req.authorized) {
       return next();
     }
 
     res.sendStatus(403);
   };
-
-  app.use(getContext);
-  app.use(isAuthorized);
 
   // Adding gzip'ing
   app.use(compression());
@@ -222,7 +219,7 @@ module.exports.run = function (worker) {
 
   // HTTP Transport
   serviceProvider.availableTransforms().forEach(event => {
-    app.all(apiPath + event, (req, res) => { // eslint-disable-line no-loop-func
+    app.all(apiPath + event, getContext, requireAuthorized, (req, res) => { // eslint-disable-line no-loop-func
       // TODO: should just be req.body, when all endpoints accept object-only as parameter, until then, this hack supports legacy transforms
       let query = Array.isArray(req.body) ? req.body[0] : req.body;
 
