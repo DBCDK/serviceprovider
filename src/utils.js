@@ -24,15 +24,6 @@ export function functionName(fun) {
 }
 
 /**
- * Logs object to console as JSON.
- * The function adds a timestamp to the json object (key=logTimestamp)
- */
-export function logJSON(object) {
-  object.logTimestamp = Math.floor(new Date() / 1000);
-  console.log(JSON.stringify(object)); // eslint-disable-line
-}
-
-/**
 * return true if the given path is an existing directory, false
 * otherwise.
 */
@@ -111,3 +102,17 @@ export const log = {
   error: (msg, args) => doLog('error', msg, args),
   debug: (msg, args) => doLog('debug', msg, args)
 };
+
+/**
+ * Timingdecorator.
+ * returns new function that logs time usage of function.
+ *
+ */
+export function timingDecorator(f) {
+  return function() {
+    let start = Date.now();
+    let r = f.apply(this, arguments);
+    log.debug('timing', {timing: {function: functionName(f), time: (Date.now() - start)}});
+    return r;
+  };
+}
