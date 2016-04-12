@@ -74,16 +74,6 @@ module.exports.run = function (worker) {
   app.set('serviceProvider', serviceProvider);
   app.set('logger', logger);
 
-  // Adding gzip'ing
-  app.use(compression());
-
-  // Setting paths
-  app.all('/', (req, res) => res.redirect(apiPath));
-  app.use(apiPath, express.static(path.join(__dirname, '../static')));
-
-  // Setting logger
-  app.use(expressLoggers.logger);
-
   // DUMMY context
   let dummyContext = {
     request: {},
@@ -136,6 +126,16 @@ module.exports.run = function (worker) {
 
   app.use(getContext);
   app.use(isAuthorized);
+
+  // Adding gzip'ing
+  app.use(compression());
+
+  // Setting paths
+  app.all('/', (req, res) => res.redirect(apiPath));
+  app.use(apiPath, express.static(path.join(__dirname, '../static')));
+
+  // Setting logger
+  app.use(expressLoggers.logger);
 
   // Execute transform
   function callApi(event, query, context, callback) {
