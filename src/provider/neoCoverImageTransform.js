@@ -232,7 +232,7 @@ export function moreInfoResponse(response, context, state) { // eslint-disable-l
 
     try {
       errorCodeInResponse(response);
-
+ 
       let identifierInformation = getIdentifierInformationList(response);
 
       let data = {};
@@ -261,9 +261,7 @@ export function moreInfoFunc(context) {
   };
 }
 
-
 export default function moreInfoTransformer() {
-
   return genericTransformer(moreInfoRequest,
                             moreInfoResponse,
                             moreInfoFunc);
