@@ -2,6 +2,8 @@
 This is ideas for design, and it is not decided, nor fully implemented yet.
 During the next months, this document will converge towards the released implementation.
 
+Also see the generated API-documentation, `spec.yaml`, and `work-context.jsonld`. 
+
 # API structure
 
 __Requests__ to the API consist of the _endpoint name_, and a JSON object of _parameters_.
@@ -52,9 +54,92 @@ In the first version it will support logins via "Resource Owner Password Credent
 
 TODO clarify/document details.
 
-# API endpoints
+# Bibliographic Data Model
 
-**The actual API-specification is in `spec.yml`, these are notes leading to that file, including extra examples**
+Bibliographic objects are returned from both the `/work` and `/search` endpoints. 
+They are identified by a *id*, - an example would be "775100-katalog:29372365".
+
+The bibliographic object is represented as a JSON-object with fields from:
+
+- BriefDisplay from opensearch
+- DKABM - defined on biblstandard.dk
+- Relations - http://danbib.dk/index.php?doc=broend3_relationer
+- `collection` list of ids in same "værk" within opensearch search
+- moreInfo - covers as url and dataurl, - as `coverUrlXXX` or `coverDataUrlXXX` where `XXX` is one of `42`, `117`, `207`, `500`, `Back`, `Thumbnail` or `Full`, ie. `coverUrl42`.
+
+The mapping between keys in the JSON object, and the above sources can be seen in 
+https://github.com/DBCDK/serviceprovider/blob/master/doc/work-context.jsonld
+
+Each key present in the json-object, contains a non-empty array of values. Example: if the bibliographic xml-object contains:
+
+
+```xml
+<dc:subject xsi:type="dkdcplus:DBCN">for 7 år</dc:subject>
+<dc:subject xsi:type="dkdcplus:DBCN">for 8 år</dc:subject>
+<dcterms:audience>børnematerialer</dcterms:audience>
+<dc:title>Danmark</dc:title>
+```
+
+it would map to json like:
+
+```json
+{ "subjectDBCN": ["for 7 år", "for 8 år"],
+  "audience": ["børnematerialer"],
+  "dcTitle": ["Danmark"]}
+```
+
+
+This encoding is designed both easy to work directly with in client code. It will also be properly encoded linked data, if we add 1) an `@context` with the url of `work-context.jsonld` and 2) an `@id` with the id of the object.
+
+# Priorities of features
+    
+1. Must:
+    - `Smaug` - openauth login - password-credentials and client-credential
+    - `/availability`
+    - `/libraries` - list of libraries - geocoordinates - opening times - address/tel - html-info
+    - `/order` - +orderId (krav i første-udgave)
+    - `/renew` (agencyid, loan-id, userid) open user status
+    - `/search` - work-1 with collection
+    - `/user` - lånerstatus (hjemkomne, bestillinger, udestående) - unique id for agency/user combination
+    - `/work` - DKABM, Relations, BriefDisplay, `coverUrlXXX`
+2. Must/should:
+    - `/events`
+    - `/facets`
+    - `/news`
+    - `/suggest` - title, subject, creator
+3. Should:
+    - `Smaug` - automatiseret oprettelse af nye apps/klient-tokens/ids.
+    - `/libraries` - adgang til data fra DDB-cms, eller
+    - `/recommend`
+    - `/search` - manifest (without collection)
+    - `/suggest` - library
+    - `/user` - birthyear
+    - `/work` - `collection`, `coverDataUrlXXX`
+    - `/?` - community services - needed by Biblo
+4. Should/nice-to-have:
+    - `/work` - værk-resultat som JSON-Linked-Data, lavthængende frugt: hvis mapningen fra DKABM etc. til json udføres korrekt, er dette sansynligvist trivielt / næsten gratis at implementere.
+    - `/recommend` - mulighed for at afgrænse anbefalinger til materialer der har forside - mulighed for at afgrænse anbefalinger til materialer der er hjemme på et givet bibliotek
+    - `/search` - mulighed for at afgrænse søgning til materialer der har forside - mulighed for at afgrænse søgning til materialer der er hjemme på et givet bibliotek
+    - `/batch` - send flere api-forespørgsler gennem en enkelt http-request
+    - `/order` - bestilling af flere eksemplarer af samme materiale
+    - `/user` - profil-service, ie. mulighed for at gemme data tilknyttet til user, (kommer måske til at eksistere via community service)
+    - adgang til elektroniske resourcer
+5. Nice-to-have:
+    - `Smaug` - Login-flow hvor cpr/pin ikke eksponeres til app - Understøttelse af andre loginmetoder (wayf, nemid, etc).  - Granuleret adgangsstyring: kun-brugerid, read-only, full
+    - `/availability` - fysisk placering på biblioteket via intelligent materialestyring, for biblioteker der understøtter dette
+    - `/user` - mulighed for at sende besked til bruger via email/sms/...
+    - `/libraries` - opmarkeret kort over biblioteket, hvis eksistrer (ie ims, wagner etc. integration)
+    - `/?` tidsbestilling af biblioteksresourcer (computere etc.)
+    - `/?` spørgetjeneste
+    - GraphQL-like søgning
+    - streaming søgeresultater
+    - Egentligt linked-data endpoint
+    
+# Notes about API endpoints
+
+**The authoritative API-specification is in `spec.yml`, these are notes leading to that file, including extra examples.**
+
+The notes below may be out of sync, please check the online api-documentation, which is generated from `spec.yml`.
 
 Generated documentation from the specification can be seen in the running serviceprovider (http://localhost:8080/ locally, or TODO:url-for-public-endpoint)
 
@@ -569,98 +654,7 @@ Response:
 
 It just returns the result from the ddbcms-service.
 
-# Bibliographic Data Model
 
-Bibliographic objects are returned from both the `/work` and `/search` endpoints. 
-They are identified by a *id*, - an example would be "775100-katalog:29372365".
-
-The bibliographic object is represented as a JSON-object with fields from:
-
-- BriefDisplay - ¿Where is this format documented? - Probably encoded in object with keys such as `identifier`, `title`, `creator`, `workType`, `titleFull` .... Evt. just identifier, if not easy to get together with dkabm from opensearch
-- DKABM - defined on biblstandard.dk. Probably encoded in object with keys such as `identifier`, `language` or `languageISO639-2`, or `titleFull`, (assuming there are no namespace-collisions of types, otherwise we need to rethink mapping into object).
-- Relations - http://danbib.dk/index.php?doc=broend3_relationer - probably encoded in object with keys such as `relIsPartOfManifestation`, `relDiscusses`, ... 
-- `collection` list of ids in same "værk" within opensearch search
-- moreInfo - covers as url and dataurl, - as `coverUrlXXX` or `coverDataUrlXXX` where `XXX` is one of `42`, `117`, `207`, `500`, `Back`, `Thumbnail` or `Full`, ie. `coverUrl42`.
-
-List of the possible keys can be seen on: https://github.com/DBCDK/serviceprovider/blob/master/doc/work-context.jsonld
-
-Each key present in the json-object, should contain an array of values. Example: if the bibliographic xml-object contains:
-
-
-```xml
-<dc:subject xsi:type="dkdcplus:DBCN">for 7 år</dc:subject>
-<dc:subject xsi:type="dkdcplus:DBCN">for 8 år</dc:subject>
-<dcterms:audience>børnematerialer</dcterms:audience>
-<dc:title>Danmark</dc:title>
-```
-
-it would map to json like:
-
-```json
-{ "subjectDBCN": ["for 7 år", "for 8 år"],
-  "audience": ["børnematerialer"],
-  "title": ["Danmark"]}
-```
-
-This encoding is both easy to work directly with in client code, and will also be a JSON-LD encoding, when adding an `@context` with a _link_ to a general context description and an `@id` with the id of the object - which makes the endpoint deliver proper linked data. 
-
-In the example above, the `@id` would be something like `https://serviceprovider.dbc.dk/v0/work/870970-basis:05941261`, and the relevant subset of the context, would be something in the line of:
-
-```json
-{ "dc": "http://purl.org/dc/elements/1.1/",
-  "dkdcplus": "http://biblstandard.dk/abm/namespace/dkdcplus/",
-  "dcterms": "http://purl.org/dc/terms/1.1/" ,
-  "subjectDBCN": 
-  { "@id": "dc:subject",
-    "@type": "dkdcplus:DBCN"},
-  "audience": "dcterms:audience",
-  "title": "dc:title"}
-```
-
-# Priorities of features
-    
-1. Must:
-    - `Smaug` - openauth login - password-credentials and client-credential
-    - `/availability`
-    - `/libraries` - list of libraries - geocoordinates - opening times - address/tel - html-info
-    - `/order` - +orderId (krav i første-udgave)
-    - `/renew` (agencyid, loan-id, userid) open user status
-    - `/search` - work-1 with collection
-    - `/user` - lånerstatus (hjemkomne, bestillinger, udestående) - unique id for agency/user combination
-    - `/work` - DKABM, Relations, BriefDisplay, `coverUrlXXX`
-2. Must/should:
-    - `/events`
-    - `/facets`
-    - `/news`
-    - `/suggest` - title, subject, creator
-3. Should:
-    - `Smaug` - automatiseret oprettelse af nye apps/klient-tokens/ids.
-    - `/libraries` - adgang til data fra DDB-cms, eller
-    - `/recommend`
-    - `/search` - manifest (without collection)
-    - `/suggest` - library
-    - `/user` - birthyear
-    - `/work` - `collection`, `coverDataUrlXXX`
-    - `/?` - community services - needed by Biblo
-4. Should/nice-to-have:
-    - `/work` - værk-resultat som JSON-Linked-Data, lavthængende frugt: hvis mapningen fra DKABM etc. til json udføres korrekt, er dette sansynligvist trivielt / næsten gratis at implementere.
-    - `/recommend` - mulighed for at afgrænse anbefalinger til materialer der har forside - mulighed for at afgrænse anbefalinger til materialer der er hjemme på et givet bibliotek
-    - `/search` - mulighed for at afgrænse søgning til materialer der har forside - mulighed for at afgrænse søgning til materialer der er hjemme på et givet bibliotek
-    - `/batch` - send flere api-forespørgsler gennem en enkelt http-request
-    - `/order` - bestilling af flere eksemplarer af samme materiale
-    - `/user` - profil-service, ie. mulighed for at gemme data tilknyttet til user, (kommer måske til at eksistere via community service)
-    - adgang til elektroniske resourcer
-5. Nice-to-have:
-    - `Smaug` - Login-flow hvor cpr/pin ikke eksponeres til app - Understøttelse af andre loginmetoder (wayf, nemid, etc).  - Granuleret adgangsstyring: kun-brugerid, read-only, full
-    - `/availability` - fysisk placering på biblioteket via intelligent materialestyring, for biblioteker der understøtter dette
-    - `/user` - mulighed for at sende besked til bruger via email/sms/...
-    - `/libraries` - opmarkeret kort over biblioteket, hvis eksistrer (ie ims, wagner etc. integration)
-    - `/?` tidsbestilling af biblioteksresourcer (computere etc.)
-    - `/?` spørgetjeneste
-    - GraphQL-like søgning
-    - streaming søgeresultater
-    - Egentligt linked-data endpoint
-    
 # old notes
 ## Notes for the concrete API design
 
