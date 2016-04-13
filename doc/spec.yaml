@@ -56,7 +56,10 @@ api:
         description: Order/ranking of results, such as "default", "rank_title", "rank_general", "acquisitionDate_ascending", "random"
         type: string
       fields:
-        description: limits the facets fetched
+        description: | 
+          Limits the facets fetched. The default fields are `creator`, `subject`, `language`, `date`, and `form`.
+         
+          The possible options are `access`, `acSource`, `audience`, `audienceCategory`, `branch`, `category`, `creator`, `creatorFunction`, `date`, `department`, `dk5`, `extraTitles`, `fictionSubject`, `form`, `gamePlatform`, `genre`, `genreCategory`, `geographic`, `language`, `level`, `let`, `literaryForm`, `lix`, `musicSubject`, `nationality`, `nonFictionSubject`, `partOf`, `period`, `primaryCreator`, `sheetMusic`, `subject`, `titleSeries`, and `type`.
         type: array
         items: {type: "string"}
         example: ["creator", "subject", "type"]
@@ -213,7 +216,12 @@ api:
         type: number
       fields:
         example: ["title", "creator", "pid"]
-        description: which meta-information to include in the search results
+        description: |
+          Which fields to return. Limiting the fields can also yield a performance improvement.
+
+          The entire list of possible fields can be seen on https://raw.githubusercontent.com/DBCDK/serviceprovider/master/doc/work-context.jsonld
+
+          If `fields` are omitted, all fields are returned, except `cover*`.
         type: array
         items: {type: "string"}
       sort:
@@ -292,7 +300,12 @@ api:
         items: {type: "string"}
         example: ["870970-basis:51989252"]
       fields:
-        description: Which fields to return. Limiting the fields can also yield a performance improvement
+        description: |
+          Which fields to return. Limiting the fields can also yield a performance improvement.
+
+          The entire list of possible fields can be seen on https://raw.githubusercontent.com/DBCDK/serviceprovider/master/doc/work-context.jsonld
+
+          If `fields` are omitted, all fields are returned, except `cover*`, and `collection`.
         type: array
         items: {type: "string"}
         example: ["title", "collection", "dcSubjectDBCF", "relHasAdaptation", "coverUrlFull"]
