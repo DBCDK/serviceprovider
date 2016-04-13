@@ -49,11 +49,17 @@ api:
       - q
     properties:
       q:
-        description: Query to find facets for. The query is expressed in CQL, see http://zing.z3950.org/cql/.
+        description: Query to find facets for. |
+          The query is expressed in CQL, see https://en.wikipedia.org/wiki/Contextual_Query_Language
+
+          A guide to CQL in danish, with list of the indexes available in this API is available on http://www.danbib.dk/broend3_soeg
         type: string
       sort:
         example: "default"
-        description: Order/ranking of results, such as "default", "rank_title", "rank_general", "acquisitionDate_ascending", "random"
+        description: |
+          Order/ranking of results, such as `default`, `rank_title`, `rank_general`, 
+          `rank_main_title`, `rank_subject`, `rank_verification` (title and creator), 
+          `rank_creator`, `rank_none`, `date_descending`, `article_date_descending`, `acquisitionDate_descending`, and `random`
         type: string
       fields:
         description: | 
@@ -203,8 +209,10 @@ api:
     properties:
       q:
         example: "harry AND potter"
-        description: |
-           Query to search for. The query is expressed in CQL, see http://zing.z3950.org/cql/.
+        description: Query to search for. |
+          The query is expressed in CQL, see https://en.wikipedia.org/wiki/Contextual_Query_Language
+
+          A guide to CQL in danish, with list of the indexes available in this API is available on http://www.danbib.dk/broend3_soeg
         type: string
       offset:
         example: 0
@@ -226,7 +234,10 @@ api:
         items: {type: "string"}
       sort:
         example: "default"
-        description: Order/ranking of results, such as "default", "rank_title", "rank_general", "acquisitionDate_ascending", "random"
+        description: |
+          Order/ranking of results, such as `default`, `rank_title`, `rank_general`, 
+          `rank_main_title`, `rank_subject`, `rank_verification` (title and creator), 
+          `rank_creator`, `rank_none`, `date_descending`, `article_date_descending`, `acquisitionDate_descending`, and `random`
         type: string
     response:
       type: array
