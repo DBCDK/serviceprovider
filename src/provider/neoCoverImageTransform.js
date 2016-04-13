@@ -214,6 +214,7 @@ export function moreInfoRequest(request, context) { // eslint-disable-line no-un
 
   return {transformedRequest: params, state: state};
 }
+<<<<<<< HEAD
 
 export function moreInfoResponse(response, context, state) { // eslint-disable-line no-unused-vars
   return new Promise((request, resolve) => {
@@ -264,6 +265,56 @@ export function moreInfoFunc(context) {
 
 export default function moreInfoTransformer() {
 
+=======
+
+export function moreInfoResponse(response, context, state) { // eslint-disable-line no-unused-vars
+  return new Promise((request, resolve) => {
+
+    // The below should probably be converted to some kind of tests:
+    //
+    // response.identifierInformation = [];
+    // delete response.identifierInformation;
+    // delete response.requestStatus.statusEnum;
+    // response.identifierInformation[0].identifierKnown = false;
+    // delete response.identifierInformation[0].identifier.localIdentifier;
+    // delete response.identifierInformation[0].coverImage;
+    // response.identifierInformation[0].coverImage = [];
+    // console.log('RESP: ' + JSON.stringify(response, null, 4));
+
+
+    try {
+      errorCodeInResponse(response);
+ 
+      let identifierInformation = getIdentifierInformationList(response);
+
+      let data = {};
+      identifierInformation.forEach((idInfo) => {
+        let {pid: pid, urls: Z} = getCoverUrlsFromIdentifierInformation(idInfo, state);
+        data[pid] = Z;
+      });
+      let envelope = {
+        statusCode: 200,
+        data: data
+      };
+      return resolve(envelope);
+    } catch (e) { // eslint-disable-line brace-style
+      let errorEnvelope = handleError(e);
+      resolve(errorEnvelope);
+    }
+  });
+}
+
+export function moreInfoFunc(context) {
+  let neoContext = context.libdata.config.provider.services.moreinfo;
+  let client = moreInfoClient(neoContext);
+
+  return function (request, local_context, state) { // eslint-disable-line no-unused-vars
+    return {response: client.getMoreInfoResultNeo(request), state: state};
+  };
+}
+
+export default function moreInfoTransformer() {
+>>>>>>> 6104c69b0d2d35f211d1a80219ec4fb0b9aa59c3
   return genericTransformer(moreInfoRequest,
                             moreInfoResponse,
                             moreInfoFunc);
