@@ -10,7 +10,7 @@ import {log} from '../../utils';
  * @param {string} service
  * @return {Promise}
  */
-function sendRequest(config, method, query) {
+export function sendRequest(config, method, query) {
   const url = config.endpoint;
   const lt = config.libraryType;
 
