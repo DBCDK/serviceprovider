@@ -1,6 +1,5 @@
 'use strict';
 
-import OpenSearchClient from '../services/OpenSearch/client.js';
 import genericTransformer from '../genericTransformer.js';
 import _ from 'lodash';
 
@@ -10,7 +9,7 @@ export default function () {
 
   function requestTransform(request, context) { // eslint-disable-line no-unused-vars
     let pid = request.pids[0];
-    console.log("PID: " + pid);
+    // console.log("PID: " + pid);
     /*
      <ns1:getObjectRequest>
      <ns1:agency>100200</ns1:agency>
@@ -39,7 +38,7 @@ export default function () {
      */
 
     let neoContext = context.libdata.config.provider.services.opensearch;
-    console.log("CONTEXT: " + JSON.stringify(neoContext, null, 4));
+    // console.log("CONTEXT: " + JSON.stringify(neoContext, null, 4));
 
     // TODO: set parameters according to the given fields.
     //       I.e. only fetch relations if a relation is asked for in fields
@@ -52,29 +51,65 @@ export default function () {
     //          rec.id='pid'
     //
     let requestParams = {
-      'action': 'getObject',
-      'identifier': pid,
-      'agency': neoContext.agency,
-      'profile': neoContext.profile,
-      'objectFormat': ['dkabm', 'briefDisplay'],
-      'outputType': 'json'
+      action: 'getObject',
+      identifier: pid,
+      agency: neoContext.agency,
+      profile: neoContext.profile,
+      objectFormat: ['dkabm', 'briefDisplay'],
+      outputType: 'json'
     };
     let state = {}; // no state needed in this transformer.
     return {transformedRequest: requestParams, state: state};
   }
 
-  function Z(value, key) {
-    _.forEach(value, function (z, k) {
-      let x = {};
-      if (_.has(z, '$') && _.has(z, '@')) {
-        x.ns = z['@'];
-        x.value = z.$;
-        if (_.has(z, '@type')) {
-          x.type = z['@type'].$;
+  // function Z(value, key) {
+  //  let y = {};
+  //  console.log('Y: ' + key);
+  //  _.forEach(value, function (z, k) {
+  //    let x = {};
+  //    if (_.has(z, '$') && _.has(z, '@')) {
+  //      x.ns = z['@'];
+  //      x.value = z.$;
+  //      if (_.has(z, '@type')) {
+  //        x.type = z['@type'].$;
+  //      }
+  //    }
+  //    console.log(JSON.stringify(x, null, 0));
+  //  });
+  //  return y;
+  // }
+
+  function T(lookup, result) {
+
+    return function (value, key) {
+      let a = [];
+      _.forEach(value, function (z, k) { // eslint-disable-line
+        let x = {key: key};
+        if (_.has(z, '$') && _.has(z, '@')) {
+          x.ns = z['@'];
+          x.value = z.$;
+          if (_.has(z, '@type')) {
+            x.type = z['@type'].$;
+          }
         }
-      }
-      console.log(JSON.stringify(x, null, 0));
-    });
+        // console.log(JSON.stringify(x, null, 0));
+        if (x.value) {
+          a.push(x);
+        }
+      });
+
+      a.map(X => {
+        let k = X.ns + ':' + key;
+        if (X.type) {
+          k += '/' + X.type;
+        }
+        if (result[k]) {
+          result[k].push(X.value);
+        } else { // eslint-disable-line brace-style
+          result[k] = [X.value];
+        }
+      });
+    };
   }
 
   function responseTransform(response, context, state) { // eslint-disable-line no-unused-vars
@@ -83,19 +118,28 @@ export default function () {
     let searchResult = response.searchResponse.result.searchResult;
     let record = searchResult[0].collection.object[0].record;
 
-    _.forOwn(record, Z);
-    return {statusCode: 200, data: {}};
+    let lookup = {namespaces: namespaces};
+    let result = {};
+    _.forOwn(record, T(lookup, result));
+
+    let data = {};
+    data.warning = 'DO NOT USE THIS RESULT. It is invalid';
+    _.extend(data, result);
+
+    // console.log("RES: " + JSON.stringify(data, null, 4));
+
+    data.title = 'HELLO';
+    return {statusCode: 200, data: [data]};
   }
 
   function OSWorkFunc(context) {
     let neoContext = context.libdata.config.provider.services.opensearch;
-    console.log("Context: " + JSON.stringify(neoContext, null, 4));
+    // console.log("Context: " + JSON.stringify(neoContext, null, 4));
     let method = ''; // method is empty in this request. It is given as 'action' in the parameter-object.
     let config = {
-      'endpoint': neoContext.wsdl.slice(0,-5), // hack! the context gives us an url with '?wsdl'. This i part is removed.
-      'libraryType': undefined // another hack! This is some legacy in the Entity-suggest client.
+      endpoint: neoContext.wsdl.slice(0, -5) // hack! the context gives us an url with '?wsdl'. This i part is removed.
     };
-    console.log("Config: " + JSON.stringify(config, null, 4));
+    // console.log("Config: " + JSON.stringify(config, null, 4));
 
     return function (request, local_context, state) { // eslint-disable-line no-unused-vars
       return {response: entitySuggestHttpClient.sendRequest(config, method, request), state: state};
