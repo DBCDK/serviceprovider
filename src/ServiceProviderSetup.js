@@ -70,7 +70,7 @@ export default function initProvider(config) {
   RegisterClientOnProvider('recommendmeta', MetaRecommendations);
 
   // Transforms are autorequired to lessen boilerplate code
-  AutoRequire(path.join(__dirname, 'transformers'), 'transform.js').map(provider.registerTransform);
+  AutoRequire(path.join(__dirname, 'transformers-old'), 'transform.js').map(provider.registerTransform);
 
   return provider;
 }
