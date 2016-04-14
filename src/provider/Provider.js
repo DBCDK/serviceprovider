@@ -11,6 +11,7 @@ import coverImageTransformer from './neoCoverImageTransform.js';
 import openSearchWorkTransformer from './neoOpenSearchWorkTransformer.js';
 import facetTransformer from './facets';
 import searchTransformer from './search';
+import workTransformer from './neoWorkTransformer';
 
 /**
  * Initialization of the provider and the underlying services.
@@ -31,7 +32,8 @@ export default function Provider() {
     getRecommendations: recommendTransformer(),
     getSuggestions: suggestTransformer(),
     getCoverImageNeo: coverImageTransformer(),
-    getOpenSearchWorkNeo: openSearchWorkTransformer()
+    getOpenSearchWorkNeo: openSearchWorkTransformer(),
+    getWork: workTransformer()
   };
 
   // we are going to reimplement a simpler mechanism to call the transformers
