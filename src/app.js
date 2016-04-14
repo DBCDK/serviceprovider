@@ -40,8 +40,7 @@ module.exports.run = function (worker) {
   // Old config, currently stored in config.json, should be delivered from auth-server, etc. later on
   const config = JSON.parse(
         fs.readFileSync(
-          process.env.CONFIG_FILE || // eslint-disable-line no-process-env
-            __dirname + '/../config.json', 'utf8'));
+          process.env.CONFIG_FILE || './config.json', 'utf8')); // eslint-disable-line no-process-env
 
   // Direct requests to app
   server.on('request', app);
