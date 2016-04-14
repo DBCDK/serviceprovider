@@ -129,7 +129,6 @@ module.exports.run = function (worker) {
 
   // Setting paths
   app.all('/', (req, res) => res.redirect(apiPath));
-  app.use(apiPath, express.static(path.join(__dirname, '../static')));
 
   // Setting logger
   app.use(expressLoggers.logger);
@@ -238,6 +237,8 @@ module.exports.run = function (worker) {
       });
     });
   });
+
+  app.use(apiPath, express.static(path.join(__dirname, '../static')));
 
   app.all(apiPath + 'swagger.json', (req, res) => {
     return swaggerFromSpec().then((response) => {
