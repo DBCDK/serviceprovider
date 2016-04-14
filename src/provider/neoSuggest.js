@@ -25,19 +25,6 @@ import entitySuggest from '../services/EntitySuggest/neoClient.js';
 import popSuggest from '../services/PopSuggest/client.js';
 import {die} from '../utils.js';
 
-
-/**
-* Helper function to change key name in an object
-*/
-function changeKey(obj, fromKey, toKey) {
-  if (obj.hasOwnProperty(fromKey)) {
-    obj[toKey] = obj[fromKey];
-    delete obj[fromKey];
-  }
-  return obj;
-}
-
-
 /**
 * Transformer for subjectSuggest endpoint.
 * This transformer calls the entitySuggest client and returns subject
@@ -55,8 +42,7 @@ export function subjectSuggestResponse(response, context, state) { // eslint-dis
 }
 
 export function subjectSuggestFunction(context) {
-  let contextCopy = clone(context);
-  changeKey(contextCopy, 'entityEndpoint', 'endpoint');
+  let contextCopy = clone(context.entitySuggest);
   let client = entitySuggest(contextCopy);
   return (request, localContext, state) => { // eslint-disable-line no-unused-vars
     return {response: client.getSubjectSuggestions(request), state: state};
@@ -87,8 +73,7 @@ export function creatorSuggestResponse(response, context, state) { // eslint-dis
 }
 
 export function creatorSuggestFunction(context) {
-  let contextCopy = clone(context);
-  changeKey(contextCopy, 'entityEndpoint', 'endpoint');
+  let contextCopy = clone(context.entitySuggest);
   let client = entitySuggest(contextCopy);
   return (request, localContext, state) => { // eslint-disable-line no-unused-vars
     return {response: client.getCreatorSuggestions(request), state: state};
@@ -120,8 +105,7 @@ export function librarySuggestResponse(response, context, state) { // eslint-dis
 }
 
 export function librarySuggestFunction(context) {
-  let contextCopy = clone(context);
-  changeKey(contextCopy, 'entityEndpoint', 'endpoint');
+  let contextCopy = clone(context.entitySuggest);
   let client = entitySuggest(contextCopy);
   return (request, localContext, state) => { // eslint-disable-line no-unused-vars
     return {response: client.getLibrarySuggestions(request), state: state};
@@ -150,8 +134,7 @@ export function popSuggestResponse(response, context, state) { // eslint-disable
 }
 
 export function popSuggestFunction(context) {
-  let contextCopy = clone(context);
-  changeKey(contextCopy, 'popEndpoint', 'endpoint');
+  let contextCopy = clone(context.popSuggest);
   let client = popSuggest(contextCopy);
   return (request, localContext, state) => { // eslint-disable-line no-unused-vars
     return {response: client.getPopSuggestions(request), state: state};
@@ -190,18 +173,22 @@ export function suggestRequest(request, context, state) { // eslint-disable-line
   return {transformedRequest: requestEnvelope, state: state};
 }
 
+function mapTitleKeys(obj) {
+  let retObj = {str: obj['display.title'][0], id: obj.fedoraPid};
+  if (obj.hasOwnProperty('display.creator')) {
+    retObj.creator = obj['display.creator'][0];
+  }
+  if (obj.hasOwnProperty('display.workType')) {
+    retObj.type = obj['display.workType'][0];
+  }
+  return retObj;
+}
+
 export function suggestResponse(response, context, state) { // eslint-disable-line no-unused-vars
   let statusCode = response.statusCode;
   if (state.type === 'title') {
-    response = response.data.response.docs.map((obj) => {
-      let retObj = {str: obj['display.title'][0], id: obj.fedoraPid};
-      if (obj.hasOwnProperty('display.creator')) {
-        retObj.creator = obj['display.creator'][0];
-      }
-      if (obj.hasOwnProperty('display.workType')) {
-        retObj.type = obj['display.workType'][0];
-      }
-      return retObj;
+    response.data = response.data.response.docs.map((obj) => {
+      return mapTitleKeys(obj);
     });
   }
   return {statusCode: statusCode, data: response.data};
