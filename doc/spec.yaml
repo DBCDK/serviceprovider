@@ -5,7 +5,11 @@
 #
 api:
   availability:
-    description: Get availability of material at the library
+    description: |
+      Get information about whether a material can be ordered /
+      are available from the library.  Only contains info from DBCs
+      services, so no "opstillingsdata fra intelligent-materialestyring"
+      or similar.
     required:
       - pid
     properties:
@@ -43,6 +47,11 @@ api:
         example: ["nid", "title"]
     response:
       example: [{"nid": "15", "title": "Mød forfatteren: Tim Buk-Swienty", "start": "2016-05-15 08:30:00", "lead": "...", "image": "/files/775100/...", "id": "56b0687313e4eefa60ef18cd", "body": "<p>Nunc ullamcorper pulvinar pharetra. Aliquam ma..." }]
+    examples:
+      - request: {"offset": 0, "limit": 2, "fields": ["nid", "title"]}
+        response: [{"nid": "15", "title": "Mød forfatteren: Tim Buk-Swienty"}, {"nid": "38", "title": "MC test event"}, "..."]
+      - request: {"nids": ["15"]}
+        response: [{"nid": "15", "title": "Mød forfatteren: Tim Buk-Swienty", "start": "2016-05-15 08:30:00", "lead": "...", "image": "/files/775100/...", "id": "56b0687313e4eefa60ef18cd", "body": "<p>Nunc ullamcorper pulvinar pharetra. Aliquam ma..." }]
   facets:
     description: Facets of a search result
     required:
@@ -57,14 +66,14 @@ api:
       sort:
         example: "default"
         description: |
-          Order/ranking of results, such as `default`, `rank_title`, `rank_general`, 
-          `rank_main_title`, `rank_subject`, `rank_verification` (title and creator), 
+          Order/ranking of results, such as `default`, `rank_title`, `rank_general`,
+          `rank_main_title`, `rank_subject`, `rank_verification` (title and creator),
           `rank_creator`, `rank_none`, `date_descending`, `article_date_descending`, `acquisitionDate_descending`, and `random`
         type: string
       fields:
-        description: | 
+        description: |
           Limits the facets fetched. The default fields are `creator`, `subject`, `language`, `date`, and `form`.
-         
+
           The possible options are `access`, `acSource`, `audience`, `audienceCategory`, `branch`, `category`, `creator`, `creatorFunction`, `date`, `department`, `dk5`, `extraTitles`, `fictionSubject`, `form`, `gamePlatform`, `genre`, `genreCategory`, `geographic`, `language`, `level`, `let`, `literaryForm`, `lix`, `musicSubject`, `nationality`, `nonFictionSubject`, `partOf`, `period`, `primaryCreator`, `sheetMusic`, `subject`, `titleSeries`, and `type`.
         type: array
         items: {type: "string"}
@@ -75,7 +84,12 @@ api:
     response:
       example: { "creator": [{ "term": "nordisk ministerråd", "frequency": 2708}, { "term": "nordisk råd", "frequency": 2463}], "subject": [{ "term": "danmark", "frequency": 188792}, { "term": "historie", "frequency": 19867}], "type": [{ "term": "avisartikel", "frequency": 83786}, { "term": "tidsskriftsartikel", "frequency": 77618}]}
   libraries:
-    description: list/information about libraries
+    description: |
+      List/information about libraries.
+
+      The possible result fields are the same as those returned from DBCs openagency service.
+
+      The field that tells which information is required when ordering the book are.
     properties:
       branchIds:
         description: ids of libraries to fetch, - return all libraries if omitted.
@@ -88,6 +102,11 @@ api:
         example: ["branchId", "city", "longitude", "latitude"]
     response:
       example: [ {"branchId": "700401", "city": "Flensburg", "longitude": "54.4801716", "latitude": "9.0467115"}, {"branchId": "710104", "city": "København N", "longitude": "55.680887", "latitude": "12.573619"}, "..."  ]
+    examples:
+      - request: { "fields": ["branchId", "city", "longitude", "latitude"]}
+        response: [ {"branchId": "700401", "city": "Flensburg", "longitude": "54.4801716", "latitude": "9.0467115"}, {"branchId": "710104", "city": "København N", "longitude": "55.680887", "latitude": "12.573619"}, "..."  ]
+      - request: { "branchIds": ["700401", "710104"], "fields": ["branchId", "city", "longitude", "latitude"]}
+        response: [ {"branchId": "700401", "city": "Flensburg", "longitude": "54.4801716", "latitude": "9.0467115"}, {"branchId": "710104", "city": "København N", "longitude": "55.680887", "latitude": "12.573619"}]
   news:
     description: news-posts about the library
     properties:
@@ -103,6 +122,11 @@ api:
         type: number
     response:
       example: [{"nid": "19", "title": "Sportsstjerner - bag facaden", "lead": "...", "image": "/files/775100/...", "id": "56b0687313e4eefa60ef18cd", "body": "<p>Nunc ullamcorper pulvinar pharetra. Aliquam ma..."}, {"nid": "40", "...": "..."}, "..."]
+    examples:
+      - request: {"offset": 0, "limit": 2, "fields": ["nid", "title"]}
+        response: [{"nid": "19", "title": "Sportsstjerner - bag facaden"}, {"nid": "40", "title": "Bagud med danskopgaven ? her er hjælp til dig"}, "..."]
+      - request: {"nids": ["19"]}
+        response: [{"nid": "19", "title": "Sportsstjerner - bag facaden", "lead": "...", "image": "/files/775100/...", "id": "56b0687313e4eefa60ef18cd", "body": "<p>Nunc ullamcorper pulvinar pharetra. Aliquam ma..." }]
   order:
     description: Order a library material, or modify/remove an existing order.
     properties:
@@ -146,6 +170,48 @@ api:
         example: true
     response:
       example: { "pids": ["870970-basis:51989252"], "library": "700401", "expires": "2016-06-24T18:25:43.511Z"}
+    examples:
+      - request: { "pids": ["870970-basis:51989252"], "library": "700401", "name": "Jens Jensen", "address": "Kirkestræde 1, 1234 Landsby", "email": "jens.jensen@example.com", "phone": "12345678", "expires": "2016-06-24T18:25:43.511Z"}
+        response:  { "pids": ["870970-basis:51989252"], "library": "700401", "expires": "2016-06-24T18:25:43.511Z"}
+      - request: { "orderId": "1234", "library": "710104", "expires": "2016-12-24T18:25:43.511Z"}
+        response: { "orderId": "1234", "pid": "870970-basis:51989252", "library": "700401", "expires": "2016-12-24T18:25:43.511Z"}
+      - request: { "orderId": "1234", "delete": true }
+        response: { "orderId": "1234", "deleted": true }
+  rank:
+    description: Similar to recommend, but sorts a list of ids in order of relevance, given a recommender with likes, dislikes and so on.
+    required:
+      - pids
+    properties:
+      pids:
+        description: list of materials that should be ranked
+        type: array
+        items: {type: "string"}
+        examples: ["870970-basis:12345678", "..."]
+      recommender:
+        description: the type of recommender, such as default or popular
+        type: string
+        example: default
+      likes:
+        description: list of liked materials
+        type: array
+        items: {type: "string"}
+        examples: ["870970-basis:12345678", "..."]
+      dislikes:
+        description: list of disliked materials
+        type: array
+        items: {type: "string"}
+        examples: ["870970-basis:12345678", "..."]
+      known:
+        description: list of materials that is related to the user
+        type: array
+        items: {type: "string"}
+        examples: ["870970-basis:12345678", "..."]
+      limit:
+        example: 10
+        description: maximum number of results returned
+        type: number
+    response:
+      example: [ { "title": "Harry Potter og Fønixordenen", "creator": "...", "weight": 123, "pid": "300185-katalog:100562332", "fromPid": "870970-basis:51989252"}, "..."]
   recommend:
     description: Get recommendations based on a list of likes
     properties:
@@ -153,12 +219,12 @@ api:
         description: filter the likes by library or material type
         type: object
         properties:
-          libraries: 
+          libraries:
             description: list of libraries
             type: array
             items: {type: "string"}
             example: ["700401", "710104"]
-          types: 
+          types:
             description: types of materials
             type: array
             items: {type: "string"}
@@ -229,22 +295,28 @@ api:
 
           The entire list of possible fields can be seen on https://raw.githubusercontent.com/DBCDK/serviceprovider/master/doc/work-context.jsonld
 
-          If `fields` are omitted, all fields are returned, except `cover*`.
+          If `fields` are omitted, only the collection-field, and the fields from DKABM and BriefDisplay is returned.
         type: array
         items: {type: "string"}
       sort:
         example: "default"
         description: |
-          Order/ranking of results, such as `default`, `rank_title`, `rank_general`, 
-          `rank_main_title`, `rank_subject`, `rank_verification` (title and creator), 
+          Order/ranking of results, such as `default`, `rank_title`, `rank_general`,
+          `rank_main_title`, `rank_subject`, `rank_verification` (title and creator),
           `rank_creator`, `rank_none`, `date_descending`, `article_date_descending`, `acquisitionDate_descending`, and `random`
         type: string
     response:
       type: array
       #items: {$ref: "#/definitions/Work"}
       example: [{"identifier": ["300185-katalog:100562332"], "dcTitle": ["Harry Potter og Fønixordenen DVD"], "coverUrlFull": ["https://moreinfo.addi.dk/2.1/more_info_get.php?id=36565894&type=forside_500&key=55d553c259c9e46291a4"]}, {"identifier": ["870970-basis:51989252"], "dcTitle": ["Harry Potter og de vises sten"], "collection": ["300185-katalog:100562332", "870970-basis:51989252", "870971-forfweb:86203219", "870970-basis:24284514", "870970-basis:24284565", "..."], "dcSubjectDBCF": ["fantasy", "magi", "troldmænd"], "relHasAdaption": ["870970-basis:27123279", "870970-basis:27963390"], "coverUrlFull": ["https://moreinfo.addi.dk/2.1/more_info_get.php?id=36565894&type=forside_500&key=55d553c259c9e46291a4"]}]
+    examples:
+      - request: { "q": "harry AND potter", "fields": ["identifier", "title", "collection", "subjectDBCF", "relHasAdaptation", "coverUrlFull"], "sort": "default", "offset": 2, "limit": 2 }
+        response: [{"identifier": ["300185-katalog:100562332"], "title": ["Harry Potter og Fønixordenen DVD"], "coverUrlFull": ["https://moreinfo.addi.dk/2.1/more_info_get.php?id=36565894&type=forside_500&key=55d553c259c9e46291a4"]}, {"identifier": ["870970-basis:51989252"], "title": ["Harry Potter og de vises sten"], "collection": ["300185-katalog:100562332", "870970-basis:51989252", "870971-forfweb:86203219", "870970-basis:24284514", "870970-basis:24284565", "..."], "subjectDBCF": ["fantasy", "magi", "troldmænd"], "relHasAdaption": ["870970-basis:27123279", "870970-basis:27963390"], "coverUrlFull": ["https://moreinfo.addi.dk/2.1/more_info_get.php?id=36565894&type=forside_500&key=55d553c259c9e46291a4"]}]
   suggest:
-    description: Suggestions for completing a query string
+    description: |
+      Suggestions for completing a query string.
+
+      Notice that suggest/completion index is not real-time, so there is no guarantee that the `id` matches a bibliographic object in the `/work` endpoint, - though usually there will be one (they will be sync'ed every week).
     required:
       - q
     properties:
@@ -267,15 +339,23 @@ api:
         example: ["term", "pid", "creator", "type"]
     response:
       example: [ { "term": "Harry Potter og Hemmelighedernes Kammer", "pid": "870970-basis:22375733", "creator": "Joanne K. Rowling", "type": "book"}, { "term": "Harry Potter og fangen fra Azkaban", "pid": "870970-basis:22639862", "creator": "Joanne K. Rowling", "type": "book" }]
+    examples:
+      - request: { "q": "harry", "type": "creator", "limit": 2 }
+        response: [ { "term": "Harry Nilsson"}, { "term": "Harry Belafonte"}]
+      - request: { "q": "harry pot", "type": "title", "limit": 2, "fields": ["term", "pid", "creator", "type"]}
+        response: [ { "term": "Harry Potter og Hemmelighedernes Kammer", "pid": "870970-basis:22375733", "creator": "Joanne K. Rowling", "type": "book"}, { "term": "Harry Potter og fangen fra Azkaban", "pid": "870970-basis:22639862", "creator": "Joanne K. Rowling", "type": "book" }]
+      - request: { "q": "køge", "type": "library", "limit": 1, "fields": ["term", "væsensnavn", "adresse", "id", "postnr", "geolokation", "navn", "bibliotekstype", "by"]}
+        response: [ { "væsensnavn": "KøgeBibliotekerne", "adresse": "Kirkestræde 18", "id": "725900", "postnr": "4600", "geolokation": { "lat": 55.45783460000001, "lng": 12.1822443 }, "navn": "Køge Bibliotek", "bibliotekstype": "Folkebibliotek", "by": "Køge", "term": "Køge Bibliotek, Køge"}]
   user:
-    description: info about current logged-in user
+    description: |
+      User status, including arrived loans, orders, unique id, whether the user is actually registered at the library, etc.
     properties:
       fields:
         description: filter user info
         example: ["id", "registered"]
     example: {}
     response:
-      example: 
+      example:
         id: "U2VydmljZVByb3ZpZGVy"
         registered: true
         loans:
@@ -284,7 +364,7 @@ api:
           title: håndbog over håndbøger
           author: La, Chris
           dueDate: "2016-04-16"
-        orders: 
+        orders:
           orderId: "24181913"
           orderDate: "2016-01-01"
           expires: "2016-01-01"
@@ -321,7 +401,10 @@ api:
         items: {type: "string"}
         example: ["title", "collection", "dcSubjectDBCF", "relHasAdaptation", "coverUrlFull"]
     response:
-      example: [{ "dcTitle": ["Harry Potter og de vises sten"], "collection": ["300185-katalog:100562332", "870970-basis:51989252", "870971-forfweb:86203219", "870970-basis:24284514", "870970-basis:24284565", "..."], "dcSubjectDBCF": ["fantasy", "magi", "troldmænd"], "relHasAdaption": ["870970-basis:27123279", "870970-basis:27963390"], "coverUrlFull": ["https://moreinfo.addi.dk/2.1/more_info_get.php?id=36565894&type=forside_500&key=55d553c259c9e46291a4"]}] 
+      example: [{ "dcTitle": ["Harry Potter og de vises sten"], "collection": ["300185-katalog:100562332", "870970-basis:51989252", "870971-forfweb:86203219", "870970-basis:24284514", "870970-basis:24284565", "..."], "dcSubjectDBCF": ["fantasy", "magi", "troldmænd"], "relHasAdaption": ["870970-basis:27123279", "870970-basis:27963390"], "coverUrlFull": ["https://moreinfo.addi.dk/2.1/more_info_get.php?id=36565894&type=forside_500&key=55d553c259c9e46291a4"]}]
+    examples:
+      - request: { "pids": ["870970-basis:51989252",], "fields": ["title", "collection", "subjectDBCF", "relHasAdaptation", "coverUrlFull"]}
+        response: [{"title": ["Harry Potter og de vises sten"], "collection": ["300185-katalog:100562332", "870970-basis:51989252", "870971-forfweb:86203219", "870970-basis:24284514", "870970-basis:24284565", "..."], "subjectDBCF": ["fantasy", "magi", "troldmænd"], "relHasAdaption": ["870970-basis:27123279", "870970-basis:27963390"], "coverUrlFull": ["https://moreinfo.addi.dk/2.1/more_info_get.php?id=36565894&type=forside_500&key=55d553c259c9e46291a4"]}]
 definitions:
   Work:
     example: { "dcTitle": ["Harry Potter og de vises sten"], "collection": ["300185-katalog:100562332", "870970-basis:51989252", "870971-forfweb:86203219", "870970-basis:24284514", "870970-basis:24284565", "..."], "dcSubjectDBCF": ["fantasy", "magi", "troldmænd"], "relHasAdaption": ["870970-basis:27123279", "870970-basis:27963390"], "coverUrlFull": ["https://moreinfo.addi.dk/2.1/more_info_get.php?id=36565894&type=forside_500&key=55d553c259c9e46291a4"]}
