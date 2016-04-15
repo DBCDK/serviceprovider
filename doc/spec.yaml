@@ -308,10 +308,10 @@ api:
     response:
       type: array
       #items: {$ref: "#/definitions/Work"}
-      example: [{"identifier": ["300185-katalog:100562332"], "dcTitle": ["Harry Potter og Fønixordenen DVD"], "coverUrlFull": ["https://moreinfo.addi.dk/2.1/more_info_get.php?id=36565894&type=forside_500&key=55d553c259c9e46291a4"]}, {"identifier": ["870970-basis:51989252"], "dcTitle": ["Harry Potter og de vises sten"], "collection": ["300185-katalog:100562332", "870970-basis:51989252", "870971-forfweb:86203219", "870970-basis:24284514", "870970-basis:24284565", "..."], "dcSubjectDBCF": ["fantasy", "magi", "troldmænd"], "relHasAdaption": ["870970-basis:27123279", "870970-basis:27963390"], "coverUrlFull": ["https://moreinfo.addi.dk/2.1/more_info_get.php?id=36565894&type=forside_500&key=55d553c259c9e46291a4"]}]
+      example: [{"identifier": ["300185-katalog:100562332"], "dcTitle": ["Harry Potter og Fønixordenen DVD"], "coverUrlFull": ["https://moreinfo.addi.dk/2.1/more_info_get.php?id=36565894&type=forside_500&key=55d553c259c9e46291a4"]}, {"identifier": ["870970-basis:51989252"], "dcTitle": ["Harry Potter og de vises sten"], "collection": ["300185-katalog:100562332", "870970-basis:51989252", "870971-forfweb:86203219", "870970-basis:24284514", "870970-basis:24284565", "..."], "dcSubjectDBCF": ["fantasy", "magi", "troldmænd"], "hasAdaption": ["870970-basis:27123279", "870970-basis:27963390"], "coverUrlFull": ["https://moreinfo.addi.dk/2.1/more_info_get.php?id=36565894&type=forside_500&key=55d553c259c9e46291a4"]}]
     examples:
-      - request: { "q": "harry AND potter", "fields": ["identifier", "title", "collection", "subjectDBCF", "relHasAdaptation", "coverUrlFull"], "sort": "default", "offset": 2, "limit": 2 }
-        response: [{"identifier": ["300185-katalog:100562332"], "title": ["Harry Potter og Fønixordenen DVD"], "coverUrlFull": ["https://moreinfo.addi.dk/2.1/more_info_get.php?id=36565894&type=forside_500&key=55d553c259c9e46291a4"]}, {"identifier": ["870970-basis:51989252"], "title": ["Harry Potter og de vises sten"], "collection": ["300185-katalog:100562332", "870970-basis:51989252", "870971-forfweb:86203219", "870970-basis:24284514", "870970-basis:24284565", "..."], "subjectDBCF": ["fantasy", "magi", "troldmænd"], "relHasAdaption": ["870970-basis:27123279", "870970-basis:27963390"], "coverUrlFull": ["https://moreinfo.addi.dk/2.1/more_info_get.php?id=36565894&type=forside_500&key=55d553c259c9e46291a4"]}]
+      - request: { "q": "harry AND potter", "fields": ["identifier", "title", "collection", "subjectDBCF", "hasAdaptation", "coverUrlFull"], "sort": "default", "offset": 2, "limit": 2 }
+        response: [{"identifier": ["300185-katalog:100562332"], "title": ["Harry Potter og Fønixordenen DVD"], "coverUrlFull": ["https://moreinfo.addi.dk/2.1/more_info_get.php?id=36565894&type=forside_500&key=55d553c259c9e46291a4"]}, {"identifier": ["870970-basis:51989252"], "title": ["Harry Potter og de vises sten"], "collection": ["300185-katalog:100562332", "870970-basis:51989252", "870971-forfweb:86203219", "870970-basis:24284514", "870970-basis:24284565", "..."], "subjectDBCF": ["fantasy", "magi", "troldmænd"], "hasAdaption": ["870970-basis:27123279", "870970-basis:27963390"], "coverUrlFull": ["https://moreinfo.addi.dk/2.1/more_info_get.php?id=36565894&type=forside_500&key=55d553c259c9e46291a4"]}]
   suggest:
     description: |
       Suggestions for completing a query string.
@@ -399,15 +399,15 @@ api:
           If `fields` are omitted, all fields are returned, except `cover*`, and `collection`.
         type: array
         items: {type: "string"}
-        example: ["title", "collection", "dcSubjectDBCF", "relHasAdaptation", "coverUrlFull"]
+        example: ["title", "collection", "dcSubjectDBCF", "hasAdaptation", "coverUrlFull"]
     response:
-      example: [{ "dcTitle": ["Harry Potter og de vises sten"], "collection": ["300185-katalog:100562332", "870970-basis:51989252", "870971-forfweb:86203219", "870970-basis:24284514", "870970-basis:24284565", "..."], "dcSubjectDBCF": ["fantasy", "magi", "troldmænd"], "relHasAdaption": ["870970-basis:27123279", "870970-basis:27963390"], "coverUrlFull": ["https://moreinfo.addi.dk/2.1/more_info_get.php?id=36565894&type=forside_500&key=55d553c259c9e46291a4"]}]
+      example: [{ "dcTitle": ["Harry Potter og de vises sten"], "collection": ["300185-katalog:100562332", "870970-basis:51989252", "870971-forfweb:86203219", "870970-basis:24284514", "870970-basis:24284565", "..."], "dcSubjectDBCF": ["fantasy", "magi", "troldmænd"], "hasAdaption": ["870970-basis:27123279", "870970-basis:27963390"], "coverUrlFull": ["https://moreinfo.addi.dk/2.1/more_info_get.php?id=36565894&type=forside_500&key=55d553c259c9e46291a4"]}]
     examples:
-      - request: { "pids": ["870970-basis:51989252",], "fields": ["title", "collection", "subjectDBCF", "relHasAdaptation", "coverUrlFull"]}
-        response: [{"title": ["Harry Potter og de vises sten"], "collection": ["300185-katalog:100562332", "870970-basis:51989252", "870971-forfweb:86203219", "870970-basis:24284514", "870970-basis:24284565", "..."], "subjectDBCF": ["fantasy", "magi", "troldmænd"], "relHasAdaption": ["870970-basis:27123279", "870970-basis:27963390"], "coverUrlFull": ["https://moreinfo.addi.dk/2.1/more_info_get.php?id=36565894&type=forside_500&key=55d553c259c9e46291a4"]}]
+      - request: { "pids": ["870970-basis:51989252",], "fields": ["title", "collection", "subjectDBCF", "hasAdaptation", "coverUrlFull"]}
+        response: [{"title": ["Harry Potter og de vises sten"], "collection": ["300185-katalog:100562332", "870970-basis:51989252", "870971-forfweb:86203219", "870970-basis:24284514", "870970-basis:24284565", "..."], "subjectDBCF": ["fantasy", "magi", "troldmænd"], "hasAdaption": ["870970-basis:27123279", "870970-basis:27963390"], "coverUrlFull": ["https://moreinfo.addi.dk/2.1/more_info_get.php?id=36565894&type=forside_500&key=55d553c259c9e46291a4"]}]
 definitions:
   Work:
-    example: { "dcTitle": ["Harry Potter og de vises sten"], "collection": ["300185-katalog:100562332", "870970-basis:51989252", "870971-forfweb:86203219", "870970-basis:24284514", "870970-basis:24284565", "..."], "dcSubjectDBCF": ["fantasy", "magi", "troldmænd"], "relHasAdaption": ["870970-basis:27123279", "870970-basis:27963390"], "coverUrlFull": ["https://moreinfo.addi.dk/2.1/more_info_get.php?id=36565894&type=forside_500&key=55d553c259c9e46291a4"]}
+    example: { "dcTitle": ["Harry Potter og de vises sten"], "collection": ["300185-katalog:100562332", "870970-basis:51989252", "870971-forfweb:86203219", "870970-basis:24284514", "870970-basis:24284565", "..."], "dcSubjectDBCF": ["fantasy", "magi", "troldmænd"], "hasAdaption": ["870970-basis:27123279", "870970-basis:27963390"], "coverUrlFull": ["https://moreinfo.addi.dk/2.1/more_info_get.php?id=36565894&type=forside_500&key=55d553c259c9e46291a4"]}
     type: object
     properties:
       pid: {type: "array", items: {type: "string"}}
