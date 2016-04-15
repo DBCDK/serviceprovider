@@ -1,6 +1,8 @@
 language: node_js
 sudo: required
 dist: trusty
+env:
+  - SMAUG=invalid
 script:
   - npm run dev & npm test
   - npm run lint
