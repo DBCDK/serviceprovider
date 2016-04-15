@@ -219,7 +219,7 @@ module.exports.run = function (worker) {
           })
           .catch((err) => {
             log.error(err);
-            // todo: inform client about the error
+            callback({statusCode: 403, error: 'Forbidden'});
           });
       });
     });
