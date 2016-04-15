@@ -11,9 +11,10 @@ export default (params, context) => new Promise((resolve) => {
 
   let facets = (Array.isArray(params.fields) && params.fields) ||
                   ['creator', 'subject', 'language', 'date', 'form'];
-  let agency = '100200'; // context.libdata.config.agency;
-  let profile = 'test'; // context.libdata.kommune;
-  let url = context.libdata.config.provider.services.opensearch.wsdl.replace('?wsdl', '');
+  context = context.libdata.config.provider.services.opensearch;
+  let agency = context.agency;
+  let profile = context.profile;
+  let url = context.wsdl.replace('?wsdl', '');
 
   let soap = `<?xml version="1.0" encoding="UTF-8"?>
 <SOAP-ENV:Envelope xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/"
