@@ -175,6 +175,8 @@ module.exports.run = function (worker) {
           errors: [{warning: 'missing envelope'}]
         };
       }
+
+      // Fields filter, - filter the result based on the `fields` parameter.
       function fieldsFilter(obj) {
         if (!Array.isArray(query.fields) || (typeof obj !== 'object')) {
           return obj;
@@ -221,6 +223,8 @@ module.exports.run = function (worker) {
       // TODO: should just be req.body, when all endpoints accept object-only as parameter, until then, this hack supports legacy transforms
       let query = Array.isArray(req.body) ? req.body[0] : req.body;
 
+      // We support both POST-body, GET-requests, and a combination of both.
+      // This code joins all parameters into a single object.
       query = query || {};
       for (let key in req.query) { // eslint-disable-line guard-for-in
         try {
@@ -230,6 +234,7 @@ module.exports.run = function (worker) {
           query[key] = req.query[key];
         }
       }
+
       callApi(event, query, req.context, response => {
         app.set('json spaces', query.pretty ? 2 : null);
         res.jsonp(response);
@@ -239,6 +244,8 @@ module.exports.run = function (worker) {
 
   app.use(apiPath, express.static(path.join(__dirname, '../static')));
 
+  // The swagger specification is generated from `spec.yml`
+  // and returned as this separate endpoint.
   app.all(apiPath + 'swagger.json', (req, res) => {
     return swaggerFromSpec().then((response) => {
       res.jsonp(response);
