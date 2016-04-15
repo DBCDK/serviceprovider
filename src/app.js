@@ -33,7 +33,6 @@ module.exports.run = function (worker) {
   const server = worker.httpServer;
   const APP_NAME = process.env.APP_NAME || 'app_name'; // eslint-disable-line no-process-env
   const SMAUG_LOCATION = process.env.SMAUG; // eslint-disable-line no-process-env
-  const USE_SMAUG = typeof SMAUG_LOCATION !== 'undefined';
   const logger = new Logger({app_name: APP_NAME});
   const expressLoggers = logger.getExpressLoggers();
 
@@ -73,24 +72,26 @@ module.exports.run = function (worker) {
   app.set('serviceProvider', serviceProvider);
   app.set('logger', logger);
 
-  // DUMMY context
-  let dummyContext = {
-    request: {},
-    libdata: {
-      kommune: 'aarhus',
-      config: config,
-      libraryId: (config || {}).agency
-    }
-    // request: {},
-    // libdata: res.locals.libdata
+  const getContext = function(token) {
+    return new Promise((resolve, reject) => {
+      request.get({
+        uri: SMAUG_LOCATION + '/configuration',
+        qs: {token: token}
+      }, (err, response, body) => {
+        if (err) {
+          return reject(err);
+        }
+
+        if (response.statusCode !== 200) {
+          return reject(new Error('Smaug status code=' + response.statusCode));
+        }
+
+        resolve(JSON.parse(body));
+      });
+    });
   };
 
-  const getContext = function(req, res, next) {
-    if (!USE_SMAUG) {
-      req.context = dummyContext;
-      return next();
-    }
-
+  const getContextMiddleware = function(req, res, next) {
     var authHeader = req.get('authorization');
     if (typeof authHeader === 'undefined') {
       return next();
@@ -103,20 +104,21 @@ module.exports.run = function (worker) {
       return next();
     }
 
-    request.get({
-      uri: SMAUG_LOCATION + '/configuration',
-      qs: {token: bearerToken}
-    }, (err, response, body) => {
-      if (!err && response.statusCode === 200) {
+    getContext(bearerToken)
+      .then((context) => {
         req.authorized = true;
-        req.context = JSON.parse(body);
-      }
-      return next();
-    });
+        req.context = context;
+      })
+      .catch((err) => {
+        log.error(String(err), {stacktrace: err.stack});
+      })
+      .then(() => {
+        return next();
+      });
   };
 
   const requireAuthorized = function(req, res, next) {
-    if (!USE_SMAUG || req.authorized) {
+    if (req.authorized) {
       return next();
     }
 
@@ -209,17 +211,23 @@ module.exports.run = function (worker) {
 
   // WebSocket/SocketCluster transport
   worker.on('connection', (connection) => {
-
     serviceProvider.availableTransforms().forEach(key => {
       connection.on(key, (data, callback) => { // eslint-disable-line no-loop-func
-        callApi(key, data, dummyContext, callback);
+        getContext(data.token)
+          .then((context) => {
+            callApi(key, data, context, callback);
+          })
+          .catch((err) => {
+            log.error(err);
+            // todo: inform client about the error
+          });
       });
     });
   });
 
   // HTTP Transport
   serviceProvider.availableTransforms().forEach(event => {
-    app.all(apiPath + event, getContext, requireAuthorized, (req, res) => { // eslint-disable-line no-loop-func
+    app.all(apiPath + event, getContextMiddleware, requireAuthorized, (req, res) => { // eslint-disable-line no-loop-func
       // TODO: should just be req.body, when all endpoints accept object-only as parameter, until then, this hack supports legacy transforms
       let query = Array.isArray(req.body) ? req.body[0] : req.body;
 
