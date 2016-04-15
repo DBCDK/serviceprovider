@@ -36,6 +36,7 @@ export default function Provider() {
    * Structure containing all the new transformers.
    */
   const transformerMap = {
+    search: require('./search.js'),
     facets: require('./facets.js'),
     getRecommendations: recommendTransformer(),
     getSuggestions: suggestTransformer(),
