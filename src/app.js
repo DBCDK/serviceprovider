@@ -16,7 +16,7 @@ import express from 'express';
 import path from 'path';
 import Logger from 'dbc-node-logger';
 import request from 'request';
-import ServiceProviderSetup from './ServiceProviderSetup.js';
+import Provider from './provider/Provider';
 
 // Middleware
 import bodyParser from 'body-parser';
@@ -36,8 +36,7 @@ module.exports.run = function (worker) {
   const logger = new Logger({app_name: APP_NAME});
   const expressLoggers = logger.getExpressLoggers();
 
-  // Old config, currently stored in config.json, should be delivered from auth-server, etc. later on
-  const config = JSON.parse(
+  const config = JSON.parse( // eslint-disable-line no-unused-vars
         fs.readFileSync(
           process.env.CONFIG_FILE || './config.json', 'utf8')); // eslint-disable-line no-process-env
 
@@ -68,7 +67,7 @@ module.exports.run = function (worker) {
   app.set('port', process.env.PORT || 8080); // eslint-disable-line no-process-env
 
   // Configure app variables
-  let serviceProvider = ServiceProviderSetup(config);
+  let serviceProvider = Provider();
   app.set('serviceProvider', serviceProvider);
   app.set('logger', logger);
 
