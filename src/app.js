@@ -136,35 +136,18 @@ module.exports.run = function (worker) {
   // Execute transform
   function callApi(event, query, context, callback) {
     let prom;
-    // Currently it is needed to run the old-school version of getRecommendations,
-    // since the apitests uses the property isFrontPage=true, which calls the meta-recommender.
-    // But only the regular recommender is implemented in the current neoGetRecommendations.
-    // prom = serviceProvider.trigger(event, query, context);
-    // When the above mentioned is fixed, the below will make use of neoGetRecommendations!
-    // if (event === 'getRecommendations') {
+
     if (serviceProvider.hasTransformer(event)) {
-      log.info('Neo Event called: ', event);
-      // The below expects an array. We will give it what it asks for!
-      prom = [serviceProvider.execute(event, query, context)];
+      prom = serviceProvider.execute(event, query, context);
     } else { // eslint-disable-line brace-style
-      log.info('Old-School Event called: ', event);
-      prom = serviceProvider.trigger(event, query, context);
-    }
-    // TODO: result from serviceProvider should just be a single promise.
-    // fix this in provider
-    if (Array.isArray(prom)) {
-      log.warn('result is array, instead of single promise', {event: event});
-      if (prom.length !== 1) {
-        log.error('result-length is not 1', {length: prom.length});
-      }
-      prom = Array.isArray(prom) ? prom : [prom];
+      log.error('Missing transformer: ' + event);
     }
 
     if (typeof query.fields === 'string') {
       query.fields = query.fields.split(',');
     }
 
-    prom[0].then((response) => {
+    prom.then((response) => {
       if ((typeof response !== 'object') ||
           (typeof response.statusCode !== 'number') ||
           (response.statusCode === 200 && !response.data) ||
