@@ -56,7 +56,7 @@ This variable is used to configure the name with which the application should ap
   The default value is `app_name`
 
 - __PORT__  
-Defines which portnumber the application should use when bootinh up.
+Defines which port number the application should use.
 If `PORT` is undefined the application will be accecsible at port 8080 (i.e. localhost:8080)  
   
   The default value is `8080`
