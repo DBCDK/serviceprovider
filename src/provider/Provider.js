@@ -82,13 +82,10 @@ export default function Provider() {
   }
 
   function availableTransforms() {
-    let result = [];
+    let result = Object.keys(transformerMap);
     for (let key of transforms.keys()) {
       result.push(key);
     }
-    result.push('getSuggestions');
-    result.push('getCoverImageNeo');
-    result.push('getOpenSearchWorkNeo');
     return result;
   }
 
