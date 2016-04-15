@@ -44,41 +44,16 @@ By default it will run on port 8080 on localhost.
 
 Optionally run `mdecrypt config.json.nc`, to decrypt the config for within DBCs network.
 
-# Documentation in old readme, ie. needs to be looked through, and merged into above
-
-## Environment Varibles
+# Environment Varibles
 The following environment variables can be used to override default settings in the application
 
-- __NPM_TOKEN__
-Used to download private modules. THIS IS REQUIRED. You can find your npm token in ~/.npmrc
-The token has the following format: NPM_TOKEN=“00000000-0000-0000-0000-000000000000”
-
-- __EMAIL_REDIRECT__  
-Used when a user creates a new account. The value given in `EMAIL_REDIRECT` will be used as basepath in the link that'll appear in the confirmation email sent to the user.
-Typically you'll want the value in `EMAIL_REDIRECT` to be the same as the basepath for the given site the user is signing up at. I.e pg.demo.dbc.dk.  
-  
-  The default value is `localhost`
-
-- __KAFKA_TOPIC__  
-(inherited from [dbc-node-logger](https://www.npmjs.com/package/dbc-node-logger))  
-This defines which topic in Kafka the log messages should be associated with 
-
-- __KAFKA_HOST__  
-(inherited from [dbc-node-logger](https://www.npmjs.com/package/dbc-node-logger))  
-String that defines the Zookeeper connectionstring. Should be defined as `host:port`. see [winston-kafka-transport](https://www.npmjs.com/package/winston-kafka-transport) and [dbc-node-logger](https://www.npmjs.com/package/dbc-node-logger) 
+- __LOG_LEVEL__
+Is either `DEBUG`,  `INFO`, `WARN`, `ERROR` or `OFF`
 
 - __APP_NAME__
 This variable is used to configure the name with which the application should appear in logs, and is also appended to secrets used in Redis.  
   
   The default value is `app_name`
-
-- __NODE_APPLICATION__  
-Use this varialbe to let the application how stylesheets are compiled and which jade templates are used.
-Currently two values are used to control compiling of SASS and delivering of templates:
-  - `pg` Should be used when building Palles Gavebod
-  - `ddbmobil` Should be used when building Mobil Søg
-  
-  The default value is `pg`
 
 - __PORT__  
 Defines which portnumber the application should use when bootinh up.
@@ -101,9 +76,10 @@ Defines if a worker reboots on crash. (This does not apply to the whole applicat
 
   The default value is `true`
 
-## Testing
+- __CONFIG_FILE__
+Which config-file to read, default is `./config.json`
 
-### Unit tests
-Unit tests are placed with the modules and components in a __tests__ folder
+## Unit tests
+Unit tests are placed with the modules and components in a `__tests__` folder
 to run the tests: `npm run test`
 
