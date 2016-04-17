@@ -9,7 +9,6 @@ export default function () {
 
   function requestTransform(request, context) { // eslint-disable-line no-unused-vars
     let pid = request.pids[0];
-    // console.log("PID: " + pid);
     /*
      <ns1:getObjectRequest>
      <ns1:agency>100200</ns1:agency>
