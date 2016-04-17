@@ -24,19 +24,19 @@ function fieldNameLookup() {
   }
 
   function isBriefDisplay(field) {
-    if(field in ["accessType", "creator", "fedoraPid", "pid", "language", "multiVolumeType", "partOf", "titleFull", "title", "workType"]) {
-      return true;
-    } else {
-      return false;
+    let res = false;
+    if (field in ['accessType', 'creator', 'fedoraPid', 'pid', 'language', 'multiVolumeType', 'partOf', 'titleFull', 'title', 'workType']) {
+      res = true;
     }
+    return res;
   }
 
   function isDkabm(field) {
-    if(isRelation(field) || isMoreInfo(field) || isCollection(field) || isBriefDisplay(field)) {
-      return false;
-    } else {
-      return true;
+    let res = true;
+    if (isRelation(field) || isMoreInfo(field) || isCollection(field) || isBriefDisplay(field)) {
+      res = false;
     }
+    return res;
   }
 
   return {
@@ -45,19 +45,19 @@ function fieldNameLookup() {
     isCollection,
     isBriefDisplay,
     isDkabm
-  }
+  };
 }
 
 function isGetObject(field) {
-  let fieldLookup= fieldNameLookup();
+  let fieldLookup = fieldNameLookup();
   return (fieldLookup.isDkabm(field) || fieldLookup.isBriefDisplay(field) || fieldLookup.isRelation(field));
 }
 
-export function workRequest(request, context) {
+export function workRequest(request, context) { // eslint-disable-line no-unused-vars
   let fieldLookup = fieldNameLookup();
 
   let transformedRequests = {};
-  if(_.has(request, 'fields')) {
+  if (_.has(request, 'fields')) {
     // Only call clients which can contribute the given fields.
     let fields = request.fields;
     // Determine which OpenSearch-method to use:
@@ -67,7 +67,7 @@ export function workRequest(request, context) {
       // A collection is found.
       // Restructure this request as a Search request for retrieving collection only!
       transformedRequests.search = {
-        q: 'rec.id='+request.pids[0],
+        q: 'rec.id=' + request.pids[0],
         fields: ['collection'],
         offset: 0,
         limit: 1
@@ -78,11 +78,11 @@ export function workRequest(request, context) {
       transformedRequests.getobject = request;
     }
 
-    if(fields.some(field => fieldLookup.isMoreInfo(field))) {
+    if (fields.some(field => fieldLookup.isMoreInfo(field))) {
       // send this to the coverurl transformer.
-      transformedRequests.moreinfo = { pids: request.pids };
+      transformedRequests.moreinfo = {pids: request.pids};
     }
-  } else {
+  } else { // eslint-disable-line brace-style
     // Default:
     // Return dkabm, briefdisplay and relations from getObject
     // This should be default behaviour for getObject with no fields!
@@ -91,10 +91,10 @@ export function workRequest(request, context) {
   return {transformedRequest: transformedRequests, state: {}};
 }
 
-export function workResponse(response, context, state) {
+export function workResponse(response, context, state) { // eslint-disable-line no-unused-vars
   // TODO: If any of the clients return an errorEnvelope, drop everything else and just return that errorEnvelope.
   // TODO: Merge envelopes.
-  console.log("RESP: " + JSON.stringify(response.length, null, 4));
+  // console.log('RESP: ' + JSON.stringify(response.length, null, 4));
   return {
     statusCode: 200,
     data: {}
@@ -102,14 +102,14 @@ export function workResponse(response, context, state) {
 }
 
 export function workFunc(context) {
-  return function(request, local_contex, state) {
+  return function (request, local_contex, state) {
     let promises = [];
-    if(_.has(request, 'moreinfo')) {
+    if (_.has(request, 'moreinfo')) {
       // query moreinfo through its transformer.
       let moreInfoPromise = coverImageTransformer()(request.moreinfo, context);
       promises.push(moreInfoPromise);
     }
-    if(_.has(request, 'getobject')) {
+    if (_.has(request, 'getobject')) {
       // query opensearch through getObject method
       let getObjectPromise = openSearchWorkTransformer()(request.getobject, context);
       promises.push(getObjectPromise);
