@@ -20,13 +20,14 @@ function makeReverseContext() {
       if (type) {
         id += type.split(':')[1];
       }
+      id = id.toLowerCase();
       result[id] = key;
     }
   }
   return result;
 }
 
-function workToJSON(o, defaultPrefix) {
+export function workToJSON(o, defaultPrefix) {
   var result = {};
   for (let key in o) {  // eslint-disable-line guard-for-in
     let entries = o[key];
@@ -39,11 +40,11 @@ function workToJSON(o, defaultPrefix) {
       if (entry['@type']) {
         xmlName = xmlBaseName + entry['@type'].$.split(':')[1];
       }
-      let jsonName = reverseContext[xmlName];
+      let jsonName = reverseContext[xmlName.toLowerCase()];
       if (!jsonName) {
         log.warn('invalid id/type, trying type=oth', entry);
         xmlName = xmlBaseName + 'oth';
-        jsonName = reverseContext[xmlName];
+        jsonName = reverseContext[xmlName.toLowerCase()];
       }
       if (!jsonName) {
         log.error('invalid id/type', entry);
