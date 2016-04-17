@@ -34,8 +34,7 @@ function responseTransform(response, context) { // eslint-disable-line no-unused
 }
 
 function recommenderFunc(context) {
-  context.endpoint = context.libdata.config.provider.services.recommend.endpoint;
-  let rec_client = recommendClient(context);
+  let rec_client = recommendClient(context.recommend);
 
   return function (request, context_local) {
     let params = context_local;

@@ -33,8 +33,8 @@ export default function MoreInfoClient(config) {
     throw new Error('A config object should be provided');
   }
 
-  if (!config.wsdl) {
-    throw new Error('A wsdl should be provided with the given config object');
+  if (!config.url) {
+    throw new Error('An url should be provided with the given config object');
   }
 
   if (!config.user || !config.group || !config.password) {
@@ -48,7 +48,7 @@ export default function MoreInfoClient(config) {
       authenticationPassword: config.password
     }
   };
-  const client = BaseSoapClient.client(config.wsdl, defaults, '');
+  const client = BaseSoapClient.client(config.url + '/moreinfo.wsdl', defaults, '');
 
   return {
     getMoreInfoResult: getMoreInfoResult.bind(null, client),

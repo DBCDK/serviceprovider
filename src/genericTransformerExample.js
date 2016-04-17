@@ -60,7 +60,7 @@ function esResponseTransformer(response) {
 // split
 
 let es_config = {
-  endpoint: 'http://xptest.dbc.dk/ms/entity-suggest/v1/',
+  url: 'http://xptest.dbc.dk/ms/entity-suggest/v1/',
   createTest: true,
   createTestPath: '/home/shm/repos/serviceprovider/TESTS/myTest.js',
   createTestDescription: 'foo the bar'

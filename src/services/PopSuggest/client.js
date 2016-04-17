@@ -53,7 +53,7 @@ function getPopSuggestions(config, params) {
 /**
  * Initializes client and return api functions
  *
- * @param {Object} config Requires endpoint and port
+ * @param {Object} config Requires url
  * @returns {{getPopSuggestions}}
  */
 export default function PopSuggest(config) {
@@ -61,13 +61,13 @@ export default function PopSuggest(config) {
     throw new Error('no config object provided');
   }
 
-  ['endpoint'].forEach((key) => {
+  ['url'].forEach((key) => {
     if (!config[key]) {
       throw new Error(`no ${key} provided in config`);
     }
   });
 
-  const uri = config.endpoint;
+  const uri = config.url;
   const filter = config.profile && [`rec.collectionIdentifier:${config.profile}`] || [];
 
   return {
