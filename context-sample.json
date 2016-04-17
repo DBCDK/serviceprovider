@@ -1,0 +1,32 @@
+{
+  "context": {
+    "opensearch": {
+      "url": "http://opensearch.addi.dk/b3.0_4.2/",
+      "agency": 775100,
+      "profile": "opac"
+    },
+    "moreinfo": {
+      "url": "http://moreinfo.addi.dk/2.1/",
+      "user": "***",
+      "group": "***",
+      "password": "***"
+    },
+    "popsuggest": {
+      "url": "http://xptest.dbc.dk/ms/entity-pop/v1"
+    },
+    "entitysuggest": {
+      "url": "http://xptest.dbc.dk/ms/entity-suggest/v1",
+      "libraryType": "folkebibliotek"
+    },
+    "recommend": {
+      "url": "http://xptest.dbc.dk/ms/recommend-cosim/v1",
+      "filters": [
+        "rec.collectionIdentifier:150031-sted OR rec.collectionIdentifier:150031-tema OR rec.collectionIdentifier:775100-katalog OR rec.collectionIdentifier:150033-dandyr OR rec.collectionIdentifier:150008-public OR rec.collectionIdentifier:150052-ekurser OR rec.collectionIdentifier:150015-ereol OR rec.collectionIdentifier:150061-ebog OR rec.collectionIdentifier:150061-netlydbog OR rec.collectionIdentifier:150015-erelic OR rec.collectionIdentifier:870971-faktalink OR rec.collectionIdentifier:150022-alle OR rec.collectionIdentifier:150021-fjern OR rec.collectionIdentifier:870971-forfweb OR rec.collectionIdentifier:150012-ordbog OR rec.collectionIdentifier:150043-atlas OR rec.collectionIdentifier:150005-analyse OR rec.collectionIdentifier:150005-artikel OR rec.collectionIdentifier:150005-portraet OR rec.collectionIdentifier:159014-lokalbibl OR rec.collectionIdentifier:150015-netlydbog OR rec.collectionIdentifier:150060-pressdisp OR rec.collectionIdentifier:150044-safari OR rec.collectionIdentifier:150023-sicref OR rec.collectionIdentifier:150053-turteori OR rec.collectionIdentifier:150033-verdyr OR rec.collectionIdentifier:150059-magasin"
+      ]
+    },
+    "openagency": {
+      "url": "http://openagency.addi.dk/2.24/",
+      "agency": 775100
+    }
+  }
+}
