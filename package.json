@@ -50,6 +50,7 @@
     "js-yaml": "^3.5.3",
     "jsonpath-object-transform": "https://github.com/vibjerg/jsonpath-object-transform/archive/1.0.5.tar.gz",
     "lodash": "3.10.1",
+    "minimist": "^1.2.0",
     "node-rest-client": "^1.5.1",
     "path": "^0.12.7",
     "request": "^2.60.0",
