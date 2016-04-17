@@ -6,7 +6,7 @@ const entsuggest = require('./services/EntitySuggest/client.js');
 
 
 var config = {
-  endpoint: 'http://xptest.dbc.dk/ms/entity-suggest/v1/'
+  url: 'http://xptest.dbc.dk/ms/entity-suggest/v1/'
 };
 
 var entclient = entsuggest(config);

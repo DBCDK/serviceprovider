@@ -11,7 +11,7 @@ import {log} from '../../utils';
  * @return {Promise}
  */
 export function sendRequest(config, method, query) {
-  const url = config.endpoint;
+  const url = config.url;
   const lt = config.libraryType;
 
   return new Promise((resolve, reject) => {
@@ -55,8 +55,8 @@ export default function EntitySuggestClient(config) {
     throw new Error('no config object provided');
   }
 
-  if (!config.endpoint) {
-    throw new Error('no endpoint provided in config');
+  if (!config.url) {
+    throw new Error('no url provided in config');
   }
 
   if (!config.libraryType) {

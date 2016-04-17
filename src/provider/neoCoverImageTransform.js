@@ -253,8 +253,7 @@ export function moreInfoResponse(response, context, state) { // eslint-disable-l
 }
 
 export function moreInfoFunc(context) {
-  let neoContext = context.libdata.config.provider.services.moreinfo;
-  let client = moreInfoClient(neoContext);
+  let client = moreInfoClient(context.moreinfo);
 
   return function (request, local_context, state) { // eslint-disable-line no-unused-vars
     return {response: client.getMoreInfoResultNeo(request), state: state};
