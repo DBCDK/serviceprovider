@@ -200,7 +200,8 @@ function handleError(e) {
 }
 
 export function moreInfoRequest(request, context) { // eslint-disable-line no-unused-vars
-  let pids = request[0].pids;
+                                                    // let pids = request[0].pids;
+  let pids = request.pids;
   let params = {};
   let state = {};
   params.identifier = pids.map(pid => {
@@ -216,40 +217,38 @@ export function moreInfoRequest(request, context) { // eslint-disable-line no-un
 }
 
 export function moreInfoResponse(response, context, state) { // eslint-disable-line no-unused-vars
-  return new Promise((request, resolve) => {
+  // The below should probably be converted to some kind of tests:
+  //
+  // response.identifierInformation = [];
+  // delete response.identifierInformation;
+  // delete response.requestStatus.statusEnum;
+  // response.identifierInformation[0].identifierKnown = false;
+  // delete response.identifierInformation[0].identifier.localIdentifier;
+  // delete response.identifierInformation[0].coverImage;
+  // response.identifierInformation[0].coverImage = [];
+  // console.log('RESP: ' + JSON.stringify(response, null, 4));
 
-    // The below should probably be converted to some kind of tests:
-    //
-    // response.identifierInformation = [];
-    // delete response.identifierInformation;
-    // delete response.requestStatus.statusEnum;
-    // response.identifierInformation[0].identifierKnown = false;
-    // delete response.identifierInformation[0].identifier.localIdentifier;
-    // delete response.identifierInformation[0].coverImage;
-    // response.identifierInformation[0].coverImage = [];
-    // console.log('RESP: ' + JSON.stringify(response, null, 4));
+  try {
+    errorCodeInResponse(response);
 
+    let identifierInformation = getIdentifierInformationList(response);
 
-    try {
-      errorCodeInResponse(response);
-
-      let identifierInformation = getIdentifierInformationList(response);
-
-      let data = {};
-      identifierInformation.forEach((idInfo) => {
-        let {pid: pid, urls: Z} = getCoverUrlsFromIdentifierInformation(idInfo, state);
-        data[pid] = Z;
-      });
-      let envelope = {
-        statusCode: 200,
-        data: data
-      };
-      return resolve(envelope);
-    } catch (e) { // eslint-disable-line brace-style
-      let errorEnvelope = handleError(e);
-      resolve(errorEnvelope);
-    }
-  });
+    let data = {};
+    identifierInformation.forEach((idInfo) => {
+      let {pid: pid, urls: Z} = getCoverUrlsFromIdentifierInformation(idInfo, state);
+      data[pid] = Z;
+    });
+    let envelope = {
+      statusCode: 200,
+      data: data
+    };
+    // return resolve(envelope);
+    return envelope;
+  } catch (e) { // eslint-disable-line brace-style
+    let errorEnvelope = handleError(e);
+    // resolve(errorEnvelope);
+    return errorEnvelope;
+  }
 }
 
 export function moreInfoFunc(context) {
@@ -264,6 +263,6 @@ export function moreInfoFunc(context) {
 export default function moreInfoTransformer() {
 
   return genericTransformer(moreInfoRequest,
-                            moreInfoResponse,
-                            moreInfoFunc);
+    moreInfoResponse,
+    moreInfoFunc);
 }
