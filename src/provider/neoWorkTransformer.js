@@ -56,6 +56,10 @@ function isGetObject(field) {
 export function workRequest(request, context) { // eslint-disable-line no-unused-vars
   let fieldLookup = fieldNameLookup();
 
+  let state = {};
+  if (_.has(request, 'pids') && request.pids.length === 1) {
+    state.pid = request.pids[0]; // saves pid for use in responder.
+  }
   let transformedRequests = {};
   if (_.has(request, 'fields')) {
     // Only call clients which can contribute the given fields.
@@ -88,34 +92,68 @@ export function workRequest(request, context) { // eslint-disable-line no-unused
     // This should be default behaviour for getObject with no fields!
     transformedRequests.getobject = request;
   }
-  return {transformedRequest: transformedRequests, state: {}};
+  return {transformedRequest: transformedRequests, state: state};
 }
 
 export function workResponse(response, context, state) { // eslint-disable-line no-unused-vars
-  // TODO: If any of the clients return an errorEnvelope, drop everything else and just return that errorEnvelope.
-  // TODO: Merge envelopes.
-  // console.log('RESP: ' + JSON.stringify(response.length, null, 4));
-  return {
+                                                         // TODO: If any of the clients return an errorEnvelope, drop everything else and just return that errorEnvelope.
+                                                         // TODO: Merge envelopes.
+                                                         // console.log('RESP: ' + JSON.stringify(response.length, null, 4));
+
+  let envelope = {
     statusCode: 200,
-    data: {}
+    data: [{}]
   };
+
+  let resData = {};
+  for (let i = 0; i < response.length; i++) {
+    let resp = response[i];
+    if (resp.statusCode != 200) {
+      envelope = resp;
+      break;
+    }
+    switch (state.services[i]) {
+      case 'moreinfo':
+        _.extend(envelope.data[0], resp.data[0][state.pid]);
+        break;
+      case 'getobject':
+        _.extend(envelope.data[0], resp.data[0]);
+        break;
+      case 'search':
+        console.log("Search to be merged!");
+        break;
+      default:
+      // We should never get here.
+    }
+  }
+  ;
+
+  return envelope;
 }
 
 export function workFunc(context) {
   return function (request, local_contex, state) {
+    let services = []; // state-data for knowing which servies is called and in which order.
     let promises = [];
     if (_.has(request, 'moreinfo')) {
       // query moreinfo through its transformer.
       let moreInfoPromise = coverImageTransformer()(request.moreinfo, context);
       promises.push(moreInfoPromise);
+      services.push('moreinfo');
     }
     if (_.has(request, 'getobject')) {
       // query opensearch through getObject method
       let getObjectPromise = openSearchWorkTransformer()(request.getobject, context);
       promises.push(getObjectPromise);
+      services.push('getobject');
     }
+    if (_.has(request, 'search')) {
+      // query opensearch through search method
     // TODO: call search-transformer if applicable!
+      services.push('search');
+    }
 
+    state.services = services;
     return {response: Promise.all(promises), state: state};
   };
 }

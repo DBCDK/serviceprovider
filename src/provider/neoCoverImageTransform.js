@@ -240,13 +240,11 @@ export function moreInfoResponse(response, context, state) { // eslint-disable-l
     });
     let envelope = {
       statusCode: 200,
-      data: data
+      data: [data]
     };
-    // return resolve(envelope);
     return envelope;
   } catch (e) { // eslint-disable-line brace-style
     let errorEnvelope = handleError(e);
-    // resolve(errorEnvelope);
     return errorEnvelope;
   }
 }
