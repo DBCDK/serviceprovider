@@ -1,41 +1,39 @@
 'use strict';
 
 import request from 'request';
+import {clone} from 'lodash';
 import {log} from '../utils';
 /**
- * Retrieves data from the webservice based on the given parameters
+ * Retrieves data from the webservice based on the parameters given
  *
+ * @param {string} uri endpoint to send request to
  * @param {Object} params Parameters for the request
- * @param {string} service
  * @return {Promise}
  */
-export function sendRequest(uri, params) {
+export default function sendRequest(uri, query) {
+
   return new Promise((resolve, reject) => {
-    log.debug('calling url: ' + uri + ' with params ' + JSON.stringify(params));
-    request.get({uri, params}, (err, response, body) => {
-      let result = {};
+    let qs = clone(query);
+    log.info('calling client', {path: uri, params: qs});
+
+    request.get({uri, qs}, (err, response, body) => {
       if (err) {
-        log.error(`call failed with error`, {path: uri, params: params, error: err});
+        log.error(`call failed with error`, {path: uri, params: qs, error: err});
         reject(err);
       }
       else if (response.statusCode !== 200) {
         log.error('call responded with unsuccesful statuscode',
-                  {path: uri, params: params, statusCode: response.statusCode});
+                  {path: uri, params: qs, statusCode: response.statusCode});
         reject(response);
       }
       else {
-        result.data = JSON.parse(body);
-        result.metadata = {path: uri,
-                           params: params};
+        let response = {};
+        response.data = JSON.parse(body);
+        response.metadata = { path: uri,
+                              params: qs};
+      resolve(response);
+      log.info('endpoint responded', {path: uri, params: qs, data: response.data});
       }
-
-      resolve(result);
-      log.info('endpoint responded', {path: uri, params: params, data: result.data});
     });
   });
-}
-
-export function buildUri(context, method) {
-  const url = context.endpoint;
-  return `${url}/${method}`;
 }
