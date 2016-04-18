@@ -11,22 +11,20 @@
  *    Returns library suggestions based on query
  *  * subjectSuggestTransformer
  *    Returns subject suggestions based on query
- *  * popSuggestTransformer
+ *  * popsuggestTransformer
  *    Returns solr documents sorted according to loan count
  *  * suggestTransformer
  *    Transformer bsaed on the above mentioned transformers.
  *    The suggestTransformer supports 4 types of suggestions:
  *    creator, library, subject and title
  */
-
 import genericTransformer from '../genericTransformer.js';
-import entitySuggest from '../services/EntitySuggest/neoClient.js';
-import popSuggest from '../services/PopSuggest/client.js';
 import {die} from '../utils.js';
+import {sendRequest} from '../services/HTTPClient.js';
 
 /**
 * Transformer for subjectSuggest endpoint.
-* This transformer calls the entitySuggest client and returns subject
+* This transformer calls the entitysuggest client and returns subject
 * suggestions
 */
 export function subjectSuggestRequest(request, context, state) { // eslint-disable-line no-unused-vars
@@ -35,15 +33,16 @@ export function subjectSuggestRequest(request, context, state) { // eslint-disab
 }
 
 export function subjectSuggestResponse(response, context, state) { // eslint-disable-line no-unused-vars
-  return {statusCode: 200, data: response.response.suggestions.map((obj) => {
+  return {statusCode: 200, data: response.data.response.suggestions.map((obj) => {
     return {str: obj.suggestion};
   })};
 }
 
 export function subjectSuggestFunction(context) {
-  let client = entitySuggest(context.entitysuggest);
   return (request, localContext, state) => { // eslint-disable-line no-unused-vars
-    return {response: client.getSubjectSuggestions(request), state: state};
+    request.lt = context.entitysuggest.libraryType;
+    let url = context.entitysuggest.url + '/' + 'subject';
+    return {response: sendRequest(url, request), state: state};
   };
 }
 
@@ -56,7 +55,7 @@ export function subjectSuggestTransformer() {
 
 /**
 * Transformer for creatorSuggest endpoint.
-* This transformer calls the entitySuggest client and returns creator
+* This transformer calls the entitysuggest client and returns creator
 * suggestions
 */
 export function creatorSuggestRequest(request, context, state) { // eslint-disable-line no-unused-vars
@@ -65,15 +64,16 @@ export function creatorSuggestRequest(request, context, state) { // eslint-disab
 }
 
 export function creatorSuggestResponse(response, context, state) { // eslint-disable-line no-unused-vars
-  return {statusCode: 200, data: response.response.suggestions.map((obj) => {
+  return {statusCode: 200, data: response.data.response.suggestions.map((obj) => {
     return {str: obj.suggestion};
   })};
 }
 
 export function creatorSuggestFunction(context) {
-  let client = entitySuggest(context.entitysuggest);
   return (request, localContext, state) => { // eslint-disable-line no-unused-vars
-    return {response: client.getCreatorSuggestions(request), state: state};
+    request.lt = context.entitysuggest.libraryType;
+    let url = context.entitysuggest.url + '/' + 'creator';
+    return {response: sendRequest(url, request), state: state};
   };
 }
 
@@ -86,7 +86,7 @@ export function creatorSuggestTransformer() {
 
 /**
 * Transformer for librarySuggest endpoint.
-* This transformer calls the entitySuggest client and returns library
+* This transformer calls the entitysuggest client and returns library
 * suggestions
 */
 export function librarySuggestRequest(request, context, state) { // eslint-disable-line no-unused-vars
@@ -95,16 +95,17 @@ export function librarySuggestRequest(request, context, state) { // eslint-disab
 }
 
 export function librarySuggestResponse(response, context, state) { // eslint-disable-line no-unused-vars
-  return {statusCode: 200, data: response.response.suggestions.map((obj) => {
+  return {statusCode: 200, data: response.data.response.suggestions.map((obj) => {
     obj.suggestion.str = obj.suggestion.navn + ', ' + obj.suggestion.by;
     return obj.suggestion;
   })};
 }
 
 export function librarySuggestFunction(context) {
-  let client = entitySuggest(context.entitysuggest);
   return (request, localContext, state) => { // eslint-disable-line no-unused-vars
-    return {response: client.getLibrarySuggestions(request), state: state};
+    request.lt = context.entitysuggest.libraryType;
+    let url = context.entitysuggest.url + '/' + 'library';
+    return {response: sendRequest(url, request), state: state};
   };
 }
 
@@ -116,8 +117,8 @@ export function librarySuggestTransformer() {
 
 
 /**
-* Transformer for popSuggest endpoint.
-* This transformer calls the popSuggestion client and returns solr
+* Transformer for popsuggest endpoint.
+* This transformer calls the popsuggestion client and returns solr
 * document suggestions
 */
 export function popSuggestRequest(request, context, state) { // eslint-disable-line no-unused-vars
@@ -126,13 +127,12 @@ export function popSuggestRequest(request, context, state) { // eslint-disable-l
 }
 
 export function popSuggestResponse(response, context, state) { // eslint-disable-line no-unused-vars
-  return {statusCode: 200, data: response};
+  return {statusCode: 200, data: response.data};
 }
 
 export function popSuggestFunction(context) {
-  let client = popSuggest(context.popsuggest);
   return (request, localContext, state) => { // eslint-disable-line no-unused-vars
-    return {response: client.getPopSuggestions(request), state: state};
+    return {response: sendRequest(context.popsuggest.url, request), state: state};
   };
 }
 
