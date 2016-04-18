@@ -10,7 +10,7 @@ import {log} from '../utils';
  * @param {Object} params Parameters for the request
  * @return {Promise}
  */
-export default function sendRequest(uri, query) {
+export function sendRequest(uri, query) {
 
   return new Promise((resolve, reject) => {
     let qs = clone(query);
