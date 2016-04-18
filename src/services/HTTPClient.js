@@ -1,7 +1,6 @@
 'use strict';
 
 import request from 'request';
-import {curry, extend} from 'lodash';
 import {log} from '../utils';
 /**
  * Retrieves data from the webservice based on the given parameters
@@ -14,6 +13,7 @@ export function sendRequest(uri, params) {
   return new Promise((resolve, reject) => {
     log.debug('calling url: ' + uri + ' with params ' + JSON.stringify(params));
     request.get({uri, params}, (err, response, body) => {
+      let result = {};
       if (err) {
         log.error(`call failed with error`, {path: uri, params: params, error: err});
         reject(err);
@@ -24,14 +24,13 @@ export function sendRequest(uri, params) {
         reject(response);
       }
       else {
-        let response = {};
-        response.data = JSON.parse(body);
-        response.metadata = { path: uri,
-                              params: params};
+        result.data = JSON.parse(body);
+        result.metadata = {path: uri,
+                           params: params};
       }
-      
-      resolve(response);
-      log.info('endpoint responded', {path: uri, params: params, data: response.data});
+
+      resolve(result);
+      log.info('endpoint responded', {path: uri, params: params, data: result.data});
     });
   });
 }
