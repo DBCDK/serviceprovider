@@ -4,7 +4,7 @@ rm -f test.result*
 
 export API_VERSION=`node -e "console.log(parseInt(require('../package.json').version, 10))"`
 IFS=$'\n$'
-for line in `cat requests.lst`
+for line in `cat requests.lst | grep -v "^#"`
 do
   printf "\n\n$line\n" >> test.results.http
   curl -H "Content-Type: application/json" \

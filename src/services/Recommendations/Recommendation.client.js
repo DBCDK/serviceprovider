@@ -6,12 +6,12 @@ import {curry, isPlainObject, isUndefined, isArray} from 'lodash';
 /**
  * Method for getting recommendations
  *
- * @param {String} endpoint
+ * @param {String} url
  * @param {Array} filters
  * @param {Object} params
  * @returns {Promise}
  */
-function getRecommendations(endpoint, params) {
+function getRecommendations(url, params) {
   if (!isPlainObject(params) || isUndefined(params.likes) || isUndefined(params.dislikes)) {
     return Promise.reject({statusMessage: 'Parameters should be an objet that contains both a like and a dislike parameter. I.e. { like: [], dislike: [] }'});
   }
@@ -24,7 +24,7 @@ function getRecommendations(endpoint, params) {
 
   return new Promise((resolve, reject) => {
     request.post({
-      url: endpoint,
+      url: url,
       body: parameters
     }, (err, response) => {
       if (err) {
@@ -50,11 +50,11 @@ export default function Recommendations(config) {
   if (isUndefined(config)) {
     throw new Error('config is undefined');
   }
-  if (!config.endpoint) {
-    throw new Error('An endpoint needs to be provided with config');
+  if (!config.url) {
+    throw new Error('An url needs to be provided with config');
   }
 
   return {
-    getRecommendations: curry(getRecommendations)(config.endpoint)
+    getRecommendations: curry(getRecommendations)(config.url)
   };
 }

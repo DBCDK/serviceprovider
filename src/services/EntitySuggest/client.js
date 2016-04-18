@@ -54,13 +54,13 @@ export default function EntitySuggestClient(config) {
     throw new Error('no config object provided');
   }
 
-  if (!config.endpoint) {
-    throw new Error('no endpoint provided in config');
+  if (!config.url) {
+    throw new Error('no url provided in config');
   }
 
   const defaults = {
     lt: config.libraryType || 'folkebibliotek',
-    url: config.endpoint
+    url: config.url
   };
 
   return {

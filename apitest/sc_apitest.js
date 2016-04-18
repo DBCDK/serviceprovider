@@ -1,4 +1,5 @@
 function identity(x) { return x; }
+function filterComments(x) { return !x.startsWith('#'); }
 
 var majorVersion = parseInt(require('../package.json').version, 10);
 
@@ -6,7 +7,8 @@ var reqs = require('fs')
   .readFileSync('requests.lst', 'utf-8')
   .split('\n')
   .filter(identity)
-  .map(function(s) { 
+  .filter(filterComments)
+  .map(function(s) {
     var result = s.split(' ');
     result[1] = result[1] ?  JSON.parse(result[1]) : {};
     return result;

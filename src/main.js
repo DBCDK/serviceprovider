@@ -12,6 +12,18 @@ require('babel/register');
 var SocketCluster = require('socketcluster').SocketCluster;
 var path = require('path');
 var majorVersion = parseInt(require('../package.json').version, 10);
+var log = require('./utils').log;
+
+var requiredEnvVars = ['SMAUG'];
+
+var missingEnvVars = requiredEnvVars.filter(function(envVar) {
+  return typeof process.env[envVar] === 'undefined'; // eslint-disable-line no-process-env
+});
+
+if (missingEnvVars.length > 0) {
+  log.error('Missing ENV VARS: ' + missingEnvVars);
+  process.exit(1);
+}
 
 new SocketCluster({ // eslint-disable-line no-new
   workers: Number(process.env.NODE_WEB_WORKERS) || 1, // eslint-disable-line no-process-env
