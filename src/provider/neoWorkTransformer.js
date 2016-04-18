@@ -105,10 +105,9 @@ export function workResponse(response, context, state) { // eslint-disable-line 
     data: [{}]
   };
 
-  let resData = {};
   for (let i = 0; i < response.length; i++) {
     let resp = response[i];
-    if (resp.statusCode != 200) {
+    if (resp.statusCode !== 200) {
       envelope = resp;
       break;
     }
@@ -120,13 +119,12 @@ export function workResponse(response, context, state) { // eslint-disable-line 
         _.extend(envelope.data[0], resp.data[0]);
         break;
       case 'search':
-        console.log("Search to be merged!");
+        // console.log("Search to be merged!");
         break;
       default:
       // We should never get here.
     }
   }
-  ;
 
   return envelope;
 }
