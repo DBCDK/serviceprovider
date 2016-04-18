@@ -19,7 +19,6 @@
  *    creator, library, subject and title
  */
 
-import {clone} from 'lodash';
 import genericTransformer from '../genericTransformer.js';
 import entitySuggest from '../services/EntitySuggest/neoClient.js';
 import popSuggest from '../services/PopSuggest/client.js';
@@ -42,8 +41,7 @@ export function subjectSuggestResponse(response, context, state) { // eslint-dis
 }
 
 export function subjectSuggestFunction(context) {
-  let contextCopy = clone(context.entitySuggest);
-  let client = entitySuggest(contextCopy);
+  let client = entitySuggest(context.entitysuggest);
   return (request, localContext, state) => { // eslint-disable-line no-unused-vars
     return {response: client.getSubjectSuggestions(request), state: state};
   };
@@ -73,8 +71,7 @@ export function creatorSuggestResponse(response, context, state) { // eslint-dis
 }
 
 export function creatorSuggestFunction(context) {
-  let contextCopy = clone(context.entitySuggest);
-  let client = entitySuggest(contextCopy);
+  let client = entitySuggest(context.entitysuggest);
   return (request, localContext, state) => { // eslint-disable-line no-unused-vars
     return {response: client.getCreatorSuggestions(request), state: state};
   };
@@ -105,8 +102,7 @@ export function librarySuggestResponse(response, context, state) { // eslint-dis
 }
 
 export function librarySuggestFunction(context) {
-  let contextCopy = clone(context.entitySuggest);
-  let client = entitySuggest(contextCopy);
+  let client = entitySuggest(context.entitysuggest);
   return (request, localContext, state) => { // eslint-disable-line no-unused-vars
     return {response: client.getLibrarySuggestions(request), state: state};
   };
@@ -134,8 +130,7 @@ export function popSuggestResponse(response, context, state) { // eslint-disable
 }
 
 export function popSuggestFunction(context) {
-  let contextCopy = clone(context.popSuggest);
-  let client = popSuggest(contextCopy);
+  let client = popSuggest(context.popsuggest);
   return (request, localContext, state) => { // eslint-disable-line no-unused-vars
     return {response: client.getPopSuggestions(request), state: state};
   };

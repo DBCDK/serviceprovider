@@ -37,7 +37,7 @@ export default function () {
      </SOAP-ENV:Envelope>
      */
 
-    let neoContext = context.libdata.config.provider.services.opensearch;
+    let neoContext = context.opensearch;
     // console.log("CONTEXT: " + JSON.stringify(neoContext, null, 4));
 
     // TODO: set parameters according to the given fields.
@@ -133,16 +133,11 @@ export default function () {
   }
 
   function OSWorkFunc(context) {
-    let neoContext = context.libdata.config.provider.services.opensearch;
     // console.log("Context: " + JSON.stringify(neoContext, null, 4));
     let method = ''; // method is empty in this request. It is given as 'action' in the parameter-object.
-    let config = {
-      endpoint: neoContext.wsdl.slice(0, -5) // hack! the context gives us an url with '?wsdl'. This i part is removed.
-    };
-    // console.log("Config: " + JSON.stringify(config, null, 4));
 
     return function (request, local_context, state) { // eslint-disable-line no-unused-vars
-      return {response: entitySuggestHttpClient.sendRequest(config, method, request), state: state};
+      return {response: entitySuggestHttpClient.sendRequest(context.opensearch, method, request), state: state};
     };
   }
 

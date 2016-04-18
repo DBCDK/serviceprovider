@@ -16,7 +16,7 @@ import express from 'express';
 import path from 'path';
 import Logger from 'dbc-node-logger';
 import request from 'request';
-import ServiceProviderSetup from './ServiceProviderSetup.js';
+import Provider from './provider/Provider';
 
 // Middleware
 import bodyParser from 'body-parser';
@@ -33,12 +33,10 @@ module.exports.run = function (worker) {
   const server = worker.httpServer;
   const APP_NAME = process.env.APP_NAME || 'app_name'; // eslint-disable-line no-process-env
   const SMAUG_LOCATION = process.env.SMAUG; // eslint-disable-line no-process-env
-  const USE_SMAUG = typeof SMAUG_LOCATION !== 'undefined';
   const logger = new Logger({app_name: APP_NAME});
   const expressLoggers = logger.getExpressLoggers();
 
-  // Old config, currently stored in config.json, should be delivered from auth-server, etc. later on
-  const config = JSON.parse(
+  const config = JSON.parse( // eslint-disable-line no-unused-vars
         fs.readFileSync(
           process.env.CONFIG_FILE || './config.json', 'utf8')); // eslint-disable-line no-process-env
 
@@ -69,28 +67,30 @@ module.exports.run = function (worker) {
   app.set('port', process.env.PORT || 8080); // eslint-disable-line no-process-env
 
   // Configure app variables
-  let serviceProvider = ServiceProviderSetup(config);
+  let serviceProvider = Provider();
   app.set('serviceProvider', serviceProvider);
   app.set('logger', logger);
 
-  // DUMMY context
-  let dummyContext = {
-    request: {},
-    libdata: {
-      kommune: 'aarhus',
-      config: config,
-      libraryId: (config || {}).agency
-    }
-    // request: {},
-    // libdata: res.locals.libdata
+  const getContext = function(token) {
+    return new Promise((resolve, reject) => {
+      request.get({
+        uri: SMAUG_LOCATION + '/configuration',
+        qs: {token: token}
+      }, (err, response, body) => {
+        if (err) {
+          return reject(err);
+        }
+
+        if (response.statusCode !== 200) {
+          return reject(new Error('Smaug status code=' + response.statusCode));
+        }
+
+        resolve(JSON.parse(body));
+      });
+    });
   };
 
-  const getContext = function(req, res, next) {
-    if (!USE_SMAUG) {
-      req.context = dummyContext;
-      return next();
-    }
-
+  const getContextMiddleware = function(req, res, next) {
     var authHeader = req.get('authorization');
     if (typeof authHeader === 'undefined') {
       return next();
@@ -103,20 +103,21 @@ module.exports.run = function (worker) {
       return next();
     }
 
-    request.get({
-      uri: SMAUG_LOCATION + '/configuration',
-      qs: {token: bearerToken}
-    }, (err, response, body) => {
-      if (!err && response.statusCode === 200) {
+    getContext(bearerToken)
+      .then((context) => {
         req.authorized = true;
-        req.context = JSON.parse(body);
-      }
-      return next();
-    });
+        req.context = context;
+      })
+      .catch((err) => {
+        log.error(String(err), {stacktrace: err.stack});
+      })
+      .then(() => {
+        return next();
+      });
   };
 
   const requireAuthorized = function(req, res, next) {
-    if (!USE_SMAUG || req.authorized) {
+    if (req.authorized) {
       return next();
     }
 
@@ -135,35 +136,18 @@ module.exports.run = function (worker) {
   // Execute transform
   function callApi(event, query, context, callback) {
     let prom;
-    // Currently it is needed to run the old-school version of getRecommendations,
-    // since the apitests uses the property isFrontPage=true, which calls the meta-recommender.
-    // But only the regular recommender is implemented in the current neoGetRecommendations.
-    // prom = serviceProvider.trigger(event, query, context);
-    // When the above mentioned is fixed, the below will make use of neoGetRecommendations!
-    // if (event === 'getRecommendations') {
+
     if (serviceProvider.hasTransformer(event)) {
-      log.info('Neo Event called: ', event);
-      // The below expects an array. We will give it what it asks for!
-      prom = [serviceProvider.execute(event, query, context)];
+      prom = serviceProvider.execute(event, query, context);
     } else { // eslint-disable-line brace-style
-      log.info('Old-School Event called: ', event);
-      prom = serviceProvider.trigger(event, query, context);
-    }
-    // TODO: result from serviceProvider should just be a single promise.
-    // fix this in provider
-    if (Array.isArray(prom)) {
-      log.warn('result is array, instead of single promise', {event: event});
-      if (prom.length !== 1) {
-        log.error('result-length is not 1', {length: prom.length});
-      }
-      prom = Array.isArray(prom) ? prom : [prom];
+      log.error('Missing transformer: ' + event);
     }
 
     if (typeof query.fields === 'string') {
       query.fields = query.fields.split(',');
     }
 
-    prom[0].then((response) => {
+    prom.then((response) => {
       if ((typeof response !== 'object') ||
           (typeof response.statusCode !== 'number') ||
           (response.statusCode === 200 && !response.data) ||
@@ -209,17 +193,23 @@ module.exports.run = function (worker) {
 
   // WebSocket/SocketCluster transport
   worker.on('connection', (connection) => {
-
     serviceProvider.availableTransforms().forEach(key => {
       connection.on(key, (data, callback) => { // eslint-disable-line no-loop-func
-        callApi(key, data, dummyContext, callback);
+        getContext(data.token)
+          .then((context) => {
+            callApi(key, data, context, callback);
+          })
+          .catch((err) => {
+            log.error(err);
+            callback({statusCode: 403, error: 'Forbidden'});
+          });
       });
     });
   });
 
   // HTTP Transport
   serviceProvider.availableTransforms().forEach(event => {
-    app.all(apiPath + event, getContext, requireAuthorized, (req, res) => { // eslint-disable-line no-loop-func
+    app.all(apiPath + event, getContextMiddleware, requireAuthorized, (req, res) => { // eslint-disable-line no-loop-func
       // TODO: should just be req.body, when all endpoints accept object-only as parameter, until then, this hack supports legacy transforms
       let query = Array.isArray(req.body) ? req.body[0] : req.body;
 
