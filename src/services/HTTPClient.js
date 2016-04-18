@@ -27,12 +27,12 @@ export default function sendRequest(uri, query) {
         reject(response);
       }
       else {
-        let response = {};
-        response.data = JSON.parse(body);
-        response.metadata = { path: uri,
-                              params: qs};
-      resolve(response);
-      log.info('endpoint responded', {path: uri, params: qs, data: response.data});
+        let result = {};
+        result.data = JSON.parse(body);
+        result.metadata = {path: uri,
+                           params: qs};
+        resolve(result);
+        log.info('endpoint responded', {path: uri, params: qs, data: result.data});
       }
     });
   });
