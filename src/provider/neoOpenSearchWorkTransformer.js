@@ -41,11 +41,12 @@ export function requestTransform(request, context) { // eslint-disable-line no-u
   return {transformedRequest: requestParams, state: state};
 }
 
-function T(lookup, result) {
+function retrieveDkabmFields(lookup, result) {
 
   return function (value, key) {
     let a = [];
     _.forEach(value, function (z, k) { // eslint-disable-line
+      // console.log("Key: " + key);
       let x = {key: key};
       if (_.has(z, '$') && _.has(z, '@')) {
         x.ns = z['@'];
@@ -61,34 +62,70 @@ function T(lookup, result) {
     });
 
     a.map(X => {
-      let k = X.ns + ':' + key;
-      if (X.type) {
-        k += '/' + X.type;
-      }
-      if (result[k]) {
-        result[k].push(X.value);
+      //let k = X.ns + ':' + key;
+      //if (X.type) {
+      //  k += '/' + X.type;
+      //}
+      let identifier = X.ns + ':' + key;
+      let field = X.type ? typeId.getField(identifier, X.type) : typeId.getField(identifier);
+      // console.log("Field: " + field);
+      if (result[field]) {
+        result[field].push(X.value);
       } else { // eslint-disable-line brace-style
-        result[k] = [X.value];
+        result[field] = [X.value];
       }
     });
   };
 }
 
-export function responseTransform(response, context, state) { // eslint-disable-line no-unused-vars
+function getDkabmData(response) {
   // TODO: check that all the below properties are valid.
   let namespaces = response.data['@namespaces'];
   let searchResult = response.data.searchResponse.result.searchResult;
-  let record = searchResult[0].collection.object[0].record;
+  let record = searchResult[0].collection.object[0].record; // DKABM-data
 
-  let lookup = {namespaces: namespaces};
+  let lookup = {namespaces: namespaces}; // unused!
   let result = {};
-  _.forOwn(record, T(lookup, result));
+  _.forOwn(record, retrieveDkabmFields(lookup, result));
+  return result;
+}
 
-  // TODO: use requestTypeIdentifier.js for getting correct fieldnames of returned data.
+function getBriefDisplayData(response) {
+  let searchResult = response.data.searchResponse.result.searchResult;
+  let briefDisplay = searchResult[0].formattedCollection.briefDisplay.manifestation[0];
+
+  let res = {};
+  _.forOwn(briefDisplay, (value,key) => {
+    let ns = 'bd';
+    let identifier = ns + ':' + key;
+    let field = typeId.getField(identifier);
+    res[field] = [value.$];
+  });
+  return res;
+}
+
+function getRelationData(response) {
+  let searchResult = response.data.searchResponse.result.searchResult;
+  let relations = searchResult[0].collection.object[0].relations.relation;
+
+  let res = {};
+  _.forEach(relations, relation => {
+    let field = typeId.getField(relation.relationType.$);
+    if(!res[field]) {
+      res[field] = [];
+    }
+    res[field].push(relation.relationUri.$);
+  });
+  return res;
+}
+
+export function responseTransform(response, context, state) { // eslint-disable-line no-unused-vars
   let data = {};
-  data.warning = 'DO NOT USE THIS RESULT. It is invalid';
-  _.extend(data, result);
-  data.title = 'HELLO';
+  let dkabmData = getDkabmData(response);
+  let briefDisplayData = getBriefDisplayData(response);
+  let relationData = getRelationData(response);
+
+  _.extend(data, dkabmData, briefDisplayData, relationData);
   return {statusCode: 200, data: [data]};
 }
 

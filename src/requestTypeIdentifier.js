@@ -15,7 +15,7 @@
 *
 */
 import fs from 'fs';
-import {findKey} from 'lodash';
+import {isEqual} from 'lodash';
 import {die} from './utils.js';
 
 
@@ -65,6 +65,8 @@ export function TypeID(workContext) {
     dbcaddi: requestType.RELATIONS,
     dbcbib: requestType.RELATIONS
   };
+
+  //console.log("WC: " + JSON.stringify(this.workContext, null, 4));
 
   /**
    * Gets type of field
@@ -122,7 +124,16 @@ export function TypeID(workContext) {
     if (typeof type !== 'undefined') {
       obj['@type'] = type;
     }
-    return findKey(workContext, obj);
+    let res;
+    for(let key in this.workContext) {
+      if(!this.workContext.hasOwnProperty(key)) {
+        continue;
+      }
+      if(isEqual(workContext[key], obj)) {
+        res = key;
+      }
+    }
+    return res;
   };
 }
 
