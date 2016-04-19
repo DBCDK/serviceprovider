@@ -4,38 +4,12 @@ import genericTransformer from '../genericTransformer';
 import {sendRequest} from '../services/HTTPClient';
 import _ from 'lodash';
 
+// TODO: remove outer function and set genericTransformer as 'export default'.
 export default function () {
 
   function requestTransform(request, context) { // eslint-disable-line no-unused-vars
     let pid = request.pids[0];
-    /*
-     <ns1:getObjectRequest>
-     <ns1:agency>100200</ns1:agency>
-     <ns1:profile>test</ns1:profile>
-     <ns1:identifier>870970-basis:51989252</ns1:identifier>
-     <ns1:objectFormat>dkabm</ns1:objectFormat>
-     <ns1:relationData>full</ns1:relationData>
-     </ns1:getObjectRequest>
-     */
-
-    /*
-     <?xml version="1.0" encoding="UTF-8"?>
-     <SOAP-ENV:Envelope xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ns1="http://oss.dbc.dk/ns/opensearch">
-     <SOAP-ENV:Body>
-     <ns1:getObjectRequest>
-     <ns1:agency>100200</ns1:agency>
-     <ns1:profile>test</ns1:profile>
-     <ns1:identifier>870970-basis:27953433</ns1:identifier>
-     <ns1:objectFormat>dkabm</ns1:objectFormat>
-     <ns1:objectFormat>briefDisplay</ns1:objectFormat>
-     <ns1:relationData>uri</ns1:relationData>
-     <ns1:collectionType>work-1</ns1:collectionType>
-     </ns1:getObjectRequest>
-     </SOAP-ENV:Body>
-     </SOAP-ENV:Envelope>
-     */
-
-    let neoContext = context.opensearch;
+    let osContext = context.opensearch;
 
     // TODO: set parameters according to the given fields.
     //       I.e. only fetch relations if a relation is asked for in fields
@@ -44,37 +18,18 @@ export default function () {
     //            the getObject-method. In this case a search-method must be used.
     //            If the fields are empty, get all info (collection, relations,
     //            dkabm, briefDisplay).
-    // subnote: when querying a pid using the search-method us a cql like this:
-    //          rec.id='pid'
-    //
     let requestParams = {
       action: 'getObject',
       identifier: pid,
-      agency: neoContext.agency,
-      profile: neoContext.profile,
+      agency: osContext.agency,
+      profile: osContext.profile,
       objectFormat: ['dkabm', 'briefDisplay'],
+      relationData: 'uri',
       outputType: 'json'
     };
     let state = {}; // no state needed in this transformer.
     return {transformedRequest: requestParams, state: state};
   }
-
-  // function Z(value, key) {
-  //  let y = {};
-  //  console.log('Y: ' + key);
-  //  _.forEach(value, function (z, k) {
-  //    let x = {};
-  //    if (_.has(z, '$') && _.has(z, '@')) {
-  //      x.ns = z['@'];
-  //      x.value = z.$;
-  //      if (_.has(z, '@type')) {
-  //        x.type = z['@type'].$;
-  //      }
-  //    }
-  //    console.log(JSON.stringify(x, null, 0));
-  //  });
-  //  return y;
-  // }
 
   function T(lookup, result) {
 
@@ -119,18 +74,18 @@ export default function () {
     let result = {};
     _.forOwn(record, T(lookup, result));
 
+    // TODO: use requestTypeIdentifier.js for getting correct fieldnames of returned data.
     let data = {};
     data.warning = 'DO NOT USE THIS RESULT. It is invalid';
     _.extend(data, result);
-
-    // console.log("RES: " + JSON.stringify(data, null, 4));
-
     data.title = 'HELLO';
     return {statusCode: 200, data: [data]};
   }
 
   function OSWorkFunc(context) {
-    // console.log("Context: " + JSON.stringify(neoContext, null, 4));
+    if(!_.has(context, 'opensearch.url')) {
+      throw new Error('no openseach url provided in context.');
+    }
 
     return function (request, local_context, state) { // eslint-disable-line no-unused-vars
       return {response: sendRequest(context.opensearch.url, request), state: state};
