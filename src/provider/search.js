@@ -64,10 +64,9 @@ export default (params, context) => new Promise((resolve) => {
                     error: 'missing q parameter'});
   }
 
-  context = context.libdata.config.provider.services.opensearch;
-  let agency = context.agency;
-  let profile = context.profile;
-  let url = context.wsdl.replace('?wsdl', '');
+  let agency = context.opensearch.agency;
+  let profile = context.opensearch.profile;
+  let url = context.opensearch.url;
   let q = params.q.replace(/</g, '&lt;');
   let sort = (params.sort || '').replace(/</g, '&lt;');
   let offset = 1 + (parseInt(params.offset, 10) || 0);
