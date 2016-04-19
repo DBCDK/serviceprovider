@@ -117,7 +117,7 @@ export function TypeID(workContext) {
    *
    * @api public
    */
-  this.getField = function (id, type){
+  this.getField = function(id, type) {
     return findKey(workContext, {'@id': id, '@type': type});
   };
 }
