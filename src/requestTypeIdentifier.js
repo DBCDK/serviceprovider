@@ -8,7 +8,7 @@
 *
 * Example of usage:
 *
-*   let typeID = to.makeTypeID('doc/work-context.jsonld');
+*   let typeID = makeTypeID('doc/work-context.jsonld');
 *
 *   let retval = typeID.getType('isAnalysisOf');
 *   let isval = typeID.isType('isAnalysisOf', 'relations');
@@ -37,8 +37,8 @@ function isRequestType(type) {
     if (type === requestType[key]) {
       return true;
     }
-    return false;
   }
+  return false;
 }
 
 
