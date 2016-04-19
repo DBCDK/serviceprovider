@@ -125,8 +125,8 @@ export default function(specName = 'spec') {
           title: 'DBC ServiceProvider',
           description: desc
         },
-        basePath: '/v' + majorVersion + '/',
-        schemes: ['https', 'wss'],
+        basePath: '/v' + majorVersion,
+        schemes: ['http', 'https', 'wss'],
         consumes: ['application/json'],
         produces: ['application/json'],
         paths: specToPaths(spec),
