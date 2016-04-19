@@ -15,6 +15,7 @@
 *
 */
 import fs from 'fs';
+import {findKey} from 'lodash';
 import {die} from './utils.js';
 
 
@@ -106,6 +107,22 @@ export function TypeID(workContext) {
       return true;
     }
     return false;
+  };
+
+  /**
+   * Returns field based on id and type
+   * @param {string} id the id of requested field
+   * @param {string} type the type of requested field
+   * @returns {string} fieldname
+   *
+   * @api public
+   */
+  this.getField = function(id, type) {
+    let obj = {'@id': id};
+    if (typeof type !== 'undefined') {
+      obj['@type'] = type;
+    }
+    return findKey(workContext, obj);
   };
 }
 
