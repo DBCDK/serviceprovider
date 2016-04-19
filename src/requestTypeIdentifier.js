@@ -66,6 +66,8 @@ export function TypeID(workContext) {
     dbcbib: requestType.RELATIONS
   };
 
+  //console.log("WC: " + JSON.stringify(this.workContext, null, 4));
+
   /**
    * Gets type of field
    * @param {string} field returns endpoint type for field
