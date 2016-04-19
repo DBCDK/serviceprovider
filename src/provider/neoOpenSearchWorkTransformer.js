@@ -1,9 +1,8 @@
 'use strict';
 
-import genericTransformer from '../genericTransformer.js';
+import genericTransformer from '../genericTransformer';
+import {sendRequest} from '../services/HTTPClient';
 import _ from 'lodash';
-
-const entitySuggestHttpClient = require('../services/EntitySuggest/neoClient');
 
 export default function () {
 
@@ -37,7 +36,6 @@ export default function () {
      */
 
     let neoContext = context.opensearch;
-    // console.log("CONTEXT: " + JSON.stringify(neoContext, null, 4));
 
     // TODO: set parameters according to the given fields.
     //       I.e. only fetch relations if a relation is asked for in fields
@@ -113,8 +111,8 @@ export default function () {
 
   function responseTransform(response, context, state) { // eslint-disable-line no-unused-vars
     // TODO: check that all the below properties are valid.
-    let namespaces = response['@namespaces'];
-    let searchResult = response.searchResponse.result.searchResult;
+    let namespaces = response.data['@namespaces'];
+    let searchResult = response.data.searchResponse.result.searchResult;
     let record = searchResult[0].collection.object[0].record;
 
     let lookup = {namespaces: namespaces};
@@ -133,10 +131,9 @@ export default function () {
 
   function OSWorkFunc(context) {
     // console.log("Context: " + JSON.stringify(neoContext, null, 4));
-    let method = ''; // method is empty in this request. It is given as 'action' in the parameter-object.
 
     return function (request, local_context, state) { // eslint-disable-line no-unused-vars
-      return {response: entitySuggestHttpClient.sendRequest(context.opensearch, method, request), state: state};
+      return {response: sendRequest(context.opensearch.url, request), state: state};
     };
   }
 
