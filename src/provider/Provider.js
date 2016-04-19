@@ -9,6 +9,8 @@ import recommendTransformer from './neoRecommendTransform.js';
 import {suggestTransformer} from './neoSuggest.js';
 import coverImageTransformer from './neoCoverImageTransform.js';
 import openSearchWorkTransformer from './neoOpenSearchWorkTransformer.js';
+import facetTransformer from './facets';
+import searchTransformer from './search';
 
 /**
  * Initialization of the provider and the underlying services.
@@ -24,8 +26,8 @@ export default function Provider() {
    * Structure containing all the new transformers.
    */
   const transformerMap = {
-    search: require('./search.js'),
-    facets: require('./facets.js'),
+    search: searchTransformer,
+    facets: facetTransformer,
     getRecommendations: recommendTransformer(),
     getSuggestions: suggestTransformer(),
     getCoverImageNeo: coverImageTransformer(),
