@@ -5,7 +5,7 @@ import {sendRequest} from '../services/HTTPClient';
 import {requestType, makeTypeID} from '../requestTypeIdentifier';
 import _ from 'lodash';
 
-let filePath = './doc/work-context.jsonld';
+let filePath = __dirname + '/../../doc/work-context.jsonld';
 let typeId = makeTypeID(filePath);
 
 export function requestTransform(request, context) { // eslint-disable-line no-unused-vars
