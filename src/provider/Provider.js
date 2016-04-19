@@ -33,7 +33,7 @@ export default function Provider() {
     getSuggestions: suggestTransformer(),
     getCoverImageNeo: coverImageTransformer(),
     getOpenSearchWorkNeo: openSearchWorkTransformer(),
-    getWork: workTransformer()
+    work: workTransformer()
   };
 
   // we are going to reimplement a simpler mechanism to call the transformers
