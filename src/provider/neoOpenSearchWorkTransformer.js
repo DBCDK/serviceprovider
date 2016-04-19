@@ -62,13 +62,8 @@ function retrieveDkabmFields(lookup, result) {
     });
 
     a.map(X => {
-      //let k = X.ns + ':' + key;
-      //if (X.type) {
-      //  k += '/' + X.type;
-      //}
       let identifier = X.ns + ':' + key;
       let field = X.type ? typeId.getField(identifier, X.type) : typeId.getField(identifier);
-      // console.log("Field: " + field);
       if (result[field]) {
         result[field].push(X.value);
       } else { // eslint-disable-line brace-style
@@ -95,7 +90,7 @@ function getBriefDisplayData(response) {
   let briefDisplay = searchResult[0].formattedCollection.briefDisplay.manifestation[0];
 
   let res = {};
-  _.forOwn(briefDisplay, (value,key) => {
+  _.forOwn(briefDisplay, (value, key) => {
     let ns = 'bd';
     let identifier = ns + ':' + key;
     let field = typeId.getField(identifier);
@@ -111,7 +106,7 @@ function getRelationData(response) {
   let res = {};
   _.forEach(relations, relation => {
     let field = typeId.getField(relation.relationType.$);
-    if(!res[field]) {
+    if (!res[field]) {
       res[field] = [];
     }
     res[field].push(relation.relationUri.$);

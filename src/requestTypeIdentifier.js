@@ -66,8 +66,6 @@ export function TypeID(workContext) {
     dbcbib: requestType.RELATIONS
   };
 
-  //console.log("WC: " + JSON.stringify(this.workContext, null, 4));
-
   /**
    * Gets type of field
    * @param {string} field returns endpoint type for field
@@ -119,17 +117,17 @@ export function TypeID(workContext) {
    *
    * @api public
    */
-  this.getField = function(id, type) {
+  this.getField = function (id, type) {
     let obj = {'@id': id};
     if (typeof type !== 'undefined') {
       obj['@type'] = type;
     }
     let res;
-    for(let key in this.workContext) {
-      if(!this.workContext.hasOwnProperty(key)) {
+    for (let key in this.workContext) {
+      if (!this.workContext.hasOwnProperty(key)) {
         continue;
       }
-      if(isEqual(workContext[key], obj)) {
+      if (isEqual(workContext[key], obj)) {
         res = key;
       }
     }
