@@ -118,7 +118,11 @@ export function TypeID(workContext) {
    * @api public
    */
   this.getField = function(id, type) {
-    return findKey(workContext, {'@id': id, '@type': type});
+    let obj = {'@id': id};
+    if (typeof type !== 'undefined') {
+      obj['@type'] = type;
+    }
+    return findKey(workContext, obj);
   };
 }
 
