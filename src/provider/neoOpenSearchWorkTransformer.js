@@ -2,7 +2,7 @@
 
 import genericTransformer from '../genericTransformer';
 import {sendRequest} from '../services/HTTPClient';
-import {requestType, TypeID, makeTypeID} from '../requestTypeIdentifier';
+import {requestType, makeTypeID} from '../requestTypeIdentifier';
 import _ from 'lodash';
 
 let filePath = './doc/work-context.jsonld';
@@ -27,13 +27,13 @@ export function requestTransform(request, context) { // eslint-disable-line no-u
     objectFormat: [] // to be filled out below
   };
 
-  if(fields.some(field => {return typeId.isType(field, requestType.BRIEFDISPLAY)})) {
+  if (fields.some(field => { return typeId.isType(field, requestType.BRIEFDISPLAY); })) { // eslint-disable-line brace-style
     requestParams.objectFormat.push('briefDisplay');
   }
-  if(fields.some(field => {return typeId.isType(field, requestType.DKABM)})) {
+  if (fields.some(field => { return typeId.isType(field, requestType.DKABM); })) { // eslint-disable-line brace-style
     requestParams.objectFormat.push('dkabm');
   }
-  if(fields.some(field => {return typeId.isType(field, requestType.RELATIONS)})) {
+  if (fields.some(field => { return typeId.isType(field, requestType.RELATIONS); })) { // eslint-disable-line brace-style
     requestParams.relationData = 'uri';
   }
 
