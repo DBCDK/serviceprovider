@@ -2,28 +2,41 @@
 
 import genericTransformer from '../genericTransformer';
 import {sendRequest} from '../services/HTTPClient';
+import {requestType, TypeID, makeTypeID} from '../requestTypeIdentifier';
 import _ from 'lodash';
 
-export function requestTransform(request, context) { // eslint-disable-line no-unused-vars
-  let pid = request.pids[0];
-  let osContext = context.opensearch;
+let filePath = './doc/work-context.jsonld';
+let typeId = makeTypeID(filePath);
 
-  // TODO: set parameters according to the given fields.
-  //       I.e. only fetch relations if a relation is asked for in fields
-  //            only fetch briefDisplay if a briefDisplay is asked for in fields.
-  //            Collection is a special case, since it cannot be fetched through
-  //            the getObject-method. In this case a search-method must be used.
-  //            If the fields are empty, get all info (collection, relations,
-  //            dkabm, briefDisplay).
+export function requestTransform(request, context) { // eslint-disable-line no-unused-vars
+
+  let pid = request.pids[0]; // TODO: ensure that there is a pid
+  let osContext = context.opensearch; // TODO: ensure that properties used from opensearch are valid.
+
+
+  let fields = request.fields; // TODO: ensure request.fields is a valid property.
+
+  // Create request params.
+  // Only add dkabm, briefDisplay and relations if requested.
   let requestParams = {
     action: 'getObject',
     identifier: pid,
     agency: osContext.agency,
     profile: osContext.profile,
-    objectFormat: ['dkabm', 'briefDisplay'],
-    relationData: 'uri',
-    outputType: 'json'
+    outputType: 'json',
+    objectFormat: [] // to be filled out below
   };
+
+  if(fields.some(field => {return typeId.isType(field, requestType.BRIEFDISPLAY)})) {
+    requestParams.objectFormat.push('briefDisplay');
+  }
+  if(fields.some(field => {return typeId.isType(field, requestType.DKABM)})) {
+    requestParams.objectFormat.push('dkabm');
+  }
+  if(fields.some(field => {return typeId.isType(field, requestType.RELATIONS)})) {
+    requestParams.relationData = 'uri';
+  }
+
   let state = {}; // no state needed in this transformer.
   return {transformedRequest: requestParams, state: state};
 }
@@ -81,7 +94,7 @@ export function responseTransform(response, context, state) { // eslint-disable-
 
 export function OSWorkFunc(context) {
   if (!_.has(context, 'opensearch.url')) {
-    throw new Error('no openseach url provided in context.');
+    throw new Error('no opensearch url provided in context.');
   }
 
   return function (request, local_context, state) { // eslint-disable-line no-unused-vars
