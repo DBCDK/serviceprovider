@@ -11,7 +11,6 @@ import {version} from '../package.json';
 const apiPath = '/v' + parseInt(version, 10) + '/';
 
 // Libraries
-import fs from 'fs';
 import express from 'express';
 import path from 'path';
 import Logger from 'dbc-node-logger';
@@ -35,10 +34,6 @@ module.exports.run = function (worker) {
   const SMAUG_LOCATION = process.env.SMAUG; // eslint-disable-line no-process-env
   const logger = new Logger({app_name: APP_NAME});
   const expressLoggers = logger.getExpressLoggers();
-
-  const config = JSON.parse( // eslint-disable-line no-unused-vars
-        fs.readFileSync(
-          process.env.CONFIG_FILE || './config.json', 'utf8')); // eslint-disable-line no-process-env
 
   // Direct requests to app
   server.on('request', app);

@@ -37,4 +37,4 @@ NODE_ENV_DOCKERFILE
 # MISC
 # ============
 /versions/
-config.json
+context.json
