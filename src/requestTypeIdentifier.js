@@ -15,7 +15,7 @@
 *
 */
 import fs from 'fs';
-import {findKey} from 'lodash';
+import {isEqual} from 'lodash';
 import {die} from './utils.js';
 
 
@@ -117,12 +117,21 @@ export function TypeID(workContext) {
    *
    * @api public
    */
-  this.getField = function(id, type) {
+  this.getField = function (id, type) {
     let obj = {'@id': id};
     if (typeof type !== 'undefined') {
       obj['@type'] = type;
     }
-    return findKey(workContext, obj);
+    let res;
+    for (let key in this.workContext) {
+      if (!this.workContext.hasOwnProperty(key)) {
+        continue;
+      }
+      if (isEqual(workContext[key], obj)) {
+        res = key;
+      }
+    }
+    return res;
   };
 }
 
