@@ -12,18 +12,18 @@ function getPid(request) {
   if (!_.has(request, 'pids')) {
     throw new Error('Pid not correctly present in request');
   }
-  if(request.pids.length !== 1) {
+  if (request.pids.length !== 1) {
     throw new Error('Illegal number of pids in request - exactly one should be present.');
   }
   return request.pids[0];
 }
 
 function getAndValidateOpensearchContext(context) {
-  if(!_.has(context, 'opensearch')) {
+  if (!_.has(context, 'opensearch')) {
     throw new Error('No opensearch property present in context');
   }
   let osContext = context.opensearch;
-  if(!_.has(osContext, 'agency') || !_.has(osContext, 'profile')) {
+  if (!_.has(osContext, 'agency') || !_.has(osContext, 'profile')) {
     throw new Error('agency or profile missing from opensearch-context.');
   }
   return osContext;
@@ -109,25 +109,25 @@ function retrieveDkabmFields(result) {
 
 function getDkabmData(response) {
   // TODO: check that all the below properties are valid.
-  if(!_.has(response, 'data.@namespaces')) {
-    // no namespaces. Handle!
-  }
-  let namespaces = response.data['@namespaces'];
-  if(!_.has(response, 'data.searchResponse.result.searchResult')) {
+  // if (!_.has(response, 'data.@namespaces')) {
+  //  // no namespaces. Handle!
+  // }
+  // let namespaces = response.data['@namespaces'];
+  if (!_.has(response, 'data.searchResponse.result.searchResult')) {
     // no searchresult. Handle!
   }
   let searchResult = response.data.searchResponse.result.searchResult;
-  if(searchResult.length < 1) {
+  if (searchResult.length < 1) {
     // empty searchresult. Handle!
   }
-  if(!_.has(searchResult[0], 'collection.object')) {
+  if (!_.has(searchResult[0], 'collection.object')) {
     // No object. Handle!
   }
   let obj = searchResult[0].collection.object;
-  if(obj.length < 1) {
+  if (obj.length < 1) {
     // empty object. Handle!
   }
-  if(!_.has(obj[0], 'record')) {
+  if (!_.has(obj[0], 'record')) {
     // no record. Handle!
   }
   let record = obj[0].record; // DKABM-data
