@@ -11,24 +11,27 @@ This is the repository for the ServiceProvider, ie. the API from [MobilSøg](htt
 
 ## Communication with the API
 
-HTTP endpoints can be accesses on `/api/$ENDPOINT_NAME` with the parameters in a post request, ie.: 
+HTTP endpoints can be accesses on `/api/$ENDPOINT_NAME` with the parameters in a post request, ie.:
 
     curl -X POST \
          -H "Content-Type: application/json" \
          -d '{"query":"(1q84)","offset":0,"worksPerPage":12,"sort":"rank_frequency"}' \
          http://localhost:8080/api/getOpenSearchResultList
 
-will search for "1q84". 
+will search for "1q84".
 
 ## Installation / getting it to run
 
 **IMPORTANT** the serviceprovider only runs on DBCs internal network as it serve as the gateway to the services.
 
-The current version depends on the existance for `config.json`, which has the list of internal DBC-services etc. 
+It depends on a authorisation server to serve the configuration.
+
+You can run a local configuration server, w
+The current version depends on the existance for `config.json`, which has the list of internal DBC-services etc.
 These information should be delivered through environment or the authentification server later on.
-A sample file without passwords etc. is: `config.json.sample`, and that one can also be used for building / running tests when outside of DBCs network.
-The full config for running on the internal network lies in `config.json.nc` and is encrypted (with the password that was also previously used to get access to the config).
-The `config.json.sample` is automatically copied to `config.json` on npm install.
+A sample file without passwords etc. is: `context-sample.json`, and that one can also be used for building / running tests when outside of DBCs network.
+The full config for running on the internal network lies in `context.json.nc` and is encrypted (with the password that was also previously used to get access to the config).
+The `context.json.sample` is automatically copied to `context.json` on npm install.
 
 ### Dependencies
 
@@ -38,11 +41,12 @@ The `config.json.sample` is automatically copied to `config.json` on npm install
 
 ### Building / running it
 
-- `npm run dev` runs the application in dev-mode
+- `PORT=3000 node src/smaug/minismaug.js -f context.json` runs a minimal config-serving authorisation server (which ignores tokens).
+- `SMAUG=http://localhost:3000 npm run dev` runs the application in dev-mode. If you have access to another authorisation server, enter that instead of localhost:3000 (examples could be `http://platform-i01:3000` or `http://smaug.m.dbc.antistof.dk:3000`)
 
-By default it will run on port 8080 on localhost.
+By default the ServiceProvider will run on port 8080 on localhost.
 
-Optionally run `mdecrypt config.json.nc`, to decrypt the config for within DBCs network.
+Optionally run `mdecrypt context.json.nc`, to decrypt the config.
 
 # Environment Varibles
 The following environment variables can be used to override default settings in the application
@@ -51,24 +55,24 @@ The following environment variables can be used to override default settings in 
 Is either `DEBUG`,  `INFO`, `WARN`, `ERROR` or `OFF`
 
 - __APP_NAME__
-This variable is used to configure the name with which the application should appear in logs, and is also appended to secrets used in Redis.  
-  
+This variable is used to configure the name with which the application should appear in logs, and is also appended to secrets used in Redis.
+
   The default value is `app_name`
 
-- __PORT__  
+- __PORT__
 Defines which port number the application should use.
-If `PORT` is undefined the application will be accecsible at port 8080 (i.e. localhost:8080)  
-  
+If `PORT` is undefined the application will be accecsible at port 8080 (i.e. localhost:8080)
+
   The default value is `8080`
 
 - __NODE_WEB_WORKERS__
-Defines how many workers to use. 
-  
+Defines how many workers to use.
+
   The default value is `1`
-  
+
 - __NODE_WEB_BROKERS__
 Defines how many brokers to use.
-  
+
   The default value is `1`
 
 - __AUTO_REBOOT__
@@ -78,6 +82,10 @@ Defines if a worker reboots on crash. (This does not apply to the whole applicat
 
 - __CONFIG_FILE__
 Which config-file to read, default is `./config.json`
+
+- __SMAUG__
+Url of the authorisation server we use.
+
 
 ## Unit tests
 Unit tests are placed with the modules and components in a `__tests__` folder
