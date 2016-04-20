@@ -37,7 +37,6 @@ export function workRequest(request, context) { // eslint-disable-line no-unused
     // If the collection-field is given, then the OpenSearch request should
     // be given to the search method. Else it should be given to the getObject method.
     if (fields.some(field => typeId.isType(field, requestType.COLLECTION))) {
-    //if (fields.some(x => fieldLookup.isCollection(x))) {
       // A collection is found.
       // Restructure this request as a Search request for retrieving collection only!
       transformedRequests[requestMethod.SEARCH] = {
@@ -74,6 +73,7 @@ export function workResponse(response, context, state) { // eslint-disable-line 
   for (let i = 0; i < response.length; i++) {
     let resp = response[i];
     if (resp.statusCode !== 200) {
+      // Setting error envelope if found!
       envelope = resp;
       break;
     }
