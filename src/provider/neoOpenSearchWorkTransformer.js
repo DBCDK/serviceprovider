@@ -10,18 +10,29 @@ let typeId = makeTypeID(filePath);
 
 function getPid(request) {
   if (!_.has(request, 'pids')) {
-    throw new Error("Pid not correctly present in request");
+    throw new Error('Pid not correctly present in request');
   }
   if(request.pids.length !== 1) {
-    throw new Error("Illegal number of pids in request - exactly one should be present.");
+    throw new Error('Illegal number of pids in request - exactly one should be present.');
   }
   return request.pids[0];
+}
+
+function getAndValidateOpensearchContext(context) {
+  if(!_.has(context, 'opensearch')) {
+    throw new Error('No opensearch property present in context');
+  }
+  let osContext = context.opensearch;
+  if(!_.has(osContext, 'agency') || !_.has(osContext, 'profile')) {
+    throw new Error('agency or profile missing from opensearch-context.');
+  }
+  return osContext;
 }
 
 export function requestTransform(request, context) { // eslint-disable-line no-unused-vars
 
   let pid = getPid(request);
-  let osContext = context.opensearch; // TODO: ensure that properties used from opensearch are valid.
+  let osContext = getAndValidateOpensearchContext(context);
 
   // Create request params.
   // Only add dkabm, briefDisplay and relations if requested.
@@ -34,8 +45,8 @@ export function requestTransform(request, context) { // eslint-disable-line no-u
     objectFormat: [] // to be filled out below
   };
 
-  // If no fields were given,
-  // Default behaviour is to get everything from briefDisplay, dkabm and relations
+  // If no fields were given, default behaviour is to get
+  // everything from briefDisplay, dkabm and relations.
   let defaultBehaviour = _.has(request, 'fields') ? false: true;
   let fields = request.fields;
   if (defaultBehaviour
@@ -54,7 +65,7 @@ export function requestTransform(request, context) { // eslint-disable-line no-u
   return {transformedRequest: requestParams, state: state};
 }
 
-function retrieveDkabmFields(lookup, result) {
+function retrieveDkabmFields(result) {
 
   return function (value, key) {
     let a = [];
@@ -68,7 +79,6 @@ function retrieveDkabmFields(lookup, result) {
           x.type = z['@type'].$;
         }
       }
-      // console.log(JSON.stringify(x, null, 0));
       if (x.value) {
         a.push(x);
       }
@@ -92,13 +102,13 @@ function getDkabmData(response) {
   let searchResult = response.data.searchResponse.result.searchResult;
   let record = searchResult[0].collection.object[0].record; // DKABM-data
 
-  let lookup = {namespaces: namespaces}; // unused!
   let result = {};
-  _.forOwn(record, retrieveDkabmFields(lookup, result));
+  _.forOwn(record, retrieveDkabmFields(result));
   return result;
 }
 
 function getBriefDisplayData(response) {
+  // TODO: check that all the below properties are valid.
   let searchResult = response.data.searchResponse.result.searchResult;
   let briefDisplay = searchResult[0].formattedCollection.briefDisplay.manifestation[0];
 
@@ -116,6 +126,7 @@ function getBriefDisplayData(response) {
 }
 
 function getRelationData(response) {
+  // TODO: check that all the below properties are valid.
   let searchResult = response.data.searchResponse.result.searchResult;
   let relations = searchResult[0].collection.object[0].relations.relation;
 
