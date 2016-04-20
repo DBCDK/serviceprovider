@@ -1,9 +1,8 @@
 'use strict';
 
-import genericTransformer from '../genericTransformer';
 import workTransformer from './neoWorkTransformer';
 import searchTransformer from './opensearchSearch';
-import {requestType, makeTypeID} from '../requestTypeIdentifier';
+import {makeTypeID} from '../requestTypeIdentifier';
 
 let typeId = makeTypeID();
 
@@ -28,18 +27,18 @@ export default (params, context) => {
 
   return search.then(results => {
     // fail if search failed
-    if(results.statusCode !== 200) {
+    if (results.statusCode !== 200) {
       return results;
     }
 
     // call work-endpoint with pids from search result, and desired fields
-    return new Promise((resolve, reject) => {
+    return new Promise(resolve => {
       let workRequest = {pids: results.data.map(o => o.pid[0]), fields: workFields};
       workTransformer()(workRequest, context).then(workResult => {
 
         // combine the objects from search and work endpoints.
         let result = [];
-        for(let i = 0; i < results.data.length; ++i) {
+        for (let i = 0; i < results.data.length; ++i) {
           result[i] = Object.assign(results.data[i], workResult.data[i]);
         }
         resolve({statusCode: 200, data: result});
