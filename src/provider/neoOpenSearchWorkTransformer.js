@@ -14,7 +14,6 @@ export function requestTransform(request, context) { // eslint-disable-line no-u
   let osContext = context.opensearch; // TODO: ensure that properties used from opensearch are valid.
 
 
-  let fields = request.fields; // TODO: ensure request.fields is a valid property.
 
   // Create request params.
   // Only add dkabm, briefDisplay and relations if requested.
@@ -27,16 +26,22 @@ export function requestTransform(request, context) { // eslint-disable-line no-u
     objectFormat: [] // to be filled out below
   };
 
-  if (fields.some(field => { return typeId.isType(field, requestType.BRIEFDISPLAY); })) { // eslint-disable-line brace-style
+    // If no fields were given,
+    // Default behaviour is to get everything from briefDisplay, dkabm and relations
+  let defaultBehaviour = _.has(request, 'fields') ? false: true;
+  let fields = request.fields;
+  if (defaultBehaviour
+    || fields.some(field => { return typeId.isType(field, requestType.BRIEFDISPLAY); })) { // eslint-disable-line brace-style
     requestParams.objectFormat.push('briefDisplay');
   }
-  if (fields.some(field => { return typeId.isType(field, requestType.DKABM); })) { // eslint-disable-line brace-style
+  if (defaultBehaviour
+    || fields.some(field => { return typeId.isType(field, requestType.DKABM); })) { // eslint-disable-line brace-style
     requestParams.objectFormat.push('dkabm');
   }
-  if (fields.some(field => { return typeId.isType(field, requestType.RELATIONS); })) { // eslint-disable-line brace-style
+  if (defaultBehaviour
+    || fields.some(field => { return typeId.isType(field, requestType.RELATIONS); })) { // eslint-disable-line brace-style
     requestParams.relationData = 'uri';
   }
-
   let state = {}; // no state needed in this transformer.
   return {transformedRequest: requestParams, state: state};
 }
@@ -94,7 +99,10 @@ function getBriefDisplayData(response) {
     let ns = 'bd';
     let identifier = ns + ':' + key;
     let field = typeId.getField(identifier);
-    res[field] = [value.$];
+    if(!res[field]) {
+      res[field] = [];
+    }
+    res[field].push(value.$);
   });
   return res;
 }
