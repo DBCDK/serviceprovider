@@ -3,7 +3,7 @@
 import genericTransformer from '../genericTransformer';
 import coverImageTransformer from './neoCoverImageTransform';
 import openSearchWorkTransformer from './neoOpenSearchWorkTransformer';
-import searchTransformer from './search';
+import searchTransformer from './opensearchSearch';
 import {requestType, makeTypeID} from '../requestTypeIdentifier';
 import _ from 'lodash';
 
