@@ -8,16 +8,39 @@
 *
 * Example of usage:
 *
-*   let typeID = makeTypeID('doc/work-context.jsonld');
+*   let typeID = makeTypeID();
 *
 *   let retval = typeID.getType('isAnalysisOf');
 *   let isval = typeID.isType('isAnalysisOf', 'relations');
 *
 */
 import fs from 'fs';
-import {isEqual} from 'lodash';
-import {die} from './utils.js';
+import {die, log} from './utils.js';
 
+const workContext = JSON.parse(fs.readFileSync(__dirname + '/../doc/work-context.jsonld', 'utf8'));
+const reverseContext = makeReverseContext();
+
+/**
+ * Returns field based on id and type
+ * @param {string} tagName the name of the tag of requested field
+ * @param {string} type the type of requested field
+ * @returns {string} fieldname
+ *
+ * @api public
+ */
+function getField(tagName, type) {
+  let xmlName = tagName;
+  if (type) {
+    xmlName = tagName + type.split(':')[1];
+  }
+  let jsonName = reverseContext[xmlName.toLowerCase()];
+  if (!jsonName) {
+    log.warn('invalid id/type, trying type=oth', {tag: tagName, type: type});
+    xmlName = tagName + 'oth';
+    jsonName = reverseContext[xmlName.toLowerCase()];
+  }
+  return jsonName;
+}
 
 /**
 * requestType enum. Only these request types are supported.
@@ -42,7 +65,6 @@ function isRequestType(type) {
   return false;
 }
 
-
 /**
 * TypeID class
 *
@@ -50,10 +72,8 @@ function isRequestType(type) {
 *   getType: returns type for input field
 *   isType: performs type test.
 *
-* @param workContext field definitions
 */
-export function TypeID(workContext) {
-  this.workContext = workContext;
+export function TypeID() {
   this.namespaceMap = {
     dc: requestType.DKABM,
     dkdcplus: requestType.DKABM,
@@ -75,7 +95,7 @@ export function TypeID(workContext) {
    */
   this.getType = function(field) {
 
-    let val = this.workContext[field];
+    let val = workContext[field];
     if (typeof val === 'undefined' || typeof val === 'string') {
       die('key \'' + field + '\' is unknown');
     }
@@ -103,45 +123,68 @@ export function TypeID(workContext) {
       }) + ']');
     }
 
-    if (this.getType(field) === type) {
-      return true;
-    }
-    return false;
+    return this.getType(field) === type;
   };
-
-  /**
-   * Returns field based on id and type
-   * @param {string} id the id of requested field
-   * @param {string} type the type of requested field
-   * @returns {string} fieldname
-   *
-   * @api public
-   */
-  this.getField = function (id, type) {
-    let obj = {'@id': id};
-    if (typeof type !== 'undefined') {
-      obj['@type'] = type;
-    }
-    let res;
-    for (let key in this.workContext) {
-      if (!this.workContext.hasOwnProperty(key)) {
-        continue;
-      }
-      if (isEqual(workContext[key], obj)) {
-        res = key;
-      }
-    }
-    return res;
-  };
+  this.getField = getField;
 }
-
 
 /**
  * Creates and returns TypeID based on work-context file.
  *
- * @param {string} filePath path to work-context file
  * @api public
  */
-export function makeTypeID(filePath) {
-  return new TypeID(JSON.parse(fs.readFileSync(filePath, 'utf8')));
+export function makeTypeID() {
+  return new TypeID();
+}
+
+/**
+ * Create a lookup table for finding the JSON-name of a tag/type.
+ */
+function makeReverseContext() {
+  let result = {};
+
+  for (let key in workContext) { // eslint-disable-line guard-for-in
+    let elem = workContext[key];
+    let id = elem['@id'];
+    let type = elem['@type'];
+    if (id) {
+      if (type) {
+        id += type.split(':')[1];
+      }
+      id = id.toLowerCase();
+      result[id] = key;
+    }
+  }
+  return result;
+}
+
+/**
+ * Map a badgerfish xml tag to its name in the json object.
+ * @param {object} o The xml element as badgerfish
+ * @param {string} defaultPrefix The default prefix for the namespace for elements in the xml.
+ */
+export function workToJSON(o, defaultPrefix) {
+  var result = {};
+  for (let key in o) {  // eslint-disable-line guard-for-in
+    if (key === '@') {
+      continue;
+    }
+    let entries = o[key];
+    if (!Array.isArray(entries)) {
+      entries = [entries];
+    }
+    entries.forEach(entry => { // eslint-disable-line no-loop-func
+      let tagName = (entry['@'] || defaultPrefix) + ':' + key;
+      let type = entry['@type'] ? entry['@type'].$ : undefined; // eslint-disable-line no-undefined
+      let jsonName = getField(tagName, type);
+      if (!jsonName) {
+        log.error('invalid id/type', {object: entry});
+      }
+      else {
+        result[jsonName] = result[jsonName] || [];
+        result[jsonName].push(entry.$);
+      }
+    });
+  }
+  return result;
 }

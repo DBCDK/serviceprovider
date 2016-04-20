@@ -228,5 +228,6 @@
 "dcTitle":{"@id":"dc:title"},
 "titleSeries":{"@id":"dc:title","@type":"dkdcplus:series"},
 "typeBibDKType":{"@id":"dc:type","@type":"dkdcplus:BibDK-Type"},
+"type":{"@id":"bd:type"},
 "version":{"@id":"dkdcplus:version"},
 "workType":{"@id":"bd:workType"}}
