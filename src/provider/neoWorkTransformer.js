@@ -3,58 +3,27 @@
 import genericTransformer from '../genericTransformer';
 import coverImageTransformer from './neoCoverImageTransform';
 import openSearchWorkTransformer from './neoOpenSearchWorkTransformer';
+import searchTransformer from './search';
+import {requestType, makeTypeID} from '../requestTypeIdentifier';
 import _ from 'lodash';
 
 
-// The poor-mans lookup function. To be replaced by the true implementation.
-function fieldNameLookup() {
+let filePath = __dirname + '/../../doc/work-context.jsonld';
+let typeId = makeTypeID(filePath);
 
-  function isRelation(field) {
-    // Not a correct implementation!
-    return (field.startsWith('has')) ? true : false;
-  }
-
-  function isMoreInfo(field) {
-    // Should work.
-    return (field.startsWith('coverUrl')) ? true : false;
-  }
-
-  function isCollection(field) {
-    return (field === 'collection') ? true : false;
-  }
-
-  function isBriefDisplay(field) {
-    let res = false;
-    if (field in ['accessType', 'creator', 'fedoraPid', 'pid', 'language', 'multiVolumeType', 'partOf', 'titleFull', 'title', 'workType']) {
-      res = true;
-    }
-    return res;
-  }
-
-  function isDkabm(field) {
-    let res = true;
-    if (isRelation(field) || isMoreInfo(field) || isCollection(field) || isBriefDisplay(field)) {
-      res = false;
-    }
-    return res;
-  }
-
-  return {
-    isRelation,
-    isMoreInfo,
-    isCollection,
-    isBriefDisplay,
-    isDkabm
-  };
-}
+let requestMethod = {
+  MOREINFO: 'moreinfo',
+  SEARCH: 'search',
+  GETOBJECT: 'getobject'
+};
 
 function isGetObject(field) {
-  let fieldLookup = fieldNameLookup();
-  return (fieldLookup.isDkabm(field) || fieldLookup.isBriefDisplay(field) || fieldLookup.isRelation(field));
+  return (typeId.isType(field, requestType.DKABM)
+  || typeId.isType(field, requestType.BRIEFDISPLAY)
+  || typeId.isType(field, requestType.RELATIONS));
 }
 
 export function workRequest(request, context) { // eslint-disable-line no-unused-vars
-  let fieldLookup = fieldNameLookup();
 
   let state = {};
   if (_.has(request, 'pids') && request.pids.length === 1) {
@@ -67,10 +36,10 @@ export function workRequest(request, context) { // eslint-disable-line no-unused
     // Determine which OpenSearch-method to use:
     // If the collection-field is given, then the OpenSearch request should
     // be given to the search method. Else it should be given to the getObject method.
-    if (fields.some(x => fieldLookup.isCollection(x))) {
+    if (fields.some(field => typeId.isType(field, requestType.COLLECTION))) {
       // A collection is found.
       // Restructure this request as a Search request for retrieving collection only!
-      transformedRequests.search = {
+      transformedRequests[requestMethod.SEARCH] = {
         q: 'rec.id=' + request.pids[0],
         fields: ['collection'],
         offset: 0,
@@ -79,12 +48,12 @@ export function workRequest(request, context) { // eslint-disable-line no-unused
     }
     if (fields.some(field => isGetObject(field))) {
       // send this as a getObjectRequest
-      transformedRequests.getobject = request;
+      transformedRequests[requestMethod.GETOBJECT] = request;
     }
 
-    if (fields.some(field => fieldLookup.isMoreInfo(field))) {
+    if (fields.some(field => typeId.isType(field, requestType.MOREINFO))) {
       // send this to the coverurl transformer.
-      transformedRequests.moreinfo = {pids: request.pids};
+      transformedRequests[requestMethod.MOREINFO] = {pids: request.pids};
     }
   } else { // eslint-disable-line brace-style
     // Default:
@@ -96,10 +65,6 @@ export function workRequest(request, context) { // eslint-disable-line no-unused
 }
 
 export function workResponse(response, context, state) { // eslint-disable-line no-unused-vars
-                                                         // TODO: If any of the clients return an errorEnvelope, drop everything else and just return that errorEnvelope.
-                                                         // TODO: Merge envelopes.
-                                                         // console.log('RESP: ' + JSON.stringify(response.length, null, 4));
-
   let envelope = {
     statusCode: 200,
     data: [{}]
@@ -108,18 +73,22 @@ export function workResponse(response, context, state) { // eslint-disable-line 
   for (let i = 0; i < response.length; i++) {
     let resp = response[i];
     if (resp.statusCode !== 200) {
+      // Setting error envelope if found!
       envelope = resp;
       break;
     }
     switch (state.services[i]) {
-      case 'moreinfo':
+      case requestMethod.MOREINFO:
         _.extend(envelope.data[0], resp.data[0][state.pid]);
         break;
-      case 'getobject':
+      case requestMethod.GETOBJECT:
         _.extend(envelope.data[0], resp.data[0]);
         break;
-      case 'search':
-        // console.log("Search to be merged!");
+      case requestMethod.SEARCH:
+        let X = {
+          collection: resp.data[0].collection
+        };
+        _.extend(envelope.data[0], X);
         break;
       default:
       // We should never get here.
@@ -133,22 +102,23 @@ export function workFunc(context) {
   return function (request, local_contex, state) {
     let services = []; // state-data for knowing which servies is called and in which order.
     let promises = [];
-    if (_.has(request, 'moreinfo')) {
+    if (_.has(request, requestMethod.MOREINFO)) {
       // query moreinfo through its transformer.
       let moreInfoPromise = coverImageTransformer()(request.moreinfo, context);
       promises.push(moreInfoPromise);
-      services.push('moreinfo');
+      services.push(requestMethod.MOREINFO);
     }
-    if (_.has(request, 'getobject')) {
+    if (_.has(request, requestMethod.GETOBJECT)) {
       // query opensearch through getObject method
       let getObjectPromise = openSearchWorkTransformer()(request.getobject, context);
       promises.push(getObjectPromise);
-      services.push('getobject');
+      services.push(requestMethod.GETOBJECT);
     }
-    if (_.has(request, 'search')) {
+    if (_.has(request, requestMethod.SEARCH)) {
       // query opensearch through search method
-    // TODO: call search-transformer if applicable!
-      services.push('search');
+      let searchPromise = searchTransformer(request.search, context);
+      promises.push(searchPromise);
+      services.push(requestMethod.SEARCH);
     }
 
     state.services = services;
