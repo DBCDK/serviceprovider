@@ -1,62 +1,8 @@
 'use strict';
 
 import request from 'request';
-import {log} from '../utils.js';
-
-// This will also be needed by work, and should be moved to separate file.
-const reverseContext = makeReverseContext();
-
-function makeReverseContext() {
-  let workContext = JSON.parse(require('fs')
-      .readFileSync(__dirname + '/../../doc/work-context.jsonld'));
-
-  let result = {};
-
-  for (let key in workContext) { // eslint-disable-line guard-for-in
-    let elem = workContext[key];
-    let id = elem['@id'];
-    let type = elem['@type'];
-    if (id) {
-      if (type) {
-        id += type.split(':')[1];
-      }
-      id = id.toLowerCase();
-      result[id] = key;
-    }
-  }
-  return result;
-}
-
-export function workToJSON(o, defaultPrefix) {
-  var result = {};
-  for (let key in o) {  // eslint-disable-line guard-for-in
-    let entries = o[key];
-    if (!Array.isArray(entries)) {
-      entries = [entries];
-    }
-    entries.forEach(entry => { // eslint-disable-line no-loop-func
-      let xmlBaseName = (entry['@'] || defaultPrefix) + ':' + key;
-      let xmlName = xmlBaseName;
-      if (entry['@type']) {
-        xmlName = xmlBaseName + entry['@type'].$.split(':')[1];
-      }
-      let jsonName = reverseContext[xmlName.toLowerCase()];
-      if (!jsonName) {
-        log.warn('invalid id/type, trying type=oth', entry);
-        xmlName = xmlBaseName + 'oth';
-        jsonName = reverseContext[xmlName.toLowerCase()];
-      }
-      if (!jsonName) {
-        log.error('invalid id/type', entry);
-      }
-      else {
-        result[jsonName] = result[jsonName] || [];
-        result[jsonName].push(entry.$);
-      }
-    });
-  }
-  return result;
-}
+// import {log} from '../utils.js';
+import {workToJSON} from '../requestTypeIdentifier.js';
 
 export default (params, context) => new Promise((resolve) => {
   if (!params.q) {
