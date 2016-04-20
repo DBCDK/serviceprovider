@@ -157,7 +157,7 @@ function getImageSizeAndUrl(x) {
   let res = {};
   if (_.has(x, 'attributes.imageSize') && _.has(x, '$value')) {
     let is = IMAGE_SIZES[x.attributes.imageSize];
-    res[is] = x.$value.replace('http:', '');
+    res[is] = [x.$value.replace('http:', '')];
   }
   return res;
 }
