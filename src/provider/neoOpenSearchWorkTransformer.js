@@ -13,8 +13,6 @@ export function requestTransform(request, context) { // eslint-disable-line no-u
   let pid = request.pids[0]; // TODO: ensure that there is a pid
   let osContext = context.opensearch; // TODO: ensure that properties used from opensearch are valid.
 
-
-
   // Create request params.
   // Only add dkabm, briefDisplay and relations if requested.
   let requestParams = {
@@ -99,7 +97,7 @@ function getBriefDisplayData(response) {
     let ns = 'bd';
     let identifier = ns + ':' + key;
     let field = typeId.getField(identifier);
-    if(!res[field]) {
+    if (!res[field]) {
       res[field] = [];
     }
     res[field].push(value.$);
