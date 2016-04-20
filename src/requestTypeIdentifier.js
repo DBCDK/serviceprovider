@@ -22,21 +22,21 @@ const reverseContext = makeReverseContext();
 
 /**
  * Returns field based on id and type
- * @param {string} xmlBaseName the name of the tag of requested field
+ * @param {string} tagName the name of the tag of requested field
  * @param {string} type the type of requested field
  * @returns {string} fieldname
  *
  * @api public
  */
-function getField(xmlBaseName, type) {
-  let xmlName = xmlBaseName;
+function getField(tagName, type) {
+  let xmlName = tagName;
   if (type) {
-    xmlName = xmlBaseName + type.split(':')[1];
+    xmlName = tagName + type.split(':')[1];
   }
   let jsonName = reverseContext[xmlName.toLowerCase()];
   if (!jsonName) {
-    log.warn('invalid id/type, trying type=oth', {tag: xmlBaseName, type: type});
-    xmlName = xmlBaseName + 'oth';
+    log.warn('invalid id/type, trying type=oth', {tag: tagName, type: type});
+    xmlName = tagName + 'oth';
     jsonName = reverseContext[xmlName.toLowerCase()];
   }
   return jsonName;
@@ -123,10 +123,7 @@ export function TypeID() {
       }) + ']');
     }
 
-    if (this.getType(field) === type) {
-      return true;
-    }
-    return false;
+    return this.getType(field) === type;
   };
   this.getField = getField;
 }
@@ -139,7 +136,6 @@ export function TypeID() {
 export function makeTypeID() {
   return new TypeID();
 }
-
 
 /**
  * Create a lookup table for finding the JSON-name of a tag/type.
@@ -170,19 +166,17 @@ function makeReverseContext() {
 export function workToJSON(o, defaultPrefix) {
   var result = {};
   for (let key in o) {  // eslint-disable-line guard-for-in
+    if (key === '@') {
+      continue;
+    }
     let entries = o[key];
     if (!Array.isArray(entries)) {
       entries = [entries];
     }
     entries.forEach(entry => { // eslint-disable-line no-loop-func
-      if (key === '@') {
-        return;
-      }
-      let xmlBaseName = (entry['@'] || defaultPrefix) + ':' + key;
+      let tagName = (entry['@'] || defaultPrefix) + ':' + key;
       let type = entry['@type'] ? entry['@type'].$ : undefined; // eslint-disable-line no-undefined
-
-      let jsonName = getField(xmlBaseName, type);
-
+      let jsonName = getField(tagName, type);
       if (!jsonName) {
         log.error('invalid id/type', {object: entry});
       }
