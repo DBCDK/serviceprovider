@@ -11,7 +11,6 @@ import {version} from '../package.json';
 const apiPath = '/v' + parseInt(version, 10) + '/';
 
 // Libraries
-import fs from 'fs';
 import express from 'express';
 import path from 'path';
 import Logger from 'dbc-node-logger';
