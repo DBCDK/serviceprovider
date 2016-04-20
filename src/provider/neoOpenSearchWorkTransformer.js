@@ -8,9 +8,19 @@ import _ from 'lodash';
 let filePath = __dirname + '/../../doc/work-context.jsonld';
 let typeId = makeTypeID(filePath);
 
+function getPid(request) {
+  if (!_.has(request, 'pids')) {
+    throw new Error("Pid not correctly present in request");
+  }
+  if(request.pids.length !== 1) {
+    throw new Error("Illegal number of pids in request - exactly one should be present.");
+  }
+  return request.pids[0];
+}
+
 export function requestTransform(request, context) { // eslint-disable-line no-unused-vars
 
-  let pid = request.pids[0]; // TODO: ensure that there is a pid
+  let pid = getPid(request);
   let osContext = context.opensearch; // TODO: ensure that properties used from opensearch are valid.
 
   // Create request params.
@@ -24,8 +34,8 @@ export function requestTransform(request, context) { // eslint-disable-line no-u
     objectFormat: [] // to be filled out below
   };
 
-    // If no fields were given,
-    // Default behaviour is to get everything from briefDisplay, dkabm and relations
+  // If no fields were given,
+  // Default behaviour is to get everything from briefDisplay, dkabm and relations
   let defaultBehaviour = _.has(request, 'fields') ? false: true;
   let fields = request.fields;
   if (defaultBehaviour
