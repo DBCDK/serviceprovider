@@ -182,6 +182,9 @@ export function workToJSON(o, defaultPrefix) {
       entries = [entries];
     }
     entries.forEach(entry => { // eslint-disable-line no-loop-func
+      if (key === '@') {
+        return;
+      }
       let xmlBaseName = (entry['@'] || defaultPrefix) + ':' + key;
       let xmlName = xmlBaseName;
       if (entry['@type']) {
@@ -189,12 +192,12 @@ export function workToJSON(o, defaultPrefix) {
       }
       let jsonName = reverseContext[xmlName.toLowerCase()];
       if (!jsonName) {
-        log.warn('invalid id/type, trying type=oth', entry);
+        log.warn('invalid id/type, trying type=oth', {object: entry});
         xmlName = xmlBaseName + 'oth';
         jsonName = reverseContext[xmlName.toLowerCase()];
       }
       if (!jsonName) {
-        log.error('invalid id/type', entry);
+        log.error('invalid id/type', {object: entry});
       }
       else {
         result[jsonName] = result[jsonName] || [];
