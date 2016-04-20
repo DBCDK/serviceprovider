@@ -36,10 +36,6 @@ module.exports.run = function (worker) {
   const logger = new Logger({app_name: APP_NAME});
   const expressLoggers = logger.getExpressLoggers();
 
-  const config = JSON.parse( // eslint-disable-line no-unused-vars
-        fs.readFileSync(
-          process.env.CONFIG_FILE || './config.json', 'utf8')); // eslint-disable-line no-process-env
-
   // Direct requests to app
   server.on('request', app);
 

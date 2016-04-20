@@ -38,3 +38,4 @@ NODE_ENV_DOCKERFILE
 # ============
 /versions/
 config.json
+context.json
