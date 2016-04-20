@@ -3,6 +3,7 @@
 import genericTransformer from '../genericTransformer';
 import coverImageTransformer from './neoCoverImageTransform';
 import openSearchWorkTransformer from './neoOpenSearchWorkTransformer';
+import searchTransformer from './search';
 import _ from 'lodash';
 
 
@@ -119,7 +120,10 @@ export function workResponse(response, context, state) { // eslint-disable-line 
         _.extend(envelope.data[0], resp.data[0]);
         break;
       case 'search':
-        // console.log("Search to be merged!");
+        let X = {
+          collection: resp.data[0].collection
+        };
+        _.extend(envelope.data[0], X);
         break;
       default:
       // We should never get here.
@@ -147,7 +151,8 @@ export function workFunc(context) {
     }
     if (_.has(request, 'search')) {
       // query opensearch through search method
-    // TODO: call search-transformer if applicable!
+      let searchPromise = searchTransformer(request.search, context);
+      promises.push(searchPromise);
       services.push('search');
     }
 
