@@ -8,10 +8,40 @@ import _ from 'lodash';
 let filePath = __dirname + '/../../doc/work-context.jsonld';
 let typeId = makeTypeID(filePath);
 
+function getPid(request) {
+  if (!_.has(request, 'pids')) {
+    throw new Error('Pid not correctly present in request');
+  }
+  if (request.pids.length !== 1) {
+    throw new Error('Illegal number of pids in request - exactly one should be present.');
+  }
+  return request.pids[0];
+}
+
+function getAndValidateOpensearchContext(context) {
+  if (!_.has(context, 'opensearch')) {
+    throw new Error('No opensearch property present in context');
+  }
+  let osContext = context.opensearch;
+  if (!_.has(osContext, 'agency') || !_.has(osContext, 'profile')) {
+    throw new Error('agency or profile missing from opensearch-context.');
+  }
+  return osContext;
+}
+
+let localRequestTypes = {
+  DKABM: 'dkabm',
+  BRIEFDISPLAY: 'briefdisplay',
+  RELATIONS: 'relations'
+};
+
 export function requestTransform(request, context) { // eslint-disable-line no-unused-vars
 
-  let pid = request.pids[0]; // TODO: ensure that there is a pid
-  let osContext = context.opensearch; // TODO: ensure that properties used from opensearch are valid.
+  let pid = getPid(request);
+  let osContext = getAndValidateOpensearchContext(context);
+  let state = {
+    types: []
+  };
 
   // Create request params.
   // Only add dkabm, briefDisplay and relations if requested.
@@ -24,27 +54,29 @@ export function requestTransform(request, context) { // eslint-disable-line no-u
     objectFormat: [] // to be filled out below
   };
 
-    // If no fields were given,
-    // Default behaviour is to get everything from briefDisplay, dkabm and relations
+  // If no fields were given, default behaviour is to get
+  // everything from briefDisplay, dkabm and relations.
   let defaultBehaviour = _.has(request, 'fields') ? false: true;
   let fields = request.fields;
   if (defaultBehaviour
     || fields.some(field => { return typeId.isType(field, requestType.BRIEFDISPLAY); })) { // eslint-disable-line brace-style
     requestParams.objectFormat.push('briefDisplay');
+    state.types.push(localRequestTypes.BRIEFDISPLAY);
   }
   if (defaultBehaviour
     || fields.some(field => { return typeId.isType(field, requestType.DKABM); })) { // eslint-disable-line brace-style
     requestParams.objectFormat.push('dkabm');
+    state.types.push(localRequestTypes.DKABM);
   }
   if (defaultBehaviour
     || fields.some(field => { return typeId.isType(field, requestType.RELATIONS); })) { // eslint-disable-line brace-style
     requestParams.relationData = 'uri';
+    state.types.push(localRequestTypes.RELATIONS);
   }
-  let state = {}; // no state needed in this transformer.
   return {transformedRequest: requestParams, state: state};
 }
 
-function retrieveDkabmFields(lookup, result) {
+function retrieveDkabmFields(result) {
 
   return function (value, key) {
     let a = [];
@@ -58,7 +90,6 @@ function retrieveDkabmFields(lookup, result) {
           x.type = z['@type'].$;
         }
       }
-      // console.log(JSON.stringify(x, null, 0));
       if (x.value) {
         a.push(x);
       }
@@ -78,17 +109,36 @@ function retrieveDkabmFields(lookup, result) {
 
 function getDkabmData(response) {
   // TODO: check that all the below properties are valid.
-  let namespaces = response.data['@namespaces'];
+  // if (!_.has(response, 'data.@namespaces')) {
+  //  // no namespaces. Handle!
+  // }
+  // let namespaces = response.data['@namespaces'];
+  if (!_.has(response, 'data.searchResponse.result.searchResult')) {
+    // no searchresult. Handle!
+  }
   let searchResult = response.data.searchResponse.result.searchResult;
-  let record = searchResult[0].collection.object[0].record; // DKABM-data
+  if (searchResult.length < 1) {
+    // empty searchresult. Handle!
+  }
+  if (!_.has(searchResult[0], 'collection.object')) {
+    // No object. Handle!
+  }
+  let obj = searchResult[0].collection.object;
+  if (obj.length < 1) {
+    // empty object. Handle!
+  }
+  if (!_.has(obj[0], 'record')) {
+    // no record. Handle!
+  }
+  let record = obj[0].record; // DKABM-data
 
-  let lookup = {namespaces: namespaces}; // unused!
   let result = {};
-  _.forOwn(record, retrieveDkabmFields(lookup, result));
+  _.forOwn(record, retrieveDkabmFields(result));
   return result;
 }
 
 function getBriefDisplayData(response) {
+  // TODO: check that all the below properties are valid.
   let searchResult = response.data.searchResponse.result.searchResult;
   let briefDisplay = searchResult[0].formattedCollection.briefDisplay.manifestation[0];
 
@@ -106,6 +156,7 @@ function getBriefDisplayData(response) {
 }
 
 function getRelationData(response) {
+  // TODO: check that all the below properties are valid.
   let searchResult = response.data.searchResponse.result.searchResult;
   let relations = searchResult[0].collection.object[0].relations.relation;
 
@@ -121,11 +172,12 @@ function getRelationData(response) {
 }
 
 export function responseTransform(response, context, state) { // eslint-disable-line no-unused-vars
-  let data = {};
-  let dkabmData = getDkabmData(response);
-  let briefDisplayData = getBriefDisplayData(response);
-  let relationData = getRelationData(response);
+  let types = state.types;
+  let dkabmData = types.includes(localRequestTypes.DKABM) ? getDkabmData(response) : {};
+  let briefDisplayData = types.includes(localRequestTypes.BRIEFDISPLAY) ? getBriefDisplayData(response) : {};
+  let relationData = types.includes(localRequestTypes.RELATIONS) ? getRelationData(response) : {};
 
+  let data = {};
   _.extend(data, dkabmData, briefDisplayData, relationData);
   return {statusCode: 200, data: [data]};
 }
