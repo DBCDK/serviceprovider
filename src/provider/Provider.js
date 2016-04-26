@@ -11,6 +11,7 @@ import coverImageTransformer from './neoCoverImageTransform.js';
 import openSearchWorkTransformer from './neoOpenSearchWorkTransformer.js';
 import facetTransformer from './facets';
 import searchTransformer from './search';
+import librariesTransformer from './libraries';
 import workTransformer from './neoWorkTransformer';
 
 /**
@@ -21,13 +22,12 @@ import workTransformer from './neoWorkTransformer';
  * @api public
  */
 export default function Provider() {
-
-
   /**
    * Structure containing all the new transformers.
    */
   const transformerMap = {
     search: searchTransformer,
+    libraries: librariesTransformer,
     facets: facetTransformer,
     getRecommendations: recommendTransformer(),
     getSuggestions: suggestTransformer(),
