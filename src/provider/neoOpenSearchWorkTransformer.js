@@ -29,7 +29,7 @@ function getAndValidateOpensearchContext(context) {
   return osContext;
 }
 
-let localRequestTypes = {
+let dataObjectRequestTypes = {
   DKABM: 'dkabm',
   BRIEFDISPLAY: 'briefdisplay',
   RELATIONS: 'relations'
@@ -40,7 +40,7 @@ export function requestTransform(request, context) { // eslint-disable-line no-u
   let pid = getPid(request);
   let osContext = getAndValidateOpensearchContext(context);
   let state = {
-    types: []
+    dataObjectsRequested: []
   };
 
   // Create request params.
@@ -61,17 +61,17 @@ export function requestTransform(request, context) { // eslint-disable-line no-u
   if (defaultBehaviour
     || fields.some(field => { return typeId.isType(field, requestType.BRIEFDISPLAY); })) { // eslint-disable-line brace-style
     requestParams.objectFormat.push('briefDisplay');
-    state.types.push(localRequestTypes.BRIEFDISPLAY);
+    state.dataObjectsRequested.push(dataObjectRequestTypes.BRIEFDISPLAY);
   }
   if (defaultBehaviour
     || fields.some(field => { return typeId.isType(field, requestType.DKABM); })) { // eslint-disable-line brace-style
     requestParams.objectFormat.push('dkabm');
-    state.types.push(localRequestTypes.DKABM);
+    state.dataObjectsRequested.push(dataObjectRequestTypes.DKABM);
   }
   if (defaultBehaviour
     || fields.some(field => { return typeId.isType(field, requestType.RELATIONS); })) { // eslint-disable-line brace-style
     requestParams.relationData = 'uri';
-    state.types.push(localRequestTypes.RELATIONS);
+    state.dataObjectsRequested.push(dataObjectRequestTypes.RELATIONS);
   }
   return {transformedRequest: requestParams, state: state};
 }
@@ -172,17 +172,17 @@ function getRelationData(response) {
 }
 
 export function responseTransform(response, context, state) { // eslint-disable-line no-unused-vars
-  let types = state.types;
-  let dkabmData = types.includes(localRequestTypes.DKABM) ? getDkabmData(response) : {};
-  let briefDisplayData = types.includes(localRequestTypes.BRIEFDISPLAY) ? getBriefDisplayData(response) : {};
-  let relationData = types.includes(localRequestTypes.RELATIONS) ? getRelationData(response) : {};
+  let dataObjectsRequested = state.dataObjectsRequested;
+  let dkabmData = dataObjectsRequested.includes(dataObjectRequestTypes.DKABM) ? getDkabmData(response) : {};
+  let briefDisplayData = dataObjectsRequested.includes(dataObjectRequestTypes.BRIEFDISPLAY) ? getBriefDisplayData(response) : {};
+  let relationData = dataObjectsRequested.includes(dataObjectRequestTypes.RELATIONS) ? getRelationData(response) : {};
 
   let data = {};
   _.extend(data, dkabmData, briefDisplayData, relationData);
   return {statusCode: 200, data: [data]};
 }
 
-export function OSWorkFunc(context) {
+export function opensearchGetObjectFunc(context) {
   if (!_.has(context, 'opensearch.url')) {
     throw new Error('no opensearch url provided in context.');
   }
@@ -193,7 +193,7 @@ export function OSWorkFunc(context) {
 }
 
 export default function getObjectTransformer() {
-  return genericTransformer(requestTransform, responseTransform, OSWorkFunc);
+  return genericTransformer(requestTransform, responseTransform, opensearchGetObjectFunc);
 }
 
 
