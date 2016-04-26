@@ -136,7 +136,6 @@ function doIdentifierInformationContainsCoverImages(idInfo) {
     || !idInfo.identifierKnown === true
     || !_.has(idInfo, 'coverImage')
     || idInfo.coverImage.length === 0) {
-    // no identifierKnown attribute. should this be the same as 'identifier not known'?
     if (_.has(idInfo, 'identifier.localIdentifier') && _.has(idInfo, 'identifier.libraryCode')) {
       let pid = id2parameter(idInfo.identifier.libraryCode, idInfo.identifier.localIdentifier);
       log.info('Could not find covers for identifier: ' + pid);
@@ -188,14 +187,10 @@ function handleError(e) {
     error: 'Internal server error'
   };
 
-  try {
-    log.error('ERROR: [' + e.name + '] : ' + e.message);
-    log.error('Response: ' + JSON.stringify(e.response, null, 0));
-    log.error(e.stack);
-    log.error('******** END ERROR');
-  } catch (err) { // eslint-disable-line brace-style
-    // We dont care about an error here!
-  }
+  log.error('ERROR: [' + e.name + '] : ' + e.message);
+  log.error('Response: ' + JSON.stringify(e.response, null, 0));
+  log.error(e.stack);
+  log.error('******** END ERROR');
   return errorEnvelope;
 }
 
@@ -256,7 +251,6 @@ export function moreInfoFunc(context) {
     return {response: client.getMoreInfoResultNeo(request), state: state};
   };
 }
-
 
 export default function moreInfoTransformer() {
 
