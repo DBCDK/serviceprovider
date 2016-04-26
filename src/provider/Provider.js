@@ -12,6 +12,7 @@ import openSearchWorkTransformer from './neoOpenSearchWorkTransformer.js';
 import facetTransformer from './facets';
 import searchTransformer from './search';
 import workTransformer from './neoWorkTransformer';
+import caller from './caller';
 
 /**
  * Initialization of the provider and the underlying services.
@@ -38,7 +39,7 @@ export default function Provider() {
 
   // we are going to reimplement a simpler mechanism to call the transformers
   function execute(name, params, context) { // eslint-disable-line no-unused-vars
-    return transformerMap[name](params, context);
+    return caller(transformerMap, context).call(name, params);
   }
 
   function availableTransforms() {
