@@ -1,6 +1,5 @@
 'use strict';
 
-import request from 'request';
 // import {log} from '../utils.js';
 import {workToJSON} from '../requestTypeIdentifier.js';
 
@@ -43,7 +42,8 @@ export default (params, context) => new Promise((resolve) => {
 </SOAP-ENV:Envelope>
 `;
 
-  request.post(url, {form: {xml: soap}}, function(err, _, body) {
+  context.call('opensearch', soap)
+    .then(body => {
     body = JSON.parse(body).searchResponse.result;
     // let more = body.more.$; // this could be used for paging info later
     let searchResult = body.searchResult;
