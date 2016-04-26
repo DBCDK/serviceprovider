@@ -48,6 +48,12 @@ By default the ServiceProvider will run on port 8080 on localhost.
 
 Optionally run `mdecrypt context.json.nc`, to decrypt the config.
 
+If you then open a browser to `localhost:8080`, you will see the API-documentation, - and you can now also send requests to the API, for example:
+
+```bash
+curl -H "Authorization: Bearer qwerty" -H "Content-Type: application/json" -d '{"q": "ost", "fields": ["title","pid"]}' http://localhost:8080/v0/search
+```
+
 # Environment Varibles
 The following environment variables can be used to override default settings in the application
 
