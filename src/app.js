@@ -138,10 +138,6 @@ module.exports.run = function (worker) {
       log.error('Missing transformer: ' + event);
     }
 
-    if (typeof query.fields === 'string') {
-      query.fields = query.fields.split(',');
-    }
-
     prom.then((response) => {
       if ((typeof response !== 'object') ||
           (typeof response.statusCode !== 'number') ||
@@ -212,12 +208,16 @@ module.exports.run = function (worker) {
       // This code joins all parameters into a single object.
       query = query || {};
       for (let key in req.query) { // eslint-disable-line guard-for-in
+        let val = req.query[key];
         try {
-          query[key] = JSON.parse(req.query[key]);
+          query[key] = JSON.parse(val);
         }
         catch (_) {
-          query[key] = req.query[key];
+          query[key] = (val.indexOf(',') !== -1) ? val.split(',').filter(s => s) : val;
         }
+      }
+      if (typeof query.fields === 'string') {
+        query.fields = [query.fields];
       }
 
       callApi(event, query, req.context, response => {
