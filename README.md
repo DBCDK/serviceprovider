@@ -92,6 +92,8 @@ Which config-file to read, default is `./config.json`
 - __SMAUG__
 Url of the authorisation server we use.
 
+- __TEST_DEV__
+Boolean flag whether to support createTest parameter. If TEST_DEV is set, and a query is send with the extra parameter createTest set to true, then this will be used to create a unit test.
 
 ## Unit tests
 Unit tests are placed with the modules and components in a `__tests__` folder
