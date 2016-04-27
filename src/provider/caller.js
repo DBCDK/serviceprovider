@@ -58,7 +58,8 @@ function call(name, params) {
         delete params.createTest;
         saveTest({name: name, params: params, 
           context: Object.getPrototypeOf(this), 
-          mockData: this.mockData, result: result});
+          mockData: this.mockData, result: result,
+          requestId: this.requestId});
       }
     }
     return result;
@@ -74,7 +75,7 @@ function saveTest(test) {
   let mockData = ${JSON.stringify(test.mockData)}
 
   describe('Automated test of the ${test.name} endpoint', () => {
-    it('returns expected response for ${JSON.stringify(test.params)}', (done) => {
+    it('expected response. ID:${test.requestId}, for ${JSON.stringify(test.params)}', (done) => {
       let context = ${JSON.stringify(test.context)};
       context.mockData = mockData;
       provider.execute("${test.name}", ${JSON.stringify(test.params)}, context)
