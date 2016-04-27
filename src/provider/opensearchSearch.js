@@ -1,11 +1,10 @@
 'use strict';
 
-// import {log} from '../utils.js';
 import {workToJSON} from '../requestTypeIdentifier.js';
 
-export default (params, context) => new Promise((resolve) => {
+export default (params, context) => {
   if (!params.q) {
-    return resolve({statusCode: 400,
+    return new Promise({statusCode: 400,
                     error: 'missing q parameter'});
   }
 
@@ -15,12 +14,7 @@ export default (params, context) => new Promise((resolve) => {
   let sort = (params.sort || '').replace(/</g, '&lt;');
   let offset = 1 + (parseInt(params.offset, 10) || 0);
   let limit = parseInt(params.limit, 10) || 10;
-  // TODO determine whether we need relations(getObject) or cover images(moreInfo)
-  // let fields = (Array.isArray(params.fields) && params.fields);
-  // let getObject = false;
-  // let moreInfo = false;
 
-  // TODO: current version only get dkabm+briefdisplay+collection, the rest is missing
   let soap = `<?xml version="1.0" encoding="UTF-8"?>
 <SOAP-ENV:Envelope xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ns1="http://oss.dbc.dk/ns/opensearch">
   <SOAP-ENV:Body>
@@ -41,27 +35,26 @@ export default (params, context) => new Promise((resolve) => {
 </SOAP-ENV:Envelope>
 `;
 
-  context.call('opensearch', soap)
-    .then(body => {
-      body = JSON.parse(body).searchResponse.result;
-      // let more = body.more.$; // this could be used for paging info later
-      let searchResult = body.searchResult;
-      let result = [];
-      searchResult.forEach(o => { // eslint-disable-line no-loop-func
-        let collection = o.collection.object.map(obj => obj.identifier.$);
-        let dkabm = o.collection.object[0].record;
-        dkabm = workToJSON(dkabm);
-        let briefDisplays =
-          o.formattedCollection.briefDisplay.manifestation.map(briefDisplay => {
-            delete briefDisplay.fedoraPid;
-            return workToJSON(briefDisplay, 'bd');
-          });
-        // here we would call getObject or moreInfo if needed...
-        result.push(Object.assign({
-          collection: collection,
-          collectionDetails: briefDisplays
-        }, dkabm, briefDisplays[0]));
-      });
-      resolve({statusCode: 200, data: result});
+  return context.call('opensearch', soap).then(body => {
+    body = JSON.parse(body).searchResponse.result;
+    // let more = body.more.$; // this could be used for paging info later
+    let searchResult = body.searchResult;
+    let result = [];
+    searchResult.forEach(o => { // eslint-disable-line no-loop-func
+      let collection = o.collection.object.map(obj => obj.identifier.$);
+      let dkabm = o.collection.object[0].record;
+      dkabm = workToJSON(dkabm);
+      let briefDisplays =
+        o.formattedCollection.briefDisplay.manifestation.map(briefDisplay => {
+          delete briefDisplay.fedoraPid;
+          return workToJSON(briefDisplay, 'bd');
+        });
+      // here we would call getObject or moreInfo if needed...
+      result.push(Object.assign({
+        collection: collection,
+        collectionDetails: briefDisplays
+      }, dkabm, briefDisplays[0]));
     });
-});
+    return {statusCode: 200, data: result};
+  });
+};
