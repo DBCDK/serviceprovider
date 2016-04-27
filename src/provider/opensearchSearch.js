@@ -51,11 +51,16 @@ export default (params, context) => new Promise((resolve) => {
         let collection = o.collection.object.map(obj => obj.identifier.$);
         let dkabm = o.collection.object[0].record;
         dkabm = workToJSON(dkabm);
-        let briefDisplay = o.formattedCollection.briefDisplay.manifestation[0];
-        delete briefDisplay.fedoraPid;
-        briefDisplay = workToJSON(briefDisplay, 'bd');
+        let briefDisplays =
+          o.formattedCollection.briefDisplay.manifestation.map(briefDisplay => {
+            delete briefDisplay.fedoraPid;
+            return workToJSON(briefDisplay, 'bd');
+          });
         // here we would call getObject or moreInfo if needed...
-        result.push(Object.assign({collection: collection}, dkabm, briefDisplay));
+        result.push(Object.assign({
+          collection: collection,
+          collectionDetails: briefDisplays
+        }, dkabm, briefDisplays[0]));
       });
       resolve({statusCode: 200, data: result});
     });
