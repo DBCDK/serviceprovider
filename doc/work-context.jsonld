@@ -17,6 +17,7 @@
 "audienceMedieraad":{"@id":"dcterms:audience","@type":"dkdcplus:medieraad"},
 "audiencePegi":{"@id":"dcterms:audience","@type":"dkdcplus:pegi"},
 "collection":{"@id":"os:collection"},
+"collectionDetails":{"@id":"os:collectionBriefDisplay"},
 "continuedIn":{"@id":"dbcaddi:continuedIn"},
 "continues":{"@id":"dbcaddi:continues"},
 "contributorAct":{"@id":"dc:contributor","@type":"dkdcplus:act"},
