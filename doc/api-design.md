@@ -16,6 +16,7 @@ Parameters are general across endpoints:
 - `pretty` determines whether the JSON should be prettyprinted when serialising.
 - `callback` is the callback name when doing a jsonp request on the HTTP-transport
 - `fields` which keys should be in the returned object.
+- `timings` enable some timing statistics in envelope
 
 __Responses__ are returned within an envelope, usually as a JSON object with the following properties:
 
