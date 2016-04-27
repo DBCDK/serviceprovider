@@ -12,9 +12,7 @@ export default function caller(transformerMap, context) {
 }
 
 let randomId = () => Math.random().toString(36).slice(2,8); 
-let generatedTests = [];
 let testDev = process.env.TEST_DEV;
-console.log('testDev', testDev);
 
 function call(name, params) {
   let promise;
@@ -22,12 +20,11 @@ function call(name, params) {
   let mockId = JSON.stringify([name, params]);
   let outerCall = false;
   let startTime = Date.now();
+  this.mockData = this.mockData || {};
+  this.createTest = this.createTest || params.createTest;
   if(!this.requestId) {
     this.requestId = randomId();
     outerCall = true;
-    if(this.createTest ) {
-      this.mockRecord = {};
-    }
   }
 
   let isRestCall = !this.transformerMap[name] && this[name] && this[name].url;
@@ -37,11 +34,8 @@ function call(name, params) {
 
   } else if(isRestCall) {
     let url = this[name].url;
-    if(this.mockData) {
-      if(!this.mockData[mockId]) {
-        throw {error: 'missing mockdata', mockId: mockId};
-      }
-      promise = new Promise(this.mockData[mockId]);
+    if(this.mockData && this.mockData[mockId]) {
+      promise = new Promise(resolve => resolve(this.mockData[mockId]));
     } else if(typeof params === 'string') {
       promise = new Promise((resolve, reject) => 
           request.post(url, {form: {xml: params}}, 
@@ -56,32 +50,28 @@ function call(name, params) {
   }
 
   return promise.then(result => {
-    if(testDev && params.createTest) {
-      if(mockId) {
-        this.mockRecord[mockId] = result;
+    if(testDev && this.createTest) {
+      if(isRestCall) {
+        this.mockData[mockId] = result;
       }
       if(outerCall) {
         delete params.createTest;
-        saveTest({name: name, params: params, context: this.prototype, 
-          mockData: this.mockRecord, result: result});
+        saveTest({name: name, params: params, 
+          context: Object.getPrototypeOf(this), 
+          mockData: this.mockData, result: result});
       }
     }
-    console.log(name, this.requestId, Date.now() - startTime, typeof result);
     return result;
   });
 };
 
 function saveTest(test) {
-  let mockDataFile = __dirname + '/mockData.json';
-  let mockData = JSON.parse(fs.readFileSync(mockDataFile, 'utf8'));
-  Object.assign(mockData, test.mockData);
-  let source = `'use strict';
+  let source = `  'use strict';
   import Provider from '../Provider.js';
   import {expect, assert} from 'chai';
-  import fs from 'fs';
 
-  let mockData = JSON.parse(fs.readFileSync('../mockData.json'));
   let provider = Provider();
+  let mockData = ${JSON.stringify(test.mockData)}
 
   describe('Automated test of the ${test.name} endpoint', () => {
     it('returns expected response for ${JSON.stringify(test.params)}', (done) => {
@@ -95,6 +85,5 @@ function saveTest(test) {
         });
     })
   });`;
-  fs.writeFile(mockDataFile, JSON.stringify(mockData, null, ""));
-  fs.writeFile(`${__dirname}/__tests__/autotest_${test.name}_${Date.now()}.js`);
+  fs.writeFile(`${__dirname}/__tests__/autotest_${test.name}_${Date.now()}.js`, source);
 }
