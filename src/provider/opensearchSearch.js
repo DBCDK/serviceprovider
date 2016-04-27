@@ -38,7 +38,7 @@ export default (params, context) => {
   return context.call('opensearch', soap).then(body => {
     body = JSON.parse(body).searchResponse.result;
     // let more = body.more.$; // this could be used for paging info later
-    let searchResult = body.searchResult;
+    let searchResult = body.searchResult || [];
     let result = [];
     searchResult.forEach(o => { // eslint-disable-line no-loop-func
       let collection = o.collection.object.map(obj => obj.identifier.$);
