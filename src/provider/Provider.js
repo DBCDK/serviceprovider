@@ -30,8 +30,8 @@ export default function Provider() {
     search: searchTransformer,
     libraries: librariesTransformer,
     facets: facetTransformer,
-    getRecommendations: recommendTransformer(),
-    getSuggestions: suggestTransformer(),
+    recommend: recommendTransformer(),
+    suggest: suggestTransformer(),
     getCoverImageNeo: coverImageTransformer(),
     getOpenSearchWorkNeo: openSearchWorkTransformer(),
     work: workTransformer()
