@@ -55,7 +55,7 @@ export default (params, context) => new Promise((resolve) => {
           o.formattedCollection.briefDisplay.manifestation.map(briefDisplay => {
             delete briefDisplay.fedoraPid;
             return workToJSON(briefDisplay, 'bd');
-        });
+          });
         // here we would call getObject or moreInfo if needed...
         result.push(Object.assign({
           collection: collection,
