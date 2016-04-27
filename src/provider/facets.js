@@ -1,6 +1,5 @@
 'use strict';
 
-import request from 'request';
 import {log} from '../utils.js';
 
 export default (params, context) => new Promise((resolve) => {
@@ -11,10 +10,8 @@ export default (params, context) => new Promise((resolve) => {
 
   let facets = (Array.isArray(params.fields) && params.fields) ||
                   ['creator', 'subject', 'language', 'date', 'form'];
-  context = context.opensearch;
-  let agency = context.agency;
-  let profile = context.profile;
-  let url = context.url;
+  let agency = context.opensearch.agency;
+  let profile = context.opensearch.profile;
 
   let soap = `<?xml version="1.0" encoding="UTF-8"?>
 <SOAP-ENV:Envelope xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/"
@@ -39,11 +36,8 @@ export default (params, context) => new Promise((resolve) => {
   </SOAP-ENV:Body>
 </SOAP-ENV:Envelope>`;
 
-  request.post(url, {form: {xml: soap}}, function(err, _, body) {
+  context.call('opensearch', soap).then(body => {
     try {
-      if (err) {
-        throw err;
-      }
       let result = {};
       facets = JSON.parse(body).searchResponse.result.facetResult.facet;
       facets.forEach(facet => {
