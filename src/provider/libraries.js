@@ -1,7 +1,6 @@
 'use strict';
-import request from 'request';
 
-let getOrderParameters = (url) => (agencyId) => new Promise(resolve => {
+let getOrderParameters = (context) => (agencyId) => new Promise(resolve => {
   let soap = `
     <?xml version="1.0" encoding="UTF-8"?>
     <SOAP-ENV:Envelope xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ns1="http://oss.dbc.dk/ns/openagency"><SOAP-ENV:Body>
@@ -12,7 +11,7 @@ let getOrderParameters = (url) => (agencyId) => new Promise(resolve => {
     </ns1:serviceRequest>
     </SOAP-ENV:Body></SOAP-ENV:Envelope>
     `;
-  request.post(url, {form: {xml: soap}}, function(err, _, body) {
+  context.call('openagency', soap).then(body => {
     let result = [];
     let parameters = JSON.parse(body)
       .serviceResponse.userOrderParameters.userParameter;
@@ -28,7 +27,6 @@ let getOrderParameters = (url) => (agencyId) => new Promise(resolve => {
 });
 
 export default (params, context) => new Promise((resolve) => {
-  let url = context.openagency.url;
   let agencies;
   if (Array.isArray(params.agencyIds)) {
     agencies = {};
@@ -54,7 +52,7 @@ export default (params, context) => new Promise((resolve) => {
     </soapenv:Body>
     </soapenv:Envelope>`;
 
-  request.post(url, {form: {xml: soap}}, function(err, _, body) {
+  context.call('openagency', soap).then(body => {
     let badgerfish = JSON.parse(body).findLibraryResponse.pickupAgency;
     let results = [];
     for (let i = 0; i < badgerfish.length; ++i) {
@@ -100,7 +98,7 @@ export default (params, context) => new Promise((resolve) => {
         }
       }
       agencies = Object.keys(agencies);
-      Promise.all(agencies.map(getOrderParameters(url)))
+      Promise.all(agencies.map(getOrderParameters(context)))
         .then(orderParameters => {
           let agencyOrderParameters = {};
           for (let i = 0; i < agencies.length; ++i) {
