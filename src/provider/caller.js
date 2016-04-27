@@ -69,8 +69,8 @@ function call(name, params) {
 
   }
   else if (isRestCall) { // make a request to an external service
-    if(this.timings) {
-      if(this.externalCallsInProgress === 0) {
+    if (this.timings) {
+      if (this.externalCallsInProgress === 0) {
         this.externalTiming -= Date.now();
       }
       ++this.externalCallsInProgress;
@@ -96,9 +96,9 @@ function call(name, params) {
   }
 
   return promise.then(result => {
-    if(this.timings && isRestCall) {
+    if (this.timings && isRestCall) {
       --this.externalCallsInProgress;
-      if(this.externalCallsInProgress === 0) {
+      if (this.externalCallsInProgress === 0) {
         this.externalTiming += Date.now();
       }
     }
@@ -114,7 +114,7 @@ function call(name, params) {
           requestId: this.requestId});
       }
     }
-    if(outerCall && params.timings) {
+    if (outerCall && params.timings) {
       result.timings = {
         total: Date.now() - startTime,
         external: this.externalTiming
