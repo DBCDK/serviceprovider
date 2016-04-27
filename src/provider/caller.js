@@ -49,23 +49,32 @@ function saveTest(test) {
  * @param params the parameters to pass to the endpoint
  */
 function call(name, params) {
-  let promise;
+  let promise, outerCall, startTime;
 
   let mockId = JSON.stringify([name, params]); // key for mock data
   this.mockData = this.mockData || {}; // used for recording/playing mock data
-  this.createTest = this.createTest || params.createTest;
-  let outerCall = false; // is this the outermost-transformer
+  let isRestCall = !this.transformerMap[name] && this[name] && this[name].url;
   if (!this.requestId) {
     this.requestId = randomId(); // identifier for request, useful for grepping etc.
     outerCall = true;
+    this.createTest = params.createTest;
+    this.timings = params.timings;
+    this.externalCallsInProgress = 0;
+    this.externalTiming = 0;
+    startTime = Date.now();
   }
-  let isRestCall = !this.transformerMap[name] && this[name] && this[name].url;
 
   if (this.transformerMap[name]) { // do call the actual transformer
     promise = this.transformerMap[name](params, this);
 
   }
   else if (isRestCall) { // make a request to an external service
+    if(this.timings) {
+      if(this.externalCallsInProgress === 0) {
+        this.externalTiming -= Date.now();
+      }
+      ++this.externalCallsInProgress;
+    }
     let url = this[name].url;
     if (this.mockData && this.mockData[mockId]) {
       promise = new Promise(resolve => resolve(this.mockData[mockId]));
@@ -87,6 +96,12 @@ function call(name, params) {
   }
 
   return promise.then(result => {
+    if(this.timings && isRestCall) {
+      --this.externalCallsInProgress;
+      if(this.externalCallsInProgress === 0) {
+        this.externalTiming += Date.now();
+      }
+    }
     if (testDev && this.createTest) { // save mock-data / create text-code
       if (isRestCall) {
         this.mockData[mockId] = result;
@@ -98,6 +113,12 @@ function call(name, params) {
           mockData: this.mockData, result: result,
           requestId: this.requestId});
       }
+    }
+    if(outerCall && params.timings) {
+      result.timings = {
+        total: Date.now() - startTime,
+        external: this.externalTiming
+      };
     }
     return result;
   });
