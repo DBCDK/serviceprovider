@@ -170,16 +170,23 @@ module.exports.run = function (worker) {
       log.error('Missing transformer: ' + event);
     }
 
-    prom.then((response) => {
+    if (typeof query.fields === 'string') {
+      query.fields = query.fields.split(',');
+    }
+
+    prom.catch(err => {
+      log.error(String(err), {stacktrace: err.stack});
+      return {statusCode: 500, error: String(err)};
+    }).then((response) => {
       if ((typeof response !== 'object') ||
           (typeof response.statusCode !== 'number') ||
           (response.statusCode === 200 && !response.data) ||
           (response.statusCode !== 200 && !response.error)) {
-        log.warn('response is not wrapped in an envelope', {response: response});
+        log.error('response is not wrapped in an envelope', {response: response});
         response = {
-          statusCode: 200,
+          statusCode: 500,
           data: response,
-          errors: [{warning: 'missing envelope'}]
+          error: 'missing envelope'
         };
       }
 
