@@ -6,7 +6,7 @@
   "scripts": {
     "preinstall": "cp -n context-sample.json context.json",
     "apitest": "cd apitest; ./apitest.sh",
-    "dev": "supervisor -w src,node_modules src/main.js",
+    "dev": "TEST_DEV=true supervisor -w src,node_modules src/main.js",
     "dev:remoteprofile": "PROFILE_SERVICE_URL=\"http://profile-i01.dbc.dk:3001/\" npm run dev",
     "lint": "eslint ./src",
     "lint:checkstyle": "eslint ./src  -o report.xml -f checkstyle",
