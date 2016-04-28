@@ -159,7 +159,7 @@ export function workFunc(context) {
     }
     if (_.has(request, requestMethod.GETOBJECT)) {
       // query opensearch through getObject method
-      let getObjectPromise = openSearchWorkTransformer()(request.getobject, context);
+      let getObjectPromise = openSearchWorkTransformer(request.getobject, context);
       promises.push(getObjectPromise);
       services.push(requestMethod.GETOBJECT);
     }

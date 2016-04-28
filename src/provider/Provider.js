@@ -33,7 +33,7 @@ export default function Provider() {
     recommend: recommendTransformer(),
     suggest: suggestTransformer,
     getCoverImageNeo: coverImageTransformer,
-    getOpenSearchWorkNeo: openSearchWorkTransformer(),
+    getOpenSearchWorkNeo: openSearchWorkTransformer,
     work: workTransformer()
   };
 
