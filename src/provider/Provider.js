@@ -6,7 +6,7 @@
  */
 
 import recommendTransformer from './neoRecommendTransform.js';
-import {suggestTransformer} from './neoSuggest.js';
+import suggestTransformer from './suggest2.js';
 import coverImageTransformer from './neoCoverImageTransform.js';
 import openSearchWorkTransformer from './neoOpenSearchWorkTransformer.js';
 import facetTransformer from './facets';
@@ -31,7 +31,7 @@ export default function Provider() {
     libraries: librariesTransformer,
     facets: facetTransformer,
     recommend: recommendTransformer(),
-    suggest: suggestTransformer(),
+    suggest: suggestTransformer,
     getCoverImageNeo: coverImageTransformer(),
     getOpenSearchWorkNeo: openSearchWorkTransformer(),
     work: workTransformer()
