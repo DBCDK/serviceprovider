@@ -228,14 +228,18 @@ export function moreInfoResponse(response, context, state) { // eslint-disable-l
 
     let identifierInformation = getIdentifierInformationList(response);
 
-    let data = {};
-    identifierInformation.forEach((idInfo) => {
+    let data = identifierInformation.map(idInfo => {
       let {pid: pid, urls: Z} = getCoverUrlsFromIdentifierInformation(idInfo, state);
-      data[pid] = Z;
+      if (pid && Z) {
+        Z.pid = pid;
+      } else { // eslint-disable-line brace-style
+        Z = {};
+      }
+      return Z;
     });
     let envelope = {
       statusCode: 200,
-      data: [data]
+      data: data
     };
     return envelope;
   } catch (e) { // eslint-disable-line brace-style

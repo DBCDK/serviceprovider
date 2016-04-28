@@ -145,7 +145,6 @@ function validateAndGetBriefDisplay(searchResult) {
 }
 
 function getBriefDisplayData(searchResult) {
-  // TODO: check that all the below properties are valid.
   let briefDisplay = validateAndGetBriefDisplay(searchResult);
 
   let res = {};
