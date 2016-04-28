@@ -230,9 +230,9 @@ export function moreInfoResponse(response, context, state) { // eslint-disable-l
 
     let data = identifierInformation.map(idInfo => {
       let {pid: pid, urls: Z} = getCoverUrlsFromIdentifierInformation(idInfo, state);
-      if(pid && Z) {
-        Z['pid'] = pid;
-      } else {
+      if (pid && Z) {
+        Z.pid = pid;
+      } else { // eslint-disable-line brace-style
         Z = {};
       }
       return Z;
