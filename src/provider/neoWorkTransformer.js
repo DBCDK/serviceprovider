@@ -26,8 +26,9 @@ function isGetObject(field) {
 export function workRequest(request, context) { // eslint-disable-line no-unused-vars
 
   let state = {};
-  if (_.has(request, 'pids') && request.pids.length === 1) {
+  if (_.has(request, 'pids') && request.pids.length > 0) {
     state.pid = request.pids[0]; // saves pid for use in responder.
+    state.pids = request.pids;
   }
   let transformedRequests = {};
   if (_.has(request, 'fields')) {
@@ -39,12 +40,15 @@ export function workRequest(request, context) { // eslint-disable-line no-unused
     if (fields.some(field => typeId.isType(field, requestType.COLLECTION))) {
       // A collection is found.
       // Restructure this request as a Search request for retrieving collection only!
-      transformedRequests[requestMethod.SEARCH] = {
-        q: 'rec.id=' + request.pids[0],
-        fields: ['collection'],
-        offset: 0,
-        limit: 1
-      };
+      transformedRequests[requestMethod.SEARCH] = [];
+      for(let i=0; i<request.pids.length; i++) {
+        transformedRequests[requestMethod.SEARCH].push({
+          q: 'rec.id=' + request.pids[i],
+          fields: ['collection'],
+          offset: 0,
+          limit: 1
+        });
+      }
     }
     if (fields.some(field => isGetObject(field))) {
       // send this as a getObjectRequest
@@ -67,28 +71,72 @@ export function workRequest(request, context) { // eslint-disable-line no-unused
 export function workResponse(response, context, state) { // eslint-disable-line no-unused-vars
   let envelope = {
     statusCode: 200,
-    data: [{}]
+    // data: []
   };
-
+  // loop over at most three promises (getObject, search and moreInfo):
   for (let i = 0; i < response.length; i++) {
     let resp = response[i];
-    if (resp.statusCode !== 200) {
+    // evaluate the statusCode for getObject and moreInfo
+    if (resp.statusCode && resp.statusCode !== 200) {
       // Setting error envelope if found!
       envelope = resp;
       break;
     }
+    // evaluate statusCode for list of responses from search
+    if (resp.length) {
+      let error = false;
+      for(let i=0; i<resp.length; i++) {
+        if (resp[i].statusCode !== 200) {
+          envelope = resp[i];
+          error = true;
+          break;
+        }
+      }
+      if(error) {
+        break;
+      }
+    }
+    // Set number of data elements if not done in previous iteration
+    if(!envelope.data) {
+      // Damn, this feel hacked.
+      // But if you just do 'let x = Array(3).fill({})', you will get an array with the same
+      // object three times. So if you add to x[0], you will also add to x[1] and x[2].
+      // Not exactly what I expected.
+      if(resp.data) {
+        envelope.data = Array(resp.data.length).fill(1).map(x => {return {};});
+      }
+
+    }
+
+    // Where am I?????
+    // I need to collect the data from the different services.
+    // I have an assumption, that there will be equally many results in each.
+    // Search is currently not implemented to return more than one result.
+    //   - I'll have to make a loop with X promises.
     switch (state.services[i]) {
       case requestMethod.MOREINFO:
-        _.extend(envelope.data[0], resp.data[0][state.pid]);
+        // TODO: Check that pids corresponds.
+        for(let x = 0; x < resp.data.length; x++) {
+          let respData = resp.data[x];
+          if(respData.pid) {
+            delete(respData.pid); // remove the pid.
+          }
+          _.extend(envelope.data[x], respData);
+        }
         break;
       case requestMethod.GETOBJECT:
-        _.extend(envelope.data[0], resp.data[0]);
+        for(let x = 0; x<resp.data.length; x++) {
+          _.extend(envelope.data[x], resp.data[x]);
+        }
         break;
       case requestMethod.SEARCH:
-        let X = {
-          collection: resp.data[0].collection
-        };
-        _.extend(envelope.data[0], X);
+        console.log("SEARCH: " + JSON.stringify(resp, null, 4));
+        for(let x = 0; x<resp.length; x++) {
+          let coll = {
+            collection: resp[x].data[0].collection
+          };
+          _.extend(envelope.data[x], coll);
+        }
         break;
       default:
       // We should never get here.
@@ -116,8 +164,14 @@ export function workFunc(context) {
     }
     if (_.has(request, requestMethod.SEARCH)) {
       // query opensearch through search method
-      let searchPromise = searchTransformer(request.search, context);
-      promises.push(searchPromise);
+      let searchPromises = [];
+      for(let i = 0; i < request.search.length; i++) {
+        let prom = searchTransformer(request.search[i], context);
+        searchPromises.push(prom);
+      }
+      // let searchPromise = searchTransformer(request.search[0], context);
+      // promises.push(searchPromise);
+      promises.push(Promise.all(searchPromises));
       services.push(requestMethod.SEARCH);
     }
 
