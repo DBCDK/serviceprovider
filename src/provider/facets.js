@@ -50,7 +50,7 @@ export default (params, context) => new Promise((resolve) => {
     }
     catch (e) {
       log.error('response from facet-request', {error: e, errorString: String(e)});
-      resolve({statusCode: 500, error: 'error fulfilling the request'});
+      resolve({statusCode: 400, error: 'error fulfilling the request'});
     }
   });
 });
