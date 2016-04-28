@@ -1,6 +1,5 @@
 'use strict';
 
-import genericTransformer from '../genericTransformer';
 import coverImageTransformer from './neoCoverImageTransform';
 import openSearchWorkTransformer from './neoOpenSearchWorkTransformer';
 import searchTransformer from './opensearchSearch';
@@ -147,40 +146,36 @@ export function workResponse(response, context, state) { // eslint-disable-line 
   return envelope;
 }
 
-export function workFunc(context) {
-  return function (request, local_contex, state) {
-    let services = []; // state-data for knowing which servies is called and in which order.
-    let promises = [];
-    if (_.has(request, requestMethod.MOREINFO)) {
-      // query moreinfo through its transformer.
-      let moreInfoPromise = coverImageTransformer(request.moreinfo, context);
-      promises.push(moreInfoPromise);
-      services.push(requestMethod.MOREINFO);
-    }
-    if (_.has(request, requestMethod.GETOBJECT)) {
-      // query opensearch through getObject method
-      let getObjectPromise = openSearchWorkTransformer(request.getobject, context);
-      promises.push(getObjectPromise);
-      services.push(requestMethod.GETOBJECT);
-    }
-    if (_.has(request, requestMethod.SEARCH)) {
-      // query opensearch through search method
-      let searchPromises = [];
-      for (let i = 0; i < request.search.length; i++) {
-        let prom = searchTransformer(request.search[i], context);
-        searchPromises.push(prom);
-      }
-      // let searchPromise = searchTransformer(request.search[0], context);
-      // promises.push(searchPromise);
-      promises.push(Promise.all(searchPromises));
-      services.push(requestMethod.SEARCH);
-    }
+export default (request, context) => {
+  let {transformedRequest: params, state: state} = workRequest(request, context);
 
-    state.services = services;
-    return {response: Promise.all(promises), state: state};
-  };
-}
+  let services = []; // state-data for knowing which servies is called and in which order.
+  let promises = [];
+  if (_.has(params, requestMethod.MOREINFO)) {
+    // query moreinfo through its transformer.
+    let moreInfoPromise = coverImageTransformer(params.moreinfo, context);
+    promises.push(moreInfoPromise);
+    services.push(requestMethod.MOREINFO);
+  }
+  if (_.has(params, requestMethod.GETOBJECT)) {
+    // query opensearch through getObject method
+    let getObjectPromise = openSearchWorkTransformer(params.getobject, context);
+    promises.push(getObjectPromise);
+    services.push(requestMethod.GETOBJECT);
+  }
+  if (_.has(params, requestMethod.SEARCH)) {
+    // query opensearch through search method
+    let searchPromises = [];
+    for (let i = 0; i < params.search.length; i++) {
+      let prom = searchTransformer(params.search[i], context);
+      searchPromises.push(prom);
+    }
+    promises.push(Promise.all(searchPromises));
+    services.push(requestMethod.SEARCH);
+  }
+  state.services = services;
 
-export default function workTransformer() {
-  return genericTransformer(workRequest, workResponse, workFunc);
-}
+  return Promise.all(promises).then(body => {
+    return workResponse(body, context, state);
+  });
+};
