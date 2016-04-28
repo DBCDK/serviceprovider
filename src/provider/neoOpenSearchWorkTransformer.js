@@ -19,7 +19,9 @@ function getPids(request) {
 }
 
 function getAndValidateOpensearchContext(context) {
-  if (!_.has(context, 'opensearch')) {
+  // context does not seem to have the property opensearch after .call has been introduced.
+  // if (!_.has(context, 'opensearch')) {
+  if (!context.opensearch) {
     throw new Error('No opensearch property present in context');
   }
   let osContext = context.opensearch;
