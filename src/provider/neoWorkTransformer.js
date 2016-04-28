@@ -41,7 +41,7 @@ export function workRequest(request, context) { // eslint-disable-line no-unused
       // A collection is found.
       // Restructure this request as a Search request for retrieving collection only!
       transformedRequests[requestMethod.SEARCH] = [];
-      for(let i=0; i<request.pids.length; i++) {
+      for (let i=0; i<request.pids.length; i++) {
         transformedRequests[requestMethod.SEARCH].push({
           q: 'rec.id=' + request.pids[i],
           fields: ['collection'],
@@ -70,7 +70,7 @@ export function workRequest(request, context) { // eslint-disable-line no-unused
 
 export function workResponse(response, context, state) { // eslint-disable-line no-unused-vars
   let envelope = {
-    statusCode: 200,
+    statusCode: 200
     // data: []
   };
   // loop over at most three promises (getObject, search and moreInfo):
@@ -85,25 +85,27 @@ export function workResponse(response, context, state) { // eslint-disable-line 
     // evaluate statusCode for list of responses from search
     if (resp.length) {
       let error = false;
-      for(let i=0; i<resp.length; i++) {
-        if (resp[i].statusCode !== 200) {
+      for (let x=0; x<resp.length; x++) {
+        if (resp[x].statusCode !== 200) {
           envelope = resp[i];
           error = true;
           break;
         }
       }
-      if(error) {
+      if (error) {
         break;
       }
     }
     // Set number of data elements if not done in previous iteration
-    if(!envelope.data) {
+    if (!envelope.data) {
       // Damn, this feel hacked.
       // But if you just do 'let x = Array(3).fill({})', you will get an array with the same
       // object three times. So if you add to x[0], you will also add to x[1] and x[2].
       // Not exactly what I expected.
-      if(resp.data) {
-        envelope.data = Array(resp.data.length).fill(1).map(x => {return {};});
+      if (resp.data) {
+        envelope.data = Array(resp.data.length).fill(1).map(x => { // eslint-disable-line no-unused-vars
+          return {};
+        });
       }
 
     }
@@ -116,22 +118,21 @@ export function workResponse(response, context, state) { // eslint-disable-line 
     switch (state.services[i]) {
       case requestMethod.MOREINFO:
         // TODO: Check that pids corresponds.
-        for(let x = 0; x < resp.data.length; x++) {
+        for (let x = 0; x < resp.data.length; x++) {
           let respData = resp.data[x];
-          if(respData.pid) {
-            delete(respData.pid); // remove the pid.
+          if (respData.pid) {
+            delete (respData.pid); // remove the pid.
           }
           _.extend(envelope.data[x], respData);
         }
         break;
       case requestMethod.GETOBJECT:
-        for(let x = 0; x<resp.data.length; x++) {
+        for (let x = 0; x<resp.data.length; x++) {
           _.extend(envelope.data[x], resp.data[x]);
         }
         break;
       case requestMethod.SEARCH:
-        console.log("SEARCH: " + JSON.stringify(resp, null, 4));
-        for(let x = 0; x<resp.length; x++) {
+        for (let x = 0; x<resp.length; x++) {
           let coll = {
             collection: resp[x].data[0].collection
           };
@@ -165,7 +166,7 @@ export function workFunc(context) {
     if (_.has(request, requestMethod.SEARCH)) {
       // query opensearch through search method
       let searchPromises = [];
-      for(let i = 0; i < request.search.length; i++) {
+      for (let i = 0; i < request.search.length; i++) {
         let prom = searchTransformer(request.search[i], context);
         searchPromises.push(prom);
       }
