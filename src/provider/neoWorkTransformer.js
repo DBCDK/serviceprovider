@@ -153,7 +153,7 @@ export function workFunc(context) {
     let promises = [];
     if (_.has(request, requestMethod.MOREINFO)) {
       // query moreinfo through its transformer.
-      let moreInfoPromise = coverImageTransformer()(request.moreinfo, context);
+      let moreInfoPromise = coverImageTransformer(request.moreinfo, context);
       promises.push(moreInfoPromise);
       services.push(requestMethod.MOREINFO);
     }

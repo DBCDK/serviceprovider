@@ -32,7 +32,7 @@ export default function Provider() {
     facets: facetTransformer,
     recommend: recommendTransformer(),
     suggest: suggestTransformer,
-    getCoverImageNeo: coverImageTransformer(),
+    getCoverImageNeo: coverImageTransformer,
     getOpenSearchWorkNeo: openSearchWorkTransformer(),
     work: workTransformer()
   };
