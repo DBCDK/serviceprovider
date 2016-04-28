@@ -14,9 +14,15 @@
     "popsuggest": {
       "url": "http://xptest.dbc.dk/ms/entity-pop/v1"
     },
-    "entitysuggest": {
-      "url": "http://xptest.dbc.dk/ms/entity-suggest/v1",
-      "libraryType": "folkebibliotek"
+    "creatorsuggest": {
+      "url": "http://xptest.dbc.dk/ms/entity-suggest/v1/creator",
+    },
+    "librarysuggest": {
+      "url": "http://xptest.dbc.dk/ms/entity-suggest/v1/library",
+      "librarytype": "folkebibliotek"
+    },
+    "subjectsuggest": {
+      "url": "http://xptest.dbc.dk/ms/entity-suggest/v1/subject",
     },
     "recommend": {
       "url": "http://xptest.dbc.dk/ms/recommend-cosim/v1",
