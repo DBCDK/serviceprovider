@@ -6,7 +6,7 @@
  */
 
 import recommendTransformer from './neoRecommendTransform.js';
-import suggestTransformer from './suggest2.js';
+import suggestTransformer from './suggest.js';
 import coverImageTransformer from './neoCoverImageTransform.js';
 import openSearchWorkTransformer from './neoOpenSearchWorkTransformer.js';
 import facetTransformer from './facets';
