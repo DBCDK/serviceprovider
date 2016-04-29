@@ -86,15 +86,47 @@ module.exports.run = function (worker) {
   };
 
   const getContextMiddleware = function(req, res, next) {
-    var authHeader = req.get('authorization');
-    if (typeof authHeader === 'undefined') {
+    // list of functions that can extract a token from a request
+    var tokenSearchers = [
+      () => {
+        var authHeader = req.get('authorization');
+        if (typeof authHeader !== 'undefined') {
+          var authType = authHeader.split(' ', 2)[0];
+          var bearerToken = authHeader.split(' ', 2)[1];
+
+          if (authType === 'Bearer') {
+            return bearerToken;
+          }
+        }
+      },
+      () => {
+        var bearerToken = req.query.access_token;
+        if (typeof bearerToken !== 'undefined') {
+          return bearerToken;
+        }
+      },
+      () => {
+        var bearerToken = req.body.access_token;
+        if (typeof bearerToken !== 'undefined') {
+          return bearerToken;
+        }
+      }
+    ];
+
+    var bearerTokens = tokenSearchers
+      // execute all token searchers, and remove failures
+      .map((f) => f())
+      // remove failures
+      .filter((e) => typeof e !== 'undefined');
+
+    if (bearerTokens.length > 1) {
+      // todo: return a meaningful error, like 'too many tokens'
       return next();
     }
 
-    var authType = authHeader.split(' ', 2)[0];
-    var bearerToken = authHeader.split(' ', 2)[1];
+    var bearerToken = bearerTokens[0];
 
-    if (authType !== 'Bearer') {
+    if (typeof bearerToken === 'undefined') {
       return next();
     }
 
