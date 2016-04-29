@@ -1,7 +1,5 @@
 'use strict';
 
-import genericTransformer from '../genericTransformer';
-import {sendRequest} from '../services/HTTPClient';
 import {requestType, makeTypeID} from '../requestTypeIdentifier';
 import _ from 'lodash';
 
@@ -225,16 +223,10 @@ export function responseTransform(response, context, state) { // eslint-disable-
   return {statusCode: 200, data: data};
 }
 
-export function opensearchGetObjectFunc(context) {
-  if (!_.has(context, 'opensearch.url')) {
-    throw new Error('no opensearch url provided in context.');
-  }
+export default (request, context) => {
+  let {transformedRequest: params, state: state} = requestTransform(request, context);
 
-  return function (request, local_context, state) { // eslint-disable-line no-unused-vars
-    return {response: sendRequest(context.opensearch.url, request), state: state};
-  };
-}
-
-export default function getObjectTransformer() {
-  return genericTransformer(requestTransform, responseTransform, opensearchGetObjectFunc);
-}
+  return context.call('opensearch', params).then(body => {
+    return responseTransform(body, context, state);
+  });
+};

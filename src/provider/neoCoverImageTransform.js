@@ -17,10 +17,10 @@
  *   }
  */
 
-import genericTransformer from '../genericTransformer.js';
-import moreInfoClient from '../services/MoreInfo/client';
 import _ from 'lodash';
 import {log} from '../utils.js';
+
+import * as BaseSoapClient from 'dbc-node-basesoap-client';
 
 /**
  * Splits a PID into: type, agencyid and localid.
@@ -248,17 +248,20 @@ export function moreInfoResponse(response, context, state) { // eslint-disable-l
   }
 }
 
-export function moreInfoFunc(context) {
-  let client = moreInfoClient(context.moreinfo);
+export default (request, context) => {
 
-  return function (request, local_context, state) { // eslint-disable-line no-unused-vars
-    return {response: client.getMoreInfoResultNeo(request), state: state};
+  let {transformedRequest: params, state: state} = moreInfoRequest(request, context);
+
+  let defaults = {
+    authentication: {
+      authenticationUser: context.moreinfo.user,
+      authenticationGroup: context.moreinfo.group,
+      authenticationPassword: context.moreinfo.password
+    }
   };
-}
+  let client = BaseSoapClient.client(context.moreinfo.url + '/moreinfo.wsdl', defaults, '');
 
-export default function moreInfoTransformer() {
-
-  return genericTransformer(moreInfoRequest,
-    moreInfoResponse,
-    moreInfoFunc);
-}
+  return client.request('moreInfo', params, null, true).then(body => {
+    return moreInfoResponse(body, context, state);
+  });
+};
