@@ -32,9 +32,9 @@ export default function Provider() {
     facets: facetTransformer,
     recommend: recommendTransformer(),
     suggest: suggestTransformer,
-    getCoverImageNeo: coverImageTransformer(),
-    getOpenSearchWorkNeo: openSearchWorkTransformer(),
-    work: workTransformer()
+    getCoverImageNeo: coverImageTransformer,
+    getOpenSearchWorkNeo: openSearchWorkTransformer,
+    work: workTransformer
   };
 
   // we are going to reimplement a simpler mechanism to call the transformers
