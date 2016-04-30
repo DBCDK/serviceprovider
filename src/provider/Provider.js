@@ -12,6 +12,7 @@ import openSearchWorkTransformer from './neoOpenSearchWorkTransformer.js';
 import facetTransformer from './facets';
 import searchTransformer from './search';
 import librariesTransformer from './libraries';
+import userTransformer from './user';
 import workTransformer from './neoWorkTransformer';
 import caller from './caller';
 
@@ -34,6 +35,7 @@ export default function Provider() {
     suggest: suggestTransformer,
     getCoverImageNeo: coverImageTransformer,
     getOpenSearchWorkNeo: openSearchWorkTransformer,
+    user: userTransformer,
     work: workTransformer
   };
 
