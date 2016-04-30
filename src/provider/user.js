@@ -2,32 +2,31 @@
 /**
  * User transformer.
  */
-import {log} from '../utils';
 import {requestPromise} from '../services/requestPromise';
 
 function loan(loanItem) {
 
-  let result = {loanId : loanItem.loanId['$'],
-                dueDate: loanItem.dateDue['$'],
-               title: loanItem.title['$']};
+  let result = {loanId: loanItem.loanId.$,
+                dueDate: loanItem.dateDue.$,
+               title: loanItem.title.$};
   if (loanItem.author) {
-    result.author = loanItem.author['$'];
+    result.author = loanItem.author.$;
   }
   return result;
 }
 
 function order(orderItem) {
 
-  let result = {title: orderItem.title['$'],
-                orderId: orderItem.orderId['$'],
-                orderDate: orderItem.orderDate['$'],
-                status: orderItem.orderStatus['$'],
-                type: orderItem.orderType['$'],
-                holdQueuePosition: orderItem.holdQueuePosition['$'],
-                library: orderItem.pickUpAgency['$']
+  let result = {title: orderItem.title.$,
+                orderId: orderItem.orderId.$,
+                orderDate: orderItem.orderDate.$,
+                status: orderItem.orderStatus.$,
+                type: orderItem.orderType.$,
+                holdQueuePosition: orderItem.holdQueuePosition.$,
+                library: orderItem.pickUpAgency.$
                };
   if (orderItem.author) {
-    result.author = orderItem.author['$'];
+    result.author = orderItem.author.$;
   }
   return result;
 }
@@ -74,7 +73,7 @@ export default (params, context) => {
     // LOAN
     // Hvor får jeg pid fra i loan?
     // creator findes ikke altid
-    
+
     // ORDER
     // er library i order det samme som pickup agency ??(implemnteret som sådan)
     // hvor får jeg pid fra i order?
@@ -84,12 +83,11 @@ export default (params, context) => {
     // DEBT
     // Hvor findes disse oplysninger ? (Er det fordi testbrugeren ikke har noget gæld?)
 
-    let data = {id: body.getUserStatusResponse.userId['$'],
+    let data = {id: body.getUserStatusResponse.userId.$,
                 loans: body.getUserStatusResponse.userStatus.loanedItems.loan.map(loan),
                 orders: body.getUserStatusResponse.userStatus.orderedItems.order.map(order)
                };
-    
+
     return {statusCode: 200, data: data};
   });
 };
-
