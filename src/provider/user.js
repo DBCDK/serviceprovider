@@ -2,7 +2,6 @@
 /**
  * User transformer.
  */
-import {requestPromise} from '../services/requestPromise';
 
 function loan(loanItem) {
 
@@ -16,58 +15,45 @@ function loan(loanItem) {
 }
 
 function order(orderItem) {
+  // Just for testing!
+  // if (!orderItem.title) console.log("title");
+  // if (!orderItem.orderId) console.log("orderId");
+  // if (!orderItem.orderDate) console.log("orderDate");
+  // if (!orderItem.orderStatus) console.log("orderStatus");
+  // if (!orderItem.orderType) console.log("orderType");
+  // if (!orderItem.holdQueuePosition) console.log("holdQueuePosition");
+  // if (!orderItem.pickUpAgency) console.log("pickUpAgency");
 
   let result = {title: orderItem.title.$,
                 orderId: orderItem.orderId.$,
                 orderDate: orderItem.orderDate.$,
                 status: orderItem.orderStatus.$,
                 type: orderItem.orderType.$,
-                holdQueuePosition: orderItem.holdQueuePosition.$,
                 library: orderItem.pickUpAgency.$
                };
+  if (orderItem.holdQueuePosition) {
+    result.holdQueuePosition = orderItem.holdQueuePosition;
+  }
   if (orderItem.author) {
     result.author = orderItem.author.$;
   }
   return result;
 }
 
+export default (request, context) => {
 
-export default (params, context) => {
-
-  let agency = context.user.useragency;
-  let userID = context.user.userid;
-  let pin = context.user.userpin;
-  let groupID = context.user.authgroupid;
-  let password = context.user.authpassword;
-  let authID = context.user.authid;
-
-  let soap = `<SOAP-ENV:Envelope xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/" xmlns:open="http://oss.dbc.dk/ns/openuserstatus">
-  <SOAP-ENV:Body>
-      <open:getUserStatusRequest>
-         <open:agencyId>${agency}</open:agencyId>
-         <open:authentication>
-            <open:groupIdAut>${groupID}</open:groupIdAut>
-            <open:passwordAut>${password}</open:passwordAut>
-            <open:userIdAut>${authID}</open:userIdAut>
-         </open:authentication>
-         <open:outputType>json</open:outputType>
-         <open:userId>${userID}</open:userId>
-         <open:userPincode>${pin}</open:userPincode>
-      </open:getUserStatusRequest>
-  </SOAP-ENV:Body>
-</SOAP-ENV:Envelope>
-`;
-
-  var paramsPost = {
-    uri: context.user.url,
-    method: 'POST',
-    form: {xml: soap}
+  let params = {
+    agencyId: context.userstatus.useragency,
+    userId: context.userstatus.userid,
+    userPincode: context.userstatus.userpin,
+    'authentication.groupIdAut': context.userstatus.authgroupid,
+    'authentication.passwordAut': context.userstatus.authpassword,
+    'authentication.userIdAut': context.userstatus.authid,
+    action: 'getUserStatus',
+    outputType: 'json'
   };
 
-
-  // Brug caller i stedet
-  return requestPromise(paramsPost).then(body => {
-    body = JSON.parse(body);
+  return context.call('userstatus', params).then(body => {
     // registered? Hvad dækker denne nøgle over?
 
     // LOAN
@@ -83,11 +69,11 @@ export default (params, context) => {
     // DEBT
     // Hvor findes disse oplysninger ? (Er det fordi testbrugeren ikke har noget gæld?)
 
-    let data = {id: body.getUserStatusResponse.userId.$,
-                loans: body.getUserStatusResponse.userStatus.loanedItems.loan.map(loan),
-                orders: body.getUserStatusResponse.userStatus.orderedItems.order.map(order)
+    let data = {id: body.data.getUserStatusResponse.userId.$,
+                loans: body.data.getUserStatusResponse.userStatus.loanedItems.loan.map(loan),
+                orders: body.data.getUserStatusResponse.userStatus.orderedItems.order.map(order)
                };
 
-    return {statusCode: 200, data: data};
+    return {statusCode: 200, data: [data]};
   });
 };
