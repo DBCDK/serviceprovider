@@ -32,7 +32,7 @@ function order(orderItem) {
                 library: orderItem.pickUpAgency.$
                };
   if (orderItem.holdQueuePosition) {
-    result.holdQueuePosition = orderItem.holdQueuePosition;
+    result.holdQueuePosition = orderItem.holdQueuePosition.$;
   }
   if (orderItem.author) {
     result.author = orderItem.author.$;
