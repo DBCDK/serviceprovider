@@ -2,8 +2,23 @@
 /**
  * Order transformer.
  */
+function validateParams(params) {
+  if (!params.pids || params.pids.length === 0) {
+    throw ('missing pids parameter');
+  }
+}
 
 export default (request, context) => {
+
+  try {
+    validateParams(request);
+  } catch (err) { // eslint-disable-line brace-style
+    return new Promise(resolve => {
+      return resolve({statusCode: 400,
+                      error: err});
+    });
+  }
+
 
   let params = {
     agencyId: context.userstatus.useragency,
@@ -17,7 +32,10 @@ export default (request, context) => {
     serviceRequester: 190101    
   };
 
-  return getOrderPolicy(request.pid, params, context);
+
+
+  placeOrder(['870970-basis:27597726', '870970-basis:28126727', '870970-basis:27709885'], params, context);
+  return getOrderPolicy(request.pids, params, context);
 
 }
 
@@ -41,12 +59,36 @@ function getOrderPolicy(pid, params, context) {
      </SOAP-ENV:Body>
   </SOAP-ENV:Envelope>`;
 
-  return context.call('userstatus', soap).then(body => {
+
+  return context.call('orderpolicy', soap).then(body => {
     body = JSON.parse(body).checkOrderPolicyResponse;
     return {statusCode: 200, data: {orderPossible: body.orderPossible.$, orderPossibleReason: body.orderPossibleReason.$}};
   });
 }
 
+function placeOrder(pidList, params, context) {
+    
+  let soap = `<SOAP-ENV:Envelope xmlns="http://oss.dbc.dk/ns/openorder" xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/">
+     <SOAP-ENV:Body>
+        <placeOrderRequest>
+           <authentication>
+              <groupIdAut>${params['authentication.groupIdAut']}</groupIdAut>
+              <passwordAut>${params['authentication.passwordAut']}</passwordAut>
+              <userIdAut>${params['authentication.userIdAut']}</userIdAut>
+           </authentication>
+           <copy>false</copy>
+           <exactEdition>false</exactEdition>
+           <needBeforeDate>2016-07-29T00:00:00</needBeforeDate>
+           <orderSystem>bibliotekdk</orderSystem>
+           <pickUpAgencyId>${params.agencyId}</pickUpAgencyId>
+            ${pidList.map(pid => {return `<pid>${pid}</pid>`;}).join('\n')}
+             <serviceRequester>${params.serviceRequester}</serviceRequester>
+           <userId>${params.userId}</userId>
+           <userIdAuthenticated>true</userIdAuthenticated>
+           <verificationReferenceSource>dbcdatawell</verificationReferenceSource>
+        </placeOrderRequest>
+     </SOAP-ENV:Body>
+  </SOAP-ENV:Envelope>`;
 
-
-
+  console.log('SOAP\n' + soap);
+}
