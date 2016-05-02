@@ -13,6 +13,7 @@ import facetTransformer from './facets';
 import searchTransformer from './search';
 import librariesTransformer from './libraries';
 import userTransformer from './user';
+import orderTransformer from './order';
 import workTransformer from './neoWorkTransformer';
 import caller from './caller';
 
@@ -36,6 +37,7 @@ export default function Provider() {
     getCoverImageNeo: coverImageTransformer,
     getOpenSearchWorkNeo: openSearchWorkTransformer,
     user: userTransformer,
+    order: orderTransformer,
     work: workTransformer
   };
 
