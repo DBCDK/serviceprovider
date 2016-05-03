@@ -17,6 +17,7 @@ import orderTransformer from './order';
 import workTransformer from './neoWorkTransformer';
 import openHoldingStatusTransformer from './openHoldingStatus';
 import caller from './caller';
+import {testTransformer} from './testTransformer.js';
 
 /**
  * Initialization of the provider and the underlying services.
@@ -40,7 +41,8 @@ export default function Provider() {
     user: userTransformer,
     order: orderTransformer,
     work: workTransformer,
-    openHoldingStatus: openHoldingStatusTransformer
+    openHoldingStatus: openHoldingStatusTransformer,
+    test: testTransformer
   };
 
   // we are going to reimplement a simpler mechanism to call the transformers
