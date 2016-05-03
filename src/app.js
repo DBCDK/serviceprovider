@@ -170,10 +170,6 @@ module.exports.run = function (worker) {
       log.error('Missing transformer: ' + event);
     }
 
-    if (typeof query.fields === 'string') {
-      query.fields = query.fields.split(',');
-    }
-
     prom.catch(err => {
       log.error(String(err), {stacktrace: err.stack});
       return {statusCode: 500, error: String(err)};
