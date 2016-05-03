@@ -41,12 +41,16 @@ export function workRequest(request, context) { // eslint-disable-line no-unused
       // Restructure this request as a Search request for retrieving collection only!
       transformedRequests[requestMethod.SEARCH] = [];
       for (let i=0; i<request.pids.length; i++) {
-        transformedRequests[requestMethod.SEARCH].push({
+        let searchRequest = {
           q: 'rec.id=' + request.pids[i],
           fields: ['collection'],
           offset: 0,
           limit: 1
-        });
+        };
+        if (_.contains(fields, 'collectionDetails')) {
+          searchRequest.fields.push('collectionDetails');
+        }
+        transformedRequests[requestMethod.SEARCH].push(searchRequest);
       }
     }
     if (fields.some(field => isGetObject(field))) {
@@ -135,6 +139,9 @@ export function workResponse(response, context, state) { // eslint-disable-line 
           let coll = {
             collection: resp[x].data[0].collection
           };
+          if (resp[x].data[0].collectionDetails) {
+            coll.collectionDetails = resp[x].data[0].collectionDetails;
+          }
           _.extend(envelope.data[x], coll);
         }
         break;
