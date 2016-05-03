@@ -27,7 +27,7 @@ function saveTest(test) {
 
   describe('Automated test of the ${test.name} endpoint', () => {
     it('expected response. ID:${test.requestId}, for ${JSON.stringify(test.params)}', (done) => {
-      let context = ${JSON.stringify(test.context};
+      let context = ${JSON.stringify(test.context)};
       context.mockData = mockData;
       provider.execute("${test.name}", ${JSON.stringify(test.params)}, context)
         .then(result => {
@@ -128,7 +128,7 @@ function call(name, params) {
  * Add a call function to the context.
  */
 export default function caller(transformerMap, contextData) {
-  context = Object.create(config); // will become `context = {};` later.
+  let context = Object.create(contextData); // will become `let context = {};` later. Just here for compatibility during transition
   context.data = contextData;
   context.transformerMap = transformerMap;
   context.call = call;
