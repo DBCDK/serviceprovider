@@ -61,7 +61,7 @@ function creatorSuggest(params, context) {
 
 
 function librarySuggest(params, context) {
-  let localParams = {query: params.q, lt: context.librarysuggest.librarytype};
+  let localParams = {query: params.q, lt: context.data.librarysuggest.librarytype};
   if (params.limit) {
     localParams.n = params.limit;
   }
