@@ -15,6 +15,7 @@ import librariesTransformer from './libraries';
 import userTransformer from './user';
 import orderTransformer from './order';
 import workTransformer from './neoWorkTransformer';
+import openHoldingStatusTransformer from './openHoldingStatus';
 import caller from './caller';
 
 /**
@@ -38,7 +39,8 @@ export default function Provider() {
     getOpenSearchWorkNeo: openSearchWorkTransformer,
     user: userTransformer,
     order: orderTransformer,
-    work: workTransformer
+    work: workTransformer,
+    openHoldingStatus: openHoldingStatusTransformer
   };
 
   // we are going to reimplement a simpler mechanism to call the transformers
