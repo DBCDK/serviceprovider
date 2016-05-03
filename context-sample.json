@@ -33,6 +33,10 @@
       "authpassword": "***",
       "authid": "***"
     },
+    "orderpolicy": {
+      "url": "https://openorder.addi.dk/test_2.7.1/"
+      "servicerequester": "190101"
+    },
     "recommend": {
       "url": "http://xptest.dbc.dk/ms/recommend-cosim/v1",
       "filters": [
