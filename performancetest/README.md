@@ -9,11 +9,11 @@ A few quick and dirty tools for performance testing. The idea is this:
 
 You are expected to tweak at least the generator.
 
-Example using some python to generate curl-lines, parallel to execute
+Example using some python to generate 1000 curl-lines and GNU parallel to execute
 them with 10 threads and the analyzer to get the stats:
 
 ```
-./generate.py|parallel -j 10|./analyze.py
+TIMES=1000 ./generate.py|parallel -j 10|./analyze.py
 ```
 
 Example of serial execution:
