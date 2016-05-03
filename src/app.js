@@ -14,6 +14,8 @@ const apiPath = '/v' + parseInt(version, 10) + '/';
 import express from 'express';
 import path from 'path';
 import Logger from 'dbc-node-logger';
+import moment from 'moment';
+import lodash from 'lodash';
 import request from 'request';
 import Provider from './provider/Provider';
 
@@ -159,6 +161,52 @@ module.exports.run = function (worker) {
 
   // Setting logger
   app.use(expressLoggers.logger);
+
+  // Health check
+  app.get('/health', (req, res) => {
+    var result = {ok: {}};
+    var tests = {};
+
+    tests.smaug = new Promise((resolve, reject) => { // eslint-disable-line no-unused-vars
+      var tStart = moment();
+      request.get({
+        uri: SMAUG_LOCATION + '/health'
+      }, (err, response, body) => { // eslint-disable-line no-unused-vars
+        if (err) {
+          return resolve({responseTime: moment().diff(tStart), result: err});
+        }
+
+        if (response.statusCode !== 200) {
+          return resolve({responseTime: moment().diff(tStart), result: new Error('Smaug returned http status code ' + response.statusCode)});
+        }
+
+        resolve({responseTime: moment().diff(tStart), result: 'ok'});
+      });
+    });
+
+    var testsPromises = Object.keys(tests).map((testId) => tests[testId]);
+
+    Promise.all(testsPromises).then((results) => {
+      lodash.zip(Object.keys(tests), results).forEach((zipElem) => {
+        let [testId, status] = zipElem;
+
+        if (status.result instanceof Error) {
+          if (typeof result.errors === 'undefined') {
+            result.errors = {};
+          }
+          result.errors[testId] = {name: status.result.name, msg: status.result.message, stacktrace: status.result.stack, responseTime: status.responseTime};
+        }
+        else {
+          result.ok[testId] = {responseTime: status.responseTime};
+        }
+      });
+      if (Object.keys(result.errors || {}).length > 0) {
+        res.status(500);
+      }
+      app.set('json spaces', 2);
+      res.json(result);
+    });
+  });
 
   // Execute transform
   function callApi(event, query, context, callback) {
