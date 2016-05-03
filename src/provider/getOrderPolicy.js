@@ -54,9 +54,8 @@ export default (request, context) => {
     'authentication.groupIdAut': context.userstatus.authgroupid,
     'authentication.passwordAut': context.userstatus.authpassword,
     'authentication.userIdAut': context.userstatus.authid,
-    action: 'getOrderPolicy',
     outputType: 'json',
-    serviceRequester: 190101
+    serviceRequester: context.orderpolicy.servicerequester
   };
 
   return getOrderPolicy(request.pids, params, context);
