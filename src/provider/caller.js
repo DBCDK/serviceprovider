@@ -27,7 +27,7 @@ function saveTest(test) {
 
   describe('Automated test of the ${test.name} endpoint', () => {
     it('expected response. ID:${test.requestId}, for ${JSON.stringify(test.params)}', (done) => {
-      let context = ${JSON.stringify(test.context)};
+      let context = ${JSON.stringify(test.context};
       context.mockData = mockData;
       provider.execute("${test.name}", ${JSON.stringify(test.params)}, context)
         .then(result => {
@@ -52,8 +52,8 @@ function call(name, params) {
   let promise, outerCall, startTime;
 
   let mockId = JSON.stringify([name, params]); // key for mock data
-  this.mockData = this.mockData || {}; // used for recording/playing mock data
-  let isRestCall = !this.transformerMap[name] && this[name] && this[name].url;
+  this.mockData = this.mockData || Object.assign({}, this.data.mockData || {}); // used for recording/playing mock data
+  let isRestCall = !this.transformerMap[name] && this.data[name] && this.data[name].url;
   if (!this.requestId) {
     this.requestId = randomId(); // identifier for request, useful for grepping etc.
     outerCall = true;
@@ -75,7 +75,7 @@ function call(name, params) {
       }
       ++this.externalCallsInProgress;
     }
-    let url = this[name].url;
+    let url = this.data[name].url;
     if (this.mockData && this.mockData[mockId]) {
       promise = new Promise(resolve => resolve(this.mockData[mockId]));
     }
@@ -109,7 +109,7 @@ function call(name, params) {
       if (outerCall) {
         delete params.createTest;
         saveTest({name: name, params: params,
-          context: Object.getPrototypeOf(this),
+          context: this.data,
           mockData: this.mockData, result: result,
           requestId: this.requestId});
       }
@@ -127,8 +127,9 @@ function call(name, params) {
 /**
  * Add a call function to the context.
  */
-export default function caller(transformerMap, context) {
-  context = Object.create(context);
+export default function caller(transformerMap, contextData) {
+  context = Object.create(config); // will become `context = {};` later.
+  context.data = contextData;
   context.transformerMap = transformerMap;
   context.call = call;
   return context;
