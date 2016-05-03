@@ -16,6 +16,24 @@ git pull # sync from master branch on github
 git push  # sync to master branch on github
 ```
 
+# Building (or rebuilding)
+
+```
+source nvm.sh
+
+# install node
+nvm install
+
+# optional clean dependencies
+# rm -rf node_modules
+
+# install deps
+npm install
+
+# start, note that it asserts a smaug somewhere
+SMAUG=http://localhost:3000 npm run dev
+```
+
 # Tests
 
 The apitest `npm run apitest` sends a bunch of test-requests to the server, and diff the result with a previous result. The server has to be running during this.
@@ -32,4 +50,17 @@ In addition, the generated swagger-file can be tested with:
 
 ```
 curl localhost:8080/api/swagger.json | swagger validate
+```
+
+# Starting a mini smaug for development
+
+This asserts a working context-file:
+
+```
+PORT=3000 node src/smaug/minismaug.js -f context.json&
+```
+
+The SP can then be started with:
+```
+SMAUG=http://localhost:3000 npm run dev
 ```
