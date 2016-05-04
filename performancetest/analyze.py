@@ -32,6 +32,7 @@ if __name__ == "__main__":
     curltime_ms = None
     totaltime = None
     externaltime = None
+    n = 0
     for line in sys.stdin:
         if line.startswith('{'):
             # assume json response
@@ -41,6 +42,8 @@ if __name__ == "__main__":
             continue
         match = re.search(r'CURL HTTPCODE=(\d+) SECS=(\d+[.,]\d+)', line)
         if match:
+            n+=1
+            print "n:", n
             (httpcode, time) = match.group(1,2)                  
             if not httpcode == "200":
                 if not httpcode in errors:
