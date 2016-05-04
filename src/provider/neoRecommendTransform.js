@@ -5,7 +5,7 @@ import recommendClient from '../services/Recommendations/Recommendation.client.j
 import lodash from 'lodash';
 
 function requestTransform(request, context) {
-  const filter = context.libdata.config.provider.services.recommend.filters || ['rec.collectionIdentifier:' + (context.libdata.libraryId || '716500') + '-katalog'];
+  const filter = context.data.libdata.config.provider.services.recommend.filters || ['rec.collectionIdentifier:' + (context.data.libdata.libraryId || '716500') + '-katalog'];
   let result;
   if (request.isFrontPage) {
     const metaParams = {
@@ -14,7 +14,7 @@ function requestTransform(request, context) {
     };
     result = metaParams;
   } else { // eslint-disable-line brace-style
-    request.libdata = context.libdata;
+    request.libdata = context.data.libdata;
     request.filter = filter;
     result = request;
   }
@@ -34,7 +34,7 @@ function responseTransform(response, context) { // eslint-disable-line no-unused
 }
 
 function recommenderFunc(context) {
-  let rec_client = recommendClient(context.recommend);
+  let rec_client = recommendClient(context.data.recommend);
 
   return function (request, context_local) {
     let params = context_local;
