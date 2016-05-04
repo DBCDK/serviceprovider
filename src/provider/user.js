@@ -14,16 +14,8 @@ function loan(loanItem) {
   return result;
 }
 
-function order(orderItem) {
-  // Just for testing!
-  // if (!orderItem.title) console.log("title");
-  // if (!orderItem.orderId) console.log("orderId");
-  // if (!orderItem.orderDate) console.log("orderDate");
-  // if (!orderItem.orderStatus) console.log("orderStatus");
-  // if (!orderItem.orderType) console.log("orderType");
-  // if (!orderItem.holdQueuePosition) console.log("holdQueuePosition");
-  // if (!orderItem.pickUpAgency) console.log("pickUpAgency");
 
+function order(orderItem) {
   let result = {title: orderItem.title.$,
                 orderId: orderItem.orderId.$,
                 orderDate: orderItem.orderDate.$,
@@ -55,26 +47,11 @@ export default (request, context) => {
   };
 
   return context.call('userstatus', params).then(body => {
-    // registered? Hvad dækker denne nøgle over?
-
-    // LOAN
-    // Hvor får jeg pid fra i loan?
-    // creator findes ikke altid
-
-    // ORDER
-    // er library i order det samme som pickup agency ??(implemnteret som sådan)
-    // hvor får jeg pid fra i order?
-    // hvor får jeg expires fra i order?
-    // creator findes ikke altid
-
-    // DEBT
-    // Hvor findes disse oplysninger ? (Er det fordi testbrugeren ikke har noget gæld?)
-
-    let data = {id: body.data.getUserStatusResponse.userId.$,
+    
+    let data = {id: context.userstatus.uniqueid,
                 loans: body.data.getUserStatusResponse.userStatus.loanedItems.loan.map(loan),
                 orders: body.data.getUserStatusResponse.userStatus.orderedItems.order.map(order)
                };
-
     return {statusCode: 200, data: [data]};
   });
 };
