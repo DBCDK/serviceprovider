@@ -23,7 +23,8 @@ function specToPaths(specs) {
     spec.required.push('access_token');
     spec.properties.access_token = {
       type: 'string',
-      description: 'Access token from the OAuth2 server'
+      description: 'Access token from the OAuth2 server',
+      example: 'qwerty'
     };
     if (!spec.properties.fields) {
       spec.properties.fields = {
