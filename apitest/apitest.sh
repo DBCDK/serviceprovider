@@ -8,14 +8,14 @@ for line in `cat requests.lst | grep -v "^#"`
 do
   printf "\n\n$line\n" >> test.results.http
   curl -H "Content-Type: application/json" \
+       -H "Authorization: Bearer qwerty" \
        -X POST \
        --max-time 10 \
        -d "`echo $line | sed -e 's/[^ ]*//'`" \
-       "http://localhost:8080/v$API_VERSION/`echo $line | sed -e s/' .*//'`" \
+       "http://localhost:8080/v$API_VERSION/`echo $line | sed -e s/' .*//'`?pretty=true" \
        >> test.results.http
 done
 
-node sc_apitest.js > test.results.ws
+# node sc_apitest.js > test.results.ws
 
-diff -u test.results.http test.expected &&
-diff -u test.results.ws test.expected
+diff -u test.results.http test.expected # && diff -u test.results.ws test.expected
