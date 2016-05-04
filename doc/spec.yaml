@@ -7,7 +7,7 @@ api:
   availability:
     description: |
       Get information about whether a material can be ordered /
-      are available from the library.  Only contains info from DBCs
+      are available from the agency the users library is part of.  Only contains info from DBCs
       services, so no "opstillingsdata fra intelligent-materialestyring"
       or similar.
     required:
@@ -17,13 +17,8 @@ api:
         description: pid of the work to order
         type: string
         example: "870970-basis:24284565"
-      fields:
-        descriptions: the libraries to check availability at
-        type: array
-        items: {type: "string"}
-        example: ["700400", "710100", "710100"]
     response:
-      example: {"700400":{"note": "check_local_library", "willLend": false}, "710100":{"willLend": true, "expectedDelivery": "2016-04-15"}}
+      example: {"willLend": true, "expectedDelivery": "2016-04-15"}
   events:
     description: List of events at the library where the application is logged in
     properties:

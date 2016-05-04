@@ -50,6 +50,7 @@
     },
     "openholdingstatus": {
       "url": "https://openholdingstatus.addi.dk/2.2/",
+      "agency": 775100,
       "authgroupid": "*****",
       "authpassword": "******",
       "authid": "******"
