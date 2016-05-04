@@ -42,13 +42,14 @@ function order(orderItem) {
 
 export default (request, context) => {
 
+  let userstatus = context.data.userstatus;
   let params = {
-    agencyId: context.userstatus.useragency,
-    userId: context.userstatus.userid,
-    userPincode: context.userstatus.userpin,
-    'authentication.groupIdAut': context.userstatus.authgroupid,
-    'authentication.passwordAut': context.userstatus.authpassword,
-    'authentication.userIdAut': context.userstatus.authid,
+    agencyId: userstatus.useragency,
+    userId: userstatus.userid,
+    userPincode: userstatus.userpin,
+    'authentication.groupIdAut': userstatus.authgroupid,
+    'authentication.passwordAut': userstatus.authpassword,
+    'authentication.userIdAut': userstatus.authid,
     action: 'getUserStatus',
     outputType: 'json'
   };

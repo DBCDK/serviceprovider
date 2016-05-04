@@ -5,7 +5,7 @@
 // { "pid": "123-hello:456", filter: ["710100", "710118"] }
 export default (request, context) => {
 
-  let holdingContext = context.openholdingstatus;
+  let holdingContext = context.data.openholdingstatus;
 
   let params = {
     authgroupid: holdingContext.authgroupid,

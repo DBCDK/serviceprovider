@@ -40,8 +40,8 @@ export function subjectSuggestResponse(response, context, state) { // eslint-dis
 
 export function subjectSuggestFunction(context) {
   return (request, localContext, state) => { // eslint-disable-line no-unused-vars
-    request.lt = context.entitysuggest.libraryType;
-    let url = context.entitysuggest.url + '/' + 'subject';
+    request.lt = context.data.entitysuggest.libraryType;
+    let url = context.data.entitysuggest.url + '/' + 'subject';
     return {response: sendRequest(url, request), state: state};
   };
 }
@@ -71,8 +71,8 @@ export function creatorSuggestResponse(response, context, state) { // eslint-dis
 
 export function creatorSuggestFunction(context) {
   return (request, localContext, state) => { // eslint-disable-line no-unused-vars
-    request.lt = context.entitysuggest.libraryType;
-    let url = context.entitysuggest.url + '/' + 'creator';
+    request.lt = context.data.entitysuggest.libraryType;
+    let url = context.data.entitysuggest.url + '/' + 'creator';
     return {response: sendRequest(url, request), state: state};
   };
 }
@@ -103,8 +103,8 @@ export function librarySuggestResponse(response, context, state) { // eslint-dis
 
 export function librarySuggestFunction(context) {
   return (request, localContext, state) => { // eslint-disable-line no-unused-vars
-    request.lt = context.entitysuggest.libraryType;
-    let url = context.entitysuggest.url + '/' + 'library';
+    request.lt = context.data.entitysuggest.libraryType;
+    let url = context.data.entitysuggest.url + '/' + 'library';
     return {response: sendRequest(url, request), state: state};
   };
 }
@@ -132,7 +132,7 @@ export function popSuggestResponse(response, context, state) { // eslint-disable
 
 export function popSuggestFunction(context) {
   return (request, localContext, state) => { // eslint-disable-line no-unused-vars
-    return {response: sendRequest(context.popsuggest.url, request), state: state};
+    return {response: sendRequest(context.data.popsuggest.url, request), state: state};
   };
 }
 

@@ -22,7 +22,7 @@ function getAndValidateOpensearchContext(context) {
   if (!context.opensearch) {
     throw new Error('No opensearch property present in context');
   }
-  let osContext = context.opensearch;
+  let osContext = context.data.opensearch;
   if (!_.has(osContext, 'agency') || !_.has(osContext, 'profile')) {
     throw new Error('agency or profile missing from opensearch-context.');
   }
