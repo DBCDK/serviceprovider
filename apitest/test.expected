@@ -1,4 +1,2151 @@
 
 
-facets {"q":"harry AND potter"}
-Forbidden
+facets {"q" : "harry"}
+{
+  "statusCode": 200,
+  "data": {
+    "creator": [
+      {
+        "term": "joanne k. rowling",
+        "frequency": 109
+      },
+      {
+        "term": "harry christophers",
+        "frequency": 79
+      },
+      {
+        "term": "the sixteen",
+        "frequency": 77
+      },
+      {
+        "term": "harry edison",
+        "frequency": 66
+      },
+      {
+        "term": "duke ellington",
+        "frequency": 38
+      },
+      {
+        "term": "georg friedrich händel",
+        "frequency": 38
+      },
+      {
+        "term": "bing crosby",
+        "frequency": 35
+      },
+      {
+        "term": "harry connick",
+        "frequency": 32
+      },
+      {
+        "term": "kai normann andersen",
+        "frequency": 32
+      },
+      {
+        "term": "harry nilsson",
+        "frequency": 31
+      }
+    ],
+    "subject": [
+      {
+        "term": "vokal",
+        "frequency": 641
+      },
+      {
+        "term": "usa",
+        "frequency": 386
+      },
+      {
+        "term": "instrumental",
+        "frequency": 307
+      },
+      {
+        "term": "jazz",
+        "frequency": 262
+      },
+      {
+        "term": "england",
+        "frequency": 232
+      },
+      {
+        "term": "2000-2009",
+        "frequency": 209
+      },
+      {
+        "term": "rock",
+        "frequency": 204
+      },
+      {
+        "term": "danmark",
+        "frequency": 198
+      },
+      {
+        "term": "1990-1999",
+        "frequency": 181
+      },
+      {
+        "term": "1960-1969",
+        "frequency": 131
+      }
+    ],
+    "language": [
+      {
+        "term": "engelsk",
+        "frequency": 519
+      },
+      {
+        "term": "dansk",
+        "frequency": 341
+      },
+      {
+        "term": "blandede sprog",
+        "frequency": 190
+      },
+      {
+        "term": "latin",
+        "frequency": 31
+      },
+      {
+        "term": "tysk",
+        "frequency": 20
+      },
+      {
+        "term": "italiensk",
+        "frequency": 12
+      },
+      {
+        "term": "spansk",
+        "frequency": 5
+      },
+      {
+        "term": "svensk",
+        "frequency": 5
+      },
+      {
+        "term": "fransk",
+        "frequency": 4
+      },
+      {
+        "term": "jiddisch",
+        "frequency": 3
+      }
+    ],
+    "date": [
+      {
+        "term": "2011",
+        "frequency": 92
+      },
+      {
+        "term": "2014",
+        "frequency": 75
+      },
+      {
+        "term": "2004",
+        "frequency": 73
+      },
+      {
+        "term": "2003",
+        "frequency": 66
+      },
+      {
+        "term": "2005",
+        "frequency": 64
+      },
+      {
+        "term": "2006",
+        "frequency": 63
+      },
+      {
+        "term": "2009",
+        "frequency": 61
+      },
+      {
+        "term": "2000",
+        "frequency": 60
+      },
+      {
+        "term": "2012",
+        "frequency": 58
+      },
+      {
+        "term": "2015",
+        "frequency": 58
+      }
+    ],
+    "form": [
+      {
+        "term": "computerspil",
+        "frequency": 48
+      },
+      {
+        "term": "soundtracks",
+        "frequency": 47
+      },
+      {
+        "term": "adventurespil",
+        "frequency": 30
+      },
+      {
+        "term": "amerikanske film",
+        "frequency": 25
+      },
+      {
+        "term": "actionspil",
+        "frequency": 24
+      },
+      {
+        "term": "biografier",
+        "frequency": 14
+      },
+      {
+        "term": "engelske film",
+        "frequency": 14
+      },
+      {
+        "term": "undervisningsmaterialer",
+        "frequency": 10
+      },
+      {
+        "term": "historiske optagelser",
+        "frequency": 9
+      },
+      {
+        "term": "dokumentarfilm",
+        "frequency": 7
+      }
+    ]
+  }
+}
+
+facets {"q" : "harry AND potter", "fields": ["creator"], "limit": 20}
+{
+  "statusCode": 200,
+  "data": {
+    "creator": [
+      {
+        "term": "joanne k. rowling",
+        "frequency": 109
+      },
+      {
+        "term": "daniel radcliffe",
+        "frequency": 22
+      },
+      {
+        "term": "emma watson",
+        "frequency": 22
+      },
+      {
+        "term": "robbie coltrane",
+        "frequency": 22
+      },
+      {
+        "term": "rupert grint",
+        "frequency": 22
+      },
+      {
+        "term": "steve kloves",
+        "frequency": 20
+      },
+      {
+        "term": "hanna lützen",
+        "frequency": 17
+      },
+      {
+        "term": "david yates",
+        "frequency": 16
+      },
+      {
+        "term": "michael gambon",
+        "frequency": 15
+      },
+      {
+        "term": "jesper christensen (f. 1948)",
+        "frequency": 14
+      },
+      {
+        "term": "helena bonham carter",
+        "frequency": 10
+      },
+      {
+        "term": "ralph fiennes",
+        "frequency": 10
+      },
+      {
+        "term": "chris columbus",
+        "frequency": 8
+      },
+      {
+        "term": "electronic arts",
+        "frequency": 8
+      },
+      {
+        "term": "john williams (f. 1932)",
+        "frequency": 8
+      },
+      {
+        "term": "richard griffiths",
+        "frequency": 8
+      },
+      {
+        "term": "torben sekov",
+        "frequency": 8
+      },
+      {
+        "term": "jesper christensen",
+        "frequency": 7
+      },
+      {
+        "term": "alan rickman",
+        "frequency": 6
+      },
+      {
+        "term": "eduardo serra",
+        "frequency": 6
+      }
+    ]
+  }
+}
+
+libraries {"limit": 10, "agencyIds": ["717500"], "fields": ["agencyId", "orderParameters"]}
+{
+  "statusCode": 200,
+  "data": [
+    {
+      "agencyId": "717500",
+      "orderParameters": [
+        "customId",
+        "pincode",
+        "userName",
+        "userAddress"
+      ]
+    },
+    {
+      "agencyId": "717500",
+      "orderParameters": [
+        "customId",
+        "pincode",
+        "userName",
+        "userAddress"
+      ]
+    },
+    {
+      "agencyId": "717500",
+      "orderParameters": [
+        "customId",
+        "pincode",
+        "userName",
+        "userAddress"
+      ]
+    }
+  ]
+}
+
+search {"q" : "hest"}
+{
+  "statusCode": 200,
+  "data": [
+    {
+      "collection": [
+        "870970-basis:29567085"
+      ],
+      "collectionDetails": [
+        {
+          "accessType": [
+            "physical"
+          ],
+          "creator": [
+            "Pia Halse"
+          ],
+          "pid": [
+            "870970-basis:29567085"
+          ],
+          "language": [
+            "Dansk"
+          ],
+          "title": [
+            "Tork og Hest"
+          ],
+          "titleFull": [
+            "Tork og Hest"
+          ],
+          "type": [
+            "Bog"
+          ],
+          "workType": [
+            "book"
+          ]
+        }
+      ],
+      "acIdentifier": [
+        "29567085|870970"
+      ],
+      "identifierISBN": [
+        "9788771150445"
+      ],
+      "acSource": [
+        "Bibliotekskatalog"
+      ],
+      "dcTitle": [
+        "Tork og Hest"
+      ],
+      "dcTitleFull": [
+        "Tork og Hest"
+      ],
+      "creatorAut": [
+        "Louis Jensen (f. 1943)"
+      ],
+      "creatorSort": [
+        "Jensen, Louis (f. 1943)"
+      ],
+      "subjectDK5Text": [
+        "Skønlitteratur"
+      ],
+      "subjectDBCS": [
+        "fantasi",
+        "rejser",
+        "venskab"
+      ],
+      "subjectDBCN": [
+        "for 5 år",
+        "for 6 år",
+        "for 7 år",
+        "for 8 år",
+        "for højtlæsning"
+      ],
+      "subjectDK5": [
+        "sk"
+      ],
+      "abstract": [
+        "Torks vugge er en kuffert, og han drager tidligt ud i verden. Her møder han Hest, og de to venner har mange spændende oplevelse, før historien ender som alle gode eventyr og Tork får prinsessen"
+      ],
+      "descriptionSeries": [
+        "Samhørende: Tork og Hest ; Tork og Hest - den store blyant ; Tork og Hest - på nye eventyr ; Tork og Hest - den porcelæne danserinde"
+      ],
+      "audience": [
+        "børnematerialer"
+      ],
+      "version": [
+        "1. oplag (2012)"
+      ],
+      "publisher": [
+        "Alfa"
+      ],
+      "contributorIll": [
+        "Pia Halse"
+      ],
+      "date": [
+        "2012"
+      ],
+      "typeBibDKType": [
+        "Bog"
+      ],
+      "format": [
+        "illustreret i farver"
+      ],
+      "extent": [
+        "48 sider"
+      ],
+      "languageISO6392": [
+        "dan"
+      ],
+      "dcLanguage": [
+        "Dansk"
+      ],
+      "accessType": [
+        "physical"
+      ],
+      "creator": [
+        "Pia Halse"
+      ],
+      "pid": [
+        "870970-basis:29567085"
+      ],
+      "language": [
+        "Dansk"
+      ],
+      "title": [
+        "Tork og Hest"
+      ],
+      "titleFull": [
+        "Tork og Hest"
+      ],
+      "type": [
+        "Bog"
+      ],
+      "workType": [
+        "book"
+      ]
+    },
+    {
+      "collection": [
+        "870970-basis:06031390"
+      ],
+      "collectionDetails": [
+        {
+          "accessType": [
+            "physical"
+          ],
+          "pid": [
+            "870970-basis:06031390"
+          ],
+          "language": [
+            "Dansk"
+          ],
+          "title": [
+            "Min hest"
+          ],
+          "titleFull": [
+            "Min hest : årsalbum"
+          ],
+          "type": [
+            "Tegneserie (Årgang 1983)"
+          ],
+          "workType": [
+            "book"
+          ]
+        }
+      ],
+      "acIdentifier": [
+        "06031390|870970"
+      ],
+      "identifierISBN": [
+        "87-7529-917-8"
+      ],
+      "acSource": [
+        "Bibliotekskatalog"
+      ],
+      "dcTitle": [
+        "Min hest"
+      ],
+      "dcTitleFull": [
+        "Min hest : årsalbum. Årgang 1983 (Bagsværd : 1983)"
+      ],
+      "subjectDK5Text": [
+        "Skønlitteratur"
+      ],
+      "subjectDK5": [
+        "sk"
+      ],
+      "abstract": [
+        "Tegneserier, noveller, digte samt gode råd for hesteinteresserede"
+      ],
+      "audience": [
+        "børnematerialer"
+      ],
+      "publisher": [
+        "Interpresse"
+      ],
+      "date": [
+        "1983",
+        "1983"
+      ],
+      "typeBibDKType": [
+        "Tegneserie"
+      ],
+      "format": [
+        "illustreret i farver"
+      ],
+      "extent": [
+        "48 sider"
+      ],
+      "languageISO6392": [
+        "dan"
+      ],
+      "dcLanguage": [
+        "Dansk"
+      ],
+      "accessType": [
+        "physical"
+      ],
+      "pid": [
+        "870970-basis:06031390"
+      ],
+      "language": [
+        "Dansk"
+      ],
+      "title": [
+        "Min hest"
+      ],
+      "titleFull": [
+        "Min hest : årsalbum"
+      ],
+      "type": [
+        "Tegneserie (Årgang 1983)"
+      ],
+      "workType": [
+        "book"
+      ]
+    },
+    {
+      "collection": [
+        "870970-basis:28446594"
+      ],
+      "collectionDetails": [
+        {
+          "accessType": [
+            "physical"
+          ],
+          "creator": [
+            "Gerd Heuschmann"
+          ],
+          "pid": [
+            "870970-basis:28446594"
+          ],
+          "language": [
+            "Dansk"
+          ],
+          "title": [
+            "Min hest har næsen forrest!"
+          ],
+          "titleFull": [
+            "Min hest har næsen forrest! : rid rigtigt og få en sund hest"
+          ],
+          "type": [
+            "Bog"
+          ],
+          "workType": [
+            "book"
+          ]
+        }
+      ],
+      "acIdentifier": [
+        "28446594|870970"
+      ],
+      "identifierISBN": [
+        "9788721036102"
+      ],
+      "acSource": [
+        "Bibliotekskatalog"
+      ],
+      "source": [
+        "Mein Pferd hat die Nase vorn!"
+      ],
+      "dcTitle": [
+        "Min hest har næsen forrest!"
+      ],
+      "dcTitleFull": [
+        "Min hest har næsen forrest! : rid rigtigt og få en sund hest"
+      ],
+      "creatorAut": [
+        "Gerd Heuschmann"
+      ],
+      "creatorSort": [
+        "Heuschmann, Gerd"
+      ],
+      "subjectDK5": [
+        "79.65"
+      ],
+      "subjectDK5Text": [
+        "Ridning. Hestesport"
+      ],
+      "subjectDBCF": [
+        "dressur",
+        "heste",
+        "rideheste",
+        "ridning",
+        "sundhed"
+      ],
+      "subjectDBCN": [
+        "for 14 år",
+        "for 15 år",
+        "for 16 år"
+      ],
+      "description": [
+        "Indhold: Det ømme punkt ; Klassisk ridekunst ; Opstaldning af din hest ; Din hests anatomi ; Uddannelse af heste ; Du og din hest"
+      ],
+      "audience": [
+        "børnematerialer"
+      ],
+      "version": [
+        "1. udgave, 1. oplag (2010)"
+      ],
+      "publisher": [
+        "Borgen"
+      ],
+      "contributorTrl": [
+        "Birgitte Eggeling"
+      ],
+      "contributorIll": [
+        "Katharina Rücker-Weininger",
+        "Kaja Möbius"
+      ],
+      "date": [
+        "2010"
+      ],
+      "typeBibDKType": [
+        "Bog"
+      ],
+      "format": [
+        "ill i farver"
+      ],
+      "extent": [
+        "141 sider"
+      ],
+      "languageISO6392": [
+        "dan"
+      ],
+      "dcLanguage": [
+        "Dansk"
+      ],
+      "accessType": [
+        "physical"
+      ],
+      "creator": [
+        "Gerd Heuschmann"
+      ],
+      "pid": [
+        "870970-basis:28446594"
+      ],
+      "language": [
+        "Dansk"
+      ],
+      "title": [
+        "Min hest har næsen forrest!"
+      ],
+      "titleFull": [
+        "Min hest har næsen forrest! : rid rigtigt og få en sund hest"
+      ],
+      "type": [
+        "Bog"
+      ],
+      "workType": [
+        "book"
+      ]
+    },
+    {
+      "collection": [
+        "870970-basis:24590933"
+      ],
+      "collectionDetails": [
+        {
+          "accessType": [
+            "physical"
+          ],
+          "creator": [
+            "Lesley Bayley"
+          ],
+          "pid": [
+            "870970-basis:24590933"
+          ],
+          "language": [
+            "Dansk"
+          ],
+          "title": [
+            "Hvad tænker min hest?"
+          ],
+          "titleFull": [
+            "Hvad tænker min hest? : sådan forstår du din hest"
+          ],
+          "type": [
+            "Bog"
+          ],
+          "workType": [
+            "book"
+          ]
+        }
+      ],
+      "acIdentifier": [
+        "24590933|870970"
+      ],
+      "identifierISBN": [
+        "87-21-02089-2",
+        "9788721020897"
+      ],
+      "acSource": [
+        "Bibliotekskatalog"
+      ],
+      "source": [
+        "What is my horse thinking?"
+      ],
+      "dcTitle": [
+        "Hvad tænker min hest?"
+      ],
+      "dcTitleFull": [
+        "Hvad tænker min hest? : sådan forstår du din hest"
+      ],
+      "creatorAut": [
+        "Lesley Bayley"
+      ],
+      "creatorSort": [
+        "Bayley, Lesley"
+      ],
+      "subjectDK5": [
+        "63.61"
+      ],
+      "subjectDK5Text": [
+        "Heste"
+      ],
+      "subjectDBCF": [
+        "adfærd",
+        "heste"
+      ],
+      "subjectDBCO": [
+        "håndbøger"
+      ],
+      "abstract": [
+        "Indføring i og illustration af en lang række af de signaler din hest bruger til at omgås andre heste og de mennesker den møder"
+      ],
+      "audienceAge": [
+        "Fra 12 år"
+      ],
+      "audience": [
+        "børnematerialer"
+      ],
+      "version": [
+        "1. udgave, 4. oplag"
+      ],
+      "publisher": [
+        "Borgen"
+      ],
+      "date": [
+        "2003"
+      ],
+      "typeBibDKType": [
+        "Bog"
+      ],
+      "format": [
+        "illustreret i farver"
+      ],
+      "extent": [
+        "96 sider"
+      ],
+      "languageISO6392": [
+        "dan"
+      ],
+      "dcLanguage": [
+        "Dansk"
+      ],
+      "accessType": [
+        "physical"
+      ],
+      "creator": [
+        "Lesley Bayley"
+      ],
+      "pid": [
+        "870970-basis:24590933"
+      ],
+      "language": [
+        "Dansk"
+      ],
+      "title": [
+        "Hvad tænker min hest?"
+      ],
+      "titleFull": [
+        "Hvad tænker min hest? : sådan forstår du din hest"
+      ],
+      "type": [
+        "Bog"
+      ],
+      "workType": [
+        "book"
+      ]
+    },
+    {
+      "collection": [
+        "870970-basis:05311764"
+      ],
+      "collectionDetails": [
+        {
+          "accessType": [
+            "physical"
+          ],
+          "creator": [
+            "Sigurður A. Magnússon"
+          ],
+          "pid": [
+            "870970-basis:05311764"
+          ],
+          "language": [
+            "Dansk"
+          ],
+          "title": [
+            "Gudernes hest"
+          ],
+          "titleFull": [
+            "Gudernes hest : sagaen om den islandske hest i fortid og nutid"
+          ],
+          "type": [
+            "Bog"
+          ],
+          "workType": [
+            "book"
+          ]
+        }
+      ],
+      "acIdentifier": [
+        "05311764|870970"
+      ],
+      "identifierISBN": [
+        "87-87581-24-8"
+      ],
+      "acSource": [
+        "Bibliotekskatalog"
+      ],
+      "dcTitle": [
+        "Gudernes hest"
+      ],
+      "dcTitleFull": [
+        "Gudernes hest : sagaen om den islandske hest i fortid og nutid"
+      ],
+      "titleSeries": [
+        "Skarv's hestebøger"
+      ],
+      "creatorAut": [
+        "Sigurður A. Magnússon"
+      ],
+      "creatorSort": [
+        "Sigurður A. Magnússon"
+      ],
+      "subjectDK5": [
+        "63.61"
+      ],
+      "subjectDK5Text": [
+        "Heste"
+      ],
+      "subjectDBCF": [
+        "islandsheste"
+      ],
+      "abstract": [
+        "Illustreret med mange farvefotos fortælles om den islandske hest før, og hvordan den avles og bruges nu"
+      ],
+      "audienceAge": [
+        "Fra 11 år"
+      ],
+      "audience": [
+        "børnematerialer"
+      ],
+      "version": [
+        "1. udgave, 2. oplag"
+      ],
+      "publisher": [
+        "Skarv"
+      ],
+      "contributor": [
+        "Guðmundur Ingólfsson"
+      ],
+      "date": [
+        "1978"
+      ],
+      "typeBibDKType": [
+        "Bog"
+      ],
+      "format": [
+        "illustreret i farver"
+      ],
+      "extent": [
+        "95 sider"
+      ],
+      "languageISO6392": [
+        "dan"
+      ],
+      "dcLanguage": [
+        "Dansk"
+      ],
+      "accessType": [
+        "physical"
+      ],
+      "creator": [
+        "Sigurður A. Magnússon"
+      ],
+      "pid": [
+        "870970-basis:05311764"
+      ],
+      "language": [
+        "Dansk"
+      ],
+      "title": [
+        "Gudernes hest"
+      ],
+      "titleFull": [
+        "Gudernes hest : sagaen om den islandske hest i fortid og nutid"
+      ],
+      "type": [
+        "Bog"
+      ],
+      "workType": [
+        "book"
+      ]
+    },
+    {
+      "collection": [
+        "870970-basis:01138898"
+      ],
+      "collectionDetails": [
+        {
+          "accessType": [
+            "physical"
+          ],
+          "creator": [
+            "Babbis Friis-Baastad"
+          ],
+          "pid": [
+            "870970-basis:01138898"
+          ],
+          "language": [
+            "Dansk"
+          ],
+          "title": [
+            "Hest i centrum"
+          ],
+          "titleFull": [
+            "Hest i centrum"
+          ],
+          "type": [
+            "Bog"
+          ],
+          "workType": [
+            "book"
+          ]
+        }
+      ],
+      "acIdentifier": [
+        "01138898|870970"
+      ],
+      "identifierISBN": [
+        "87-411-1660-7"
+      ],
+      "acSource": [
+        "Bibliotekskatalog"
+      ],
+      "source": [
+        "Hest i sentrum"
+      ],
+      "dcTitle": [
+        "Hest i centrum"
+      ],
+      "dcTitleFull": [
+        "Hest i centrum"
+      ],
+      "creatorAut": [
+        "Babbis Friis-Baastad"
+      ],
+      "creatorSort": [
+        "Friis-Baastad, Babbis"
+      ],
+      "subjectDK5Text": [
+        "Skønlitteratur"
+      ],
+      "subjectDBCN": [
+        "for 12 år",
+        "for 13 år",
+        "for 14 år"
+      ],
+      "subjectDK5": [
+        "sk"
+      ],
+      "abstract": [
+        "To drenge tager et feriejob som medhjælpere i en rideskole"
+      ],
+      "descriptionSeries": [
+        "2. del af: En hest på ønskesedlen"
+      ],
+      "audience": [
+        "børnematerialer"
+      ],
+      "publisher": [
+        "Branner og Korch"
+      ],
+      "date": [
+        "1970"
+      ],
+      "typeBibDKType": [
+        "Bog"
+      ],
+      "extent": [
+        "150 sider"
+      ],
+      "languageISO6392": [
+        "dan"
+      ],
+      "dcLanguage": [
+        "Dansk"
+      ],
+      "accessType": [
+        "physical"
+      ],
+      "creator": [
+        "Babbis Friis-Baastad"
+      ],
+      "pid": [
+        "870970-basis:01138898"
+      ],
+      "language": [
+        "Dansk"
+      ],
+      "title": [
+        "Hest i centrum"
+      ],
+      "titleFull": [
+        "Hest i centrum"
+      ],
+      "type": [
+        "Bog"
+      ],
+      "workType": [
+        "book"
+      ]
+    },
+    {
+      "collection": [
+        "870970-basis:24389499"
+      ],
+      "collectionDetails": [
+        {
+          "accessType": [
+            "physical"
+          ],
+          "creator": [
+            "Sandy Ransford"
+          ],
+          "pid": [
+            "870970-basis:24389499"
+          ],
+          "language": [
+            "Dansk"
+          ],
+          "title": [
+            "Hest & pony"
+          ],
+          "titleFull": [
+            "Hest & pony : lær at ride"
+          ],
+          "type": [
+            "Bog"
+          ],
+          "workType": [
+            "book"
+          ]
+        }
+      ],
+      "acIdentifier": [
+        "24389499|870970"
+      ],
+      "identifierISBN": [
+        "87-7905-707-1"
+      ],
+      "acSource": [
+        "Bibliotekskatalog"
+      ],
+      "source": [
+        "First riding lessons"
+      ],
+      "dcTitle": [
+        "Hest & pony"
+      ],
+      "dcTitleFull": [
+        "Hest & pony : lær at ride"
+      ],
+      "alternative": [
+        "Hest og pony"
+      ],
+      "creatorAut": [
+        "Sandy Ransford"
+      ],
+      "creatorSort": [
+        "Ransford, Sandy"
+      ],
+      "subjectDK5": [
+        "79.65"
+      ],
+      "subjectDK5Text": [
+        "Ridning. Hestesport"
+      ],
+      "subjectDBCF": [
+        "heste",
+        "ponyer",
+        "ridning"
+      ],
+      "abstract": [
+        "Om hvordan man skal omgås og ride en hest eller pony med udførlige trin for trin-instruktioner"
+      ],
+      "description": [
+        "Indhold: Før du begynder ; Ponyens seletøj ; De første ridetimer ; På ridebanen ; Se dig for"
+      ],
+      "audienceAge": [
+        "Fra 10 år"
+      ],
+      "audience": [
+        "børnematerialer"
+      ],
+      "version": [
+        "1. oplag"
+      ],
+      "publisher": [
+        "Klematis"
+      ],
+      "contributor": [
+        "Bob Langrish"
+      ],
+      "date": [
+        "2002"
+      ],
+      "typeBibDKType": [
+        "Bog"
+      ],
+      "format": [
+        "alle illustreret i farver"
+      ],
+      "extent": [
+        "64 sider"
+      ],
+      "languageISO6392": [
+        "dan"
+      ],
+      "dcLanguage": [
+        "Dansk"
+      ],
+      "accessType": [
+        "physical"
+      ],
+      "creator": [
+        "Sandy Ransford"
+      ],
+      "pid": [
+        "870970-basis:24389499"
+      ],
+      "language": [
+        "Dansk"
+      ],
+      "title": [
+        "Hest & pony"
+      ],
+      "titleFull": [
+        "Hest & pony : lær at ride"
+      ],
+      "type": [
+        "Bog"
+      ],
+      "workType": [
+        "book"
+      ]
+    },
+    {
+      "collection": [
+        "870970-basis:24050017"
+      ],
+      "collectionDetails": [
+        {
+          "accessType": [
+            "physical"
+          ],
+          "creator": [
+            "Sandy Ransford"
+          ],
+          "pid": [
+            "870970-basis:24050017"
+          ],
+          "language": [
+            "Dansk"
+          ],
+          "title": [
+            "Hest & pony"
+          ],
+          "titleFull": [
+            "Hest & pony : pleje & pasning"
+          ],
+          "type": [
+            "Bog"
+          ],
+          "workType": [
+            "book"
+          ]
+        }
+      ],
+      "acIdentifier": [
+        "24050017|870970"
+      ],
+      "identifierISBN": [
+        "87-7905-618-0"
+      ],
+      "acSource": [
+        "Bibliotekskatalog"
+      ],
+      "source": [
+        "Horse and pony care"
+      ],
+      "dcTitle": [
+        "Hest & pony"
+      ],
+      "dcTitleFull": [
+        "Hest & pony : pleje & pasning"
+      ],
+      "alternative": [
+        "Hest og pony"
+      ],
+      "creatorAut": [
+        "Sandy Ransford"
+      ],
+      "creatorSort": [
+        "Ransford, Sandy"
+      ],
+      "subjectDK5": [
+        "63.61"
+      ],
+      "subjectDK5Text": [
+        "Heste"
+      ],
+      "subjectDBCN": [
+        "for 10 år",
+        "for 11 år",
+        "for 9 år"
+      ],
+      "subjectDBCF": [
+        "heste",
+        "pasning",
+        "ponyer"
+      ],
+      "description": [
+        "Indhold: Ponyens pasning ; Fodring af ponyen ; Ponyens soignering ; Andre former for pasning ; Sundhed ; Punkter på en hest"
+      ],
+      "audience": [
+        "børnematerialer"
+      ],
+      "version": [
+        "1. oplag"
+      ],
+      "publisher": [
+        "Klematis"
+      ],
+      "date": [
+        "2002"
+      ],
+      "typeBibDKType": [
+        "Bog"
+      ],
+      "format": [
+        "alle illustreret i farver"
+      ],
+      "extent": [
+        "96 sider"
+      ],
+      "languageISO6392": [
+        "dan"
+      ],
+      "dcLanguage": [
+        "Dansk"
+      ],
+      "accessType": [
+        "physical"
+      ],
+      "creator": [
+        "Sandy Ransford"
+      ],
+      "pid": [
+        "870970-basis:24050017"
+      ],
+      "language": [
+        "Dansk"
+      ],
+      "title": [
+        "Hest & pony"
+      ],
+      "titleFull": [
+        "Hest & pony : pleje & pasning"
+      ],
+      "type": [
+        "Bog"
+      ],
+      "workType": [
+        "book"
+      ]
+    },
+    {
+      "collection": [
+        "870970-basis:26964598"
+      ],
+      "collectionDetails": [
+        {
+          "accessType": [
+            "physical"
+          ],
+          "pid": [
+            "870970-basis:26964598"
+          ],
+          "title": [
+            "Den islandske hest - Nordens fuldblod"
+          ],
+          "titleFull": [
+            "Den islandske hest - Nordens fuldblod"
+          ],
+          "type": [
+            "Dvd"
+          ],
+          "workType": [
+            "movie"
+          ]
+        }
+      ],
+      "acIdentifier": [
+        "26964598|870970"
+      ],
+      "acSource": [
+        "Bibliotekskatalog"
+      ],
+      "dcTitle": [
+        "Den islandske hest - Nordens fuldblod"
+      ],
+      "dcTitleFull": [
+        "Den islandske hest - Nordens fuldblod"
+      ],
+      "subjectDK5": [
+        "63.61"
+      ],
+      "subjectDK5Text": [
+        "Heste"
+      ],
+      "subjectDBCF": [
+        "islandsheste"
+      ],
+      "abstract": [
+        "Om den islandske hest og dens historie, herunder dens særpræg, de 5 gangarter"
+      ],
+      "audience": [
+        "voksenmaterialer"
+      ],
+      "publisher": [
+        "Pegazoom"
+      ],
+      "contributor": [
+        "Carsten Schrøder Hansen"
+      ],
+      "date": [
+        "2007"
+      ],
+      "typeBibDKType": [
+        "Dvd"
+      ],
+      "format": [
+        "1 dvd-video"
+      ],
+      "extent": [
+        "75 min."
+      ],
+      "languageISO6392": [
+        "dan"
+      ],
+      "dcLanguage": [
+        "Dansk"
+      ],
+      "accessType": [
+        "physical"
+      ],
+      "pid": [
+        "870970-basis:26964598"
+      ],
+      "title": [
+        "Den islandske hest - Nordens fuldblod"
+      ],
+      "titleFull": [
+        "Den islandske hest - Nordens fuldblod"
+      ],
+      "type": [
+        "Dvd"
+      ],
+      "workType": [
+        "movie"
+      ]
+    },
+    {
+      "collection": [
+        "870970-basis:23207176"
+      ],
+      "collectionDetails": [
+        {
+          "accessType": [
+            "physical"
+          ],
+          "creator": [
+            "Gitte V. Naldal"
+          ],
+          "pid": [
+            "870970-basis:23207176"
+          ],
+          "language": [
+            "Dansk"
+          ],
+          "title": [
+            "Fra rytter til hest"
+          ],
+          "titleFull": [
+            "Fra rytter til hest : kropssprog som kommunikation"
+          ],
+          "type": [
+            "Bog"
+          ],
+          "workType": [
+            "book"
+          ]
+        }
+      ],
+      "acIdentifier": [
+        "23207176|870970"
+      ],
+      "identifierISBN": [
+        "87-11-16187-6"
+      ],
+      "acSource": [
+        "Bibliotekskatalog"
+      ],
+      "dcTitle": [
+        "Fra rytter til hest"
+      ],
+      "dcTitleFull": [
+        "Fra rytter til hest : kropssprog som kommunikation"
+      ],
+      "creatorAut": [
+        "Gitte V. Naldal"
+      ],
+      "creatorSort": [
+        "Naldal, Gitte V."
+      ],
+      "subjectDK5": [
+        "79.65"
+      ],
+      "subjectDK5Text": [
+        "Ridning. Hestesport"
+      ],
+      "subjectDBCF": [
+        "dressur",
+        "heste",
+        "kropssprog",
+        "rideheste",
+        "ridning",
+        "træning"
+      ],
+      "audienceAge": [
+        "Fra 14 år"
+      ],
+      "audience": [
+        "børnematerialer"
+      ],
+      "version": [
+        "1. udgave, 3. oplag"
+      ],
+      "publisher": [
+        "Aschehoug"
+      ],
+      "date": [
+        "2000"
+      ],
+      "typeBibDKType": [
+        "Bog"
+      ],
+      "format": [
+        "illustreret i farver"
+      ],
+      "extent": [
+        "143 sider"
+      ],
+      "languageISO6392": [
+        "dan"
+      ],
+      "dcLanguage": [
+        "Dansk"
+      ],
+      "accessType": [
+        "physical"
+      ],
+      "creator": [
+        "Gitte V. Naldal"
+      ],
+      "pid": [
+        "870970-basis:23207176"
+      ],
+      "language": [
+        "Dansk"
+      ],
+      "title": [
+        "Fra rytter til hest"
+      ],
+      "titleFull": [
+        "Fra rytter til hest : kropssprog som kommunikation"
+      ],
+      "type": [
+        "Bog"
+      ],
+      "workType": [
+        "book"
+      ]
+    }
+  ]
+}
+
+search {"q" : "ost", "fields": ["creator", "coverUrlFull"], "limit": 3}
+{
+  "statusCode": 200,
+  "data": [
+    {
+      "creator": [
+        "Torben Olsen (f. 1950)"
+      ]
+    },
+    {
+      "creator": [
+        "Lærke Roos"
+      ],
+      "coverUrlFull": [
+        "//moreinfo.addi.dk/2.1/more_info_get.php?id=53525490&type=forside_stor&key=287e0c4eb64ac701b951"
+      ]
+    },
+    {
+      "creator": [
+        "Marie Hansen (f. 1937-08-28)"
+      ],
+      "coverUrlFull": [
+        "//moreinfo.addi.dk/2.1/more_info_get.php?id=35544218&type=forside_stor&key=d405f30e62d87dc0b131"
+      ]
+    }
+  ]
+}
+
+suggest {"q" : "harr", "type": "title"}
+{
+  "statusCode": 200,
+  "data": [
+    {
+      "str": "Medielobbyisme",
+      "id": "870970-basis:26459885",
+      "creator": "Erik Harr",
+      "type": "book"
+    }
+  ]
+}
+
+suggest {"q" : "harr", "type": "creator"}
+{
+  "statusCode": 200,
+  "data": [
+    {
+      "str": "The Beatles"
+    },
+    {
+      "str": "Spielberg Steven"
+    },
+    {
+      "str": "Charlaine Harris"
+    },
+    {
+      "str": "Flo Rida"
+    },
+    {
+      "str": "Nicholas Harris"
+    },
+    {
+      "str": "Joanne Harris"
+    },
+    {
+      "str": "Emmylou Harris"
+    },
+    {
+      "str": "Svenne & Lotta"
+    },
+    {
+      "str": "Harris Savides"
+    },
+    {
+      "str": "Gasolin'"
+    },
+    {
+      "str": "Robert Harris (f. 1957)"
+    },
+    {
+      "str": "Fiennes, Martha"
+    },
+    {
+      "str": "Harris Clifford"
+    },
+    {
+      "str": "Katie Melua"
+    },
+    {
+      "str": "Harry Nilsson"
+    },
+    {
+      "str": "Russ Harris"
+    },
+    {
+      "str": "Ciara"
+    },
+    {
+      "str": "Colin Harrison (f. 1960-11-27)"
+    },
+    {
+      "str": "Iron Maiden"
+    },
+    {
+      "str": "Mahershala Ali"
+    }
+  ]
+}
+
+suggest {"q" : "køge", "type": "library"}
+{
+  "statusCode": 200,
+  "data": [
+    {
+      "str": {
+        "væsensnavn": "Stevns Bibliotekerne",
+        "adresse": "Strøby Egede Center 11",
+        "id": "733602",
+        "postnr": "4600",
+        "geolokation": {
+          "lat": 55.4165189,
+          "lng": 12.2424689
+        },
+        "navn": "Strøby Egede Bibliotek",
+        "bibliotekstype": "Folkebibliotek",
+        "by": "Køge"
+      }
+    },
+    {
+      "str": {
+        "væsensnavn": "KøgeBibliotekerne",
+        "adresse": "Kirkestræde 18",
+        "id": "725900",
+        "postnr": "4600",
+        "geolokation": {
+          "lat": 55.45783460000001,
+          "lng": 12.1822443
+        },
+        "navn": "Køge Bibliotek",
+        "bibliotekstype": "Folkebibliotek",
+        "by": "Køge"
+      }
+    },
+    {
+      "str": {
+        "væsensnavn": "KøgeBibliotekerne",
+        "adresse": "Parkvej 2",
+        "id": "725903",
+        "postnr": "4140",
+        "geolokation": {
+          "lat": 55.5002162,
+          "lng": 11.9804517
+        },
+        "navn": "Borup Bibliotek",
+        "bibliotekstype": "Folkebibliotek",
+        "by": "Borup"
+      }
+    },
+    {
+      "str": {
+        "væsensnavn": "KøgeBibliotekerne",
+        "adresse": "Billesborgvej 1 B",
+        "id": "725902",
+        "postnr": "4681",
+        "geolokation": {
+          "lat": 55.416913,
+          "lng": 12.142357
+        },
+        "navn": "Herfølge Bibliotek",
+        "bibliotekstype": "Folkebibliotek",
+        "by": "Herfølge"
+      }
+    },
+    {
+      "str": {
+        "væsensnavn": "KøgeBibliotekerne",
+        "adresse": "Ejby Medborgerhus Gemsevej 19",
+        "id": "725905",
+        "postnr": "4623",
+        "geolokation": {
+          "lat": 0,
+          "lng": 0
+        },
+        "navn": "Ejby Bibliotekspunkt",
+        "bibliotekstype": "Folkebibliotek",
+        "by": "Ll. Skensved"
+      }
+    },
+    {
+      "str": {
+        "væsensnavn": "KøgeBibliotekerne",
+        "adresse": "Super Brugsen Bjæverskov Center",
+        "id": "725904",
+        "postnr": "4632",
+        "geolokation": {
+          "lat": 55.457699,
+          "lng": 12.033552
+        },
+        "navn": "Bjæverskov Bibliotekspunkt",
+        "bibliotekstype": "Folkebibliotek",
+        "by": "Bjæverskov"
+      }
+    }
+  ]
+}
+
+suggest {"q" : "os", "type": "subject"}
+{
+  "statusCode": 200,
+  "data": [
+    {
+      "str": "oslo"
+    },
+    {
+      "str": "kost"
+    },
+    {
+      "str": "los"
+    },
+    {
+      "str": "råkost"
+    },
+    {
+      "str": "slankekost"
+    },
+    {
+      "str": "glutenfri kost"
+    },
+    {
+      "str": "stenalderkost"
+    },
+    {
+      "str": "helsekost"
+    },
+    {
+      "str": "barbados"
+    },
+    {
+      "str": "mælkefri kost"
+    },
+    {
+      "str": "buenos"
+    },
+    {
+      "str": "rhodos"
+    },
+    {
+      "str": "kos"
+    },
+    {
+      "str": "osama"
+    },
+    {
+      "str": "osama bin laden"
+    },
+    {
+      "str": "fedtfattig kost"
+    },
+    {
+      "str": "laos"
+    },
+    {
+      "str": "oskarshamn"
+    },
+    {
+      "str": "samos"
+    },
+    {
+      "str": "lesbos"
+    }
+  ]
+}
+
+user {}
+{
+  "error": "TypeError: Cannot read property 'useragency' of undefined"
+}
+
+work {"pids": ["300185-katalog:100562332", "870970-basis:51989252", "870971-forfweb:86203219", "870970-basis:24284514"]}
+{
+  "statusCode": 200,
+  "data": [
+    {},
+    {
+      "acIdentifier": [
+        "51989252|870970"
+      ],
+      "identifierISBN": [
+        "9788702179859"
+      ],
+      "acSource": [
+        "Bibliotekskatalog"
+      ],
+      "source": [
+        "Harry Potter and the philosopher's stone"
+      ],
+      "dcTitle": [
+        "Harry Potter og de vises sten"
+      ],
+      "dcTitleFull": [
+        "Harry Potter og de vises sten (ill. Jim Kay)"
+      ],
+      "creatorAut": [
+        "Joanne K. Rowling"
+      ],
+      "creatorSort": [
+        "Rowling, Joanne K."
+      ],
+      "subjectDK5Text": [
+        "Skønlitteratur"
+      ],
+      "subjectDBCS": [
+        "fantasy",
+        "magi",
+        "troldmænd"
+      ],
+      "subjectGenre": [
+        "fantasy"
+      ],
+      "subjectDBCN": [
+        "for 11 år",
+        "for 12 år",
+        "for 13 år",
+        "for 14 år",
+        "for 15 år",
+        "for 16 år"
+      ],
+      "subjectDK5": [
+        "sk"
+      ],
+      "abstract": [
+        "Fantasy. Den 11-årige forældreløse dreng Harry Potter bliver adopteret af sin onkel og tante som ikke bryder sig om ham. Han har trolddomsblod i årerne og bliver optaget på en skole for trolddomskyndige. Her får han nye venner og fjender"
+      ],
+      "description": [
+        "I kolofonen fejlagtigt: 7. udgave"
+      ],
+      "descriptionSeries": [
+        "Samhørende: Harry Potter og De Vises Sten ; Harry Potter og Hemmelighedernes Kammer ; Harry Potter og fangen fra Azkaban ; Harry Potter og Flammernes Pokal ; Harry Potter og Fønixordenen ; Harry Potter og halvblodsprinsen ; Harry Potter og dødsregalierne"
+      ],
+      "audience": [
+        "børnematerialer"
+      ],
+      "version": [
+        "1. illustrerede udgave, 1. oplag (2015)"
+      ],
+      "publisher": [
+        "Gyldendal"
+      ],
+      "contributorIll": [
+        "Jim Kay"
+      ],
+      "contributorTrl": [
+        "Hanna Lützen"
+      ],
+      "date": [
+        "2015"
+      ],
+      "typeBibDKType": [
+        "Bog"
+      ],
+      "format": [
+        "illustreret i farver"
+      ],
+      "extent": [
+        "246 sider"
+      ],
+      "languageISO6392": [
+        "dan"
+      ],
+      "dcLanguage": [
+        "Dansk"
+      ],
+      "accessType": [
+        "physical"
+      ],
+      "creator": [
+        "Joanne K. Rowling"
+      ],
+      "fedoraPid": [
+        "870970-basis:51989252"
+      ],
+      "pid": [
+        "870970-basis:51989252"
+      ],
+      "language": [
+        "Dansk"
+      ],
+      "title": [
+        "Harry Potter og de vises sten"
+      ],
+      "titleFull": [
+        "Harry Potter og de vises sten"
+      ],
+      "type": [
+        "Bog"
+      ],
+      "workType": [
+        "book"
+      ]
+    },
+    {
+      "acIdentifier": [
+        "86203219|870971"
+      ],
+      "identifierURI": [
+        "http://www.forfatterweb.dk/oversigt/rowling00"
+      ],
+      "acSource": [
+        "Forfatterweb"
+      ],
+      "dcTitle": [
+        "Joanne K. Rowling"
+      ],
+      "dcTitleFull": [
+        "Joanne K. Rowling"
+      ],
+      "titleSeries": [
+        "Forfatterweb for børn & unge"
+      ],
+      "dcCreator": [
+        "Pia Andersen Høg"
+      ],
+      "creatorSort": [
+        "Høg, Pia Andersen"
+      ],
+      "subjectDK5": [
+        "99.4 Rowling, Joanne K."
+      ],
+      "subjectDK5Text": [
+        "Biografier af enkelte personer"
+      ],
+      "subjectDBCF": [
+        "Joanne K. Rowling",
+        "børnelitteratur",
+        "engelsk litteratur",
+        "fantasy",
+        "litteratur"
+      ],
+      "subjectSort": [
+        "Rowling, Joanne K."
+      ],
+      "subjectGenre": [
+        "forfatterportræt"
+      ],
+      "description": [
+        "Bibliografier og links opdateres to gange årligt"
+      ],
+      "audience": [
+        "voksenmaterialer"
+      ],
+      "date": [
+        "2008"
+      ],
+      "typeBibDKType": [
+        "Artikel"
+      ],
+      "languageISO6392": [
+        "dan"
+      ],
+      "dcLanguage": [
+        "Dansk"
+      ],
+      "isPartOf": [
+        "Forfatterweb, 2008"
+      ]
+    },
+    {
+      "acIdentifier": [
+        "24284514|870970"
+      ],
+      "acSource": [
+        "Bibliotekskatalog"
+      ],
+      "source": [
+        "Harry Potter and the sorcerer's stone"
+      ],
+      "dcTitle": [
+        "Harry Potter og de vises sten"
+      ],
+      "dcTitleFull": [
+        "Harry Potter og de vises sten (Danske stemmer)"
+      ],
+      "creatorDrt": [
+        "Chris Columbus"
+      ],
+      "creatorSort": [
+        "Columbus, Chris"
+      ],
+      "subjectDK5": [
+        "77.7"
+      ],
+      "subjectDK5Text": [
+        "Spillefilm"
+      ],
+      "subjectDBCS": [
+        "drenge",
+        "kostskoler",
+        "magi",
+        "troldmænd"
+      ],
+      "abstract": [
+        "Harry Potter er et uønsket hittebarn, men da han fylder elleve år, forandres hans liv for altid. Han har magiske evner og skal være studerende på en kostskole for troldmænd. Her får han brug for alle sine evner for at løse mysteriet om de vises sten"
+      ],
+      "description": [
+        "Danske stemmer Philip Christian Schmølker Hornehøj, Naja Iven Ulstrup, Allan Hyde, Rasmus Albeck, William Høeg, Sebastian Jessen, Sonny Lahey, Kit Eichler, Andreas Jessen ... et al."
+      ],
+      "descriptionSeries": [
+        "Samhørende: Harry Potter og de vises sten ; Harry Potter og Hemmelighedernes kammer"
+      ],
+      "audienceMedieraad": [
+        "Mærkning: Tilladt for alle men frarådes børn under 7 år"
+      ],
+      "audienceAge": [
+        "Fra 9 år"
+      ],
+      "audience": [
+        "voksenmaterialer"
+      ],
+      "publisher": [
+        "Sandrew Metronome"
+      ],
+      "contributor": [
+        "Chris Columbus",
+        "Steve Kloves",
+        "Joanne K. Rowling",
+        "John Seale"
+      ],
+      "contributorAct": [
+        "Daniel Radcliffe",
+        "Rupert Grint",
+        "Emma Watson",
+        "John Cleese",
+        "Robbie Coltrane",
+        "Richard Griffiths",
+        "Richard Harris",
+        "Ian Hart",
+        "John Hurt"
+      ],
+      "date": [
+        "2002"
+      ],
+      "typeBibDKType": [
+        "Video"
+      ],
+      "format": [
+        "1 kassette, VHS, letterbox, surround"
+      ],
+      "extent": [
+        "2 t., 26 min."
+      ],
+      "languageISO6392": [
+        "dan"
+      ],
+      "dcLanguage": [
+        "Dansk"
+      ]
+    }
+  ]
+}
+
+work {"pids": ["300185-katalog:100562332", "870970-basis:51989252", "870971-forfweb:86203219", "870970-basis:24284514"], "fields": ["collection", "title"]}
+{}
+
+work {"pids": ["300185-katalog:100562332", "870970-basis:51989252", "870971-forfweb:86203219", "870970-basis:24284514"], "fields": ["coverUrlFull", "title"]}
+{
+  "statusCode": 200,
+  "data": [
+    {},
+    {
+      "coverUrlFull": [
+        "//moreinfo.addi.dk/2.1/more_info_get.php?id=64951376&type=forside_stor&key=8d627374e439255a34ff"
+      ],
+      "title": [
+        "Harry Potter og de vises sten"
+      ]
+    },
+    {},
+    {}
+  ]
+}

@@ -1,26 +1,13 @@
-# cancelOrder {"orderId":"14894443","orderType":"Hold"}
-# findMobilSoegProfile {}
-# getAllAffiliates {}
-# getCoverImage [["870970-basis:28511663"]]
-# getEventList {"amount":"10"}
-# getNewsList {"amount":"0"}
-# getOpenSearchResultList {"query":"(test)","offset":0,"worksPerPage":12,"sort":"rank_frequency"}
-# getOpenSearchWorkBriefDisplay {"pid":"870970-basis:23645564"}
-# getOpenSearchWork {"pid":"870970-basis:23645564","offset":1,"worksPerPage":1,"allManifestations":true}
-# getOrderPolicy {"agencyId":"","pids":["775100-katalog:28370334"]}
-# getOrderPolicy {"agencyId":"","pids":["775100-katalog:29372365","775100-katalog:23645564"]}
-# getPersonalRecommendations {"work":"870970-basis:23645564","likes":[],"dislikes":[]}
-# getPickupAgencyList {}
-# getPickupAgencyList ["775150"]
-# getRecommendations {"likes":["870970-basis:28511663","870970-basis:29754519","870970-basis:29060835","870970-basis:22629344"],"dislikes":[],"isFrontPage":true}
-# getUserStatus {}
-# holdingStatus ["775100-katalog:29372365"]
-# isMobilSoegUserLoggedIn {}
-# placeOrder {"agencyId":"775150","pids":"XXX775100-katalog:28370334XXXX"}
-# saveLikeToMobilSoegProfile {"item_id":"870970-basis:23645564","action":"like"}
-# saveLikeToMobilSoegProfile {"item_id":"870970-basis:23645564","action":"remove","id":532}
-# savePickupAgencyToMobilSoegProfile ["775130"]
-# updateOrder {"orderId":"14894443","pickUpAgencyId":"775140"}
-# getPopSuggestions ["api"]
-# wrongEndpoint {}
-facets {"q":"harry"}
+facets {"q" : "harry"}
+facets {"q" : "harry AND potter", "fields": ["creator"], "limit": 20}
+libraries {"limit": 10, "agencyIds": ["717500"], "fields": ["agencyId", "orderParameters"]}
+search {"q" : "hest"}
+search {"q" : "ost", "fields": ["creator", "coverUrlFull"], "limit": 3}
+suggest {"q" : "harr", "type": "title"}
+suggest {"q" : "harr", "type": "creator"}
+suggest {"q" : "køge", "type": "library"}
+suggest {"q" : "os", "type": "subject"}
+user {}
+work {"pids": ["300185-katalog:100562332", "870970-basis:51989252", "870971-forfweb:86203219", "870970-basis:24284514"]}
+work {"pids": ["300185-katalog:100562332", "870970-basis:51989252", "870971-forfweb:86203219", "870970-basis:24284514"], "fields": ["collection", "title"]}
+work {"pids": ["300185-katalog:100562332", "870970-basis:51989252", "870971-forfweb:86203219", "870970-basis:24284514"], "fields": ["coverUrlFull", "title"]}
