@@ -95,6 +95,9 @@ Url of the authorisation server we use.
 - __TEST_DEV__
 Boolean flag whether to support createTest parameter. If TEST_DEV is set, and a query is send with the extra parameter createTest set to true, then this will be used to create a unit test.
 
+- __SWAGGER_HTTP__
+Include http as allowed scheme in swagger, this is useful when developing locally.
+
 ## Unit tests
 Unit tests are placed with the modules and components in a `__tests__` folder
 to run the tests: `npm run test`

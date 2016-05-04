@@ -127,7 +127,9 @@ export default function(specName = 'spec') {
           description: desc
         },
         basePath: '/v' + majorVersion,
-        schemes: ['http', 'https', 'wss'],
+        schemes: (process.env.SWAGGER_HTTP // eslint-disable-line no-process-env
+            ? ['http', 'https', 'wss']
+            : ['https', 'wss']),
         consumes: ['application/json'],
         produces: ['application/json'],
         paths: specToPaths(spec),
