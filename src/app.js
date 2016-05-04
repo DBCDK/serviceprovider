@@ -266,7 +266,7 @@ module.exports.run = function (worker) {
   worker.on('connection', (connection) => {
     serviceProvider.availableTransforms().forEach(key => {
       connection.on(key, (data, callback) => { // eslint-disable-line no-loop-func
-        getContext(data.token)
+        getContext(data.access_token)
           .then((context) => {
             callApi(key, data, context, callback);
           })
