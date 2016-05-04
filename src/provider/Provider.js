@@ -15,7 +15,6 @@ import librariesTransformer from './libraries';
 import userTransformer from './user';
 import orderTransformer from './order';
 import workTransformer from './neoWorkTransformer';
-import openHoldingStatusTransformer from './openHoldingStatus';
 import availabilityTransformer from './availability';
 import caller from './caller';
 import {testTransformer} from './testTransformer.js';
@@ -42,7 +41,6 @@ export default function Provider() {
     user: userTransformer,
     order: orderTransformer,
     work: workTransformer,
-    openHoldingStatus: openHoldingStatusTransformer,
     test: testTransformer,
     availability: availabilityTransformer
   };
