@@ -1,6 +1,7 @@
 facets {"q" : "harry"}
 facets {"q" : "harry AND potter", "fields": ["creator"], "limit": 20}
 libraries {"limit": 10, "agencyIds": ["717500"], "fields": ["agencyId", "orderParameters"]}
+search {}
 search {"q" : "hest"}
 search {"q" : "ost", "fields": ["creator", "coverUrlFull"], "limit": 3}
 suggest {"q" : "harr", "type": "title"}

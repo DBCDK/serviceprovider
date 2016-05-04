@@ -9,6 +9,7 @@ do
   printf "\n\n$line\n" >> test.results.http
   curl -H "Content-Type: application/json" \
        -H "Authorization: Bearer qwerty" \
+       --silent \
        -X POST \
        --max-time 10 \
        -d "`echo $line | sed -e 's/[^ ]*//'`" \
