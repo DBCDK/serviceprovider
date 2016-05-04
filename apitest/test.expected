@@ -340,6 +340,12 @@ libraries {"limit": 10, "agencyIds": ["717500"], "fields": ["agencyId", "orderPa
   ]
 }
 
+search {}
+{
+  "statusCode": 400,
+  "error": "missing q parameter"
+}
+
 search {"q" : "hest"}
 {
   "statusCode": 200,
