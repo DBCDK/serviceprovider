@@ -31,7 +31,8 @@
       "useragency": "***",
       "authgroupid": "***",
       "authpassword": "***",
-      "authid": "***"
+      "authid": "***",
+      "uniqueid": "example-id"
     },
     "orderpolicy": {
       "url": "https://openorder.addi.dk/test_2.7.1/",
