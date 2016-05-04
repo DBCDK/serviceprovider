@@ -1,18 +1,15 @@
 'use strict';
 
+import _ from 'lodash';
 
-// Takes one pid and a list of agencies in a filter:
-// { "pid": "123-hello:456", filter: ["710100", "710118"] }
 export default (request, context) => {
-
   let holdingContext = context.data.openholdingstatus;
-
   let params = {
     authgroupid: holdingContext.authgroupid,
     authpassword: holdingContext.authpassword,
     authid: holdingContext.authid,
     pid: request.pid,
-    agencies: request.fields
+    agency: holdingContext.agency
   };
 
   let soap = `
@@ -25,10 +22,10 @@ export default (request, context) => {
             <open:passwordAut>${params.authpassword}</open:passwordAut>
             <open:userIdAut>${params.authid}</open:userIdAut>
          </open:authentication>
-         ${params.agencies.map(agency => {
-           let xml = '<open:lookupRecord><open:responderId>' + agency + '</open:responderId><open:pid>' + request.pid + '</open:pid></open:lookupRecord>';
-           return xml;
-         }).join('\n')}
+         <open:lookupRecord>
+            <open:responderId>${params.agency}</open:responderId>
+            <open:pid>${params.pid}</open:pid>
+         </open:lookupRecord>
          <open:outputType>json</open:outputType>
       </open:holdingsRequest>
    </soapenv:Body>
@@ -36,18 +33,15 @@ export default (request, context) => {
 
   return context.call('openholdingstatus', soap).then(body => {
     body = JSON.parse(body).holdingsResponse.responder;
-
-    let res = {
-      pid: params.pid
-    };
-    body.forEach(response => {
-      let entry = {
-        willLend: response.willLend.$,
-        expectedDelivery: response.expectedDelivery.$
-      };
-      res[response.responderId.$] = entry;
-    });
-
-    return {statusCode: 200, data: res};
+    let data = {willLend: false};
+    if (body && body.length > 0) {
+      if (_.has(body[0], 'willLend.$')) {
+        data.willLend = body[0].willLend.$;
+      }
+      if (_.has(body[0], 'expectedDelivery.$')) {
+        data.expectedDelivery = body[0].expectedDelivery.$;
+      }
+    }
+    return {statusCode: 200, data: data};
   });
 };
