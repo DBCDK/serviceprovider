@@ -7,9 +7,7 @@ api:
   availability:
     description: |
       Get information about whether a material can be ordered /
-      are available from the agency the users library is part of.  Only contains info from DBCs
-      services, so no "opstillingsdata fra intelligent-materialestyring"
-      or similar.
+      are available for the currently logged in user.
     required:
       - pid
     properties:
@@ -120,10 +118,10 @@ api:
       - request: {"nids": ["19"]}
         response: [{"nid": "19", "title": "Sportsstjerner - bag facaden", "lead": "...", "image": "/files/775100/...", "id": "56b0687313e4eefa60ef18cd", "body": "<p>Nunc ullamcorper pulvinar pharetra. Aliquam ma..." }]
   order:
-    description: Order a library material, or modify/remove an existing order.
+    description: Order a library material, or remove an existing order.
     properties:
       orderId:
-        description: The identifier for the order, required when updating or deleting an order. You get this from `/user`-status. Depending on the kind of order, it can take a long time from ordering, until the material with the orderId appears in the user status.
+        description: The identifier for the order, deleting an order. You get this from `/user`-status. Depending on the kind of order, it can take a long time from ordering, until the material with the orderId appears in the user status.
         type: string
         example: "1234"
       pids:
@@ -132,7 +130,7 @@ api:
         type: array
         items: {type: "string"}
       library:
-        description: The library to deliver to. Required when making a new order.
+        description: The library branch to deliver to. Required when making a new order.
         type: string
         example: "700401"
       name:
@@ -152,7 +150,7 @@ api:
         example: 12345678
         type: string
       expires:
-        description: When the order expires if not fullfilled. Required when making a new order.
+        description: When the order expires if not fullfilled.
         type: string
         example: 2016-06-24
         format: date-time
@@ -165,8 +163,6 @@ api:
     examples:
       - request: { "pids": ["870970-basis:51989252"], "library": "700401", "name": "Jens Jensen", "address": "Kirkestræde 1, 1234 Landsby", "email": "jens.jensen@example.com", "phone": "12345678", "expires": "2016-06-24T18:25:43.511Z"}
         response:  { "pids": ["870970-basis:51989252"], "library": "700401", "expires": "2016-06-24T18:25:43.511Z"}
-      - request: { "orderId": "1234", "library": "710104", "expires": "2016-12-24T18:25:43.511Z"}
-        response: { "orderId": "1234", "pid": "870970-basis:51989252", "library": "700401", "expires": "2016-12-24T18:25:43.511Z"}
       - request: { "orderId": "1234", "delete": true }
         response: { "orderId": "1234", "deleted": true }
   rank:
@@ -311,6 +307,7 @@ api:
       Notice that suggest/completion index is not real-time, so there is no guarantee that the `id` matches a bibliographic object in the `/work` endpoint, - though usually there will be one (they will be sync'ed every week).
     required:
       - q
+      - type
     properties:
       q:
         description: Query to complete
@@ -340,33 +337,26 @@ api:
         response: [ { "væsensnavn": "KøgeBibliotekerne", "adresse": "Kirkestræde 18", "id": "725900", "postnr": "4600", "geolokation": { "lat": 55.45783460000001, "lng": 12.1822443 }, "navn": "Køge Bibliotek", "bibliotekstype": "Folkebibliotek", "by": "Køge", "term": "Køge Bibliotek, Køge"}]
   user:
     description: |
-      User status, including arrived loans, orders, unique id, whether the user is actually registered at the library, etc.
+      User status, including arrived loans, orders, unique id, etc.
     properties:
       fields:
         description: filter user info
-        example: ["id", "registered"]
+        example: ["id"]
     example: {}
     response:
       example:
         id: "U2VydmljZVByb3ZpZGVy"
-        registered: true
+        library: "710100"
         loans:
-          loanId: "4940377131"
-          pid: "870970-basis:51123455"
-          title: håndbog over håndbøger
-          author: La, Chris
-          dueDate: "2016-04-16"
+          - loanId: "4940377131"
+            title: håndbog over håndbøger
+            author: La, Chris
+            dueDate: "2016-04-16"
         orders:
-          orderId: "24181913"
-          orderDate: "2016-01-01"
-          expires: "2016-01-01"
-          pid: "870970-basis:51989252"
-          title: Morder-Anders og hans venner
-          author: Jonasson, Jonas
-          status: In process
-          type: Hold
-          holdQueuePosition: 14
-          library: "710100"
+          - orderId: "24181913"
+            title: Morder-Anders og hans venner
+            creator: Jonasson, Jonas
+            status: In process
         debt:
           amount: "20"
           currency: dkk
