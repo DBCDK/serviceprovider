@@ -128,7 +128,7 @@ function call(name, params) {
  * Add a call function to the context.
  */
 export default function caller(transformerMap, contextData) {
-  let context = Object.create(contextData); // will become `let context = {};` later. Just here for compatibility during transition
+  let context = {};
   context.data = contextData;
   context.transformerMap = transformerMap;
   context.call = call;
