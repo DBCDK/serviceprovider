@@ -4,8 +4,7 @@ import {workToJSON} from '../requestTypeIdentifier.js';
 
 export default (params, context) => {
   if (!params.q) {
-    return new Promise({statusCode: 400,
-                    error: 'missing q parameter'});
+    return Promise.resolve({statusCode: 400, error: 'missing q parameter'});
   }
 
   let agency = context.opensearch.agency;
