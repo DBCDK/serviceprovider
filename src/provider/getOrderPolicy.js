@@ -48,14 +48,14 @@ export default (request, context) => {
 
 
   let params = {
-    agencyId: context.userstatus.useragency,
-    userId: context.userstatus.userid,
-    userPincode: context.userstatus.userpin,
-    'authentication.groupIdAut': context.userstatus.authgroupid,
-    'authentication.passwordAut': context.userstatus.authpassword,
-    'authentication.userIdAut': context.userstatus.authid,
+    agencyId: context.data.userstatus.useragency,
+    userId: context.data.userstatus.userid,
+    userPincode: context.data.userstatus.userpin,
+    'authentication.groupIdAut': context.data.userstatus.authgroupid,
+    'authentication.passwordAut': context.data.userstatus.authpassword,
+    'authentication.userIdAut': context.data.userstatus.authid,
     outputType: 'json',
-    serviceRequester: context.orderpolicy.servicerequester
+    serviceRequester: context.data.orderpolicy.servicerequester
   };
 
   return getOrderPolicy(request.pids, params, context);

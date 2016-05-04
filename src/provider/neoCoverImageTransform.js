@@ -254,12 +254,12 @@ export default (request, context) => {
 
   let defaults = {
     authentication: {
-      authenticationUser: context.moreinfo.user,
-      authenticationGroup: context.moreinfo.group,
-      authenticationPassword: context.moreinfo.password
+      authenticationUser: context.data.moreinfo.user,
+      authenticationGroup: context.data.moreinfo.group,
+      authenticationPassword: context.data.moreinfo.password
     }
   };
-  let client = BaseSoapClient.client(context.moreinfo.url + '/moreinfo.wsdl', defaults, '');
+  let client = BaseSoapClient.client(context.data.moreinfo.url + '/moreinfo.wsdl', defaults, '');
 
   return client.request('moreInfo', params, null, true).then(body => {
     return moreInfoResponse(body, context, state);

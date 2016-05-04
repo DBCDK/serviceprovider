@@ -19,10 +19,10 @@ function getPids(request) {
 function getAndValidateOpensearchContext(context) {
   // context does not seem to have the property opensearch after .call has been introduced.
   // if (!_.has(context, 'opensearch')) {
-  if (!context.opensearch) {
+  if (!context.data.opensearch) {
     throw new Error('No opensearch property present in context');
   }
-  let osContext = context.opensearch;
+  let osContext = context.data.opensearch;
   if (!_.has(osContext, 'agency') || !_.has(osContext, 'profile')) {
     throw new Error('agency or profile missing from opensearch-context.');
   }
