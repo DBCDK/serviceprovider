@@ -13,6 +13,31 @@ let testDev = process.env.TEST_DEV; // eslint-disable-line no-process-env
 
 let randomId = () => Math.random().toString(36).slice(2, 8);
 
+// function for escaping special regex characters
+let regexEscape = s => s.replace(/[\\[\](\|)*?+.^$]/g, c => '\\' + c);
+// these keys in entries in config contains information that needs to be removed from the test
+let blacklist = ['authid', 'authpassword', 'authgroupid', 'userpin', 'userid', 'password', 'group', 'user'];
+/**
+ * remove sensitive data from a string.
+ * The sensitive data is paswords etc. given through the context.
+ */
+function censor(str, context) {
+  // Identify strings that needs to be redacted
+  let forbidden = {};
+  for (let key in context) { // eslint-disable-line guard-for-in
+    for (let i = 0; i < blacklist.length; ++i) {
+      let word = context[key][blacklist[i]];
+      if (word) {
+        forbidden[word] = true;
+      }
+    }
+  }
+  // construct regex for global replacement in string
+  let re = new RegExp('(' + Object.keys(forbidden).map(regexEscape).join('|') + ')', 'g');
+  return str.replace(re, 'XXXXX');
+}
+
+
 /**
  * Utility function to write a unittest to a file.
  * The unit tests are typically saved `src/provider/__tests__/autotest_*.js`
@@ -37,6 +62,7 @@ function saveTest(test) {
         });
     })
   });`;
+  source = censor(source, test.context);
   fs.writeFile(`${__dirname}/__tests__/autotest_${test.name}_${Date.now()}.js`, source);
 }
 
