@@ -2136,7 +2136,10 @@ work {"pids": ["300185-katalog:100562332", "870970-basis:51989252", "870971-forf
 }
 
 work {"pids": ["300185-katalog:100562332", "870970-basis:51989252", "870971-forfweb:86203219", "870970-basis:24284514"], "fields": ["collection", "title"]}
-{}
+{
+  "statusCode": 500,
+  "error": "TypeError: Cannot read property 'collection' of undefined"
+}
 
 work {"pids": ["300185-katalog:100562332", "870970-basis:51989252", "870971-forfweb:86203219", "870970-basis:24284514"], "fields": ["coverUrlFull", "title"]}
 {

@@ -19,4 +19,4 @@ done
 
 # node sc_apitest.js > test.results.ws
 
-diff -u test.results.http test.expected # && diff -u test.results.ws test.expected
+diff -u test.expected test.results.http # && diff -u test.results.ws test.expected
