@@ -1850,6 +1850,7 @@ suggest {"q" : "os", "type": "subject"}
 
 user {}
 {
+  "statusCode": 500,
   "error": "TypeError: Cannot read property 'useragency' of undefined"
 }
 
