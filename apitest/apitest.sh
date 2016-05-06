@@ -17,6 +17,6 @@ do
        >> test.results.http
 done
 
-# node sc_apitest.js > test.results.ws
+node sc_apitest.js > test.results.ws
 
-diff -u test.expected test.results.http # && diff -u test.results.ws test.expected
+diff -u test.expected test.results.http && diff -u test.results.ws test.expected
