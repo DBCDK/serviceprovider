@@ -13,6 +13,12 @@ function validateParams(params) {
   if (!params.type) {
     throw ('missing type parameter');
   }
+  if (typeof params.q !== 'string') {
+    throw ('q parameter must be a string');
+  }
+  if (typeof params.limit !== 'number') {
+    throw ('limit parameter must be a number');
+  }
 }
 
 let fMap = {creator: creatorSuggest,
@@ -76,9 +82,11 @@ function librarySuggest(params, context) {
 
 function subjectSuggest(params, context) {
   let localParams = {query: params.q, rs: 3};
+
   if (params.limit) {
     localParams.n = params.limit;
   }
+
   return context.call('subjectsuggest', localParams)
     .then(body => {
       return {statusCode: 200, data: body.data.response.suggestions.map((obj) => {
