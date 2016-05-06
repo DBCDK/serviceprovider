@@ -48,7 +48,7 @@ if __name__ == "__main__":
         match = re.search(r'CURL HTTPCODE=(\d+) SECS=(\d+[.,]\d+)', line)
         if match:
             n+=1
-            print "n:", n
+            #print "n:", n
             (httpcode, time) = match.group(1,2)                  
             if not httpcode == "200":
                 if not httpcode in errors:
@@ -58,10 +58,10 @@ if __name__ == "__main__":
             else:
                 time = time.replace(',','.')
                 curltime_ms = float(time)*1000
-                print "CURL:", curltime_ms
-                print "TOTAL REC:", externaltime
+                #print "CURL:", curltime_ms
+                #print "TOTAL REC:", externaltime
                 overhead = curltime_ms - externaltime
-                print "TOTAL OVERHEAD:", overhead
+                #print "TOTAL OVERHEAD:", overhead
                 total_times.append(curltime_ms)
                 overhead_times.append(overhead)
                 service_times.append(externaltime)

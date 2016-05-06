@@ -1,9 +1,9 @@
 #!/bin/bash
 
-export TIMES=1
+export TIMES=1000
 export URL='http://xp-p02.dbc.dk:3000/v0/'
 export ACCESS_TOKEN='64141bea42b72443ce3848455f5960e1438fb434'
-export JOBS=1
+export JOBS=8
 
 
 export ENDPOINT='search'
@@ -16,9 +16,15 @@ export NAME='-simple'
 ./make-test.sh
 
 export ENDPOINT='work'
-export REQUEST='{ "pids": ["870970-basis:22629344"], "fields": ["dcTitle", "title", "collection", "subjectDBCF", "hasReview", "coverUrlFull", "workType"], "timings":true}'
-export NAME='-collection-coverurl'
+export REQUEST='{ "pids": ["870970-basis:22629344"], "fields": ["title", "collection" ], "timings":true}'
+export NAME='-collection'
 ./make-test.sh
+
+export ENDPOINT='work'
+export REQUEST='{ "pids": ["870970-basis:22629344"], "fields": ["title", "coverUrlFull"], "timings":true}'
+export NAME='-coverurl'
+./make-test.sh
+
 
 export ENDPOINT='suggest'
 export REQUEST='{ "q": "hest", "type": "subject", "timings":true}'

@@ -1,6 +1,6 @@
 #!/bin/bash
 
-export BASENAME=$ENDPOINT$NAME
+export BASENAME=$ENDPOINT$NAME-$TIMES-$JOBS
 
 export CREATE=./create-curl-lines.py
 export PARALLEL=parallel
