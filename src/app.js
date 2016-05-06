@@ -330,14 +330,14 @@ module.exports.run = function (worker) {
     }
 
     res.status(500);
-    res.jsonp({error: String(err)});
+    res.jsonp({statusCode: 500, error: String(err)});
     res.end();
   });
 
   // Handle 404's
   app.use((req, res) => {
     res.status(404);
-    res.jsonp({error: '404 Not Found'});
+    res.jsonp({statusCode: 404, error: '404 Not Found'});
     res.end();
   });
 
