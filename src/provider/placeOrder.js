@@ -53,7 +53,7 @@ function placeOrder(pidList, params, context) { // eslint-disable-line no-unused
       return {statusCode: 500, error: err};
     }
     if (!body.orderPlaced) {
-      return {statusCode: 500, error: "Unknown error occured"};
+      return {statusCode: 500, error: 'Unknown error occured'};
     }
     return {statusCode: 200, data: 'ok'};
   });
