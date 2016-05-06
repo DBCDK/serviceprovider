@@ -38,7 +38,12 @@ if __name__ == "__main__":
             # assume json response
             response = json.loads(line)
             #totaltime = response["msecs"]
-            externaltime = response["msecs"]
+            externamtime = None
+            if "msecs" in response:
+                externaltime = response["msecs"]
+            elif "responseHeader" in response:
+                externaltime = response["responseHeader"]["time"]
+            assert(externaltime)
             continue
         match = re.search(r'CURL HTTPCODE=(\d+) SECS=(\d+[.,]\d+)', line)
         if match:
