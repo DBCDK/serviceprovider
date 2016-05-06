@@ -720,6 +720,132 @@ search {"q" : "hest"}
     },
     {
       "collection": [
+        "870970-basis:05311764"
+      ],
+      "collectionDetails": [
+        {
+          "accessType": [
+            "physical"
+          ],
+          "creator": [
+            "Sigurður A. Magnússon"
+          ],
+          "pid": [
+            "870970-basis:05311764"
+          ],
+          "language": [
+            "Dansk"
+          ],
+          "title": [
+            "Gudernes hest"
+          ],
+          "titleFull": [
+            "Gudernes hest : sagaen om den islandske hest i fortid og nutid"
+          ],
+          "type": [
+            "Bog"
+          ],
+          "workType": [
+            "book"
+          ]
+        }
+      ],
+      "acIdentifier": [
+        "05311764|870970"
+      ],
+      "identifierISBN": [
+        "87-87581-24-8"
+      ],
+      "acSource": [
+        "Bibliotekskatalog"
+      ],
+      "dcTitle": [
+        "Gudernes hest"
+      ],
+      "dcTitleFull": [
+        "Gudernes hest : sagaen om den islandske hest i fortid og nutid"
+      ],
+      "titleSeries": [
+        "Skarv's hestebøger"
+      ],
+      "creatorAut": [
+        "Sigurður A. Magnússon"
+      ],
+      "creatorSort": [
+        "Sigurður A. Magnússon"
+      ],
+      "subjectDK5": [
+        "63.61"
+      ],
+      "subjectDK5Text": [
+        "Heste"
+      ],
+      "subjectDBCF": [
+        "islandsheste"
+      ],
+      "abstract": [
+        "Illustreret med mange farvefotos fortælles om den islandske hest før, og hvordan den avles og bruges nu"
+      ],
+      "audienceAge": [
+        "Fra 11 år"
+      ],
+      "audience": [
+        "børnematerialer"
+      ],
+      "version": [
+        "1. udgave, 2. oplag"
+      ],
+      "publisher": [
+        "Skarv"
+      ],
+      "contributor": [
+        "Guðmundur Ingólfsson"
+      ],
+      "date": [
+        "1978"
+      ],
+      "typeBibDKType": [
+        "Bog"
+      ],
+      "format": [
+        "illustreret i farver"
+      ],
+      "extent": [
+        "95 sider"
+      ],
+      "languageISO6392": [
+        "dan"
+      ],
+      "dcLanguage": [
+        "Dansk"
+      ],
+      "accessType": [
+        "physical"
+      ],
+      "creator": [
+        "Sigurður A. Magnússon"
+      ],
+      "pid": [
+        "870970-basis:05311764"
+      ],
+      "language": [
+        "Dansk"
+      ],
+      "title": [
+        "Gudernes hest"
+      ],
+      "titleFull": [
+        "Gudernes hest : sagaen om den islandske hest i fortid og nutid"
+      ],
+      "type": [
+        "Bog"
+      ],
+      "workType": [
+        "book"
+      ]
+    },
+    {
+      "collection": [
         "870970-basis:24590933"
       ],
       "collectionDetails": [
@@ -848,132 +974,6 @@ search {"q" : "hest"}
     },
     {
       "collection": [
-        "870970-basis:05311764"
-      ],
-      "collectionDetails": [
-        {
-          "accessType": [
-            "physical"
-          ],
-          "creator": [
-            "Sigurður A. Magnússon"
-          ],
-          "pid": [
-            "870970-basis:05311764"
-          ],
-          "language": [
-            "Dansk"
-          ],
-          "title": [
-            "Gudernes hest"
-          ],
-          "titleFull": [
-            "Gudernes hest : sagaen om den islandske hest i fortid og nutid"
-          ],
-          "type": [
-            "Bog"
-          ],
-          "workType": [
-            "book"
-          ]
-        }
-      ],
-      "acIdentifier": [
-        "05311764|870970"
-      ],
-      "identifierISBN": [
-        "87-87581-24-8"
-      ],
-      "acSource": [
-        "Bibliotekskatalog"
-      ],
-      "dcTitle": [
-        "Gudernes hest"
-      ],
-      "dcTitleFull": [
-        "Gudernes hest : sagaen om den islandske hest i fortid og nutid"
-      ],
-      "titleSeries": [
-        "Skarv's hestebøger"
-      ],
-      "creatorAut": [
-        "Sigurður A. Magnússon"
-      ],
-      "creatorSort": [
-        "Sigurður A. Magnússon"
-      ],
-      "subjectDK5": [
-        "63.61"
-      ],
-      "subjectDK5Text": [
-        "Heste"
-      ],
-      "subjectDBCF": [
-        "islandsheste"
-      ],
-      "abstract": [
-        "Illustreret med mange farvefotos fortælles om den islandske hest før, og hvordan den avles og bruges nu"
-      ],
-      "audienceAge": [
-        "Fra 11 år"
-      ],
-      "audience": [
-        "børnematerialer"
-      ],
-      "version": [
-        "1. udgave, 2. oplag"
-      ],
-      "publisher": [
-        "Skarv"
-      ],
-      "contributor": [
-        "Guðmundur Ingólfsson"
-      ],
-      "date": [
-        "1978"
-      ],
-      "typeBibDKType": [
-        "Bog"
-      ],
-      "format": [
-        "illustreret i farver"
-      ],
-      "extent": [
-        "95 sider"
-      ],
-      "languageISO6392": [
-        "dan"
-      ],
-      "dcLanguage": [
-        "Dansk"
-      ],
-      "accessType": [
-        "physical"
-      ],
-      "creator": [
-        "Sigurður A. Magnússon"
-      ],
-      "pid": [
-        "870970-basis:05311764"
-      ],
-      "language": [
-        "Dansk"
-      ],
-      "title": [
-        "Gudernes hest"
-      ],
-      "titleFull": [
-        "Gudernes hest : sagaen om den islandske hest i fortid og nutid"
-      ],
-      "type": [
-        "Bog"
-      ],
-      "workType": [
-        "book"
-      ]
-    },
-    {
-      "collection": [
         "870970-basis:01138898"
       ],
       "collectionDetails": [
@@ -1083,6 +1083,136 @@ search {"q" : "hest"}
       ],
       "titleFull": [
         "Hest i centrum"
+      ],
+      "type": [
+        "Bog"
+      ],
+      "workType": [
+        "book"
+      ]
+    },
+    {
+      "collection": [
+        "870970-basis:24050017"
+      ],
+      "collectionDetails": [
+        {
+          "accessType": [
+            "physical"
+          ],
+          "creator": [
+            "Sandy Ransford"
+          ],
+          "pid": [
+            "870970-basis:24050017"
+          ],
+          "language": [
+            "Dansk"
+          ],
+          "title": [
+            "Hest & pony"
+          ],
+          "titleFull": [
+            "Hest & pony : pleje & pasning"
+          ],
+          "type": [
+            "Bog"
+          ],
+          "workType": [
+            "book"
+          ]
+        }
+      ],
+      "acIdentifier": [
+        "24050017|870970"
+      ],
+      "identifierISBN": [
+        "87-7905-618-0"
+      ],
+      "acSource": [
+        "Bibliotekskatalog"
+      ],
+      "source": [
+        "Horse and pony care"
+      ],
+      "dcTitle": [
+        "Hest & pony"
+      ],
+      "dcTitleFull": [
+        "Hest & pony : pleje & pasning"
+      ],
+      "alternative": [
+        "Hest og pony"
+      ],
+      "creatorAut": [
+        "Sandy Ransford"
+      ],
+      "creatorSort": [
+        "Ransford, Sandy"
+      ],
+      "subjectDK5": [
+        "63.61"
+      ],
+      "subjectDK5Text": [
+        "Heste"
+      ],
+      "subjectDBCN": [
+        "for 10 år",
+        "for 11 år",
+        "for 9 år"
+      ],
+      "subjectDBCF": [
+        "heste",
+        "pasning",
+        "ponyer"
+      ],
+      "description": [
+        "Indhold: Ponyens pasning ; Fodring af ponyen ; Ponyens soignering ; Andre former for pasning ; Sundhed ; Punkter på en hest"
+      ],
+      "audience": [
+        "børnematerialer"
+      ],
+      "version": [
+        "1. oplag"
+      ],
+      "publisher": [
+        "Klematis"
+      ],
+      "date": [
+        "2002"
+      ],
+      "typeBibDKType": [
+        "Bog"
+      ],
+      "format": [
+        "alle illustreret i farver"
+      ],
+      "extent": [
+        "96 sider"
+      ],
+      "languageISO6392": [
+        "dan"
+      ],
+      "dcLanguage": [
+        "Dansk"
+      ],
+      "accessType": [
+        "physical"
+      ],
+      "creator": [
+        "Sandy Ransford"
+      ],
+      "pid": [
+        "870970-basis:24050017"
+      ],
+      "language": [
+        "Dansk"
+      ],
+      "title": [
+        "Hest & pony"
+      ],
+      "titleFull": [
+        "Hest & pony : pleje & pasning"
       ],
       "type": [
         "Bog"
@@ -1227,232 +1357,6 @@ search {"q" : "hest"}
     },
     {
       "collection": [
-        "870970-basis:24050017"
-      ],
-      "collectionDetails": [
-        {
-          "accessType": [
-            "physical"
-          ],
-          "creator": [
-            "Sandy Ransford"
-          ],
-          "pid": [
-            "870970-basis:24050017"
-          ],
-          "language": [
-            "Dansk"
-          ],
-          "title": [
-            "Hest & pony"
-          ],
-          "titleFull": [
-            "Hest & pony : pleje & pasning"
-          ],
-          "type": [
-            "Bog"
-          ],
-          "workType": [
-            "book"
-          ]
-        }
-      ],
-      "acIdentifier": [
-        "24050017|870970"
-      ],
-      "identifierISBN": [
-        "87-7905-618-0"
-      ],
-      "acSource": [
-        "Bibliotekskatalog"
-      ],
-      "source": [
-        "Horse and pony care"
-      ],
-      "dcTitle": [
-        "Hest & pony"
-      ],
-      "dcTitleFull": [
-        "Hest & pony : pleje & pasning"
-      ],
-      "alternative": [
-        "Hest og pony"
-      ],
-      "creatorAut": [
-        "Sandy Ransford"
-      ],
-      "creatorSort": [
-        "Ransford, Sandy"
-      ],
-      "subjectDK5": [
-        "63.61"
-      ],
-      "subjectDK5Text": [
-        "Heste"
-      ],
-      "subjectDBCN": [
-        "for 10 år",
-        "for 11 år",
-        "for 9 år"
-      ],
-      "subjectDBCF": [
-        "heste",
-        "pasning",
-        "ponyer"
-      ],
-      "description": [
-        "Indhold: Ponyens pasning ; Fodring af ponyen ; Ponyens soignering ; Andre former for pasning ; Sundhed ; Punkter på en hest"
-      ],
-      "audience": [
-        "børnematerialer"
-      ],
-      "version": [
-        "1. oplag"
-      ],
-      "publisher": [
-        "Klematis"
-      ],
-      "date": [
-        "2002"
-      ],
-      "typeBibDKType": [
-        "Bog"
-      ],
-      "format": [
-        "alle illustreret i farver"
-      ],
-      "extent": [
-        "96 sider"
-      ],
-      "languageISO6392": [
-        "dan"
-      ],
-      "dcLanguage": [
-        "Dansk"
-      ],
-      "accessType": [
-        "physical"
-      ],
-      "creator": [
-        "Sandy Ransford"
-      ],
-      "pid": [
-        "870970-basis:24050017"
-      ],
-      "language": [
-        "Dansk"
-      ],
-      "title": [
-        "Hest & pony"
-      ],
-      "titleFull": [
-        "Hest & pony : pleje & pasning"
-      ],
-      "type": [
-        "Bog"
-      ],
-      "workType": [
-        "book"
-      ]
-    },
-    {
-      "collection": [
-        "870970-basis:26964598"
-      ],
-      "collectionDetails": [
-        {
-          "accessType": [
-            "physical"
-          ],
-          "pid": [
-            "870970-basis:26964598"
-          ],
-          "title": [
-            "Den islandske hest - Nordens fuldblod"
-          ],
-          "titleFull": [
-            "Den islandske hest - Nordens fuldblod"
-          ],
-          "type": [
-            "Dvd"
-          ],
-          "workType": [
-            "movie"
-          ]
-        }
-      ],
-      "acIdentifier": [
-        "26964598|870970"
-      ],
-      "acSource": [
-        "Bibliotekskatalog"
-      ],
-      "dcTitle": [
-        "Den islandske hest - Nordens fuldblod"
-      ],
-      "dcTitleFull": [
-        "Den islandske hest - Nordens fuldblod"
-      ],
-      "subjectDK5": [
-        "63.61"
-      ],
-      "subjectDK5Text": [
-        "Heste"
-      ],
-      "subjectDBCF": [
-        "islandsheste"
-      ],
-      "abstract": [
-        "Om den islandske hest og dens historie, herunder dens særpræg, de 5 gangarter"
-      ],
-      "audience": [
-        "voksenmaterialer"
-      ],
-      "publisher": [
-        "Pegazoom"
-      ],
-      "contributor": [
-        "Carsten Schrøder Hansen"
-      ],
-      "date": [
-        "2007"
-      ],
-      "typeBibDKType": [
-        "Dvd"
-      ],
-      "format": [
-        "1 dvd-video"
-      ],
-      "extent": [
-        "75 min."
-      ],
-      "languageISO6392": [
-        "dan"
-      ],
-      "dcLanguage": [
-        "Dansk"
-      ],
-      "accessType": [
-        "physical"
-      ],
-      "pid": [
-        "870970-basis:26964598"
-      ],
-      "title": [
-        "Den islandske hest - Nordens fuldblod"
-      ],
-      "titleFull": [
-        "Den islandske hest - Nordens fuldblod"
-      ],
-      "type": [
-        "Dvd"
-      ],
-      "workType": [
-        "movie"
-      ]
-    },
-    {
-      "collection": [
         "870970-basis:23207176"
       ],
       "collectionDetails": [
@@ -1572,6 +1476,102 @@ search {"q" : "hest"}
       "workType": [
         "book"
       ]
+    },
+    {
+      "collection": [
+        "870970-basis:26964598"
+      ],
+      "collectionDetails": [
+        {
+          "accessType": [
+            "physical"
+          ],
+          "pid": [
+            "870970-basis:26964598"
+          ],
+          "title": [
+            "Den islandske hest - Nordens fuldblod"
+          ],
+          "titleFull": [
+            "Den islandske hest - Nordens fuldblod"
+          ],
+          "type": [
+            "Dvd"
+          ],
+          "workType": [
+            "movie"
+          ]
+        }
+      ],
+      "acIdentifier": [
+        "26964598|870970"
+      ],
+      "acSource": [
+        "Bibliotekskatalog"
+      ],
+      "dcTitle": [
+        "Den islandske hest - Nordens fuldblod"
+      ],
+      "dcTitleFull": [
+        "Den islandske hest - Nordens fuldblod"
+      ],
+      "subjectDK5": [
+        "63.61"
+      ],
+      "subjectDK5Text": [
+        "Heste"
+      ],
+      "subjectDBCF": [
+        "islandsheste"
+      ],
+      "abstract": [
+        "Om den islandske hest og dens historie, herunder dens særpræg, de 5 gangarter"
+      ],
+      "audience": [
+        "voksenmaterialer"
+      ],
+      "publisher": [
+        "Pegazoom"
+      ],
+      "contributor": [
+        "Carsten Schrøder Hansen"
+      ],
+      "date": [
+        "2007"
+      ],
+      "typeBibDKType": [
+        "Dvd"
+      ],
+      "format": [
+        "1 dvd-video"
+      ],
+      "extent": [
+        "75 min."
+      ],
+      "languageISO6392": [
+        "dan"
+      ],
+      "dcLanguage": [
+        "Dansk"
+      ],
+      "accessType": [
+        "physical"
+      ],
+      "pid": [
+        "870970-basis:26964598"
+      ],
+      "title": [
+        "Den islandske hest - Nordens fuldblod"
+      ],
+      "titleFull": [
+        "Den islandske hest - Nordens fuldblod"
+      ],
+      "type": [
+        "Dvd"
+      ],
+      "workType": [
+        "movie"
+      ]
     }
   ]
 }
@@ -1590,7 +1590,7 @@ search {"q" : "ost", "fields": ["creator", "coverUrlFull"], "limit": 3}
         "Lærke Roos"
       ],
       "coverUrlFull": [
-        "//moreinfo.addi.dk/2.1/more_info_get.php?id=53525490&type=forside_stor&key=287e0c4eb64ac701b951"
+        "//moreinfo.addi.dk/2.1/more_info_get.php?id=53525490&type=forside_stor&key=b4974ae302ae0a59c442"
       ]
     },
     {
@@ -1598,7 +1598,7 @@ search {"q" : "ost", "fields": ["creator", "coverUrlFull"], "limit": 3}
         "Marie Hansen (f. 1937-08-28)"
       ],
       "coverUrlFull": [
-        "//moreinfo.addi.dk/2.1/more_info_get.php?id=35544218&type=forside_stor&key=d405f30e62d87dc0b131"
+        "//moreinfo.addi.dk/2.1/more_info_get.php?id=35544218&type=forside_stor&key=0ad872ebc3d507d04680"
       ]
     }
   ]
@@ -2148,7 +2148,7 @@ work {"pids": ["300185-katalog:100562332", "870970-basis:51989252", "870971-forf
     {},
     {
       "coverUrlFull": [
-        "//moreinfo.addi.dk/2.1/more_info_get.php?id=64951376&type=forside_stor&key=8d627374e439255a34ff"
+        "//moreinfo.addi.dk/2.1/more_info_get.php?id=64951376&type=forside_stor&key=080a2504216dd9fcf70e"
       ],
       "title": [
         "Harry Potter og de vises sten"
