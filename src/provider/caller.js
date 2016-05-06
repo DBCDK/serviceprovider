@@ -107,10 +107,10 @@ class Context {
     else {
       let url = this.data[name].url || name;
 
-      ++this.externalCallsInProgress;
       if (this.externalCallsInProgress === 0) {
         this.externalTiming -= Date.now();
       }
+      ++this.externalCallsInProgress;
 
       mockId = JSON.stringify([name, params]); // key for mock data
       if (this.mockData[mockId]) {
