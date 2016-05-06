@@ -20,7 +20,6 @@
  */
 import genericTransformer from '../genericTransformer.js';
 import {die} from '../utils.js';
-import {sendRequest} from '../services/HTTPClient.js';
 
 /**
 * Transformer for subjectSuggest endpoint.
@@ -42,7 +41,7 @@ export function subjectSuggestFunction(context) {
   return (request, localContext, state) => { // eslint-disable-line no-unused-vars
     request.lt = context.data.entitysuggest.libraryType;
     let url = context.data.entitysuggest.url + '/' + 'subject';
-    return {response: sendRequest(url, request), state: state};
+    return {response: context.call(url, request), state: state};
   };
 }
 
@@ -73,7 +72,7 @@ export function creatorSuggestFunction(context) {
   return (request, localContext, state) => { // eslint-disable-line no-unused-vars
     request.lt = context.data.entitysuggest.libraryType;
     let url = context.data.entitysuggest.url + '/' + 'creator';
-    return {response: sendRequest(url, request), state: state};
+    return {response: context.call(url, request), state: state};
   };
 }
 
@@ -105,7 +104,7 @@ export function librarySuggestFunction(context) {
   return (request, localContext, state) => { // eslint-disable-line no-unused-vars
     request.lt = context.data.entitysuggest.libraryType;
     let url = context.data.entitysuggest.url + '/' + 'library';
-    return {response: sendRequest(url, request), state: state};
+    return {response: context.call(url, request), state: state};
   };
 }
 
@@ -132,7 +131,7 @@ export function popSuggestResponse(response, context, state) { // eslint-disable
 
 export function popSuggestFunction(context) {
   return (request, localContext, state) => { // eslint-disable-line no-unused-vars
-    return {response: sendRequest(context.data.popsuggest.url, request), state: state};
+    return {response: context.call(context.data.popsuggest.url, request), state: state};
   };
 }
 
