@@ -20,8 +20,6 @@
 import _ from 'lodash';
 import {log} from '../utils.js';
 
-import * as BaseSoapClient from 'dbc-node-basesoap-client';
-
 /**
  * Splits a PID into: type, agencyid and localid.
  * This functionality is needed as long as moreinfo
@@ -252,16 +250,19 @@ export default (request, context) => {
 
   let {transformedRequest: params, state: state} = moreInfoRequest(request, context);
 
-  let defaults = {
-    authentication: {
-      authenticationUser: context.data.moreinfo.user,
-      authenticationGroup: context.data.moreinfo.group,
-      authenticationPassword: context.data.moreinfo.password
+  let req = {
+    action: 'moreInfo',
+    params: params,
+    config: {
+      authentication: {
+        authenticationUser: context.data.moreinfo.user,
+        authenticationGroup: context.data.moreinfo.group,
+        authenticationPassword: context.data.moreinfo.password
+      }
     }
   };
-  let client = BaseSoapClient.client(context.data.moreinfo.url + '/moreinfo.wsdl', defaults, '');
 
-  return client.request('moreInfo', params, null, true).then(body => {
+  return context.basesoap('moreinfo', req).then(body => {
     return moreInfoResponse(body, context, state);
   });
 };

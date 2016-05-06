@@ -6,6 +6,7 @@
  */
 import request from 'request';
 import {sendRequest} from '../services/HTTPClient.js';
+import * as BaseSoapClient from 'dbc-node-basesoap-client';
 import fs from 'fs';
 
 // Flag that allows createTest endpoint parameter
@@ -54,7 +55,7 @@ function saveTest(test) {
     it('expected response. ID:${test.requestId}, for ${JSON.stringify(test.params)}', (done) => {
       let context = ${JSON.stringify(test.context)};
       context.mockData = mockData;
-      provider.execute("${test.name}", ${JSON.stringify(test.params)}, context)
+      provider.execute('${test.name}', ${JSON.stringify(test.params)}, context)
         .then(result => {
           assert.deepEqual(result,
               ${JSON.stringify(test.result)});
@@ -66,97 +67,145 @@ function saveTest(test) {
   fs.writeFile(`${__dirname}/__tests__/autotest_${test.name}_${Date.now()}.js`, source);
 }
 
-/**
- * This is a method on the context object,
- * which allows calling other transformers, and external endpoints.
- *
- * @param this the context
- * @param name the name of the endpoint
- * @param params the parameters to pass to the endpoint
- */
-function call(name, params) {
-  let promise, outerCall, startTime;
-
-  let mockId = JSON.stringify([name, params]); // key for mock data
-  this.mockData = this.mockData || Object.assign({}, this.data.mockData || {}); // used for recording/playing mock data
-  let isRestCall = !this.transformerMap[name] && this.data[name] && this.data[name].url;
-  if (!this.requestId) {
-    this.requestId = randomId(); // identifier for request, useful for grepping etc.
-    outerCall = true;
-    this.createTest = params.createTest;
-    this.timings = params.timings;
+class Context {
+  constructor(transformerMap, data) {
+    this.data = data;
+    this.transformerMap = transformerMap;
+    this.callsInProgress = 0;
+    this.mockData = data.mockData ? Object.assign({}, data.mockData) : {};
     this.externalCallsInProgress = 0;
     this.externalTiming = 0;
-    startTime = Date.now();
+    this.startTime = Date.now();
+    this.requestId = randomId();
   }
 
-  if (this.transformerMap[name]) { // do call the actual transformer
-    promise = this.transformerMap[name](params, this);
+  /**
+   * Private method.
+   *
+   * This function is responsible for dispatching to transformers,
+   * and different kind of api-requests. And also optionally
+   * record timings and mock-data, and replay mock-data.
+   *
+   * @param type transformer, sendrequest, soapstring or basesoap
+   * @param name name of service (or url)
+   * @param params parameters for service
+   * @returns promise with result
+   */
+  _call(type, name, params) {
+    // take information about whether to create test/timings from outer call
+    if (this.callsInProgress === 0) {
+      this.createTest = params.createTest;
+      this.timings = params.timings;
+    }
+    ++this.callsInProgress;
 
-  }
-  else if (isRestCall) { // make a request to an external service
-    if (this.timings) {
+    let promise, mockId;
+
+    if (type === 'transformer') {
+      promise = this.transformerMap[name](params, this);
+    }
+    else {
+      let url = this.data[name].url || name;
+
+      ++this.externalCallsInProgress;
       if (this.externalCallsInProgress === 0) {
         this.externalTiming -= Date.now();
       }
-      ++this.externalCallsInProgress;
+
+      mockId = JSON.stringify([name, params]); // key for mock data
+      if (this.mockData[mockId]) {
+        promise = new Promise(resolve => resolve(this.mockData[mockId]));
+      }
+
+      else if (type === 'soapstring') {
+        promise = new Promise((resolve, reject) =>
+            request.post(url, {form: {xml: params}},
+              (err, _, data) => err ? reject(err) : resolve(data)));
+      }
+      else if (type === 'sendrequest') {
+        promise = sendRequest(url, params);
+      }
+
+      else if (type === 'basesoap') {
+        if (this.data[name].url) {
+          url = this.data[name].url + '/' + name + '.wsdl';
+        }
+        let client = BaseSoapClient.client(url, params.config, null);
+        promise = client.request(params.action, params.params, params.options);
+      }
     }
-    let url = this.data[name].url;
-    if (this.mockData && this.mockData[mockId]) {
-      promise = new Promise(resolve => resolve(this.mockData[mockId]));
-    }
-    else if (typeof params === 'string') {
-      promise = new Promise((resolve, reject) =>
-          request.post(url, {form: {xml: params}},
-            (err, _, data) => err ? reject(err) : resolve(data)));
-    }
-    else if (typeof params === 'object') {
-      promise = sendRequest(url, params);
-    }
-    else { // should never happen, can only occur if call is called with wrong parameters
-      throw 'call error: wrong parameters to endpoint';
-    }
-  }
-  else { // should never happen, - the endpoint does not exist (or has no endpoint-url defined in config)
-    throw 'call error: no such endpoint';
+
+    return promise.then(result => {
+      --this.callsInProgress;
+      if (type !== 'transformer') {
+        --this.externalCallsInProgress;
+        if (this.externalCallsInProgress === 0) {
+          this.externalTiming += Date.now();
+        }
+      }
+      if (testDev && this.createTest) { // save mock-data / create text-code
+        if (this.type !== 'transformer') {
+          this.mockData[mockId] = result;
+        }
+        if (this.callsInProgress === 0) {
+          delete params.createTest;
+          saveTest({name: name, params: params,
+            context: this.data,
+            mockData: this.mockData, result: result,
+            requestId: this.requestId});
+        }
+      }
+      if (this.callsInProgress === 0 && params.timings) {
+        result.timings = {
+          total: Date.now() - this.startTime,
+          external: this.externalTiming
+        };
+      }
+      return result;
+    });
   }
 
-  return promise.then(result => {
-    if (this.timings && isRestCall) {
-      --this.externalCallsInProgress;
-      if (this.externalCallsInProgress === 0) {
-        this.externalTiming += Date.now();
-      }
+  /**
+   * This is a method on the context object,
+   * which allows calling other transformers, and external endpoints.
+   *
+   * @param this the context
+   * @param name the name of the endpoint
+   * @param params the parameters to pass to the endpoint
+   */
+  call(name, params) {
+    let type;
+    if (this.transformerMap[name]) {
+      type = 'transformer';
     }
-    if (testDev && this.createTest) { // save mock-data / create text-code
-      if (isRestCall) {
-        this.mockData[mockId] = result;
-      }
-      if (outerCall) {
-        delete params.createTest;
-        saveTest({name: name, params: params,
-          context: this.data,
-          mockData: this.mockData, result: result,
-          requestId: this.requestId});
-      }
+    else if (typeof params === 'object') {
+      type = 'sendrequest';
     }
-    if (outerCall && params.timings) {
-      result.timings = {
-        total: Date.now() - startTime,
-        external: this.externalTiming
-      };
+    else if (typeof params === 'string') {
+      type = 'soapstring';
     }
-    return result;
-  });
+    return this._call(type, name, params);
+  }
+
+  transformer(name, params) {
+    return this._call('transformer', name, params);
+  }
+
+  basesoap(name, params) {
+    return this._call('basesoap', name, params);
+  }
+
+  query(name, params) {
+    return this._call('sendrequest', name, params);
+  }
+  soapstring(name, params) {
+    return this._call('sendstring', name, params);
+  }
 }
 
 /**
  * Add a call function to the context.
  */
 export default function caller(transformerMap, contextData) {
-  let context = {};
-  context.data = contextData;
-  context.transformerMap = transformerMap;
-  context.call = call;
-  return context;
+  return new Context(transformerMap, contextData);
 }
