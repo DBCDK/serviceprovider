@@ -108,7 +108,7 @@ function placeOrder(request, context) { // eslint-disable-line no-unused-vars
     }
 
     if (!body.orderPlaced) {
-      return {statusCode: 500, error: "Unknown error occured"};
+      return {statusCode: 500, error: 'Unknown error occured'};
     }
     return {statusCode: 200, data: 'ok'};
   });
