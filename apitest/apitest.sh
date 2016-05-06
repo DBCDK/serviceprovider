@@ -16,7 +16,8 @@ do
        "http://localhost:8080/v$API_VERSION/`echo $line | sed -e s/' .*//'`?pretty=true" \
        >> test.results.http
 done
+echo "" >> test.results.http
 
-# node sc_apitest.js > test.results.ws
+node sc_apitest.js > test.results.ws
 
-diff -u test.expected test.results.http # && diff -u test.results.ws test.expected
+diff -u test.expected test.results.http && diff -u test.results.ws test.expected
