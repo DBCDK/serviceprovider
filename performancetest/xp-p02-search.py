@@ -6,9 +6,9 @@ import os
 times = int(os.getenv("TIMES",100))
 
 auth = {
-  "token_type": "bearer",
-  "access_token": "766b5b95d196b6472ee5248ddd0b14ce8286a0ee",
-  "expires_in": 2592000
+    "token_type": "bearer",
+    "access_token": "f26669c57d9a3d8f4815e0bec66780cae948edbf",
+    "expires_in": 2592000
 }
 
 token = auth['access_token']
