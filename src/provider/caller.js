@@ -6,6 +6,7 @@
  */
 import request from 'request';
 import {sendRequest} from '../services/HTTPClient.js';
+import * as BaseSoapClient from 'dbc-node-basesoap-client';
 import fs from 'fs';
 
 // Flag that allows createTest endpoint parameter
@@ -66,6 +67,11 @@ function saveTest(test) {
   fs.writeFile(`${__dirname}/__tests__/autotest_${test.name}_${Date.now()}.js`, source);
 }
 
+class Context {
+  constructor(transformerMap, contextData) {
+    this.data = contextData;
+    this.transformerMap = transformerMap;
+  }
 /**
  * This is a method on the context object,
  * which allows calling other transformers, and external endpoints.
@@ -74,7 +80,7 @@ function saveTest(test) {
  * @param name the name of the endpoint
  * @param params the parameters to pass to the endpoint
  */
-function call(name, params) {
+call(name, params) {
   let promise, outerCall, startTime;
 
   let mockId = JSON.stringify([name, params]); // key for mock data
@@ -149,14 +155,11 @@ function call(name, params) {
     return result;
   });
 }
+}
 
 /**
  * Add a call function to the context.
  */
 export default function caller(transformerMap, contextData) {
-  let context = {};
-  context.data = contextData;
-  context.transformerMap = transformerMap;
-  context.call = call;
-  return context;
+  return new Context(transformerMap, contextData);
 }
