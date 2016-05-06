@@ -11,14 +11,14 @@ var reqs = require('fs')
   .map(function(s) {
     var result = s.split(' ', 1);
     result[1] = JSON.parse(s.slice(result[0].length));
-    result[1].auth_token = "qwerty";
+    result[1].access_token = "qwerty";
     result[2] = s;
     return result;
   })
   .reverse();
 
 var sc = require('socketcluster-client')
-  .connect({port:8080, hostname:'localhost', path: '/v' + majorVersion + '/socketcluster/?auth_token=qwerty'});
+  .connect({port:8080, hostname:'localhost', path: '/v' + majorVersion + '/socketcluster/?access_token=qwerty'});
 
 function next() {
   var req = reqs.pop();
