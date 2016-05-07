@@ -105,19 +105,18 @@ export function workResponse(response, context, state) { // eslint-disable-line 
       // But if you just do 'let x = Array(3).fill({})', you will get an array with the same
       // object three times. So if you add to x[0], you will also add to x[1] and x[2].
       // Not exactly what I expected.
-      if (resp.data) {
-        envelope.data = Array(resp.data.length).fill(1).map(x => { // eslint-disable-line no-unused-vars
+      if (resp.data || resp[0].data) {
+        // Length is dependent on which services were called.
+        // If search were the first service, the an array is returned, else an object with arrays in data.
+        let length = resp.data ? resp.data.length : resp.length;
+        envelope.data = Array(length).fill(1).map(x => { // eslint-disable-line no-unused-vars
           return {};
         });
       }
-
     }
 
-    // Where am I?????
     // I need to collect the data from the different services.
     // I have an assumption, that there will be equally many results in each.
-    // Search is currently not implemented to return more than one result.
-    //   - I'll have to make a loop with X promises.
     switch (state.services[i]) {
       case requestMethod.MOREINFO:
         // TODO: Check that pids corresponds.
