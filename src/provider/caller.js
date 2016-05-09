@@ -64,7 +64,7 @@ function saveTest(test) {
     })
   });`;
   source = censor(source, test.context);
-  fs.writeFile(`${__dirname}/__tests__/autotest_${test.name}_${Date.now()}.js`, source);
+  fs.writeFile(`${__dirname}/__tests__/autotest_${test.name}_${test.requestId}.js`, source);
 }
 
 class Context {
@@ -153,6 +153,7 @@ class Context {
             context: this.data,
             mockData: this.mockData, result: result,
             requestId: this.requestId});
+          result.createTest = this.requestId;
         }
       }
       if (this.callsInProgress === 0 && params.timings) {
