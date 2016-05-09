@@ -1,5 +1,4 @@
 'use strict';
-'use strict';
 /**
  * placeOrder transformer.
  */
@@ -79,6 +78,7 @@ ${pidList.map(pid => {
            ${userParams.name}
            ${userParams.phone}
            <verificationReferenceSource>dbcdatawell</verificationReferenceSource>
+<<<<<<< HEAD
            <outputType>${params.outputType}</outputType>
          </placeOrderRequest>
       </SOAP-ENV:Body>
