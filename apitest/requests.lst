@@ -12,3 +12,6 @@ user {}
 work {"pids": ["300185-katalog:100562332", "870970-basis:51989252", "870971-forfweb:86203219", "870970-basis:24284514"]}
 work {"pids": ["300185-katalog:100562332", "870970-basis:51989252", "870971-forfweb:86203219", "870970-basis:24284514"], "fields": ["collection", "title"]}
 work {"pids": ["300185-katalog:100562332", "870970-basis:51989252", "870971-forfweb:86203219", "870970-basis:24284514"], "fields": ["coverUrlFull", "title"]}
+news {"fields": ["title", "changed", "nid", "field_ding_news_list_image"]}
+events {"fields": ["title", "changed", "nid", "field_ding_event_title_image"]}
+news {"nids": ["19", "40"], "fields": ["title", "changed", "nid", "field_ding_news_list_image"]}
