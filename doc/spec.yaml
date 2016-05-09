@@ -18,7 +18,10 @@ api:
     response:
       example: {"willLend": true, "expectedDelivery": "2016-04-15"}
   events:
-    description: List of events at the library where the application is logged in
+    description:
+      List of events at the library where the application is logged in
+
+      The requests are passed directly to/from the DDBCMS-API.
     properties:
       nids:
         description: to fetch events specified by ids
@@ -26,25 +29,23 @@ api:
         items: {type: "string"}
         example: ["15"]
       limit:
-        description: number of events to get
+        description: number of items to get. This is passed to the DDBCMS-API, which decides how many to return. (currently usually less than the requested limit/amount).
         type: number
-        example: 2
+        example: 10
       offset:
-        description: offset to first event to get events chronological
+        description: offset to first item to get. This is passed to the ddb-cms.
         type: number
-        example: 2
+        example: 10
       fields:
         description: which parts of the response to get
         type: array
         items: {type: "string"}
         example: ["nid", "title"]
     response:
-      example: [{"nid": "15", "title": "Mød forfatteren: Tim Buk-Swienty", "start": "2016-05-15 08:30:00", "lead": "...", "image": "/files/775100/...", "id": "56b0687313e4eefa60ef18cd", "body": "<p>Nunc ullamcorper pulvinar pharetra. Aliquam ma..." }]
+      example: [{"nid": "15", "title": {"name": "Titel", "value": "Mød forfatteren: Tim Buk-Swienty", "attr": []}, "...": "..."}, "..."]
     examples:
       - request: {"offset": 0, "limit": 2, "fields": ["nid", "title"]}
-        response: [{"nid": "15", "title": "Mød forfatteren: Tim Buk-Swienty"}, {"nid": "38", "title": "MC test event"}, "..."]
       - request: {"nids": ["15"]}
-        response: [{"nid": "15", "title": "Mød forfatteren: Tim Buk-Swienty", "start": "2016-05-15 08:30:00", "lead": "...", "image": "/files/775100/...", "id": "56b0687313e4eefa60ef18cd", "body": "<p>Nunc ullamcorper pulvinar pharetra. Aliquam ma..." }]
   facets:
     description: Facets of a search result
     required:
@@ -98,25 +99,26 @@ api:
       - request: { "branchIds": ["700401", "710104"], "fields": ["branchId", "city", "longitude", "latitude"]}
         response: [ {"branchId": "700401", "city": "Flensburg", "longitude": "54.4801716", "latitude": "9.0467115"}, {"branchId": "710104", "city": "København N", "longitude": "55.680887", "latitude": "12.573619"}]
   news:
-    description: news-posts about the library
+    description: |
+      News-posts about the library.
+
+      The requests are passed directly to/from the DDBCMS-API.
     properties:
       nids:
         description: to fetch news specified by ids
         type: array
         items: {type: "string"}
       limit:
-        description: number of news to get
+        description: number of items to get. This is passed to the DDBCMS-API, which decides how many to return. (currently usually less than the requested limit/amount).
         type: number
       offset:
-        description: offset to first news to get events chronological
+        description: offset to first item to get. This is passed to the ddb-cms.
         type: number
     response:
-      example: [{"nid": "19", "title": "Sportsstjerner - bag facaden", "lead": "...", "image": "/files/775100/...", "id": "56b0687313e4eefa60ef18cd", "body": "<p>Nunc ullamcorper pulvinar pharetra. Aliquam ma..."}, {"nid": "40", "...": "..."}, "..."]
+      example: [{"nid": "19", "title": {"name": "Titel", "value": "Sportsstjerner - bag facaden", "attr": []}, "...": "..."}, "..."]
     examples:
       - request: {"offset": 0, "limit": 2, "fields": ["nid", "title"]}
-        response: [{"nid": "19", "title": "Sportsstjerner - bag facaden"}, {"nid": "40", "title": "Bagud med danskopgaven ? her er hjælp til dig"}, "..."]
       - request: {"nids": ["19"]}
-        response: [{"nid": "19", "title": "Sportsstjerner - bag facaden", "lead": "...", "image": "/files/775100/...", "id": "56b0687313e4eefa60ef18cd", "body": "<p>Nunc ullamcorper pulvinar pharetra. Aliquam ma..." }]
   order:
     description: Order a library material, or remove an existing order.
     properties:
