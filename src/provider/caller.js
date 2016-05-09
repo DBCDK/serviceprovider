@@ -105,7 +105,7 @@ class Context {
       promise = this.transformerMap[name](params, this);
     }
     else {
-      let url = this.data[name].url || name;
+      let url = (this.data[name] && this.data[name].url) || name;
 
       if (this.externalCallsInProgress === 0) {
         this.externalTiming -= Date.now();

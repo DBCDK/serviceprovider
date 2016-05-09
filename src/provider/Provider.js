@@ -16,6 +16,7 @@ import userTransformer from './user';
 import orderTransformer from './order';
 import workTransformer from './neoWorkTransformer';
 import availabilityTransformer from './availability';
+import {ddbcms} from './ddbcms';
 import caller from './caller';
 import {testTransformer} from './testTransformer.js';
 
@@ -31,6 +32,7 @@ export default function Provider() {
    * Structure containing all the new transformers.
    */
   const transformerMap = {
+    ddbcms: ddbcms,
     search: searchTransformer,
     libraries: librariesTransformer,
     facets: facetTransformer,
