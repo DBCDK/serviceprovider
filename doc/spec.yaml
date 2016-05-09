@@ -1,10 +1,8 @@
-# TODO
-#
-# - document info about paging in header
-# - make sure general fields are documented
-#
 api:
   availability:
+    tags:
+      - Show
+      - Order
     description: |
       Get information about whether a material can be ordered /
       are available for the currently logged in user.
@@ -18,6 +16,8 @@ api:
     response:
       example: {"willLend": true, "expectedDelivery": "2016-04-15"}
   events:
+    tags:
+      - CMS
     description:
       List of events at the library where the application is logged in
 
@@ -47,6 +47,8 @@ api:
       - request: {"offset": 0, "limit": 2, "fields": ["nid", "title"]}
       - request: {"nids": ["15"]}
   facets:
+    tags:
+      - Search
     description: Facets of a search result
     required:
       - q
@@ -71,6 +73,8 @@ api:
     response:
       example: { "creator": [{ "term": "nordisk ministerråd", "frequency": 2708}, { "term": "nordisk råd", "frequency": 2463}], "subject": [{ "term": "danmark", "frequency": 188792}, { "term": "historie", "frequency": 19867}], "type": [{ "term": "avisartikel", "frequency": 83786}, { "term": "tidsskriftsartikel", "frequency": 77618}]}
   libraries:
+    tags:
+      - Libraries
     description: |
       List/information about libraries.
 
@@ -99,6 +103,8 @@ api:
       - request: { "branchIds": ["700401", "710104"], "fields": ["branchId", "city", "longitude", "latitude"]}
         response: [ {"branchId": "700401", "city": "Flensburg", "longitude": "54.4801716", "latitude": "9.0467115"}, {"branchId": "710104", "city": "København N", "longitude": "55.680887", "latitude": "12.573619"}]
   news:
+    tags:
+      - CMS
     description: |
       News-posts about the library.
 
@@ -120,6 +126,9 @@ api:
       - request: {"offset": 0, "limit": 2, "fields": ["nid", "title"]}
       - request: {"nids": ["19"]}
   order:
+    tags:
+      - Order
+      - Status
     description: Order a library material, or remove an existing order.
     properties:
       orderId:
@@ -168,6 +177,8 @@ api:
       - request: { "orderId": "1234", "delete": true }
         response: { "orderId": "1234", "deleted": true }
   rank:
+    tags:
+      - Recommend
     description: Similar to recommend, but sorts a list of ids in order of relevance, given a recommender with likes, dislikes and so on.
     required:
       - pids
@@ -203,6 +214,8 @@ api:
     response:
       example: [ { "title": "Harry Potter og Fønixordenen", "creator": "...", "weight": 123, "pid": "300185-katalog:100562332", "fromPid": "870970-basis:51989252"}, "..."]
   recommend:
+    tags:
+      - Recommend
     description: Get recommendations based on a list of likes
     properties:
       filter:
@@ -250,6 +263,8 @@ api:
     response:
       example: [ { "title": "Harry Potter og Fønixordenen", "creator": "...", "weight": 123, "pid": "300185-katalog:100562332", "fromPid": "870970-basis:51989252"}, "..."]
   renew:
+    tags:
+      - Status
     description: Renew a material
     properties:
       loanId:
@@ -259,6 +274,8 @@ api:
     response:
       example: {"loanId": "7890", "returnDate": "2016-09-12"}
   search:
+    tags:
+      - Search
     description: Search for a library material.
     required:
       - q
@@ -303,6 +320,8 @@ api:
       - request: { "q": "harry AND potter", "fields": ["identifier", "title", "collection", "subjectDBCF", "hasAdaptation", "coverUrlFull"], "sort": "default", "offset": 2, "limit": 2 }
         response: [{"identifier": ["300185-katalog:100562332"], "title": ["Harry Potter og Fønixordenen DVD"], "coverUrlFull": ["https://moreinfo.addi.dk/2.1/more_info_get.php?id=36565894&type=forside_500&key=55d553c259c9e46291a4"]}, {"identifier": ["870970-basis:51989252"], "title": ["Harry Potter og de vises sten"], "collection": ["300185-katalog:100562332", "870970-basis:51989252", "870971-forfweb:86203219", "870970-basis:24284514", "870970-basis:24284565", "..."], "subjectDBCF": ["fantasy", "magi", "troldmænd"], "hasAdaption": ["870970-basis:27123279", "870970-basis:27963390"], "coverUrlFull": ["https://moreinfo.addi.dk/2.1/more_info_get.php?id=36565894&type=forside_500&key=55d553c259c9e46291a4"]}]
   suggest:
+    tags:
+      - Suggest
     description: |
       Suggestions for completing a query string.
 
@@ -338,6 +357,8 @@ api:
       - request: { "q": "køge", "type": "library", "limit": 1, "fields": ["term", "væsensnavn", "adresse", "id", "postnr", "geolokation", "navn", "bibliotekstype", "by"]}
         response: [ { "væsensnavn": "KøgeBibliotekerne", "adresse": "Kirkestræde 18", "id": "725900", "postnr": "4600", "geolokation": { "lat": 55.45783460000001, "lng": 12.1822443 }, "navn": "Køge Bibliotek", "bibliotekstype": "Folkebibliotek", "by": "Køge", "term": "Køge Bibliotek, Køge"}]
   user:
+    tags:
+      - Status
     description: |
       User status, including arrived loans, orders, unique id, etc.
     properties:
@@ -367,6 +388,9 @@ api:
           author: Kristín Marja Baldursdóttir
           title: Kantate
   work:
+    tags:
+      - Search
+      - Show
     description: Retrieve meta information about a creative work
     properties:
       pids:

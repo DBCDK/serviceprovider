@@ -91,11 +91,13 @@ function specToPaths(specs) {
 
     paths['/' + method] = {
       post: {
+        tags: spec.tags,
         description: spec.description || '',
         parameters: [request],
         responses: responses
       },
       get: {
+        tags: spec.tags,
         description: spec.description || '',
         parameters: params,
         responses: responses
