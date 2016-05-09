@@ -1,8 +1,3 @@
-# TODO
-#
-# - document info about paging in header
-# - make sure general fields are documented
-#
 api:
   availability:
     tags:
