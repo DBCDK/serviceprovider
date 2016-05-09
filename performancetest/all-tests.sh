@@ -14,17 +14,19 @@ export ENDPOINT='work'
 export REQUEST='{ "pids": ["870970-basis:22629344"], "fields": ["title" ], "timings":true}'
 export NAME='-simple'
 ./make-test.sh
+export NAME=''
 
 export ENDPOINT='work'
 export REQUEST='{ "pids": ["870970-basis:22629344"], "fields": ["title", "collection" ], "timings":true}'
 export NAME='-collection'
 ./make-test.sh
+export NAME=''
 
 export ENDPOINT='work'
 export REQUEST='{ "pids": ["870970-basis:22629344"], "fields": ["title", "coverUrlFull"], "timings":true}'
 export NAME='-coverurl'
 ./make-test.sh
-
+export NAME=''
 
 export ENDPOINT='suggest'
 export REQUEST='{ "q": "hest", "type": "subject", "timings":true}'
