@@ -47,8 +47,8 @@ export default (request, context) => {
   };
 
   return context.call('userstatus', params).then(body => {
-
     let data = {id: context.data.userstatus.uniqueid,
+                ddbcmsapi: context.data.ddbcms.url,
                 loans: body.data.getUserStatusResponse.userStatus.loanedItems.loan.map(loan),
                 orders: body.data.getUserStatusResponse.userStatus.orderedItems.order.map(order)
                };
