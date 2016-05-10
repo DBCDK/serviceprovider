@@ -1,4 +1,8 @@
 'use strict';
+'use strict';
+/**
+ * placeOrder transformer.
+ */
 import {extend}from 'lodash';
 
 function validateParams(params) {

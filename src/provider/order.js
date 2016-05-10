@@ -2,7 +2,8 @@
 /**
  * Order transformer.
  */
-import getOrderPolicy from './getOrderPolicy';
+import cancelOrder from './cancelOrder';
+//import getOrderPolicy from './getOrderPolicy';
 import placeOrder from './placeOrder';
 import {indexOf} from 'lodash';
 
@@ -49,6 +50,7 @@ export default (request, context) => {
 
   if (request.delete) {
     console.log('DELETE');
+    return cancelOrder(request, context);
   }
 
   // library param in request.
