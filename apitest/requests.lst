@@ -1,6 +1,8 @@
 facets {"q" : "harry"}
 facets {"q" : "harry AND potter", "fields": ["creator"], "limit": 20}
-libraries {"limit": 10, "agencyIds": ["717500"], "fields": ["agencyId", "orderParameters"]}
+libraries {"limit": 10, "branchIds": ["717500","717501","717501"], "fields": ["agencyId", "branchId", "orderParameters"]}
+#libraries {"limit": 10, "fields": ["agencyId", "orderParameters"]}
+#libraries {"limit": 10, "agencyIds": ["717500"], "fields": ["agencyId", "orderParameters"]}
 search {}
 search {"q" : "hest"}
 search {"q" : "ost", "fields": ["creator", "coverUrlFull"], "limit": 3}

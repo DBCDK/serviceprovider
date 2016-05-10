@@ -1,5 +1,9 @@
 'use strict';
 
+const timeout = 60*60*1000;
+let cache;
+let timestamp;
+
 let getOrderParameters = (context) => (agencyId) => new Promise(resolve => {
   let soap = `
     <?xml version="1.0" encoding="UTF-8"?>
@@ -26,21 +30,7 @@ let getOrderParameters = (context) => (agencyId) => new Promise(resolve => {
   });
 });
 
-export default (params, context) => new Promise((resolve) => {
-  let agencies;
-  if (Array.isArray(params.agencyIds)) {
-    agencies = {};
-    for (let i = 0; i < params.agencyIds.length; ++i) {
-      agencies[params.agencyIds[i]] = true;
-    }
-  }
-  let branches;
-  if (Array.isArray(params.branchIds)) {
-    branches = {};
-    for (let i = 0; i < params.branchIds.length; ++i) {
-      branches[params.branchIds[i]] = true;
-    }
-  }
+function getLibraries(context) {
   let soap = `<soapenv:Envelope
     xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/"
     xmlns:open="http://oss.dbc.dk/ns/openagency">
@@ -52,14 +42,14 @@ export default (params, context) => new Promise((resolve) => {
     </soapenv:Body>
     </soapenv:Envelope>`;
 
-  context.call('openagency', soap).then(body => {
+  return context.call('openagency', soap).then(body => {
     let badgerfish = JSON.parse(body).findLibraryResponse.pickupAgency;
     let results = [];
     for (let i = 0; i < badgerfish.length; ++i) {
       let library = badgerfish[i];
       let result = {};
       for (let key in library) {
-        if (key !== '@') {
+        if (key !== '@' && key.slice(0, 4) !== 'ncip') {
           let val = library[key];
           if (val.$) {
             result[key] = val.$;
@@ -82,36 +72,53 @@ export default (params, context) => new Promise((resolve) => {
           }
         }
       }
-      if (!agencies || agencies[result.agencyId]) {
-        if (!branches || branches[result.branchId]) {
-          results.push(result);
-        }
-      }
+      results.push(result);
     }
-    if (!params.fields ||
-        (Array.isArray(params.fields) &&
-         params.fields.indexOf('orderParameters') !== -1)) {
-      if (!agencies) {
-        agencies = {};
+
+    let agencies = {};
+    for (let i = 0; i < results.length; ++i) {
+      agencies[results[i].agencyId] = true;
+    }
+    agencies = Object.keys(agencies);
+    return Promise.all(agencies.map(getOrderParameters(context)))
+      .then(orderParameters => {
+        let agencyOrderParameters = {};
+        for (let i = 0; i < agencies.length; ++i) {
+          agencyOrderParameters[agencies[i]] = orderParameters[i];
+        }
         for (let i = 0; i < results.length; ++i) {
-          agencies[results[i].agencyId] = true;
+          results[i].orderParameters =
+            agencyOrderParameters[results[i].agencyId];
         }
-      }
-      agencies = Object.keys(agencies);
-      Promise.all(agencies.map(getOrderParameters(context)))
-        .then(orderParameters => {
-          let agencyOrderParameters = {};
-          for (let i = 0; i < agencies.length; ++i) {
-            agencyOrderParameters[agencies[i]] = orderParameters[i];
-          }
-          for (let i = 0; i < results.length; ++i) {
-            results[i].orderParameters =
-              agencyOrderParameters[results[i].agencyId];
-          }
-          resolve({statusCode: 200, data: results});
-        });
-      return;
-    }
-    resolve({statusCode: 200, data: results});
+        cache = results;
+        timestamp = Date.now();
+        return results;
+      });
   });
+}
+
+export default (params, context) => Promise.resolve(cache ? cache : getLibraries(context)).then(libraries => {
+  if (Date.now() - timestamp > timeout) {
+    getLibraries(context);
+    timestamp = Date.now();
+  }
+
+  if (Array.isArray(params.agencyIds)) {
+    let agencies = {};
+    for (let i = 0; i < params.agencyIds.length; ++i) {
+      agencies[params.agencyIds[i]] = true;
+    }
+
+    libraries = libraries.filter(o => agencies[o.agencyId]);
+  }
+
+  if (Array.isArray(params.branchIds)) {
+    let branches = {};
+    for (let i = 0; i < params.branchIds.length; ++i) {
+      branches[params.branchIds[i]] = true;
+    }
+    libraries = libraries.filter(o => branches[o.branchId]);
+  }
+
+  return {statusCode: 200, data: libraries};
 });
