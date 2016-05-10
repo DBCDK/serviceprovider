@@ -12,6 +12,7 @@ import facetTransformer from './facets';
 import searchTransformer from './search';
 import librariesTransformer from './libraries';
 import userTransformer from './user';
+import renewTransformer from './renew';
 import orderTransformer from './order';
 import workTransformer from './neoWorkTransformer';
 import availabilityTransformer from './availability';
@@ -35,6 +36,7 @@ export default function Provider() {
     ddbcms: ddbcms,
     events: events,
     news: news,
+    renew: renewTransformer,
     search: searchTransformer,
     libraries: librariesTransformer,
     facets: facetTransformer,
