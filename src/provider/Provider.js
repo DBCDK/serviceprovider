@@ -5,7 +5,6 @@
  * Basic service provider. Discovers and initializes the transforms.
  */
 
-import recommendTransformer from './neoRecommendTransform.js';
 import suggestTransformer from './suggest.js';
 import coverImageTransformer from './neoCoverImageTransform.js';
 import openSearchWorkTransformer from './neoOpenSearchWorkTransformer.js';
@@ -19,6 +18,7 @@ import availabilityTransformer from './availability';
 import {ddbcms, news, events} from './ddbcms';
 import caller from './caller';
 import {testTransformer} from './testTransformer.js';
+import recommendTransformer from './recommend';
 
 /**
  * Initialization of the provider and the underlying services.
@@ -38,7 +38,7 @@ export default function Provider() {
     search: searchTransformer,
     libraries: librariesTransformer,
     facets: facetTransformer,
-    recommend: recommendTransformer(),
+    recommend: recommendTransformer,
     suggest: suggestTransformer,
     getCoverImageNeo: coverImageTransformer,
     getOpenSearchWorkNeo: openSearchWorkTransformer,
