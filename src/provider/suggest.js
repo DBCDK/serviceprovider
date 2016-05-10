@@ -16,7 +16,7 @@ function validateParams(params) {
   if (typeof params.q !== 'string') {
     throw ('q parameter must be a string');
   }
-  if (typeof params.limit !== 'number') {
+  if (params.limit && isNaN(parseInt(params.limit, 10))) {
     throw ('limit parameter must be a number');
   }
 }
@@ -44,6 +44,10 @@ export default (params, context) => {
                       error: `Unsupported suggestion type ${params.type}.` +
                       ` Supported types are: ${Object.keys(fMap)}`});
     });
+  }
+
+  if (params.limit) {
+    params.limit = parseInt(params.limit, 10);
   }
 
   return fMap[params.type](params, context).then(result => {
