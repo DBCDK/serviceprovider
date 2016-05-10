@@ -47,6 +47,8 @@ export default (params, context) => new Promise((resolve) => {
     <soapenv:Header/>
     <soapenv:Body>
     <open:findLibraryRequest>
+    ${!Array.isArray(params.branchIds) ? ''
+      : params.branchIds.map(id => `<open:agencyId>${id}</open:agencyId>`).join('')}
     <open:outputType>json</open:outputType>
     </open:findLibraryRequest>
     </soapenv:Body>
