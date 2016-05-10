@@ -44,25 +44,27 @@ function censor(str, context) {
  * The unit tests are typically saved `src/provider/__tests__/autotest_*.js`
  */
 function saveTest(test) {
-  let source = `  'use strict';
-  import Provider from '../Provider.js';
-  import {expect, assert} from 'chai';
+  let source = `/* eslint-disable max-len, quotes, comma-spacing, key-spacing, quote-props */
+'use strict';
+import Provider from '../Provider.js';
+import {assert} from 'chai';
 
-  let provider = Provider();
-  let mockData = ${JSON.stringify(test.mockData)}
+let provider = Provider();
+let mockData = ${JSON.stringify(test.mockData)};
 
-  describe('Automated test of the ${test.name} endpoint', () => {
-    it('expected response. ID:${test.requestId}, for ${JSON.stringify(test.params)}', (done) => {
-      let context = ${JSON.stringify(test.context)};
-      context.mockData = mockData;
-      provider.execute('${test.name}', ${JSON.stringify(test.params)}, context)
-        .then(result => {
-          assert.deepEqual(result,
-              ${JSON.stringify(test.result)});
-          done();
-        });
-    })
-  });`;
+describe('Automated test of the ${test.name} endpoint', () => {
+  it('expected response. ID:${test.requestId}, for ${JSON.stringify(test.params)}', (done) => {
+    let context = ${JSON.stringify(test.context)};
+    context.mockData = mockData;
+    provider.execute('${test.name}', ${JSON.stringify(test.params)}, context)
+      .then(result => {
+        assert.deepEqual(result,
+            ${JSON.stringify(test.result)});
+        done();
+      });
+  });
+});
+`;
   source = censor(source, test.context);
   fs.writeFile(`${__dirname}/__tests__/autotest_${test.name}_${test.requestId}.js`, source);
 }
