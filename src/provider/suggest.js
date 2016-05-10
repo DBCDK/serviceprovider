@@ -113,7 +113,7 @@ function mapTitleKeys(obj) {
 
 
 function titleSuggest(params, context) {
-  let localParams = {query: 'display.title:{!complexphrase inOrder=true}' + params.q,
+  let localParams = {query: '{!complexphrase inOrder=true}display.title:' + params.q + '*',
                      fields: 'display.title,fedoraPid,display.creator,display.workType',
                      filter: 'rec.collectionIdentifier:775100-katalog'};
   if (params.limit) {
