@@ -49,7 +49,7 @@ function getLibraries(context) {
       let library = badgerfish[i];
       let result = {};
       for (let key in library) {
-        if (key !== '@' && key.slice(0,4) !== 'ncip') {
+        if (key !== '@' && key.slice(0, 4) !== 'ncip') {
           let val = library[key];
           if (val.$) {
             result[key] = val.$;
@@ -75,7 +75,7 @@ function getLibraries(context) {
       results.push(result);
     }
 
-    let agencies = {}
+    let agencies = {};
     for (let i = 0; i < results.length; ++i) {
       agencies[results[i].agencyId] = true;
     }
@@ -95,10 +95,10 @@ function getLibraries(context) {
         return results;
       });
   });
-};
+}
 
 export default (params, context) => Promise.resolve(cache ? cache : getLibraries(context)).then(libraries => {
-  if(Date.now() - timestamp > timeout) {
+  if (Date.now() - timestamp > timeout) {
     getLibraries(context);
     timestamp = Date.now();
   }
@@ -120,5 +120,5 @@ export default (params, context) => Promise.resolve(cache ? cache : getLibraries
     libraries = libraries.filter(o => branches[o.branchId]);
   }
 
-  return({statusCode: 200, data: libraries});
+  return {statusCode: 200, data: libraries};
 });
