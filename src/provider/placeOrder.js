@@ -14,7 +14,10 @@ function validateParams(params) {
 
   let dateOffset = new Date(params.expires) - Date.now();
   if (params.expires && dateOffset < 0) {
-    throw ('The expire arguemtn must be a future date');
+    throw ('The expire argument must be a future date');
+  }
+  if (!params.library) {
+    throw ('library must be provided (used for pickup)');
   }
 }
 
@@ -27,24 +30,26 @@ function createNeedBeforeDate() {
 }
 
 
-function insertUserContent(params) {
+function getUserParams(params) {
 
-  let resultString = '';
+  let result = {};
 
-  [['name', 'userName'],
-   ['adress', 'userAdress'],
+  [['address', 'userAddress'],
    ['email', 'userMail'],
+   ['name', 'userName'],
    ['phone', 'userTelephone']].forEach((names) => {
-
+     result[names[0]] = '';
      if (params[names[0]]) {
-       resultString += `<${names[1]}>${names[0]}</${names[1]}>\n`;
+       result[names[0]] = `<${names[1]}>${names[0]}</${names[1]}>`;
      }
    });
-  return resultString;
+  return result;
 }
 
 
 function constructSoap(pidList, expireDate, params) {
+
+  let userParams = getUserParams(params);
 
   let soap = `<SOAP-ENV:Envelope xmlns="http://oss.dbc.dk/ns/openorder" xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/">
      <SOAP-ENV:Body>
@@ -58,21 +63,22 @@ function constructSoap(pidList, expireDate, params) {
            <exactEdition>false</exactEdition>
            <needBeforeDate>${expireDate}</needBeforeDate>
            <orderSystem>bibliotekdk</orderSystem>
-           <pickUpAgencyId>${params.agencyId}</pickUpAgencyId>
-            ${pidList.map(pid => {
-              return `<pid>${pid}</pid>`;
-            }).join('\n')}
-             <serviceRequester>${params.serviceRequester}</serviceRequester>
+           <pickUpAgencyId>${params.library}</pickUpAgencyId>
+${pidList.map(pid => {
+  return `           <pid>${pid}</pid>`;
+}).join('\n')}
+           <serviceRequester>${params.serviceRequester}</serviceRequester>
+           ${userParams.address}
            <userId>${params.userId}</userId>
            <userIdAuthenticated>true</userIdAuthenticated>
+           ${userParams.email}
+           ${userParams.name}
+           ${userParams.phone}
            <verificationReferenceSource>dbcdatawell</verificationReferenceSource>
-           <outputType>${params.outputType}</outputType>`;
-
-  soap += insertUserContent(params);
-  soap += `
-      </placeOrderRequest>
-     </SOAP-ENV:Body>
-  </SOAP-ENV:Envelope>`;
+           <outputType>${params.outputType}</outputType>
+         </placeOrderRequest>
+      </SOAP-ENV:Body>
+    </SOAP-ENV:Envelope>`;
   return soap;
 }
 
@@ -84,7 +90,6 @@ function placeOrder(request, context) { // eslint-disable-line no-unused-vars
     expireDate = request.expires + 'T00:00:00';
   }
   let soap = constructSoap(request.pids, expireDate, request);
-  console.log('SOAP\n' + soap);
 
   return context.call('orderpolicy', soap).then(body => {
     body = JSON.parse(body).placeOrderResponse;

@@ -12,16 +12,25 @@ function validateParams(params) {
     throw (`parameter error: delete must be either true or false (given ${params.delete})`);
   }
 
-  if (params.delete && params.delete === 'true' && !params.orderId) {
-    throw ('Needs orderId to delete order');
+  if (params.delete && params.delete === 'true') {
+    // Delete is set
+    if (!params.orderId) {
+      throw ('Needs orderId to delete order');
+    }
+
+    if (typeof params.orderId !== 'string') {
+      throw ('orderId must be a string');
+    }
   }
 
-  if (params.delete && params.delete === 'true' && typeof params.orderId !== 'string') {
-    throw ('orderId must be a string');
-  }
-
-  if ((!params.delete || params.delete === 'false') && (!params.pids || params.pids.length < 1)) {
-    throw ('At least one pid must be provided to place order');
+  if (!params.delete || params.delete === 'false') {
+    // Order is set
+    if (!params.pids || params.pids.length < 1) {
+      throw ('At least one pid must be provided to place order');
+    }
+    if (!params.library) {
+      throw ('library must be provided (used for pickup)');
+    }    
   }
 }
 
