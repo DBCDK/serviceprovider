@@ -16,10 +16,9 @@ function loan(loanItem) {
 
 function order(orderItem) {
   let result = {title: orderItem.title.$,
-                orderId: orderItem.orderId.$,
+                orderId: `${orderItem.orderType.$}:${orderItem.orderId.$}`,
                 orderDate: orderItem.orderDate.$,
                 status: orderItem.orderStatus.$,
-                type: orderItem.orderType.$,
                 library: orderItem.pickUpAgency.$
                };
   if (orderItem.holdQueuePosition) {

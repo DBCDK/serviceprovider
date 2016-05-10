@@ -30,7 +30,7 @@ function validateParams(params) {
     }
     if (!params.library) {
       throw ('library must be provided (used for pickup)');
-    }    
+    }
   }
 }
 
@@ -48,6 +48,5 @@ export default (request, context) => {
   if (request.delete) {
     return cancelOrder(request, context);
   }
-
   return placeOrder(request, context);
 };
