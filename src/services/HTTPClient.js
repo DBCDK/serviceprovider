@@ -32,7 +32,7 @@ export function sendRequest(uri, query) {
         result.metadata = {path: uri,
                            params: qs};
         resolve(result);
-        log.info('endpoint responded', {path: uri, params: qs, data: result.data});
+        log.info('endpoint responded', {path: uri, params: qs});
       }
     });
   });
