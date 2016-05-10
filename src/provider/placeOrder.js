@@ -78,10 +78,6 @@ ${pidList.map(pid => {
            ${userParams.name}
            ${userParams.phone}
            <verificationReferenceSource>dbcdatawell</verificationReferenceSource>
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> order now handles library and user info
            <outputType>${params.outputType}</outputType>
          </placeOrderRequest>
       </SOAP-ENV:Body>
