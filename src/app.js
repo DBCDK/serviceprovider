@@ -27,6 +27,7 @@ import {log} from './utils';
 
 // Generation of swagger specification
 import swaggerFromSpec from './swaggerFromSpec.js';
+import validateRequest from './validate.js';
 
 module.exports.run = function (worker) {
   // Setup
@@ -253,6 +254,12 @@ module.exports.run = function (worker) {
     }).catch(err => {
       log.error(String(err), {stacktrace: err.stack});
       return {statusCode: 500, error: String(err)};
+    }).then(result => {
+      let validateWarnings = validateRequest(event, query);
+      if(validateWarnings) {
+        result.warnings = validateWarnings;
+      }
+      return result;
     });
 
   // WebSocket/SocketCluster transport

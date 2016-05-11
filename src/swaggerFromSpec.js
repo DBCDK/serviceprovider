@@ -1,4 +1,6 @@
 'use strict';
+import fs from 'fs';
+import yaml from 'js-yaml';
 
 function specToPaths(specs) {
   let paths = {};
@@ -111,8 +113,6 @@ const version = require('../package.json').version;
 const majorVersion = parseInt(version, 10);
 
 export default function(specName = 'spec') {
-  let fs = require('fs');
-  let yaml = require('js-yaml');
   let path = __dirname + '/../doc/';
 
   return Promise.all(
