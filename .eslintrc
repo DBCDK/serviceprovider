@@ -53,7 +53,7 @@
     "default-case": 2,
     "dot-notation": 2,
     "eqeqeq": 2,
-    "guard-for-in": 2,
+    // XP "guard-for-in": 2,
     "no-alert": 2,
     "no-caller": 2,
     "no-div-regex": 2,
@@ -78,14 +78,14 @@
     "no-new-wrappers": 2,
     "no-octal": 2,
     "no-octal-escape": 2,
-    "no-process-env": 2,
+    // XP "no-process-env": 2,
     "no-proto": 2,
     "no-redeclare": 2,
     "no-return-assign": 2,
     "no-script-url": 2,
     "no-self-compare": 2,
     "no-sequences": 2,
-    "no-unused-expressions": 2,
+    // XP "no-unused-expressions": 2,
     "no-void": 0,
     "no-warning-comments": 0,
     "no-with": 2,
@@ -107,14 +107,15 @@
     "no-undef": 2,
     "no-undef-init": 2,
     "no-undefined": 2,
-    "no-unused-vars": 2,
+    // XP "no-unused-vars": 2,
     "no-use-before-define": 2,
     // Stylistic Issues
     "indent": [2, 2, {"SwitchCase": 1}],
-    "brace-style": [
-      2,
-      "stroustrup"
-    ],
+    // XP
+    // "brace-style": [
+    //   2,
+    //   "stroustrup"
+    // ],
     "camelcase": 0,
     "comma-spacing": 2,
     "comma-style": 2,
@@ -147,8 +148,8 @@
     ],
     "no-spaced-func": 2,
     "no-ternary": 0,
-    "no-trailing-spaces": 2,
-    "no-multiple-empty-lines": 2,
+    // XP "no-trailing-spaces": 2,
+    // XP "no-multiple-empty-lines": 2,
     "no-underscore-dangle": 0,
     "one-var": 0,
     "operator-assignment": [
