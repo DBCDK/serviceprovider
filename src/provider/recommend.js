@@ -65,7 +65,6 @@ function createRequestParameters(request) {
     uri = uris[recommenderType];
   }
   // console.log("createRequestParameters 5");
-  paramsPost.uri = uri;
   let names = {
     likes: 'like',
     dislikes: 'dislike',
@@ -80,7 +79,7 @@ function createRequestParameters(request) {
     }
   }
   // console.log(JSON.stringify(paramsPost, null, 4));
-  return paramsPost;
+  return [uri, paramsPost];
 }
 
 
@@ -94,12 +93,9 @@ export default (request, context) => { // eslint-disable-line no-unused-vars
 //     "limit": 10
 // }
 
-  let paramsPost = createRequestParameters(request);
+  let [uri, params] = createRequestParameters(request);
   // console.log("SP REQUEST", JSON.stringify(request,null,4));
-  return requestPromise(paramsPost).then(body => {
-    // TODO: should use call to call requestPromise to support
-    // testing, timing etc.
-    // Rasmus needs to explain
+  return context.request(uri, params).then(body => {
     // console.log("SERVICE RESPONSE", JSON.stringify(body, null, 4));
     var result = [];
     if (body.result) {

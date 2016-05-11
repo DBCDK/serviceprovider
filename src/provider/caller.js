@@ -126,6 +126,12 @@ class Context {
       }
       else if (type === 'sendrequest') {
         promise = sendRequest(url, params);
+      } else if (type === 'request') {
+        promise = new Promise((resolve, reject) =>
+          request(url, params, (err, response, data) =>
+              (err || response.statusCode !== 200)
+              ? reject(err || response)
+              : resolve(data)));
       }
 
       else if (type === 'basesoap') {
@@ -200,6 +206,9 @@ class Context {
 
   query(name, params) {
     return this._call('sendrequest', name, params);
+  }
+  request(name, params) {
+    return this._call('request', name, params);
   }
   soapstring(name, params) {
     return this._call('sendstring', name, params);

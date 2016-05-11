@@ -1,10 +1,12 @@
 #!/bin/bash
 
 rm -f test.result*
+cp -n test.expected test.compared
+cp -n requests.lst requests.executed
 
 export API_VERSION=`node -e "console.log(parseInt(require('../package.json').version, 10))"`
 IFS=$'\n$'
-for line in `cat requests.lst | grep -v "^#"`
+for line in `cat requests.executed | grep -v "^#"`
 do
   printf "\n\n$line\n" >> test.results.http
   curl -H "Content-Type: application/json" \
@@ -20,4 +22,4 @@ echo "" >> test.results.http
 
 node sc_apitest.js > test.results.ws
 
-diff -u test.expected test.results.http && diff -u test.results.ws test.expected
+diff -u test.compared test.results.http && diff -u test.results.ws test.compared
