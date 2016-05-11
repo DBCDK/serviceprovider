@@ -6,10 +6,6 @@ import {requestPromise} from '../services/requestPromise.js';
 
 // TODO
 // old recommend code should be removed from SP
-// review names with rje: with or without s
-// "recommender" should be optional and default to default :)
-// in first version, default is recommend-cosim
-// request verification!?
 
 /*
 function createFilter(request){
@@ -18,29 +14,14 @@ function createFilter(request){
 }
 */
 
-/*
-function getLimit(request) {
-  var maxresults = 10;
-  if (!isNaN(request.limit)) {
-    let limit = Math.round(request.limit);
-    let minlimit = 0;
-    let maxlimit = 10000;
-    if (limit >= minlimit && limit < maxlimit) {
-      // TODO should throw error on invalid limit
-      maxresults = limit;
-    } // eslint-disable-line no-unused-vars
-  }
-  return maxresults;
-}
-*/
 
 function createRequestParameters(request) {
-  console.log(">>>>>>>createRequestParameters 1");
+  //console.log(">>>>>>>createRequestParameters 1");
   const uris = {
     popular: 'https://xptest.dbc.dk/ms/recommend-pop/v1',
     default: 'https://xptest.dbc.dk/ms/recommend-cosim/v1'
   };
-  console.log("createRequestParameters 3");
+  //console.log("createRequestParameters 3");
   let paramsPost = {
     // TODO: url take from context
     method: 'POST',
@@ -54,19 +35,19 @@ function createRequestParameters(request) {
   };
   let recommenderType = 'default';
   let uri = uris[recommenderType];
-  console.log("createRequestParameters 4");
+  //console.log("createRequestParameters 4");
   if (request.hasOwnProperty('recommender')) {
-    console.log("we have a recommender");
+    //console.log("we have a recommender");
     if (!uris[request.recommender]) {
-      console.log("not in map", request.recommender);
+      //console.log("not in map", request.recommender);
       throw {statusCode: 400,
              error: 'unknown or missing recommender type'};
     }
-    console.log("is in map", request.recommender);
+    //console.log("is in map", request.recommender);
     recommenderType = request.recommender;
     uri = uris[recommenderType];
   }
-  console.log("createRequestParameters 5");
+  //console.log("createRequestParameters 5");
   paramsPost.uri = uri;
   let names = {
     likes: 'like',
@@ -95,7 +76,7 @@ export default (request, context) => { // eslint-disable-line no-unused-vars
 //     "likes": [],
 //     "limit": 10
   // }  
-  console.log(">>>> ALIVE");
+  //console.log(">>>> ALIVE");
   try {
     let paramsPost = createRequestParameters(request);
     // console.log("SP REQUEST", JSON.stringify(request,null,4));
