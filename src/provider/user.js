@@ -1,4 +1,5 @@
 'use strict';
+import {pbkdf2} from 'crypto';
 /**
  * User transformer.
  */
@@ -44,9 +45,12 @@ export default (request, context) => {
     outputType: 'json'
   };
 
-  return context.call('userstatus', params).then(body => {
+  let idPromise = new Promise((resolve, reject) =>
+    pbkdf2(userstatus.useragency.replace(/^DK-/, '') + ' ' + userstatus.userid,
+      userstatus.salt, 100000, 24, 'sha512', (err, key) => err ? reject(err) : resolve(key)));
 
-    let data = {id: context.data.userstatus.uniqueid,
+  return context.call('userstatus', params).then(body => idPromise.then(id => {
+    let data = {id: id.toString('base64'),
                 loans: body.data.getUserStatusResponse.userStatus.loanedItems.loan.map(loan),
                 orders: body.data.getUserStatusResponse.userStatus.orderedItems.order.map(order)
                };
@@ -55,5 +59,5 @@ export default (request, context) => {
     }
 
     return {statusCode: 200, data: [data]};
-  });
+  }));
 };
