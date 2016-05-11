@@ -1,5 +1,37 @@
 
 
+availability {"pid": "870970-basis:51989252"}
+{"statusCode":500,"error":"TypeError: Cannot read property 'authgroupid' of undefined"}
+
+events {"fields": ["title", "changed", "nid", "field_ding_event_title_image"]}
+{
+  "statusCode": 200,
+  "data": [
+    {
+      "title": {
+        "name": "Titel",
+        "value": "Mød forfatteren: Tim Buk-Swienty",
+        "attr": []
+      },
+      "changed": {
+        "name": "Opdateret",
+        "value": 1452689863,
+        "attr": []
+      },
+      "nid": 15,
+      "field_ding_event_title_image": {
+        "name": "Title image",
+        "value": [
+          "files/775100/581328cef1630f7c4ca26a5ad814b8edb214f0d2.jpeg"
+        ],
+        "attr": [
+          "image/jpeg"
+        ]
+      }
+    }
+  ]
+}
+
 facets {"q" : "harry"}
 {
   "statusCode": 200,
@@ -91,7 +123,7 @@ facets {"q" : "harry"}
     "language": [
       {
         "term": "engelsk",
-        "frequency": 683
+        "frequency": 684
       },
       {
         "term": "dansk",
@@ -306,7 +338,41 @@ facets {"q" : "harry AND potter", "fields": ["creator"], "limit": 20}
   }
 }
 
-libraries {"limit": 10, "branchIds": ["717500","717501","717501"], "fields": ["agencyId", "branchId", "orderParameters"]}
+libraries {"limit": 10, "agencyIds": ["717500"], "fields": ["agencyId", "orderParameters"]}
+{
+  "statusCode": 200,
+  "data": [
+    {
+      "agencyId": "717500",
+      "orderParameters": [
+        "customId",
+        "pincode",
+        "userName",
+        "userAddress"
+      ]
+    },
+    {
+      "agencyId": "717500",
+      "orderParameters": [
+        "customId",
+        "pincode",
+        "userName",
+        "userAddress"
+      ]
+    },
+    {
+      "agencyId": "717500",
+      "orderParameters": [
+        "customId",
+        "pincode",
+        "userName",
+        "userAddress"
+      ]
+    }
+  ]
+}
+
+libraries {"limit": 10, "branchIds": ["717500","717501","717502"], "fields": ["agencyId", "branchId", "orderParameters"]}
 {
   "statusCode": 200,
   "data": [
@@ -329,8 +395,249 @@ libraries {"limit": 10, "branchIds": ["717500","717501","717501"], "fields": ["a
         "userName",
         "userAddress"
       ]
+    },
+    {
+      "agencyId": "717500",
+      "branchId": "717502",
+      "orderParameters": [
+        "customId",
+        "pincode",
+        "userName",
+        "userAddress"
+      ]
     }
   ]
+}
+
+news {"fields": ["title", "changed", "nid", "field_ding_news_list_image"]}
+{
+  "statusCode": 200,
+  "data": [
+    {
+      "title": {
+        "name": "Titel",
+        "value": "Sportsstjerner - bag facaden",
+        "attr": []
+      },
+      "changed": {
+        "name": "Opdateret",
+        "value": 1451918109,
+        "attr": []
+      },
+      "nid": 19,
+      "field_ding_news_list_image": {
+        "name": "List image",
+        "value": [
+          "files/775100/7268c0e6792000b897cea1d0dff628bd41117017.jpeg"
+        ],
+        "attr": [
+          "image/jpeg"
+        ]
+      }
+    },
+    {
+      "title": {
+        "name": "Titel",
+        "value": "Bagud med danskopgaven ? her er hjælp til dig",
+        "attr": []
+      },
+      "changed": {
+        "name": "Opdateret",
+        "value": 1454401649,
+        "attr": []
+      },
+      "nid": 40,
+      "field_ding_news_list_image": {
+        "name": "List image",
+        "value": [
+          "files/775100/97d745b02862cde44e9f4a431e0da175608760b7.jpeg"
+        ],
+        "attr": [
+          "image/jpeg"
+        ]
+      }
+    },
+    {
+      "title": {
+        "name": "Titel",
+        "value": "AFB test nyhed",
+        "attr": []
+      },
+      "changed": {
+        "name": "Opdateret",
+        "value": 1454692591,
+        "attr": []
+      },
+      "nid": 36,
+      "field_ding_news_list_image": {
+        "name": "List image",
+        "value": [
+          "files/775100/9daae4251ddd2684efe21a6164500fb309919c83.jpeg"
+        ],
+        "attr": [
+          "image/jpeg"
+        ]
+      }
+    },
+    {
+      "title": {
+        "name": "Titel",
+        "value": "Vil du interviewes om eReolen?",
+        "attr": []
+      },
+      "changed": {
+        "name": "Opdateret",
+        "value": 1454692950,
+        "attr": []
+      },
+      "nid": 41,
+      "field_ding_news_list_image": {
+        "name": "List image",
+        "value": [
+          "files/775100/e60c0aca678c0f7dfccb9b30bf705f8142471c56.jpeg"
+        ],
+        "attr": [
+          "image/jpeg"
+        ]
+      }
+    }
+  ]
+}
+
+news {"nids": ["19", "40"], "fields": ["title", "changed", "nid", "field_ding_news_list_image"]}
+{
+  "statusCode": 200,
+  "data": [
+    {
+      "title": {
+        "name": "Titel",
+        "value": "Sportsstjerner - bag facaden",
+        "attr": []
+      },
+      "changed": {
+        "name": "Opdateret",
+        "value": 1451918109,
+        "attr": []
+      },
+      "nid": 19,
+      "field_ding_news_list_image": {
+        "name": "List image",
+        "value": [
+          "files/775100/7268c0e6792000b897cea1d0dff628bd41117017.jpeg"
+        ],
+        "attr": [
+          "image/jpeg"
+        ]
+      }
+    },
+    {
+      "title": {
+        "name": "Titel",
+        "value": "Bagud med danskopgaven ? her er hjælp til dig",
+        "attr": []
+      },
+      "changed": {
+        "name": "Opdateret",
+        "value": 1454401649,
+        "attr": []
+      },
+      "nid": 40,
+      "field_ding_news_list_image": {
+        "name": "List image",
+        "value": [
+          "files/775100/97d745b02862cde44e9f4a431e0da175608760b7.jpeg"
+        ],
+        "attr": [
+          "image/jpeg"
+        ]
+      }
+    }
+  ]
+}
+
+order {}
+{
+  "statusCode": 400,
+  "error": "At least one pid must be provided to place order"
+}
+
+rank {}
+{
+  "statusCode": 404,
+  "error": "404 Not Found"
+}
+
+recommend { "likes":["870970-basis:27266428"], "limit":10}
+{
+  "statusCode": 200,
+  "data": [
+    {
+      "creator": "Jussi Adler-Olsen",
+      "val": 0.4860173593892626,
+      "title": "Flaskepost fra P : krimithriller",
+      "pid": "870970-basis:28043872"
+    },
+    {
+      "creator": "Jussi Adler-Olsen",
+      "val": 0.45139501883365696,
+      "title": "Kvinden i buret : krimi",
+      "pid": "870970-basis:26923530"
+    },
+    {
+      "creator": "Jussi Adler-Olsen",
+      "val": 0.414862087532955,
+      "title": "Journal 64 : krimithriller",
+      "pid": "870970-basis:28511663"
+    },
+    {
+      "creator": "Jussi Adler-Olsen",
+      "val": 0.29921312572907927,
+      "title": "Marco effekten : krimithriller",
+      "pid": "870970-basis:29754519"
+    },
+    {
+      "creator": "Jussi Adler-Olsen",
+      "val": 0.27038205502570556,
+      "title": "Alfabethuset",
+      "pid": "870970-basis:28075480"
+    },
+    {
+      "creator": "Jussi Adler-Olsen",
+      "val": 0.2574213664466531,
+      "title": "Washington dekretet",
+      "pid": "870970-basis:26370574"
+    },
+    {
+      "creator": "Jussi Adler-Olsen",
+      "val": 0.24711549282919104,
+      "title": "Og hun takkede guderne",
+      "pid": "870970-basis:27254128"
+    },
+    {
+      "creator": "Sara Blædel",
+      "val": 0.22859737831777507,
+      "title": "Dødsenglen : krimi",
+      "pid": "870970-basis:28567057"
+    },
+    {
+      "creator": "Sara Blædel",
+      "val": 0.22392438355326977,
+      "title": "Hævnens gudinde : krimi",
+      "pid": "870970-basis:29319006"
+    },
+    {
+      "creator": "Lars Kepler",
+      "val": 0.21930264357648044,
+      "title": "Hypnotisøren",
+      "pid": "874310-katalog:DBB0019369"
+    }
+  ]
+}
+
+renew {}
+{
+  "statusCode": 400,
+  "error": "Needs loanId to renew order"
 }
 
 search {}
@@ -1548,34 +1855,18 @@ search {"q" : "ost", "fields": ["creator", "coverUrlFull"], "limit": 3}
   "data": [
     {
       "coverUrlFull": [
-        "//moreinfo.addi.dk/2.1/more_info_get.php?id=44502234&type=forside_stor&key=0387b6fc49e63e21dc44"
+        "//moreinfo.addi.dk/2.1/more_info_get.php?id=44502234&type=forside_stor&key=5b7c3f14532ce7a08538"
       ]
     },
     {
       "coverUrlFull": [
-        "//moreinfo.addi.dk/2.1/more_info_get.php?id=54073988&type=forside_stor&key=fb3568591c9c9358b1ae"
+        "//moreinfo.addi.dk/2.1/more_info_get.php?id=54073988&type=forside_stor&key=6e590f0d3f6b116c802d"
       ]
     },
     {
       "creator": [
-        "Rie Boberg"
-      ],
-      "coverUrlFull": [
-        "//moreinfo.addi.dk/2.1/more_info_get.php?id=24559198&type=forside_stor&key=2b6305b691ba331aaaff"
+        "Ingrid Dam"
       ]
-    }
-  ]
-}
-
-suggest {"q" : "harr", "type": "title"}
-{
-  "statusCode": 200,
-  "data": [
-    {
-      "str": "Medielobbyisme",
-      "id": "870970-basis:26459885",
-      "creator": "Erik Harr",
-      "type": "book"
     }
   ]
 }
@@ -1643,6 +1934,68 @@ suggest {"q" : "harr", "type": "creator"}
     },
     {
       "str": "Mahershala Ali"
+    }
+  ]
+}
+
+suggest {"q" : "harr", "type": "title"}
+{
+  "statusCode": 200,
+  "data": [
+    {
+      "str": "Harry Potter og Fønixordenen",
+      "id": "870970-basis:24880605",
+      "creator": "Joanne K. Rowling",
+      "type": "book"
+    },
+    {
+      "str": "Harry Potter and the deathly hallows - part 1",
+      "id": "870970-basis:28529724",
+      "type": "movie"
+    },
+    {
+      "str": "Harry Potter - quidditch verdensmesterskaberne",
+      "id": "870970-basis:25034937",
+      "type": "other"
+    },
+    {
+      "str": "Harry - med far i køkkenet",
+      "id": "870970-basis:27002951",
+      "creator": "Rikke Lauridsen",
+      "type": "book"
+    },
+    {
+      "str": "Harry alias Kammertjeneren",
+      "id": "870970-basis:29534810",
+      "creator": "Duncan Hamilton",
+      "type": "book"
+    },
+    {
+      "str": "Harriet the spy - blog wars",
+      "id": "870970-basis:29170258",
+      "type": "movie"
+    },
+    {
+      "str": "Harry Potter and the prisoner of Azkaban (uddrag)",
+      "id": "870970-basis:25390938",
+      "creator": "John Williams (f. 1932)",
+      "type": "sheetmusic"
+    },
+    {
+      "str": "Harrington on Hold 'em",
+      "id": "870970-basis:43852027",
+      "type": "book"
+    },
+    {
+      "str": "Harrington on online cash games",
+      "id": "870970-basis:44991616",
+      "type": "book"
+    },
+    {
+      "str": "Harry Potter and the half-blood prince (uddrag)",
+      "id": "870970-basis:27953026",
+      "creator": "Nicholas Hooper",
+      "type": "sheetmusic"
     }
   ]
 }
@@ -1816,7 +2169,6 @@ user {}
   "statusCode": 200,
   "data": [
     {
-      "ddbcmsapi": "http://rest.filmstriben.dbc.inlead.dk/web/",
       "loans": [
         {
           "loanId": "NCIPMDAxOXw5OTAwfHw5OTAwLnx8",
@@ -1859,44 +2211,41 @@ user {}
       "orders": [
         {
           "title": "Komputer for alle - 2015, 02",
-          "orderId": "NCIPMDAxOXwxNS0wNC0yMDE1IDE1OjUzOjE4fHxLb21wdXRlciBmb3IgYWxsZXx8MjAxNSwgMDJ8MQ==",
+          "orderId": "Hold:NCIPMDAxOXwxNS0wNC0yMDE1IDE1OjUzOjE4fHxLb21wdXRlciBmb3IgYWxsZXx8MjAxNSwgMDJ8MQ==",
           "orderDate": "2015-04-15T00:00:00+02:00",
           "status": "In process",
-          "type": "Hold",
           "library": "DK-100451",
           "holdQueuePosition": "1"
         },
         {
           "title": "Hvis din hest er død - så stå af",
-          "orderId": "NCIPMDAxOXwxOS0wNS0yMDE1IDE0OjI1OjAxfExhbmdlLCBLYXJpbmF8SHZpcyBkaW4gaGVzdCBlciBkJm9zbGFzaDtkIC0gcyZhcmluZzsgc3QmYXJpbmc7IGFmfHx8MQ==",
+          "orderId": "Hold:NCIPMDAxOXwxOS0wNS0yMDE1IDE0OjI1OjAxfExhbmdlLCBLYXJpbmF8SHZpcyBkaW4gaGVzdCBlciBkJm9zbGFzaDtkIC0gcyZhcmluZzsgc3QmYXJpbmc7IGFmfHx8MQ==",
           "orderDate": "2015-05-19T00:00:00+02:00",
           "status": "In process",
-          "type": "Hold",
           "library": "DK-100451",
           "holdQueuePosition": "1",
           "author": "Lange, Karina"
         },
         {
           "title": "Livet på Skagen omkring år 1900",
-          "orderId": "NCIPMDAxOXwxMi0wOC0yMDE1IDA5OjI1OjAxfFZpbGxhZHNlbiwgT2xlIEgufExpdmV0IHAmYXJpbmc7IFNrYWdlbiBvbWtyaW5nICZhcmluZztyIDE5MDB8fHwx",
+          "orderId": "Hold:NCIPMDAxOXwxMi0wOC0yMDE1IDA5OjI1OjAxfFZpbGxhZHNlbiwgT2xlIEgufExpdmV0IHAmYXJpbmc7IFNrYWdlbiBvbWtyaW5nICZhcmluZztyIDE5MDB8fHwx",
           "orderDate": "2015-08-12T00:00:00+02:00",
           "status": "In process",
-          "type": "Hold",
           "library": "DK-100451",
           "holdQueuePosition": "1",
           "author": "Villadsen, Ole H."
         },
         {
           "title": "Hvis din hest er død - så stå af",
-          "orderId": "NCIPMDAxOXwxOS0wMi0yMDE2IDEzOjU1OjAyfExhbmdlLCBLYXJpbmF8SHZpcyBkaW4gaGVzdCBlciBkJm9zbGFzaDtkIC0gcyZhcmluZzsgc3QmYXJpbmc7IGFmfHx8MQ==",
+          "orderId": "Hold:NCIPMDAxOXwxOS0wMi0yMDE2IDEzOjU1OjAyfExhbmdlLCBLYXJpbmF8SHZpcyBkaW4gaGVzdCBlciBkJm9zbGFzaDtkIC0gcyZhcmluZzsgc3QmYXJpbmc7IGFmfHx8MQ==",
           "orderDate": "2016-02-19T00:00:00+01:00",
           "status": "In process",
-          "type": "Hold",
           "library": "DK-100451",
           "holdQueuePosition": "1",
           "author": "Lange, Karina"
         }
-      ]
+      ],
+      "ddbcmsapi": "http://rest.filmstriben.dbc.inlead.dk/web/"
     }
   ]
 }
@@ -2263,7 +2612,7 @@ work {"pids": ["300185-katalog:100562332", "870970-basis:51989252", "870971-forf
     {},
     {
       "coverUrlFull": [
-        "//moreinfo.addi.dk/2.1/more_info_get.php?id=64951376&type=forside_stor&key=55f7289b2532e29e1b78"
+        "//moreinfo.addi.dk/2.1/more_info_get.php?id=64951376&type=forside_stor&key=c726f7373563e71b2410"
       ],
       "title": [
         "Harry Potter og de vises sten"
@@ -2275,180 +2624,5 @@ work {"pids": ["300185-katalog:100562332", "870970-basis:51989252", "870971-forf
       ]
     },
     {}
-  ]
-}
-
-news {"fields": ["title", "changed", "nid", "field_ding_news_list_image"]}
-{
-  "statusCode": 200,
-  "data": [
-    {
-      "title": {
-        "name": "Titel",
-        "value": "Sportsstjerner - bag facaden",
-        "attr": []
-      },
-      "changed": {
-        "name": "Opdateret",
-        "value": 1451918109,
-        "attr": []
-      },
-      "nid": 19,
-      "field_ding_news_list_image": {
-        "name": "List image",
-        "value": [
-          "files/775100/7268c0e6792000b897cea1d0dff628bd41117017.jpeg"
-        ],
-        "attr": [
-          "image/jpeg"
-        ]
-      }
-    },
-    {
-      "title": {
-        "name": "Titel",
-        "value": "Bagud med danskopgaven ? her er hjælp til dig",
-        "attr": []
-      },
-      "changed": {
-        "name": "Opdateret",
-        "value": 1454401649,
-        "attr": []
-      },
-      "nid": 40,
-      "field_ding_news_list_image": {
-        "name": "List image",
-        "value": [
-          "files/775100/97d745b02862cde44e9f4a431e0da175608760b7.jpeg"
-        ],
-        "attr": [
-          "image/jpeg"
-        ]
-      }
-    },
-    {
-      "title": {
-        "name": "Titel",
-        "value": "AFB test nyhed",
-        "attr": []
-      },
-      "changed": {
-        "name": "Opdateret",
-        "value": 1454692591,
-        "attr": []
-      },
-      "nid": 36,
-      "field_ding_news_list_image": {
-        "name": "List image",
-        "value": [
-          "files/775100/9daae4251ddd2684efe21a6164500fb309919c83.jpeg"
-        ],
-        "attr": [
-          "image/jpeg"
-        ]
-      }
-    },
-    {
-      "title": {
-        "name": "Titel",
-        "value": "Vil du interviewes om eReolen?",
-        "attr": []
-      },
-      "changed": {
-        "name": "Opdateret",
-        "value": 1454692950,
-        "attr": []
-      },
-      "nid": 41,
-      "field_ding_news_list_image": {
-        "name": "List image",
-        "value": [
-          "files/775100/e60c0aca678c0f7dfccb9b30bf705f8142471c56.jpeg"
-        ],
-        "attr": [
-          "image/jpeg"
-        ]
-      }
-    }
-  ]
-}
-
-events {"fields": ["title", "changed", "nid", "field_ding_event_title_image"]}
-{
-  "statusCode": 200,
-  "data": [
-    {
-      "title": {
-        "name": "Titel",
-        "value": "Mød forfatteren: Tim Buk-Swienty",
-        "attr": []
-      },
-      "changed": {
-        "name": "Opdateret",
-        "value": 1452689863,
-        "attr": []
-      },
-      "nid": 15,
-      "field_ding_event_title_image": {
-        "name": "Title image",
-        "value": [
-          "files/775100/581328cef1630f7c4ca26a5ad814b8edb214f0d2.jpeg"
-        ],
-        "attr": [
-          "image/jpeg"
-        ]
-      }
-    }
-  ]
-}
-
-news {"nids": ["19", "40"], "fields": ["title", "changed", "nid", "field_ding_news_list_image"]}
-{
-  "statusCode": 200,
-  "data": [
-    {
-      "title": {
-        "name": "Titel",
-        "value": "Sportsstjerner - bag facaden",
-        "attr": []
-      },
-      "changed": {
-        "name": "Opdateret",
-        "value": 1451918109,
-        "attr": []
-      },
-      "nid": 19,
-      "field_ding_news_list_image": {
-        "name": "List image",
-        "value": [
-          "files/775100/7268c0e6792000b897cea1d0dff628bd41117017.jpeg"
-        ],
-        "attr": [
-          "image/jpeg"
-        ]
-      }
-    },
-    {
-      "title": {
-        "name": "Titel",
-        "value": "Bagud med danskopgaven ? her er hjælp til dig",
-        "attr": []
-      },
-      "changed": {
-        "name": "Opdateret",
-        "value": 1454401649,
-        "attr": []
-      },
-      "nid": 40,
-      "field_ding_news_list_image": {
-        "name": "List image",
-        "value": [
-          "files/775100/97d745b02862cde44e9f4a431e0da175608760b7.jpeg"
-        ],
-        "attr": [
-          "image/jpeg"
-        ]
-      }
-    }
   ]
 }
