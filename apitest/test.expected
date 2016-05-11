@@ -1,7 +1,10 @@
 
 
 availability {"pid": "870970-basis:51989252"}
-{"statusCode":500,"error":"TypeError: Cannot read property 'authgroupid' of undefined"}
+{
+  "statusCode": 500,
+  "error": "TypeError: Cannot read property 'authgroupid' of undefined"
+}
 
 events {"fields": ["title", "changed", "nid", "field_ding_event_title_image"]}
 {
@@ -2097,7 +2100,7 @@ suggest {"q" : "køge", "type": "library"}
   ]
 }
 
-suggest {"q" : "os", "type": "subject"}
+suggest {"q" : "os", "type": "subject", "limit": 3}
 {
   "statusCode": 200,
   "data": [
@@ -2109,57 +2112,6 @@ suggest {"q" : "os", "type": "subject"}
     },
     {
       "str": "los"
-    },
-    {
-      "str": "råkost"
-    },
-    {
-      "str": "slankekost"
-    },
-    {
-      "str": "glutenfri kost"
-    },
-    {
-      "str": "stenalderkost"
-    },
-    {
-      "str": "helsekost"
-    },
-    {
-      "str": "barbados"
-    },
-    {
-      "str": "mælkefri kost"
-    },
-    {
-      "str": "buenos"
-    },
-    {
-      "str": "rhodos"
-    },
-    {
-      "str": "kos"
-    },
-    {
-      "str": "osama"
-    },
-    {
-      "str": "osama bin laden"
-    },
-    {
-      "str": "fedtfattig kost"
-    },
-    {
-      "str": "laos"
-    },
-    {
-      "str": "oskarshamn"
-    },
-    {
-      "str": "samos"
-    },
-    {
-      "str": "lesbos"
     }
   ]
 }
@@ -2246,6 +2198,131 @@ user {}
         }
       ],
       "ddbcmsapi": "http://rest.filmstriben.dbc.inlead.dk/web/"
+    }
+  ]
+}
+
+work {"pids": ["870970-basis:27266428"]}
+{
+  "statusCode": 200,
+  "data": [
+    {
+      "acIdentifier": [
+        "27266428|870970"
+      ],
+      "identifierISBN": [
+        "9788756787277"
+      ],
+      "acSource": [
+        "Bibliotekskatalog"
+      ],
+      "dcTitle": [
+        "Fasandræberne"
+      ],
+      "dcTitleFull": [
+        "Fasandræberne : krimithriller"
+      ],
+      "titleSeries": [
+        "Afdeling Q ; 2"
+      ],
+      "creatorAut": [
+        "Jussi Adler-Olsen"
+      ],
+      "creatorSort": [
+        "Adler-Olsen, Jussi"
+      ],
+      "subjectDK5Text": [
+        "Skønlitteratur"
+      ],
+      "subjectDBCS": [
+        "kostskoler",
+        "krimi",
+        "politiromaner",
+        "posedamer"
+      ],
+      "subjectGenre": [
+        "krimi"
+      ],
+      "subjectDK5": [
+        "sk"
+      ],
+      "abstract": [
+        "Krimi. Ad mærkelige veje lander en gammel, tilsyneladende afsluttet mordsag hos vicekriminalkommissær Carl Mørck i Afdeling Q, og da han kigger nærmere på den, begynder skeletterne at vælte ud af skabene hos en umage flok gamle kostskolekammerater"
+      ],
+      "audience": [
+        "voksenmaterialer"
+      ],
+      "version": [
+        "1. udgave, 7. oplag"
+      ],
+      "publisher": [
+        "Politiken"
+      ],
+      "date": [
+        "2008"
+      ],
+      "typeBibDKType": [
+        "Bog"
+      ],
+      "extent": [
+        "399 sider"
+      ],
+      "languageISO6392": [
+        "dan"
+      ],
+      "dcLanguage": [
+        "Dansk"
+      ],
+      "spatialDBCS": [
+        "Danmark"
+      ],
+      "temporalDBCP": [
+        "2000-2009"
+      ],
+      "accessType": [
+        "physical"
+      ],
+      "creator": [
+        "Jussi Adler-Olsen"
+      ],
+      "fedoraPid": [
+        "870970-basis:27266428"
+      ],
+      "pid": [
+        "870970-basis:27266428"
+      ],
+      "language": [
+        "Dansk"
+      ],
+      "title": [
+        "Fasandræberne"
+      ],
+      "titleFull": [
+        "Fasandræberne : krimithriller"
+      ],
+      "type": [
+        "Bog"
+      ],
+      "workType": [
+        "book"
+      ],
+      "hasCreatorDescription": [
+        "870971-forfweb:34235856",
+        "150005-portraet:45879"
+      ],
+      "hasReview": [
+        "870971-anmeld:33118538",
+        "870971-anmeld:33118503",
+        "870971-anmeld:33142900",
+        "870971-anmeld:33340133",
+        "870971-anmeld:33217102",
+        "870976-anmeld:30712706",
+        "150005-anmeld:91203"
+      ],
+      "hasAdaptation": [
+        "775100-katalog:51336550",
+        "775100-katalog:51649079"
+      ]
     }
   ]
 }

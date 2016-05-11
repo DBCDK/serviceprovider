@@ -5,7 +5,6 @@
  * and optionally create unit-tests, look at timings etc.
  */
 import request from 'request';
-import {sendRequest} from '../services/HTTPClient.js';
 import * as BaseSoapClient from 'dbc-node-basesoap-client';
 import fs from 'fs';
 
@@ -88,7 +87,7 @@ class Context {
    * and different kind of api-requests. And also optionally
    * record timings and mock-data, and replay mock-data.
    *
-   * @param type transformer, sendrequest, soapstring or basesoap
+   * @param type transformer, soapstring or basesoap
    * @param name name of service (or url)
    * @param params parameters for service
    * @returns promise with result
@@ -117,24 +116,17 @@ class Context {
       mockId = JSON.stringify([name, params]); // key for mock data
       if (this.mockData[mockId]) {
         promise = new Promise(resolve => resolve(this.mockData[mockId]));
-      }
-
-      else if (type === 'soapstring') {
+      } else if (type === 'soapstring') {
         promise = new Promise((resolve, reject) =>
             request.post(url, {form: {xml: params}},
               (err, _, data) => err ? reject(err) : resolve(data)));
-      }
-      else if (type === 'sendrequest') {
-        promise = sendRequest(url, params);
       } else if (type === 'request') {
         promise = new Promise((resolve, reject) =>
           request(url, params, (err, response, data) =>
               (err || response.statusCode !== 200)
               ? reject(err || response)
               : resolve(data)));
-      }
-
-      else if (type === 'basesoap') {
+      } else if (type === 'basesoap') {
         if (this.data[name].url) {
           url = this.data[name].url + '/' + name + '.wsdl';
         }
@@ -183,17 +175,13 @@ class Context {
    * @param params the parameters to pass to the endpoint
    */
   call(name, params) {
-    let type;
     if (this.transformerMap[name]) {
-      type = 'transformer';
+      return this.transformer(name, params);
     }
-    else if (typeof params === 'object') {
-      type = 'sendrequest';
+    if (typeof params === 'object') {
+      return this.query(name, params);
     }
-    else if (typeof params === 'string') {
-      type = 'soapstring';
-    }
-    return this._call(type, name, params);
+    return this.soapstring(name, params);
   }
 
   transformer(name, params) {
@@ -205,13 +193,14 @@ class Context {
   }
 
   query(name, params) {
-    return this._call('sendrequest', name, params);
+    return this._call('request', name, {qs: params})
+          .then(s => ({data: JSON.parse(s)}));
   }
   request(name, params) {
     return this._call('request', name, params);
   }
   soapstring(name, params) {
-    return this._call('sendstring', name, params);
+    return this._call('soapstring', name, params);
   }
 }
 
