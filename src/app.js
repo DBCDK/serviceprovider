@@ -209,19 +209,11 @@ module.exports.run = function (worker) {
   });
 
   // Execute transform
-  function callApi(event, query, context, callback) {
-    let prom;
-
-    if (serviceProvider.hasTransformer(event)) {
-      prom = serviceProvider.execute(event, query, context);
-    } else { // eslint-disable-line brace-style
-      log.error('Missing transformer: ' + event);
-    }
-
-    prom.catch(err => {
-      log.error(String(err), {stacktrace: err.stack});
-      return {statusCode: 500, error: String(err)};
-    }).then(response => {
+  let callApi = (event, query, context) =>
+    (serviceProvider.hasTransformer(event)
+      ? serviceProvider.execute(event, query, context)
+      : Promise.reject('Missing transformer: ' + event))
+    .then(response => {
       if ((typeof response !== 'object') ||
           (typeof response.statusCode !== 'number') ||
           (response.statusCode === 200 && !response.data) ||
@@ -257,26 +249,22 @@ module.exports.run = function (worker) {
         response.data = fieldsFilter(response.data);
       }
 
-      callback(response);
-    }, (error) => {
-      callback(error);
-    }).catch((err) => {
+      return response;
+    }).catch(err => {
       log.error(String(err), {stacktrace: err.stack});
+      return {statusCode: 500, error: String(err)};
     });
-  }
 
   // WebSocket/SocketCluster transport
   worker.on('connection', (connection) => {
     serviceProvider.availableTransforms().forEach(key => {
       connection.on(key, (data, callback) => { // eslint-disable-line no-loop-func
         getContext(data.access_token)
-          .then((context) => {
-            callApi(key, data, context, callback);
-          })
-          .catch((err) => {
+          .then(context => callApi(key, data, context))
+          .catch(err => {
             log.error(err);
-            callback({statusCode: 403, error: 'Forbidden'});
-          });
+            return {statusCode: 403, error: 'Forbidden'};
+          }).then(result => callback(result));
       });
     });
   });
@@ -303,10 +291,11 @@ module.exports.run = function (worker) {
         query.fields = [query.fields];
       }
 
-      callApi(event, query, req.context, response => {
-        app.set('json spaces', query.pretty ? 2 : null);
-        res.jsonp(response);
-      });
+      callApi(event, query, req.context)
+        .then(response => {
+          app.set('json spaces', query.pretty ? 2 : null);
+          res.jsonp(response);
+        });
     });
   });
 
