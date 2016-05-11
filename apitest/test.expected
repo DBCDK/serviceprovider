@@ -2,8 +2,10 @@
 
 availability {"pid": "870970-basis:51989252"}
 {
-  "statusCode": 500,
-  "error": "TypeError: Cannot read property 'authgroupid' of undefined"
+  "statusCode": 200,
+  "data": {
+    "willLend": false
+  }
 }
 
 events {"fields": ["title", "changed", "nid", "field_ding_event_title_image"]}
@@ -2121,6 +2123,7 @@ user {}
   "statusCode": 200,
   "data": [
     {
+      "id": "zeEOALqmSuy+ysfz0zYbna0CgwtrhewG",
       "loans": [
         {
           "loanId": "NCIPMDAxOXw5OTAwfHw5OTAwLnx8",
