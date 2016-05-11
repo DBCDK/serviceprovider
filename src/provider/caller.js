@@ -175,17 +175,13 @@ class Context {
    * @param params the parameters to pass to the endpoint
    */
   call(name, params) {
-    let type;
     if (this.transformerMap[name]) {
-      return this.transformer(name, params)
+      return this.transformer(name, params);
     }
     if (typeof params === 'object') {
       return this.query(name, params);
     }
-    if (typeof params === 'string') {
-      return this.soapstring(name, params);
-    }
-    return this._call(type, name, params);
+    return this.soapstring(name, params);
   }
 
   transformer(name, params) {

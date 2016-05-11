@@ -2,7 +2,6 @@
 /**
  * User transformer.
  */
-import {requestPromise} from '../services/requestPromise.js';
 
 // TODO
 // old recommend code should be removed from SP
