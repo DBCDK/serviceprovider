@@ -80,7 +80,7 @@ export default (request, context) => { // eslint-disable-line no-unused-vars
       // console.log("SERVICE RESPONSE", JSON.stringify(body, null, 4));
       var result = [];
       if (body.result) {
-	for (let i = 0; i < body.result.length; ++i) {
+        for (let i = 0; i < body.result.length; ++i) {
           let o = body.result[i];
           let pid = o[0];
           let r = o[1];
