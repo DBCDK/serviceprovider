@@ -192,12 +192,12 @@ api:
         description: the type of recommender, such as default or popular
         type: string
         example: default
-      likes:
+      like:
         description: list of liked materials
         type: array
         items: {type: "string"}
         examples: ["870970-basis:12345678", "..."]
-      dislikes:
+      dislike:
         description: list of disliked materials
         type: array
         items: {type: "string"}
@@ -236,12 +236,12 @@ api:
         description: the type of recommender, such as default or popular
         type: string
         example: default
-      likes:
+      like:
         description: list of liked materials
         type: array
         items: {type: "string"}
         examples: ["870970-basis:12345678", "..."]
-      dislikes:
+      dislike:
         description: list of disliked materials
         type: array
         items: {type: "string"}
