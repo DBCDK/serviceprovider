@@ -127,14 +127,11 @@ class Context {
       else if (type === 'sendrequest') {
         promise = sendRequest(url, params);
       } else if (type === 'request') {
-        promise = new Promise((resolve, reject) => {
+        promise = new Promise((resolve, reject) =>
           request(url, params, (err, response, data) =>
-              err
-              ? reject(err)
-              : response.statusCode !== 200
-                ? reject(response)
-                : resolve(data));
-        });
+              (err || response.statusCode !== 200)
+              ? reject(err || response)
+              : resolve(data)));
       }
 
       else if (type === 'basesoap') {
