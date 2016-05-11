@@ -6,10 +6,6 @@ import {requestPromise} from '../services/requestPromise.js';
 
 // TODO
 // old recommend code should be removed from SP
-// review names with rje: with or without s
-// "recommender" should be optional and default to default :)
-// in first version, default is recommend-cosim
-// request verification!?
 
 /*
 function createFilter(request){
@@ -18,21 +14,6 @@ function createFilter(request){
 }
 */
 
-/*
-function getLimit(request) {
-  var maxresults = 10;
-  if (!isNaN(request.limit)) {
-    let limit = Math.round(request.limit);
-    let minlimit = 0;
-    let maxlimit = 10000;
-    if (limit >= minlimit && limit < maxlimit) {
-      // TODO should throw error on invalid limit
-      maxresults = limit;
-    } // eslint-disable-line no-unused-vars
-  }
-  return maxresults;
-}
-*/
 
 function createRequestParameters(request) {
   // console.log("createRequestParameters 1");
@@ -92,21 +73,26 @@ export default (request, context) => { // eslint-disable-line no-unused-vars
 //     "likes": [],
 //     "limit": 10
 // }
-
-  let [uri, params] = createRequestParameters(request);
-  // console.log("SP REQUEST", JSON.stringify(request,null,4));
-  return context.request(uri, params).then(body => {
-    // console.log("SERVICE RESPONSE", JSON.stringify(body, null, 4));
-    var result = [];
-    if (body.result) {
-      for (let i = 0; i < body.result.length; ++i) {
-	let o = body.result[i]; // eslint-disable-line indent
-	let pid = o[0]; // eslint-disable-line indent
-	let r = o[1]; // eslint-disable-line indent
-	r.pid = pid; // eslint-disable-line indent
-	result.push(r); // eslint-disable-line indent
+  try {
+    let [uri, params] = createRequestParameters(request);
+    // console.log("SP REQUEST", JSON.stringify(request,null,4));
+    return context.request(uri, params).then(body => {
+      // console.log("SERVICE RESPONSE", JSON.stringify(body, null, 4));
+      var result = [];
+      if (body.result) {
+        for (let i = 0; i < body.result.length; ++i) {
+          let o = body.result[i];
+          let pid = o[0];
+          let r = o[1];
+          r.pid = pid;
+          result.push(r);
+        }
       }
+      return {statusCode: 200, data: result};
+    });
+  } catch (err){
+    if (err.hasOwnProperty('statusCode')){
+      return Promise.resolve(err);
     }
-    return {statusCode: 200, data: result};
-  });
+  }
 };
