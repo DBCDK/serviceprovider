@@ -80,7 +80,7 @@ api:
 
       The possible result fields are the same as those returned from DBCs openagency service.
 
-      The field that tells which information is required when ordering the book are.
+      The field that tells which information is required when ordering the book is `orderParameters`.
     properties:
       agencyIds:
         description: ids of agencies of libraries to fetch, - an agency is a collection of libraries, - return all libraries if neither `branchIds` nor `agencyIds` are supplied
