@@ -79,7 +79,7 @@ api:
     description: |
       List/information about libraries.
 
-      The possible result fields are the same as those returned from DBCs openagency service.
+      The possible result fields are a subset of those returned from DBCs openagency service.
 
       The field that tells which information is required when ordering the book is `orderParameters`.
     properties:
