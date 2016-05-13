@@ -183,5 +183,25 @@ export default (request, context) => {
 
   return Promise.all(promises).then(body => {
     return workResponse(body, context, state);
+  }).then(result => {
+    let dataUrls = (request.fields || []).filter(key => key.startsWith('coverDataUrl'));
+    if (dataUrls.length === 0) {
+      return result;
+    }
+    let requests = [];
+    for(let field of dataUrls) {
+      for(let i = 0; i < result.data.length; ++i) {
+        let url = (result.data[i][field.replace('coverDataUrl', 'coverUrl')] || [])[0];
+        if(url) {
+          requests.push({url, field, i});
+        }
+      }
+    }
+    requests = requests.map(req =>
+      context.request('http:' + req.url, {encoding: null}).then(o => {
+        let str = `data:image/jpeg;base64,${new Buffer(o, 'binary').toString('base64')}`;
+        result.data[req.i][req.field] = str;
+      }));
+    return Promise.all(requests).then(_ => result);
   });
 };
