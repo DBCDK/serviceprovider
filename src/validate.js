@@ -7,10 +7,10 @@ import yaml from 'js-yaml';
 let schemas;
 
 function getSchema(name) {
-  if(!schemas) {
-    schemas = {}
+  if (!schemas) {
+    schemas = {};
     let fullSpec = yaml.safeLoad(fs.readFileSync(__dirname + '/../doc/spec.yaml', 'utf-8'));
-    for(let key in fullSpec.api) {
+    for (let key in fullSpec.api) {
       let spec = fullSpec.api[key];
       schemas[key] = {
         type: 'object',
