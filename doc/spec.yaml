@@ -303,7 +303,7 @@ api:
         items: {type: "string"}
       sort:
         example: "rank_title"
-        description: Order/ranking of results. This correspond to the `sort` parameter of opensearch, which, at the time of writing, can take values such as  `rank_title`, `rank_general`, `rank_main_title`, `rank_subject`, `rank_verification` (title and creator), `rank_creator`, `rank_none`, `date_descending`, `article_date_descending`, `acquisitionDate_descending`, and `random`. 
+        description: Order/ranking of results. This correspond to the `sort` parameter of opensearch, which, at the time of writing, can take values such as  `rank_title`, `rank_general`, `rank_main_title`, `rank_subject`, `rank_verification` (title and creator), `rank_creator`, `rank_none`, `date_descending`, `article_date_descending`, `acquisitionDate_descending`, and `random`.
         type: string
     response:
       type: array
@@ -416,3 +416,34 @@ definitions:
       title: {type: "array", items: {type: "string"}}
       creator: {type: "array", items: {type: "string"}}
       "...": "..."
+defaultProperties:
+  fields:
+    description: which parts of the response to get
+    type: array
+    items: {type: "string"}
+  access_token:
+    type: 'string'
+    description: 'Access token from the OAuth2 server'
+    example: 'qwerty'
+  pretty:
+    description: 'whether to prettyprint the resulting json'
+    type: 'bool'
+    example: true
+  timings:
+    description: 'whether to include timings in the resulting json'
+    type: 'bool'
+    example: true
+  createTest:
+    type: 'bool'
+    example: true
+    onlyIfDev: true
+  limit:
+    description: limit the number of result in array.
+    type: number
+    example: 10
+    onlyIfArrayResult: true
+  offset:
+    description: offset to first item to get.
+    type: number
+    example: 10
+    onlyIfArrayResult: true

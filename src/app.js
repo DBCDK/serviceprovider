@@ -27,6 +27,7 @@ import {log} from './utils';
 
 // Generation of swagger specification
 import swaggerFromSpec from './swaggerFromSpec.js';
+import validateRequest from './validate.js';
 
 module.exports.run = function (worker) {
   // Setup
@@ -210,9 +211,19 @@ module.exports.run = function (worker) {
 
   // Execute transform
   let callApi = (event, query, context) =>
-    (serviceProvider.hasTransformer(event)
-      ? serviceProvider.execute(event, query, context)
-      : Promise.reject('Missing transformer: ' + event))
+    Promise.resolve((() => {
+      if (!serviceProvider.hasTransformer(event)) {
+        return {statusCode: 400,
+                error: 'Missing transformer: ' + event};
+      }
+      let validateErrors = validateRequest(event, query);
+      if (validateErrors.length) {
+        return Promise.resolve({
+          statusCode: 400,
+          error: validateErrors.map(o => o.message).join('\n')});
+      }
+      return serviceProvider.execute(event, query, context);
+    })())
     .then(response => {
       if ((typeof response !== 'object') ||
           (typeof response.statusCode !== 'number') ||

@@ -7376,71 +7376,10 @@ rank {}
   "error": "404 Not Found"
 }
 
-recommend { "likes":["870970-basis:27266428"], "limit":10}
+recommend { "like":["870970-basis:27266428"], "limit":10}
 {
   "statusCode": 200,
-  "data": [
-    {
-      "creator": "Jussi Adler-Olsen",
-      "val": 0.4860173593892626,
-      "title": "Flaskepost fra P : krimithriller",
-      "pid": "870970-basis:28043872"
-    },
-    {
-      "creator": "Jussi Adler-Olsen",
-      "val": 0.45139501883365696,
-      "title": "Kvinden i buret : krimi",
-      "pid": "870970-basis:26923530"
-    },
-    {
-      "creator": "Jussi Adler-Olsen",
-      "val": 0.414862087532955,
-      "title": "Journal 64 : krimithriller",
-      "pid": "870970-basis:28511663"
-    },
-    {
-      "creator": "Jussi Adler-Olsen",
-      "val": 0.29921312572907927,
-      "title": "Marco effekten : krimithriller",
-      "pid": "870970-basis:29754519"
-    },
-    {
-      "creator": "Jussi Adler-Olsen",
-      "val": 0.27038205502570556,
-      "title": "Alfabethuset",
-      "pid": "870970-basis:28075480"
-    },
-    {
-      "creator": "Jussi Adler-Olsen",
-      "val": 0.2574213664466531,
-      "title": "Washington dekretet",
-      "pid": "870970-basis:26370574"
-    },
-    {
-      "creator": "Jussi Adler-Olsen",
-      "val": 0.24711549282919104,
-      "title": "Og hun takkede guderne",
-      "pid": "870970-basis:27254128"
-    },
-    {
-      "creator": "Sara Blædel",
-      "val": 0.22859737831777507,
-      "title": "Dødsenglen : krimi",
-      "pid": "870970-basis:28567057"
-    },
-    {
-      "creator": "Sara Blædel",
-      "val": 0.22392438355326977,
-      "title": "Hævnens gudinde : krimi",
-      "pid": "870970-basis:29319006"
-    },
-    {
-      "creator": "Lars Kepler",
-      "val": 0.21930264357648044,
-      "title": "Hypnotisøren",
-      "pid": "874310-katalog:DBB0019369"
-    }
-  ]
+  "data": []
 }
 
 renew {}
@@ -7452,7 +7391,7 @@ renew {}
 search {}
 {
   "statusCode": 400,
-  "error": "missing q parameter"
+  "error": "requires property \"q\""
 }
 
 search {"q" : "hest"}
