@@ -1,4 +1,5 @@
 availability {"pid": "870970-basis:51989252"}
+availability {"pid": "870970-basis:22503030"}
 events {"fields": ["title", "changed", "nid", "field_ding_event_title_image"]}
 facets {"q" : "harry"}
 facets {"q" : "harry AND potter", "fields": ["creator"], "limit": 20}
@@ -13,6 +14,8 @@ renew {}
 search {}
 search {"q" : "hest"}
 search {"q" : "ost", "fields": ["creator", "coverUrlFull"], "limit": 3}
+search { "q": "harry AND potter", "fields": ["identifier", "title", "collection", "subjectDBCF", "hasAdaptation", "coverUrlFull"], "sort": "rank_title"}
+search { "q": "harry AND potter", "fields": ["identifier", "title", "collection", "subjectDBCF", "hasAdaptation"], "sort": "default" }
 suggest {"q" : "harr", "type": "creator"}
 suggest {"q" : "harr", "type": "title"}
 suggest {"q" : "køge", "type": "library"}

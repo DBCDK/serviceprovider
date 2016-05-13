@@ -35,7 +35,14 @@ export default (params, context) => {
 `;
 
   return context.call('opensearch', soap).then(body => {
-    body = JSON.parse(body).searchResponse.result;
+    body = JSON.parse(body).searchResponse;
+    if (body.error) {
+      return {
+        statusCode: 500,
+        error: body.error.$
+      };
+    }
+    body = body.result;
     // let more = body.more.$; // this could be used for paging info later
     let searchResult = body.searchResult || [];
     let result = [];
