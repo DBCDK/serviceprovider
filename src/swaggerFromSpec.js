@@ -4,6 +4,13 @@ import yaml from 'js-yaml';
 
 function specToPaths(specs) {
   let paths = {};
+  let defaultProperties = specs.defaultProperties;
+  for (let key in defaultProperties) {
+    if (defaultProperties[key].noSwag) {
+      delete defaultProperties[key];
+    }
+  }
+
   for (let method in specs.api) { // eslint-disable-line guard-for-in
     let spec = specs.api[method];
     let ref = {
@@ -20,26 +27,9 @@ function specToPaths(specs) {
         throw 'Missing definition';
       }
     }
-    spec.properties = Object.assign({}, spec.properties, ref.properties);
+    spec.properties = Object.assign({}, defaultProperties, spec.properties, ref.properties);
     spec.required = spec.required || ref.required;
     spec.required.push('access_token');
-    spec.properties.access_token = {
-      type: 'string',
-      description: 'Access token from the OAuth2 server',
-      example: 'qwerty'
-    };
-    if (!spec.properties.fields) {
-      spec.properties.fields = {
-        description: 'filter the keys in the result objects, to only contain these fields',
-        type: 'array',
-        items: {type: 'string'}
-      };
-    }
-    spec.properties.pretty = {
-      description: 'whether to prettyprint the resulting json',
-      type: 'bool',
-      example: true
-    };
     let request = {
       name: 'request',
       description: 'Request object',

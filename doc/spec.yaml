@@ -30,11 +30,11 @@ api:
         example: ["15"]
       limit:
         description: number of items to get. This is passed to the DDBCMS-API, which decides how many to return. (currently usually less than the requested limit/amount).
-        type: number
+        type: integer
         example: 10
       offset:
         description: offset to first item to get. This is passed to the ddb-cms.
-        type: number
+        type: integer
         example: 10
       fields:
         description: which parts of the response to get
@@ -69,6 +69,7 @@ api:
         example: ["creator", "subject", "type"]
       limit:
         description: number of facets per type
+        type: integer
         example: 2
     response:
       example: { "creator": [{ "term": "nordisk ministerråd", "frequency": 2708}, { "term": "nordisk råd", "frequency": 2463}], "subject": [{ "term": "danmark", "frequency": 188792}, { "term": "historie", "frequency": 19867}], "type": [{ "term": "avisartikel", "frequency": 83786}, { "term": "tidsskriftsartikel", "frequency": 77618}]}
@@ -112,10 +113,10 @@ api:
         items: {type: "string"}
       limit:
         description: number of items to get. This is passed to the DDBCMS-API, which decides how many to return. (currently usually less than the requested limit/amount).
-        type: number
+        type: integer
       offset:
         description: offset to first item to get. This is passed to the ddb-cms.
-        type: number
+        type: integer
     response:
       example: [{"nid": "19", "title": {"name": "Titel", "value": "Sportsstjerner - bag facaden", "attr": []}, "...": "..."}, "..."]
     examples:
@@ -206,7 +207,7 @@ api:
       limit:
         example: 10
         description: maximum number of results returned
-        type: number
+        type: integer
     response:
       example: [ { "title": "Harry Potter og Fønixordenen", "creator": "...", "weight": 123, "pid": "300185-katalog:100562332", "fromPid": "870970-basis:51989252"}, "..."]
   recommend:
@@ -255,7 +256,7 @@ api:
       limit:
         example: 10
         description: maximum number of results returned
-        type: number
+        type: integer
     response:
       example: [ { "title": "Harry Potter og Fønixordenen", "creator": "...", "weight": 123, "pid": "300185-katalog:100562332", "fromPid": "870970-basis:51989252"}, "..."]
   renew:
@@ -286,11 +287,11 @@ api:
       offset:
         example: 0
         description: Starting position in search result
-        type: number
+        type: integer
       limit:
         example: 10
         description: maximum number of results returned
-        type: number
+        type: integer
       fields:
         example: ["title", "creator", "pid"]
         description: |
@@ -329,7 +330,7 @@ api:
         example: "harry"
       limit:
         description: Maximum number of suggestions returned
-        type: number
+        type: integer
         example: 10
       type:
         description: The desired type of suggestions, possible values are `library`, `title`, `subject`, `creator`
@@ -436,14 +437,7 @@ defaultProperties:
   createTest:
     type: 'bool'
     example: true
-    onlyIfDev: true
-  limit:
-    description: limit the number of result in array.
-    type: number
-    example: 10
-    onlyIfArrayResult: true
-  offset:
-    description: offset to first item to get.
-    type: number
-    example: 10
-    onlyIfArrayResult: true
+    noSwag: true
+  callback:
+    type: 'string'
+    noSwag: true
