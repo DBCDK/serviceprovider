@@ -210,8 +210,14 @@ module.exports.run = function (worker) {
   });
 
   // Execute transform
-  let callApi = (event, query, context) =>
-    (serviceProvider.hasTransformer(event)
+  let callApi = (event, query, context) => {
+    let validateErrors = validateRequest(event, query);
+    if(validateErrors.length) {
+      return Promise.resolve({
+        statusCode: 400, 
+        error: validateErrors.map(o => o.message).join('\n')});
+    }
+    return (serviceProvider.hasTransformer(event)
       ? serviceProvider.execute(event, query, context)
       : Promise.reject('Missing transformer: ' + event))
     .then(response => {
@@ -254,13 +260,14 @@ module.exports.run = function (worker) {
     }).catch(err => {
       log.error(String(err), {stacktrace: err.stack});
       return {statusCode: 500, error: String(err)};
-    }).then(result => {
+    })
+  /*.then(result => {
       let validateWarnings = validateRequest(event, query);
-      if(validateWarnings) {
+      if(validateWarnings.length) {
         result.warnings = validateWarnings;
       }
       return result;
-    });
+    })*/;};
 
   // WebSocket/SocketCluster transport
   worker.on('connection', (connection) => {

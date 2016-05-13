@@ -1,22 +1,22 @@
 'use strict';
 
-import validate from 'json-schema';
+import {validate} from 'jsonschema';
 import fs from 'fs';
 import yaml from 'js-yaml';
-
 
 let schemas;
 
 function getSchema(name) {
   if(!schemas) {
     schemas = {}
-    let fullSpec = yaml.safeLoad(fs.readFileSync(__dirname + '/../doc/spec.yaml', 'utf-8')).api;
-    for(let key in fullSpec) {
-      let spec = fullSpec[name]
+    let fullSpec = yaml.safeLoad(fs.readFileSync(__dirname + '/../doc/spec.yaml', 'utf-8'));
+    for(let key in fullSpec.api) {
+      let spec = fullSpec.api[key];
       schemas[key] = {
         type: 'object',
-        required: fullSpec[key].required,
-        properties: fullSpec[key].properties
+        required: spec.required,
+        additionalProperties: false,
+        properties: Object.assign({}, fullSpec.defaultProperties, spec.properties)
       };
     }
   }
@@ -25,6 +25,5 @@ function getSchema(name) {
 
 export default (name, params) => {
   let schema = getSchema(name);
-  console.log('validate', name, params, JSON.stringify(schema).slice(0,80));
-  console.log(validate(params, ""));
+  return validate(params, schema).errors;
 };
