@@ -36,7 +36,7 @@ export default (params, context) => {
 
   return context.call('opensearch', soap).then(body => {
     body = JSON.parse(body).searchResponse;
-    if(body.error) {
+    if (body.error) {
       return {
         statusCode: 500,
         error: body.error.$
