@@ -95,13 +95,9 @@ api:
         type: array
         items: {type: "string"}
         example: ["branchId", "city", "geolocation"]
-    response:
-      example: [ {"branchId": "700401", "city": "Flensburg", "longitude": "54.4801716", "latitude": "9.0467115"}, {"branchId": "710104", "city": "København N", "longitude": "55.680887", "latitude": "12.573619"}, "..."  ]
     examples:
-      - request: { "fields": ["branchId", "city", "longitude", "latitude"]}
-        response: [ {"branchId": "700401", "city": "Flensburg", "longitude": "54.4801716", "latitude": "9.0467115"}, {"branchId": "710104", "city": "København N", "longitude": "55.680887", "latitude": "12.573619"}, "..."  ]
-      - request: { "branchIds": ["700401", "710104"], "fields": ["branchId", "city", "longitude", "latitude"]}
-        response: [ {"branchId": "700401", "city": "Flensburg", "longitude": "54.4801716", "latitude": "9.0467115"}, {"branchId": "710104", "city": "København N", "longitude": "55.680887", "latitude": "12.573619"}]
+      - request: { "fields": ["branchId", "city", "longitude", "latitude", "geolocation"]}
+      - request: { "branchIds": ["700401", "710104"], "fields": ["branchId", "city", "geolocation"]}
   news:
     tags:
       - CMS
