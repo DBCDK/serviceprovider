@@ -8,6 +8,14 @@ availability {"pid": "870970-basis:51989252"}
   }
 }
 
+availability {"pid": "870970-basis:22503030"}
+{
+  "statusCode": 200,
+  "data": {
+    "willLend": false
+  }
+}
+
 events {"fields": ["title", "changed", "nid", "field_ding_event_title_image"]}
 {
   "statusCode": 200,
@@ -56,7 +64,7 @@ facets {"q" : "harry"}
       },
       {
         "term": "harry christophers",
-        "frequency": 38
+        "frequency": 37
       },
       {
         "term": "the sixteen",
@@ -86,15 +94,15 @@ facets {"q" : "harry"}
     "subject": [
       {
         "term": "vokal",
-        "frequency": 471
+        "frequency": 470
       },
       {
         "term": "usa",
-        "frequency": 380
+        "frequency": 378
       },
       {
         "term": "rock",
-        "frequency": 205
+        "frequency": 204
       },
       {
         "term": "england",
@@ -102,7 +110,7 @@ facets {"q" : "harry"}
       },
       {
         "term": "instrumental",
-        "frequency": 196
+        "frequency": 194
       },
       {
         "term": "2000-2009",
@@ -128,7 +136,7 @@ facets {"q" : "harry"}
     "language": [
       {
         "term": "engelsk",
-        "frequency": 684
+        "frequency": 682
       },
       {
         "term": "dansk",
@@ -140,7 +148,7 @@ facets {"q" : "harry"}
       },
       {
         "term": "latin",
-        "frequency": 18
+        "frequency": 17
       },
       {
         "term": "tysk",
@@ -194,19 +202,19 @@ facets {"q" : "harry"}
       },
       {
         "term": "2006",
-        "frequency": 82
+        "frequency": 81
       },
       {
         "term": "2014",
         "frequency": 81
       },
       {
-        "term": "2004",
+        "term": "2005",
         "frequency": 78
       },
       {
-        "term": "2005",
-        "frequency": 78
+        "term": "2004",
+        "frequency": 77
       }
     ],
     "form": [
@@ -1860,12 +1868,12 @@ search {"q" : "ost", "fields": ["creator", "coverUrlFull"], "limit": 3}
   "data": [
     {
       "coverUrlFull": [
-        "//moreinfo.addi.dk/2.1/more_info_get.php?id=44502234&type=forside_stor&key=5b7c3f14532ce7a08538"
+        "//moreinfo.addi.dk/2.1/more_info_get.php?id=44502234&type=forside_stor&key=5e7357505d440d3688ca"
       ]
     },
     {
       "coverUrlFull": [
-        "//moreinfo.addi.dk/2.1/more_info_get.php?id=54073988&type=forside_stor&key=6e590f0d3f6b116c802d"
+        "//moreinfo.addi.dk/2.1/more_info_get.php?id=54073988&type=forside_stor&key=5e7837ef7b82cf30d417"
       ]
     },
     {
@@ -1874,6 +1882,128 @@ search {"q" : "ost", "fields": ["creator", "coverUrlFull"], "limit": 3}
       ]
     }
   ]
+}
+
+search { "q": "harry AND potter", "fields": ["identifier", "title", "collection", "subjectDBCF", "hasAdaptation", "coverUrlFull"], "sort": "rank_title"}
+{
+  "statusCode": 200,
+  "data": [
+    {
+      "title": [
+        "Lego creator - Harry Potter"
+      ],
+      "collection": [
+        "775100-katalog:24039978"
+      ],
+      "subjectDBCF": [
+        "legoklodser"
+      ]
+    },
+    {
+      "title": [
+        "Harry Potter-fænomenet"
+      ],
+      "collection": [
+        "870971-faktalink:34568634"
+      ],
+      "subjectDBCF": [
+        "Harry Potter-bøger",
+        "Joanne K. Rowling",
+        "børnelitteratur",
+        "engelsk film",
+        "engelsk litteratur",
+        "film",
+        "litteratur"
+      ]
+    },
+    {
+      "title": [
+        "Harry potter and the half-blood prince"
+      ],
+      "collection": [
+        "150061-ebog:ODN0000791016",
+        "150061-netlydbog:ODN0000791532"
+      ]
+    },
+    {
+      "title": [
+        "Harry Potter and the Chamber of Secrets"
+      ],
+      "collection": [
+        "775100-katalog:95410561",
+        "150061-ebog:ODN0000790276",
+        "150061-netlydbog:ODN0000791396"
+      ]
+    },
+    {
+      "title": [
+        "Harry Potter and the Half-Blood Prince"
+      ],
+      "collection": [
+        "775100-katalog:28668147"
+      ],
+      "coverUrlFull": [
+        "//moreinfo.addi.dk/2.1/more_info_get.php?id=51917747&type=forside_stor&key=a7c10b418e1a190b58aa"
+      ]
+    },
+    {
+      "title": [
+        "Harry potter and the philosopher's stone"
+      ],
+      "collection": [
+        "150061-ebog:ODN0000790239",
+        "150061-netlydbog:ODN0000791363"
+      ]
+    },
+    {
+      "title": [
+        "Harry Potter og dødsregalierne"
+      ],
+      "collection": [
+        "775100-katalog:29316910",
+        "775100-katalog:27267912",
+        "775100-katalog:26917921",
+        "775100-katalog:26931215",
+        "775100-katalog:27639798"
+      ],
+      "coverUrlFull": [
+        "//moreinfo.addi.dk/2.1/more_info_get.php?id=55722038&type=forside_stor&key=55992e8cc42b8bd9e2f6"
+      ]
+    },
+    {
+      "title": [
+        "Harry potter and the deathly hallows"
+      ],
+      "collection": [
+        "150061-ebog:ODN0000791048",
+        "150061-netlydbog:ODN0000791590"
+      ]
+    },
+    {
+      "title": [
+        "Harry potter and the prisoner of azkaban"
+      ],
+      "collection": [
+        "150061-ebog:ODN0000790934",
+        "150061-netlydbog:ODN0000791430"
+      ]
+    },
+    {
+      "title": [
+        "Harry potter and the order of the phoenix"
+      ],
+      "collection": [
+        "150061-ebog:ODN0000790987",
+        "150061-netlydbog:ODN0000791499"
+      ]
+    }
+  ]
+}
+
+search { "q": "harry AND potter", "fields": ["identifier", "title", "collection", "subjectDBCF", "hasAdaptation"], "sort": "default" }
+{
+  "statusCode": 500,
+  "error": "Error: Unknown sort: default"
 }
 
 suggest {"q" : "harr", "type": "creator"}
@@ -2692,7 +2822,7 @@ work {"pids": ["300185-katalog:100562332", "870970-basis:51989252", "870971-forf
     {},
     {
       "coverUrlFull": [
-        "//moreinfo.addi.dk/2.1/more_info_get.php?id=64951376&type=forside_stor&key=c726f7373563e71b2410"
+        "//moreinfo.addi.dk/2.1/more_info_get.php?id=64951376&type=forside_stor&key=3b20a305b4d20907a56d"
       ],
       "title": [
         "Harry Potter og de vises sten"
