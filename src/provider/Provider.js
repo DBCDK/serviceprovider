@@ -20,6 +20,7 @@ import {ddbcms, news, events} from './ddbcms';
 import caller from './caller';
 import {testTransformer} from './testTransformer.js';
 import recommendTransformer from './recommend';
+import rankTransformer from './rank';
 
 /**
  * Initialization of the provider and the underlying services.
@@ -41,6 +42,7 @@ export default function Provider() {
     libraries: librariesTransformer,
     facets: facetTransformer,
     recommend: recommendTransformer,
+    rank: rankTransformer,
     suggest: suggestTransformer,
     getCoverImageNeo: coverImageTransformer,
     getOpenSearchWorkNeo: openSearchWorkTransformer,
