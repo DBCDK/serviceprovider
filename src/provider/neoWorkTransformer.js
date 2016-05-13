@@ -189,10 +189,10 @@ export default (request, context) => {
       return result;
     }
     let requests = [];
-    for(let field of dataUrls) {
-      for(let i = 0; i < result.data.length; ++i) {
+    for (let field of dataUrls) {
+      for (let i = 0; i < result.data.length; ++i) {
         let url = (result.data[i][field.replace('coverDataUrl', 'coverUrl')] || [])[0];
-        if(url) {
+        if (url) {
           requests.push({url, field, i});
         }
       }
@@ -202,6 +202,6 @@ export default (request, context) => {
         let str = `data:image/jpeg;base64,${new Buffer(o, 'binary').toString('base64')}`;
         result.data[req.i][req.field] = str;
       }));
-    return Promise.all(requests).then(_ => result);
+    return Promise.all(requests).then(any => result);
   });
 };
