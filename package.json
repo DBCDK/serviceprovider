@@ -18,8 +18,6 @@
     "test:single": "LOG_LEVEL=off mocha --compilers js:babel/register",
     "tail": "tail -f log.log",
     "tail:timer": "tail -f log.log | awk '(/event/ || /time_delta/ || /TIMER/) && !/result/'",
-    "transformer-proto": "node src/transformer-proto.js",
-    "gtrans": "node src/genericTransformerExample.js",
     "coverage": "istanbul cover _mocha --report lcovonly --report cobertura --report html -- --compilers js:babel/register src/**/__tests__/*.test.js"
   },
   "repository": {
