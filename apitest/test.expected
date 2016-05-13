@@ -422,6 +422,6802 @@ libraries {"limit": 10, "branchIds": ["717500","717501","717502"], "fields": ["a
   ]
 }
 
+libraries { "fields": ["branchId", "city", "geolocation"]}
+{
+  "statusCode": 200,
+  "data": [
+    {
+      "branchId": "100450",
+      "city": "Q2zx"
+    },
+    {
+      "branchId": "131300"
+    },
+    {
+      "branchId": "135300"
+    },
+    {
+      "branchId": "700400",
+      "city": "Flensburg",
+      "geolocation": {
+        "latitude": "54.79212",
+        "longitude": "9.43103"
+      }
+    },
+    {
+      "branchId": "700401",
+      "city": "Husum",
+      "geolocation": {
+        "latitude": "54.4801716",
+        "longitude": "9.0467115"
+      }
+    },
+    {
+      "branchId": "700402",
+      "city": "Schleswig",
+      "geolocation": {
+        "latitude": "54.5188982",
+        "longitude": "9.5640843"
+      }
+    },
+    {
+      "branchId": "700404",
+      "city": "Eckernförde",
+      "geolocation": {
+        "latitude": "54.47328",
+        "longitude": "9.82871"
+      }
+    },
+    {
+      "branchId": "700405",
+      "city": "Flensburg",
+      "geolocation": {
+        "latitude": "54.79212",
+        "longitude": "9.43103"
+      }
+    },
+    {
+      "branchId": "710100",
+      "city": "København K",
+      "geolocation": {
+        "latitude": "55.680887",
+        "longitude": "12.573619"
+      }
+    },
+    {
+      "branchId": "710104",
+      "city": "København N",
+      "geolocation": {
+        "latitude": "55.6860904",
+        "longitude": "12.5567168"
+      }
+    },
+    {
+      "branchId": "710105",
+      "city": "Brønshøj",
+      "geolocation": {
+        "latitude": "55.7042921",
+        "longitude": "12.4993836"
+      }
+    },
+    {
+      "branchId": "710106",
+      "city": "København K",
+      "geolocation": {
+        "latitude": "55.6723406",
+        "longitude": "12.5921292"
+      }
+    },
+    {
+      "branchId": "710107",
+      "city": "Brønshøj",
+      "geolocation": {
+        "latitude": "55.7113268",
+        "longitude": "12.4747123"
+      }
+    },
+    {
+      "branchId": "710108",
+      "city": "København S",
+      "geolocation": {
+        "latitude": "55.6665428",
+        "longitude": "12.5791908"
+      }
+    },
+    {
+      "branchId": "710109",
+      "city": "København Ø",
+      "geolocation": {
+        "latitude": "55.709173",
+        "longitude": "12.576458"
+      }
+    },
+    {
+      "branchId": "710110",
+      "city": "København NV",
+      "geolocation": {
+        "latitude": "55.708421",
+        "longitude": "12.52288"
+      }
+    },
+    {
+      "branchId": "710111",
+      "city": "København N",
+      "geolocation": {
+        "latitude": "55.6990425",
+        "longitude": "12.5432118"
+      }
+    },
+    {
+      "branchId": "710112",
+      "city": "København S",
+      "geolocation": {
+        "latitude": "55.6487443",
+        "longitude": "12.5955017"
+      }
+    },
+    {
+      "branchId": "710113",
+      "city": "København S",
+      "geolocation": {
+        "latitude": "55.6651998",
+        "longitude": "12.6038686"
+      }
+    },
+    {
+      "branchId": "710114",
+      "city": "København S",
+      "geolocation": {
+        "latitude": "55.650359",
+        "longitude": "12.6132581"
+      }
+    },
+    {
+      "branchId": "710115",
+      "city": "København SV",
+      "geolocation": {
+        "latitude": "55.6468105",
+        "longitude": "12.529623"
+      }
+    },
+    {
+      "branchId": "710116",
+      "city": "Brønshøj",
+      "geolocation": {
+        "latitude": "55.718864",
+        "longitude": "12.481163"
+      }
+    },
+    {
+      "branchId": "710117",
+      "city": "Valby",
+      "geolocation": {
+        "latitude": "55.665354",
+        "longitude": "12.513072"
+      }
+    },
+    {
+      "branchId": "710118",
+      "city": "Vanløse",
+      "geolocation": {
+        "latitude": "55.686532",
+        "longitude": "12.491274"
+      }
+    },
+    {
+      "branchId": "710119",
+      "city": "København V",
+      "geolocation": {
+        "latitude": "55.667836",
+        "longitude": "12.543681"
+      }
+    },
+    {
+      "branchId": "710120",
+      "city": "Valby",
+      "geolocation": {
+        "latitude": "55.649234",
+        "longitude": "12.5032789"
+      }
+    },
+    {
+      "branchId": "710121",
+      "city": "København Ø",
+      "geolocation": {
+        "latitude": "55.694579",
+        "longitude": "12.581699"
+      }
+    },
+    {
+      "branchId": "710122",
+      "city": "København S",
+      "geolocation": {
+        "latitude": "55.6313466",
+        "longitude": "12.5809647"
+      }
+    },
+    {
+      "branchId": "714700",
+      "city": "Frederiksberg",
+      "geolocation": {
+        "latitude": "55.6810034",
+        "longitude": "12.5303327"
+      }
+    },
+    {
+      "branchId": "714702",
+      "city": "Frederiksberg C",
+      "geolocation": {
+        "latitude": "55.679546",
+        "longitude": "12.550756"
+      }
+    },
+    {
+      "branchId": "714703",
+      "city": "Frederiksberg",
+      "geolocation": {
+        "latitude": "55.688685",
+        "longitude": "12.523189"
+      }
+    },
+    {
+      "branchId": "714704",
+      "city": "Frederiksberg",
+      "geolocation": {
+        "latitude": "55.670992",
+        "longitude": "12.500803"
+      }
+    },
+    {
+      "branchId": "715100",
+      "city": "Ballerup",
+      "geolocation": {
+        "latitude": "55.7297418",
+        "longitude": "12.3595981"
+      }
+    },
+    {
+      "branchId": "715101",
+      "city": "Skovlunde",
+      "geolocation": {
+        "latitude": "55.718655",
+        "longitude": "12.400783"
+      }
+    },
+    {
+      "branchId": "715102",
+      "city": "Måløv",
+      "geolocation": {
+        "latitude": "55.749694",
+        "longitude": "12.319237"
+      }
+    },
+    {
+      "branchId": "715300",
+      "city": "Brøndby",
+      "geolocation": {
+        "latitude": "55.667581",
+        "longitude": "12.439601"
+      }
+    },
+    {
+      "branchId": "715301",
+      "city": "Brøndby",
+      "geolocation": {
+        "latitude": "55.65282",
+        "longitude": "12.408298"
+      }
+    },
+    {
+      "branchId": "715302",
+      "city": "Brøndby Strand",
+      "geolocation": {
+        "latitude": "55.6232944",
+        "longitude": "12.4233432"
+      }
+    },
+    {
+      "branchId": "715500",
+      "city": "Dragør",
+      "geolocation": {
+        "latitude": "55.5932177",
+        "longitude": "12.6707656"
+      }
+    },
+    {
+      "branchId": "715501",
+      "city": "Dragør",
+      "geolocation": {
+        "latitude": "55.594183",
+        "longitude": "12.63912"
+      }
+    },
+    {
+      "branchId": "715502"
+    },
+    {
+      "branchId": "715700",
+      "city": "Hellerup",
+      "geolocation": {
+        "latitude": "55.737459",
+        "longitude": "12.573438"
+      }
+    },
+    {
+      "branchId": "715701",
+      "city": "Charlottenlund",
+      "geolocation": {
+        "latitude": "55.7580265",
+        "longitude": "12.5714021"
+      }
+    },
+    {
+      "branchId": "715702",
+      "city": "Gentofte",
+      "geolocation": {
+        "latitude": "55.751032",
+        "longitude": "12.5184979"
+      }
+    },
+    {
+      "branchId": "715703",
+      "city": "Gentofte",
+      "geolocation": {
+        "latitude": "55.746455",
+        "longitude": "12.541343"
+      }
+    },
+    {
+      "branchId": "715704",
+      "city": "Dyssegård",
+      "geolocation": {
+        "latitude": "55.732251",
+        "longitude": "12.538733"
+      }
+    },
+    {
+      "branchId": "715705",
+      "city": "Gentofte",
+      "geolocation": {
+        "latitude": "55.7615678",
+        "longitude": "12.5269871"
+      }
+    },
+    {
+      "branchId": "715900",
+      "city": "Søborg",
+      "geolocation": {
+        "latitude": "55.7423172",
+        "longitude": "12.4949918"
+      }
+    },
+    {
+      "branchId": "715902",
+      "city": "Bagsværd",
+      "geolocation": {
+        "latitude": "55.7606338",
+        "longitude": "12.4557026"
+      }
+    },
+    {
+      "branchId": "715903",
+      "city": "Søborg",
+      "geolocation": {
+        "latitude": "55.730211",
+        "longitude": "12.497613"
+      }
+    },
+    {
+      "branchId": "715904",
+      "city": "Søborg",
+      "geolocation": {
+        "latitude": "55.723797",
+        "longitude": "12.469845"
+      }
+    },
+    {
+      "branchId": "715905",
+      "city": "Bagsværd",
+      "geolocation": {
+        "latitude": "55.758464",
+        "longitude": "12.439297"
+      }
+    },
+    {
+      "branchId": "716100",
+      "city": "Glostrup",
+      "geolocation": {
+        "latitude": "55.66366",
+        "longitude": "12.3938279"
+      }
+    },
+    {
+      "branchId": "716300",
+      "city": "Herlev",
+      "geolocation": {
+        "latitude": "55.725455",
+        "longitude": "12.435548"
+      }
+    },
+    {
+      "branchId": "716301",
+      "city": "Herlev"
+    },
+    {
+      "branchId": "716500",
+      "city": "Albertslund",
+      "geolocation": {
+        "latitude": "55.6570156",
+        "longitude": "12.3562517"
+      }
+    },
+    {
+      "branchId": "716503",
+      "city": "Albertslund",
+      "geolocation": {
+        "latitude": "55.657011",
+        "longitude": "12.3399174"
+      }
+    },
+    {
+      "branchId": "716510"
+    },
+    {
+      "branchId": "716511"
+    },
+    {
+      "branchId": "716700",
+      "city": "Hvidovre",
+      "geolocation": {
+        "latitude": "55.641952",
+        "longitude": "12.477669"
+      }
+    },
+    {
+      "branchId": "716701",
+      "city": "Hvidovre",
+      "geolocation": {
+        "latitude": "55.62752",
+        "longitude": "12.4500379"
+      }
+    },
+    {
+      "branchId": "716900",
+      "city": "Taastrup",
+      "geolocation": {
+        "latitude": "55.648429",
+        "longitude": "12.299623"
+      }
+    },
+    {
+      "branchId": "716903",
+      "city": "Hedehusene",
+      "geolocation": {
+        "latitude": "55.6494695",
+        "longitude": "12.1973509"
+      }
+    },
+    {
+      "branchId": "716904",
+      "city": "Tåstrup",
+      "geolocation": {
+        "latitude": "55.6520198",
+        "longitude": "12.2689169"
+      }
+    },
+    {
+      "branchId": "717300",
+      "city": "Kongens Lyngby",
+      "geolocation": {
+        "latitude": "55.773331",
+        "longitude": "12.498974"
+      }
+    },
+    {
+      "branchId": "717303",
+      "city": "Klampenborg",
+      "geolocation": {
+        "latitude": "55.7870693",
+        "longitude": "12.5947267"
+      }
+    },
+    {
+      "branchId": "717305",
+      "city": "Virum",
+      "geolocation": {
+        "latitude": "55.793748",
+        "longitude": "12.47468"
+      }
+    },
+    {
+      "branchId": "717500",
+      "city": "Rødovre",
+      "geolocation": {
+        "latitude": "55.680913",
+        "longitude": "12.457274"
+      }
+    },
+    {
+      "branchId": "717501",
+      "city": "Rødovre",
+      "geolocation": {
+        "latitude": "55.701627",
+        "longitude": "12.454169"
+      }
+    },
+    {
+      "branchId": "717502",
+      "city": "Rødovre"
+    },
+    {
+      "branchId": "718300",
+      "city": "Ishøj",
+      "geolocation": {
+        "latitude": "55.6137373",
+        "longitude": "12.3559647"
+      }
+    },
+    {
+      "branchId": "718301",
+      "city": "Ishøj",
+      "geolocation": {
+        "latitude": "55.6137373",
+        "longitude": "12.3559647"
+      }
+    },
+    {
+      "branchId": "718500",
+      "city": "Kastrup",
+      "geolocation": {
+        "latitude": "55.632321",
+        "longitude": "12.622646"
+      }
+    },
+    {
+      "branchId": "718502",
+      "city": "Kastrup",
+      "geolocation": {
+        "latitude": "55.603256",
+        "longitude": "12.586085"
+      }
+    },
+    {
+      "branchId": "718700",
+      "city": "Vallensbæk Strand",
+      "geolocation": {
+        "latitude": "55.624257",
+        "longitude": "12.387463"
+      }
+    },
+    {
+      "branchId": "718711",
+      "city": "Vallensbæk",
+      "geolocation": {
+        "latitude": "55.6502132",
+        "longitude": "12.3573339"
+      }
+    },
+    {
+      "branchId": "719000",
+      "city": "Værløse",
+      "geolocation": {
+        "latitude": "55.783473",
+        "longitude": "12.371396"
+      }
+    },
+    {
+      "branchId": "719001",
+      "city": "Farum",
+      "geolocation": {
+        "latitude": "55.81374",
+        "longitude": "12.377128"
+      }
+    },
+    {
+      "branchId": "719002",
+      "city": "Værløse",
+      "geolocation": {
+        "latitude": "55.764571",
+        "longitude": "12.402532"
+      }
+    },
+    {
+      "branchId": "719003",
+      "city": "Værløse"
+    },
+    {
+      "branchId": "720100",
+      "city": "Allerød",
+      "geolocation": {
+        "latitude": "55.86773",
+        "longitude": "12.354155"
+      }
+    },
+    {
+      "branchId": "720101",
+      "city": "Lynge",
+      "geolocation": {
+        "latitude": "55.8393163",
+        "longitude": "12.2775605"
+      }
+    },
+    {
+      "branchId": "721000",
+      "city": "Fredensborg",
+      "geolocation": {
+        "latitude": "55.9789981",
+        "longitude": "12.3989543"
+      }
+    },
+    {
+      "branchId": "721001",
+      "city": "Nivå",
+      "geolocation": {
+        "latitude": "55.934494",
+        "longitude": "12.50394"
+      }
+    },
+    {
+      "branchId": "721002",
+      "city": "Humlebæk",
+      "geolocation": {
+        "latitude": "55.964269",
+        "longitude": "12.5293647"
+      }
+    },
+    {
+      "branchId": "721003",
+      "city": "Kokkedal",
+      "geolocation": {
+        "latitude": "55.909695",
+        "longitude": "12.489103"
+      }
+    },
+    {
+      "branchId": "721700",
+      "city": "Helsingør",
+      "geolocation": {
+        "latitude": "56.0377711",
+        "longitude": "12.6141173"
+      }
+    },
+    {
+      "branchId": "721701",
+      "city": "Espergærde",
+      "geolocation": {
+        "latitude": "55.9951101",
+        "longitude": "12.5467761"
+      }
+    },
+    {
+      "branchId": "721702",
+      "city": "Helsingør",
+      "geolocation": {
+        "latitude": "56.030787",
+        "longitude": "12.592127"
+      }
+    },
+    {
+      "branchId": "721703",
+      "city": "Hornbæk",
+      "geolocation": {
+        "latitude": "56.0905393",
+        "longitude": "12.4557533"
+      }
+    },
+    {
+      "branchId": "721704",
+      "city": "Helsingør",
+      "geolocation": {
+        "latitude": "56.021911",
+        "longitude": "12.581346"
+      }
+    },
+    {
+      "branchId": "721707",
+      "city": "Ålsgårde",
+      "geolocation": {
+        "latitude": "56.076667",
+        "longitude": "12.536944"
+      }
+    },
+    {
+      "branchId": "721900",
+      "city": "Hillerød",
+      "geolocation": {
+        "latitude": "55.927909",
+        "longitude": "12.300806"
+      }
+    },
+    {
+      "branchId": "721902",
+      "city": "Skævinge",
+      "geolocation": {
+        "latitude": "55.9087417",
+        "longitude": "12.14863"
+      }
+    },
+    {
+      "branchId": "722300",
+      "city": "Hørsholm",
+      "geolocation": {
+        "latitude": "55.880699",
+        "longitude": "12.497312"
+      }
+    },
+    {
+      "branchId": "723000",
+      "city": "Birkerød",
+      "geolocation": {
+        "latitude": "55.840465",
+        "longitude": "12.427654"
+      }
+    },
+    {
+      "branchId": "723001",
+      "city": "Holte",
+      "geolocation": {
+        "latitude": "55.811471",
+        "longitude": "12.471455"
+      }
+    },
+    {
+      "branchId": "723002",
+      "city": "Nærum",
+      "geolocation": {
+        "latitude": "55.816177",
+        "longitude": "12.5397269"
+      }
+    },
+    {
+      "branchId": "723003",
+      "city": "Vedbæk",
+      "geolocation": {
+        "latitude": "55.852167",
+        "longitude": "12.5598497"
+      }
+    },
+    {
+      "branchId": "724000",
+      "city": "Smørum",
+      "geolocation": {
+        "latitude": "55.7315365",
+        "longitude": "12.3083103"
+      }
+    },
+    {
+      "branchId": "724001",
+      "city": "Stenløse",
+      "geolocation": {
+        "latitude": "55.792549",
+        "longitude": "12.266358"
+      }
+    },
+    {
+      "branchId": "724002",
+      "city": "Stenløse",
+      "geolocation": {
+        "latitude": "55.768226",
+        "longitude": "12.1965013"
+      }
+    },
+    {
+      "branchId": "724003",
+      "city": "Ølstykke",
+      "geolocation": {
+        "latitude": "55.793643",
+        "longitude": "12.147581"
+      }
+    },
+    {
+      "branchId": "725000",
+      "city": "Frederikssund",
+      "geolocation": {
+        "latitude": "55.8379723",
+        "longitude": "12.0638525"
+      }
+    },
+    {
+      "branchId": "725001",
+      "city": "Jægerspris",
+      "geolocation": {
+        "latitude": "55.852574",
+        "longitude": "11.985131"
+      }
+    },
+    {
+      "branchId": "725002",
+      "city": "Slangerup",
+      "geolocation": {
+        "latitude": "55.845994",
+        "longitude": "12.169767"
+      }
+    },
+    {
+      "branchId": "725003",
+      "city": "Skibby",
+      "geolocation": {
+        "latitude": "55.7489736",
+        "longitude": "11.9542105"
+      }
+    },
+    {
+      "branchId": "725300",
+      "city": "Greve",
+      "geolocation": {
+        "latitude": "55.5983284",
+        "longitude": "12.330856"
+      }
+    },
+    {
+      "branchId": "725302",
+      "city": "Karlslunde",
+      "geolocation": {
+        "latitude": "55.5626436",
+        "longitude": "12.2662491"
+      }
+    },
+    {
+      "branchId": "725304",
+      "city": "Tune",
+      "geolocation": {
+        "latitude": "55.596157",
+        "longitude": "12.179258"
+      }
+    },
+    {
+      "branchId": "725900",
+      "city": "Køge",
+      "geolocation": {
+        "latitude": "55.4578346",
+        "longitude": "12.1822443"
+      }
+    },
+    {
+      "branchId": "725902",
+      "city": "Herfølge",
+      "geolocation": {
+        "latitude": "55.416913",
+        "longitude": "12.142357"
+      }
+    },
+    {
+      "branchId": "725903",
+      "city": "Borup",
+      "geolocation": {
+        "latitude": "55.5002162",
+        "longitude": "11.9804517"
+      }
+    },
+    {
+      "branchId": "725904",
+      "city": "Bjæverskov",
+      "geolocation": {
+        "latitude": "55.457699",
+        "longitude": "12.033552"
+      }
+    },
+    {
+      "branchId": "725905",
+      "city": "Ll. Skensved",
+      "geolocation": {
+        "latitude": "55.4878305",
+        "longitude": "12.0803269"
+      }
+    },
+    {
+      "branchId": "726000",
+      "city": "Frederiksværk",
+      "geolocation": {
+        "latitude": "55.971932",
+        "longitude": "12.019282"
+      }
+    },
+    {
+      "branchId": "726001",
+      "city": "Hundested",
+      "geolocation": {
+        "latitude": "55.959432",
+        "longitude": "11.852819"
+      }
+    },
+    {
+      "branchId": "726500",
+      "city": "Roskilde",
+      "geolocation": {
+        "latitude": "55.64191",
+        "longitude": "12.087845"
+      }
+    },
+    {
+      "branchId": "726501",
+      "city": "Roskilde",
+      "geolocation": {
+        "latitude": "55.64191",
+        "longitude": "12.087845"
+      }
+    },
+    {
+      "branchId": "726502",
+      "city": "Jyllinge",
+      "geolocation": {
+        "latitude": "55.748496",
+        "longitude": "12.110293"
+      }
+    },
+    {
+      "branchId": "726503",
+      "city": "Roskilde",
+      "geolocation": {
+        "latitude": "55.7371036",
+        "longitude": "12.1489658"
+      }
+    },
+    {
+      "branchId": "726504",
+      "city": "Roskilde",
+      "geolocation": {
+        "latitude": "55.693047",
+        "longitude": "12.1608129"
+      }
+    },
+    {
+      "branchId": "726505",
+      "city": "Viby Sj.",
+      "geolocation": {
+        "latitude": "55.547563",
+        "longitude": "12.02673"
+      }
+    },
+    {
+      "branchId": "726506",
+      "city": "Gadstrup",
+      "geolocation": {
+        "latitude": "55.573022",
+        "longitude": "12.09189"
+      }
+    },
+    {
+      "branchId": "726900",
+      "city": "Solrød Strand",
+      "geolocation": {
+        "latitude": "55.516667",
+        "longitude": "12.216667"
+      }
+    },
+    {
+      "branchId": "726901",
+      "city": "Havdrup",
+      "geolocation": {
+        "latitude": "55.543879",
+        "longitude": "12.115475"
+      }
+    },
+    {
+      "branchId": "727000",
+      "city": "Helsinge",
+      "geolocation": {
+        "latitude": "56.026634",
+        "longitude": "12.192295"
+      }
+    },
+    {
+      "branchId": "727002",
+      "city": "Tisvildeleje",
+      "geolocation": {
+        "latitude": "56.056382",
+        "longitude": "12.0914"
+      }
+    },
+    {
+      "branchId": "727003",
+      "city": "Vejby",
+      "geolocation": {
+        "latitude": "56.0649045",
+        "longitude": "12.1348267"
+      }
+    },
+    {
+      "branchId": "727004",
+      "city": "Gilleleje",
+      "geolocation": {
+        "latitude": "56.125847",
+        "longitude": "12.296319"
+      }
+    },
+    {
+      "branchId": "727005",
+      "city": "Græsted",
+      "geolocation": {
+        "latitude": "56.0669862",
+        "longitude": "12.2819663"
+      }
+    },
+    {
+      "branchId": "730600",
+      "city": "Nykøbing Sjælland",
+      "geolocation": {
+        "latitude": "55.9225568",
+        "longitude": "11.6654828"
+      }
+    },
+    {
+      "branchId": "730601",
+      "city": "Asnæs",
+      "geolocation": {
+        "latitude": "55.8110436",
+        "longitude": "11.5031103"
+      }
+    },
+    {
+      "branchId": "730602",
+      "city": "Vig",
+      "geolocation": {
+        "latitude": "55.8530832",
+        "longitude": "11.5758292"
+      }
+    },
+    {
+      "branchId": "730603",
+      "city": "Hørve",
+      "geolocation": {
+        "latitude": "55.7525466",
+        "longitude": "11.4533357"
+      }
+    },
+    {
+      "branchId": "730604",
+      "city": "Rørvig",
+      "geolocation": {
+        "latitude": "55.941375",
+        "longitude": "11.7504198"
+      }
+    },
+    {
+      "branchId": "730605",
+      "city": "Sj. Odde"
+    },
+    {
+      "branchId": "730610",
+      "city": "Nykøbing Sj."
+    },
+    {
+      "branchId": "731600",
+      "city": "Holbæk",
+      "geolocation": {
+        "latitude": "55.7168665",
+        "longitude": "11.7091302"
+      }
+    },
+    {
+      "branchId": "731601",
+      "city": "Jyderup",
+      "geolocation": {
+        "latitude": "55.6598974",
+        "longitude": "11.3983369"
+      }
+    },
+    {
+      "branchId": "731602",
+      "city": "Svinninge",
+      "geolocation": {
+        "latitude": "55.7219028",
+        "longitude": "11.4615303"
+      }
+    },
+    {
+      "branchId": "731603",
+      "city": "Tølløse",
+      "geolocation": {
+        "latitude": "55.616226",
+        "longitude": "11.761498"
+      }
+    },
+    {
+      "branchId": "731605",
+      "city": "Holbæk",
+      "geolocation": {
+        "latitude": "55.766702",
+        "longitude": "11.807179"
+      }
+    },
+    {
+      "branchId": "731621",
+      "city": "Tølløse",
+      "geolocation": {
+        "latitude": "55.603692",
+        "longitude": "11.587638"
+      }
+    },
+    {
+      "branchId": "732000",
+      "city": "Haslev",
+      "geolocation": {
+        "latitude": "55.324601",
+        "longitude": "11.96355"
+      }
+    },
+    {
+      "branchId": "732001",
+      "city": "Faxe",
+      "geolocation": {
+        "latitude": "55.251191",
+        "longitude": "12.120191"
+      }
+    },
+    {
+      "branchId": "732010",
+      "city": "Karise",
+      "geolocation": {
+        "latitude": "55.303779",
+        "longitude": "12.1992939"
+      }
+    },
+    {
+      "branchId": "732011",
+      "city": "Rønnede",
+      "geolocation": {
+        "latitude": "55.259224",
+        "longitude": "12.021819"
+      }
+    },
+    {
+      "branchId": "732600",
+      "city": "Kalundborg",
+      "geolocation": {
+        "latitude": "55.6815781",
+        "longitude": "11.0860766"
+      }
+    },
+    {
+      "branchId": "732601",
+      "city": "Gørlev",
+      "geolocation": {
+        "latitude": "55.539452",
+        "longitude": "11.225361"
+      }
+    },
+    {
+      "branchId": "732602",
+      "city": "Høng",
+      "geolocation": {
+        "latitude": "55.5087632",
+        "longitude": "11.2958073"
+      }
+    },
+    {
+      "branchId": "732603",
+      "city": "Sejerø",
+      "geolocation": {
+        "latitude": "55.8797104",
+        "longitude": "11.1434117"
+      }
+    },
+    {
+      "branchId": "732604",
+      "city": "Jerslev Sj.",
+      "geolocation": {
+        "latitude": "55.620681",
+        "longitude": "11.209156"
+      }
+    },
+    {
+      "branchId": "732606",
+      "city": "Eskebjerg",
+      "geolocation": {
+        "latitude": "55.713006",
+        "longitude": "11.301053"
+      }
+    },
+    {
+      "branchId": "732607",
+      "city": "Svebølle"
+    },
+    {
+      "branchId": "732900",
+      "city": "Ringsted",
+      "geolocation": {
+        "latitude": "55.4462543",
+        "longitude": "11.7996316"
+      }
+    },
+    {
+      "branchId": "732901",
+      "city": "Ringsted",
+      "geolocation": {
+        "latitude": "55.4462543",
+        "longitude": "11.7996316"
+      }
+    },
+    {
+      "branchId": "733000",
+      "city": "Slagelse",
+      "geolocation": {
+        "latitude": "55.403121",
+        "longitude": "11.35254"
+      }
+    },
+    {
+      "branchId": "733001",
+      "city": "Korsør",
+      "geolocation": {
+        "latitude": "55.337786",
+        "longitude": "11.13568"
+      }
+    },
+    {
+      "branchId": "733002",
+      "city": "Skælskør",
+      "geolocation": {
+        "latitude": "55.254125",
+        "longitude": "11.291244"
+      }
+    },
+    {
+      "branchId": "733003",
+      "city": "Vemmelev",
+      "geolocation": {
+        "latitude": "55.3637919",
+        "longitude": "11.2597764"
+      }
+    },
+    {
+      "branchId": "733004",
+      "city": "Skælskør"
+    },
+    {
+      "branchId": "733005",
+      "city": "Skælskør"
+    },
+    {
+      "branchId": "733010",
+      "city": "Dalmose",
+      "geolocation": {
+        "latitude": "55.2914514",
+        "longitude": "11.4231076"
+      }
+    },
+    {
+      "branchId": "733600",
+      "city": "Store Heddinge",
+      "geolocation": {
+        "latitude": "55.312584",
+        "longitude": "12.389713"
+      }
+    },
+    {
+      "branchId": "733601",
+      "city": "Hårlev",
+      "geolocation": {
+        "latitude": "55.350787",
+        "longitude": "12.233255"
+      }
+    },
+    {
+      "branchId": "733602",
+      "city": "Køge",
+      "geolocation": {
+        "latitude": "55.416757",
+        "longitude": "12.243619"
+      }
+    },
+    {
+      "branchId": "734000",
+      "city": "Sorø",
+      "geolocation": {
+        "latitude": "55.432372",
+        "longitude": "11.5560836"
+      }
+    },
+    {
+      "branchId": "734001",
+      "city": "Dianalund",
+      "geolocation": {
+        "latitude": "55.5271989",
+        "longitude": "11.4947972"
+      }
+    },
+    {
+      "branchId": "734010",
+      "city": "Stenlille",
+      "geolocation": {
+        "latitude": "55.5395021",
+        "longitude": "11.5902258"
+      }
+    },
+    {
+      "branchId": "735000",
+      "city": "Kirke-Hyllinge",
+      "geolocation": {
+        "latitude": "55.708438",
+        "longitude": "11.898669"
+      }
+    },
+    {
+      "branchId": "735001",
+      "city": "Hvalsø",
+      "geolocation": {
+        "latitude": "55.5932207",
+        "longitude": "11.8575913"
+      }
+    },
+    {
+      "branchId": "735002",
+      "city": "Lejre",
+      "geolocation": {
+        "latitude": "55.5619859",
+        "longitude": "11.9627256"
+      }
+    },
+    {
+      "branchId": "735003",
+      "city": "Lejre"
+    },
+    {
+      "branchId": "735004",
+      "city": "Roskilde"
+    },
+    {
+      "branchId": "736000",
+      "city": "Nakskov",
+      "geolocation": {
+        "latitude": "54.834957",
+        "longitude": "11.138254"
+      }
+    },
+    {
+      "branchId": "736001",
+      "city": "Maribo",
+      "geolocation": {
+        "latitude": "54.777015",
+        "longitude": "11.514946"
+      }
+    },
+    {
+      "branchId": "736002",
+      "city": "Rødby",
+      "geolocation": {
+        "latitude": "54.661133",
+        "longitude": "11.354695"
+      }
+    },
+    {
+      "branchId": "736011",
+      "city": "Søllested",
+      "geolocation": {
+        "latitude": "54.8109615",
+        "longitude": "11.2683734"
+      }
+    },
+    {
+      "branchId": "736012",
+      "city": "Horslunde",
+      "geolocation": {
+        "latitude": "54.9101833",
+        "longitude": "11.2170846"
+      }
+    },
+    {
+      "branchId": "736013",
+      "city": "Holeby",
+      "geolocation": {
+        "latitude": "54.708818",
+        "longitude": "11.473089"
+      }
+    },
+    {
+      "branchId": "736014",
+      "city": "Fejø",
+      "geolocation": {
+        "latitude": "54.9511807",
+        "longitude": "11.4294413"
+      }
+    },
+    {
+      "branchId": "736015",
+      "city": "Maribo",
+      "geolocation": {
+        "latitude": "54.970681",
+        "longitude": "11.531587"
+      }
+    },
+    {
+      "branchId": "736017",
+      "city": "Stokkemarke",
+      "geolocation": {
+        "latitude": "54.8373407",
+        "longitude": "11.366563"
+      }
+    },
+    {
+      "branchId": "736018",
+      "city": "Dannemare",
+      "geolocation": {
+        "latitude": "54.760606",
+        "longitude": "11.187368"
+      }
+    },
+    {
+      "branchId": "737000",
+      "city": "Næstved",
+      "geolocation": {
+        "latitude": "55.233164",
+        "longitude": "11.760422"
+      }
+    },
+    {
+      "branchId": "737001",
+      "city": "Holmegaard",
+      "geolocation": {
+        "latitude": "55.2784",
+        "longitude": "11.808098"
+      }
+    },
+    {
+      "branchId": "737002",
+      "city": "Fuglebjerg",
+      "geolocation": {
+        "latitude": "55.302835",
+        "longitude": "11.543996"
+      }
+    },
+    {
+      "branchId": "737003",
+      "city": "Glumsø",
+      "geolocation": {
+        "latitude": "55.354264",
+        "longitude": "11.690303"
+      }
+    },
+    {
+      "branchId": "737005",
+      "city": "Tappernøje",
+      "geolocation": {
+        "latitude": "55.1790671",
+        "longitude": "11.9746628"
+      }
+    },
+    {
+      "branchId": "737600",
+      "city": "Nykøbing Falster",
+      "geolocation": {
+        "latitude": "54.7693089",
+        "longitude": "11.8698041"
+      }
+    },
+    {
+      "branchId": "737601",
+      "city": "Nysted",
+      "geolocation": {
+        "latitude": "54.669328",
+        "longitude": "11.728738"
+      }
+    },
+    {
+      "branchId": "737602",
+      "city": "Nørre Alslev",
+      "geolocation": {
+        "latitude": "54.899552",
+        "longitude": "11.873134"
+      }
+    },
+    {
+      "branchId": "737603",
+      "city": "Sakskøbing",
+      "geolocation": {
+        "latitude": "54.7977338",
+        "longitude": "11.6353457"
+      }
+    },
+    {
+      "branchId": "737604",
+      "city": "Stubbekøbing",
+      "geolocation": {
+        "latitude": "54.8913307",
+        "longitude": "12.0413789"
+      }
+    },
+    {
+      "branchId": "737605",
+      "city": "Væggerløse",
+      "geolocation": {
+        "latitude": "54.712927",
+        "longitude": "11.923891"
+      }
+    },
+    {
+      "branchId": "737607",
+      "city": "Nykøbing F",
+      "geolocation": {
+        "latitude": "54.5758245",
+        "longitude": "11.9305815"
+      }
+    },
+    {
+      "branchId": "737608",
+      "city": "Nykøbing F",
+      "geolocation": {
+        "latitude": "54.774502",
+        "longitude": "11.875876"
+      }
+    },
+    {
+      "branchId": "739000",
+      "city": "Vordingborg",
+      "geolocation": {
+        "latitude": "54.99743",
+        "longitude": "11.891686"
+      }
+    },
+    {
+      "branchId": "739001",
+      "city": "Stege",
+      "geolocation": {
+        "latitude": "54.987522",
+        "longitude": "12.288116"
+      }
+    },
+    {
+      "branchId": "739002",
+      "city": "Præstø",
+      "geolocation": {
+        "latitude": "55.1211763",
+        "longitude": "12.0477779"
+      }
+    },
+    {
+      "branchId": "739003",
+      "city": "Lundby",
+      "geolocation": {
+        "latitude": "55.109232",
+        "longitude": "11.879155"
+      }
+    },
+    {
+      "branchId": "739004",
+      "city": "Vordingborg",
+      "geolocation": {
+        "latitude": "54.99743",
+        "longitude": "11.891686"
+      }
+    },
+    {
+      "branchId": "739011",
+      "city": "Vordingborg",
+      "geolocation": {
+        "latitude": "55.0145585",
+        "longitude": "11.914924"
+      }
+    },
+    {
+      "branchId": "740000",
+      "city": "Rønne",
+      "geolocation": {
+        "latitude": "55.101762",
+        "longitude": "14.707298"
+      }
+    },
+    {
+      "branchId": "740001",
+      "city": "Allinge",
+      "geolocation": {
+        "latitude": "55.279969",
+        "longitude": "14.799211"
+      }
+    },
+    {
+      "branchId": "740002",
+      "city": "Gudhjem",
+      "geolocation": {
+        "latitude": "55.21197",
+        "longitude": "14.970807"
+      }
+    },
+    {
+      "branchId": "740003",
+      "city": "Hasle",
+      "geolocation": {
+        "latitude": "55.1807085",
+        "longitude": "14.7152359"
+      }
+    },
+    {
+      "branchId": "740006",
+      "city": "Nexø",
+      "geolocation": {
+        "latitude": "55.0615235",
+        "longitude": "15.1288394"
+      }
+    },
+    {
+      "branchId": "740007",
+      "city": "Svaneke",
+      "geolocation": {
+        "latitude": "55.136911",
+        "longitude": "15.140331"
+      }
+    },
+    {
+      "branchId": "740008",
+      "city": "Aakirkeby",
+      "geolocation": {
+        "latitude": "55.070708",
+        "longitude": "14.92362"
+      }
+    },
+    {
+      "branchId": "740009",
+      "city": "Gudhjem",
+      "geolocation": {
+        "latitude": "55.3220752",
+        "longitude": "15.1837394"
+      }
+    },
+    {
+      "branchId": "741000",
+      "city": "Middelfart",
+      "geolocation": {
+        "latitude": "55.5057034",
+        "longitude": "9.7366813"
+      }
+    },
+    {
+      "branchId": "741001",
+      "city": "Middelfart",
+      "geolocation": {
+        "latitude": "55.54142",
+        "longitude": "9.763785"
+      }
+    },
+    {
+      "branchId": "741002",
+      "city": "Ejby",
+      "geolocation": {
+        "latitude": "55.43147",
+        "longitude": "9.9332689"
+      }
+    },
+    {
+      "branchId": "741003",
+      "city": "Nørre Åby",
+      "geolocation": {
+        "latitude": "55.459909",
+        "longitude": "9.876438"
+      }
+    },
+    {
+      "branchId": "742000",
+      "city": "Assens",
+      "geolocation": {
+        "latitude": "55.270035",
+        "longitude": "9.914184"
+      }
+    },
+    {
+      "branchId": "742001",
+      "city": "Glamsbjerg",
+      "geolocation": {
+        "latitude": "55.2785539",
+        "longitude": "10.1052147"
+      }
+    },
+    {
+      "branchId": "742002",
+      "city": "Haarby",
+      "geolocation": {
+        "latitude": "55.222348",
+        "longitude": "10.1243079"
+      }
+    },
+    {
+      "branchId": "742003",
+      "city": "Tommerup",
+      "geolocation": {
+        "latitude": "55.340236",
+        "longitude": "10.18116"
+      }
+    },
+    {
+      "branchId": "742004",
+      "city": "Vissenbjerg",
+      "geolocation": {
+        "latitude": "55.3852754",
+        "longitude": "10.1313915"
+      }
+    },
+    {
+      "branchId": "742005",
+      "city": "Aarup",
+      "geolocation": {
+        "latitude": "55.3786736",
+        "longitude": "10.047568"
+      }
+    },
+    {
+      "branchId": "743000",
+      "city": "Faaborg",
+      "geolocation": {
+        "latitude": "55.1012989",
+        "longitude": "10.2407226"
+      }
+    },
+    {
+      "branchId": "743001",
+      "city": "Ringe",
+      "geolocation": {
+        "latitude": "55.237028",
+        "longitude": "10.4792076"
+      }
+    },
+    {
+      "branchId": "743002",
+      "city": "Årslev",
+      "geolocation": {
+        "latitude": "55.3083181",
+        "longitude": "10.4901691"
+      }
+    },
+    {
+      "branchId": "743003",
+      "city": "Broby",
+      "geolocation": {
+        "latitude": "55.256033",
+        "longitude": "10.235524"
+      }
+    },
+    {
+      "branchId": "743006",
+      "city": "Faaborg"
+    },
+    {
+      "branchId": "744000",
+      "city": "Munkebo",
+      "geolocation": {
+        "latitude": "55.4591045",
+        "longitude": "10.5582028"
+      }
+    },
+    {
+      "branchId": "744001",
+      "city": "Kerteminde",
+      "geolocation": {
+        "latitude": "55.4492163",
+        "longitude": "10.6575406"
+      }
+    },
+    {
+      "branchId": "744002",
+      "city": "Langeskov",
+      "geolocation": {
+        "latitude": "55.3600957",
+        "longitude": "10.5916411"
+      }
+    },
+    {
+      "branchId": "745000",
+      "city": "Nyborg",
+      "geolocation": {
+        "latitude": "55.3128806",
+        "longitude": "10.7892488"
+      }
+    },
+    {
+      "branchId": "745001",
+      "city": "Ullerslev",
+      "geolocation": {
+        "latitude": "55.359899",
+        "longitude": "10.6709859"
+      }
+    },
+    {
+      "branchId": "745002",
+      "city": "Ørbæk",
+      "geolocation": {
+        "latitude": "55.253823",
+        "longitude": "10.674902"
+      }
+    },
+    {
+      "branchId": "746100",
+      "city": "Odense C",
+      "geolocation": {
+        "latitude": "55.40116",
+        "longitude": "10.388635"
+      }
+    },
+    {
+      "branchId": "746102",
+      "city": "Odense V.",
+      "geolocation": {
+        "latitude": "55.394197",
+        "longitude": "10.35157"
+      }
+    },
+    {
+      "branchId": "746103",
+      "city": "Odense SV",
+      "geolocation": {
+        "latitude": "55.365681",
+        "longitude": "10.373476"
+      }
+    },
+    {
+      "branchId": "746104",
+      "city": "Odense S",
+      "geolocation": {
+        "latitude": "55.332962",
+        "longitude": "10.44119"
+      }
+    },
+    {
+      "branchId": "746105",
+      "city": "Odense C"
+    },
+    {
+      "branchId": "746106",
+      "city": "Odense C",
+      "geolocation": {
+        "latitude": "55.3998169",
+        "longitude": "10.38157"
+      }
+    },
+    {
+      "branchId": "746110",
+      "city": "Odense NV",
+      "geolocation": {
+        "latitude": "55.410381",
+        "longitude": "10.33609"
+      }
+    },
+    {
+      "branchId": "746111",
+      "city": "Odense NØ",
+      "geolocation": {
+        "latitude": "55.4067885",
+        "longitude": "10.441249"
+      }
+    },
+    {
+      "branchId": "746112",
+      "city": "Odense SØ",
+      "geolocation": {
+        "latitude": "55.3660934",
+        "longitude": "10.4496394"
+      }
+    },
+    {
+      "branchId": "746113",
+      "city": "Odense NV",
+      "geolocation": {
+        "latitude": "55.4216361",
+        "longitude": "10.2664359"
+      }
+    },
+    {
+      "branchId": "747900",
+      "city": "Svendborg",
+      "geolocation": {
+        "latitude": "55.0616454",
+        "longitude": "10.6028347"
+      }
+    },
+    {
+      "branchId": "747901",
+      "city": "Svendborg.",
+      "geolocation": {
+        "latitude": "55.0482152",
+        "longitude": "10.6700866"
+      }
+    },
+    {
+      "branchId": "747902",
+      "city": "Skårup",
+      "geolocation": {
+        "latitude": "55.09382",
+        "longitude": "10.6891269"
+      }
+    },
+    {
+      "branchId": "747904",
+      "city": "Svendborg",
+      "geolocation": {
+        "latitude": "54.998477",
+        "longitude": "10.596785"
+      }
+    },
+    {
+      "branchId": "747906",
+      "city": "Svendborg.",
+      "geolocation": {
+        "latitude": "54.9702467",
+        "longitude": "10.4190476"
+      }
+    },
+    {
+      "branchId": "747907",
+      "city": "Gudme",
+      "geolocation": {
+        "latitude": "55.1528528",
+        "longitude": "10.7070899"
+      }
+    },
+    {
+      "branchId": "747908",
+      "city": "Stenstrup",
+      "geolocation": {
+        "latitude": "55.132434",
+        "longitude": "10.502222"
+      }
+    },
+    {
+      "branchId": "747909",
+      "city": "Vester Skerninge",
+      "geolocation": {
+        "latitude": "55.0732223",
+        "longitude": "10.4492831"
+      }
+    },
+    {
+      "branchId": "748000",
+      "city": "Otterup",
+      "geolocation": {
+        "latitude": "55.51501",
+        "longitude": "10.399024"
+      }
+    },
+    {
+      "branchId": "748001",
+      "city": "Søndersø",
+      "geolocation": {
+        "latitude": "55.485419",
+        "longitude": "10.251064"
+      }
+    },
+    {
+      "branchId": "748002",
+      "city": "Bogense",
+      "geolocation": {
+        "latitude": "55.5640197",
+        "longitude": "10.0883486"
+      }
+    },
+    {
+      "branchId": "748200",
+      "city": "Rudkøbing",
+      "geolocation": {
+        "latitude": "54.935363",
+        "longitude": "10.717631"
+      }
+    },
+    {
+      "branchId": "748210",
+      "city": "Rudkøbing",
+      "geolocation": {
+        "latitude": "54.935363",
+        "longitude": "10.717631"
+      }
+    },
+    {
+      "branchId": "749200",
+      "city": "Ærøskøbing",
+      "geolocation": {
+        "latitude": "54.8877595",
+        "longitude": "10.4111674"
+      }
+    },
+    {
+      "branchId": "749201",
+      "city": "Marstal",
+      "geolocation": {
+        "latitude": "54.8535433",
+        "longitude": "10.5187728"
+      }
+    },
+    {
+      "branchId": "751000",
+      "city": "Haderslev",
+      "geolocation": {
+        "latitude": "55.250414",
+        "longitude": "9.484711"
+      }
+    },
+    {
+      "branchId": "751001",
+      "city": "Gram",
+      "geolocation": {
+        "latitude": "55.2870143",
+        "longitude": "9.0508825"
+      }
+    },
+    {
+      "branchId": "751002",
+      "city": "Vojens",
+      "geolocation": {
+        "latitude": "55.2448007",
+        "longitude": "9.293324"
+      }
+    },
+    {
+      "branchId": "753000",
+      "city": "Grindsted",
+      "geolocation": {
+        "latitude": "55.7529351",
+        "longitude": "8.9212072"
+      }
+    },
+    {
+      "branchId": "753001",
+      "city": "Billund",
+      "geolocation": {
+        "latitude": "55.7306555",
+        "longitude": "9.1180936"
+      }
+    },
+    {
+      "branchId": "753002",
+      "city": "Vorbasse",
+      "geolocation": {
+        "latitude": "55.6272591",
+        "longitude": "9.0819464"
+      }
+    },
+    {
+      "branchId": "753003",
+      "city": "Sdr. Omme",
+      "geolocation": {
+        "latitude": "55.840727",
+        "longitude": "8.891382"
+      }
+    },
+    {
+      "branchId": "754000",
+      "city": "Sønderborg",
+      "geolocation": {
+        "latitude": "54.910175",
+        "longitude": "9.7961639"
+      }
+    },
+    {
+      "branchId": "754001",
+      "city": "Augustenborg",
+      "geolocation": {
+        "latitude": "54.9466504",
+        "longitude": "9.8725239"
+      }
+    },
+    {
+      "branchId": "754002",
+      "city": "Broager",
+      "geolocation": {
+        "latitude": "54.889586",
+        "longitude": "9.674497"
+      }
+    },
+    {
+      "branchId": "754003",
+      "city": "Sønderborg",
+      "geolocation": {
+        "latitude": "54.911066",
+        "longitude": "9.766716"
+      }
+    },
+    {
+      "branchId": "754004",
+      "city": "Gråsten",
+      "geolocation": {
+        "latitude": "54.919526",
+        "longitude": "9.5905919"
+      }
+    },
+    {
+      "branchId": "754005",
+      "city": "Nordborg",
+      "geolocation": {
+        "latitude": "54.991824",
+        "longitude": "9.863988"
+      }
+    },
+    {
+      "branchId": "754006",
+      "city": "Nordborg",
+      "geolocation": {
+        "latitude": "55.056813",
+        "longitude": "9.7491"
+      }
+    },
+    {
+      "branchId": "754007",
+      "city": "Sønderborg",
+      "geolocation": {
+        "latitude": "54.949691",
+        "longitude": "9.699548"
+      }
+    },
+    {
+      "branchId": "754008",
+      "city": "Sydals",
+      "geolocation": {
+        "latitude": "54.9141624",
+        "longitude": "9.8939423"
+      }
+    },
+    {
+      "branchId": "754009",
+      "city": "Sønderborg",
+      "geolocation": {
+        "latitude": "54.9244842",
+        "longitude": "9.8218802"
+      }
+    },
+    {
+      "branchId": "754010",
+      "city": "Augustenborg",
+      "geolocation": {
+        "latitude": "54.981904",
+        "longitude": "9.973299"
+      }
+    },
+    {
+      "branchId": "755000",
+      "city": "Tønder",
+      "geolocation": {
+        "latitude": "54.937416",
+        "longitude": "8.86881"
+      }
+    },
+    {
+      "branchId": "755001",
+      "city": "Bredebro"
+    },
+    {
+      "branchId": "755002",
+      "city": "Højer"
+    },
+    {
+      "branchId": "755003",
+      "city": "Løgumkloster",
+      "geolocation": {
+        "latitude": "55.058407",
+        "longitude": "8.9517149"
+      }
+    },
+    {
+      "branchId": "755004",
+      "city": "Skærbæk",
+      "geolocation": {
+        "latitude": "55.1581825",
+        "longitude": "8.7693312"
+      }
+    },
+    {
+      "branchId": "755005",
+      "city": "Toftlund",
+      "geolocation": {
+        "latitude": "55.1920345",
+        "longitude": "9.0607401"
+      }
+    },
+    {
+      "branchId": "756100",
+      "city": "Esbjerg",
+      "geolocation": {
+        "latitude": "55.469201",
+        "longitude": "8.454726"
+      }
+    },
+    {
+      "branchId": "756101",
+      "city": "Esbjerg V.",
+      "geolocation": {
+        "latitude": "55.498485",
+        "longitude": "8.4077023"
+      }
+    },
+    {
+      "branchId": "756102",
+      "city": "Esbjerg Ø",
+      "geolocation": {
+        "latitude": "55.4944916",
+        "longitude": "8.4865076"
+      }
+    },
+    {
+      "branchId": "756103",
+      "city": "Tjæreborg",
+      "geolocation": {
+        "latitude": "55.4633716",
+        "longitude": "8.5839621"
+      }
+    },
+    {
+      "branchId": "756116",
+      "city": "Fanø",
+      "geolocation": {
+        "latitude": "55.4458849",
+        "longitude": "8.395245"
+      }
+    },
+    {
+      "branchId": "756117",
+      "city": "Fanø",
+      "geolocation": {
+        "latitude": "55.3498956",
+        "longitude": "8.4685652"
+      }
+    },
+    {
+      "branchId": "756120",
+      "city": "Esbjerg",
+      "geolocation": {
+        "latitude": "55.469201",
+        "longitude": "8.454726"
+      }
+    },
+    {
+      "branchId": "756121",
+      "city": "Ribe",
+      "geolocation": {
+        "latitude": "55.331276",
+        "longitude": "8.773581"
+      }
+    },
+    {
+      "branchId": "756122",
+      "city": "Bramming",
+      "geolocation": {
+        "latitude": "55.465751",
+        "longitude": "8.703061"
+      }
+    },
+    {
+      "branchId": "757300",
+      "city": "Varde",
+      "geolocation": {
+        "latitude": "55.619605",
+        "longitude": "8.479888"
+      }
+    },
+    {
+      "branchId": "757301",
+      "city": "Oksbøl",
+      "geolocation": {
+        "latitude": "55.6246442",
+        "longitude": "8.2758978"
+      }
+    },
+    {
+      "branchId": "757302",
+      "city": "Nørre Nebel",
+      "geolocation": {
+        "latitude": "55.77804",
+        "longitude": "8.294803"
+      }
+    },
+    {
+      "branchId": "757304",
+      "city": "Varde",
+      "geolocation": {
+        "latitude": "55.619605",
+        "longitude": "8.479888"
+      }
+    },
+    {
+      "branchId": "757305",
+      "city": "Agerbæk",
+      "geolocation": {
+        "latitude": "55.599423",
+        "longitude": "8.80186"
+      }
+    },
+    {
+      "branchId": "757306",
+      "city": "Ølgod",
+      "geolocation": {
+        "latitude": "55.8081156",
+        "longitude": "8.6170693"
+      }
+    },
+    {
+      "branchId": "757500",
+      "city": "Vejen",
+      "geolocation": {
+        "latitude": "55.4770455",
+        "longitude": "9.1373525"
+      }
+    },
+    {
+      "branchId": "757510",
+      "city": "Brørup",
+      "geolocation": {
+        "latitude": "55.4828152",
+        "longitude": "9.0184843"
+      }
+    },
+    {
+      "branchId": "757520",
+      "city": "Holsted",
+      "geolocation": {
+        "latitude": "55.499229",
+        "longitude": "8.913868"
+      }
+    },
+    {
+      "branchId": "757530",
+      "city": "Rødding",
+      "geolocation": {
+        "latitude": "55.365629",
+        "longitude": "9.053921"
+      }
+    },
+    {
+      "branchId": "757533",
+      "city": "Vejen",
+      "geolocation": {
+        "latitude": "55.479224",
+        "longitude": "9.137997"
+      }
+    },
+    {
+      "branchId": "758000",
+      "city": "Aabenraa",
+      "geolocation": {
+        "latitude": "55.049899",
+        "longitude": "9.420663"
+      }
+    },
+    {
+      "branchId": "758001",
+      "city": "Padborg",
+      "geolocation": {
+        "latitude": "54.82788",
+        "longitude": "9.3643059"
+      }
+    },
+    {
+      "branchId": "758002",
+      "city": "Rødekro",
+      "geolocation": {
+        "latitude": "55.072696",
+        "longitude": "9.330898"
+      }
+    },
+    {
+      "branchId": "758003",
+      "city": "Tinglev",
+      "geolocation": {
+        "latitude": "54.9357554",
+        "longitude": "9.2510123"
+      }
+    },
+    {
+      "branchId": "758004",
+      "city": "Aabenraa",
+      "geolocation": {
+        "latitude": "54.979424",
+        "longitude": "9.4973986"
+      }
+    },
+    {
+      "branchId": "758005",
+      "city": "Aabenraa"
+    },
+    {
+      "branchId": "760700",
+      "city": "Fredericia",
+      "geolocation": {
+        "latitude": "55.5668406",
+        "longitude": "9.7578662"
+      }
+    },
+    {
+      "branchId": "760702"
+    },
+    {
+      "branchId": "760706",
+      "city": "Fredericia",
+      "geolocation": {
+        "latitude": "55.5389708",
+        "longitude": "9.6095795"
+      }
+    },
+    {
+      "branchId": "760710",
+      "city": "Fredericia",
+      "geolocation": {
+        "latitude": "55.5410924",
+        "longitude": "9.7106136"
+      }
+    },
+    {
+      "branchId": "761500",
+      "city": "Horsens",
+      "geolocation": {
+        "latitude": "55.8581302",
+        "longitude": "9.8475881"
+      }
+    },
+    {
+      "branchId": "761501",
+      "city": "Brædstrup",
+      "geolocation": {
+        "latitude": "55.9738175",
+        "longitude": "9.6097617"
+      }
+    },
+    {
+      "branchId": "761502",
+      "city": "Horsens",
+      "geolocation": {
+        "latitude": "55.758652",
+        "longitude": "10.276579"
+      }
+    },
+    {
+      "branchId": "761503",
+      "city": "Hovedgård",
+      "geolocation": {
+        "latitude": "55.945973",
+        "longitude": "9.9620979"
+      }
+    },
+    {
+      "branchId": "761504",
+      "city": "Gedved",
+      "geolocation": {
+        "latitude": "55.931337",
+        "longitude": "9.851996"
+      }
+    },
+    {
+      "branchId": "761505",
+      "city": "Østbirk",
+      "geolocation": {
+        "latitude": "55.9677728",
+        "longitude": "9.7499507"
+      }
+    },
+    {
+      "branchId": "761506",
+      "city": "Horsens",
+      "geolocation": {
+        "latitude": "55.8965641",
+        "longitude": "10.0015836"
+      }
+    },
+    {
+      "branchId": "762100",
+      "city": "Kolding",
+      "geolocation": {
+        "latitude": "55.491453",
+        "longitude": "9.480069"
+      }
+    },
+    {
+      "branchId": "762102",
+      "city": "Lunderskov",
+      "geolocation": {
+        "latitude": "55.480407",
+        "longitude": "9.292804"
+      }
+    },
+    {
+      "branchId": "762103",
+      "city": "Christiansfeld",
+      "geolocation": {
+        "latitude": "55.3547123",
+        "longitude": "9.4859345"
+      }
+    },
+    {
+      "branchId": "762104",
+      "city": "Vamdrup",
+      "geolocation": {
+        "latitude": "55.426471",
+        "longitude": "9.283146"
+      }
+    },
+    {
+      "branchId": "762105",
+      "city": "Egtved",
+      "geolocation": {
+        "latitude": "55.5676728",
+        "longitude": "9.4011434"
+      }
+    },
+    {
+      "branchId": "762106",
+      "city": "Alminde",
+      "geolocation": {
+        "latitude": "55.56477",
+        "longitude": "9.489804"
+      }
+    },
+    {
+      "branchId": "762107",
+      "city": "Bjert",
+      "geolocation": {
+        "latitude": "55.4579813",
+        "longitude": "9.5575442"
+      }
+    },
+    {
+      "branchId": "762108",
+      "city": "Jordrup",
+      "geolocation": {
+        "latitude": "55.553925",
+        "longitude": "9.312341"
+      }
+    },
+    {
+      "branchId": "762109",
+      "city": "Hejls",
+      "geolocation": {
+        "latitude": "55.382884",
+        "longitude": "9.578189"
+      }
+    },
+    {
+      "branchId": "763000",
+      "city": "Vejle",
+      "geolocation": {
+        "latitude": "55.706406",
+        "longitude": "9.520034"
+      }
+    },
+    {
+      "branchId": "763001",
+      "city": "Give",
+      "geolocation": {
+        "latitude": "55.8438412",
+        "longitude": "9.2370145"
+      }
+    },
+    {
+      "branchId": "763002",
+      "city": "Jelling",
+      "geolocation": {
+        "latitude": "55.754741",
+        "longitude": "9.418115"
+      }
+    },
+    {
+      "branchId": "763003",
+      "city": "Egtved",
+      "geolocation": {
+        "latitude": "55.6204166",
+        "longitude": "9.3103449"
+      }
+    },
+    {
+      "branchId": "763004",
+      "city": "Børkop",
+      "geolocation": {
+        "latitude": "55.6437287",
+        "longitude": "9.6541861"
+      }
+    },
+    {
+      "branchId": "763005",
+      "city": "Vejle",
+      "geolocation": {
+        "latitude": "55.706406",
+        "longitude": "9.520034"
+      }
+    },
+    {
+      "branchId": "765700",
+      "city": "Herning",
+      "geolocation": {
+        "latitude": "56.136",
+        "longitude": "8.977069"
+      }
+    },
+    {
+      "branchId": "765703",
+      "city": "Herning",
+      "geolocation": {
+        "latitude": "56.134189",
+        "longitude": "9.062908"
+      }
+    },
+    {
+      "branchId": "765704",
+      "city": "Sunds",
+      "geolocation": {
+        "latitude": "56.2041173",
+        "longitude": "9.0165687"
+      }
+    },
+    {
+      "branchId": "765705",
+      "city": "Vildbjerg",
+      "geolocation": {
+        "latitude": "56.1980564",
+        "longitude": "8.7662709"
+      }
+    },
+    {
+      "branchId": "765707",
+      "city": "Aulum",
+      "geolocation": {
+        "latitude": "56.265547",
+        "longitude": "8.797607"
+      }
+    },
+    {
+      "branchId": "765708",
+      "city": "Kibæk",
+      "geolocation": {
+        "latitude": "56.027692",
+        "longitude": "8.852654"
+      }
+    },
+    {
+      "branchId": "765711",
+      "city": "Herning",
+      "geolocation": {
+        "latitude": "56.014285",
+        "longitude": "8.993614"
+      }
+    },
+    {
+      "branchId": "765712",
+      "city": "Brande",
+      "geolocation": {
+        "latitude": "56.007655",
+        "longitude": "9.1092681"
+      }
+    },
+    {
+      "branchId": "765713",
+      "city": "Haderup",
+      "geolocation": {
+        "latitude": "56.341509",
+        "longitude": "8.940693"
+      }
+    },
+    {
+      "branchId": "765714",
+      "city": "Haderup",
+      "geolocation": {
+        "latitude": "56.3891871",
+        "longitude": "8.9959455"
+      }
+    },
+    {
+      "branchId": "765715",
+      "city": "Herning",
+      "geolocation": {
+        "latitude": "56.1202565",
+        "longitude": "8.8058854"
+      }
+    },
+    {
+      "branchId": "765716",
+      "city": "Aulum",
+      "geolocation": {
+        "latitude": "56.3141243",
+        "longitude": "8.8560646"
+      }
+    },
+    {
+      "branchId": "765717",
+      "city": "Herning",
+      "geolocation": {
+        "latitude": "56.146791",
+        "longitude": "8.978302"
+      }
+    },
+    {
+      "branchId": "765718",
+      "city": "Sunds",
+      "geolocation": {
+        "latitude": "56.2382741",
+        "longitude": "9.0896467"
+      }
+    },
+    {
+      "branchId": "765719",
+      "city": "Kibæk",
+      "geolocation": {
+        "latitude": "55.9338632",
+        "longitude": "8.9408936"
+      }
+    },
+    {
+      "branchId": "765720",
+      "city": "Herning",
+      "geolocation": {
+        "latitude": "56.062091",
+        "longitude": "9.084503"
+      }
+    },
+    {
+      "branchId": "765721",
+      "city": "Sunds",
+      "geolocation": {
+        "latitude": "56.2704373",
+        "longitude": "8.995043"
+      }
+    },
+    {
+      "branchId": "765722",
+      "city": "Herning",
+      "geolocation": {
+        "latitude": "56.21292",
+        "longitude": "8.851267"
+      }
+    },
+    {
+      "branchId": "765723",
+      "city": "Kibæk",
+      "geolocation": {
+        "latitude": "55.9778872",
+        "longitude": "8.8979109"
+      }
+    },
+    {
+      "branchId": "765724",
+      "city": "Sdr. Felding",
+      "geolocation": {
+        "latitude": "55.941253",
+        "longitude": "8.78326"
+      }
+    },
+    {
+      "branchId": "765725",
+      "city": "Stakroge",
+      "geolocation": {
+        "latitude": "55.890531",
+        "longitude": "8.847594"
+      }
+    },
+    {
+      "branchId": "765726",
+      "city": "Sørvad",
+      "geolocation": {
+        "latitude": "56.262466",
+        "longitude": "8.652268"
+      }
+    },
+    {
+      "branchId": "765727",
+      "city": "Ørnhøj",
+      "geolocation": {
+        "latitude": "56.1998468",
+        "longitude": "8.5650776"
+      }
+    },
+    {
+      "branchId": "765728",
+      "city": "Vildbjerg",
+      "geolocation": {
+        "latitude": "56.1694596",
+        "longitude": "8.8469003"
+      }
+    },
+    {
+      "branchId": "765729",
+      "city": "Holstebro",
+      "geolocation": {
+        "latitude": "56.2596186",
+        "longitude": "8.5663623"
+      }
+    },
+    {
+      "branchId": "766100",
+      "city": "Holstebro",
+      "geolocation": {
+        "latitude": "56.3603032",
+        "longitude": "8.616229"
+      }
+    },
+    {
+      "branchId": "766102",
+      "city": "Ulfborg",
+      "geolocation": {
+        "latitude": "56.272416",
+        "longitude": "8.321566"
+      }
+    },
+    {
+      "branchId": "766103",
+      "city": "Vinderup",
+      "geolocation": {
+        "latitude": "56.4768319",
+        "longitude": "8.7829889"
+      }
+    },
+    {
+      "branchId": "766500",
+      "city": "Lemvig",
+      "geolocation": {
+        "latitude": "56.5493317",
+        "longitude": "8.3097157"
+      }
+    },
+    {
+      "branchId": "766501",
+      "city": "Lemvig",
+      "geolocation": {
+        "latitude": "56.5493317",
+        "longitude": "8.3097157"
+      }
+    },
+    {
+      "branchId": "767100",
+      "city": "Struer",
+      "geolocation": {
+        "latitude": "56.48493",
+        "longitude": "8.589933"
+      }
+    },
+    {
+      "branchId": "767101",
+      "city": "Struer",
+      "geolocation": {
+        "latitude": "56.48493",
+        "longitude": "8.589933"
+      }
+    },
+    {
+      "branchId": "767103",
+      "city": "Thyholm",
+      "geolocation": {
+        "latitude": "56.650866",
+        "longitude": "8.533999"
+      }
+    },
+    {
+      "branchId": "770600",
+      "city": "Ebeltoft",
+      "geolocation": {
+        "latitude": "56.193381",
+        "longitude": "10.669748"
+      }
+    },
+    {
+      "branchId": "770601",
+      "city": "Hornslet",
+      "geolocation": {
+        "latitude": "56.318495",
+        "longitude": "10.3153279"
+      }
+    },
+    {
+      "branchId": "770602",
+      "city": "Kolind",
+      "geolocation": {
+        "latitude": "56.360955",
+        "longitude": "10.577498"
+      }
+    },
+    {
+      "branchId": "770603",
+      "city": "Rønde",
+      "geolocation": {
+        "latitude": "56.302892",
+        "longitude": "10.474459"
+      }
+    },
+    {
+      "branchId": "770604",
+      "city": "Ebeltoft",
+      "geolocation": {
+        "latitude": "56.196327",
+        "longitude": "10.677857"
+      }
+    },
+    {
+      "branchId": "770700",
+      "city": "Grenaa",
+      "geolocation": {
+        "latitude": "56.410611",
+        "longitude": "10.88689"
+      }
+    },
+    {
+      "branchId": "770701",
+      "city": "Ørum Djurs",
+      "geolocation": {
+        "latitude": "56.4403588",
+        "longitude": "10.6874979"
+      }
+    },
+    {
+      "branchId": "770702"
+    },
+    {
+      "branchId": "770706",
+      "city": "Auning"
+    },
+    {
+      "branchId": "770707",
+      "city": "Ørsted"
+    },
+    {
+      "branchId": "770720",
+      "city": "Allingåbro"
+    },
+    {
+      "branchId": "770721",
+      "city": "Glesborg"
+    },
+    {
+      "branchId": "770722",
+      "city": "Glesborg"
+    },
+    {
+      "branchId": "770723",
+      "city": "Grenaa"
+    },
+    {
+      "branchId": "770724",
+      "city": "Trustrup"
+    },
+    {
+      "branchId": "770725",
+      "city": "Allingåbro"
+    },
+    {
+      "branchId": "770726",
+      "city": "Allingåbro"
+    },
+    {
+      "branchId": "771000",
+      "city": "Hinnerup",
+      "geolocation": {
+        "latitude": "56.2650022",
+        "longitude": "10.0633759"
+      }
+    },
+    {
+      "branchId": "771001",
+      "city": "Hammel",
+      "geolocation": {
+        "latitude": "56.256876",
+        "longitude": "9.860022"
+      }
+    },
+    {
+      "branchId": "771002",
+      "city": "Hadsten",
+      "geolocation": {
+        "latitude": "56.325725",
+        "longitude": "10.044932"
+      }
+    },
+    {
+      "branchId": "771003",
+      "city": "Ulstrup",
+      "geolocation": {
+        "latitude": "56.387301",
+        "longitude": "9.78821"
+      }
+    },
+    {
+      "branchId": "772700",
+      "city": "Odder",
+      "geolocation": {
+        "latitude": "55.973865",
+        "longitude": "10.152563"
+      }
+    },
+    {
+      "branchId": "772705"
+    },
+    {
+      "branchId": "773000",
+      "city": "Randers C",
+      "geolocation": {
+        "latitude": "56.4635786",
+        "longitude": "10.0344155"
+      }
+    },
+    {
+      "branchId": "773001",
+      "city": "Randers NØ",
+      "geolocation": {
+        "latitude": "56.471814",
+        "longitude": "10.06571"
+      }
+    },
+    {
+      "branchId": "773002",
+      "city": "Randers SØ",
+      "geolocation": {
+        "latitude": "56.446897",
+        "longitude": "10.056528"
+      }
+    },
+    {
+      "branchId": "773004",
+      "city": "Randers C",
+      "geolocation": {
+        "latitude": "56.4635786",
+        "longitude": "10.0344155"
+      }
+    },
+    {
+      "branchId": "773005",
+      "city": "Langå",
+      "geolocation": {
+        "latitude": "56.39174",
+        "longitude": "9.89408"
+      }
+    },
+    {
+      "branchId": "774000",
+      "city": "Silkeborg",
+      "geolocation": {
+        "latitude": "56.176362",
+        "longitude": "9.5549216"
+      }
+    },
+    {
+      "branchId": "774001",
+      "city": "Kjellerup",
+      "geolocation": {
+        "latitude": "56.287432",
+        "longitude": "9.42866"
+      }
+    },
+    {
+      "branchId": "774003",
+      "city": "Them",
+      "geolocation": {
+        "latitude": "56.0924471",
+        "longitude": "9.5481803"
+      }
+    },
+    {
+      "branchId": "774004",
+      "city": "Gjern",
+      "geolocation": {
+        "latitude": "56.224488",
+        "longitude": "9.743094"
+      }
+    },
+    {
+      "branchId": "774021",
+      "city": "Sorring",
+      "geolocation": {
+        "latitude": "56.1758831",
+        "longitude": "9.7815235"
+      }
+    },
+    {
+      "branchId": "774022",
+      "city": "Bryrup",
+      "geolocation": {
+        "latitude": "56.041027",
+        "longitude": "9.450739"
+      }
+    },
+    {
+      "branchId": "774023",
+      "city": "Silkeborg",
+      "geolocation": {
+        "latitude": "56.2082433",
+        "longitude": "9.4661874"
+      }
+    },
+    {
+      "branchId": "774024",
+      "city": "Kjellerup",
+      "geolocation": {
+        "latitude": "56.284818",
+        "longitude": "9.33181"
+      }
+    },
+    {
+      "branchId": "774025",
+      "city": "Ans",
+      "geolocation": {
+        "latitude": "56.3072084",
+        "longitude": "9.5874779"
+      }
+    },
+    {
+      "branchId": "774026",
+      "city": "Bryrup",
+      "geolocation": {
+        "latitude": "56.0244881",
+        "longitude": "9.511337"
+      }
+    },
+    {
+      "branchId": "774027",
+      "city": "Lemming",
+      "geolocation": {
+        "latitude": "56.23255",
+        "longitude": "9.5542079"
+      }
+    },
+    {
+      "branchId": "774028",
+      "city": "Silkeborg",
+      "geolocation": {
+        "latitude": "56.194684",
+        "longitude": "9.4091817"
+      }
+    },
+    {
+      "branchId": "774029"
+    },
+    {
+      "branchId": "774100",
+      "city": "Samsø",
+      "geolocation": {
+        "latitude": "55.8334831",
+        "longitude": "10.5848498"
+      }
+    },
+    {
+      "branchId": "774101",
+      "city": "Samsø"
+    },
+    {
+      "branchId": "774600",
+      "city": "Skanderborg",
+      "geolocation": {
+        "latitude": "56.0352416",
+        "longitude": "9.9322404"
+      }
+    },
+    {
+      "branchId": "774601",
+      "city": "Ry",
+      "geolocation": {
+        "latitude": "56.0908523",
+        "longitude": "9.7642965"
+      }
+    },
+    {
+      "branchId": "774602",
+      "city": "Hørning",
+      "geolocation": {
+        "latitude": "56.085108",
+        "longitude": "10.035757"
+      }
+    },
+    {
+      "branchId": "774603",
+      "city": "Galten",
+      "geolocation": {
+        "latitude": "56.155456",
+        "longitude": "9.904941"
+      }
+    },
+    {
+      "branchId": "774604",
+      "city": "Ry",
+      "geolocation": {
+        "latitude": "56.076919",
+        "longitude": "9.6993383"
+      }
+    },
+    {
+      "branchId": "774607",
+      "city": "Skanderborg"
+    },
+    {
+      "branchId": "775100",
+      "city": "Aarhus C",
+      "geolocation": {
+        "latitude": "56.165278",
+        "longitude": "10.227222"
+      }
+    },
+    {
+      "branchId": "775120",
+      "city": "Højbjerg",
+      "geolocation": {
+        "latitude": "56.1142695",
+        "longitude": "10.2074291"
+      }
+    },
+    {
+      "branchId": "775122",
+      "city": "Beder",
+      "geolocation": {
+        "latitude": "56.060383",
+        "longitude": "10.215753"
+      }
+    },
+    {
+      "branchId": "775126",
+      "city": "Solbjerg",
+      "geolocation": {
+        "latitude": "56.042156",
+        "longitude": "10.0840789"
+      }
+    },
+    {
+      "branchId": "775127",
+      "city": "Tranbjerg",
+      "geolocation": {
+        "latitude": "56.091095",
+        "longitude": "10.135585"
+      }
+    },
+    {
+      "branchId": "775130",
+      "city": "Viby J.",
+      "geolocation": {
+        "latitude": "56.130558",
+        "longitude": "10.164646"
+      }
+    },
+    {
+      "branchId": "775133",
+      "city": "Hasselager",
+      "geolocation": {
+        "latitude": "56.1099242",
+        "longitude": "10.0760538"
+      }
+    },
+    {
+      "branchId": "775140",
+      "city": "Åbyhøj",
+      "geolocation": {
+        "latitude": "56.156438",
+        "longitude": "10.162515"
+      }
+    },
+    {
+      "branchId": "775144",
+      "city": "Brabrand",
+      "geolocation": {
+        "latitude": "56.155667",
+        "longitude": "10.135267"
+      }
+    },
+    {
+      "branchId": "775146",
+      "city": "Harlev",
+      "geolocation": {
+        "latitude": "56.139929",
+        "longitude": "10.0032866"
+      }
+    },
+    {
+      "branchId": "775147",
+      "city": "Aarhus V.",
+      "geolocation": {
+        "latitude": "56.1792779",
+        "longitude": "10.166976"
+      }
+    },
+    {
+      "branchId": "775149",
+      "city": "Sabro",
+      "geolocation": {
+        "latitude": "56.211784",
+        "longitude": "10.023611"
+      }
+    },
+    {
+      "branchId": "775150",
+      "city": "Tilst",
+      "geolocation": {
+        "latitude": "56.188355",
+        "longitude": "10.110579"
+      }
+    },
+    {
+      "branchId": "775160",
+      "city": "Risskov",
+      "geolocation": {
+        "latitude": "56.1937133",
+        "longitude": "10.2234383"
+      }
+    },
+    {
+      "branchId": "775162",
+      "city": "Hjortshøj",
+      "geolocation": {
+        "latitude": "56.3092922",
+        "longitude": "10.2085902"
+      }
+    },
+    {
+      "branchId": "775164",
+      "city": "Egå",
+      "geolocation": {
+        "latitude": "56.211717",
+        "longitude": "10.283211"
+      }
+    },
+    {
+      "branchId": "775167",
+      "city": "Lystrup",
+      "geolocation": {
+        "latitude": "56.234166",
+        "longitude": "10.2283329"
+      }
+    },
+    {
+      "branchId": "775168",
+      "city": "Skødstrup",
+      "geolocation": {
+        "latitude": "56.271602",
+        "longitude": "10.308421"
+      }
+    },
+    {
+      "branchId": "775170",
+      "city": "Trige",
+      "geolocation": {
+        "latitude": "56.253203",
+        "longitude": "10.147788"
+      }
+    },
+    {
+      "branchId": "775600",
+      "city": "Ikast",
+      "geolocation": {
+        "latitude": "56.141837",
+        "longitude": "9.152847"
+      }
+    },
+    {
+      "branchId": "775601",
+      "city": "Brande",
+      "geolocation": {
+        "latitude": "55.940895",
+        "longitude": "9.125928"
+      }
+    },
+    {
+      "branchId": "775602",
+      "city": "Bording"
+    },
+    {
+      "branchId": "775603",
+      "city": "Ejstrupholm"
+    },
+    {
+      "branchId": "775604",
+      "city": "Engesvang"
+    },
+    {
+      "branchId": "775605",
+      "city": "Nørre Snede"
+    },
+    {
+      "branchId": "776000",
+      "city": "Ringkøbing",
+      "geolocation": {
+        "latitude": "56.086535",
+        "longitude": "8.242397"
+      }
+    },
+    {
+      "branchId": "776001",
+      "city": "Skjern",
+      "geolocation": {
+        "latitude": "55.9479462",
+        "longitude": "8.4964523"
+      }
+    },
+    {
+      "branchId": "776002",
+      "city": "Tarm",
+      "geolocation": {
+        "latitude": "55.907727",
+        "longitude": "8.516476"
+      }
+    },
+    {
+      "branchId": "776003",
+      "city": "Videbæk",
+      "geolocation": {
+        "latitude": "56.090198",
+        "longitude": "8.629023"
+      }
+    },
+    {
+      "branchId": "776004",
+      "city": "Hvide Sande",
+      "geolocation": {
+        "latitude": "56.007465",
+        "longitude": "8.129276"
+      }
+    },
+    {
+      "branchId": "776600",
+      "city": "Hedensted",
+      "geolocation": {
+        "latitude": "55.77085",
+        "longitude": "9.7024268"
+      }
+    },
+    {
+      "branchId": "776601",
+      "city": "Tørring",
+      "geolocation": {
+        "latitude": "55.860647",
+        "longitude": "9.482918"
+      }
+    },
+    {
+      "branchId": "776602",
+      "city": "Uldum",
+      "geolocation": {
+        "latitude": "55.8453",
+        "longitude": "9.588212"
+      }
+    },
+    {
+      "branchId": "776603",
+      "city": "Hornsyld",
+      "geolocation": {
+        "latitude": "55.757478",
+        "longitude": "9.8456703"
+      }
+    },
+    {
+      "branchId": "776604",
+      "city": "Juelsminde",
+      "geolocation": {
+        "latitude": "55.7133651",
+        "longitude": "10.0127488"
+      }
+    },
+    {
+      "branchId": "777300",
+      "city": "Nykøbing Mors",
+      "geolocation": {
+        "latitude": "56.7968238",
+        "longitude": "8.8611087"
+      }
+    },
+    {
+      "branchId": "777900",
+      "city": "Skive",
+      "geolocation": {
+        "latitude": "56.567195",
+        "longitude": "9.028752"
+      }
+    },
+    {
+      "branchId": "777901",
+      "city": "Skive",
+      "geolocation": {
+        "latitude": "56.5667255",
+        "longitude": "9.0294515"
+      }
+    },
+    {
+      "branchId": "778700",
+      "city": "Thisted",
+      "geolocation": {
+        "latitude": "56.956368",
+        "longitude": "8.685837"
+      }
+    },
+    {
+      "branchId": "778701",
+      "city": "Thisted",
+      "geolocation": {
+        "latitude": "56.955966",
+        "longitude": "8.686613"
+      }
+    },
+    {
+      "branchId": "778710",
+      "city": "Hanstholm",
+      "geolocation": {
+        "latitude": "57.112861",
+        "longitude": "8.617668"
+      }
+    },
+    {
+      "branchId": "778720",
+      "city": "Hurup Thy",
+      "geolocation": {
+        "latitude": "56.748626",
+        "longitude": "8.421566"
+      }
+    },
+    {
+      "branchId": "779100",
+      "city": "Viborg",
+      "geolocation": {
+        "latitude": "56.449818",
+        "longitude": "9.398641"
+      }
+    },
+    {
+      "branchId": "779102",
+      "city": "Viborg",
+      "geolocation": {
+        "latitude": "56.46272",
+        "longitude": "9.448549"
+      }
+    },
+    {
+      "branchId": "779105",
+      "city": "Møldrup",
+      "geolocation": {
+        "latitude": "56.6184574",
+        "longitude": "9.5005356"
+      }
+    },
+    {
+      "branchId": "779109",
+      "city": "Skals",
+      "geolocation": {
+        "latitude": "56.557891",
+        "longitude": "9.406609"
+      }
+    },
+    {
+      "branchId": "779110",
+      "city": "Tjele",
+      "geolocation": {
+        "latitude": "56.48388",
+        "longitude": "9.624895"
+      }
+    },
+    {
+      "branchId": "779115",
+      "city": "Bjerringbro",
+      "geolocation": {
+        "latitude": "56.376865",
+        "longitude": "9.656368"
+      }
+    },
+    {
+      "branchId": "779116",
+      "city": "Rødkærsbro",
+      "geolocation": {
+        "latitude": "56.35543",
+        "longitude": "9.504139"
+      }
+    },
+    {
+      "branchId": "779117",
+      "city": "Stoholm",
+      "geolocation": {
+        "latitude": "56.484337",
+        "longitude": "9.14227"
+      }
+    },
+    {
+      "branchId": "779122",
+      "city": "Karup",
+      "geolocation": {
+        "latitude": "56.3072144",
+        "longitude": "9.1679897"
+      }
+    },
+    {
+      "branchId": "779123",
+      "city": "Karup",
+      "geolocation": {
+        "latitude": "56.3451162",
+        "longitude": "9.251028"
+      }
+    },
+    {
+      "branchId": "779131"
+    },
+    {
+      "branchId": "779132"
+    },
+    {
+      "branchId": "779135"
+    },
+    {
+      "branchId": "779136"
+    },
+    {
+      "branchId": "781000",
+      "city": "Brønderslev",
+      "geolocation": {
+        "latitude": "57.2683528",
+        "longitude": "9.9506411"
+      }
+    },
+    {
+      "branchId": "781001",
+      "city": "Brønderslev",
+      "geolocation": {
+        "latitude": "57.2683528",
+        "longitude": "9.9506411"
+      }
+    },
+    {
+      "branchId": "781006",
+      "city": "Dronninglund",
+      "geolocation": {
+        "latitude": "57.1595874",
+        "longitude": "10.2913026"
+      }
+    },
+    {
+      "branchId": "781008",
+      "city": "Hjallerup",
+      "geolocation": {
+        "latitude": "57.169539",
+        "longitude": "10.146004"
+      }
+    },
+    {
+      "branchId": "781300",
+      "city": "Frederikshavn",
+      "geolocation": {
+        "latitude": "57.442711",
+        "longitude": "10.521006"
+      }
+    },
+    {
+      "branchId": "781302",
+      "city": "Sæby",
+      "geolocation": {
+        "latitude": "57.3308698",
+        "longitude": "10.5166278"
+      }
+    },
+    {
+      "branchId": "781303",
+      "city": "Østervrå",
+      "geolocation": {
+        "latitude": "57.342235",
+        "longitude": "10.235304"
+      }
+    },
+    {
+      "branchId": "781304",
+      "city": "Ålbæk",
+      "geolocation": {
+        "latitude": "57.5933625",
+        "longitude": "10.4070461"
+      }
+    },
+    {
+      "branchId": "781305",
+      "city": "Skagen",
+      "geolocation": {
+        "latitude": "57.722668",
+        "longitude": "10.5877079"
+      }
+    },
+    {
+      "branchId": "782000",
+      "city": "Aars",
+      "geolocation": {
+        "latitude": "56.802403",
+        "longitude": "9.51731"
+      }
+    },
+    {
+      "branchId": "782001",
+      "city": "Løgstør",
+      "geolocation": {
+        "latitude": "56.9675834",
+        "longitude": "9.2503011"
+      }
+    },
+    {
+      "branchId": "782002",
+      "city": "Farsø",
+      "geolocation": {
+        "latitude": "56.7716178",
+        "longitude": "9.3445009"
+      }
+    },
+    {
+      "branchId": "782003",
+      "city": "Aalestrup",
+      "geolocation": {
+        "latitude": "56.694439",
+        "longitude": "9.49054"
+      }
+    },
+    {
+      "branchId": "782011"
+    },
+    {
+      "branchId": "782012"
+    },
+    {
+      "branchId": "782013"
+    },
+    {
+      "branchId": "782014"
+    },
+    {
+      "branchId": "782015"
+    },
+    {
+      "branchId": "782500",
+      "city": "Læsø (Laesoe)",
+      "geolocation": {
+        "latitude": "57.253753",
+        "longitude": "11.002351"
+      }
+    },
+    {
+      "branchId": "784000",
+      "city": "Støvring",
+      "geolocation": {
+        "latitude": "56.8889672",
+        "longitude": "9.8366669"
+      }
+    },
+    {
+      "branchId": "784001",
+      "city": "Skørping",
+      "geolocation": {
+        "latitude": "56.8358368",
+        "longitude": "9.887984"
+      }
+    },
+    {
+      "branchId": "784002",
+      "city": "Terndrup",
+      "geolocation": {
+        "latitude": "56.812488",
+        "longitude": "10.058735"
+      }
+    },
+    {
+      "branchId": "784003",
+      "city": "Nørager",
+      "geolocation": {
+        "latitude": "56.7072673",
+        "longitude": "9.6279225"
+      }
+    },
+    {
+      "branchId": "784004",
+      "city": "Støvring",
+      "geolocation": {
+        "latitude": "56.8891113",
+        "longitude": "9.8362967"
+      }
+    },
+    {
+      "branchId": "784600",
+      "city": "Hobro",
+      "geolocation": {
+        "latitude": "56.6391392",
+        "longitude": "9.797648"
+      }
+    },
+    {
+      "branchId": "784601",
+      "city": "Arden",
+      "geolocation": {
+        "latitude": "56.769043",
+        "longitude": "9.856832"
+      }
+    },
+    {
+      "branchId": "784602",
+      "city": "Hadsund",
+      "geolocation": {
+        "latitude": "56.7186994",
+        "longitude": "10.1178412"
+      }
+    },
+    {
+      "branchId": "784603",
+      "city": "Mariager",
+      "geolocation": {
+        "latitude": "56.650427",
+        "longitude": "9.980795"
+      }
+    },
+    {
+      "branchId": "784605",
+      "city": "Hadsund",
+      "geolocation": {
+        "latitude": "56.7565264",
+        "longitude": "10.2877988"
+      }
+    },
+    {
+      "branchId": "784900",
+      "city": "Brovst",
+      "geolocation": {
+        "latitude": "57.101018",
+        "longitude": "9.517732"
+      }
+    },
+    {
+      "branchId": "784901",
+      "city": "Aabybro",
+      "geolocation": {
+        "latitude": "57.1634563",
+        "longitude": "9.7347079"
+      }
+    },
+    {
+      "branchId": "784902",
+      "city": "Pandrup",
+      "geolocation": {
+        "latitude": "57.220598",
+        "longitude": "9.677702"
+      }
+    },
+    {
+      "branchId": "784903",
+      "city": "Fjerritslev",
+      "geolocation": {
+        "latitude": "57.087405",
+        "longitude": "9.265699"
+      }
+    },
+    {
+      "branchId": "784904",
+      "city": "Brovst",
+      "geolocation": {
+        "latitude": "57.101018",
+        "longitude": "9.517732"
+      }
+    },
+    {
+      "branchId": "785100",
+      "city": "Aalborg",
+      "geolocation": {
+        "latitude": "57.0472572",
+        "longitude": "9.9275896"
+      }
+    },
+    {
+      "branchId": "785101",
+      "city": "Aalborg",
+      "geolocation": {
+        "latitude": "57.054224",
+        "longitude": "9.898961"
+      }
+    },
+    {
+      "branchId": "785103",
+      "city": "Aalborg",
+      "geolocation": {
+        "latitude": "57.041402",
+        "longitude": "9.951504"
+      }
+    },
+    {
+      "branchId": "785104",
+      "city": "Aalborg SØ",
+      "geolocation": {
+        "latitude": "57.0230115",
+        "longitude": "9.94299"
+      }
+    },
+    {
+      "branchId": "785106",
+      "city": "Aalborg ØSt",
+      "geolocation": {
+        "latitude": "57.0277153",
+        "longitude": "10.0003913"
+      }
+    },
+    {
+      "branchId": "785107",
+      "city": "Aalborg",
+      "geolocation": {
+        "latitude": "57.036556",
+        "longitude": "9.88339"
+      }
+    },
+    {
+      "branchId": "785109",
+      "city": "Nørresundby",
+      "geolocation": {
+        "latitude": "57.0577107",
+        "longitude": "9.9243795"
+      }
+    },
+    {
+      "branchId": "785110",
+      "city": "Nørresundby"
+    },
+    {
+      "branchId": "785113",
+      "city": "Svenstrup J",
+      "geolocation": {
+        "latitude": "56.9723414",
+        "longitude": "9.8517401"
+      }
+    },
+    {
+      "branchId": "785116",
+      "city": "Vodskov",
+      "geolocation": {
+        "latitude": "57.10377",
+        "longitude": "10.027571"
+      }
+    },
+    {
+      "branchId": "785117",
+      "city": "Hals",
+      "geolocation": {
+        "latitude": "56.9950239",
+        "longitude": "10.3095658"
+      }
+    },
+    {
+      "branchId": "785122",
+      "city": "Nibe"
+    },
+    {
+      "branchId": "785123",
+      "city": "Nibe",
+      "geolocation": {
+        "latitude": "56.982095",
+        "longitude": "9.636342"
+      }
+    },
+    {
+      "branchId": "785131",
+      "city": "Aalborg"
+    },
+    {
+      "branchId": "785140",
+      "city": "Aalborg"
+    },
+    {
+      "branchId": "785141"
+    },
+    {
+      "branchId": "785142"
+    },
+    {
+      "branchId": "785143",
+      "city": "Storvorde",
+      "geolocation": {
+        "latitude": "57.001631",
+        "longitude": "10.101506"
+      }
+    },
+    {
+      "branchId": "786000",
+      "city": "Hjørring",
+      "geolocation": {
+        "latitude": "57.4580861",
+        "longitude": "9.9909581"
+      }
+    },
+    {
+      "branchId": "786001",
+      "city": "Hirtshals",
+      "geolocation": {
+        "latitude": "57.5904807",
+        "longitude": "9.9603369"
+      }
+    },
+    {
+      "branchId": "786002",
+      "city": "Vrå",
+      "geolocation": {
+        "latitude": "57.353108",
+        "longitude": "9.946824"
+      }
+    },
+    {
+      "branchId": "786003",
+      "city": "Løkken",
+      "geolocation": {
+        "latitude": "57.372502",
+        "longitude": "9.714157"
+      }
+    },
+    {
+      "branchId": "786004",
+      "city": "Sindal",
+      "geolocation": {
+        "latitude": "57.472046",
+        "longitude": "10.200346"
+      }
+    },
+    {
+      "branchId": "786006",
+      "city": "Tårs",
+      "geolocation": {
+        "latitude": "57.387019",
+        "longitude": "10.11397"
+      }
+    },
+    {
+      "branchId": "786007",
+      "city": "Bindslev",
+      "geolocation": {
+        "latitude": "57.5420495",
+        "longitude": "10.1964522"
+      }
+    },
+    {
+      "branchId": "786008",
+      "city": "Hjørring",
+      "geolocation": {
+        "latitude": "57.5134",
+        "longitude": "10.025916"
+      }
+    },
+    {
+      "branchId": "786009",
+      "city": "Tornby",
+      "geolocation": {
+        "latitude": "57.525698",
+        "longitude": "9.948305"
+      }
+    },
+    {
+      "branchId": "786010",
+      "city": "Bindslev",
+      "geolocation": {
+        "latitude": "57.58692",
+        "longitude": "10.188126"
+      }
+    },
+    {
+      "branchId": "786011",
+      "city": "Sindal",
+      "geolocation": {
+        "latitude": "57.503576",
+        "longitude": "10.278933"
+      }
+    },
+    {
+      "branchId": "786012",
+      "city": "Hjørring",
+      "geolocation": {
+        "latitude": "57.471932",
+        "longitude": "9.797296"
+      }
+    },
+    {
+      "branchId": "786013"
+    },
+    {
+      "branchId": "786014"
+    },
+    {
+      "branchId": "786015"
+    },
+    {
+      "branchId": "786016"
+    },
+    {
+      "branchId": "786017"
+    },
+    {
+      "branchId": "790900",
+      "city": "Testby-test"
+    },
+    {
+      "branchId": "810010",
+      "city": "København K",
+      "geolocation": {
+        "latitude": "55.6732158",
+        "longitude": "12.5821264"
+      }
+    },
+    {
+      "branchId": "810011",
+      "city": "København K",
+      "geolocation": {
+        "latitude": "55.6856006",
+        "longitude": "12.5700945"
+      }
+    },
+    {
+      "branchId": "810012",
+      "city": "København S",
+      "geolocation": {
+        "latitude": "55.661891",
+        "longitude": "12.589797"
+      }
+    },
+    {
+      "branchId": "810013",
+      "city": "København N",
+      "geolocation": {
+        "latitude": "55.697244",
+        "longitude": "12.5611979"
+      }
+    },
+    {
+      "branchId": "810014",
+      "city": "København K"
+    },
+    {
+      "branchId": "810015",
+      "city": "København K"
+    },
+    {
+      "branchId": "820010",
+      "city": "Aarhus C",
+      "geolocation": {
+        "latitude": "56.1701747",
+        "longitude": "10.199239"
+      }
+    },
+    {
+      "branchId": "820012",
+      "city": "København K"
+    },
+    {
+      "branchId": "820014",
+      "city": "Aarhus",
+      "geolocation": {
+        "latitude": "56.166644",
+        "longitude": "10.206756"
+      }
+    },
+    {
+      "branchId": "820015"
+    },
+    {
+      "branchId": "820016"
+    },
+    {
+      "branchId": "820030",
+      "city": "Odense M",
+      "geolocation": {
+        "latitude": "55.3683931",
+        "longitude": "10.4276852"
+      }
+    },
+    {
+      "branchId": "820031",
+      "city": "Esbjerg",
+      "geolocation": {
+        "latitude": "55.491036",
+        "longitude": "8.449366"
+      }
+    },
+    {
+      "branchId": "820032",
+      "city": "Kolding",
+      "geolocation": {
+        "latitude": "55.495973",
+        "longitude": "9.4730519"
+      }
+    },
+    {
+      "branchId": "820033",
+      "city": "Sønderborg",
+      "geolocation": {
+        "latitude": "54.9130458",
+        "longitude": "9.7789006"
+      }
+    },
+    {
+      "branchId": "820036",
+      "city": "Odense C",
+      "geolocation": {
+        "latitude": "55.400929",
+        "longitude": "10.402539"
+      }
+    },
+    {
+      "branchId": "820037",
+      "city": "Odense M",
+      "geolocation": {
+        "latitude": "55.3683931",
+        "longitude": "10.4276852"
+      }
+    },
+    {
+      "branchId": "820039",
+      "city": "Slagelse",
+      "geolocation": {
+        "latitude": "55.4072389",
+        "longitude": "11.3485739"
+      }
+    },
+    {
+      "branchId": "820040",
+      "city": "Roskilde",
+      "geolocation": {
+        "latitude": "55.652912",
+        "longitude": "12.143393"
+      }
+    },
+    {
+      "branchId": "820050",
+      "city": "Aalborg Øst",
+      "geolocation": {
+        "latitude": "57.020799",
+        "longitude": "9.977612"
+      }
+    },
+    {
+      "branchId": "820051",
+      "city": "Esbjerg"
+    },
+    {
+      "branchId": "820052",
+      "city": "København SV"
+    },
+    {
+      "branchId": "820053",
+      "city": "Hørsholm"
+    },
+    {
+      "branchId": "820060",
+      "city": "Kgs. Lyngby",
+      "geolocation": {
+        "latitude": "55.786908",
+        "longitude": "12.523264"
+      }
+    },
+    {
+      "branchId": "820070",
+      "city": "København NV",
+      "geolocation": {
+        "latitude": "55.72171",
+        "longitude": "12.543195"
+      }
+    },
+    {
+      "branchId": "820080",
+      "city": "Århus C",
+      "geolocation": {
+        "latitude": "56.1612494",
+        "longitude": "10.2124633"
+      }
+    },
+    {
+      "branchId": "820090",
+      "city": "København Ø",
+      "geolocation": {
+        "latitude": "55.703168",
+        "longitude": "12.5595074"
+      }
+    },
+    {
+      "branchId": "820100",
+      "city": "København N"
+    },
+    {
+      "branchId": "820110",
+      "city": "Frederiksberg C",
+      "geolocation": {
+        "latitude": "55.679072",
+        "longitude": "12.54134"
+      }
+    },
+    {
+      "branchId": "820120",
+      "city": "Frederiksberg",
+      "geolocation": {
+        "latitude": "55.6815889",
+        "longitude": "12.5290918"
+      }
+    },
+    {
+      "branchId": "820121",
+      "city": "Frederiksberg"
+    },
+    {
+      "branchId": "820122",
+      "city": "Frederiksberg",
+      "geolocation": {
+        "latitude": "55.677864",
+        "longitude": "12.521467"
+      }
+    },
+    {
+      "branchId": "820123"
+    },
+    {
+      "branchId": "820140",
+      "city": "Århus V",
+      "geolocation": {
+        "latitude": "56.1622333",
+        "longitude": "10.1824915"
+      }
+    },
+    {
+      "branchId": "820150",
+      "city": "København K",
+      "geolocation": {
+        "latitude": "55.6760968",
+        "longitude": "12.5683371"
+      }
+    },
+    {
+      "branchId": "820180",
+      "city": "Århus"
+    },
+    {
+      "branchId": "820190",
+      "city": "København S"
+    },
+    {
+      "branchId": "830010",
+      "city": "København S",
+      "geolocation": {
+        "latitude": "55.656189",
+        "longitude": "12.598737"
+      }
+    },
+    {
+      "branchId": "830020",
+      "city": "Skovlunde"
+    },
+    {
+      "branchId": "830060",
+      "city": "København N"
+    },
+    {
+      "branchId": "830061",
+      "city": "Søborg"
+    },
+    {
+      "branchId": "830062"
+    },
+    {
+      "branchId": "830069"
+    },
+    {
+      "branchId": "830070",
+      "city": "Birkerød"
+    },
+    {
+      "branchId": "830071",
+      "city": "København K"
+    },
+    {
+      "branchId": "830080",
+      "city": "København K",
+      "geolocation": {
+        "latitude": "55.6814193",
+        "longitude": "12.6051379"
+      }
+    },
+    {
+      "branchId": "830140",
+      "city": "Århus N"
+    },
+    {
+      "branchId": "830190",
+      "city": "Esbjerg Ø",
+      "geolocation": {
+        "latitude": "55.4833649",
+        "longitude": "8.4857417"
+      }
+    },
+    {
+      "branchId": "830240",
+      "city": "Frederiksberg"
+    },
+    {
+      "branchId": "830250",
+      "city": "København V"
+    },
+    {
+      "branchId": "830280",
+      "city": "København NV"
+    },
+    {
+      "branchId": "830290",
+      "city": "Haderslev",
+      "geolocation": {
+        "latitude": "55.2545603",
+        "longitude": "9.4854699"
+      }
+    },
+    {
+      "branchId": "830300",
+      "city": "Herning",
+      "geolocation": {
+        "latitude": "56.1294714",
+        "longitude": "9.0270544"
+      }
+    },
+    {
+      "branchId": "830360",
+      "city": "Hillerød"
+    },
+    {
+      "branchId": "830370",
+      "city": "Sorø",
+      "geolocation": {
+        "latitude": "55.444605",
+        "longitude": "11.547643"
+      }
+    },
+    {
+      "branchId": "830371",
+      "city": "Sorø",
+      "geolocation": {
+        "latitude": "55.4397849",
+        "longitude": "11.5575087"
+      }
+    },
+    {
+      "branchId": "830372",
+      "city": "Roskilde",
+      "geolocation": {
+        "latitude": "55.6507804",
+        "longitude": "12.141245"
+      }
+    },
+    {
+      "branchId": "830380",
+      "city": "Aalborg SØ",
+      "geolocation": {
+        "latitude": "57.018477",
+        "longitude": "9.948632"
+      }
+    },
+    {
+      "branchId": "830400",
+      "city": "Holstebro",
+      "geolocation": {
+        "latitude": "56.3707225",
+        "longitude": "8.6169082"
+      }
+    },
+    {
+      "branchId": "830410",
+      "city": "Horsens",
+      "geolocation": {
+        "latitude": "55.871524",
+        "longitude": "9.886037"
+      }
+    },
+    {
+      "branchId": "830450",
+      "city": "Ikast"
+    },
+    {
+      "branchId": "830460",
+      "city": "Jelling",
+      "geolocation": {
+        "latitude": "55.755695",
+        "longitude": "9.420212"
+      }
+    },
+    {
+      "branchId": "830471",
+      "city": "Randers C",
+      "geolocation": {
+        "latitude": "56.4613818",
+        "longitude": "10.0426475"
+      }
+    },
+    {
+      "branchId": "830480",
+      "city": "Århus C"
+    },
+    {
+      "branchId": "830500",
+      "city": "Kolding",
+      "geolocation": {
+        "latitude": "55.4997515",
+        "longitude": "9.4731599"
+      }
+    },
+    {
+      "branchId": "830520",
+      "city": "Frederiksberg C"
+    },
+    {
+      "branchId": "830530",
+      "city": "København Ø"
+    },
+    {
+      "branchId": "830550",
+      "city": "København SV"
+    },
+    {
+      "branchId": "830560",
+      "city": "Ballerup"
+    },
+    {
+      "branchId": "830600",
+      "city": "V.Skerninge",
+      "geolocation": {
+        "latitude": "55.07103",
+        "longitude": "10.506812"
+      }
+    },
+    {
+      "branchId": "830630",
+      "city": "Aalborg"
+    },
+    {
+      "branchId": "830660",
+      "city": "Lemvig",
+      "geolocation": {
+        "latitude": "56.54734",
+        "longitude": "8.420313"
+      }
+    },
+    {
+      "branchId": "830680",
+      "city": "Odense C"
+    },
+    {
+      "branchId": "830690",
+      "city": "Odense C",
+      "geolocation": {
+        "latitude": "55.3973436",
+        "longitude": "10.3874569"
+      }
+    },
+    {
+      "branchId": "830691",
+      "city": "Odense V",
+      "geolocation": {
+        "latitude": "55.3913896",
+        "longitude": "10.3386789"
+      }
+    },
+    {
+      "branchId": "830692",
+      "city": "Odense S"
+    },
+    {
+      "branchId": "830700",
+      "city": "Odense C",
+      "geolocation": {
+        "latitude": "55.395601",
+        "longitude": "10.346454"
+      }
+    },
+    {
+      "branchId": "830750",
+      "city": "Silkeborg",
+      "geolocation": {
+        "latitude": "56.168618",
+        "longitude": "9.573111"
+      }
+    },
+    {
+      "branchId": "830770",
+      "city": "Skive",
+      "geolocation": {
+        "latitude": "56.5503529",
+        "longitude": "9.0127815"
+      }
+    },
+    {
+      "branchId": "830830",
+      "city": "Frederiksberg"
+    },
+    {
+      "branchId": "830860",
+      "city": "Odense SØ",
+      "geolocation": {
+        "latitude": "55.3896604",
+        "longitude": "10.440976"
+      }
+    },
+    {
+      "branchId": "830880",
+      "city": "København K"
+    },
+    {
+      "branchId": "830930",
+      "city": "Esbjerg",
+      "geolocation": {
+        "latitude": "55.4704747",
+        "longitude": "8.4506202"
+      }
+    },
+    {
+      "branchId": "830950",
+      "city": "Viborg",
+      "geolocation": {
+        "latitude": "56.458726",
+        "longitude": "9.402872"
+      }
+    },
+    {
+      "branchId": "830960",
+      "city": "Vordingborg",
+      "geolocation": {
+        "latitude": "55.0131363",
+        "longitude": "11.8975872"
+      }
+    },
+    {
+      "branchId": "830961",
+      "city": "Nykøbing F.",
+      "geolocation": {
+        "latitude": "54.764658",
+        "longitude": "11.878863"
+      }
+    },
+    {
+      "branchId": "830963",
+      "city": "Næstved",
+      "geolocation": {
+        "latitude": "55.205479",
+        "longitude": "11.767418"
+      }
+    },
+    {
+      "branchId": "830970",
+      "city": "København K"
+    },
+    {
+      "branchId": "830980",
+      "city": "Aabenraa",
+      "geolocation": {
+        "latitude": "55.040852",
+        "longitude": "9.4151589"
+      }
+    },
+    {
+      "branchId": "831000",
+      "city": "Hjørring",
+      "geolocation": {
+        "latitude": "57.458559",
+        "longitude": "10.003269"
+      }
+    },
+    {
+      "branchId": "831020",
+      "city": "Aarhus C"
+    },
+    {
+      "branchId": "831040",
+      "city": "Aarhus C",
+      "geolocation": {
+        "latitude": "56.1587207",
+        "longitude": "10.2154356"
+      }
+    },
+    {
+      "branchId": "831080",
+      "city": "Aalborg Øst",
+      "geolocation": {
+        "latitude": "57.016158",
+        "longitude": "9.9941739"
+      }
+    },
+    {
+      "branchId": "831120",
+      "city": "Odense C",
+      "geolocation": {
+        "latitude": "55.404753",
+        "longitude": "10.387987"
+      }
+    },
+    {
+      "branchId": "831140",
+      "city": "Nykøbing F",
+      "geolocation": {
+        "latitude": "54.775845",
+        "longitude": "11.878755"
+      }
+    },
+    {
+      "branchId": "831170",
+      "city": "Odense S"
+    },
+    {
+      "branchId": "831180",
+      "city": "Esbjerg N"
+    },
+    {
+      "branchId": "831200",
+      "city": "Næstved"
+    },
+    {
+      "branchId": "831201",
+      "city": "Køge"
+    },
+    {
+      "branchId": "831202",
+      "city": "Holbæk"
+    },
+    {
+      "branchId": "831220",
+      "city": "Sønderborg",
+      "geolocation": {
+        "latitude": "54.9209965",
+        "longitude": "9.7820018"
+      }
+    },
+    {
+      "branchId": "831260",
+      "city": "Fredericia"
+    },
+    {
+      "branchId": "831261",
+      "city": "Vejle"
+    },
+    {
+      "branchId": "831340",
+      "city": "Nykøbing F"
+    },
+    {
+      "branchId": "831350",
+      "city": "Aarhus N",
+      "geolocation": {
+        "latitude": "56.192499",
+        "longitude": "10.181203"
+      }
+    },
+    {
+      "branchId": "831380",
+      "city": "Vejle",
+      "geolocation": {
+        "latitude": "55.7117907",
+        "longitude": "9.5220021"
+      }
+    },
+    {
+      "branchId": "831410",
+      "city": "Løgumkloster"
+    },
+    {
+      "branchId": "840020",
+      "city": "København N"
+    },
+    {
+      "branchId": "840050",
+      "city": "København K"
+    },
+    {
+      "branchId": "840090",
+      "city": "København K",
+      "geolocation": {
+        "latitude": "55.6859785",
+        "longitude": "12.5950453"
+      }
+    },
+    {
+      "branchId": "840100",
+      "city": "København S"
+    },
+    {
+      "branchId": "840110",
+      "city": " "
+    },
+    {
+      "branchId": "840130",
+      "city": "København S"
+    },
+    {
+      "branchId": "840170",
+      "city": " "
+    },
+    {
+      "branchId": "840180",
+      "city": "København S"
+    },
+    {
+      "branchId": "840200",
+      "city": " ",
+      "geolocation": {
+        "latitude": "55.701504",
+        "longitude": "12.560686"
+      }
+    },
+    {
+      "branchId": "840220",
+      "city": "København S"
+    },
+    {
+      "branchId": "840270",
+      "city": " "
+    },
+    {
+      "branchId": "840290",
+      "city": "Kbh. K"
+    },
+    {
+      "branchId": "840300",
+      "city": " "
+    },
+    {
+      "branchId": "840350",
+      "city": " "
+    },
+    {
+      "branchId": "840360",
+      "city": "København S"
+    },
+    {
+      "branchId": "840420",
+      "city": "København S"
+    },
+    {
+      "branchId": "840430",
+      "city": "København S"
+    },
+    {
+      "branchId": "840431",
+      "city": "København S"
+    },
+    {
+      "branchId": "840480",
+      "city": "København K"
+    },
+    {
+      "branchId": "840540",
+      "city": "København K",
+      "geolocation": {
+        "latitude": "55.6781961",
+        "longitude": "12.5680503"
+      }
+    },
+    {
+      "branchId": "840550",
+      "city": "København S"
+    },
+    {
+      "branchId": "840560",
+      "city": "København Ø"
+    },
+    {
+      "branchId": "840570",
+      "city": "København K"
+    },
+    {
+      "branchId": "840600",
+      "city": "København Ø"
+    },
+    {
+      "branchId": "840630",
+      "city": "Kbh. K"
+    },
+    {
+      "branchId": "840650",
+      "city": "København S"
+    },
+    {
+      "branchId": "840670",
+      "city": "København K"
+    },
+    {
+      "branchId": "840690",
+      "city": "København S"
+    },
+    {
+      "branchId": "840700",
+      "city": "København Ø"
+    },
+    {
+      "branchId": "840720",
+      "city": "København K"
+    },
+    {
+      "branchId": "840790",
+      "city": "København S"
+    },
+    {
+      "branchId": "840810",
+      "city": "København K"
+    },
+    {
+      "branchId": "840930",
+      "city": " "
+    },
+    {
+      "branchId": "841020",
+      "city": "Odense M"
+    },
+    {
+      "branchId": "841030",
+      "city": "Århus C"
+    },
+    {
+      "branchId": "841160",
+      "city": " "
+    },
+    {
+      "branchId": "841180",
+      "city": "Kgs. Lyngby"
+    },
+    {
+      "branchId": "841210",
+      "city": "Kgs. Lyngby"
+    },
+    {
+      "branchId": "841260",
+      "city": "Århus C",
+      "geolocation": {
+        "latitude": "56.1664503",
+        "longitude": "10.198699"
+      }
+    },
+    {
+      "branchId": "841340",
+      "city": "Lyngby"
+    },
+    {
+      "branchId": "841370",
+      "city": " "
+    },
+    {
+      "branchId": "841520",
+      "city": " "
+    },
+    {
+      "branchId": "841570",
+      "city": " "
+    },
+    {
+      "branchId": "841660",
+      "city": "Aarhus C"
+    },
+    {
+      "branchId": "841690",
+      "city": " "
+    },
+    {
+      "branchId": "841870",
+      "city": " "
+    },
+    {
+      "branchId": "841920",
+      "city": "Højbjerg"
+    },
+    {
+      "branchId": "842040",
+      "city": " "
+    },
+    {
+      "branchId": "842110",
+      "city": " "
+    },
+    {
+      "branchId": "842150",
+      "city": " "
+    },
+    {
+      "branchId": "842470",
+      "city": " "
+    },
+    {
+      "branchId": "842570",
+      "city": " "
+    },
+    {
+      "branchId": "842820",
+      "city": "Lyngby"
+    },
+    {
+      "branchId": "842910",
+      "city": "Aalborg Øst"
+    },
+    {
+      "branchId": "842930",
+      "city": "København N"
+    },
+    {
+      "branchId": "843000",
+      "city": " "
+    },
+    {
+      "branchId": "850010",
+      "city": "København K",
+      "geolocation": {
+        "latitude": "55.6748711",
+        "longitude": "12.584745"
+      }
+    },
+    {
+      "branchId": "850020",
+      "city": "Taastrup",
+      "geolocation": {
+        "latitude": "55.660866",
+        "longitude": "12.303565"
+      }
+    },
+    {
+      "branchId": "850021"
+    },
+    {
+      "branchId": "850030",
+      "city": "København K",
+      "geolocation": {
+        "latitude": "55.6789316",
+        "longitude": "12.590436"
+      }
+    },
+    {
+      "branchId": "850040",
+      "city": "København Ø",
+      "geolocation": {
+        "latitude": "55.6914492",
+        "longitude": "12.5949606"
+      }
+    },
+    {
+      "branchId": "850050",
+      "city": "København Ø"
+    },
+    {
+      "branchId": "850130",
+      "city": "København V"
+    },
+    {
+      "branchId": "850131"
+    },
+    {
+      "branchId": "850132"
+    },
+    {
+      "branchId": "850160",
+      "city": "København Ø"
+    },
+    {
+      "branchId": "850170",
+      "city": "Esbjerg",
+      "geolocation": {
+        "latitude": "55.473873",
+        "longitude": "8.456592"
+      }
+    },
+    {
+      "branchId": "850200",
+      "city": "Charlottenlund"
+    },
+    {
+      "branchId": "850290",
+      "city": "København K",
+      "geolocation": {
+        "latitude": "55.683134",
+        "longitude": "12.5785509"
+      }
+    },
+    {
+      "branchId": "850300",
+      "city": "Aalborg"
+    },
+    {
+      "branchId": "850330",
+      "city": " "
+    },
+    {
+      "branchId": "850480",
+      "city": "København K"
+    },
+    {
+      "branchId": "850580",
+      "city": "København K"
+    },
+    {
+      "branchId": "850590",
+      "city": "København K",
+      "geolocation": {
+        "latitude": "55.768308",
+        "longitude": "12.4922229"
+      }
+    },
+    {
+      "branchId": "850600",
+      "city": "Herlev"
+    },
+    {
+      "branchId": "850610",
+      "city": "Glostrup"
+    },
+    {
+      "branchId": "850650",
+      "city": "København K",
+      "geolocation": {
+        "latitude": "55.6879339",
+        "longitude": "12.578571"
+      }
+    },
+    {
+      "branchId": "850660",
+      "city": "København K"
+    },
+    {
+      "branchId": "850680",
+      "city": "Århus C"
+    },
+    {
+      "branchId": "850700",
+      "city": " "
+    },
+    {
+      "branchId": "850740",
+      "city": "Århus C"
+    },
+    {
+      "branchId": "850860",
+      "city": "København K"
+    },
+    {
+      "branchId": "850863",
+      "city": "Frederiksberg C",
+      "geolocation": {
+        "latitude": "55.68221",
+        "longitude": "12.552525"
+      }
+    },
+    {
+      "branchId": "850870",
+      "city": " "
+    },
+    {
+      "branchId": "850920",
+      "city": "Risskov",
+      "geolocation": {
+        "latitude": "56.188276",
+        "longitude": "10.226571"
+      }
+    },
+    {
+      "branchId": "850940",
+      "city": "København K"
+    },
+    {
+      "branchId": "850950",
+      "city": "København Ø"
+    },
+    {
+      "branchId": "850960",
+      "city": " "
+    },
+    {
+      "branchId": "850980",
+      "city": "Roskilde",
+      "geolocation": {
+        "latitude": "55.650558",
+        "longitude": "12.068446"
+      }
+    },
+    {
+      "branchId": "850990",
+      "city": "København K"
+    },
+    {
+      "branchId": "851010",
+      "city": "København K"
+    },
+    {
+      "branchId": "851040",
+      "city": "Tjele",
+      "geolocation": {
+        "latitude": "56.51081",
+        "longitude": "9.6116569"
+      }
+    },
+    {
+      "branchId": "851060",
+      "city": "København K"
+    },
+    {
+      "branchId": "851061"
+    },
+    {
+      "branchId": "851090",
+      "city": "København S",
+      "geolocation": {
+        "latitude": "55.666087",
+        "longitude": "12.587445"
+      }
+    },
+    {
+      "branchId": "851140",
+      "city": " "
+    },
+    {
+      "branchId": "851150",
+      "city": "København S"
+    },
+    {
+      "branchId": "851170",
+      "city": "Aabenraa",
+      "geolocation": {
+        "latitude": "55.0630626",
+        "longitude": "9.3771647"
+      }
+    },
+    {
+      "branchId": "851220",
+      "city": " "
+    },
+    {
+      "branchId": "851280",
+      "city": "Viborg"
+    },
+    {
+      "branchId": "851300",
+      "city": " "
+    },
+    {
+      "branchId": "851320",
+      "city": " "
+    },
+    {
+      "branchId": "851380",
+      "city": "Odense C",
+      "geolocation": {
+        "latitude": "55.3816896",
+        "longitude": "10.3717036"
+      }
+    },
+    {
+      "branchId": "851470",
+      "city": "København K",
+      "geolocation": {
+        "latitude": "55.6772229",
+        "longitude": "12.5971624"
+      }
+    },
+    {
+      "branchId": "851490",
+      "city": "Thisted"
+    },
+    {
+      "branchId": "851491"
+    },
+    {
+      "branchId": "851510",
+      "city": "Aalborg"
+    },
+    {
+      "branchId": "851540",
+      "city": " "
+    },
+    {
+      "branchId": "851640",
+      "city": " "
+    },
+    {
+      "branchId": "851660",
+      "city": " "
+    },
+    {
+      "branchId": "851680",
+      "city": " "
+    },
+    {
+      "branchId": "851690",
+      "city": " "
+    },
+    {
+      "branchId": "851700",
+      "city": "København Ø"
+    },
+    {
+      "branchId": "851800",
+      "city": "Helsingør"
+    },
+    {
+      "branchId": "851870",
+      "city": "Hillerød"
+    },
+    {
+      "branchId": "851930",
+      "city": " "
+    },
+    {
+      "branchId": "852000",
+      "city": "Rønne"
+    },
+    {
+      "branchId": "852120",
+      "city": " "
+    },
+    {
+      "branchId": "852180",
+      "city": "Lemvig"
+    },
+    {
+      "branchId": "852190",
+      "city": "Silkeborg"
+    },
+    {
+      "branchId": "852220",
+      "city": " "
+    },
+    {
+      "branchId": "852260",
+      "city": " "
+    },
+    {
+      "branchId": "852300",
+      "city": "København Ø"
+    },
+    {
+      "branchId": "852340",
+      "city": "Nexø"
+    },
+    {
+      "branchId": "852350",
+      "city": "Roskilde"
+    },
+    {
+      "branchId": "852360",
+      "city": "Vejle",
+      "geolocation": {
+        "latitude": "55.7147509",
+        "longitude": "9.5382562"
+      }
+    },
+    {
+      "branchId": "852380",
+      "city": " "
+    },
+    {
+      "branchId": "852390",
+      "city": "Køge"
+    },
+    {
+      "branchId": "852430",
+      "city": "Slagelse"
+    },
+    {
+      "branchId": "852440",
+      "city": "Hjørring"
+    },
+    {
+      "branchId": "852460",
+      "city": " "
+    },
+    {
+      "branchId": "852470",
+      "city": "Løgumkloster"
+    },
+    {
+      "branchId": "852490",
+      "city": "Odense C"
+    },
+    {
+      "branchId": "852500",
+      "city": "Slagelse",
+      "geolocation": {
+        "latitude": "55.3539363",
+        "longitude": "11.3266799"
+      }
+    },
+    {
+      "branchId": "852610",
+      "city": "København K",
+      "geolocation": {
+        "latitude": "55.7058806",
+        "longitude": "12.5759414"
+      }
+    },
+    {
+      "branchId": "852620",
+      "city": "Odense C",
+      "geolocation": {
+        "latitude": "55.4050403",
+        "longitude": "10.3914276"
+      }
+    },
+    {
+      "branchId": "852650",
+      "city": "København Ø"
+    },
+    {
+      "branchId": "852690",
+      "city": " "
+    },
+    {
+      "branchId": "852730",
+      "city": "Aalborg"
+    },
+    {
+      "branchId": "852750",
+      "city": "Kolding"
+    },
+    {
+      "branchId": "852760",
+      "city": "Kolding"
+    },
+    {
+      "branchId": "852770",
+      "city": "Grønland"
+    },
+    {
+      "branchId": "860030",
+      "city": "København C"
+    },
+    {
+      "branchId": "860100",
+      "city": "København K",
+      "geolocation": {
+        "latitude": "55.6771298",
+        "longitude": "12.5804729"
+      }
+    },
+    {
+      "branchId": "860110",
+      "city": " "
+    },
+    {
+      "branchId": "860120",
+      "city": "København K"
+    },
+    {
+      "branchId": "860130",
+      "city": "København Ø"
+    },
+    {
+      "branchId": "860150",
+      "city": " "
+    },
+    {
+      "branchId": "860230",
+      "city": "København K"
+    },
+    {
+      "branchId": "860240",
+      "city": "København K"
+    },
+    {
+      "branchId": "860410",
+      "city": "Sønderborg"
+    },
+    {
+      "branchId": "860490",
+      "city": "Slagelse"
+    },
+    {
+      "branchId": "860520",
+      "city": " "
+    },
+    {
+      "branchId": "860550",
+      "city": "København K"
+    },
+    {
+      "branchId": "860570",
+      "city": "Viborg",
+      "geolocation": {
+        "latitude": "56.465143",
+        "longitude": "9.413229"
+      }
+    },
+    {
+      "branchId": "860750",
+      "city": "Hillerød"
+    },
+    {
+      "branchId": "860810",
+      "city": " "
+    },
+    {
+      "branchId": "860830",
+      "city": "Odense M",
+      "geolocation": {
+        "latitude": "55.3809154",
+        "longitude": "10.4086351"
+      }
+    },
+    {
+      "branchId": "860840",
+      "city": "Kolding",
+      "geolocation": {
+        "latitude": "55.4837451",
+        "longitude": "9.4861183"
+      }
+    },
+    {
+      "branchId": "860841",
+      "city": "Fredericia",
+      "geolocation": {
+        "latitude": "55.539086",
+        "longitude": "9.718863"
+      }
+    },
+    {
+      "branchId": "860842",
+      "city": "Aabenraa",
+      "geolocation": {
+        "latitude": "55.04342",
+        "longitude": "9.41263"
+      }
+    },
+    {
+      "branchId": "860890",
+      "city": "Aalborg",
+      "geolocation": {
+        "latitude": "57.032771",
+        "longitude": "9.90931"
+      }
+    },
+    {
+      "branchId": "860893",
+      "city": "Aalborg SV",
+      "geolocation": {
+        "latitude": "57.021055",
+        "longitude": "9.885131"
+      }
+    },
+    {
+      "branchId": "860900",
+      "city": "København N"
+    },
+    {
+      "branchId": "860960",
+      "city": " "
+    },
+    {
+      "branchId": "860970"
+    },
+    {
+      "branchId": "860980",
+      "city": "Ishøj"
+    },
+    {
+      "branchId": "860990",
+      "city": "Kgs. Lyngby"
+    },
+    {
+      "branchId": "860992",
+      "city": "København K."
+    },
+    {
+      "branchId": "861000",
+      "city": "Viborg"
+    },
+    {
+      "branchId": "861010",
+      "city": " "
+    },
+    {
+      "branchId": "861030",
+      "city": "Fredericia"
+    },
+    {
+      "branchId": "861060",
+      "city": "Næstved"
+    },
+    {
+      "branchId": "861110",
+      "city": "Vordingborg"
+    },
+    {
+      "branchId": "861130",
+      "city": "Nykøbing F.",
+      "geolocation": {
+        "latitude": "54.759583",
+        "longitude": "11.898277"
+      }
+    },
+    {
+      "branchId": "861150",
+      "city": "København K"
+    },
+    {
+      "branchId": "861160",
+      "city": "Viby J"
+    },
+    {
+      "branchId": "861170",
+      "city": "Esbjerg",
+      "geolocation": {
+        "latitude": "55.4802429",
+        "longitude": "8.4336222"
+      }
+    },
+    {
+      "branchId": "861190",
+      "city": "Odense SV"
+    },
+    {
+      "branchId": "861210",
+      "city": "Skive",
+      "geolocation": {
+        "latitude": "56.5551723",
+        "longitude": "9.017382"
+      }
+    },
+    {
+      "branchId": "861260",
+      "city": "Holbæk"
+    },
+    {
+      "branchId": "861280",
+      "city": "Hobro"
+    },
+    {
+      "branchId": "861281",
+      "city": "Randers SØ"
+    },
+    {
+      "branchId": "861290",
+      "city": "Ballerup"
+    },
+    {
+      "branchId": "861300",
+      "city": "Vejle",
+      "geolocation": {
+        "latitude": "55.7077097",
+        "longitude": "9.5178325"
+      }
+    },
+    {
+      "branchId": "861330",
+      "city": "Beder",
+      "geolocation": {
+        "latitude": "56.058638",
+        "longitude": "10.200265"
+      }
+    },
+    {
+      "branchId": "861340",
+      "city": " "
+    },
+    {
+      "branchId": "861380",
+      "city": "Slagelse",
+      "geolocation": {
+        "latitude": "55.403493",
+        "longitude": "11.36076"
+      }
+    },
+    {
+      "branchId": "861410",
+      "city": "Randers C"
+    },
+    {
+      "branchId": "861411",
+      "city": "Randers SØ"
+    },
+    {
+      "branchId": "861430",
+      "city": "Roskilde",
+      "geolocation": {
+        "latitude": "55.626477",
+        "longitude": "12.0755079"
+      }
+    },
+    {
+      "branchId": "861440",
+      "city": "Sønderborg",
+      "geolocation": {
+        "latitude": "54.90718",
+        "longitude": "9.80877"
+      }
+    },
+    {
+      "branchId": "861450",
+      "city": "Hjørring",
+      "geolocation": {
+        "latitude": "57.46101",
+        "longitude": "10.012421"
+      }
+    },
+    {
+      "branchId": "861452"
+    },
+    {
+      "branchId": "861460",
+      "city": " "
+    },
+    {
+      "branchId": "861470",
+      "city": "Skjern"
+    },
+    {
+      "branchId": "861500",
+      "city": "Silkeborg",
+      "geolocation": {
+        "latitude": "56.166549",
+        "longitude": "9.5483173"
+      }
+    },
+    {
+      "branchId": "861510",
+      "city": "Vejle"
+    },
+    {
+      "branchId": "861520",
+      "city": "Ribe",
+      "geolocation": {
+        "latitude": "55.339217",
+        "longitude": "8.782207"
+      }
+    },
+    {
+      "branchId": "861530",
+      "city": " "
+    },
+    {
+      "branchId": "861540",
+      "city": "Rønne",
+      "geolocation": {
+        "latitude": "55.106771",
+        "longitude": "14.712703"
+      }
+    },
+    {
+      "branchId": "861560",
+      "city": "Odense C"
+    },
+    {
+      "branchId": "861562",
+      "city": "Odense V."
+    },
+    {
+      "branchId": "861564",
+      "city": "Odense C"
+    },
+    {
+      "branchId": "861580",
+      "city": "Thisted"
+    },
+    {
+      "branchId": "861590",
+      "city": "Aalborg"
+    },
+    {
+      "branchId": "861592"
+    },
+    {
+      "branchId": "861610",
+      "city": "Svendborg",
+      "geolocation": {
+        "latitude": "55.054455",
+        "longitude": "10.602034"
+      }
+    },
+    {
+      "branchId": "861620",
+      "city": "Ikast",
+      "geolocation": {
+        "latitude": "56.132901",
+        "longitude": "9.125879"
+      }
+    },
+    {
+      "branchId": "861621",
+      "city": "Herning",
+      "geolocation": {
+        "latitude": "56.1495304",
+        "longitude": "8.9869123"
+      }
+    },
+    {
+      "branchId": "861640",
+      "city": "Sorø"
+    },
+    {
+      "branchId": "861660",
+      "city": " "
+    },
+    {
+      "branchId": "861680",
+      "city": "Holstebro",
+      "geolocation": {
+        "latitude": "56.371804",
+        "longitude": "8.601745"
+      }
+    },
+    {
+      "branchId": "861700",
+      "city": "Assens"
+    },
+    {
+      "branchId": "861720",
+      "city": "Frederiksberg"
+    },
+    {
+      "branchId": "861790",
+      "city": " "
+    },
+    {
+      "branchId": "861800",
+      "city": "Århus N",
+      "geolocation": {
+        "latitude": "56.1943719",
+        "longitude": "10.1785138"
+      }
+    },
+    {
+      "branchId": "861820",
+      "city": "Rønne"
+    },
+    {
+      "branchId": "861880",
+      "city": "Skive"
+    },
+    {
+      "branchId": "861920",
+      "city": "Middelfart"
+    },
+    {
+      "branchId": "861930",
+      "city": "Brøndby"
+    },
+    {
+      "branchId": "861931",
+      "city": " "
+    },
+    {
+      "branchId": "861932",
+      "city": " "
+    },
+    {
+      "branchId": "861940",
+      "city": "Horsens"
+    },
+    {
+      "branchId": "861950",
+      "city": "Silkeborg"
+    },
+    {
+      "branchId": "861970",
+      "city": " "
+    },
+    {
+      "branchId": "861980",
+      "city": " "
+    },
+    {
+      "branchId": "862010",
+      "city": "Risskov",
+      "geolocation": {
+        "latitude": "56.189038",
+        "longitude": "10.2220099"
+      }
+    },
+    {
+      "branchId": "862060",
+      "city": " "
+    },
+    {
+      "branchId": "862070",
+      "city": "Odense S",
+      "geolocation": {
+        "latitude": "55.3669024",
+        "longitude": "10.3983948"
+      }
+    },
+    {
+      "branchId": "862100",
+      "city": "Thisted"
+    },
+    {
+      "branchId": "862110",
+      "city": " "
+    },
+    {
+      "branchId": "862120",
+      "city": "Frederiksberg C"
+    },
+    {
+      "branchId": "862140",
+      "city": "København Ø"
+    },
+    {
+      "branchId": "862150",
+      "city": "Køge"
+    },
+    {
+      "branchId": "862190",
+      "city": "Middelfart"
+    },
+    {
+      "branchId": "862210",
+      "city": "Ballerup"
+    },
+    {
+      "branchId": "862220",
+      "city": "Brøndby"
+    },
+    {
+      "branchId": "870110",
+      "city": "Skive",
+      "geolocation": {
+        "latitude": "56.554601",
+        "longitude": "9.022479"
+      }
+    },
+    {
+      "branchId": "871740",
+      "city": "Vejen"
+    },
+    {
+      "branchId": "871780"
+    },
+    {
+      "branchId": "871790",
+      "city": "Ishøj"
+    },
+    {
+      "branchId": "871860",
+      "city": "Frederiksværk"
+    },
+    {
+      "branchId": "871870"
+    },
+    {
+      "branchId": "871880"
+    },
+    {
+      "branchId": "871890",
+      "city": "Odense M",
+      "geolocation": {
+        "latitude": "55.377876",
+        "longitude": "10.38381"
+      }
+    },
+    {
+      "branchId": "871900"
+    },
+    {
+      "branchId": "871920"
+    },
+    {
+      "branchId": "871950"
+    },
+    {
+      "branchId": "871980",
+      "city": "Kolding"
+    },
+    {
+      "branchId": "872020",
+      "city": "København V"
+    },
+    {
+      "branchId": "872030",
+      "city": "Hobro",
+      "geolocation": {
+        "latitude": "56.633808",
+        "longitude": "9.813394"
+      }
+    },
+    {
+      "branchId": "872040",
+      "city": "Hillerød"
+    },
+    {
+      "branchId": "872050",
+      "city": "Støvring",
+      "geolocation": {
+        "latitude": "56.88053",
+        "longitude": "9.82992"
+      }
+    },
+    {
+      "branchId": "872060",
+      "city": "Hjørring"
+    },
+    {
+      "branchId": "872070",
+      "city": "Roskilde"
+    },
+    {
+      "branchId": "872080",
+      "city": "Aalborg",
+      "geolocation": {
+        "latitude": "57.0488195",
+        "longitude": "9.921747"
+      }
+    },
+    {
+      "branchId": "872090",
+      "city": "Brønderslev",
+      "geolocation": {
+        "latitude": "57.27855",
+        "longitude": "9.943748"
+      }
+    },
+    {
+      "branchId": "872100",
+      "city": "Aars",
+      "geolocation": {
+        "latitude": "56.80115",
+        "longitude": "9.522762"
+      }
+    },
+    {
+      "branchId": "872120",
+      "city": "Aarhus N",
+      "geolocation": {
+        "latitude": "56.171785",
+        "longitude": "10.190109"
+      }
+    },
+    {
+      "branchId": "872140",
+      "city": "Aalborg",
+      "geolocation": {
+        "latitude": "57.025801",
+        "longitude": "9.942754"
+      }
+    },
+    {
+      "branchId": "872150",
+      "city": "Viborg"
+    },
+    {
+      "branchId": "872160",
+      "city": "Grindsted"
+    },
+    {
+      "branchId": "872190",
+      "city": "Gentofte"
+    },
+    {
+      "branchId": "872200",
+      "city": "Taastrup",
+      "geolocation": {
+        "latitude": "55.649065",
+        "longitude": "12.2624549"
+      }
+    },
+    {
+      "branchId": "872210",
+      "city": "København V"
+    },
+    {
+      "branchId": "872250",
+      "city": "Vejle"
+    },
+    {
+      "branchId": "872260",
+      "city": "Vejle"
+    },
+    {
+      "branchId": "872280",
+      "city": "Svendborg"
+    },
+    {
+      "branchId": "872290",
+      "city": "Aalborg",
+      "geolocation": {
+        "latitude": "57.0458282",
+        "longitude": "9.9172802"
+      }
+    },
+    {
+      "branchId": "872300",
+      "city": "Nykøbing F"
+    },
+    {
+      "branchId": "872310",
+      "city": "Fredericia"
+    },
+    {
+      "branchId": "872320",
+      "city": "Slagelse"
+    },
+    {
+      "branchId": "872330",
+      "city": "Roskilde"
+    },
+    {
+      "branchId": "872340",
+      "city": "Frederikshavn",
+      "geolocation": {
+        "latitude": "57.44075",
+        "longitude": "10.526423"
+      }
+    },
+    {
+      "branchId": "872350",
+      "city": "Brønshøj",
+      "geolocation": {
+        "latitude": "55.71838",
+        "longitude": "12.471291"
+      }
+    },
+    {
+      "branchId": "872360",
+      "city": "Valby"
+    },
+    {
+      "branchId": "872370",
+      "city": "København N"
+    },
+    {
+      "branchId": "872380",
+      "city": "København K"
+    },
+    {
+      "branchId": "872400",
+      "city": "Fjerritslev",
+      "geolocation": {
+        "latitude": "57.095106",
+        "longitude": "9.269088"
+      }
+    },
+    {
+      "branchId": "872420",
+      "city": "Hellerup"
+    },
+    {
+      "branchId": "872430",
+      "city": "Gentofte"
+    },
+    {
+      "branchId": "872440",
+      "city": "Hellerup"
+    },
+    {
+      "branchId": "872450",
+      "city": "Søborg"
+    },
+    {
+      "branchId": "872460",
+      "city": "Nærum"
+    },
+    {
+      "branchId": "872480",
+      "city": "Kastrup"
+    },
+    {
+      "branchId": "872490",
+      "city": "Birkerød"
+    },
+    {
+      "branchId": "872510",
+      "city": "Frederikssund"
+    },
+    {
+      "branchId": "872520",
+      "city": "Aalborg",
+      "geolocation": {
+        "latitude": "57.048107",
+        "longitude": "9.911275"
+      }
+    },
+    {
+      "branchId": "872530",
+      "city": "Helsinge"
+    },
+    {
+      "branchId": "872550",
+      "city": "Espergærde"
+    },
+    {
+      "branchId": "872560",
+      "city": "Helsingør"
+    },
+    {
+      "branchId": "872570",
+      "city": "Rungsted Kyst"
+    },
+    {
+      "branchId": "872580",
+      "city": "Stenløse"
+    },
+    {
+      "branchId": "872590",
+      "city": "Køge"
+    },
+    {
+      "branchId": "872600",
+      "city": "Roskilde",
+      "geolocation": {
+        "latitude": "55.6422884",
+        "longitude": "12.0798286"
+      }
+    },
+    {
+      "branchId": "872630",
+      "city": "Silkeborg"
+    },
+    {
+      "branchId": "872670",
+      "city": "København K"
+    },
+    {
+      "branchId": "872690",
+      "city": "Hørsholm"
+    },
+    {
+      "branchId": "872700",
+      "city": "Charlottenlund"
+    },
+    {
+      "branchId": "872720"
+    },
+    {
+      "branchId": "872730",
+      "city": "Hvidovre"
+    },
+    {
+      "branchId": "872740",
+      "city": "København K"
+    },
+    {
+      "branchId": "872760",
+      "city": "Odense C"
+    },
+    {
+      "branchId": "872770",
+      "city": "Odense C"
+    },
+    {
+      "branchId": "872780",
+      "city": "Haderslev"
+    },
+    {
+      "branchId": "872790",
+      "city": "Brøndby"
+    },
+    {
+      "branchId": "872830",
+      "city": "Esbjerg V"
+    },
+    {
+      "branchId": "872870",
+      "city": "Gudhjem"
+    },
+    {
+      "branchId": "872890",
+      "city": "Højbjerg"
+    },
+    {
+      "branchId": "872910",
+      "city": "Aabenraa"
+    },
+    {
+      "branchId": "872940",
+      "city": "Roskilde"
+    },
+    {
+      "branchId": "872941"
+    },
+    {
+      "branchId": "872942"
+    },
+    {
+      "branchId": "872960",
+      "city": "Odense C"
+    },
+    {
+      "branchId": "873020",
+      "city": "Vrå"
+    },
+    {
+      "branchId": "873200",
+      "city": "København K"
+    },
+    {
+      "branchId": "873220",
+      "city": "Ringe"
+    },
+    {
+      "branchId": "873250",
+      "city": "Viborg"
+    },
+    {
+      "branchId": "873270",
+      "city": "Silkeborg"
+    },
+    {
+      "branchId": "873280",
+      "city": "København Ø"
+    },
+    {
+      "branchId": "873300",
+      "city": "Kolding"
+    },
+    {
+      "branchId": "873310",
+      "city": "Nørresundby"
+    },
+    {
+      "branchId": "873340",
+      "city": "Søndersø"
+    },
+    {
+      "branchId": "873350",
+      "city": "Maribo"
+    },
+    {
+      "branchId": "873630",
+      "city": "Grenaa"
+    },
+    {
+      "branchId": "873870",
+      "city": "Aalborg"
+    },
+    {
+      "branchId": "874030",
+      "city": "Holstebro"
+    },
+    {
+      "branchId": "874060",
+      "city": "Mundelstrup"
+    },
+    {
+      "branchId": "874070",
+      "city": "Skive"
+    },
+    {
+      "branchId": "874080",
+      "city": "Viborg"
+    },
+    {
+      "branchId": "874090",
+      "city": "Allerød"
+    },
+    {
+      "branchId": "874100",
+      "city": "Dronninglund",
+      "geolocation": {
+        "latitude": "57.1520176",
+        "longitude": "10.2805041"
+      }
+    },
+    {
+      "branchId": "874110"
+    },
+    {
+      "branchId": "874180",
+      "city": "Bjerringbro"
+    },
+    {
+      "branchId": "874190",
+      "city": "Nykøbing Mors"
+    },
+    {
+      "branchId": "874240",
+      "city": "Glamsbjerg"
+    },
+    {
+      "branchId": "874250",
+      "city": "Haderslev"
+    },
+    {
+      "branchId": "874260",
+      "city": "Greve Strand",
+      "geolocation": {
+        "latitude": "55.582996",
+        "longitude": "12.290174"
+      }
+    },
+    {
+      "branchId": "874280"
+    },
+    {
+      "branchId": "874300",
+      "city": "Tønder"
+    },
+    {
+      "branchId": "874310",
+      "city": "København Ø",
+      "geolocation": {
+        "latitude": "55.7082413",
+        "longitude": "12.558502"
+      }
+    },
+    {
+      "branchId": "874320"
+    },
+    {
+      "branchId": "874330",
+      "city": "Tørring"
+    },
+    {
+      "branchId": "874340",
+      "city": "Thisted",
+      "geolocation": {
+        "latitude": "56.96612",
+        "longitude": "8.69878"
+      }
+    },
+    {
+      "branchId": "874350",
+      "city": "Thisted"
+    },
+    {
+      "branchId": "874360",
+      "city": "Herlev"
+    },
+    {
+      "branchId": "874370",
+      "city": "Tarm"
+    },
+    {
+      "branchId": "874380",
+      "city": "Ballerup"
+    },
+    {
+      "branchId": "874390"
+    },
+    {
+      "branchId": "874400",
+      "city": "Faaborg"
+    },
+    {
+      "branchId": "874440",
+      "city": "Svendborg"
+    },
+    {
+      "branchId": "874450"
+    },
+    {
+      "branchId": "874460"
+    },
+    {
+      "branchId": "874470",
+      "city": "Roskilde"
+    },
+    {
+      "branchId": "874480",
+      "city": "Næstved",
+      "geolocation": {
+        "latitude": "55.218796",
+        "longitude": "11.768075"
+      }
+    },
+    {
+      "branchId": "874500",
+      "city": "Odense Sø."
+    },
+    {
+      "branchId": "874510",
+      "city": "Odense Nø."
+    },
+    {
+      "branchId": "874530",
+      "city": "Esbjerg Ø"
+    },
+    {
+      "branchId": "874540"
+    },
+    {
+      "branchId": "874550",
+      "city": "Kolding"
+    },
+    {
+      "branchId": "874560",
+      "city": "Herning"
+    },
+    {
+      "branchId": "874570",
+      "city": "Århus V."
+    },
+    {
+      "branchId": "874600",
+      "city": "Svendborg",
+      "geolocation": {
+        "latitude": "55.0652186",
+        "longitude": "10.6192228"
+      }
+    },
+    {
+      "branchId": "874610"
+    },
+    {
+      "branchId": "874620"
+    },
+    {
+      "branchId": "874630"
+    },
+    {
+      "branchId": "874640",
+      "city": "Grindsted"
+    },
+    {
+      "branchId": "874650",
+      "city": "Randers"
+    },
+    {
+      "branchId": "874710",
+      "city": "Haslev"
+    },
+    {
+      "branchId": "874810"
+    },
+    {
+      "branchId": "874830",
+      "city": "Aabenraa",
+      "geolocation": {
+        "latitude": "55.0427025",
+        "longitude": "9.4137007"
+      }
+    },
+    {
+      "branchId": "874831"
+    },
+    {
+      "branchId": "874832"
+    },
+    {
+      "branchId": "874833"
+    },
+    {
+      "branchId": "874834"
+    },
+    {
+      "branchId": "874840",
+      "city": "Roskilde",
+      "geolocation": {
+        "latitude": "55.64191",
+        "longitude": "12.087845"
+      }
+    },
+    {
+      "branchId": "874860"
+    },
+    {
+      "branchId": "874930"
+    },
+    {
+      "branchId": "874960",
+      "city": "Holbæk"
+    },
+    {
+      "branchId": "874970"
+    },
+    {
+      "branchId": "874990"
+    },
+    {
+      "branchId": "875010"
+    },
+    {
+      "branchId": "875020"
+    },
+    {
+      "branchId": "875030"
+    },
+    {
+      "branchId": "875040"
+    },
+    {
+      "branchId": "875041"
+    },
+    {
+      "branchId": "875050"
+    },
+    {
+      "branchId": "875051"
+    },
+    {
+      "branchId": "875060"
+    },
+    {
+      "branchId": "875080"
+    },
+    {
+      "branchId": "875081"
+    },
+    {
+      "branchId": "875083"
+    },
+    {
+      "branchId": "875090"
+    },
+    {
+      "branchId": "875110"
+    },
+    {
+      "branchId": "875120",
+      "city": "Århus C"
+    },
+    {
+      "branchId": "875130",
+      "city": "Viby J."
+    },
+    {
+      "branchId": "875131",
+      "city": "Risskov"
+    },
+    {
+      "branchId": "875140",
+      "city": "Holbæk",
+      "geolocation": {
+        "latitude": "55.7112214",
+        "longitude": "11.6827544"
+      }
+    },
+    {
+      "branchId": "875150"
+    },
+    {
+      "branchId": "875170"
+    },
+    {
+      "branchId": "875190"
+    },
+    {
+      "branchId": "875200"
+    },
+    {
+      "branchId": "875210",
+      "city": "København K"
+    },
+    {
+      "branchId": "875220",
+      "city": "København K"
+    },
+    {
+      "branchId": "875230"
+    },
+    {
+      "branchId": "875240"
+    },
+    {
+      "branchId": "875250"
+    },
+    {
+      "branchId": "875260"
+    },
+    {
+      "branchId": "875270",
+      "city": "Frederiksberg"
+    },
+    {
+      "branchId": "875280",
+      "city": "Herning"
+    },
+    {
+      "branchId": "875281"
+    },
+    {
+      "branchId": "875290"
+    },
+    {
+      "branchId": "875300",
+      "city": "Kolding"
+    },
+    {
+      "branchId": "875310"
+    },
+    {
+      "branchId": "875320",
+      "city": "Vejen"
+    },
+    {
+      "branchId": "875340"
+    },
+    {
+      "branchId": "875360"
+    },
+    {
+      "branchId": "875370"
+    },
+    {
+      "branchId": "875400"
+    },
+    {
+      "branchId": "875410"
+    },
+    {
+      "branchId": "875420",
+      "city": "Hjørring"
+    },
+    {
+      "branchId": "875430"
+    },
+    {
+      "branchId": "875440",
+      "city": "Odense C",
+      "geolocation": {
+        "latitude": "55.392102",
+        "longitude": "10.390117"
+      }
+    },
+    {
+      "branchId": "875450"
+    },
+    {
+      "branchId": "875451"
+    },
+    {
+      "branchId": "875460",
+      "city": "Aalborg"
+    },
+    {
+      "branchId": "875461",
+      "city": "Aalborg"
+    },
+    {
+      "branchId": "875470",
+      "city": "Kolding",
+      "geolocation": {
+        "latitude": "55.4850486",
+        "longitude": "9.4867587"
+      }
+    },
+    {
+      "branchId": "875480",
+      "city": "Kbh.K."
+    },
+    {
+      "branchId": "875490"
+    },
+    {
+      "branchId": "875520"
+    },
+    {
+      "branchId": "875540"
+    },
+    {
+      "branchId": "875560"
+    },
+    {
+      "branchId": "875570"
+    },
+    {
+      "branchId": "875600"
+    },
+    {
+      "branchId": "875610"
+    },
+    {
+      "branchId": "875620"
+    },
+    {
+      "branchId": "875630"
+    },
+    {
+      "branchId": "875640"
+    },
+    {
+      "branchId": "875650"
+    },
+    {
+      "branchId": "875660"
+    },
+    {
+      "branchId": "875680"
+    },
+    {
+      "branchId": "875690"
+    },
+    {
+      "branchId": "875700"
+    },
+    {
+      "branchId": "875710"
+    },
+    {
+      "branchId": "875720"
+    },
+    {
+      "branchId": "875730"
+    },
+    {
+      "branchId": "875740"
+    },
+    {
+      "branchId": "875750"
+    },
+    {
+      "branchId": "900130",
+      "city": "Uppsala, Sverige"
+    },
+    {
+      "branchId": "911130",
+      "city": "Nuuk"
+    },
+    {
+      "branchId": "911146",
+      "city": "Nuuk - GL"
+    }
+  ]
+}
+
+libraries { "branchIds": ["700401", "710104"], "fields": ["branchId", "city", "geolocation"]}
+{
+  "statusCode": 200,
+  "data": [
+    {
+      "branchId": "700401",
+      "city": "Husum",
+      "geolocation": {
+        "latitude": "54.4801716",
+        "longitude": "9.0467115"
+      }
+    },
+    {
+      "branchId": "710104",
+      "city": "København N",
+      "geolocation": {
+        "latitude": "55.6860904",
+        "longitude": "12.5567168"
+      }
+    }
+  ]
+}
+
 news {"fields": ["title", "changed", "nid", "field_ding_news_list_image"]}
 {
   "statusCode": 200,
