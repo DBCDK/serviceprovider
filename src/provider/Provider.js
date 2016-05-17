@@ -22,6 +22,8 @@ import {testTransformer} from './testTransformer.js';
 import recommendTransformer from './recommend';
 import rankTransformer from './rank';
 
+import validateContext from './validateContext';
+
 /**
  * Initialization of the provider and the underlying services.
  *
@@ -55,6 +57,7 @@ export default function Provider() {
 
   // we are going to reimplement a simpler mechanism to call the transformers
   function execute(name, params, context) { // eslint-disable-line no-unused-vars
+    validateContext(context);
     return caller(transformerMap, context).call(name, params);
   }
 
