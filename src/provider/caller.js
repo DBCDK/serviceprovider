@@ -12,7 +12,6 @@ import fs from 'fs';
 let testDev = process.env.TEST_DEV; // eslint-disable-line no-process-env
 let mockFileName = process.env.MOCK_FILE; // eslint-disable-line no-process-env
 let mockFile;
-console.log('mockfile', mockFile);
 
 // Load mock-data if requested via environment
 if(mockFileName) {
@@ -47,7 +46,11 @@ function censor(str, context) {
   }
   // construct regex for global replacement in string
   let re = new RegExp('(' + Object.keys(forbidden).map(regexEscape).join('|') + ')', 'g');
-  return str.replace(re, 'XXXXX');
+  str = str.replace(re, 'XXXXX');
+
+  // remove ncipPassword in results from openagency
+  str = str.replace(/,\\"ncipPassword\\":{[^}]*}/g, '');
+  return str;
 }
 
 
@@ -162,7 +165,6 @@ class Context {
       }
       if (testDev && (this.createTest || mockFileName) && type !== 'transformer') {
         this.mockData[mockId] = result;
-        console.log("HERE", Object.keys(this.mockData).length);
       }
       if (testDev && this.createTest) { // save mock-data / create text-code
         if (this.callsInProgress === 0) {

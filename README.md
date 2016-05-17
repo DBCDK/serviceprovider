@@ -95,6 +95,10 @@ Url of the authorisation server we use.
 - __TEST_DEV__
 Boolean flag whether to support createTest parameter. If TEST_DEV is set, and a query is send with the extra parameter createTest set to true, then this will be used to create a unit test.
 
+- __MOCK_FILE__
+Filename for mock file to use instead of backend services. 
+If a mock file is specified, then the behaviour of the `createTest` parameter is to write a the latest mock-data to the mock file to be used for testing, instead of creating a new unit test.
+
 - __SWAGGER_HTTP__
 Include http as allowed scheme in swagger, this is useful when developing locally.
 
