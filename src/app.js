@@ -29,6 +29,10 @@ import {log} from './utils';
 import swaggerFromSpec from './swaggerFromSpec.js';
 import validateRequest from './validate.js';
 
+// validate context
+import validateContext from './validateContext';
+
+
 module.exports.run = function (worker) {
   // Setup
   const app = express();
@@ -212,6 +216,7 @@ module.exports.run = function (worker) {
   // Execute transform
   let callApi = (event, query, context) =>
     Promise.resolve((() => {
+      validateContext(context);
       if (!serviceProvider.hasTransformer(event)) {
         return {statusCode: 400,
                 error: 'Missing transformer: ' + event};
