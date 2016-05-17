@@ -105,13 +105,20 @@ export function workResponse(response, context, state) { // eslint-disable-line 
       // But if you just do 'let x = Array(3).fill({})', you will get an array with the same
       // object three times. So if you add to x[0], you will also add to x[1] and x[2].
       // Not exactly what I expected.
-      if (resp.data || resp[0].data) {
+      if (resp.data || (resp.length > 0 && resp[0].data)) {
         // Length is dependent on which services were called.
         // If search were the first service, the an array is returned, else an object with arrays in data.
         let length = resp.data ? resp.data.length : resp.length;
         envelope.data = Array(length).fill(1).map(x => { // eslint-disable-line no-unused-vars
           return {};
         });
+      } else {
+        // Here be dragons!
+        // The response does not contain any data - I don't think this is a good thing,
+        // but i cant be certain. It might be that the call just returned no data - ie nothing was found.
+        // To be sure, i'll return 'ok', and empty data.
+        envelope.data = [];
+        return envelope;
       }
     }
 
