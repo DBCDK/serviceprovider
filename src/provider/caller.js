@@ -10,6 +10,19 @@ import fs from 'fs';
 
 // Flag that allows createTest endpoint parameter
 let testDev = process.env.TEST_DEV; // eslint-disable-line no-process-env
+let mockFileName = process.env.MOCK_FILE; // eslint-disable-line no-process-env
+let mockFile;
+console.log('mockfile', mockFile);
+
+// Load mock-data if requested via environment
+if(mockFileName) {
+  if(fs.existsSync(mockFileName)) {
+    mockFile = JSON.parse(fs.readFileSync(mockFileName));
+  } else {
+    mockFile = {};
+  }
+}
+
 
 let randomId = () => Math.random().toString(36).slice(2, 8);
 
@@ -43,6 +56,10 @@ function censor(str, context) {
  * The unit tests are typically saved `src/provider/__tests__/autotest_*.js`
  */
 function saveTest(test) {
+  if(mockFile) {
+    fs.writeFileSync(mockFileName, censor(JSON.stringify(mockFile, null, 2), test.context));
+    return;
+  }
   let source = `/* eslint-disable max-len, quotes, comma-spacing, key-spacing, quote-props */
 'use strict';
 import Provider from '../Provider.js';
@@ -73,7 +90,7 @@ class Context {
     this.data = data;
     this.transformerMap = transformerMap;
     this.callsInProgress = 0;
-    this.mockData = data.mockData ? Object.assign({}, data.mockData) : {};
+    this.mockData = mockFile || (data.mockData ? Object.assign({}, data.mockData) : {});
     this.externalCallsInProgress = 0;
     this.externalTiming = 0;
     this.startTime = Date.now();
@@ -143,10 +160,11 @@ class Context {
           this.externalTiming += Date.now();
         }
       }
+      if (testDev && (this.createTest || mockFileName) && type !== 'transformer') {
+        this.mockData[mockId] = result;
+        console.log("HERE", Object.keys(this.mockData).length);
+      }
       if (testDev && this.createTest) { // save mock-data / create text-code
-        if (this.type !== 'transformer') {
-          this.mockData[mockId] = result;
-        }
         if (this.callsInProgress === 0) {
           delete params.createTest;
           saveTest({name: name, params: params,
