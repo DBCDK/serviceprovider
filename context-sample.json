@@ -43,8 +43,10 @@
       "authid": "XXXXX"
     },
     "recommend": {
-      "default": "https://xptest.dbc.dk/ms/recommend-cosim/v1",
-      "popular": "https://xptest.dbc.dk/ms/recommend-pop/v1"
+      "urls": {
+        "default": "https://xptest.dbc.dk/ms/recommend-cosim/v1",
+        "popular": "https://xptest.dbc.dk/ms/recommend-pop/v1"
+      }
     },
     "openagency": {
       "url": "http://openagency.addi.dk/2.24/",
