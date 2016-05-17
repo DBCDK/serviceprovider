@@ -34,6 +34,13 @@ function order(orderItem) {
 export default (request, context) => {
 
   let userstatus = context.data.userstatus;
+
+  if (!(userstatus && userstatus.salt && userstatus.useragency)) {
+    return {statusCode: 500, error: 'userstatus is missing data in config from Smaug'};
+  }
+  if (!(userstatus.userid && userstatus.userpin)) {
+    return {statusCode: 300, error: 'not logged in'};
+  }
   let params = {
     agencyId: userstatus.useragency,
     userId: userstatus.userid,
