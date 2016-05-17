@@ -69,15 +69,20 @@ function specToPaths(specs) {
     // Create parameter list for GET-requests
     let params = [];
     if (request.schema && request.schema.properties) {
-      for (let param in request.schema.properties) { // eslint-disable-line guard-for-in
-        let schema = request.schema.properties[param];
-        params.push({
-          name: param,
-          description: schema.description,
+      for (let name in request.schema.properties) { // eslint-disable-line guard-for-in
+        let schema = request.schema.properties[name];
+        let param = Object.assign({}, schema, {
           in: 'query',
-          required: (request.schema.required || []).includes(param),
-          schema: schema
-        });
+          required: (request.schema.required || []).includes(name),
+          name: name});
+        delete param.example;
+        delete param.examples;
+        delete param.properties;
+        if (param.type === 'object') {
+          param.type = 'string';
+          param.description += '\n Parameter string contains a JSON encoded object. See POST-method for details';
+        }
+        params.push(param);
       }
     }
 
