@@ -48,7 +48,7 @@ function createRequestParameters(request, context) {
   let urls = context.data.recommend.urls;
   //console.log(JSON.stringify(urls, null, 4));
   //console.log("deafult url:", urls['default']);
-  let defaultType = "default";
+  let defaultType = 'default';
   let uri = urls[defaultType];
   //console.log("createRequestParameters 4");
   if (request.hasOwnProperty('recommender')) {

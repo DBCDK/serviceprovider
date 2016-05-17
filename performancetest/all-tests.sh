@@ -1,13 +1,13 @@
 #!/bin/bash
 
-export TIMES=1000
+export TIMES=10
 #export URL='http://xp-p02.dbc.dk:3000/v0/'
-export URL='http://localhost:3000/v0/'
+export URL='http://localhost:8080/v0/'
 export ACCESS_TOKEN='64141bea42b72443ce3848455f5960e1438fb434'
 #export URL='http://localhost:8080/v0/'
 #export ACCESS_TOKEN='766b5b95d196b6472ee5248ddd0b14ce8286a0ee'
 export JOBS=1
-export PRE='local-'
+export PRE='foo-'
 
 
 export ENDPOINT='search'
@@ -42,6 +42,10 @@ export REQUEST='{"q" : "harry", "timings":true}'
 
 export ENDPOINT='libraries'
 export REQUEST='{"agencyIds": ["717500"], "fields": ["agencyId", "orderParameters"], "timings":true}'
+./make-test.sh
+
+export ENDPOINT='recommend'
+export REQUEST='{"like":["870970-basis:45488713", "870970-basis:28643713", "870970-basis:29494940", "870970-basis:29386404", "870970-basis:28429576"], "limit":10, "timings":true}'
 ./make-test.sh
 
 
