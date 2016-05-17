@@ -22,4 +22,7 @@ echo "" >> test.results.http
 
 node sc_apitest.js > test.results.ws
 
+# replace dummy user id for mock comparison
+perl -pi -e 's/zeEOALqmSuy\+ysfz0zYbna0CgwtrhewG/KbZ0UoBGys8QMLzieTQ5mHZ39ivzulP4/g' test.*
+
 diff -u test.compared test.results.http && diff -u test.results.ws test.compared

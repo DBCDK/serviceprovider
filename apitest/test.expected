@@ -8100,6 +8100,142 @@ search {"q" : "hest"}
     },
     {
       "collection": [
+        "775100-katalog:28446594"
+      ],
+      "collectionDetails": [
+        {
+          "accessType": [
+            "physical"
+          ],
+          "creator": [
+            "Gerd Heuschmann"
+          ],
+          "pid": [
+            "775100-katalog:28446594"
+          ],
+          "language": [
+            "Dansk"
+          ],
+          "title": [
+            "Min hest har næsen forrest!"
+          ],
+          "titleFull": [
+            "Min hest har næsen forrest! : rid rigtigt og få en sund hest"
+          ],
+          "type": [
+            "Bog"
+          ],
+          "workType": [
+            "book"
+          ]
+        }
+      ],
+      "acIdentifier": [
+        "28446594|870970"
+      ],
+      "identifierISBN": [
+        "9788721036102"
+      ],
+      "acSource": [
+        "Bibliotekskatalog"
+      ],
+      "source": [
+        "Mein Pferd hat die Nase vorn!"
+      ],
+      "dcTitle": [
+        "Min hest har næsen forrest!"
+      ],
+      "dcTitleFull": [
+        "Min hest har næsen forrest! : rid rigtigt og få en sund hest"
+      ],
+      "creatorAut": [
+        "Gerd Heuschmann"
+      ],
+      "creatorSort": [
+        "Heuschmann, Gerd"
+      ],
+      "subjectDK5": [
+        "79.65"
+      ],
+      "subjectDK5Text": [
+        "Ridning. Hestesport"
+      ],
+      "subjectDBCF": [
+        "dressur",
+        "heste",
+        "rideheste",
+        "ridning",
+        "sundhed"
+      ],
+      "subjectDBCN": [
+        "for 14 år",
+        "for 15 år",
+        "for 16 år"
+      ],
+      "description": [
+        "Indhold: Det ømme punkt ; Klassisk ridekunst ; Opstaldning af din hest ; Din hests anatomi ; Uddannelse af heste ; Du og din hest"
+      ],
+      "audience": [
+        "børnematerialer"
+      ],
+      "version": [
+        "1. udgave, 1. oplag (2010)"
+      ],
+      "publisher": [
+        "Borgen"
+      ],
+      "contributorTrl": [
+        "Birgitte Eggeling"
+      ],
+      "contributorIll": [
+        "Katharina Rücker-Weininger",
+        "Kaja Möbius"
+      ],
+      "date": [
+        "2010"
+      ],
+      "typeBibDKType": [
+        "Bog"
+      ],
+      "format": [
+        "ill i farver"
+      ],
+      "extent": [
+        "141 sider"
+      ],
+      "languageISO6392": [
+        "dan"
+      ],
+      "dcLanguage": [
+        "Dansk"
+      ],
+      "accessType": [
+        "physical"
+      ],
+      "creator": [
+        "Gerd Heuschmann"
+      ],
+      "pid": [
+        "775100-katalog:28446594"
+      ],
+      "language": [
+        "Dansk"
+      ],
+      "title": [
+        "Min hest har næsen forrest!"
+      ],
+      "titleFull": [
+        "Min hest har næsen forrest! : rid rigtigt og få en sund hest"
+      ],
+      "type": [
+        "Bog"
+      ],
+      "workType": [
+        "book"
+      ]
+    },
+    {
+      "collection": [
         "775100-katalog:25230701",
         "775100-katalog:28250355"
       ],
@@ -8240,142 +8376,6 @@ search {"q" : "hest"}
       ],
       "type": [
         "Bog (Bind 1)"
-      ],
-      "workType": [
-        "book"
-      ]
-    },
-    {
-      "collection": [
-        "775100-katalog:28446594"
-      ],
-      "collectionDetails": [
-        {
-          "accessType": [
-            "physical"
-          ],
-          "creator": [
-            "Gerd Heuschmann"
-          ],
-          "pid": [
-            "775100-katalog:28446594"
-          ],
-          "language": [
-            "Dansk"
-          ],
-          "title": [
-            "Min hest har næsen forrest!"
-          ],
-          "titleFull": [
-            "Min hest har næsen forrest! : rid rigtigt og få en sund hest"
-          ],
-          "type": [
-            "Bog"
-          ],
-          "workType": [
-            "book"
-          ]
-        }
-      ],
-      "acIdentifier": [
-        "28446594|870970"
-      ],
-      "identifierISBN": [
-        "9788721036102"
-      ],
-      "acSource": [
-        "Bibliotekskatalog"
-      ],
-      "source": [
-        "Mein Pferd hat die Nase vorn!"
-      ],
-      "dcTitle": [
-        "Min hest har næsen forrest!"
-      ],
-      "dcTitleFull": [
-        "Min hest har næsen forrest! : rid rigtigt og få en sund hest"
-      ],
-      "creatorAut": [
-        "Gerd Heuschmann"
-      ],
-      "creatorSort": [
-        "Heuschmann, Gerd"
-      ],
-      "subjectDK5": [
-        "79.65"
-      ],
-      "subjectDK5Text": [
-        "Ridning. Hestesport"
-      ],
-      "subjectDBCF": [
-        "dressur",
-        "heste",
-        "rideheste",
-        "ridning",
-        "sundhed"
-      ],
-      "subjectDBCN": [
-        "for 14 år",
-        "for 15 år",
-        "for 16 år"
-      ],
-      "description": [
-        "Indhold: Det ømme punkt ; Klassisk ridekunst ; Opstaldning af din hest ; Din hests anatomi ; Uddannelse af heste ; Du og din hest"
-      ],
-      "audience": [
-        "børnematerialer"
-      ],
-      "version": [
-        "1. udgave, 1. oplag (2010)"
-      ],
-      "publisher": [
-        "Borgen"
-      ],
-      "contributorTrl": [
-        "Birgitte Eggeling"
-      ],
-      "contributorIll": [
-        "Katharina Rücker-Weininger",
-        "Kaja Möbius"
-      ],
-      "date": [
-        "2010"
-      ],
-      "typeBibDKType": [
-        "Bog"
-      ],
-      "format": [
-        "ill i farver"
-      ],
-      "extent": [
-        "141 sider"
-      ],
-      "languageISO6392": [
-        "dan"
-      ],
-      "dcLanguage": [
-        "Dansk"
-      ],
-      "accessType": [
-        "physical"
-      ],
-      "creator": [
-        "Gerd Heuschmann"
-      ],
-      "pid": [
-        "775100-katalog:28446594"
-      ],
-      "language": [
-        "Dansk"
-      ],
-      "title": [
-        "Min hest har næsen forrest!"
-      ],
-      "titleFull": [
-        "Min hest har næsen forrest! : rid rigtigt og få en sund hest"
-      ],
-      "type": [
-        "Bog"
       ],
       "workType": [
         "book"
@@ -8614,7 +8614,7 @@ search {"q" : "ost", "fields": ["pid", "creator", "coverUrlFull"], "limit": 3}
         "775100-katalog:27400337"
       ],
       "coverUrlFull": [
-        "//moreinfo.addi.dk/2.1/more_info_get.php?id=44502234&type=forside_stor&key=5e7357505d440d3688ca"
+        "//moreinfo.addi.dk/2.1/more_info_get.php?id=44502234&type=forside_stor&key=d79a609c81dd5558b1e9"
       ]
     },
     {
@@ -8622,7 +8622,7 @@ search {"q" : "ost", "fields": ["pid", "creator", "coverUrlFull"], "limit": 3}
         "775100-katalog:29130612"
       ],
       "coverUrlFull": [
-        "//moreinfo.addi.dk/2.1/more_info_get.php?id=54073988&type=forside_stor&key=5e7837ef7b82cf30d417"
+        "//moreinfo.addi.dk/2.1/more_info_get.php?id=54073988&type=forside_stor&key=6bd3e9886068e69795e0"
       ]
     },
     {
@@ -8731,7 +8731,7 @@ search { "q": "harry AND potter", "fields": ["identifier", "title", "collection"
         "775100-katalog:28668147"
       ],
       "coverUrlFull": [
-        "//moreinfo.addi.dk/2.1/more_info_get.php?id=51917747&type=forside_stor&key=a7c10b418e1a190b58aa"
+        "//moreinfo.addi.dk/2.1/more_info_get.php?id=51917747&type=forside_stor&key=c24a3bfac23d213d4eda"
       ]
     },
     {
@@ -8755,7 +8755,7 @@ search { "q": "harry AND potter", "fields": ["identifier", "title", "collection"
         "775100-katalog:27639798"
       ],
       "coverUrlFull": [
-        "//moreinfo.addi.dk/2.1/more_info_get.php?id=55722038&type=forside_stor&key=55992e8cc42b8bd9e2f6"
+        "//moreinfo.addi.dk/2.1/more_info_get.php?id=55722038&type=forside_stor&key=a8744c3daf469da8af63"
       ]
     },
     {
@@ -9041,7 +9041,7 @@ user {}
   "statusCode": 200,
   "data": [
     {
-      "id": "zeEOALqmSuy+ysfz0zYbna0CgwtrhewG",
+      "id": "KbZ0UoBGys8QMLzieTQ5mHZ39ivzulP4",
       "loans": [
         {
           "loanId": "NCIPMDAxOXw5OTAwfHw5OTAwLnx8",
@@ -9610,7 +9610,7 @@ work {"pids": ["300185-katalog:100562332", "870970-basis:51989252", "870971-forf
     {},
     {
       "coverUrlFull": [
-        "//moreinfo.addi.dk/2.1/more_info_get.php?id=64951376&type=forside_stor&key=3b20a305b4d20907a56d"
+        "//moreinfo.addi.dk/2.1/more_info_get.php?id=64951376&type=forside_stor&key=35eaf341b65f0e413b3f"
       ],
       "title": [
         "Harry Potter og de vises sten"
