@@ -28,6 +28,10 @@
     "subjectsuggest": {
       "url": "http://xptest.dbc.dk/ms/entity-suggest/v1/subject"
     },
+    "orderpolicy": {
+      "url": "https://openorder.addi.dk/test_2.7.1/",
+      "servicerequester": "190101"
+    },
     "userstatus":{
       "salt": "XXXXX",
       "url": "https://openuserstatus.addi.dk/1.4.1/",
