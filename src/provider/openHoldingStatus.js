@@ -3,6 +3,7 @@
 import _ from 'lodash';
 
 export default (request, context) => {
+  console.log('OHS!');
   let holdingContext = context.data.openholdingstatus;
   let params = {
     authgroupid: holdingContext.authgroupid,
@@ -42,6 +43,9 @@ export default (request, context) => {
         data.expectedDelivery = body[0].expectedDelivery.$;
       }
     }
+
+    // set willLend as boolean:
+    data.willLend = data.willLend === 'true' ? true : false;
     return {statusCode: 200, data: data};
   });
 };

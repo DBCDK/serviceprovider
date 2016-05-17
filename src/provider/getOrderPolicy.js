@@ -1,4 +1,7 @@
 'use strict';
+
+import _ from 'lodash';
+
 /**
  * getOrderPolicy transformer.
  */
@@ -30,7 +33,18 @@ function getOrderPolicy(pid, params, context) {
 
   return context.call('orderpolicy', soap).then(body => {
     body = JSON.parse(body).checkOrderPolicyResponse;
-    return {statusCode: 200, data: {orderPossible: body.orderPossible.$, orderPossibleReason: body.orderPossibleReason.$}};
+    if(_.has(body, 'orderPossible.$') && _.has(body, 'orderPossibleReason.$')) {
+      return {
+        statusCode: 200,
+        data: {orderPossible: true, orderPossibleReason: body.orderPossibleReason.$}
+        // data: {orderPossible: body.orderPossible.$, orderPossibleReason: body.orderPossibleReason.$}
+      };
+    } else {
+      return {
+        statusCode: 200,
+        data: {}
+      }
+    }
   });
 }
 
