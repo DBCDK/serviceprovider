@@ -3,7 +3,6 @@
 import _ from 'lodash';
 
 export default (request, context) => {
-  console.log('OHS!');
   let holdingContext = context.data.openholdingstatus;
   let params = {
     authgroupid: holdingContext.authgroupid,
