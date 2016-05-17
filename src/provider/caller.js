@@ -14,8 +14,8 @@ let mockFileName = process.env.MOCK_FILE; // eslint-disable-line no-process-env
 let mockFile;
 
 // Load mock-data if requested via environment
-if(mockFileName) {
-  if(fs.existsSync(mockFileName)) {
+if (mockFileName) {
+  if (fs.existsSync(mockFileName)) {
     mockFile = JSON.parse(fs.readFileSync(mockFileName));
   } else {
     mockFile = {};
@@ -59,7 +59,7 @@ function censor(str, context) {
  * The unit tests are typically saved `src/provider/__tests__/autotest_*.js`
  */
 function saveTest(test) {
-  if(mockFile) {
+  if (mockFile) {
     fs.writeFileSync(mockFileName, censor(JSON.stringify(mockFile, null, 2), test.context));
     return;
   }
