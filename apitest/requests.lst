@@ -10,8 +10,8 @@ libraries { "branchIds": ["700401", "710104"], "fields": ["branchId", "city", "g
 news {"fields": ["title", "changed", "nid", "field_ding_news_list_image"]}
 news {"nids": ["19", "40"], "fields": ["title", "changed", "nid", "field_ding_news_list_image"]}
 order {}
-rank {}
-recommend { "like":["870970-basis:27266428"], "limit":10}
+#rank {}
+#recommend { "like":["870970-basis:27266428"], "limit":10}
 renew {}
 search {}
 search {"q" : "hest"}
