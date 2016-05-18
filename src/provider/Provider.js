@@ -12,7 +12,7 @@ import librariesTransformer from '../transformers/libraries';
 import userTransformer from '../transformers/user';
 import renewTransformer from '../transformers/renew';
 import orderTransformer from '../transformers/order';
-import workTransformer from '../transformers/neoWorkTransformer';
+import workTransformer from '../transformers/work';
 import availabilityTransformer from '../transformers/availability';
 import {ddbcms, news, events} from '../transformers/ddbcms';
 import caller from './caller';
