@@ -216,7 +216,7 @@ module.exports.run = function (worker) {
   // Execute transform
   let callApi = (event, query, context) =>
     Promise.resolve((() => {
-      validateContext(context);
+      // validateContext(context);
       if (!serviceProvider.hasTransformer(event)) {
         return {statusCode: 400,
                 error: 'Missing transformer: ' + event};
