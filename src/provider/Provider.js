@@ -5,20 +5,20 @@
  * Basic service provider. Discovers and initializes the transforms.
  */
 
-import suggestTransformer from './suggest.js';
-import facetTransformer from './facets';
-import searchTransformer from './search';
-import librariesTransformer from './libraries';
-import userTransformer from './user';
-import renewTransformer from './renew';
-import orderTransformer from './order';
-import workTransformer from './neoWorkTransformer';
-import availabilityTransformer from './availability';
-import {ddbcms, news, events} from './ddbcms';
+import suggestTransformer from '../transformers/suggest.js';
+import facetTransformer from '../transformers/facets';
+import searchTransformer from '../transformers/search';
+import librariesTransformer from '../transformers/libraries';
+import userTransformer from '../transformers/user';
+import renewTransformer from '../transformers/renew';
+import orderTransformer from '../transformers/order';
+import workTransformer from '../transformers/neoWorkTransformer';
+import availabilityTransformer from '../transformers/availability';
+import {ddbcms, news, events} from '../transformers/ddbcms';
 import caller from './caller';
-import {testTransformer} from './testTransformer.js';
-import recommendTransformer from './recommend';
-import rankTransformer from './rank';
+import {testTransformer} from '../transformers/testTransformer.js';
+import recommendTransformer from '../transformers/recommend';
+import rankTransformer from '../transformers/rank';
 
 /**
  * Initialization of the provider and the underlying services.
