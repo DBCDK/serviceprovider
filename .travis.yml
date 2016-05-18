@@ -8,7 +8,7 @@ script:
   - npm run lint
   - npm run lint:checkstyle
   - ./mocktest.sh
-#  - npm run swagger:validate
+  - npm run swagger:validate
 after_success:
   - npm run cover
   - cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js
