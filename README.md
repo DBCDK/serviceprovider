@@ -127,7 +127,7 @@ To update the mock data, first remove the original mockdata file, and start the 
 
 ```bash
 rm apitest/mockdata.json
-SMAUG=http://localhost:3000 MOCK_FILE=apitest/mockdata.json SWAGGER_HTTP=true TEST_DEV=true node src/main.js &
+SMAUG=http://localhost:3000 MOCK_FILE=apitest/mockdata.json SWAGGER_HTTP=true TEST_DEV=true node src/main.js
 ```
 
 To generate the mock data, first run the apitest to record the data, and then call somen endpoint with `createTest=true` to write the mock data to disk, ie:
