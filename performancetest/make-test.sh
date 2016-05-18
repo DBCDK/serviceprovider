@@ -1,6 +1,6 @@
 #!/bin/bash
 
-export BASENAME=$ENDPOINT$NAME-$TIMES-$JOBS
+export BASENAME=$PRE$ENDPOINT$NAME-$TIMES-$JOBS
 
 export CREATE=./create-curl-lines.py
 export PARALLEL=parallel
@@ -19,3 +19,5 @@ CREATE_META_ONLY=true $CREATE > $META
 $CREATE > $CURL
 
 echo "$PARALLEL -j$JOBS < $CURL > $OUT && $ANALYZE < $OUT> $RESULT"
+#echo "$PARALLEL -j$JOBS < $CURL > $OUT"
+#echo "### $ANALYZE < $OUT> $RESULT"

@@ -7378,18 +7378,6 @@ order {}
   "error": "At least one pid must be provided to place order"
 }
 
-rank {}
-{
-  "statusCode": 400,
-  "error": "requires property \"pids\""
-}
-
-recommend { "like":["870970-basis:27266428"], "limit":10}
-{
-  "statusCode": 200,
-  "data": []
-}
-
 renew {}
 {
   "statusCode": 400,

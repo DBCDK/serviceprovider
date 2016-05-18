@@ -5,9 +5,9 @@
 
 // TODO
 
-function createRequestParameters(request) {
+function createRequestParameters(request, context) {
   //console.log('createRequestParameters 1');
-  const uri = 'http://xp-p02.dbc.dk/rank';
+  const uri = context.data.rank.url;
   // console.log('createRequestParameters 3');
   let paramsPost = {
     // TODO: url take from context
@@ -45,7 +45,7 @@ function createRequestParameters(request) {
 export default (request, context) => { // eslint-disable-line no-unused-vars
   //console.log('RANK SP REQUEST', JSON.stringify(request, null, 4));
   try {
-    let [uri, params] = createRequestParameters(request);
+    let [uri, params] = createRequestParameters(request, context);
     // console.log('SP REQUEST', JSON.stringify(request,null,4));
     return context.request(uri, params).then(body => {
       // console.log('SERVICE RESPONSE', JSON.stringify(body, null, 4));
