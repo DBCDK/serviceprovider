@@ -164,7 +164,7 @@ api:
         format: date-time
       delete:
         description: whether to delete an order, - not applicable to new orders.
-        type: 'bool'
+        type: 'boolean'
         example: true
     response:
       example: { "pids": ["870970-basis:51989252"], "library": "700401", "expires": "2016-06-24T18:25:43.511Z"}
@@ -415,14 +415,14 @@ defaultProperties:
     example: 'qwerty'
   pretty:
     description: 'whether to prettyprint the resulting json'
-    type: 'bool'
+    type: 'boolean'
     example: true
   timings:
     description: 'whether to include timings in the resulting json'
-    type: 'bool'
+    type: 'boolean'
     example: true
   createTest:
-    type: 'bool'
+    type: 'boolean'
     example: true
     noSwag: true
   callback:
