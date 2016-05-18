@@ -11,16 +11,6 @@ See also the API-documentation on https://openplatform.dbc.dk, and `spec.yaml`, 
 
 - SocketCluster (WebSockets) - send the request over websocket, and gets a result back, - the event is the endpoint name, the data is the parameters, and the result comes through the callback, when using the socketcluster-client (available for JavaScript, iOS and Android from https://github.com/socketcluster/.). Notice: the result received by socketcluster are decycled, so you need to call `require("cycle").retrocycle(result)`.
 
-# Auth
-
-Authentication using OAuth 2. 
-
-The authentification server is called Smaug, and lives in another repository: https://github.com/dbcdk/smaug/.
-
-In the first version it will support logins via "Resource Owner Password Credentials".
-
-TODO clarify/document details.
-
 # Priorities of features
     
 1. Must:

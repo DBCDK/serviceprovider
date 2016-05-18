@@ -54,7 +54,17 @@ If you then open a browser to `localhost:8080`, you will see the API-documentati
 curl -H "Authorization: Bearer qwerty" -H "Content-Type: application/json" -d '{"q": "ost", "fields": ["title","pid"]}' http://localhost:8080/v0/search
 ```
 
-# Environment Varibles
+# Auth
+
+Authentication using OAuth 2. 
+
+The authentification server is called Smaug, and lives in another repository: https://github.com/dbcdk/smaug/. This also documents the API for gettin
+g a token.
+
+In the first version it will support logins via "Resource Owner Password Credentials".
+
+
+# Environment Variables
 The following environment variables can be used to override default settings in the application
 
 - __LOG_LEVEL__
