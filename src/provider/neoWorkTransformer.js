@@ -142,11 +142,12 @@ export function workResponse(response, context, state) { // eslint-disable-line 
         break;
       case requestMethod.SEARCH:
         for (let x = 0; x<resp.length; x++) {
-          let coll = {
-            collection: resp[x].data[0].collection
-          };
-          if (resp[x].data[0].collectionDetails) {
-            coll.collectionDetails = resp[x].data[0].collectionDetails;
+          let coll = {};
+          if (resp[x].data[0]) {
+            coll.collection = resp[x].data[0].collection;
+            if (resp[x].data[0].collectionDetails) {
+              coll.collectionDetails = resp[x].data[0].collectionDetails;
+            }
           }
           _.extend(envelope.data[x], coll);
         }
