@@ -7378,7 +7378,7 @@ order {}
   "error": "At least one pid must be provided to place order"
 }
 
-rank {"pids":["870970-basis:28511663", "870970-basis:29754519", "870970-basis:29060835", "870970-basis:28567057", "870970-basis:28043872", "870970-basis:28709994", "870970-basis:29319006", "870970-basis:27266428", "870970-basis:28724683", "874310-katalog:DBB0019369", "870970-basis:26923530", "870970-basis:29974861", "870970-basis:28456433", "870970-basis:28902239", "870970-basis:45188981"], "like":["870970-basis:45488713", "870970-basis:28643713", "870970-basis:29494940", "870970-basis:29386404", "870970-basis:28429576"]}
+rank {"pids":["870970-basis:28511663", "870970-basis:29754519", "870970-basis:29060835", "870970-basis:28567057", "870970-basis:28043872", "870970-basis:28709994", "870970-basis:29319006", "870970-basis:27266428", "870970-basis:28724683", "870970-basis:26923530", "870970-basis:29974861", "870970-basis:28456433", "870970-basis:28902239", "870970-basis:45188981"], "like":["870970-basis:45488713", "870970-basis:28643713", "870970-basis:29494940", "870970-basis:29386404", "870970-basis:28429576"]}
 {
   "statusCode": 200,
   "data": [
@@ -7437,13 +7437,6 @@ rank {"pids":["870970-basis:28511663", "870970-basis:29754519", "870970-basis:29
       "val": 125.28970604409433,
       "ctkey": "Journal_64_:_krimithriller::Jussi_Adler-Olsen",
       "pid": "870970-basis:28511663"
-    },
-    {
-      "title": "Hypnotisøren",
-      "creator": "Lars Kepler",
-      "val": 112.97148471572395,
-      "ctkey": "Hypnotisøren::Lars_Kepler",
-      "pid": "874310-katalog:DBB0019369"
     },
     {
       "title": "Flaskepost fra P : krimithriller",
