@@ -163,7 +163,7 @@ api:
         example: 2016-06-24
       delete:
         description: whether to delete an order, - not applicable to new orders.
-        type: bool
+        type: 'boolean'
         example: true
     response:
       example: { "pids": ["870970-basis:51989252"], "library": "700401", "expires": "2016-06-24T18:25:43.511Z"}
@@ -183,7 +183,7 @@ api:
         description: list of materials that should be ranked
         type: array
         items: {type: "string"}
-        examples: ["870970-basis:12345678", "..."]
+        example: ["870970-basis:12345678", "..."]
       recommender:
         description: the type of recommender, such as default or popular
         type: string
@@ -192,17 +192,17 @@ api:
         description: list of liked materials
         type: array
         items: {type: "string"}
-        examples: ["870970-basis:12345678", "..."]
+        example: ["870970-basis:12345678", "..."]
       dislike:
         description: list of disliked materials
         type: array
         items: {type: "string"}
-        examples: ["870970-basis:12345678", "..."]
+        example: ["870970-basis:12345678", "..."]
       known:
         description: list of materials that is related to the user
         type: array
         items: {type: "string"}
-        examples: ["870970-basis:12345678", "..."]
+        example: ["870970-basis:12345678", "..."]
       limit:
         example: 10
         description: maximum number of results returned
@@ -236,22 +236,22 @@ api:
         description: list of liked materials
         type: array
         items: {type: "string"}
-        examples: ["870970-basis:12345678", "..."]
+        example: ["870970-basis:12345678", "..."]
       dislike:
         description: list of disliked materials
         type: array
         items: {type: "string"}
-        examples: ["870970-basis:12345678", "..."]
+        example: ["870970-basis:12345678", "..."]
       known:
         description: list of materials that is related to the user
         type: array
         items: {type: "string"}
-        examples: ["870970-basis:12345678", "..."]
+        example: ["870970-basis:12345678", "..."]
       discard:
         description: list of materials that should not be returned from the recommender
         type: array
         items: {type: "string"}
-        examples: ["870970-basis:12345678", "..."]
+        example: ["870970-basis:12345678", "..."]
       limit:
         example: 10
         description: maximum number of results returned
@@ -307,7 +307,6 @@ api:
         type: string
     response:
       type: array
-      #items: {$ref: "#/definitions/Work"}
       example: [{"identifier": ["300185-katalog:100562332"], "dcTitle": ["Harry Potter og Fønixordenen DVD"], "coverUrlFull": ["https://moreinfo.addi.dk/2.1/more_info_get.php?id=36565894&type=forside_500&key=55d553c259c9e46291a4"]}, {"identifier": ["870970-basis:51989252"], "dcTitle": ["Harry Potter og de vises sten"], "collection": ["300185-katalog:100562332", "870970-basis:51989252", "870971-forfweb:86203219", "870970-basis:24284514", "870970-basis:24284565", "..."], "dcSubjectDBCF": ["fantasy", "magi", "troldmænd"], "hasAdaption": ["870970-basis:27123279", "870970-basis:27963390"], "coverUrlFull": ["https://moreinfo.addi.dk/2.1/more_info_get.php?id=36565894&type=forside_500&key=55d553c259c9e46291a4"]}]
     examples:
       - request: { "q": "harry AND potter", "fields": ["identifier", "title", "collection", "subjectDBCF", "hasAdaptation", "coverUrlFull"], "sort": "rank_general", "offset": 2, "limit": 2 }
@@ -354,10 +353,7 @@ api:
       - Status
     description: |
       User status, including arrived loans, orders, unique id, etc.
-    properties:
-      fields:
-        description: filter user info
-        example: ["id"]
+    properties: {}
     example: {}
     response:
       example:
@@ -406,16 +402,7 @@ api:
     examples:
       - request: { "pids": ["870970-basis:51989252",], "fields": ["title", "collection", "subjectDBCF", "hasAdaptation", "coverUrlFull"]}
         response: [{"title": ["Harry Potter og de vises sten"], "collection": ["300185-katalog:100562332", "870970-basis:51989252", "870971-forfweb:86203219", "870970-basis:24284514", "870970-basis:24284565", "..."], "subjectDBCF": ["fantasy", "magi", "troldmænd"], "hasAdaption": ["870970-basis:27123279", "870970-basis:27963390"], "coverUrlFull": ["https://moreinfo.addi.dk/2.1/more_info_get.php?id=36565894&type=forside_500&key=55d553c259c9e46291a4"]}]
-definitions:
-  Work:
-    example: { "dcTitle": ["Harry Potter og de vises sten"], "collection": ["300185-katalog:100562332", "870970-basis:51989252", "870971-forfweb:86203219", "870970-basis:24284514", "870970-basis:24284565", "..."], "dcSubjectDBCF": ["fantasy", "magi", "troldmænd"], "hasAdaption": ["870970-basis:27123279", "870970-basis:27963390"], "coverUrlFull": ["https://moreinfo.addi.dk/2.1/more_info_get.php?id=36565894&type=forside_500&key=55d553c259c9e46291a4"]}
-    type: object
-    properties:
-      pid: {type: "array", items: {type: "string"}}
-      collection: {type: "array", items: {type: "string"}}
-      title: {type: "array", items: {type: "string"}}
-      creator: {type: "array", items: {type: "string"}}
-      "...": "..."
+definitions: {}
 defaultProperties:
   fields:
     description: which parts of the response to get
@@ -427,14 +414,14 @@ defaultProperties:
     example: 'qwerty'
   pretty:
     description: 'whether to prettyprint the resulting json'
-    type: 'bool'
+    type: 'boolean'
     example: true
   timings:
     description: 'whether to include timings in the resulting json'
-    type: 'bool'
+    type: 'boolean'
     example: true
   createTest:
-    type: 'bool'
+    type: 'boolean'
     example: true
     noSwag: true
   callback:

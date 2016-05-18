@@ -102,8 +102,17 @@ If a mock file is specified, then the behaviour of the `createTest` parameter is
 - __SWAGGER_HTTP__
 Include http as allowed scheme in swagger, this is useful when developing locally.
 
-# Testing
 
+# Development
+
+Overview of files and directories:
+
+- `apitest/`, `ave-test/`, `performancetest/`, `add_imports_to_tests.py`, `mocktest.sh`, `siegetestendpoints.txt` - various testing
+- `doc/` - documentation
+- `src/` - the source code
+- `static/` contains a swagger-ui, which is used for documentation. Latest swagger-ui release (as of May 2016) has a bug, with regard to `boolean` types, which is why we include a copy of a recent snapshot of `github:swagger-api/swagger-ui:dist/` instead of just installing it from npm.
+
+# Testing
 ## Unit tests
 Unit tests are placed with the modules and components in a `__tests__` folder
 to run the tests: `npm run test`
@@ -140,3 +149,6 @@ cd apitest
 
 There are also various utility scripts for using the apitest during development in the `apitest/` folder.
 
+## Swagger
+
+A swagger specification is generated for the API, and the unit tests checks that it is valid.
