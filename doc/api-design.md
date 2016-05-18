@@ -1,48 +1,14 @@
 **This document is a draft in progress.**
-This is ideas for design, and it is not decided, nor fully implemented yet.
-During the next months, this document will converge towards the released implementation.
+It contains ideas for design, and it is not decided, nor fully implemented yet.
 
-Also see the generated API-documentation, `spec.yaml`, and `work-context.jsonld`. 
+The documentation is moved into README.md as it is finalised
 
-# API structure
+See also the API-documentation on https://openplatform.dbc.dk, and `spec.yaml`, `README.md`, and `work-context.jsonld` in this directory. 
 
-__Requests__ to the API consist of the _endpoint name_, and a JSON object of _parameters_.
-
-Parameters are general across endpoints:
-
-- `access_token` is the access token when needed
-- `offset` for paginated results, such as search result.
-- `limit` for paginated results, - number of results per page.
-- `pretty` determines whether the JSON should be prettyprinted when serialising.
-- `callback` is the callback name when doing a jsonp request on the HTTP-transport
-- `fields` which keys should be in the returned object.
-- `timings` enable some timing statistics in envelope
-
-__Responses__ are returned within an envelope, usually as a JSON object with the following properties:
-
-- `statusCode` contains the status of the request, ie `200` if it went ok.
-- `data` contains the actual response, if applicable
-- `error` contains a list of errors, if applicable
-
-__The API__ is specified/documented using OpenAPI 2.0 Specification (swagger). 
-See http://swagger.io and https://github.com/OAI/OpenAPI-Specification for more details.
-The actual swagger file will be most likely generated from a simpler file.
-
-The generated documentation is exposed at `/v0/`. The WebSocket API is exposed at `/v0/socketcluster`. The HTTP-API is exposed as `/v0/$ENDPOINT-NAME`. 
-Version 0 (`/v0`) is the unstable API under development. When the API is finalised, we will change to version 1.
-
-The production API runs ssl-only (HTTPS/WSS).
-
-English is the main language for naming of methods, as well as API-documentation.
-We will try to minimise the amount of library jargon, in order to make the API more accessible for developers without domain knowledge.
-
+----
 
 # Transports
 
-There are several transports:
-
-- HTTP POST requests - the _parameters_ are posted as a JSON object (`Content-Type: application/json`) to an url, given by the `endpoint name`. Supports CORS.
-- HTTP GET requests - similar to HTTP-POST requests with same url, but the _parameters_ are given as url-parameters. This is a quick way to try out / experiment with the API. Parameters are parsed as JSON(if possible) and otherwise used as strings. Url-parameters can also be used in POST-requests to override values.
 - SocketCluster (WebSockets) - send the request over websocket, and gets a result back, - the event is the endpoint name, the data is the parameters, and the result comes through the callback, when using the socketcluster-client (available for JavaScript, iOS and Android from https://github.com/socketcluster/.). Notice: the result received by socketcluster are decycled, so you need to call `require("cycle").retrocycle(result)`.
 
 # Auth
@@ -54,45 +20,6 @@ The authentification server is called Smaug, and lives in another repository: ht
 In the first version it will support logins via "Resource Owner Password Credentials".
 
 TODO clarify/document details.
-
-# Bibliographic Data Model
-
-Bibliographic objects are returned from both the `/work` and `/search` endpoints. 
-They are identified by a *id*, - an example would be "775100-katalog:29372365".
-
-The bibliographic object is represented as a JSON-object with fields from:
-
-- BriefDisplay from opensearch
-- DKABM - defined on biblstandard.dk
-- Relations - http://danbib.dk/index.php?doc=broend3_relationer
-- `collection` list of ids in same "værk" within opensearch search
-- moreInfo - covers as url and dataurl, - as `coverUrlXXX` or `coverDataUrlXXX` where `XXX` is one of `42`, `117`, `207`, `500`, `Back`, `Thumbnail` or `Full`, ie. `coverUrl42`.
-
-The mapping between keys in the JSON object, and the above sources can be seen in 
-https://github.com/DBCDK/serviceprovider/blob/master/doc/work-context.jsonld
-
-Each key present in the json-object, contains a non-empty array of values. Example: if the bibliographic xml-object contains:
-
-
-```xml
-<dc:subject xsi:type="dkdcplus:DBCN">for 7 år</dc:subject>
-<dc:subject xsi:type="dkdcplus:DBCN">for 8 år</dc:subject>
-<dcterms:audience>børnematerialer</dcterms:audience>
-<dc:title>Danmark</dc:title>
-```
-
-it would map to json like:
-
-```json
-{ "subjectDBCN": ["for 7 år", "for 8 år"],
-  "audience": ["børnematerialer"],
-  "dcTitle": ["Danmark"]}
-```
-
-
-This encoding is designed both easy to work directly with in client code. It will also be properly encoded linked data, if we add 1) an `@context` with the url of `work-context.jsonld` and 2) an `@id` with the id of the object.
-
-Note: a source for creator types of dkdcplus is danmarc, ie http://www.kat-format.dk/danMARC2/Danmarc2.bilagJ.htm
 
 # Priorities of features
     
