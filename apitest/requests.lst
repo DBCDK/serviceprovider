@@ -10,8 +10,9 @@ libraries { "branchIds": ["700401", "710104"], "fields": ["branchId", "city", "g
 news {"fields": ["title", "changed", "nid", "field_ding_news_list_image"]}
 news {"nids": ["19", "40"], "fields": ["title", "changed", "nid", "field_ding_news_list_image"]}
 order {}
-#rank {}
-#recommend { "like":["870970-basis:27266428"], "limit":10}
+rank {"pids":["870970-basis:28511663", "870970-basis:29754519", "870970-basis:29060835", "870970-basis:28567057", "870970-basis:28043872", "870970-basis:28709994", "870970-basis:29319006", "870970-basis:27266428", "870970-basis:28724683", "870970-basis:26923530", "870970-basis:29974861", "870970-basis:28456433", "870970-basis:28902239", "870970-basis:45188981"], "like":["870970-basis:45488713", "870970-basis:28643713", "870970-basis:29494940", "870970-basis:29386404", "870970-basis:28429576"]}
+recommend { "like":["300185-katalog:100562332"], "limit":10}
+recommend { "recommender":"popular", "limit":2}
 renew {}
 search {}
 search {"q" : "hest"}
@@ -26,5 +27,5 @@ suggest {"q" : "os", "type": "subject", "limit": 3}
 user {}
 work {"pids": ["870970-basis:27266428"]}
 work {"pids": ["300185-katalog:100562332", "870970-basis:51989252", "870971-forfweb:86203219", "870970-basis:24284514"]}
-work {"pids": ["300185-katalog:100562332", "870970-basis:51989252", "870971-forfweb:86203219", "870970-basis:24284514"], "fields": ["collection", "title"]}
+#work {"pids": ["300185-katalog:100562332", "870970-basis:51989252", "870971-forfweb:86203219", "870970-basis:24284514"], "fields": ["collection", "title"]}
 work {"pids": ["300185-katalog:100562332", "870970-basis:51989252", "870971-forfweb:86203219", "870970-basis:24284514"], "fields": ["coverUrlFull", "title"]}
