@@ -6,8 +6,6 @@
  */
 
 import suggestTransformer from './suggest.js';
-import coverImageTransformer from './neoCoverImageTransform.js';
-import openSearchWorkTransformer from './neoOpenSearchWorkTransformer.js';
 import facetTransformer from './facets';
 import searchTransformer from './search';
 import librariesTransformer from './libraries';
@@ -44,8 +42,6 @@ export default function Provider() {
     recommend: recommendTransformer,
     rank: rankTransformer,
     suggest: suggestTransformer,
-    getCoverImageNeo: coverImageTransformer,
-    getOpenSearchWorkNeo: openSearchWorkTransformer,
     user: userTransformer,
     order: orderTransformer,
     work: workTransformer,
