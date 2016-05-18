@@ -98,7 +98,7 @@ facets {"q" : "harry"}
       },
       {
         "term": "usa",
-        "frequency": 378
+        "frequency": 377
       },
       {
         "term": "rock",
@@ -110,7 +110,7 @@ facets {"q" : "harry"}
       },
       {
         "term": "instrumental",
-        "frequency": 194
+        "frequency": 193
       },
       {
         "term": "2000-2009",
@@ -122,11 +122,11 @@ facets {"q" : "harry"}
       },
       {
         "term": "jazz",
-        "frequency": 135
+        "frequency": 134
       },
       {
         "term": "1960-1969",
-        "frequency": 131
+        "frequency": 130
       },
       {
         "term": "krimi",
@@ -136,11 +136,11 @@ facets {"q" : "harry"}
     "language": [
       {
         "term": "engelsk",
-        "frequency": 682
+        "frequency": 681
       },
       {
         "term": "dansk",
-        "frequency": 589
+        "frequency": 590
       },
       {
         "term": "blandede sprog",
@@ -201,12 +201,12 @@ facets {"q" : "harry"}
         "frequency": 93
       },
       {
-        "term": "2006",
+        "term": "2014",
         "frequency": 81
       },
       {
-        "term": "2014",
-        "frequency": 81
+        "term": "2006",
+        "frequency": 80
       },
       {
         "term": "2005",
@@ -7378,6 +7378,252 @@ order {}
   "error": "At least one pid must be provided to place order"
 }
 
+rank {"pids":["870970-basis:28511663", "870970-basis:29754519", "870970-basis:29060835", "870970-basis:28567057", "870970-basis:28043872", "870970-basis:28709994", "870970-basis:29319006", "870970-basis:27266428", "870970-basis:28724683", "874310-katalog:DBB0019369", "870970-basis:26923530", "870970-basis:29974861", "870970-basis:28456433", "870970-basis:28902239", "870970-basis:45188981"], "like":["870970-basis:45488713", "870970-basis:28643713", "870970-basis:29494940", "870970-basis:29386404", "870970-basis:28429576"]}
+{
+  "statusCode": 200,
+  "data": [
+    {
+      "title": "Fyrmesteren : kriminalroman",
+      "creator": "Camilla Läckberg",
+      "val": 160.35303598205383,
+      "ctkey": "Fyrmesteren_:_kriminalroman::Camilla_Läckberg",
+      "pid": "870970-basis:28709994"
+    },
+    {
+      "title": "Englemagersken : kriminalroman",
+      "creator": "Camilla Läckberg",
+      "val": 156.37673714369217,
+      "ctkey": "Englemagersken_:_kriminalroman::Camilla_Läckberg",
+      "pid": "870970-basis:45188981"
+    },
+    {
+      "title": "De glemte piger : krimi",
+      "creator": "Sara Blædel",
+      "val": 154.94287546424368,
+      "ctkey": "De_glemte_piger_:_krimi::Sara_Blædel",
+      "pid": "870970-basis:29060835"
+    },
+    {
+      "title": "Dødsenglen : krimi",
+      "creator": "Sara Blædel",
+      "val": 152.79449728082864,
+      "ctkey": "Dødsenglen_:_krimi::Sara_Blædel",
+      "pid": "870970-basis:28567057"
+    },
+    {
+      "title": "Tre hundes nat",
+      "creator": "Elsebeth Egholm",
+      "val": 152.4351523893472,
+      "ctkey": "Tre_hundes_nat::Elsebeth_Egholm",
+      "pid": "870970-basis:28724683"
+    },
+    {
+      "title": "Hævnens gudinde : krimi",
+      "creator": "Sara Blædel",
+      "val": 137.19556270267927,
+      "ctkey": "Hævnens_gudinde_:_krimi::Sara_Blædel",
+      "pid": "870970-basis:29319006"
+    },
+    {
+      "title": "Marco effekten : krimithriller",
+      "creator": "Jussi Adler-Olsen",
+      "val": 135.12674503355157,
+      "ctkey": "Marco_effekten_:_krimithriller::Jussi_Adler-Olsen",
+      "pid": "870970-basis:29754519"
+    },
+    {
+      "title": "Journal 64 : krimithriller",
+      "creator": "Jussi Adler-Olsen",
+      "val": 125.28970604409433,
+      "ctkey": "Journal_64_:_krimithriller::Jussi_Adler-Olsen",
+      "pid": "870970-basis:28511663"
+    },
+    {
+      "title": "Hypnotisøren",
+      "creator": "Lars Kepler",
+      "val": 112.97148471572395,
+      "ctkey": "Hypnotisøren::Lars_Kepler",
+      "pid": "874310-katalog:DBB0019369"
+    },
+    {
+      "title": "Flaskepost fra P : krimithriller",
+      "creator": "Jussi Adler-Olsen",
+      "val": 111.80156092338498,
+      "ctkey": "Flaskepost_fra_P_:_krimithriller::Jussi_Adler-Olsen",
+      "pid": "870970-basis:28043872"
+    },
+    {
+      "title": "Det syvende barn",
+      "creator": "Erik Valeur",
+      "val": 103.90192806553446,
+      "ctkey": "Det_syvende_barn::Erik_Valeur",
+      "pid": "870970-basis:28902239"
+    },
+    {
+      "title": "Fasandræberne : krimithriller",
+      "creator": "Jussi Adler-Olsen",
+      "val": 97.96675452808782,
+      "ctkey": "Fasandræberne_:_krimithriller::Jussi_Adler-Olsen",
+      "pid": "870970-basis:27266428"
+    },
+    {
+      "title": "Kvinden i buret : krimi",
+      "creator": "Jussi Adler-Olsen",
+      "val": 97.26147565144235,
+      "ctkey": "Kvinden_i_buret_:_krimi::Jussi_Adler-Olsen",
+      "pid": "870970-basis:26923530"
+    },
+    {
+      "title": "Og bjergene gav genlyd",
+      "creator": "Khaled Hosseini",
+      "val": 93.82172425193735,
+      "ctkey": "Og_bjergene_gav_genlyd::Khaled_Hosseini",
+      "pid": "870970-basis:29974861"
+    },
+    {
+      "title": "Giganternes fald",
+      "creator": "Ken Follett",
+      "val": 83.32698412417399,
+      "ctkey": "Giganternes_fald::Ken_Follett",
+      "pid": "870970-basis:28456433"
+    }
+  ]
+}
+
+recommend { "like":["870970-basis:27266428"], "limit":10}
+{
+  "statusCode": 200,
+  "data": [
+    {
+      "creator": "Jussi Adler-Olsen",
+      "val": 0.4860173593892626,
+      "title": "Flaskepost fra P : krimithriller",
+      "pid": "870970-basis:28043872"
+    },
+    {
+      "creator": "Jussi Adler-Olsen",
+      "val": 0.45139501883365696,
+      "title": "Kvinden i buret : krimi",
+      "pid": "870970-basis:26923530"
+    },
+    {
+      "creator": "Jussi Adler-Olsen",
+      "val": 0.414862087532955,
+      "title": "Journal 64 : krimithriller",
+      "pid": "870970-basis:28511663"
+    },
+    {
+      "creator": "Jussi Adler-Olsen",
+      "val": 0.29921312572907927,
+      "title": "Marco effekten : krimithriller",
+      "pid": "870970-basis:29754519"
+    },
+    {
+      "creator": "Jussi Adler-Olsen",
+      "val": 0.27038205502570556,
+      "title": "Alfabethuset",
+      "pid": "870970-basis:28075480"
+    },
+    {
+      "creator": "Jussi Adler-Olsen",
+      "val": 0.2574213664466531,
+      "title": "Washington dekretet",
+      "pid": "870970-basis:26370574"
+    },
+    {
+      "creator": "Jussi Adler-Olsen",
+      "val": 0.24711549282919104,
+      "title": "Og hun takkede guderne",
+      "pid": "870970-basis:27254128"
+    },
+    {
+      "creator": "Sara Blædel",
+      "val": 0.22859737831777507,
+      "title": "Dødsenglen : krimi",
+      "pid": "870970-basis:28567057"
+    },
+    {
+      "creator": "Sara Blædel",
+      "val": 0.22392438355326977,
+      "title": "Hævnens gudinde : krimi",
+      "pid": "870970-basis:29319006"
+    },
+    {
+      "creator": "Lars Kepler",
+      "val": 0.21930264357648044,
+      "title": "Hypnotisøren",
+      "pid": "874310-katalog:DBB0019369"
+    }
+  ]
+}
+
+recommend { "recommender":"popular", "limit":10}
+{
+  "statusCode": 200,
+  "data": [
+    {
+      "creator": "Jussi Adler-Olsen",
+      "val": 30889,
+      "title": "Journal 64 : krimithriller",
+      "pid": "870970-basis:28511663"
+    },
+    {
+      "creator": "Jussi Adler-Olsen",
+      "val": 28783,
+      "title": "Marco effekten : krimithriller",
+      "pid": "870970-basis:29754519"
+    },
+    {
+      "creator": "Sara Blædel",
+      "val": 26278,
+      "title": "De glemte piger : krimi",
+      "pid": "870970-basis:29060835"
+    },
+    {
+      "creator": "Sara Blædel",
+      "val": 25139,
+      "title": "Dødsenglen : krimi",
+      "pid": "870970-basis:28567057"
+    },
+    {
+      "creator": "Jussi Adler-Olsen",
+      "val": 23690,
+      "title": "Flaskepost fra P : krimithriller",
+      "pid": "870970-basis:28043872"
+    },
+    {
+      "creator": "Camilla Läckberg",
+      "val": 22278,
+      "title": "Fyrmesteren : kriminalroman",
+      "pid": "870970-basis:28709994"
+    },
+    {
+      "creator": "Sara Blædel",
+      "val": 21556,
+      "title": "Hævnens gudinde : krimi",
+      "pid": "870970-basis:29319006"
+    },
+    {
+      "creator": "Jussi Adler-Olsen",
+      "val": 21423,
+      "title": "Fasandræberne : krimithriller",
+      "pid": "870970-basis:27266428"
+    },
+    {
+      "creator": "Elsebeth Egholm",
+      "val": 20871,
+      "title": "Tre hundes nat",
+      "pid": "870970-basis:28724683"
+    },
+    {
+      "creator": "Lars Kepler",
+      "val": 20609,
+      "title": "Hypnotisøren",
+      "pid": "874310-katalog:DBB0019369"
+    }
+  ]
+}
+
 renew {}
 {
   "statusCode": 400,
@@ -8602,7 +8848,7 @@ search {"q" : "ost", "fields": ["pid", "creator", "coverUrlFull"], "limit": 3}
         "775100-katalog:27400337"
       ],
       "coverUrlFull": [
-        "//moreinfo.addi.dk/2.1/more_info_get.php?id=44502234&type=forside_stor&key=d79a609c81dd5558b1e9"
+        "//moreinfo.addi.dk/2.1/more_info_get.php?id=44502234&type=forside_stor&key=ac7f1bca3f44581e0dc5"
       ]
     },
     {
@@ -8610,7 +8856,7 @@ search {"q" : "ost", "fields": ["pid", "creator", "coverUrlFull"], "limit": 3}
         "775100-katalog:29130612"
       ],
       "coverUrlFull": [
-        "//moreinfo.addi.dk/2.1/more_info_get.php?id=54073988&type=forside_stor&key=6bd3e9886068e69795e0"
+        "//moreinfo.addi.dk/2.1/more_info_get.php?id=54073988&type=forside_stor&key=a6442c640c07a23bd1ea"
       ]
     },
     {
@@ -8719,7 +8965,7 @@ search { "q": "harry AND potter", "fields": ["identifier", "title", "collection"
         "775100-katalog:28668147"
       ],
       "coverUrlFull": [
-        "//moreinfo.addi.dk/2.1/more_info_get.php?id=51917747&type=forside_stor&key=c24a3bfac23d213d4eda"
+        "//moreinfo.addi.dk/2.1/more_info_get.php?id=51917747&type=forside_stor&key=a1d63350aaec2128f98e"
       ]
     },
     {
@@ -8743,7 +8989,7 @@ search { "q": "harry AND potter", "fields": ["identifier", "title", "collection"
         "775100-katalog:27639798"
       ],
       "coverUrlFull": [
-        "//moreinfo.addi.dk/2.1/more_info_get.php?id=55722038&type=forside_stor&key=a8744c3daf469da8af63"
+        "//moreinfo.addi.dk/2.1/more_info_get.php?id=55722038&type=forside_stor&key=9985f9f8967f42aa1228"
       ]
     },
     {
@@ -9585,12 +9831,6 @@ work {"pids": ["300185-katalog:100562332", "870970-basis:51989252", "870971-forf
   ]
 }
 
-work {"pids": ["300185-katalog:100562332", "870970-basis:51989252", "870971-forfweb:86203219", "870970-basis:24284514"], "fields": ["collection", "title"]}
-{
-  "statusCode": 500,
-  "error": "TypeError: Cannot read property 'collection' of undefined"
-}
-
 work {"pids": ["300185-katalog:100562332", "870970-basis:51989252", "870971-forfweb:86203219", "870970-basis:24284514"], "fields": ["coverUrlFull", "title"]}
 {
   "statusCode": 200,
@@ -9598,7 +9838,7 @@ work {"pids": ["300185-katalog:100562332", "870970-basis:51989252", "870971-forf
     {},
     {
       "coverUrlFull": [
-        "//moreinfo.addi.dk/2.1/more_info_get.php?id=64951376&type=forside_stor&key=35eaf341b65f0e413b3f"
+        "//moreinfo.addi.dk/2.1/more_info_get.php?id=64951376&type=forside_stor&key=1619325440c2d7ccb81a"
       ],
       "title": [
         "Harry Potter og de vises sten"
