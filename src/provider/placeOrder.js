@@ -11,7 +11,7 @@ function validateParams(params) {
   if (params.expires && typeof params.expires !== 'string') {
     throw ('Expires must be a string');
   }
-  if (params.expires && !params.expires.match(/\d{4}-\d{2}-\d{2}/g)) {
+  if (params.expires && !params.expires.match(/^\d{4}-\d{2}-\d{2}$/g)) {
     throw ('The expires argument must be of the form YYYY-MM-DD (example: 2016-06-24)');
   }
 

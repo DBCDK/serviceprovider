@@ -161,7 +161,6 @@ api:
         description: When the order expires if not fullfilled.
         type: string
         example: 2016-06-24
-        format: date-time
       delete:
         description: whether to delete an order, - not applicable to new orders.
         type: bool
