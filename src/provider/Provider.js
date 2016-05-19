@@ -20,6 +20,8 @@ import {testTransformer} from '../transformers/testTransformer.js';
 import recommendTransformer from '../transformers/recommend';
 import rankTransformer from '../transformers/rank';
 
+import moreinfoTransformer from '../transformers/moreinfo';
+
 /**
  * Initialization of the provider and the underlying services.
  *
@@ -46,6 +48,7 @@ export default function Provider() {
     order: orderTransformer,
     work: workTransformer,
     test: testTransformer,
+    moreinfo: moreinfoTransformer,
     availability: availabilityTransformer
   };
 

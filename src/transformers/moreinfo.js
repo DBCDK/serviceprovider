@@ -264,5 +264,8 @@ export default (request, context) => {
 
   return context.basesoap('moreinfo', req).then(body => {
     return moreInfoResponse(body, context, state);
-  });
+  }, (error => {
+    console.log("ERROR!!!!!!!!", error);
+    return {statusCode: 500, error: "Could not communicate with moreinfo server."};
+  }));
 };
