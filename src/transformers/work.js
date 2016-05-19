@@ -1,7 +1,7 @@
 'use strict';
 
-import coverImageTransformer from './neoCoverImageTransform';
-import openSearchWorkTransformer from './neoOpenSearchWorkTransformer';
+import coverImageTransformer from './moreinfo';
+import openSearchWorkTransformer from './opensearchGetObject';
 import searchTransformer from './opensearchSearch';
 import {requestType, makeTypeID} from '../requestTypeIdentifier';
 import _ from 'lodash';
