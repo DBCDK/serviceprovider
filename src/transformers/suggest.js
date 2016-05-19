@@ -117,9 +117,14 @@ function titleSuggest(params, context) {
   let queryString = params.q.replace(new RegExp(' ', 'g'), '\\ ');
   let query = '{!complexphrase inOrder=true}display.title:' + queryString+ '*';
 
+  let recids = context.data.popsuggest.collectionidentifiers;
+  recids = recids.map((id) => {
+    return `rec.collectionIdentifier:${id}`;
+  }).join(' OR ');
+
   let localParams = {query: query,
                      fields: 'display.title,fedoraPid,display.creator,display.workType',
-                     filter: 'rec.collectionIdentifier:775100-katalog'};
+                     filter: recids};
   if (params.limit) {
     localParams.rows = params.limit;
   }

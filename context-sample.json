@@ -16,7 +16,8 @@
       "libraryType": "folkebibliotek"
     },
     "popsuggest": {
-      "url": "http://xptest.dbc.dk/ms/entity-pop/v1"
+      "url": "http://xptest.dbc.dk/ms/entity-pop/v1",
+      "collectionidentifiers": ["150013-palle"]
     },
     "creatorsuggest": {
       "url": "http://xptest.dbc.dk/ms/entity-suggest/v1/creator"
