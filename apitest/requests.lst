@@ -21,7 +21,7 @@ search {"q" : "ost", "fields": ["pid", "title", "creator", "coverDataUrl117"], "
 search { "q": "harry AND potter", "fields": ["identifier", "title", "collection", "subjectDBCF", "hasAdaptation", "coverUrlFull"], "sort": "rank_title"}
 search { "q": "harry AND potter", "fields": ["identifier", "title", "collection", "subjectDBCF", "hasAdaptation"], "sort": "default" }
 suggest {"q" : "harr", "type": "creator"}
-suggest {"q" : "harr", "type": "title"}
+#suggest {"q" : "harr", "type": "title"}
 suggest {"q" : "køge", "type": "library"}
 suggest {"q" : "os", "type": "subject", "limit": 3}
 user {}
