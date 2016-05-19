@@ -119,7 +119,7 @@ function titleSuggest(params, context) {
 
   let localParams = {query: query,
                      fields: 'display.title,fedoraPid,display.creator,display.workType',
-                     filter: 'rec.collectionIdentifier:775100-katalog'};
+                     filter: 'rec.collectionIdentifier:150013-palle'};
   if (params.limit) {
     localParams.rows = params.limit;
   }
