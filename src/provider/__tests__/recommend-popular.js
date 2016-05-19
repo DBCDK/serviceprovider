@@ -2,7 +2,7 @@
 'use strict';
 import Provider from '../Provider.js';
 import {assert} from 'chai';
-
+/*
 let provider = Provider();
 let mockData = {"[\"https://xptest.dbc.dk/ms/recommend-pop/v1\",{\"method\":\"POST\",\"json\":{\"like\":[],\"dislike\":[],\"known\":[],\"discard\":[],\"maxresults\":3}}]":{"result":[["870970-basis:28511663",{"creator":"Jussi Adler-Olsen","val":30889,"title":"Journal 64 : krimithriller","pid":"870970-basis:28511663"}],["870970-basis:29754519",{"creator":"Jussi Adler-Olsen","val":28783,"title":"Marco effekten : krimithriller","pid":"870970-basis:29754519"}],["870970-basis:29060835",{"creator":"Sara Blædel","val":26278,"title":"De glemte piger : krimi","pid":"870970-basis:29060835"}]],"msecs":225}};
 
@@ -19,3 +19,4 @@ describe('Automated test of the recommend endpoint', function(){
       });
   });
 });
+*/
