@@ -1,10 +1,8 @@
 'use strict';
-/**
- * User transformer.
- */
 
 // TODO
-// old recommend code should be removed from SP
+
+// filter is missing
 
 /*
 function createFilter(request){
@@ -13,8 +11,6 @@ function createFilter(request){
 }
 */
 
-
-
 /* 
 // Examples
 '{"recommender":"popular", "limit":10, "timings":true}' 
@@ -22,29 +18,22 @@ function createFilter(request){
 
 '{"like":["870970-basis:45488713", "870970-basis:28643713", "870970-basis:29494940", "870970-basis:29386404", "870970-basis:28429576"], "limit":10, "timings":true}' 
 "http://localhost:8080/v0/recommend"
-
 */
 
 function createRequestParameters(request, context) {
-  // console.log("createRequestParameters 1");
-  // const uris = {
-  //   popular: 'https://xptest.dbc.dk/ms/recommend-pop/v1',
-  //   default: 'https://xptest.dbc.dk/ms/recommend-cosim/v1'
-  // };
-  // console.log("createRequestParameters 3");
   let paramsPost = {
-    // TODO: url take from context
     method: 'POST',
     json: {
-      like: [], // TODO!!
-      dislike: [],
-      known: [],
-      discard: [],
-      maxresults: request.limit // TODO: should we verify requests?
+      like: [],
+      // these are not mandatory:
+      // dislike: [],
+      // known: [],
+      // discard: [],
+      maxresults: request.limit
+
     }
   };
   let recommenderType = 'default';
-  //console.log("createRequestParameters 3");
   let urls = context.data.recommend.urls;
   //console.log(JSON.stringify(urls, null, 4));
   //console.log("deafult url:", urls['default']);
@@ -60,7 +49,6 @@ function createRequestParameters(request, context) {
     recommenderType = request.recommender;
     uri = urls[recommenderType];
   }
-  // console.log("createRequestParameters 5");
   let names = {
     like: 'like',
     dislike: 'dislike',
@@ -79,15 +67,7 @@ function createRequestParameters(request, context) {
 }
 
 
-export default (request, context) => { // eslint-disable-line no-unused-vars
-//   {
-//     "filter": [
-//         "870970"
-//     ],
-//     "recommender": "popular",
-//     "likes": [],
-//     "limit": 10
-// }
+export default (request, context) => { // eslint-disable-line no-
   try {
     let [uri, params] = createRequestParameters(request, context);
     // console.log("SP REQUEST", JSON.stringify(request,null,4));
