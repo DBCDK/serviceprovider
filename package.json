@@ -46,7 +46,6 @@
     "helmet": "0.14.0",
     "helmet-csp": "0.3.0",
     "js-yaml": "^3.5.3",
-    "jsonpath-object-transform": "https://github.com/vibjerg/jsonpath-object-transform/archive/1.0.5.tar.gz",
     "jsonschema": "^1.1.0",
     "lodash": "3.10.1",
     "minimist": "^1.2.0",
