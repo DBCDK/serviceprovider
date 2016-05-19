@@ -67,7 +67,7 @@ function saveTest(test) {
 // Request: ${test.name} ${JSON.stringify(test.params)}
 'use strict';
 import Provider from '../Provider.js';
-import {assert} from 'chai';
+import {assert, fail} from 'chai';
 
 let provider = Provider();
 let mockData = ${JSON.stringify(test.mockData)};
@@ -80,6 +80,10 @@ describe('Automated test of the ${test.name} endpoint', () => {
       .then(result => {
         assert.deepEqual(result,
             ${JSON.stringify(test.result)});
+        done();
+      })
+      .catch(result => {
+        fail({throw: result}, ${JSON.stringify(test.result)});
         done();
       });
   });
