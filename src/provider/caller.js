@@ -64,6 +64,7 @@ function saveTest(test) {
     return;
   }
   let source = `/* eslint-disable max-len, quotes, comma-spacing, key-spacing, quote-props */
+// Request: ${test.name} ${JSON.stringify(test.params)}
 'use strict';
 import Provider from '../Provider.js';
 import {assert} from 'chai';
@@ -169,6 +170,7 @@ class Context {
       if (testDev && this.createTest) { // save mock-data / create text-code
         if (this.callsInProgress === 0) {
           delete params.createTest;
+          delete params.access_token;
           saveTest({name: name, params: params,
             context: this.data,
             mockData: this.mockData, result: result,
