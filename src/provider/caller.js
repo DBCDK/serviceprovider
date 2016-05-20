@@ -160,7 +160,7 @@ class Context {
       }
     }
 
-    return promise.then(result => {
+    let handleResult = result => {
       --this.callsInProgress;
       if (type !== 'transformer') {
         --this.externalCallsInProgress;
@@ -189,7 +189,13 @@ class Context {
         };
       }
       return result;
-    });
+    };
+
+    return promise.then(
+        handleResult,
+        result => {
+          throw handleResult(result);
+        });
   }
 
   /**
