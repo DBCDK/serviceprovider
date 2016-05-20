@@ -61,7 +61,8 @@ function getNumericalLogLevel(logLevel) {
     WARN: 2,
     WARNING: 2,
     INFO: 3,
-    DEBUG: 4
+    DEBUG: 4,
+    TRACE: 5
   };
 
   var numericalLogLevel = logLevels[logLevel.toUpperCase()];
@@ -100,7 +101,8 @@ export const log = {
   info: (msg, args) => doLog('info', msg, args),
   warn: (msg, args) => doLog('warn', msg, args),
   error: (msg, args) => doLog('error', msg, args),
-  debug: (msg, args) => doLog('debug', msg, args)
+  debug: (msg, args) => doLog('debug', msg, args),
+  trace: (msg, args) => doLog('trace', msg, args)
 };
 
 /**
