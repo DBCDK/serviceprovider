@@ -7501,10 +7501,10 @@ recommend { "recommender":"popular", "limit":2}
       "pid": "870970-basis:28511663"
     },
     {
-      "creator": "Jussi Adler-Olsen",
-      "val": 28783,
-      "title": "Marco effekten : krimithriller",
-      "pid": "870970-basis:29754519"
+      "creator": "Sara Blædel",
+      "val": 26278,
+      "title": "De glemte piger : krimi",
+      "pid": "870970-basis:29060835"
     }
   ]
 }
@@ -9165,11 +9165,6 @@ user {}
       "id": "KbZ0UoBGys8QMLzieTQ5mHZ39ivzulP4",
       "loans": [
         {
-          "loanId": "NCIPMDAxOXw5OTAwfHw5OTAwLnx8",
-          "dueDate": "2016-03-18T00:00:00+01:00",
-          "title": "9900."
-        },
-        {
           "loanId": "NCIPMDAxOXwyMDE0MDgwMXx8TW90b3J8fDIwMTQsIDA4fA==",
           "dueDate": "2016-03-18T00:00:00+01:00",
           "title": "Motor - 2014, 08"
@@ -9200,6 +9195,11 @@ user {}
           "dueDate": "2016-03-18T00:00:00+01:00",
           "title": "Smut",
           "author": "Rosen, Michael"
+        },
+        {
+          "loanId": "NCIPMDAxOXw5OTAwfHw5OTAwLnx8",
+          "dueDate": "2016-06-20T00:00:00+02:00",
+          "title": "9900."
         }
       ],
       "orders": [
@@ -9237,6 +9237,22 @@ user {}
           "library": "DK-100451",
           "holdQueuePosition": "1",
           "author": "Lange, Karina"
+        },
+        {
+          "title": "Hvis din hest er død - så stå af",
+          "orderId": "Hold:NCIPMDAxOXwyMC0wNS0yMDE2IDE0OjE4OjE5fExhbmdlLCBLYXJpbmF8SHZpcyBkaW4gaGVzdCBlciBkJm9zbGFzaDtkIC0gcyZhcmluZzsgc3QmYXJpbmc7IGFmfHx8",
+          "orderDate": "2016-05-20T00:00:00+02:00",
+          "status": "In process",
+          "library": "DK-100451",
+          "author": "Lange, Karina"
+        },
+        {
+          "title": "Tyv er ikke det værste!",
+          "orderId": "Hold:NCIPMDAxOXwyMC0wNS0yMDE2IDE0OjI0OjM5fFdhaGwsIE1hdHN8VHl2IGVyIGlra2UgZGV0IHYmYWVsaWc7cnN0ZSF8fHw=",
+          "orderDate": "2016-05-20T00:00:00+02:00",
+          "status": "In process",
+          "library": "DK-100451",
+          "author": "Wahl, Mats"
         }
       ],
       "ddbcmsapi": "http://rest.filmstriben.dbc.inlead.dk/web/"
