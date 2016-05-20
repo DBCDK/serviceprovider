@@ -1,12 +1,12 @@
 // # Quick start guide to the open platform
 //
-// TODO: `%s/http...localhost.8080/https:\/\/openplatform.dbc.dk/g`
+// # TODO: this does not work yet, waiting for [smaug#112](https://github.com/DBCDK/smaug/issues/112) [smaug#111](https://github.com/DBCDK/smaug/issues/111)
 //
 // This introduction to getting started with the open platform is online on:
-// [http://localhost:8080/v0/guide.html#id:secret](http://localhost:8080/v0/guide.html#id:secret).
+// [https://openplatform.dbc.dk/v0/guide.html#id:secret](https://openplatform.dbc.dk/v0/guide.html#id:secret).
 //
 // It is written as a literate JavaScript
-// [source file](http://localhost:8080/v0/guide.js),
+// [source file](https://openplatform.dbc.dk/v0/guide.js),
 // that can be executed directly in the browser.
 // Use your client id/secret in the url, and open the browser console
 // to see the result of the examples.
@@ -55,7 +55,7 @@ xhr_promise(xhr).then(function(result) {
 // ## Renewal of token
 //
 // TODO
-// You can renew an `access_token`,
+// Renew'ing an `access_token`,
 // using only the `client_id` and `client_secret`.
 //
 // # Examples of api-usage
@@ -63,11 +63,11 @@ xhr_promise(xhr).then(function(result) {
 // Requests to the API can be sent by POSTing a JSON object
 // to the API endpoint:
 
-HTTP_POST('http://localhost:8080/v0/suggest',
+HTTP_POST('https://openplatform.dbc.dk/v0/suggest',
     { q: 'Steppe', type: 'title', 
       access_token: access_token});
 
-HTTP_POST('http://localhost:8080/v0/search',
+HTTP_POST('https://openplatform.dbc.dk/v0/search',
     {q: 'ost', access_token: access_token});
 
 // And all of the other APIs also have the same structure
@@ -90,7 +90,7 @@ function HTTP_POST(url, parameters) {
 //
 // You can also express the entire query in the url,
 // which is useful for interactive testing. Ie.
-// <a id=sample_url>http://localhost:8080/v0/search?q=hej&pretty=true&access_token=...</a>
+// <a id=sample_url>https://openplatform.dbc.dk/v0/search?q=hej&pretty=true&access_token=...</a>
 //
 // The requests can also be sent through WebSockets,
 // which is useful in webbrowsers, as they limits
@@ -99,25 +99,21 @@ function HTTP_POST(url, parameters) {
 // TODO: either document socketcluster+retrocycle,
 // or js-openplatform-api (if implemented).
 //
-// # Search queries
+// # Support code
 //
-// Queries for searches, facets, etc. are 
-//
-//
-// # Boilerplate code
-//
-// The utility functions used above, is implemented here
-// for completeness.
+// The following sections are the utility functions used above, is implemented here
+// for completeness. Feel free to skip the rest of this file
 
 // Sample get-request-url in document, with proper auth token
 
 var link = document.getElementById('sample_url');
 link.href = link.innerHTML =
-  'http://localhost:8080/v0/search?' +
+  'https://openplatform.dbc.dk/v0/search?' +
   'q=hej&pretty=true&access_token=' + access_token;
   console.log(link);
 
 // This ends the part of the file where `access_token` is defined
+
 });
 
 // The example code assumes that the credentials are supplied in
@@ -135,7 +131,6 @@ if(client_id() === 'id' || !client_secret()) {
   throw 'Please use your client_id' +
     ' and client_secret in the url';
 }
-
 
 // A XMLHttpRequest requires setting event handlers
 // to get the result of the request.
