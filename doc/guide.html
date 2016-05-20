@@ -3,7 +3,7 @@
 <!-- 
   
     See guide.js for the actual content, this file
-    is just reads that JavaScript as literate code,
+    just reads that JavaScript as literate code,
     and translates that from markdown into html.
 
 -->
@@ -11,38 +11,38 @@
     <title>Getting started with DBC Open Platform</title>
     <link href='https://fonts.googleapis.com/css?family=Open+Sans:300,600' rel='stylesheet' type='text/css'>
     <style>
-body {
-  text-align: center;
-}
-#guide {
-  display: inline-block;
-  font-family: "Open Sans", sans-serif;
-  text-align: left;
-  max-width: 600px;
-}
+      body {
+        text-align: center;
+      }
+      #guide {
+        display: inline-block;
+        font-family: "Open Sans", sans-serif;
+        text-align: left;
+        max-width: 600px;
+      }
     </style>
   </head>
   <body>
     <div id=guide></div>
     <script src=https://cdnjs.cloudflare.com/ajax/libs/showdown/1.4.1/showdown.min.js></script>
     <script>
-(function() {
-  var xhr = new XMLHttpRequest();
-  xhr.open('GET', 'guide.js');
-  xhr.onreadystatechange = function() {
-    if(xhr.readyState === 4) {
-      var markdown = xhr.response.split('\n')
-        .map(function(line) {
-          return line
-            .replace(/^[^\/]/g, function(s) { return '    ' + s; })
-            .replace(/^\/\/ ?/g, '');
-        }).join('\n');
-      var html = (new showdown.Converter()).makeHtml(markdown);
-      document.getElementById("guide").innerHTML = html;
-    }
-  };
-  xhr.send();
-})();
+      (function() {
+        var xhr = new XMLHttpRequest();
+        xhr.open('GET', 'guide.js');
+        xhr.onreadystatechange = function() {
+          if(xhr.readyState === 4) {
+            var markdown = xhr.response.split('\n')
+              .map(function(line) {
+                return line
+                  .replace(/^[^\/]/g, function(s) { return '    ' + s; })
+                  .replace(/^\/\/ ?/g, '');
+              }).join('\n');
+            var html = (new showdown.Converter()).makeHtml(markdown);
+            document.getElementById("guide").innerHTML = html;
+          }
+        };
+        xhr.send();
+      })();
     </script>
     <script src=guide.js></script>
   </body>
