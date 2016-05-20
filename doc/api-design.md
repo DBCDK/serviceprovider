@@ -37,6 +37,7 @@ See also the API-documentation on https://openplatform.dbc.dk, and `spec.yaml`, 
     - `/work` - `collection`, `coverDataUrlXXX`
     - `/?` - community services - needed by Biblo
 4. Should/nice-to-have:
+    - `/recommend` - mulighed for at filtrere , ie. på materialetype, bibliotek, etc. Filtret skulle være en CQL-streng, så det er konsistent med øvrige kald, se også github issue #377.
     - `/work` - værk-resultat som JSON-Linked-Data, lavthængende frugt: hvis mapningen fra DKABM etc. til json udføres korrekt, er dette sansynligvist trivielt / næsten gratis at implementere.
     - `/recommend` - mulighed for at afgrænse anbefalinger til materialer der har forside - mulighed for at afgrænse anbefalinger til materialer der er hjemme på et givet bibliotek
     - `/search` - mulighed for at afgrænse søgning til materialer der har forside - mulighed for at afgrænse søgning til materialer der er hjemme på et givet bibliotek
