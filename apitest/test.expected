@@ -98,11 +98,11 @@ facets {"q" : "harry"}
       },
       {
         "term": "usa",
-        "frequency": 377
+        "frequency": 376
       },
       {
         "term": "rock",
-        "frequency": 204
+        "frequency": 203
       },
       {
         "term": "england",
@@ -178,7 +178,7 @@ facets {"q" : "harry"}
     "date": [
       {
         "term": "2012",
-        "frequency": 107
+        "frequency": 108
       },
       {
         "term": "2013",
@@ -214,7 +214,7 @@ facets {"q" : "harry"}
       },
       {
         "term": "2004",
-        "frequency": 77
+        "frequency": 76
       }
     ],
     "form": [
@@ -7183,7 +7183,8 @@ libraries { "fields": ["branchId", "city", "geolocation"]}
       "branchId": "875730"
     },
     {
-      "branchId": "875740"
+      "branchId": "875740",
+      "city": "København V"
     },
     {
       "branchId": "875750"
@@ -8732,7 +8733,7 @@ search {"q" : "ost", "fields": ["pid", "creator", "coverUrlFull"], "limit": 3}
         "775100-katalog:27400337"
       ],
       "coverUrlFull": [
-        "//moreinfo.addi.dk/2.1/more_info_get.php?id=44502234&type=forside_stor&key=ac7f1bca3f44581e0dc5"
+        "//moreinfo.addi.dk/2.1/more_info_get.php?id=44502234&type=forside_stor&key=e15a2076f6a00af2c39f"
       ]
     },
     {
@@ -8740,7 +8741,7 @@ search {"q" : "ost", "fields": ["pid", "creator", "coverUrlFull"], "limit": 3}
         "775100-katalog:29130612"
       ],
       "coverUrlFull": [
-        "//moreinfo.addi.dk/2.1/more_info_get.php?id=54073988&type=forside_stor&key=a6442c640c07a23bd1ea"
+        "//moreinfo.addi.dk/2.1/more_info_get.php?id=54073988&type=forside_stor&key=99ad04e7bd6bcd79601f"
       ]
     },
     {
@@ -8849,7 +8850,7 @@ search { "q": "harry AND potter", "fields": ["identifier", "title", "collection"
         "775100-katalog:28668147"
       ],
       "coverUrlFull": [
-        "//moreinfo.addi.dk/2.1/more_info_get.php?id=51917747&type=forside_stor&key=a1d63350aaec2128f98e"
+        "//moreinfo.addi.dk/2.1/more_info_get.php?id=51917747&type=forside_stor&key=9ddaa6dbd0069ce1cba4"
       ]
     },
     {
@@ -8873,7 +8874,7 @@ search { "q": "harry AND potter", "fields": ["identifier", "title", "collection"
         "775100-katalog:27639798"
       ],
       "coverUrlFull": [
-        "//moreinfo.addi.dk/2.1/more_info_get.php?id=55722038&type=forside_stor&key=9985f9f8967f42aa1228"
+        "//moreinfo.addi.dk/2.1/more_info_get.php?id=55722038&type=forside_stor&key=b5bd385595305e852877"
       ]
     },
     {
@@ -8984,59 +8985,61 @@ suggest {"q" : "harr", "type": "title"}
   "statusCode": 200,
   "data": [
     {
+      "str": "Harry Potter og De Vises Sten",
+      "id": "870970-basis:22252852",
+      "creator": "Joanne K. Rowling",
+      "type": "book"
+    },
+    {
+      "str": "Harry Potter og Hemmelighedernes Kammer",
+      "id": "870970-basis:22375733",
+      "creator": "Joanne K. Rowling",
+      "type": "book"
+    },
+    {
+      "str": "Harry Potter og fangen fra Azkaban",
+      "id": "870970-basis:22639862",
+      "creator": "Joanne K. Rowling",
+      "type": "book"
+    },
+    {
+      "str": "Harry Potter og dødsregalierne",
+      "id": "870970-basis:26917921",
+      "creator": "Joanne K. Rowling",
+      "type": "book"
+    },
+    {
+      "str": "Harry Potter og Flammernes Pokal",
+      "id": "870970-basis:23154382",
+      "creator": "Joanne K. Rowling",
+      "type": "book"
+    },
+    {
+      "str": "Harry Potter og halvblodsprinsen",
+      "id": "870970-basis:25807995",
+      "creator": "Joanne K. Rowling",
+      "type": "book"
+    },
+    {
       "str": "Harry Potter og Fønixordenen",
       "id": "870970-basis:24880605",
       "creator": "Joanne K. Rowling",
       "type": "book"
     },
     {
-      "str": "Harry Potter and the deathly hallows - part 1",
-      "id": "870970-basis:28529724",
+      "str": "Harry Potter og Fønixordenen",
+      "id": "870970-basis:27091423",
       "type": "movie"
     },
     {
-      "str": "Harry Potter - quidditch verdensmesterskaberne",
-      "id": "870970-basis:25034937",
-      "type": "other"
-    },
-    {
-      "str": "Harry - med far i køkkenet",
-      "id": "870970-basis:27002951",
-      "creator": "Rikke Lauridsen",
-      "type": "book"
-    },
-    {
-      "str": "Harry alias Kammertjeneren",
-      "id": "870970-basis:29534810",
-      "creator": "Duncan Hamilton",
-      "type": "book"
-    },
-    {
-      "str": "Harriet the spy - blog wars",
-      "id": "870970-basis:29170258",
+      "str": "Harry Potter og halvblodsprinsen",
+      "id": "870970-basis:27831184",
       "type": "movie"
     },
     {
-      "str": "Harry Potter and the prisoner of Azkaban (uddrag)",
-      "id": "870970-basis:25390938",
-      "creator": "John Williams (f. 1932)",
-      "type": "sheetmusic"
-    },
-    {
-      "str": "Harrington on Hold 'em",
-      "id": "870970-basis:43852027",
-      "type": "book"
-    },
-    {
-      "str": "Harrington on online cash games",
-      "id": "870970-basis:44991616",
-      "type": "book"
-    },
-    {
-      "str": "Harry Potter and the half-blood prince (uddrag)",
-      "id": "870970-basis:27953026",
-      "creator": "Nicholas Hooper",
-      "type": "sheetmusic"
+      "str": "Harry Potter og de vises sten",
+      "id": "870970-basis:24347370",
+      "type": "movie"
     }
   ]
 }
@@ -9722,7 +9725,7 @@ work {"pids": ["300185-katalog:100562332", "870970-basis:51989252", "870971-forf
     {},
     {
       "coverUrlFull": [
-        "//moreinfo.addi.dk/2.1/more_info_get.php?id=64951376&type=forside_stor&key=1619325440c2d7ccb81a"
+        "//moreinfo.addi.dk/2.1/more_info_get.php?id=64951376&type=forside_stor&key=51ba13f377f587cfb793"
       ],
       "title": [
         "Harry Potter og de vises sten"
