@@ -60,7 +60,7 @@ See also the API-documentation on https://openplatform.dbc.dk, and `spec.yaml`, 
 
 **The authoritative API-specification is in `spec.yml`, documentation has been migrated into that file**
 
-Generated documentation from the specification can be seen in the running serviceprovider (http://localhost:8080/ locally, or TODO:url-for-public-endpoint)
+Generated documentation from the specification can be seen in the running serviceprovider (http://localhost:8080/ locally, or https://openplatform.dbc.dk/.)
 
 These are possible extra endpoints, maybe implemented later:
 
