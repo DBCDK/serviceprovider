@@ -15,7 +15,7 @@ function createRequestParameters(request, context) {
       maxresults: request.limit
     }
   };
-  let filter = context.data.app.collectionidentifiers; 
+  let filter = context.data.app.collectionidentifiers;
   if (filter){
     paramsPost.json.filter = [context.data.app.collectionidentifiers];
   }
