@@ -1,54 +1,38 @@
 'use strict';
-/**
- * User transformer.
- */
-
-// TODO
 
 function createRequestParameters(request, context) {
-  //console.log('createRequestParameters 1');
+  // create request parameters from request and context
   const uri = context.data.rank.url;
-  // console.log('createRequestParameters 3');
   let paramsPost = {
-    // TODO: url take from context
     uri: uri,
     method: 'POST',
     json: {
       like: [],
       set: [],
-      //dislike: [],
-      //known: [],
-      //discard: [],
+      // these are not mandatory:
+      // dislike: [],
+      // known: [],
+      // discard: [],
       maxresults: request.limit
     }
   };
-  //console.log('createRequestParameters 3');
   for (var prop of ['like', 'dislike', 'known', 'discard']) {
-    //console.log('check:', prop);
     if (request.hasOwnProperty(prop)) {
-      //console.log('has it:', prop);
       paramsPost.json[prop] = request[prop];
-    } else {
-      //console.log('NOT has it:', prop);
     }
   }
-  //console.log('createRequestParameters 4');
   let pids = 'pids';
   if (request.hasOwnProperty(pids)) {
     paramsPost.json.set = request[pids];
   }
-  //console.log(JSON.stringify(paramsPost, null, 4));
   return [uri, paramsPost];
 }
 
 
 export default (request, context) => { // eslint-disable-line no-unused-vars
-  //console.log('RANK SP REQUEST', JSON.stringify(request, null, 4));
   try {
     let [uri, params] = createRequestParameters(request, context);
-    // console.log('SP REQUEST', JSON.stringify(request,null,4));
     return context.request(uri, params).then(body => {
-      // console.log('SERVICE RESPONSE', JSON.stringify(body, null, 4));
       var result = [];
       if (body.result) {
         for (let i = 0; i < body.result.length; ++i) {
