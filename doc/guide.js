@@ -28,7 +28,7 @@
 // The `access_token` is retrieved with a HTTP-POST request,
 // with `client_id` and `client_secret` supplied through basic authentication,
 // and `user_id`, `user_password` supplied in the request body.
-// In browser JavaScript this is done with XHR.
+// In browser JavaScript this is done with XHR:
 
 var xhr = new XMLHttpRequest();
 
@@ -45,7 +45,6 @@ xhr.send('grant_type=password' +
     '&password=' + user_password());
 
 
-
 // This request returns a JSON object,
 // which has an `access_token` property on success.
 // The rest of this guide assume that we have a valid `access_token`
@@ -55,12 +54,10 @@ xhr_promise(xhr).then(function(result) {
 
 // ## Renewal of token
 //
+// TODO
 // You can renew an `access_token`,
 // using only the `client_id` and `client_secret`.
 //
-// TODO
-
-
 // # Examples of api-usage
 //
 // Requests to the API can be sent by POSTing a JSON object
@@ -77,13 +74,6 @@ HTTP_POST('http://localhost:8080/v0/search',
 // of sending a JSON object of parameters to the endpoint
 // and then getting the result back.
 //
-// You can also express the entire query in the url,
-// which is useful for interactive testing. Ie.
-// <a id=sample_url></a>
-//
-//
-// 
-//
 // In browser JavaScript, HTTP-POSTing a JSON object
 // is done like this:
 
@@ -97,17 +87,38 @@ function HTTP_POST(url, parameters) {
     return xhr_promise(xhr);
 }
 
-
-// ... search, recommendations, ...
 //
-// CQL-intro
-
-});
+// You can also express the entire query in the url,
+// which is useful for interactive testing. Ie.
+// <a id=sample_url>http://localhost:8080/v0/search?q=hej&pretty=true&access_token=...</a>
+//
+// The requests can also be sent through WebSockets,
+// which is useful in webbrowsers, as they limits
+// the number of parallel HTTP-requests.
+// 
+// TODO: either document socketcluster+retrocycle,
+// or js-openplatform-api (if implemented).
+//
+// # Search queries
+//
+// Queries for searches, facets, etc. are 
+//
 //
 // # Boilerplate code
 //
 // The utility functions used above, is implemented here
 // for completeness.
+
+// Sample get-request-url in document, with proper auth token
+
+var link = document.getElementById('sample_url');
+link.href = link.innerHTML =
+  'http://localhost:8080/v0/search?' +
+  'q=hej&pretty=true&access_token=' + access_token;
+  console.log(link);
+
+// This ends the part of the file where `access_token` is defined
+});
 
 // The example code assumes that the credentials are supplied in
 // the url-hash. Here is a quick hack to extract them from the url.
