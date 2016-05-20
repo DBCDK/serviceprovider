@@ -214,20 +214,6 @@ api:
       - Recommend
     description: Get recommendations based on a list of likes
     properties:
-      filter:
-        description: filter the likes by library or material type
-        type: object
-        properties:
-          libraries:
-            description: list of libraries
-            type: array
-            items: {type: "string"}
-            example: ["700401", "710104"]
-          types:
-            description: types of materials
-            type: array
-            items: {type: "string"}
-            example: ["artikel", "tidskriftsartikel"]
       recommender:
         description: the type of recommender, such as default or popular
         type: string
@@ -290,6 +276,7 @@ api:
       limit:
         example: 10
         description: maximum number of results returned
+        maximum: 20
         type: integer
       fields:
         example: ["title", "creator", "pid"]
@@ -383,8 +370,9 @@ api:
     description: Retrieve meta information about a creative work
     properties:
       pids:
-        description: the id of the material
+        description: The ids of the materials to look up. You should at most look up 20 ids per API call.
         type: array
+        maxItems: 20
         items: {type: "string"}
         example: ["870970-basis:51989252"]
       fields:
