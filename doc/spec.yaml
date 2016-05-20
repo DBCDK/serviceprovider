@@ -322,7 +322,7 @@ api:
         type: string
         example: "title"
       fields:
-        description: "Fields to return, defaults to `term`. The `subject`- and `creator`-suggest only has `term`, while `title`-suggest also has `pid`, `creator`, and `type`, and the `library`-suggest has ...
+        description: "Fields to return, defaults to `term`. The `subject`- and `creator`-suggest only has `term`, while `title`-suggest also has `pid`, `creator`, and `type`, and the `library`-suggest has ..."
         type: array
         items: {type: "string"}
         example: ["term", "pid", "creator", "type"]
