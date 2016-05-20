@@ -1,5 +1,8 @@
 {
   "context": {
+    "app": {
+      "collectionidentifiers": "rec.collectionIdentifier:150013-palle OR rec.collectionIdentifier:758000-katalog"
+    },
     "opensearch": {
       "url": "http://opensearch.addi.dk/b3.0_4.2/",
       "agency": "775100",
@@ -16,8 +19,7 @@
       "libraryType": "folkebibliotek"
     },
     "popsuggest": {
-      "url": "http://xptest.dbc.dk/ms/entity-pop/v1",
-      "collectionidentifiers": "rec.collectionIdentifier:150013-palle OR rec.collectionIdentifier:758000-katalog"
+      "url": "http://xptest.dbc.dk/ms/entity-pop/v1"
     },
     "creatorsuggest": {
       "url": "http://xptest.dbc.dk/ms/entity-suggest/v1/creator"
