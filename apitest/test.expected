@@ -9165,11 +9165,6 @@ user {}
       "id": "KbZ0UoBGys8QMLzieTQ5mHZ39ivzulP4",
       "loans": [
         {
-          "loanId": "NCIPMDAxOXw5OTAwfHw5OTAwLnx8",
-          "dueDate": "2016-03-18T00:00:00+01:00",
-          "title": "9900."
-        },
-        {
           "loanId": "NCIPMDAxOXwyMDE0MDgwMXx8TW90b3J8fDIwMTQsIDA4fA==",
           "dueDate": "2016-03-18T00:00:00+01:00",
           "title": "Motor - 2014, 08"
@@ -9200,6 +9195,11 @@ user {}
           "dueDate": "2016-03-18T00:00:00+01:00",
           "title": "Smut",
           "author": "Rosen, Michael"
+        },
+        {
+          "loanId": "NCIPMDAxOXw5OTAwfHw5OTAwLnx8",
+          "dueDate": "2016-06-20T00:00:00+02:00",
+          "title": "9900."
         }
       ],
       "orders": [

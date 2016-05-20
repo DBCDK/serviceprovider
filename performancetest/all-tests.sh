@@ -5,10 +5,10 @@ export TIMES=500
 export URL='http://localhost:8080/v0/'
 #export ACCESS_TOKEN='64141bea42b72443ce3848455f5960e1438fb434'
 # platformbe-p01
-export ACCESS_TOKEN="a1d4ba32473cb0b5746a6f4163fc4b9a542d423e"
+#export ACCESS_TOKEN="a1d4ba32473cb0b5746a6f4163fc4b9a542d423e"
 
 # local installation
-#export ACCESS_TOKEN='qwerty'
+export ACCESS_TOKEN='qwerty'
 export JOBS=1
 export PRE='p01-'
 
@@ -96,5 +96,12 @@ export ENDPOINT='renew'
 export REQUEST='{ "loanId": "NCIPMDAxOXwxMDAyMTYwMHxIZXNzZWxkYWhsLCBNb3J0ZW58TWFuZGVuIGZyYSBsYXZsYW5kZXQgOiByb21hbnx8fA==", "timings":true}'
 ./make-test.sh
 
+
+
+# export ENDPOINT='work'
+# export REQUEST='{ "pids":["870970-basis:28511663", "870970-basis:29754519", "870970-basis:29060835", "870970-basis:28567057", "870970-basis:28043872", "870970-basis:28709994", "870970-basis:29319006", "870970-basis:27266428", "870970-basis:28724683", "870970-basis:26923530", "870970-basis:29974861", "870970-basis:28456433", "870970-basis:28902239", "870970-basis:45188981", "870970-basis:45488713", "870970-basis:28643713", "870970-basis:29494940", "870970-basis:29386404", "870970-basis:28429576"], "fields": ["title", "coverUrlFull"], "timings":true}'
+# export NAME='-mucho-coverurl'
+# ./make-test.sh
+# export NAME=''
 
 
