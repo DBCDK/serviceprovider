@@ -119,7 +119,7 @@ function titleSuggest(params, context) {
 
   let localParams = {query: query,
                      fields: 'display.title,fedoraPid,display.creator,display.workType',
-                     filter: context.data.popsuggest.collectionidentifiers};
+                     filter: context.data.app.collectionidentifiers};
 
   if (params.limit) {
     localParams.rows = params.limit;
