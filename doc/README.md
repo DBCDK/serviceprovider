@@ -11,7 +11,7 @@ This is the repository for the ServiceProvider, ie. the API from [MobilSøg](htt
 
 ## Communication with the API
 
-HTTP endpoints can be accesses on `/api/$ENDPOINT_NAME` with the parameters in a post request, ie.:
+HTTP endpoints can be accesses on `/api/$ENDPOINT_NAME` with the parameters in a post request, i.e.:
 
     curl -X POST \
          -H "Content-Type: application/json" \
