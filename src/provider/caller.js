@@ -7,6 +7,8 @@
 import request from 'request';
 import * as BaseSoapClient from 'dbc-node-basesoap-client';
 import fs from 'fs';
+import {log} from '../utils';
+
 
 // Flag that allows createTest endpoint parameter
 let testDev = process.env.TEST_DEV; // eslint-disable-line no-process-env
@@ -118,6 +120,7 @@ class Context {
    * @returns promise with result
    */
   _call(type, name, params) {
+    log.debug(type, {name, params});
     // take information about whether to create test/timings from outer call
     if (this.callsInProgress === 0) {
       this.createTest = params.createTest;
@@ -161,6 +164,7 @@ class Context {
     }
 
     let handleResult = result => {
+      log.trace(type, {name, params, result});
       --this.callsInProgress;
       if (type !== 'transformer') {
         --this.externalCallsInProgress;
