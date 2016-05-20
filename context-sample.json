@@ -17,7 +17,7 @@
     },
     "popsuggest": {
       "url": "http://xptest.dbc.dk/ms/entity-pop/v1",
-      "collectionidentifiers": ["150013-palle"]
+      "collectionidentifiers": "rec.collectionIdentifier:150013-palle OR rec.collectionIdentifier:758000-katalog"
     },
     "creatorsuggest": {
       "url": "http://xptest.dbc.dk/ms/entity-suggest/v1/creator"
