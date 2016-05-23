@@ -1,42 +1,30 @@
 'use strict';
 /**
+ * @file
  * Suggest transformer.
  *
  * Wraps entitysuggest backends, and popsuggest backend.
  *
- *
  */
-function validateParams(params) {
-  if (!params.q) {
-    throw ('missing q parameter');
-  }
-  if (!params.type) {
-    throw ('missing type parameter');
-  }
-  if (typeof params.q !== 'string') {
-    throw ('q parameter must be a string');
-  }
-  if (params.limit && isNaN(parseInt(params.limit, 10))) {
-    throw ('limit parameter must be a number');
-  }
-}
+import {log} from '../utils';
 
+// Supported suggest types
 let fMap = {creator: creatorSuggest,
             library: librarySuggest,
             subject: subjectSuggest,
             title: titleSuggest};
 
-
+/**
+ * Default transformer.
+ * Wraps the different suggesters and returns suggestiones from the
+ * chosen one.
+ *
+ * @param {Object} params parameters from the user
+ * @param {Object} context The context object fetched from smaug
+ * @returns promise with result
+ * @api public
+ */
 export default (params, context) => {
-
-  try {
-    validateParams(params);
-  } catch (err) { // eslint-disable-line brace-style
-    return new Promise(resolve => {
-      return resolve({statusCode: 400,
-                      error: err});
-    });
-  }
 
   if (!fMap[params.type]) {
     return new Promise(resolve => {
@@ -55,8 +43,15 @@ export default (params, context) => {
   });
 };
 
-
+/**
+ * Creatorsuggest.
+ *
+ * @param {Object} params parameters from the user
+ * @param {Object} context The context object fetched from smaug
+ * @returns promise with result
+ */
 function creatorSuggest(params, context) {
+  log.debug('creatorsuggest called with ' + params.q);
   let localParams = {query: params.q};
   if (params.limit) {
     localParams.n = params.limit;
@@ -69,8 +64,15 @@ function creatorSuggest(params, context) {
     });
 }
 
-
+/**
+ * Librarysuggest.
+ *
+ * @param {Object} params parameters from the user
+ * @param {Object} context The context object fetched from smaug
+ * @returns promise with result
+ */
 function librarySuggest(params, context) {
+  log.debug('librarysuggest called with ' + params.q);
   let localParams = {query: params.q, lt: context.data.librarysuggest.librarytype};
   if (params.limit) {
     localParams.n = params.limit;
@@ -83,8 +85,15 @@ function librarySuggest(params, context) {
     });
 }
 
-
+/**
+ * Subjectsuggest.
+ *
+ * @param {Object} params parameters from the user
+ * @param {Object} context The context object fetched from smaug
+ * @returns promise with result
+ */
 function subjectSuggest(params, context) {
+  log.debug('subjectsuggest called with ' + params.q);
   let localParams = {query: params.q, rs: 3};
 
   if (params.limit) {
@@ -99,7 +108,11 @@ function subjectSuggest(params, context) {
     });
 }
 
-
+/**
+ * Maps keys from pop-suggest backend to serviceprovider api
+ * @param {Object} obj pop-suggest response
+ * @returns response with mapped keys
+ */
 function mapTitleKeys(obj) {
   let retObj = {str: obj['display.title'][0], id: obj.fedoraPid};
   if (obj.hasOwnProperty('display.creator')) {
@@ -111,9 +124,15 @@ function mapTitleKeys(obj) {
   return retObj;
 }
 
-
+/**
+ * Titlesuggest.
+ *
+ * @param {Object} params parameters from the user
+ * @param {Object} context The context object fetched from smaug
+ * @returns promise with result
+ */
 function titleSuggest(params, context) {
-
+  log.debug('titlesuggest called with ' + params.q);
   let queryString = params.q.replace(new RegExp(' ', 'g'), '\\ ');
   let query = '{!complexphrase inOrder=true}display.title:' + queryString+ '*';
 
@@ -124,6 +143,7 @@ function titleSuggest(params, context) {
   if (params.limit) {
     localParams.rows = params.limit;
   }
+  log.debug('popsuggest params', {params: localParams});
   return context.call('popsuggest', localParams)
     .then(body => {
       return {statusCode: 200, data: body.data.response.docs.map((obj) => {

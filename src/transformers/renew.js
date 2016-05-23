@@ -1,15 +1,17 @@
 'use strict';
 /**
- * Renew transformer.
+ * @file
+ * renew transformer.
+ *
+ * Wraps userstatus backend (only the renew functionality).
  */
 
-function validateParams(params) {
-  if (!params.loanId) {
-    throw ('Needs loanId to renew order');
-  }
-}
 
-
+/**
+* Constructs soap request to perform renew request
+* @param {object} param Parameters to substitute into soap request
+* @returns soap request string
+*/
 function constructSoap(params) {
 
   let soap = `<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:open="http://oss.dbc.dk/ns/openuserstatus">
@@ -33,16 +35,16 @@ function constructSoap(params) {
   return soap;
 }
 
-
+/**
+ * Default transformer.
+ * Wraps openuserstatus backend and returns result of renew call
+ *
+ * @param {Object} params parameters from the user (no entries from this object is used)
+ * @param {Object} context The context object fetched from smaug
+ * @returns promise with result
+ * @api public
+ */
 export default (request, context) => {
-  try {
-    validateParams(request);
-  } catch (err) { // eslint-disable-line brace-style
-    return new Promise(resolve => {
-      return resolve({statusCode: 400,
-                      error: err});
-    });
-  }
 
   let userstatus = context.data.userstatus;
   let params = {
