@@ -7,7 +7,7 @@ var majorVersion = parseInt(require('../package.json').version, 10);
 
 var cycle = require('cycle');
 var reqs = require('fs')
-  .readFileSync('requests.lst', 'utf-8')
+  .readFileSync(process.argv[2] + '.requests.lst', 'utf-8')
   .split('\n')
   .filter(identity)
   .filter(filterComments)
