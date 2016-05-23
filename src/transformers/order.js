@@ -8,11 +8,8 @@ import {indexOf} from 'lodash';
 
 
 function validateParams(params) {
-  if (params.delete && indexOf(['true', 'false'], params.delete) < 0) {
-    throw (`parameter error: delete must be either true or false (given ${params.delete})`);
-  }
 
-  if (params.delete && params.delete === 'true') {
+  if (params.delete && params.delete === true) {
     // Delete is set
     if (!params.orderId) {
       throw ('Needs orderId to delete order');
