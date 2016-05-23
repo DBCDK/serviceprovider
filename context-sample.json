@@ -67,7 +67,7 @@
       "authid": "XXXXX"
     },
     "rank":{
-      "url": "http://xp-p02.dbc.dk/rank"
+      "url": "https://xptest.dbc.dk/ms/rank/v1"
     }
   }
 }
