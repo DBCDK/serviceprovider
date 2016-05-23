@@ -1,20 +1,21 @@
-# VARIABLE=${1:-DEFAULTVALUE}    
+#libraries {"agencyIds": ["717500"], "fields": ["agencyId", "orderParameters"], "createTest": "libraries_000_agencyIds"}
+#libraries {"branchIds": ["717500","717501","717502"], "fields": ["agencyId", "branchId", "orderParameters"], "createTest": "libraries_branchIds"}
+#libraries { "fields": ["branchId", "city", "geolocation"], "createTest": "libraries_all"}
 events {"fields": ["title", "changed", "nid", "field_ding_event_title_image"], "createTest": "events"}
-facets {"q" : "harry", "createTest": true}
-facets {"q" : "aQueryMatchingNothing", "createTest": true}
-facets {"q" : "invalid cql", "createTest": true}
-facets {"q" : "harry AND potter", "fields": ["creator"], "limit": -1, "createTest": true}
-facets {"q" : "harry AND potter", "fields": ["creator"], "limit": 0, "createTest": true}
-facets {"q" : "harry AND potter", "fields": ["creator"], "limit": 20, "createTest": true}
-facets {"q" : "ost", "fields": ["access", "acSource", "audience", "audienceCategory", "branch", "category", "creator", "creatorFunction", "date", "department", "dk5", "extraTitles", "fictionSubject", "form", "gamePlatform", "genre", "genreCategory", "geographic", "language", "level", "let", "literaryForm", "lix", "musicSubject", "nationality", "nonFictionSubject", "partOf", "period", "primaryCreator", "sheetMusic", "subject", "titleSeries", "type"], "limit": 2, "createTest": true}
-libraries {"agencyIds": ["717500"], "fields": ["agencyId", "orderParameters"], "createTest": true}
-libraries {"branchIds": ["717500","717501","717502"], "fields": ["agencyId", "branchId", "orderParameters"], "createTest": true}
-libraries { "fields": ["branchId", "city", "geolocation"], "createTest": true}
-news {"fields": ["title", "changed", "nid", "field_ding_news_list_image"], "createTest": true}
-news {"nids": ["19", "40"], "fields": ["title", "changed", "nid", "field_ding_news_list_image"], "createTest": true}
-search {"createTest": true}
-search {"q" : "hest", "createTest": true}
-search {"q" : "ost", "fields": ["pid", "creator", "coverUrlFull"], "limit": 3, "createTest": true}
-search {"q" : "ost", "fields": ["pid", "title", "creator", "coverDataUrl117"], "limit": 3, "createTest": true}
-search { "q": "harry AND potter", "fields": ["identifier", "title", "collection", "subjectDBCF", "hasAdaptation", "coverUrlFull"], "sort": "rank_title", "createTest": true}
-search { "q": "harry AND potter", "fields": ["identifier", "title", "collection", "subjectDBCF", "hasAdaptation"], "sort": "invalid_sort" , "createTest": true}
+facets {"q" : "harry", "createTest": "facets_simple"}
+facets {"q" : "aQueryMatchingNothing", "createTest": "facets_noresult"}
+facets {"q" : "invalid cql", "createTest": "facets_invalid_cql"}
+facets {"q" : "harry AND potter", "fields": ["creator"], "limit": -1, "createTest": "facets_negative_limit"}
+facets {"q" : "harry AND potter", "fields": ["creator"], "limit": 0, "createTest": "facets_zero_limit"}
+facets {"q" : "harry AND potter", "fields": ["creator"], "limit": 20, "createTest": "facets_high_limit"}
+facets {"q" : "ost", "fields": ["access", "acSource", "audience", "audienceCategory", "branch", "category", "creator", "creatorFunction", "date", "department", "dk5", "extraTitles", "fictionSubject", "form", "gamePlatform", "genre", "genreCategory", "geographic", "language", "level", "let", "literaryForm", "lix", "musicSubject", "nationality", "nonFictionSubject", "partOf", "period", "primaryCreator", "sheetMusic", "subject", "titleSeries", "type"], "limit": 2, "createTest": "facets_all"}
+facets {"q" : "jensen", "fields": ["access", "acSource", "audience", "audienceCategory", "branch", "category", "creator", "creatorFunction", "date", "department", "dk5", "extraTitles", "fictionSubject", "form", "gamePlatform", "genre", "genreCategory", "geographic", "language", "level", "let", "literaryForm", "lix", "musicSubject", "nationality", "nonFictionSubject", "partOf", "period", "primaryCreator", "sheetMusic", "subject", "titleSeries", "type"], "limit": 1, "createTest": "facets_all2"}
+facets {"q" : "harry", "fields": ["access", "acSource", "audience", "audienceCategory", "branch", "category", "creator", "creatorFunction", "date", "department", "dk5", "extraTitles", "fictionSubject", "form", "gamePlatform", "genre", "genreCategory", "geographic", "language", "level", "let", "literaryForm", "lix", "musicSubject", "nationality", "nonFictionSubject", "partOf", "period", "primaryCreator", "sheetMusic", "subject", "titleSeries", "type"], "limit": 1, "createTest": "facets_all3"}
+news {"fields": ["title", "changed", "nid", "field_ding_news_list_image"], "createTest": "news"}
+news {"nids": ["19", "40"], "fields": ["title", "changed", "nid", "field_ding_news_list_image"], "createTest": "news_nids"}
+search {"createTest": "search_no_q"}
+search {"q" : "hest", "createTest": "search_simple"}
+search {"q" : "ost", "fields": ["pid", "creator", "coverUrlFull"], "limit": 3, "createTest": "search_coverUrl_limit"}
+search {"q" : "ost", "fields": ["pid", "title", "creator", "coverDataUrl117"], "limit": 3, "createTest": "search_coverDataUrl"}
+search { "q": "harry ", "fields": ["identifier", "title", "collection", "subjectDBCF", "hasAdaptation", "coverUrlFull"], "sort": "rank_title", "createTest": "seach_sort"}
+search { "q": "harry AND potter", "fields": ["identifier", "title", "collection", "subjectDBCF", "hasAdaptation"], "sort": "invalid_sort" , "createTest": "search_invalid_sort"}
