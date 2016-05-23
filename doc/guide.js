@@ -90,8 +90,7 @@ function HTTP_POST(url, parameters) {
 // which is useful in webbrowsers, as they limits
 // the number of parallel HTTP-requests.
 // 
-// TODO: either document socketcluster+retrocycle,
-// or js-openplatform-api (if implemented).
+// TODO: document js-openplatform-api(websockets) when implemented.
 //
 // # Support code
 //
