@@ -57,6 +57,7 @@
     "socketcluster": "^4.1.0",
     "supervisor": "^0.9.1",
     "swagger": "^0.7.5",
+    "to-iso-string": "0.0.2",
     "walk": "^2.3.9",
     "xml2js": "^0.4.10",
     "xmldom": "^0.1.19",
