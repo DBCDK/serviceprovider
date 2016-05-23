@@ -281,7 +281,7 @@ module.exports.run = function (worker) {
           .catch(err => {
             log.error(err);
             return {statusCode: 403, error: 'Forbidden'};
-          }).then(result => callback(result));
+          }).then(result => callback(null, result));
       });
     });
   });
