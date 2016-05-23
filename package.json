@@ -66,6 +66,7 @@
   },
   "devDependencies": {
     "babel-eslint": "^4.0.5",
+    "browserify": "^13.0.1",
     "chai": "^3.2.0",
     "codeclimate-test-reporter": "^0.1.1",
     "coveralls": "^2.11.4",
@@ -75,6 +76,7 @@
     "istanbul": "^0.3.22",
     "mocha": "^2.2.4",
     "sinon": "^1.17.2",
-    "socketcluster-client": "^4.3.9"
+    "socketcluster-client": "^4.3.9",
+    "uglify-js": "^2.6.2"
   }
 }
