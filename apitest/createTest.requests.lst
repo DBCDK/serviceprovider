@@ -12,7 +12,7 @@ libraries {"branchIds": ["717500","717501","717502"], "fields": ["agencyId", "br
 libraries { "fields": ["branchId", "city", "geolocation"], "createTest": true}
 news {"fields": ["title", "changed", "nid", "field_ding_news_list_image"], "createTest": true}
 news {"nids": ["19", "40"], "fields": ["title", "changed", "nid", "field_ding_news_list_image"], "createTest": true}
-search {, "createTest": true}
+search {"createTest": true}
 search {"q" : "hest", "createTest": true}
 search {"q" : "ost", "fields": ["pid", "creator", "coverUrlFull"], "limit": 3, "createTest": true}
 search {"q" : "ost", "fields": ["pid", "title", "creator", "coverDataUrl117"], "limit": 3, "createTest": true}
