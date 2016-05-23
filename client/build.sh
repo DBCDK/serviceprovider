@@ -1,3 +1,3 @@
-../node_modules/.bin/browserify dbcopenplatform.js | 
-../node_modules/.bin/uglifyjs  |
-cat > dbcopenplatform.min.js
+../node_modules/.bin/browserify dbc_openplatform.js | 
+#../node_modules/.bin/uglifyjs  |
+cat > dbc_openplatform.min.js
