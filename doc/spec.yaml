@@ -409,8 +409,9 @@ defaultProperties:
     type: 'boolean'
     example: true
   createTest:
-    type: 'boolean'
-    example: true
+    description: name of test to create, or "random" for random name, or "mockfile" for writing mockfile.
+    type: 'string'
+    example: "random"
     noSwag: true
   callback:
     type: 'string'

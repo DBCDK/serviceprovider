@@ -103,7 +103,7 @@ Which config-file to read, default is `./config.json`
 Url of the authorisation server we use.
 
 - __TEST_DEV__
-Boolean flag whether to support createTest parameter. If TEST_DEV is set, and a query is send with the extra parameter createTest set to true, then this will be used to create a unit test.
+Boolean flag whether to support createTest parameter. If TEST_DEV is set, and a query is send with the extra parameter createTest set to a name, then this will be used to create a unit test. If the name is "random", and random name will be choosen, if the name is "mockfile", then the mock data will be written instead.
 
 - __MOCK_FILE__
 Filename for mock file to use instead of backend services. 
@@ -131,12 +131,12 @@ rm apitest/mockdata.json
 SMAUG=http://localhost:3000 MOCK_FILE=apitest/mockdata.json SWAGGER_HTTP=true TEST_DEV=true node src/main.js
 ```
 
-To generate the mock data, first run the apitest to record the data, and then call somen endpoint with `createTest=true` to write the mock data to disk, ie:
+To generate the mock data, first run the apitest to record the data, and then call somen endpoint with `createTest=mockfile` to write the mock data to disk, ie:
 
 ```bash
 cd apitest
 ./apitest.sh
-curl 'http://localhost:8080/v0/user?access_token=qwerty&createTest=true'
+curl 'http://localhost:8080/v0/user?access_token=qwerty&createTest=mockfile'
 ```
 
 To update the expected result, make sure that the ServiceProvider is running, and then:
