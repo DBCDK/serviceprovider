@@ -1,8 +1,7 @@
 (function() {
   var cycle = require('cycle');
-  //var sc;
+  var sc;
   sc = false;
-  // Current token
   var apiToken;
   var endpoints = [
     "availability",
@@ -23,19 +22,19 @@
   function endpoint(name) {
     return function(params) {
       params = Object.assign({access_token: apiToken}, params);
-      console.log('params', params);
       if(!this.connected()) {
         return Promise.reject('need to connect before calling endpoint');
       }
-      return new Promise(function(reject, resolve) {
-        sc.emit(name, params, function(result, err) {
-          console.log('result XXX', typeof(result), result, err);
-          e = result;
+      return new Promise(function(resolve, reject) {
+        sc.emit(name, params, function(err, result) {
+          if(err) {
+            return reject(err);
+          }
           result = cycle.retrocycle(result);
           if(!result.statusCode || result.statusCode !== 200) {
             reject(result);
           } else {
-            resolve(result);
+            resolve(result.data);
           }
         });
       });
@@ -112,7 +111,7 @@
   };
   dbcOpenPlatform.connected = function() {
     return sc && sc.state === 'open';
-  }
+  };
   function getToken(clientId, clientSecret, user, passwd) {
     var xhr = new XMLHttpRequest();
 
@@ -143,6 +142,4 @@
     });
 
   }
-
-  console.log('here');
 })();
