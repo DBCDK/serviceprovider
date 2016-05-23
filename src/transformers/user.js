@@ -1,7 +1,16 @@
 'use strict';
-import {pbkdf2} from 'crypto';
 /**
+ * @file
  * User transformer.
+ *
+ * Wraps userstatus backend.
+ */
+import {pbkdf2} from 'crypto';
+
+/**
+ * Maps loan item from backend response to serviceprovider api
+ * @param {Object} obj openuserstatus loans response
+ * @returns response with mapped keys
  */
 function loan(loanItem) {
 
@@ -15,6 +24,11 @@ function loan(loanItem) {
 }
 
 
+/**
+ * Maps order item from backend response to serviceprovider api
+ * @param {Object} obj openuserstatus orders response
+ * @returns response with mapped keys
+ */
 function order(orderItem) {
   let result = {title: orderItem.title.$,
                 orderId: `${orderItem.orderType.$}:${orderItem.orderId.$}`,
@@ -31,6 +45,15 @@ function order(orderItem) {
   return result;
 }
 
+/**
+ * Default transformer.
+ * Wraps openuserstatus backend and returns user info
+ *
+ * @param {Object} params parameters from the user (no entries from this object is used)
+ * @param {Object} context The context object fetched from smaug
+ * @returns promise with result
+ * @api public
+ */
 export default (request, context) => {
 
   let userstatus = context.data.userstatus;

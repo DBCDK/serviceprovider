@@ -1,9 +1,19 @@
 'use strict';
 /**
- * placeOrder transformer.
+ * @file
+ * orderPolicy transformer.
+ *
+ * Wraps the getorderpolicy functionality of the openorder backend.
+ *
  */
 import {extend}from 'lodash';
 
+/**
+* Validate parameters
+*
+* @param {object} params parameters to validate
+* @throws if validation fails
+*/
 function validateParams(params) {
   if (!params.pids || params.pids.length === 0) {
     throw ('missing pids parameter');
@@ -24,6 +34,9 @@ function validateParams(params) {
   }
 }
 
+/**
+ * Creates date three months in the future. Used if a date is not provided
+ */
 function createNeedBeforeDate() {
   let offsetInDays = 90;
   let offsetInMilliseconds = offsetInDays * 24 * 60 * 60 * 1000;
@@ -33,6 +46,13 @@ function createNeedBeforeDate() {
 }
 
 
+/**
+ * Retrieves user info from parameters and returns xml snippet for use
+ * in soap request
+ *
+ * @param {object} params parameter map from user
+ * @returns xml snippet with found user data
+ */
 function getUserParams(params) {
 
   let result = {};
@@ -49,7 +69,11 @@ function getUserParams(params) {
   return result;
 }
 
-
+/**
+* Constructs soap request to perform placeOrder request
+* @param {object} param Parameters to substitute into soap request
+* @returns soap request string
+*/
 function constructSoap(pidList, expireDate, params) {
 
   let userParams = getUserParams(params);
@@ -86,6 +110,13 @@ ${pidList.map(pid => {
 }
 
 
+/**
+ * placeOrder.
+ *
+ * @param {Object} request parameters to use in backend call
+ * @param {Object} context The context object fetched from smaug
+ * @returns promise with result
+ */
 function placeOrder(request, context) { // eslint-disable-line no-unused-vars
 
   let expireDate = createNeedBeforeDate();
@@ -113,7 +144,15 @@ function placeOrder(request, context) { // eslint-disable-line no-unused-vars
   });
 }
 
-
+/**
+ * Default transformer.
+ * Wraps placeOrder functionality of the openorder backend
+ *
+ * @param {Object} params parameters from the user
+ * @param {Object} context The context object fetched from smaug
+ * @returns promise with result
+ * @api public
+ */
 export default (request, context) => {
 
   try {
