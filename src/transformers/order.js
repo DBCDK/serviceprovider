@@ -1,12 +1,21 @@
 'use strict';
 /**
- * Order transformer.
+ * @file
+ * order transformer.
+ *
+ * Wraps openorder backend.
  */
 import cancelOrder from './cancelOrder';
 import placeOrder from './placeOrder';
+import {log} from '../utils';
 import {indexOf} from 'lodash';
 
-
+/**
+* Validate parameters
+*
+* @param {object} params parameters to validate
+* @throws if validation fails
+*/
 function validateParams(params) {
 
   if (params.delete && params.delete === true) {
@@ -31,9 +40,18 @@ function validateParams(params) {
   }
 }
 
-
+/**
+ * Default transformer.
+ * Wraps openorder backend and returns result of call
+ *
+ * @param {Object} params parameters from the user (no entries from this object is used)
+ * @param {Object} context The context object fetched from smaug
+ * @returns promise with result
+ * @api public
+ */
 export default (request, context) => {
   try {
+    log.debug('Validating request');
     validateParams(request);
   } catch (err) { // eslint-disable-line brace-style
     return new Promise(resolve => {
