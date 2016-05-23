@@ -59,14 +59,14 @@ function censor(str, context) {
  * The unit tests are typically saved `src/provider/__tests__/autotest_*.js`
  */
 function saveTest(test) {
-  if (mockFile) {
+  if (test.createTest === 'mockfile') {
     fs.writeFileSync(mockFileName, censor(JSON.stringify(mockFile, null, 2), test.context));
     return;
   }
   let source = `/* eslint-disable max-len, quotes, comma-spacing, key-spacing, quote-props */
 // Request: ${test.name} ${JSON.stringify(test.params)}
 'use strict';
-import Provider from '../Provider.js';
+import Provider from '../../provider/Provider.js';
 import {assert, fail} from 'chai';
 
 let provider = Provider();
@@ -90,7 +90,7 @@ describe('Automated test of the ${test.name} endpoint', () => {
 });
 `;
   source = censor(source, test.context);
-  fs.writeFile(`${__dirname}/__tests__/autotest_${test.name}_${test.requestId}.js`, source);
+  fs.writeFile(`${__dirname}/../transformers/__tests__/${test.filename}.js`, source);
 }
 
 class Context {
@@ -175,11 +175,18 @@ class Context {
         if (this.callsInProgress === 0) {
           delete params.createTest;
           delete params.access_token;
-          saveTest({name: name, params: params,
+
+          let filename = (this.createTest === 'random')
+            ? `autotest_${test.name}_${this.requestId}`
+            : this.createTest;
+          saveTest({
+            filename: filename,
+            createTest: this.createTest,
+            name: name, params: params,
             context: this.data,
             mockData: this.mockData, result: result,
             requestId: this.requestId});
-          result.createTest = this.requestId;
+          result.createTest = filename;
         }
       }
       if (this.callsInProgress === 0 && params.timings) {
