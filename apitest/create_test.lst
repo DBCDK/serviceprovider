@@ -1,4 +1,5 @@
-events {"fields": ["title", "changed", "nid", "field_ding_event_title_image"], "createTest": true}
+# VARIABLE=${1:-DEFAULTVALUE}    
+events {"fields": ["title", "changed", "nid", "field_ding_event_title_image"], "createTest": "events"}
 facets {"q" : "harry", "createTest": true}
 facets {"q" : "aQueryMatchingNothing", "createTest": true}
 facets {"q" : "invalid cql", "createTest": true}
