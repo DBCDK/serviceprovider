@@ -1,6 +1,6 @@
 // # Quick start guide to the open platform
 //
-// # TODO: this does not work yet, waiting for [smaug#112](https://github.com/DBCDK/smaug/issues/112) [smaug#111](https://github.com/DBCDK/smaug/issues/111)
+// _**Guide in progress, not working/done yet. Also waiting for [smaug#112](https://github.com/DBCDK/smaug/issues/112) [smaug#111](https://github.com/DBCDK/smaug/issues/111)**_
 //
 // This introduction to getting started with the open platform is online on:
 // [https://openplatform.dbc.dk/v0/guide.html#id:secret](https://openplatform.dbc.dk/v0/guide.html#id:secret).
@@ -52,12 +52,6 @@ xhr.send('grant_type=password' +
 xhr_promise(xhr).then(function(result) {
     var access_token = result.access_token;
 
-// ## Renewal of token
-//
-// TODO
-// Renew'ing an `access_token`,
-// using only the `client_id` and `client_secret`.
-//
 // # Examples of api-usage
 //
 // Requests to the API can be sent by POSTing a JSON object
