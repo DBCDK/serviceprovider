@@ -22,6 +22,11 @@
     'work'];
 
   dbcOpenPlatform = {};
+  /**
+   * Create a new method, for an endpoint.
+   * The resulting function takes (an object of parameters) as parameter, 
+   * and returns a promise with the result.
+   */
   function endpoint(name) {
     return function(params) {
       params = Object.assign({access_token: apiToken}, params);
@@ -45,6 +50,10 @@
       });
     };
   }
+
+  /**
+   * Assign methods for all endpoints.
+   */
   for(var i = 0; i < endpoints.length; ++i) {
     dbcOpenPlatform[endpoints[i]] = endpoint(endpoints[i]);
   }
@@ -54,6 +63,8 @@
    * takes token, or client_id,client_secret 
    * or client_id,client_secret,user_id,user_passed
    * as parameters.
+   *
+   * @return a promise with the token.
    */
   dbcOpenPlatform.connect = function() {
     var promise, args, clientId, clientSecret, user, password;
@@ -112,15 +123,28 @@
       });
     });
   };
+  /**
+   * Disconnect from server
+   *
+   * @return a promise of nothing.
+   */
   dbcOpenPlatform.disconnect = function() {
     if(sc) {
       sc.disconnect();
     }
     return Promise.resolve();
   };
+  /**
+   * Check if we are connected to the server
+   * @return a boolean of whether we are connected
+   */
   dbcOpenPlatform.connected = function() {
     return sc && sc.state === 'open';
   };
+  /**
+   * Get a token, given a login.
+   * This function is not exported.
+   */
   function getToken(clientId, clientSecret, user, passwd) {
     var xhr = new XMLHttpRequest();
 
@@ -149,6 +173,5 @@
         }
       }
     });
-
   }
 })();
