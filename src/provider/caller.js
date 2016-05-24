@@ -266,7 +266,7 @@ class Context {
     let value = keys.reduce((o, name) => 
                             { return o && o[name]; }, context);
     return value;
-  };
+  }
 }
 
 /**
