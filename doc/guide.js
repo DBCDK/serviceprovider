@@ -5,6 +5,8 @@
 // This introduction to getting started with the open platform is online on:
 // [https://openplatform.dbc.dk/v0/guide.html#client\_id:client\_secret](https://openplatform.dbc.dk/v0/guide.html#client_id:client_secret). Supply your `client_id` and `client_secret` in the url hash, to make the examples work.
 //
+// The api-documentation is [https://openplatform.dbc.dk/v0/](https://openplatform.dbc.dk/v0/).
+//
 // It is written as a literate JavaScript
 // [source file](https://openplatform.dbc.dk/v0/guide.js),
 // that can be executed directly in the browser.
