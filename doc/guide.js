@@ -1,22 +1,21 @@
 // # Quick start guide to the open platform
 //
-// _**Guide in progress, not working/done yet. Also waiting for [smaug#112](https://github.com/DBCDK/smaug/issues/112) [smaug#111](https://github.com/DBCDK/smaug/issues/111)**_
+// _**Guide in progress, not fully working/done yet.**_
 //
 // This introduction to getting started with the open platform is online on:
-// [https://openplatform.dbc.dk/v0/guide.html#id:secret](https://openplatform.dbc.dk/v0/guide.html#id:secret).
+// [https://openplatform.dbc.dk/v0/guide.html#client\_id:client\_secret](https://openplatform.dbc.dk/v0/guide.html#client_id:client_secret). Supply your `client_id` and `client_secret` in the url hash, to make the examples work.
 //
 // It is written as a literate JavaScript
 // [source file](https://openplatform.dbc.dk/v0/guide.js),
 // that can be executed directly in the browser.
-// Use your client id/secret in the url, and open the browser console
-// to see the result of the examples.
+// Open the browser console to see the result of the examples.
 //
 // # JavaScript API
 //
 // To use the open platform from a browser, load
-// `https://openplatform.dbc.dk/v0/dbc_openplatform.min.js`
+// `https://openplatform.dbc.dk/v0/dbc_openplatform.min.js`,
 // and then the `dbcOpenPlatform` object will be available.
-// Do not cache JavaScript library indefinitely,
+// Do not cache the JavaScript library indefinitely,
 // as it may change if we change the underlying transport protocol.
 //
 // This guide assumes familiarity with [Promises](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise) which are used asynchronous JavaScript code.
@@ -78,9 +77,9 @@ dbcOpenPlatform.suggest({
 });
 
 
-// # Authentication
+// # OAuth2 Authentication
 //
-// In order to use the API, we need to acquire an `access_token`.
+// In order to use the HTTP-API, we need to acquire an `access_token`. 
 //
 // For this we need various credentials:
 //
@@ -93,7 +92,7 @@ dbcOpenPlatform.suggest({
 // The `access_token` is retrieved with a HTTP-POST request,
 // with `client_id` and `client_secret` supplied through basic authentication,
 // and `user_id`, `user_password` supplied in the request body.
-// In browser JavaScript this is done with XHR:
+// In browser JavaScript this can be done with XHR:
 
 var xhr = new XMLHttpRequest();
 
@@ -117,7 +116,18 @@ xhr.send('grant_type=password' +
 xhr_promise(xhr).then(function(result) {
     var access_token = result.access_token;
 
-// # Examples of api-usage
+// # GET API
+//
+// You can also express the entire query in an url,
+// which is useful for interactive testing. 
+// An example search url is:
+// <a id=sample_url>https://openplatform.dbc.dk/v0/search?q=hej&pretty=true&access_token=...</a>
+//
+// The serviceprovider tries to parse each individual url parameter 
+// as a string, and if that fails just use it as a string. This
+// makes it possible to add more complex parameters, such as `.../work?pids=["870970-basis:05760755","870970-basis:27648452"]&...`
+//
+// # POST API
 //
 // Requests to the API can be sent by POSTing a JSON object
 // to the API endpoint:
@@ -127,14 +137,14 @@ HTTP_POST('https://openplatform.dbc.dk/v0/suggest',
       access_token: access_token});
 
 HTTP_POST('https://openplatform.dbc.dk/v0/search',
-    {q: 'ost', access_token: access_token});
+    {q: 'hello', access_token: access_token});
 
-// And all of the other APIs also have the same structure
+// All of the other APIs also have the same structure
 // of sending a JSON object of parameters to the endpoint
 // and then getting the result back.
 //
 // In browser JavaScript, HTTP-POSTing a JSON object
-// is done like this:
+// can done like this:
 
 function HTTP_POST(url, parameters) {
     xhr = new XMLHttpRequest();
@@ -145,30 +155,26 @@ function HTTP_POST(url, parameters) {
     return xhr_promise(xhr);
 }
 
-//
-// You can also express the entire query in the url,
-// which is useful for interactive testing. Ie.
-// <a id=sample_url>https://openplatform.dbc.dk/v0/search?q=hej&pretty=true&access_token=...</a>
-//
+// <hr>
 // # Support code
 //
-// The following sections are the utility functions used above, is implemented here
-// for completeness. Feel free to skip the rest of this file
+// The following sections are the utility functions used above. 
+// It is implemented here for completeness. 
+// Feel free to skip the rest of this file.
 
-// Sample get-request-url in document, with proper auth token
+// Make sample get-request-url include proper `access_token`:
 
 var link = document.getElementById('sample_url');
 link.href = link.innerHTML =
   'https://openplatform.dbc.dk/v0/search?' +
   'q=hej&pretty=true&access_token=' + access_token;
-  console.log(link);
 
-// This ends the part of the file after the different kinds of logins
+// Close open code blocks. They contain scope for logins / tokens.
 
 }); }); }); });
 
 // The example code assumes that the credentials are supplied in
-// the url-hash. Here is a quick hack to extract them from the url.
+// the url-hash. Here is a quick hack to extract them from the url:
 
 function client_id() {
   return location.hash.split(':')[0].slice(1); }
@@ -194,13 +200,13 @@ function xhr_promise(xhr) {
   return new Promise(function(resolve, reject) {
     xhr.onreadystatechange = function() {
       if(xhr.readyState === 4) {
-        var result = xhr.response;
-        try {
-          result = JSON.parse(result);
-        } catch(e) {
-        }
-        console.log(xhr.responseURL, result);
+        console.log(xhr.responseURL, xhr);
         if(xhr.status === 200) {
+          var result = xhr.response;
+          try {
+            result = JSON.parse(result);
+          } catch(e) {
+          }
           resolve(result);
         } else {
           reject(xhr);
