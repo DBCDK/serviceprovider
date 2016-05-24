@@ -7,7 +7,7 @@
 //
 // The api-documentation is [https://openplatform.dbc.dk/v0/](https://openplatform.dbc.dk/v0/).
 //
-// It is written as a literate JavaScript
+// The guide is written as a literate JavaScript
 // [source file](https://openplatform.dbc.dk/v0/guide.js),
 // that can be executed directly in the browser.
 // Open the browser console to see the result of the examples.
@@ -16,9 +16,11 @@
 //
 // To use the open platform from a browser, load
 // `https://openplatform.dbc.dk/v0/dbc_openplatform.min.js`,
-// and then the `dbcOpenPlatform` object will be available.
-// Do not cache the JavaScript library indefinitely,
-// as it may change if we change the underlying transport protocol.
+// with a `<script>`-tag, or in a similar way.
+// Then the `dbcOpenPlatform` object will be available.
+// Do not cache this JavaScript library indefinitely,
+// as the underlying implementation may change
+// if we change the transport protocol.
 //
 // This guide assumes familiarity with [Promises](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise) which are used asynchronous JavaScript code.
 //
