@@ -148,7 +148,7 @@ HTTP_POST('https://openplatform.dbc.dk/v0/search',
 // and then getting the result back.
 //
 // In browser JavaScript, HTTP-POSTing a JSON object
-// can done like this:
+// can be done like this:
 
 function HTTP_POST(url, parameters) {
     xhr = new XMLHttpRequest();
