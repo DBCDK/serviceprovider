@@ -5,10 +5,10 @@ export TIMES=500
 export URL='http://localhost:8080/v0/'
 #export ACCESS_TOKEN='64141bea42b72443ce3848455f5960e1438fb434'
 # platformbe-p01
-#export ACCESS_TOKEN="a1d4ba32473cb0b5746a6f4163fc4b9a542d423e"
+export ACCESS_TOKEN="a1d4ba32473cb0b5746a6f4163fc4b9a542d423e"
 
 # local installation
-export ACCESS_TOKEN='qwerty'
+#export ACCESS_TOKEN='qwerty'
 export JOBS=1
 export PRE='p01-'
 
@@ -93,9 +93,8 @@ export REQUEST='{"pids": ["870970-basis:28126727"], "expires": "2016-08-01", "li
 ./make-test.sh
 
 export ENDPOINT='renew'
-export REQUEST='{ "loanId": "NCIPMDAxOXwxMDAyMTYwMHxIZXNzZWxkYWhsLCBNb3J0ZW58TWFuZGVuIGZyYSBsYXZsYW5kZXQgOiByb21hbnx8fA==", "timings":true}'
+export REQUEST='{ "loanId": "NCIPMDAxOXw5OTAwfHw5OTAwLnx8", "timings":true}'
 ./make-test.sh
-
 
 
 # export ENDPOINT='work'
