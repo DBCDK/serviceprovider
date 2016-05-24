@@ -1,6 +1,6 @@
 (function() {
   if(typeof Promise === 'undefined') {
-    throw "old browser without Promise object. Please load a shim before loading dbc_openplatform.min.js, if you want to make it work";
+    throw "old browser without Promise object. Please load a polyfill before loading dbc_openplatform.min.js, if you want to make it work";
   }
   var cycle = require('cycle');
   var sc;
