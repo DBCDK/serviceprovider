@@ -1,4 +1,7 @@
 (function() {
+  if(typeof Promise === 'undefined') {
+    throw "old browser without Promise object. Please load a shim before loading dbc_openplatform.min.js, if you want to make it work";
+  }
   var cycle = require('cycle');
   var sc;
   sc = false;
@@ -22,6 +25,8 @@
   function endpoint(name) {
     return function(params) {
       params = Object.assign({access_token: apiToken}, params);
+      var envelope = params.envelope;
+      delete params.envelope;
       if(!this.connected()) {
         return Promise.reject('need to connect before calling endpoint');
       }
@@ -34,7 +39,7 @@
           if(!result.statusCode || result.statusCode !== 200) {
             reject(result);
           } else {
-            resolve(result.data);
+            resolve(envelope ? result : result.data);
           }
         });
       });
@@ -108,6 +113,7 @@
     if(sc) {
       sc.disconnect();
     }
+    return Promise.resolve();
   };
   dbcOpenPlatform.connected = function() {
     return sc && sc.state === 'open';

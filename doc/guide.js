@@ -11,7 +11,72 @@
 // Use your client id/secret in the url, and open the browser console
 // to see the result of the examples.
 //
+// # JavaScript API
 //
+// To use the open platform from a browser, load
+// `https://openplatform.dbc.dk/v0/dbc_openplatform.min.js`
+// and then the `dbcOpenPlatform` object will be available.
+// Do not cache JavaScript library indefinitely,
+// as it may change if we change the underlying transport protocol.
+//
+// This guide assumes familiarity with [Promises](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise) which are used asynchronous JavaScript code.
+//
+// ## Connecting
+//
+// First you need to connect to the platform:
+
+dbcOpenPlatform.connect(
+    client_id(), client_secret(),
+    user_id(), user_password()) // optional
+.then(function(token) {
+
+// You can always check whether you are connected,
+
+console.log('connected:',
+    dbcOpenPlatform.connected());
+
+// It also possible to disconnect
+// (useful to save power on mobile devices)
+
+dbcOpenPlatform.disconnect()
+.then(function() {
+
+// and to reconnect with an existing token
+
+dbcOpenPlatform.connect(token)
+.then(function() {
+
+// ## Calling the api
+//
+// The api exposes the different endpoints as methods
+// on the `dbcOpenPlatform` object. For example,
+// a search is executed with:
+
+dbcOpenPlatform.search({
+    q: 'ost',
+    fields: ['title', 'creator', 'pid']})
+.then(function(results) {
+    console.log('search example', results);
+});
+
+// Errors are caught as usual with promises:
+
+dbcOpenPlatform.work({ invalid_parameter: 'foo'})
+.catch(function(err) {
+    console.log('work error example', err);
+});
+
+// By default, successful requests exclude the
+// result envelope, - if you want the envelope,
+// add `envelope: true` to the request.
+
+dbcOpenPlatform.suggest({
+    q: 'jens', type: 'creator',
+    timings: true, envelope: true})
+.then(function(results) {
+    console.log('suggest example', results);
+});
+
 
 // # Authentication
 //
@@ -34,7 +99,7 @@ var xhr = new XMLHttpRequest();
 
 xhr.open('POST', 'https://auth.dbc.dk/oauth/token');
 
-xhr.setRequestHeader('Authorization', 'Basic ' + 
+xhr.setRequestHeader('Authorization', 'Basic ' +
     btoa(client_id() + ':' + client_secret()));
 
 xhr.setRequestHeader('Content-Type',
@@ -58,7 +123,7 @@ xhr_promise(xhr).then(function(result) {
 // to the API endpoint:
 
 HTTP_POST('https://openplatform.dbc.dk/v0/suggest',
-    { q: 'Steppe', type: 'title', 
+    { q: 'Steppe', type: 'title',
       access_token: access_token});
 
 HTTP_POST('https://openplatform.dbc.dk/v0/search',
@@ -73,7 +138,6 @@ HTTP_POST('https://openplatform.dbc.dk/v0/search',
 
 function HTTP_POST(url, parameters) {
     xhr = new XMLHttpRequest();
-    parameters.access_token = access_token;
     xhr.open('POST', url);
     xhr.setRequestHeader('Content-Type',
         'application/json');
@@ -85,26 +149,6 @@ function HTTP_POST(url, parameters) {
 // You can also express the entire query in the url,
 // which is useful for interactive testing. Ie.
 // <a id=sample_url>https://openplatform.dbc.dk/v0/search?q=hej&pretty=true&access_token=...</a>
-//
-// # Websocket API
-//
-// The requests can also be sent through WebSockets,
-// which is useful in webbrowsers, as they limits
-// the number of parallel HTTP-requests.
-// 
-// TODO: document js-openplatform-api(websockets) when implemented.
-//
-// You need to use the API to use websockets:
-
-dbcOpenPlatform.connect(
-    client_id(), 
-    client_secret(),
-    user_id(),
-    user_password())
-  .then(function() {
-
-
-  });
 //
 // # Support code
 //
@@ -119,9 +163,9 @@ link.href = link.innerHTML =
   'q=hej&pretty=true&access_token=' + access_token;
   console.log(link);
 
-// This ends the part of the file where `access_token` is defined
+// This ends the part of the file after the different kinds of logins
 
-});
+}); }); }); });
 
 // The example code assumes that the credentials are supplied in
 // the url-hash. Here is a quick hack to extract them from the url.
