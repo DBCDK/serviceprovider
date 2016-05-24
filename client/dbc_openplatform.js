@@ -1,25 +1,25 @@
 (function() {
   if(typeof Promise === 'undefined') {
-    throw "old browser without Promise object. Please load a polyfill before loading dbc_openplatform.min.js, if you want to make it work";
+    throw 'old browser without Promise object. Please load a polyfill before loading dbc_openplatform.min.js, if you want to make it work';
   }
   var cycle = require('cycle');
   var sc;
   sc = false;
   var apiToken;
   var endpoints = [
-    "availability",
-    "events",
-    "facets",
-    "libraries",
-    "news",
-    "order",
-    "rank",
-    "recommend",
-    "renew",
-    "search",
-    "suggest",
-    "user",
-    "work"];
+    'availability',
+    'events',
+    'facets',
+    'libraries',
+    'news',
+    'order',
+    'rank',
+    'recommend',
+    'renew',
+    'search',
+    'suggest',
+    'user',
+    'work'];
 
   dbcOpenPlatform = {};
   function endpoint(name) {
@@ -61,7 +61,7 @@
     args = Array.prototype.slice.call(arguments);
     if(!args.length === 0 && !apiToken) {
       if(!apiToken) {
-        throw "missing token to connect";
+        throw 'missing token to connect';
       }
       promise = Promise.resolve(apiToken);
     } else if(args.length === 1) {
@@ -76,7 +76,10 @@
         user = args[2];
         password = args[3];
       } else {
-        throw "dbcOpenPlatform.connect takes 0, 1, 2 or 4 parameters"
+        throw 'dbcOpenPlatform.connect takes 0, 1, 2 or 4 parameters'
+      }
+      if(user.indexOf('@') === -1) {
+        throw 'id should be the concatenation of user-id, "@", and agency-id';
       }
       promise = getToken(clientId, clientSecret, user, password);
     }
