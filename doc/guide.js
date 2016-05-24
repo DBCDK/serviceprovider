@@ -86,11 +86,25 @@ function HTTP_POST(url, parameters) {
 // which is useful for interactive testing. Ie.
 // <a id=sample_url>https://openplatform.dbc.dk/v0/search?q=hej&pretty=true&access_token=...</a>
 //
+// # Websocket API
+//
 // The requests can also be sent through WebSockets,
 // which is useful in webbrowsers, as they limits
 // the number of parallel HTTP-requests.
 // 
 // TODO: document js-openplatform-api(websockets) when implemented.
+//
+// You need to use the API to use websockets:
+
+dbcOpenPlatform.connect(
+    client_id(), 
+    client_secret(),
+    user_id(),
+    user_password())
+  .then(function() {
+
+
+  });
 //
 // # Support code
 //
