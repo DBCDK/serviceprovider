@@ -264,7 +264,7 @@ class Context {
   get(key){
     let keys = key.split('.');
     let value = keys.reduce((o, name) => 
-                            { return o && o[name]; }, context);
+                            { return o && o[name]; }, this.data);
     return value;
   }
 }
