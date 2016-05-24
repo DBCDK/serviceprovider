@@ -265,7 +265,7 @@ export default (request, context) => {
   return context.basesoap('moreinfo', req).then(body => {
     return moreInfoResponse(body, context, state);
   }, (error => {
-    let errMsg = "Error while trying to communicate with moreinfo server.";
+    let errMsg = "CoverUrls could not be fetched. Server unavailable. Try request again without coverUrls.";
     console.log(errMsg, error);
     return {statusCode: 500, error: errMsg};
   }));
