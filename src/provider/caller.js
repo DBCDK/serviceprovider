@@ -96,26 +96,7 @@ describe('Automated test of the ${test.name} endpoint', () => {
 }
 
 
-/**
-* Wraps an object in a class that makes it easy to get a subobject, og
-* specific value.
-*
-* examples of usage:
-*
-*    let c = new Context(context);
-*    c.get('rank.url')); // return string value
-*    c.get('rank'); // returns object
-*
-* @param {object} context the context object to wrap
-*/
-export function Context(context) {
-  this.get = function(key){
-    let keys = key.split('.');
-    let value = keys.reduce((o, name) => 
-                            { return o && o[name]; }, context);
-    return value;
-  };
-}
+
 
 class Context {
   constructor(transformerMap, data) {
@@ -267,6 +248,25 @@ class Context {
   soapstring(name, params) {
     return this._call('soapstring', name, params);
   }
+
+  /**
+   * Wraps an object in a class that makes it easy to get a subobject, og
+   * specific value.
+   *
+   * examples of usage:
+   *
+   *    let c = new Context(context);
+   *    c.get('rank.url')); // return string value
+   *    c.get('rank'); // returns object
+   *
+   * @param {object} context the context object to wrap
+   */
+  get(key){
+    let keys = key.split('.');
+    let value = keys.reduce((o, name) => 
+                            { return o && o[name]; }, context);
+    return value;
+  };
 }
 
 /**
