@@ -33,6 +33,7 @@ dbcOpenPlatform.connect(
     user_id(), user_password()) // optional
 .then(function(token) {
 
+// Notice that the `user_id` consist of "user-id@agency-id".
 // You can always check whether you are connected,
 
 console.log('connected:',
@@ -89,7 +90,7 @@ dbcOpenPlatform.suggest({
 //
 // - `client_id` - identifies app and library
 // - `client_secret` - password connected with the `client_id`
-// - `user_id` - library user id (often consisting of 10 digits), or `@` for anonymous user
+// - `user_id` - library user id (often consisting of 10 digits) followed by an "@" followed by the library agency id, or `@` for anonymous user. The library agency ids can be found via the `libraries` endpoint, through an anonymous user login.
 // - `user_password` - typically the pin for the library user, or just `@` for anonymous users
 //
 
