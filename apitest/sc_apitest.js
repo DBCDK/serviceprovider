@@ -27,7 +27,7 @@ function next() {
   var req = reqs.pop();
   //console.log('\n' + req[0] + ' ' + JSON.stringify(req[1]));
   console.log('\n' + req[2]);
-  sc.emit(req[0], req[1], function(result) {
+  sc.emit(req[0], req[1], function(err, result) {
     result = cycle.retrocycle(result);
     console.log(JSON.stringify(result, null, 2));
     if(reqs.length) {
