@@ -1,26 +1,22 @@
 availability {"pid": "870970-basis:22503030"}
 availability {"pid": "870970-basis:51989252"}
 events {"fields": ["title", "changed", "nid", "field_ding_event_title_image"]}
-events {"fields": ["title", "changed", "nid", "field_ding_event_title_image"], "createTest": "events"}
-facets {"q" : "aQueryMatchingNothing", "createTest": "facets_noresult"}
+facets {"q" : "aQueryMatchingNothing"}
 facets {"q" : "harry"}
-facets {"q" : "harry AND potter", "fields": ["creator"], "limit": 0, "createTest": "facets_zero_limit"}
-facets {"q" : "harry AND potter", "fields": ["creator"], "limit": -1, "createTest": "facets_negative_limit"}
+facets {"q" : "harry AND potter", "fields": ["creator"], "limit": 0}
+facets {"q" : "harry AND potter", "fields": ["creator"], "limit": -1}
 facets {"q" : "harry AND potter", "fields": ["creator"], "limit": 20}
-facets {"q" : "harry AND potter", "fields": ["creator"], "limit": 20, "createTest": "facets_high_limit"}
-facets {"q" : "harry", "createTest": "facets_simple"}
-facets {"q" : "harry", "fields": ["access", "acSource", "audience", "audienceCategory", "branch", "category", "creator", "creatorFunction", "date", "department", "dk5", "extraTitles", "fictionSubject", "form", "gamePlatform", "genre", "genreCategory", "geographic", "language", "level", "let", "literaryForm", "lix", "musicSubject", "nationality", "nonFictionSubject", "partOf", "period", "primaryCreator", "sheetMusic", "subject", "titleSeries", "type"], "limit": 1, "createTest": "facets_all3"}
-facets {"q" : "invalid cql", "createTest": "facets_invalid_cql"}
-facets {"q" : "jensen", "fields": ["access", "acSource", "audience", "audienceCategory", "branch", "category", "creator", "creatorFunction", "date", "department", "dk5", "extraTitles", "fictionSubject", "form", "gamePlatform", "genre", "genreCategory", "geographic", "language", "level", "let", "literaryForm", "lix", "musicSubject", "nationality", "nonFictionSubject", "partOf", "period", "primaryCreator", "sheetMusic", "subject", "titleSeries", "type"], "limit": 1, "createTest": "facets_all2"}
-facets {"q" : "ost", "fields": ["access", "acSource", "audience", "audienceCategory", "branch", "category", "creator", "creatorFunction", "date", "department", "dk5", "extraTitles", "fictionSubject", "form", "gamePlatform", "genre", "genreCategory", "geographic", "language", "level", "let", "literaryForm", "lix", "musicSubject", "nationality", "nonFictionSubject", "partOf", "period", "primaryCreator", "sheetMusic", "subject", "titleSeries", "type"], "limit": 2, "createTest": "facets_all"}
+facets {"q" : "harry"}
+facets {"q" : "harry", "fields": ["access", "acSource", "audience", "audienceCategory", "branch", "category", "creator", "creatorFunction", "date", "department", "dk5", "extraTitles", "fictionSubject", "form", "gamePlatform", "genre", "genreCategory", "geographic", "language", "level", "let", "literaryForm", "lix", "musicSubject", "nationality", "nonFictionSubject", "partOf", "period", "primaryCreator", "sheetMusic", "subject", "titleSeries", "type"], "limit": 1}
+facets {"q" : "invalid cql"}
+facets {"q" : "jensen", "fields": ["access", "acSource", "audience", "audienceCategory", "branch", "category", "creator", "creatorFunction", "date", "department", "dk5", "extraTitles", "fictionSubject", "form", "gamePlatform", "genre", "genreCategory", "geographic", "language", "level", "let", "literaryForm", "lix", "musicSubject", "nationality", "nonFictionSubject", "partOf", "period", "primaryCreator", "sheetMusic", "subject", "titleSeries", "type"], "limit": 1}
+facets {"q" : "ost", "fields": ["access", "acSource", "audience", "audienceCategory", "branch", "category", "creator", "creatorFunction", "date", "department", "dk5", "extraTitles", "fictionSubject", "form", "gamePlatform", "genre", "genreCategory", "geographic", "language", "level", "let", "literaryForm", "lix", "musicSubject", "nationality", "nonFictionSubject", "partOf", "period", "primaryCreator", "sheetMusic", "subject", "titleSeries", "type"], "limit": 2}
 libraries {"agencyIds": ["717500"], "fields": ["agencyId", "orderParameters"]}
 libraries { "branchIds": ["700401", "710104"], "fields": ["branchId", "city", "geolocation"]}
 libraries {"branchIds": ["717500","717501","717502"], "fields": ["agencyId", "branchId", "orderParameters"]}
 libraries { "fields": ["branchId", "city", "geolocation"]}
 news {"fields": ["title", "changed", "nid", "field_ding_news_list_image"]}
-news {"fields": ["title", "changed", "nid", "field_ding_news_list_image"], "createTest": "news"}
 news {"nids": ["19", "40"], "fields": ["title", "changed", "nid", "field_ding_news_list_image"]}
-news {"nids": ["19", "40"], "fields": ["title", "changed", "nid", "field_ding_news_list_image"], "createTest": "news_nids"}
 order {}
 rank {"pids":["870970-basis:28511663", "870970-basis:29754519", "870970-basis:29060835", "870970-basis:28567057", "870970-basis:28043872", "870970-basis:28709994", "870970-basis:29319006", "870970-basis:27266428", "870970-basis:28724683", "870970-basis:26923530", "870970-basis:29974861", "870970-basis:28456433", "870970-basis:28902239", "870970-basis:45188981"], "like":["870970-basis:45488713", "870970-basis:28643713", "870970-basis:29494940", "870970-basis:29386404", "870970-basis:28429576"]}
 recommend { "like":["300185-katalog:100562332"], "limit":10}
@@ -30,14 +26,11 @@ search {}
 search {"createTest": "search_no_q"}
 search { "q": "harry AND potter", "fields": ["identifier", "title", "collection", "subjectDBCF", "hasAdaptation", "coverUrlFull"], "sort": "rank_title"}
 search { "q": "harry AND potter", "fields": ["identifier", "title", "collection", "subjectDBCF", "hasAdaptation"], "sort": "default" }
-search { "q": "harry AND potter", "fields": ["identifier", "title", "collection", "subjectDBCF", "hasAdaptation"], "sort": "invalid_sort" , "createTest": "search_invalid_sort"}
-search { "q": "harry ", "fields": ["identifier", "title", "collection", "subjectDBCF", "hasAdaptation", "coverUrlFull"], "sort": "rank_title", "createTest": "seach_sort"}
+search { "q": "harry AND potter", "fields": ["identifier", "title", "collection", "subjectDBCF", "hasAdaptation"], "sort": "invalid_sort" }
+search { "q": "harry ", "fields": ["identifier", "title", "collection", "subjectDBCF", "hasAdaptation", "coverUrlFull"], "sort": "rank_title"}
 search {"q" : "hest"}
-search {"q" : "hest", "createTest": "search_simple"}
 search {"q" : "ost", "fields": ["pid", "creator", "coverUrlFull"], "limit": 3}
-search {"q" : "ost", "fields": ["pid", "creator", "coverUrlFull"], "limit": 3, "createTest": "search_coverUrl_limit"}
 search {"q" : "ost", "fields": ["pid", "title", "creator", "coverDataUrl117"], "limit": 3}
-search {"q" : "ost", "fields": ["pid", "title", "creator", "coverDataUrl117"], "limit": 3, "createTest": "search_coverDataUrl"}
 suggest {"q" : "harr", "type": "creator"}
 suggest {"q" : "harr", "type": "title"}
 suggest {"q" : "køge", "type": "library"}
