@@ -88,6 +88,6 @@ export default (request, context) => {
       data.ddbcmsapi = context.data.ddbcms.url;
     }
 
-    return {statusCode: 200, data: [data]};
+    return {statusCode: 200, data: data};
   }));
 };
