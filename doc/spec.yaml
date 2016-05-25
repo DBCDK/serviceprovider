@@ -166,7 +166,7 @@ api:
         type: 'boolean'
         example: true
     response:
-      example: { "pids": ["870970-basis:51989252"], "library": "700401", "expires": "2016-06-24"}
+      example: { "status": "ok" }
     examples:
       - request: { "orderId": "1234", "delete": true }
         response: { "orderId": "1234", "deleted": true }
