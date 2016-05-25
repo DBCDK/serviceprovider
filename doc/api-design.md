@@ -5,7 +5,7 @@ Please see `README.md` and https://openplatform.dbc.dk/ for up to date documenta
 
 ----
 
-# old obsolete notes, might be worth keeping for refernence
+# old obsolete notes, temporarily kept for reference
 
 ----
 
