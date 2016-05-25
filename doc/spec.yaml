@@ -166,10 +166,8 @@ api:
         type: 'boolean'
         example: true
     response:
-      example: { "pids": ["870970-basis:51989252"], "library": "700401", "expires": "2016-06-24T18:25:43.511Z"}
+      example: { "pids": ["870970-basis:51989252"], "library": "700401", "expires": "2016-06-24"}
     examples:
-      - request: { "pids": ["870970-basis:51989252"], "library": "700401", "name": "Jens Jensen", "address": "Kirkestræde 1, 1234 Landsby", "email": "jens.jensen@example.com", "phone": "12345678", "expires": "2016-06-24T18:25:43.511Z"}
-        response:  { "pids": ["870970-basis:51989252"], "library": "700401", "expires": "2016-06-24T18:25:43.511Z"}
       - request: { "orderId": "1234", "delete": true }
         response: { "orderId": "1234", "deleted": true }
   rank:
