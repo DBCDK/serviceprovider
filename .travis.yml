@@ -4,7 +4,9 @@ dist: trusty
 env:
   - SMAUG=invalid
 script:
-  - ./mocktest.sh || true
+  - ./start-service-provider.sh
+  # mocktest is disabled for now
+  # ./mocktest.sh
   - npm test
   - npm run lint
   - npm run lint:checkstyle
