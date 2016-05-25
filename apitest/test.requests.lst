@@ -1,12 +1,20 @@
-availability {"pid": "870970-basis:51989252"}
 availability {"pid": "870970-basis:22503030"}
+availability {"pid": "870970-basis:51989252"}
 events {"fields": ["title", "changed", "nid", "field_ding_event_title_image"]}
+facets {"q" : "aQueryMatchingNothing"}
 facets {"q" : "harry"}
+facets {"q" : "harry AND potter", "fields": ["creator"], "limit": 0}
+facets {"q" : "harry AND potter", "fields": ["creator"], "limit": -1}
 facets {"q" : "harry AND potter", "fields": ["creator"], "limit": 20}
+facets {"q" : "harry"}
+facets {"q" : "harry", "fields": ["access", "acSource", "audience", "audienceCategory", "branch", "category", "creator", "creatorFunction", "date", "department", "dk5", "extraTitles", "fictionSubject", "form", "gamePlatform", "genre", "genreCategory", "geographic", "language", "level", "let", "literaryForm", "lix", "musicSubject", "nationality", "nonFictionSubject", "partOf", "period", "primaryCreator", "sheetMusic", "subject", "titleSeries", "type"], "limit": 1}
+facets {"q" : "invalid cql"}
+facets {"q" : "jensen", "fields": ["access", "acSource", "audience", "audienceCategory", "branch", "category", "creator", "creatorFunction", "date", "department", "dk5", "extraTitles", "fictionSubject", "form", "gamePlatform", "genre", "genreCategory", "geographic", "language", "level", "let", "literaryForm", "lix", "musicSubject", "nationality", "nonFictionSubject", "partOf", "period", "primaryCreator", "sheetMusic", "subject", "titleSeries", "type"], "limit": 1}
+facets {"q" : "ost", "fields": ["access", "acSource", "audience", "audienceCategory", "branch", "category", "creator", "creatorFunction", "date", "department", "dk5", "extraTitles", "fictionSubject", "form", "gamePlatform", "genre", "genreCategory", "geographic", "language", "level", "let", "literaryForm", "lix", "musicSubject", "nationality", "nonFictionSubject", "partOf", "period", "primaryCreator", "sheetMusic", "subject", "titleSeries", "type"], "limit": 2}
 libraries {"agencyIds": ["717500"], "fields": ["agencyId", "orderParameters"]}
+libraries { "branchIds": ["700401", "710104"], "fields": ["branchId", "city", "geolocation"]}
 libraries {"branchIds": ["717500","717501","717502"], "fields": ["agencyId", "branchId", "orderParameters"]}
 libraries { "fields": ["branchId", "city", "geolocation"]}
-libraries { "branchIds": ["700401", "710104"], "fields": ["branchId", "city", "geolocation"]}
 news {"fields": ["title", "changed", "nid", "field_ding_news_list_image"]}
 news {"nids": ["19", "40"], "fields": ["title", "changed", "nid", "field_ding_news_list_image"]}
 order {}
@@ -15,17 +23,19 @@ recommend { "like":["300185-katalog:100562332"], "limit":10}
 recommend { "recommender":"popular", "limit":2}
 renew {}
 search {}
+search {"createTest": "search_no_q"}
+search { "q": "harry AND potter", "fields": ["identifier", "title", "collection", "subjectDBCF", "hasAdaptation", "coverUrlFull"], "sort": "rank_title"}
+search { "q": "harry AND potter", "fields": ["identifier", "title", "collection", "subjectDBCF", "hasAdaptation"], "sort": "default" }
+search { "q": "harry AND potter", "fields": ["identifier", "title", "collection", "subjectDBCF", "hasAdaptation"], "sort": "invalid_sort" }
+search { "q": "harry ", "fields": ["identifier", "title", "collection", "subjectDBCF", "hasAdaptation", "coverUrlFull"], "sort": "rank_title"}
 search {"q" : "hest"}
 search {"q" : "ost", "fields": ["pid", "creator", "coverUrlFull"], "limit": 3}
 search {"q" : "ost", "fields": ["pid", "title", "creator", "coverDataUrl117"], "limit": 3}
-search { "q": "harry AND potter", "fields": ["identifier", "title", "collection", "subjectDBCF", "hasAdaptation", "coverUrlFull"], "sort": "rank_title"}
-search { "q": "harry AND potter", "fields": ["identifier", "title", "collection", "subjectDBCF", "hasAdaptation"], "sort": "default" }
 suggest {"q" : "harr", "type": "creator"}
 suggest {"q" : "harr", "type": "title"}
 suggest {"q" : "køge", "type": "library"}
 suggest {"q" : "os", "type": "subject", "limit": 3}
 user {}
-work {"pids": ["870970-basis:27266428"]}
 work {"pids": ["300185-katalog:100562332", "870970-basis:51989252", "870971-forfweb:86203219", "870970-basis:24284514"]}
-#work {"pids": ["300185-katalog:100562332", "870970-basis:51989252", "870971-forfweb:86203219", "870970-basis:24284514"], "fields": ["collection", "title"]}
 work {"pids": ["300185-katalog:100562332", "870970-basis:51989252", "870971-forfweb:86203219", "870970-basis:24284514"], "fields": ["coverUrlFull", "title"]}
+work {"pids": ["870970-basis:27266428"]}
