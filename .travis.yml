@@ -7,7 +7,7 @@ script:
   - npm test
   - npm run lint
   - npm run lint:checkstyle
-  - ./mocktest.sh || true
+  #- ./mocktest.sh || true
   - npm run swagger:validate # NOTE: expects a running SP!
 after_success:
   - npm run cover
