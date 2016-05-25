@@ -30,7 +30,7 @@ let randomId = () => Math.random().toString(36).slice(2, 8);
 // function for escaping special regex characters
 let regexEscape = s => s.replace(/[\\[\](\|)*?+.^$]/g, c => '\\' + c);
 // these keys in entries in config contains information that needs to be removed from the test
-let blacklist = ['salt', 'authid', 'authpassword', 'authgroupid', 'userpin', 'userid', 'password', 'group', 'user'];
+let blacklist = ['id', 'pin', 'ddbcmsapipassword', 'salt', 'authid', 'authpassword', 'authgroupid', 'userpin', 'userid', 'password', 'group', 'user'];
 /**
  * remove sensitive data from a string.
  * The sensitive data is paswords etc. given through the context.
