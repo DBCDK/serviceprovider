@@ -125,7 +125,7 @@ function placeOrder(request, context) { // eslint-disable-line no-unused-vars
   }
   let soap = constructSoap(request.pids, expireDate, request);
 
-  return context.call('orderpolicy', soap).then(body => {
+  return context.call('openorder', soap).then(body => {
     body = JSON.parse(body).placeOrderResponse;
 
     if (body.orderNotPlaced) {

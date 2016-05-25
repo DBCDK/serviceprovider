@@ -58,7 +58,7 @@ export default (request, context) => {
   };
 
   let soap = constructSoap(params);
-  return context.call('userstatus', soap).then(body => {
+  return context.call('openuserstatus', soap).then(body => {
 
     body = JSON.parse(body).renewLoanResponse.renewLoanStatus[0];
 

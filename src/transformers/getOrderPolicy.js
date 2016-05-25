@@ -44,7 +44,7 @@ function getOrderPolicy(pid, params, context) {
      </SOAP-ENV:Body>
   </SOAP-ENV:Envelope>`;
 
-  return context.call('orderpolicy', soap).then(body => {
+  return context.call('openorder', soap).then(body => {
     body = JSON.parse(body).checkOrderPolicyResponse;
     let data = {};
     if (_.has(body, 'orderPossible.$') && _.has(body, 'orderPossibleReason.$')) {

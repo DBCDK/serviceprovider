@@ -79,7 +79,7 @@ export default (request, context) => {
     pbkdf2(userstatus.useragency.replace(/^DK-/, '') + ' ' + userstatus.userid,
       userstatus.salt, 100000, 24, 'sha512', (err, key) => err ? reject(err) : resolve(key)));
 
-  return context.call('userstatus', params).then(body => idPromise.then(id => {
+  return context.call('openuserstatus', params).then(body => idPromise.then(id => {
     let data = {id: id.toString('base64'),
                 loans: body.data.getUserStatusResponse.userStatus.loanedItems.loan.map(loan),
                 orders: body.data.getUserStatusResponse.userStatus.orderedItems.order.map(order)
