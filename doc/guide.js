@@ -81,6 +81,17 @@ dbcOpenPlatform.suggest({
     console.log('suggest example', results);
 });
 
+// Notice that while suggest just takes a string,
+// queries for search and facets
+// are expressed as [CQL](http://www.danbib.dk/broend3_soeg).
+// This means that searches like `den lille prins` will fail,
+// and has to be `den AND lille AND prins` or `"den lille prins"` or ...,
+// depending on the desired result.
+
+dbcOpenPlatform.facets({q: '"den lille prins"'})
+.then(function(results) {
+    console.log('facets example', results);
+});
 
 // # OAuth2 Authentication
 //
