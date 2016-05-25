@@ -2,8 +2,7 @@
 
 function createRequestParameters(request, context) {
   // create request parameters from request and context
-  //const uri = context.get('rank.url');
-  const uri = context.data.rank.url;
+  const uri = context.get('rank.url');
   let paramsPost = {
     uri: uri,
     method: 'POST',
