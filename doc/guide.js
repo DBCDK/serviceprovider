@@ -159,8 +159,20 @@ HTTP_POST('https://openplatform.dbc.dk/v0/search',
 // of sending a JSON object of parameters to the endpoint
 // and then getting the result back.
 //
+// Due to browser limitations, webapps should use
+// websockets through the JavaScript API, instead
+// of POST-requests. Browsers throttle http-requests,
+// and requires CORS for requests from different hosts.
+//
+// <hr>
+// # Support code
+//
+// The following sections are the utility functions used above. 
+// It is implemented here for completeness. 
+// Feel free to skip the rest of this file.
+//
 // In browser JavaScript, HTTP-POSTing a JSON object
-// can be done like this:
+// can be done like this (works only on same host):
 
 function HTTP_POST(url, parameters) {
     xhr = new XMLHttpRequest();
@@ -171,12 +183,6 @@ function HTTP_POST(url, parameters) {
     return xhr_promise(xhr);
 }
 
-// <hr>
-// # Support code
-//
-// The following sections are the utility functions used above. 
-// It is implemented here for completeness. 
-// Feel free to skip the rest of this file.
 
 // Make sample get-request-url include proper `access_token`:
 
