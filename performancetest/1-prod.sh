@@ -2,8 +2,6 @@
 
 export TIMES=1
 export URL='http://localhost:8080/v0/'
-# platformbe-p01
-export ACCESS_TOKEN="a1d4ba32473cb0b5746a6f4163fc4b9a542d423e"
 
 export JOBS=1
 export PRE=''
