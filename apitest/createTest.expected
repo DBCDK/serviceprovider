@@ -1,0 +1,3846 @@
+
+
+events {"fields":["title","changed","nid","field_ding_event_title_image"],"createTest":"events"}
+{
+  "statusCode": 200,
+  "data": [
+    {
+      "title": {
+        "name": "Titel",
+        "value": "Mød forfatteren: Tim Buk-Swienty",
+        "attr": []
+      },
+      "changed": {
+        "name": "Opdateret",
+        "value": 1452689863,
+        "attr": []
+      },
+      "nid": 15,
+      "field_ding_event_title_image": {
+        "name": "Title image",
+        "value": [
+          "files/775100/581328cef1630f7c4ca26a5ad814b8edb214f0d2.jpeg"
+        ],
+        "attr": [
+          "image/jpeg"
+        ]
+      }
+    }
+  ],
+  "createTest": "events"
+}
+
+facets {"q":"aQueryMatchingNothing","createTest":"facets_noresult"}
+{
+  "statusCode": 200,
+  "data": {},
+  "createTest": "facets_noresult"
+}
+
+facets {"q":"harry AND potter","fields":["creator"],"limit":0,"createTest":"facets_zero_limit"}
+{
+  "statusCode": 200,
+  "data": {
+    "creator": [
+      {
+        "term": "joanne k. rowling",
+        "frequency": 112
+      },
+      {
+        "term": "daniel radcliffe",
+        "frequency": 21
+      },
+      {
+        "term": "emma watson",
+        "frequency": 21
+      },
+      {
+        "term": "robbie coltrane",
+        "frequency": 21
+      },
+      {
+        "term": "rupert grint",
+        "frequency": 21
+      },
+      {
+        "term": "steve kloves",
+        "frequency": 19
+      },
+      {
+        "term": "david yates",
+        "frequency": 16
+      },
+      {
+        "term": "j.k. rowling",
+        "frequency": 16
+      },
+      {
+        "term": "stephen fry",
+        "frequency": 15
+      },
+      {
+        "term": "michael gambon",
+        "frequency": 14
+      }
+    ]
+  },
+  "createTest": "facets_zero_limit"
+}
+
+facets {"q":"harry AND potter","fields":["creator"],"limit":-1,"createTest":"facets_negative_limit"}
+{
+  "statusCode": 200,
+  "data": {
+    "creator": [
+      {
+        "term": "joanne k. rowling",
+        "frequency": 112
+      },
+      {
+        "term": "daniel radcliffe",
+        "frequency": 21
+      },
+      {
+        "term": "emma watson",
+        "frequency": 21
+      },
+      {
+        "term": "robbie coltrane",
+        "frequency": 21
+      },
+      {
+        "term": "rupert grint",
+        "frequency": 21
+      },
+      {
+        "term": "steve kloves",
+        "frequency": 19
+      },
+      {
+        "term": "david yates",
+        "frequency": 16
+      },
+      {
+        "term": "j.k. rowling",
+        "frequency": 16
+      },
+      {
+        "term": "stephen fry",
+        "frequency": 15
+      },
+      {
+        "term": "michael gambon",
+        "frequency": 14
+      },
+      {
+        "term": "jesper christensen (f. 1948)",
+        "frequency": 13
+      },
+      {
+        "term": "hanna lützen",
+        "frequency": 12
+      },
+      {
+        "term": "john williams (f. 1932)",
+        "frequency": 12
+      },
+      {
+        "term": "bill galliford",
+        "frequency": 10
+      },
+      {
+        "term": "ethan neuburg",
+        "frequency": 10
+      },
+      {
+        "term": "ralph fiennes",
+        "frequency": 10
+      },
+      {
+        "term": "tod edmondson",
+        "frequency": 10
+      },
+      {
+        "term": "helena bonham carter",
+        "frequency": 9
+      },
+      {
+        "term": "chris columbus",
+        "frequency": 8
+      },
+      {
+        "term": "richard griffiths",
+        "frequency": 8
+      },
+      {
+        "term": "eduardo serra",
+        "frequency": 6
+      },
+      {
+        "term": "jesper christensen",
+        "frequency": 6
+      },
+      {
+        "term": "john cleese",
+        "frequency": 6
+      },
+      {
+        "term": "alan rickman",
+        "frequency": 5
+      },
+      {
+        "term": "carol cuellar",
+        "frequency": 5
+      },
+      {
+        "term": "electronic arts",
+        "frequency": 5
+      },
+      {
+        "term": "london voices",
+        "frequency": 5
+      },
+      {
+        "term": "londons symfoniorkester",
+        "frequency": 5
+      },
+      {
+        "term": "roger pratt",
+        "frequency": 5
+      },
+      {
+        "term": "alfonso cuarón",
+        "frequency": 4
+      },
+      {
+        "term": "brendan gleeson",
+        "frequency": 4
+      },
+      {
+        "term": "gary oldman",
+        "frequency": 4
+      },
+      {
+        "term": "mike newell",
+        "frequency": 4
+      },
+      {
+        "term": "nicholas hooper",
+        "frequency": 4
+      },
+      {
+        "term": "bruno delbonnel",
+        "frequency": 3
+      },
+      {
+        "term": "ian hart",
+        "frequency": 3
+      },
+      {
+        "term": "jim broadbent",
+        "frequency": 3
+      },
+      {
+        "term": "jim kay",
+        "frequency": 3
+      },
+      {
+        "term": "joanne k rowling",
+        "frequency": 3
+      },
+      {
+        "term": "john hurt",
+        "frequency": 3
+      },
+      {
+        "term": "john seale",
+        "frequency": 3
+      },
+      {
+        "term": "kenneth branagh",
+        "frequency": 3
+      },
+      {
+        "term": "maggie smith",
+        "frequency": 3
+      },
+      {
+        "term": "richard harris",
+        "frequency": 3
+      },
+      {
+        "term": "torben sekov",
+        "frequency": 3
+      },
+      {
+        "term": "warwick davis",
+        "frequency": 3
+      },
+      {
+        "term": "zobeida pérez",
+        "frequency": 3
+      },
+      {
+        "term": "alastair king",
+        "frequency": 2
+      },
+      {
+        "term": "alexandre desplat",
+        "frequency": 2
+      },
+      {
+        "term": "antonio vivaldi",
+        "frequency": 2
+      },
+      {
+        "term": "boston pops-orkestret",
+        "frequency": 2
+      },
+      {
+        "term": "cate blanchett",
+        "frequency": 2
+      },
+      {
+        "term": "chris columbus (f. 1958)",
+        "frequency": 2
+      },
+      {
+        "term": "christina ricci",
+        "frequency": 2
+      },
+      {
+        "term": "dan blackstone",
+        "frequency": 2
+      },
+      {
+        "term": "dan coates",
+        "frequency": 2
+      },
+      {
+        "term": "david colbert",
+        "frequency": 2
+      },
+      {
+        "term": "edgar lee masters",
+        "frequency": 2
+      },
+      {
+        "term": "edvard grieg",
+        "frequency": 2
+      },
+      {
+        "term": "geoffrey alexander",
+        "frequency": 2
+      },
+      {
+        "term": "harry dean stanton",
+        "frequency": 2
+      },
+      {
+        "term": "itzhak perlman",
+        "frequency": 2
+      },
+      {
+        "term": "jason isaacs",
+        "frequency": 2
+      },
+      {
+        "term": "john turturro",
+        "frequency": 2
+      },
+      {
+        "term": "johnny depp",
+        "frequency": 2
+      },
+      {
+        "term": "julia eccleshare",
+        "frequency": 2
+      },
+      {
+        "term": "julie christie",
+        "frequency": 2
+      },
+      {
+        "term": "londons kammerorkester",
+        "frequency": 2
+      },
+      {
+        "term": "ludwig van beethoven",
+        "frequency": 2
+      },
+      {
+        "term": "michael goldenberg",
+        "frequency": 2
+      },
+      {
+        "term": "michael seresin",
+        "frequency": 2
+      },
+      {
+        "term": "patrick doyle",
+        "frequency": 2
+      },
+      {
+        "term": "pittsburghs symfoniorkester",
+        "frequency": 2
+      },
+      {
+        "term": "recording arts orchestra, los angeles",
+        "frequency": 2
+      },
+      {
+        "term": "sacha vierny",
+        "frequency": 2
+      },
+      {
+        "term": "sally potter",
+        "frequency": 2
+      },
+      {
+        "term": "simon whiteside",
+        "frequency": 2
+      },
+      {
+        "term": "stephane assadourian",
+        "frequency": 2
+      },
+      {
+        "term": "sławomir idziak",
+        "frequency": 2
+      },
+      {
+        "term": "tt games",
+        "frequency": 2
+      },
+      {
+        "term": "wolfgang amadeus mozart",
+        "frequency": 2
+      },
+      {
+        "term": "yo-yo ma",
+        "frequency": 2
+      },
+      {
+        "term": "alan stivell",
+        "frequency": 1
+      },
+      {
+        "term": "alexander hanson",
+        "frequency": 1
+      },
+      {
+        "term": "allan hondé",
+        "frequency": 1
+      },
+      {
+        "term": "andrew lloyd webber",
+        "frequency": 1
+      },
+      {
+        "term": "anna claybourne",
+        "frequency": 1
+      },
+      {
+        "term": "anne petersen (f. 1959-08-01)",
+        "frequency": 1
+      },
+      {
+        "term": "anne sejten",
+        "frequency": 1
+      },
+      {
+        "term": "anne vindum",
+        "frequency": 1
+      },
+      {
+        "term": "annie ebrel",
+        "frequency": 1
+      },
+      {
+        "term": "annie haslam",
+        "frequency": 1
+      },
+      {
+        "term": "anthony mcgill",
+        "frequency": 1
+      },
+      {
+        "term": "antonín dvořák",
+        "frequency": 1
+      },
+      {
+        "term": "anúna",
+        "frequency": 1
+      },
+      {
+        "term": "arvid müller",
+        "frequency": 1
+      },
+      {
+        "term": "ben schoen",
+        "frequency": 1
+      },
+      {
+        "term": "benjamin golus",
+        "frequency": 1
+      },
+      {
+        "term": "birthe kjær",
+        "frequency": 1
+      },
+      {
+        "term": "bob gunton",
+        "frequency": 1
+      },
+      {
+        "term": "bono",
+        "frequency": 1
+      },
+      {
+        "term": "bournemouths symfoniorkester",
+        "frequency": 1
+      },
+      {
+        "term": "bradley miles",
+        "frequency": 1
+      },
+      {
+        "term": "brian dunning",
+        "frequency": 1
+      },
+      {
+        "term": "budapests symfoniorkester",
+        "frequency": 1
+      },
+      {
+        "term": "béla bartók",
+        "frequency": 1
+      },
+      {
+        "term": "béla dráhos",
+        "frequency": 1
+      },
+      {
+        "term": "børge müller",
+        "frequency": 1
+      },
+      {
+        "term": "camille saint-saens",
+        "frequency": 1
+      },
+      {
+        "term": "capella istropolitana",
+        "frequency": 1
+      },
+      {
+        "term": "capercaillie",
+        "frequency": 1
+      },
+      {
+        "term": "carl davis",
+        "frequency": 1
+      },
+      {
+        "term": "chad verrall",
+        "frequency": 1
+      },
+      {
+        "term": "chicagos symfoniorkester",
+        "frequency": 1
+      },
+      {
+        "term": "chicagos symfoniorkesters kor",
+        "frequency": 1
+      },
+      {
+        "term": "chris philips",
+        "frequency": 1
+      },
+      {
+        "term": "christian lei bennedsen",
+        "frequency": 1
+      },
+      {
+        "term": "christina elisabeth ebbesen",
+        "frequency": 1
+      },
+      {
+        "term": "christopher hussey",
+        "frequency": 1
+      },
+      {
+        "term": "christopher lyndon-gee",
+        "frequency": 1
+      },
+      {
+        "term": "clannad",
+        "frequency": 1
+      },
+      {
+        "term": "claude debussy",
+        "frequency": 1
+      },
+      {
+        "term": "claudia fenske",
+        "frequency": 1
+      },
+      {
+        "term": "claus lyne",
+        "frequency": 1
+      },
+      {
+        "term": "dan christoffersen",
+        "frequency": 1
+      },
+      {
+        "term": "dan folke",
+        "frequency": 1
+      },
+      {
+        "term": "daniel london",
+        "frequency": 1
+      },
+      {
+        "term": "daryl griffith",
+        "frequency": 1
+      },
+      {
+        "term": "david arkenstone",
+        "frequency": 1
+      },
+      {
+        "term": "david arnold",
+        "frequency": 1
+      },
+      {
+        "term": "david baggett",
+        "frequency": 1
+      },
+      {
+        "term": "david lawson",
+        "frequency": 1
+      },
+      {
+        "term": "davy spillane",
+        "frequency": 1
+      },
+      {
+        "term": "den slovakiske radios symfoniorkester, bratislava",
+        "frequency": 1
+      },
+      {
+        "term": "det amerikanske drengekor",
+        "frequency": 1
+      },
+      {
+        "term": "die 12 cellisten der berliner philharmoniker",
+        "frequency": 1
+      },
+      {
+        "term": "dinah bucholz",
+        "frequency": 1
+      },
+      {
+        "term": "dmitrij sjostakovitj",
+        "frequency": 1
+      },
+      {
+        "term": "dong-suk kang",
+        "frequency": 1
+      },
+      {
+        "term": "dune",
+        "frequency": 1
+      },
+      {
+        "term": "eder-kvartetten",
+        "frequency": 1
+      },
+      {
+        "term": "edward broadbridge",
+        "frequency": 1
+      },
+      {
+        "term": "egil harder",
+        "frequency": 1
+      },
+      {
+        "term": "elizabeth d. schafer",
+        "frequency": 1
+      },
+      {
+        "term": "elysia",
+        "frequency": 1
+      },
+      {
+        "term": "emerson spartz",
+        "frequency": 1
+      },
+      {
+        "term": "emma slebsager",
+        "frequency": 1
+      },
+      {
+        "term": "esko laine",
+        "frequency": 1
+      },
+      {
+        "term": "failoni-kammerorkestret, budapest",
+        "frequency": 1
+      },
+      {
+        "term": "frances hodgson burnett",
+        "frequency": 1
+      },
+      {
+        "term": "françois-joel thiollier",
+        "frequency": 1
+      },
+      {
+        "term": "frédéric chopin",
+        "frequency": 1
+      },
+      {
+        "term": "gabriel fauré",
+        "frequency": 1
+      },
+      {
+        "term": "gabriela montero",
+        "frequency": 1
+      },
+      {
+        "term": "galt macdermot",
+        "frequency": 1
+      },
+      {
+        "term": "georg tichy",
+        "frequency": 1
+      },
+      {
+        "term": "gilles le bigot",
+        "frequency": 1
+      },
+      {
+        "term": "gioacchino rossini",
+        "frequency": 1
+      },
+      {
+        "term": "glen kirk",
+        "frequency": 1
+      },
+      {
+        "term": "greg macmartin",
+        "frequency": 1
+      },
+      {
+        "term": "guy miller",
+        "frequency": 1
+      },
+      {
+        "term": "göteborgsmusiken",
+        "frequency": 1
+      },
+      {
+        "term": "hanne guldberg mikkelsen",
+        "frequency": 1
+      },
+      {
+        "term": "hans schreiber",
+        "frequency": 1
+      },
+      {
+        "term": "harald h. lund (f. 1902)",
+        "frequency": 1
+      },
+      {
+        "term": "helge kjærulff-schmidt",
+        "frequency": 1
+      },
+      {
+        "term": "helmer olesen",
+        "frequency": 1
+      },
+      {
+        "term": "helmut müller-brühl",
+        "frequency": 1
+      },
+      {
+        "term": "henrik blichmann",
+        "frequency": 1
+      },
+      {
+        "term": "henrik emmer",
+        "frequency": 1
+      },
+      {
+        "term": "henrik krogsgaard",
+        "frequency": 1
+      },
+      {
+        "term": "henry h. neff",
+        "frequency": 1
+      },
+      {
+        "term": "howard shore",
+        "frequency": 1
+      },
+      {
+        "term": "ib thorben jensen (f. 1949)",
+        "frequency": 1
+      },
+      {
+        "term": "idil biret",
+        "frequency": 1
+      },
+      {
+        "term": "igor stravinskij",
+        "frequency": 1
+      },
+      {
+        "term": "irma p. hall",
+        "frequency": 1
+      },
+      {
+        "term": "istván bogár",
+        "frequency": 1
+      },
+      {
+        "term": "james horner",
+        "frequency": 1
+      },
+      {
+        "term": "janne saksala",
+        "frequency": 1
+      },
+      {
+        "term": "jarvis cocker",
+        "frequency": 1
+      },
+      {
+        "term": "jason buckle",
+        "frequency": 1
+      },
+      {
+        "term": "jeanne kimsey",
+        "frequency": 1
+      },
+      {
+        "term": "jeff johnson",
+        "frequency": 1
+      },
+      {
+        "term": "jenő jandó",
+        "frequency": 1
+      },
+      {
+        "term": "jez harris",
+        "frequency": 1
+      },
+      {
+        "term": "johann sebastian bach",
+        "frequency": 1
+      },
+      {
+        "term": "johannes brahms",
+        "frequency": 1
+      },
+      {
+        "term": "john adams (f. 1947)",
+        "frequency": 1
+      },
+      {
+        "term": "john christensen",
+        "frequency": 1
+      },
+      {
+        "term": "johnny reimar",
+        "frequency": 1
+      },
+      {
+        "term": "jokern",
+        "frequency": 1
+      },
+      {
+        "term": "jonny greenwood",
+        "frequency": 1
+      },
+      {
+        "term": "jordan thomas",
+        "frequency": 1
+      },
+      {
+        "term": "josef sommer",
+        "frequency": 1
+      },
+      {
+        "term": "joseph haydn",
+        "frequency": 1
+      },
+      {
+        "term": "judith leclair (f. 1958)",
+        "frequency": 1
+      },
+      {
+        "term": "julian kershaw",
+        "frequency": 1
+      },
+      {
+        "term": "jørgen andresen (f. 1945)",
+        "frequency": 1
+      },
+      {
+        "term": "jürgen schuster",
+        "frequency": 1
+      },
+      {
+        "term": "kai mortensen",
+        "frequency": 1
+      },
+      {
+        "term": "kai normann andersen",
+        "frequency": 1
+      },
+      {
+        "term": "kaj munk",
+        "frequency": 1
+      },
+      {
+        "term": "karen matheson",
+        "frequency": 1
+      },
+      {
+        "term": "kate bush",
+        "frequency": 1
+      },
+      {
+        "term": "katrine lehmann sivertsen",
+        "frequency": 1
+      },
+      {
+        "term": "keld heick",
+        "frequency": 1
+      },
+      {
+        "term": "kenneth jean",
+        "frequency": 1
+      },
+      {
+        "term": "kennilworthy whisp",
+        "frequency": 1
+      },
+      {
+        "term": "knud pheiffer",
+        "frequency": 1
+      },
+      {
+        "term": "knud vad-thomsen",
+        "frequency": 1
+      },
+      {
+        "term": "kris beaumont",
+        "frequency": 1
+      },
+      {
+        "term": "kurt ard",
+        "frequency": 1
+      },
+      {
+        "term": "kölns kammerorkester",
+        "frequency": 1
+      },
+      {
+        "term": "lasse thorning",
+        "frequency": 1
+      },
+      {
+        "term": "leif pedersen",
+        "frequency": 1
+      },
+      {
+        "term": "lene rytter",
+        "frequency": 1
+      },
+      {
+        "term": "leonard forslund",
+        "frequency": 1
+      },
+      {
+        "term": "lisa linn",
+        "frequency": 1
+      },
+      {
+        "term": "lisa lynne",
+        "frequency": 1
+      },
+      {
+        "term": "lisbeth alnor christensen",
+        "frequency": 1
+      },
+      {
+        "term": "liverpools filharmoniske orkester",
+        "frequency": 1
+      },
+      {
+        "term": "lone wessmann",
+        "frequency": 1
+      },
+      {
+        "term": "loreena mckennitt",
+        "frequency": 1
+      },
+      {
+        "term": "louise di tullio",
+        "frequency": 1
+      },
+      {
+        "term": "lucy holliday",
+        "frequency": 1
+      },
+      {
+        "term": "ludvig brandstrup",
+        "frequency": 1
+      },
+      {
+        "term": "lutherska missionskyrkans kör",
+        "frequency": 1
+      },
+      {
+        "term": "m. d. litvinovoj",
+        "frequency": 1
+      },
+      {
+        "term": "maj-britt la cour",
+        "frequency": 1
+      },
+      {
+        "term": "marc shapiro",
+        "frequency": 1
+      },
+      {
+        "term": "marin alsop",
+        "frequency": 1
+      },
+      {
+        "term": "martin schmeling",
+        "frequency": 1
+      },
+      {
+        "term": "mary mclaughlin",
+        "frequency": 1
+      },
+      {
+        "term": "mats rondin",
+        "frequency": 1
+      },
+      {
+        "term": "matt birch",
+        "frequency": 1
+      },
+      {
+        "term": "maurice ravel",
+        "frequency": 1
+      },
+      {
+        "term": "max raabe",
+        "frequency": 1
+      },
+      {
+        "term": "michael gambov",
+        "frequency": 1
+      },
+      {
+        "term": "michael halász",
+        "frequency": 1
+      },
+      {
+        "term": "michael jeter",
+        "frequency": 1
+      },
+      {
+        "term": "mogens dam (f. 1897)",
+        "frequency": 1
+      },
+      {
+        "term": "mogens jermiin nissen",
+        "frequency": 1
+      },
+      {
+        "term": "moira butterfield",
+        "frequency": 1
+      },
+      {
+        "term": "monica potter",
+        "frequency": 1
+      },
+      {
+        "term": "mugglenet.com",
+        "frequency": 1
+      },
+      {
+        "term": "máire brennan",
+        "frequency": 1
+      },
+      {
+        "term": "nette beich",
+        "frequency": 1
+      },
+      {
+        "term": "new zealands symfoniorkester",
+        "frequency": 1
+      },
+      {
+        "term": "nicolaus esterházy sinfonia, budapest",
+        "frequency": 1
+      },
+      {
+        "term": "nightnoise",
+        "frequency": 1
+      },
+      {
+        "term": "nightwish",
+        "frequency": 1
+      },
+      {
+        "term": "norrköpings symfoniorkester",
+        "frequency": 1
+      },
+      {
+        "term": "ola persson",
+        "frequency": 1
+      },
+      {
+        "term": "ole haubo christensen",
+        "frequency": 1
+      },
+      {
+        "term": "ondrej lenárd",
+        "frequency": 1
+      },
+      {
+        "term": "pascal devoyon",
+        "frequency": 1
+      },
+      {
+        "term": "paul dukas",
+        "frequency": 1
+      },
+      {
+        "term": "paul grimster",
+        "frequency": 1
+      },
+      {
+        "term": "peter coyote",
+        "frequency": 1
+      },
+      {
+        "term": "peter himmelstrand",
+        "frequency": 1
+      },
+      {
+        "term": "peter mynte",
+        "frequency": 1
+      },
+      {
+        "term": "petr tjajkovskij",
+        "frequency": 1
+      },
+      {
+        "term": "phedon papamichael",
+        "frequency": 1
+      },
+      {
+        "term": "phil coulter",
+        "frequency": 1
+      },
+      {
+        "term": "philharmonia-orkestret, london",
+        "frequency": 1
+      },
+      {
+        "term": "philip nel (f. 1969)",
+        "frequency": 1
+      },
+      {
+        "term": "philip selway",
+        "frequency": 1
+      },
+      {
+        "term": "philip seymour hoffman",
+        "frequency": 1
+      },
+      {
+        "term": "queens' college's kor, oxford",
+        "frequency": 1
+      },
+      {
+        "term": "rachel o'donnell",
+        "frequency": 1
+      },
+      {
+        "term": "robert arnold",
+        "frequency": 1
+      },
+      {
+        "term": "robert craft",
+        "frequency": 1
+      },
+      {
+        "term": "robert schumann",
+        "frequency": 1
+      },
+      {
+        "term": "robin williams",
+        "frequency": 1
+      },
+      {
+        "term": "royal philharmonic-orkestret, london",
+        "frequency": 1
+      },
+      {
+        "term": "rsvp voices",
+        "frequency": 1
+      },
+      {
+        "term": "ryan o'donnell",
+        "frequency": 1
+      },
+      {
+        "term": "sarah mclachlan",
+        "frequency": 1
+      },
+      {
+        "term": "sayre van young",
+        "frequency": 1
+      },
+      {
+        "term": "scott thomas",
+        "frequency": 1
+      },
+      {
+        "term": "sean smith",
+        "frequency": 1
+      },
+      {
+        "term": "sergej prokof'ev",
+        "frequency": 1
+      },
+      {
+        "term": "shaun mccarthy",
+        "frequency": 1
+      },
+      {
+        "term": "shawn klein",
+        "frequency": 1
+      },
+      {
+        "term": "sigfred pedersen (f. 1903)",
+        "frequency": 1
+      },
+      {
+        "term": "sinéad o'connor",
+        "frequency": 1
+      },
+      {
+        "term": "slovakisk filharmonisk orkester, bratislava",
+        "frequency": 1
+      },
+      {
+        "term": "sonja kristensen",
+        "frequency": 1
+      },
+      {
+        "term": "steen agger (f. 1946)",
+        "frequency": 1
+      },
+      {
+        "term": "stephen gunzenhauser",
+        "frequency": 1
+      },
+      {
+        "term": "steve claydon",
+        "frequency": 1
+      },
+      {
+        "term": "steve howe",
+        "frequency": 1
+      },
+      {
+        "term": "steve mackey",
+        "frequency": 1
+      },
+      {
+        "term": "steve oedekerk",
+        "frequency": 1
+      },
+      {
+        "term": "susanne palsbo",
+        "frequency": 1
+      },
+      {
+        "term": "sven buemann",
+        "frequency": 1
+      },
+      {
+        "term": "svend aage esbensen",
+        "frequency": 1
+      },
+      {
+        "term": "takako nishizaki",
+        "frequency": 1
+      },
+      {
+        "term": "tanglewood festival-kor",
+        "frequency": 1
+      },
+      {
+        "term": "the chieftains",
+        "frequency": 1
+      },
+      {
+        "term": "the corrs",
+        "frequency": 1
+      },
+      {
+        "term": "the skywalker symphony orchestra",
+        "frequency": 1
+      },
+      {
+        "term": "thorkil jacobsen",
+        "frequency": 1
+      },
+      {
+        "term": "thøger olesen",
+        "frequency": 1
+      },
+      {
+        "term": "tim collins",
+        "frequency": 1
+      },
+      {
+        "term": "timothy morrison",
+        "frequency": 1
+      },
+      {
+        "term": "tom shadyac",
+        "frequency": 1
+      },
+      {
+        "term": "tony walther",
+        "frequency": 1
+      },
+      {
+        "term": "toots thielemans",
+        "frequency": 1
+      },
+      {
+        "term": "trine may",
+        "frequency": 1
+      },
+      {
+        "term": "utahs symfoniorkester",
+        "frequency": 1
+      },
+      {
+        "term": "v. babkova",
+        "frequency": 1
+      },
+      {
+        "term": "vangelis",
+        "frequency": 1
+      },
+      {
+        "term": "viggo happel",
+        "frequency": 1
+      },
+      {
+        "term": "vilfred kjær",
+        "frequency": 1
+      },
+      {
+        "term": "volmer-sørensen",
+        "frequency": 1
+      },
+      {
+        "term": "wilhelm kaiser-lindemann",
+        "frequency": 1
+      },
+      {
+        "term": "william coulter",
+        "frequency": 1
+      },
+      {
+        "term": "william irwin",
+        "frequency": 1
+      },
+      {
+        "term": "william ross",
+        "frequency": 1
+      },
+      {
+        "term": "within temptation",
+        "frequency": 1
+      },
+      {
+        "term": "zagrebs festivalorkester",
+        "frequency": 1
+      },
+      {
+        "term": "zdeněk košler",
+        "frequency": 1
+      }
+    ]
+  },
+  "createTest": "facets_negative_limit"
+}
+
+facets {"q":"harry AND potter","fields":["creator"],"limit":20,"createTest":"facets_high_limit"}
+{
+  "statusCode": 200,
+  "data": {
+    "creator": [
+      {
+        "term": "joanne k. rowling",
+        "frequency": 112
+      },
+      {
+        "term": "daniel radcliffe",
+        "frequency": 21
+      },
+      {
+        "term": "emma watson",
+        "frequency": 21
+      },
+      {
+        "term": "robbie coltrane",
+        "frequency": 21
+      },
+      {
+        "term": "rupert grint",
+        "frequency": 21
+      },
+      {
+        "term": "steve kloves",
+        "frequency": 19
+      },
+      {
+        "term": "david yates",
+        "frequency": 16
+      },
+      {
+        "term": "j.k. rowling",
+        "frequency": 16
+      },
+      {
+        "term": "stephen fry",
+        "frequency": 15
+      },
+      {
+        "term": "michael gambon",
+        "frequency": 14
+      },
+      {
+        "term": "jesper christensen (f. 1948)",
+        "frequency": 13
+      },
+      {
+        "term": "hanna lützen",
+        "frequency": 12
+      },
+      {
+        "term": "john williams (f. 1932)",
+        "frequency": 12
+      },
+      {
+        "term": "bill galliford",
+        "frequency": 10
+      },
+      {
+        "term": "ethan neuburg",
+        "frequency": 10
+      },
+      {
+        "term": "ralph fiennes",
+        "frequency": 10
+      },
+      {
+        "term": "tod edmondson",
+        "frequency": 10
+      },
+      {
+        "term": "helena bonham carter",
+        "frequency": 9
+      },
+      {
+        "term": "chris columbus",
+        "frequency": 8
+      },
+      {
+        "term": "richard griffiths",
+        "frequency": 8
+      }
+    ]
+  },
+  "createTest": "facets_high_limit"
+}
+
+facets {"q":"harry","createTest":"facets_simple"}
+{
+  "statusCode": 200,
+  "data": {
+    "creator": [
+      {
+        "term": "joanne k. rowling",
+        "frequency": 112
+      },
+      {
+        "term": "jo nesbø",
+        "frequency": 61
+      },
+      {
+        "term": "michael connelly",
+        "frequency": 44
+      },
+      {
+        "term": "harry christophers",
+        "frequency": 37
+      },
+      {
+        "term": "the sixteen",
+        "frequency": 34
+      },
+      {
+        "term": "harry edison",
+        "frequency": 29
+      },
+      {
+        "term": "georg friedrich händel",
+        "frequency": 27
+      },
+      {
+        "term": "allan hilton andersen",
+        "frequency": 26
+      },
+      {
+        "term": "bent otto hansen",
+        "frequency": 25
+      },
+      {
+        "term": "harry nilsson",
+        "frequency": 23
+      }
+    ],
+    "subject": [
+      {
+        "term": "vokal",
+        "frequency": 469
+      },
+      {
+        "term": "usa",
+        "frequency": 376
+      },
+      {
+        "term": "rock",
+        "frequency": 203
+      },
+      {
+        "term": "england",
+        "frequency": 202
+      },
+      {
+        "term": "instrumental",
+        "frequency": 193
+      },
+      {
+        "term": "2000-2009",
+        "frequency": 152
+      },
+      {
+        "term": "danmark",
+        "frequency": 152
+      },
+      {
+        "term": "jazz",
+        "frequency": 134
+      },
+      {
+        "term": "1960-1969",
+        "frequency": 130
+      },
+      {
+        "term": "krimi",
+        "frequency": 129
+      }
+    ],
+    "language": [
+      {
+        "term": "engelsk",
+        "frequency": 680
+      },
+      {
+        "term": "dansk",
+        "frequency": 589
+      },
+      {
+        "term": "blandede sprog",
+        "frequency": 189
+      },
+      {
+        "term": "latin",
+        "frequency": 17
+      },
+      {
+        "term": "tysk",
+        "frequency": 12
+      },
+      {
+        "term": "italiensk",
+        "frequency": 10
+      },
+      {
+        "term": "russisk",
+        "frequency": 8
+      },
+      {
+        "term": "fransk",
+        "frequency": 7
+      },
+      {
+        "term": "svensk",
+        "frequency": 7
+      },
+      {
+        "term": "norsk",
+        "frequency": 6
+      }
+    ],
+    "date": [
+      {
+        "term": "2012",
+        "frequency": 108
+      },
+      {
+        "term": "2013",
+        "frequency": 101
+      },
+      {
+        "term": "2009",
+        "frequency": 97
+      },
+      {
+        "term": "2015",
+        "frequency": 96
+      },
+      {
+        "term": "2011",
+        "frequency": 95
+      },
+      {
+        "term": "2007",
+        "frequency": 93
+      },
+      {
+        "term": "2014",
+        "frequency": 81
+      },
+      {
+        "term": "2006",
+        "frequency": 80
+      },
+      {
+        "term": "2005",
+        "frequency": 78
+      },
+      {
+        "term": "2004",
+        "frequency": 76
+      }
+    ],
+    "form": [
+      {
+        "term": "amerikanske film",
+        "frequency": 40
+      },
+      {
+        "term": "soundtracks",
+        "frequency": 32
+      },
+      {
+        "term": "computerspil",
+        "frequency": 30
+      },
+      {
+        "term": "biografier",
+        "frequency": 27
+      },
+      {
+        "term": "actionspil",
+        "frequency": 20
+      },
+      {
+        "term": "adventurespil",
+        "frequency": 15
+      },
+      {
+        "term": "engelske film",
+        "frequency": 13
+      },
+      {
+        "term": "undervisningsmaterialer",
+        "frequency": 11
+      },
+      {
+        "term": "erindringer",
+        "frequency": 8
+      },
+      {
+        "term": "håndbøger",
+        "frequency": 8
+      }
+    ]
+  },
+  "createTest": "facets_simple"
+}
+
+facets {"q":"invalid cql","createTest":"facets_invalid_cql"}
+{
+  "statusCode": 400,
+  "error": "error fulfilling the request",
+  "createTest": "facets_invalid_cql"
+}
+
+facets {"q":"ost","fields":["access","acSource","audience","audienceCategory","branch","category","creator","creatorFunction","date","department","dk5","extraTitles","fictionSubject","form","gamePlatform","genre","genreCategory","geographic","language","level","let","literaryForm","lix","musicSubject","nationality","nonFictionSubject","partOf","period","primaryCreator","sheetMusic","subject","titleSeries","type"],"limit":2,"createTest":"facets_all"}
+{
+  "statusCode": 200,
+  "data": {
+    "access": [
+      {
+        "term": "begrænset adgang",
+        "frequency": 8
+      }
+    ],
+    "acSource": [
+      {
+        "term": "bibliotekskatalog",
+        "frequency": 142
+      },
+      {
+        "term": "ereolen",
+        "frequency": 7
+      }
+    ],
+    "audience": [
+      {
+        "term": "tilladt for alle",
+        "frequency": 6
+      },
+      {
+        "term": "fra 5 år",
+        "frequency": 3
+      }
+    ],
+    "audienceCategory": [
+      {
+        "term": "for 7 år",
+        "frequency": 20
+      },
+      {
+        "term": "for 8 år",
+        "frequency": 17
+      }
+    ],
+    "branch": [
+      {
+        "term": "hb",
+        "frequency": 93
+      },
+      {
+        "term": "ris",
+        "frequency": 45
+      }
+    ],
+    "category": [
+      {
+        "term": "voksenmaterialer",
+        "frequency": 86
+      },
+      {
+        "term": "børnematerialer",
+        "frequency": 68
+      }
+    ],
+    "creator": [
+      {
+        "term": "hanne hastrup",
+        "frequency": 9
+      },
+      {
+        "term": "jannik hastrup",
+        "frequency": 9
+      }
+    ],
+    "creatorFunction": [
+      {
+        "term": "jannik hastrup",
+        "frequency": 9
+      },
+      {
+        "term": "hanne hastrup",
+        "frequency": 8
+      }
+    ],
+    "date": [
+      {
+        "term": "2008",
+        "frequency": 11
+      },
+      {
+        "term": "2000",
+        "frequency": 9
+      }
+    ],
+    "dk5": [
+      {
+        "term": "skønlitteratur",
+        "frequency": 39
+      },
+      {
+        "term": "63.7",
+        "frequency": 12
+      }
+    ],
+    "fictionSubject": [
+      {
+        "term": "mus",
+        "frequency": 12
+      },
+      {
+        "term": "sjove bøger",
+        "frequency": 7
+      }
+    ],
+    "form": [
+      {
+        "term": "kogebøger",
+        "frequency": 29
+      },
+      {
+        "term": "opskrifter",
+        "frequency": 26
+      }
+    ],
+    "genre": [
+      {
+        "term": "børnefilm",
+        "frequency": 6
+      },
+      {
+        "term": "rock",
+        "frequency": 6
+      }
+    ],
+    "genreCategory": [
+      {
+        "term": "nonfiktion",
+        "frequency": 71
+      },
+      {
+        "term": "fiktion",
+        "frequency": 53
+      }
+    ],
+    "geographic": [
+      {
+        "term": "danmark",
+        "frequency": 19
+      },
+      {
+        "term": "frankrig",
+        "frequency": 5
+      }
+    ],
+    "language": [
+      {
+        "term": "dansk",
+        "frequency": 121
+      },
+      {
+        "term": "blandede sprog",
+        "frequency": 17
+      }
+    ],
+    "level": [
+      {
+        "term": "alment niveau",
+        "frequency": 38
+      },
+      {
+        "term": "folkeskoleniveau",
+        "frequency": 4
+      }
+    ],
+    "let": [
+      {
+        "term": "16",
+        "frequency": 3
+      },
+      {
+        "term": "14",
+        "frequency": 2
+      }
+    ],
+    "literaryForm": [
+      {
+        "term": "faglitteratur",
+        "frequency": 71
+      },
+      {
+        "term": "skønlitteratur",
+        "frequency": 53
+      }
+    ],
+    "lix": [
+      {
+        "term": "07",
+        "frequency": 2
+      },
+      {
+        "term": "15",
+        "frequency": 2
+      }
+    ],
+    "musicSubject": [
+      {
+        "term": "vokal",
+        "frequency": 20
+      },
+      {
+        "term": "børnemusik",
+        "frequency": 9
+      }
+    ],
+    "nationality": [
+      {
+        "term": "danske film",
+        "frequency": 1
+      },
+      {
+        "term": "tyske film",
+        "frequency": 1
+      }
+    ],
+    "nonFictionSubject": [
+      {
+        "term": "ost",
+        "frequency": 13
+      },
+      {
+        "term": "tapas",
+        "frequency": 5
+      }
+    ],
+    "period": [
+      {
+        "term": "1990-1999",
+        "frequency": 13
+      },
+      {
+        "term": "2000-2009",
+        "frequency": 10
+      }
+    ],
+    "primaryCreator": [
+      {
+        "term": "john høybye",
+        "frequency": 6
+      },
+      {
+        "term": "hans-henrik ley",
+        "frequency": 4
+      }
+    ],
+    "sheetMusic": [
+      {
+        "term": "alle partiturer",
+        "frequency": 4
+      }
+    ],
+    "subject": [
+      {
+        "term": "kogebøger",
+        "frequency": 29
+      },
+      {
+        "term": "opskrifter",
+        "frequency": 27
+      }
+    ],
+    "titleSeries": [
+      {
+        "term": "mini zoom. mellem",
+        "frequency": 3
+      },
+      {
+        "term": "small world",
+        "frequency": 3
+      }
+    ],
+    "type": [
+      {
+        "term": "bog",
+        "frequency": 91
+      },
+      {
+        "term": "cd (musik)",
+        "frequency": 17
+      }
+    ]
+  },
+  "createTest": "facets_all"
+}
+
+news {"fields":["title","changed","nid","field_ding_news_list_image"],"createTest":"news"}
+{
+  "statusCode": 200,
+  "data": [
+    {
+      "title": {
+        "name": "Titel",
+        "value": "Sportsstjerner - bag facaden",
+        "attr": []
+      },
+      "changed": {
+        "name": "Opdateret",
+        "value": 1451918109,
+        "attr": []
+      },
+      "nid": 19,
+      "field_ding_news_list_image": {
+        "name": "List image",
+        "value": [
+          "files/775100/7268c0e6792000b897cea1d0dff628bd41117017.jpeg"
+        ],
+        "attr": [
+          "image/jpeg"
+        ]
+      }
+    },
+    {
+      "title": {
+        "name": "Titel",
+        "value": "Bagud med danskopgaven ? her er hjælp til dig",
+        "attr": []
+      },
+      "changed": {
+        "name": "Opdateret",
+        "value": 1454401649,
+        "attr": []
+      },
+      "nid": 40,
+      "field_ding_news_list_image": {
+        "name": "List image",
+        "value": [
+          "files/775100/97d745b02862cde44e9f4a431e0da175608760b7.jpeg"
+        ],
+        "attr": [
+          "image/jpeg"
+        ]
+      }
+    },
+    {
+      "title": {
+        "name": "Titel",
+        "value": "AFB test nyhed",
+        "attr": []
+      },
+      "changed": {
+        "name": "Opdateret",
+        "value": 1454692591,
+        "attr": []
+      },
+      "nid": 36,
+      "field_ding_news_list_image": {
+        "name": "List image",
+        "value": [
+          "files/775100/9daae4251ddd2684efe21a6164500fb309919c83.jpeg"
+        ],
+        "attr": [
+          "image/jpeg"
+        ]
+      }
+    },
+    {
+      "title": {
+        "name": "Titel",
+        "value": "Vil du interviewes om eReolen?",
+        "attr": []
+      },
+      "changed": {
+        "name": "Opdateret",
+        "value": 1454692950,
+        "attr": []
+      },
+      "nid": 41,
+      "field_ding_news_list_image": {
+        "name": "List image",
+        "value": [
+          "files/775100/e60c0aca678c0f7dfccb9b30bf705f8142471c56.jpeg"
+        ],
+        "attr": [
+          "image/jpeg"
+        ]
+      }
+    }
+  ],
+  "createTest": "news"
+}
+
+news {"nids":["19","40"],"fields":["title","changed","nid","field_ding_news_list_image"],"createTest":"news_nids"}
+{
+  "statusCode": 200,
+  "data": [
+    {
+      "title": {
+        "name": "Titel",
+        "value": "Sportsstjerner - bag facaden",
+        "attr": []
+      },
+      "changed": {
+        "name": "Opdateret",
+        "value": 1451918109,
+        "attr": []
+      },
+      "nid": 19,
+      "field_ding_news_list_image": {
+        "name": "List image",
+        "value": [
+          "files/775100/7268c0e6792000b897cea1d0dff628bd41117017.jpeg"
+        ],
+        "attr": [
+          "image/jpeg"
+        ]
+      }
+    },
+    {
+      "title": {
+        "name": "Titel",
+        "value": "Bagud med danskopgaven ? her er hjælp til dig",
+        "attr": []
+      },
+      "changed": {
+        "name": "Opdateret",
+        "value": 1454401649,
+        "attr": []
+      },
+      "nid": 40,
+      "field_ding_news_list_image": {
+        "name": "List image",
+        "value": [
+          "files/775100/97d745b02862cde44e9f4a431e0da175608760b7.jpeg"
+        ],
+        "attr": [
+          "image/jpeg"
+        ]
+      }
+    }
+  ],
+  "createTest": "news_nids"
+}
+
+order {"orderId":"non-existing","delete":true,"createTest":"order-delete-non-existing-order"}
+{
+  "statusCode": 500,
+  "error": "Unknown order",
+  "createTest": "order-delete-non-existing-order"
+}
+
+order {"pids":[],"expires":"2016-08-01","library":"DK-100451","phone":"123454","address":"ADDRESS","email":"EMAIL","createTest":"order-no-pids-in-pidlist"}
+{
+  "statusCode": 400,
+  "error": "At least one pid must be provided to place order",
+  "createTest": "order-no-pids-in-pidlist"
+}
+
+rank {"pids":["870970-basis:28511663","870970-basis:28902239"],"like":["870970-basis:45488713","870970-basis:28643713"],"createTest":"rank-happy"}
+{
+  "statusCode": 200,
+  "data": [
+    {
+      "title": "Journal 64 : krimithriller",
+      "creator": "Jussi Adler-Olsen",
+      "val": 62.798478002209706,
+      "ctkey": "Journal_64_:_krimithriller::Jussi_Adler-Olsen",
+      "pid": "870970-basis:28511663"
+    },
+    {
+      "title": "Det syvende barn",
+      "creator": "Erik Valeur",
+      "val": 42.07434137795138,
+      "ctkey": "Det_syvende_barn::Erik_Valeur",
+      "pid": "870970-basis:28902239"
+    }
+  ],
+  "createTest": "rank-happy"
+}
+
+recommend {"like":["870970-basis:45488713","870970-basis:28643713","870970-basis:29494940","870970-basis:29386404","870970-basis:28429576"],"recommender":"default","limit":10,"createTest":"recommend-default"}
+{
+  "statusCode": 200,
+  "data": [
+    {
+      "creator": "Mari Jungstedt",
+      "val": 0.5212014338107577,
+      "title": "Den mørke engel : kriminalroman",
+      "pid": "870970-basis:28824130"
+    },
+    {
+      "creator": "Mari Jungstedt",
+      "val": 0.49969786213953876,
+      "title": "Den farlige leg : kriminalroman",
+      "pid": "870970-basis:50625532"
+    },
+    {
+      "creator": "Camilla Läckberg",
+      "val": 0.4797369002061243,
+      "title": "Fyrmesteren : kriminalroman",
+      "pid": "870970-basis:28709994"
+    },
+    {
+      "creator": "Mari Jungstedt",
+      "val": 0.45033463212057645,
+      "title": "I denne søde sommertid : kriminalroman",
+      "pid": "870970-basis:28277350"
+    },
+    {
+      "creator": "Camilla Läckberg",
+      "val": 0.4138118073099609,
+      "title": "Tyskerungen : kriminalroman",
+      "pid": "870970-basis:27670806"
+    },
+    {
+      "creator": "Elsebeth Egholm",
+      "val": 0.3873503806990347,
+      "title": "Eget ansvar",
+      "pid": "870970-basis:29953554"
+    },
+    {
+      "creator": "Anna Grue",
+      "val": 0.3673895724014438,
+      "title": "Et spørgsmål om penge",
+      "pid": "870970-basis:29477744"
+    },
+    {
+      "creator": "Camilla Läckberg",
+      "val": 0.3626510422203491,
+      "title": "Englemagersken : kriminalroman",
+      "pid": "870970-basis:45188981"
+    },
+    {
+      "creator": "Mari Jungstedt",
+      "val": 0.3566828199512204,
+      "title": "Den døende dandy : kriminalroman",
+      "pid": "870970-basis:27805779"
+    },
+    {
+      "creator": "Julie Hastrup",
+      "val": 0.3517748973244521,
+      "title": "Portræt af døden : krimi",
+      "pid": "870970-basis:29955530"
+    }
+  ],
+  "createTest": "recommend-default"
+}
+
+recommend {"like":["870970-basis:45488713","870970-basis:28643713","870970-basis:29494940","870970-basis:29386404","870970-basis:28429576"],"recommender":"default","limit":10,"createTest":"recommend-default-explicit"}
+{
+  "statusCode": 200,
+  "data": [
+    {
+      "creator": "Mari Jungstedt",
+      "val": 0.5212014338107577,
+      "title": "Den mørke engel : kriminalroman",
+      "pid": "870970-basis:28824130"
+    },
+    {
+      "creator": "Mari Jungstedt",
+      "val": 0.49969786213953876,
+      "title": "Den farlige leg : kriminalroman",
+      "pid": "870970-basis:50625532"
+    },
+    {
+      "creator": "Camilla Läckberg",
+      "val": 0.4797369002061243,
+      "title": "Fyrmesteren : kriminalroman",
+      "pid": "870970-basis:28709994"
+    },
+    {
+      "creator": "Mari Jungstedt",
+      "val": 0.45033463212057645,
+      "title": "I denne søde sommertid : kriminalroman",
+      "pid": "870970-basis:28277350"
+    },
+    {
+      "creator": "Camilla Läckberg",
+      "val": 0.4138118073099609,
+      "title": "Tyskerungen : kriminalroman",
+      "pid": "870970-basis:27670806"
+    },
+    {
+      "creator": "Elsebeth Egholm",
+      "val": 0.3873503806990347,
+      "title": "Eget ansvar",
+      "pid": "870970-basis:29953554"
+    },
+    {
+      "creator": "Anna Grue",
+      "val": 0.3673895724014438,
+      "title": "Et spørgsmål om penge",
+      "pid": "870970-basis:29477744"
+    },
+    {
+      "creator": "Camilla Läckberg",
+      "val": 0.3626510422203491,
+      "title": "Englemagersken : kriminalroman",
+      "pid": "870970-basis:45188981"
+    },
+    {
+      "creator": "Mari Jungstedt",
+      "val": 0.3566828199512204,
+      "title": "Den døende dandy : kriminalroman",
+      "pid": "870970-basis:27805779"
+    },
+    {
+      "creator": "Julie Hastrup",
+      "val": 0.3517748973244521,
+      "title": "Portræt af døden : krimi",
+      "pid": "870970-basis:29955530"
+    }
+  ],
+  "createTest": "recommend-default-explicit"
+}
+
+recommend {"recommender":"popular","limit":3,"createTest":"recommend-popular"}
+{
+  "statusCode": 200,
+  "data": [
+    {
+      "creator": "Jussi Adler-Olsen",
+      "val": 30889,
+      "title": "Journal 64 : krimithriller",
+      "pid": "870970-basis:28511663"
+    },
+    {
+      "creator": "Sara Blædel",
+      "val": 26278,
+      "title": "De glemte piger : krimi",
+      "pid": "870970-basis:29060835"
+    },
+    {
+      "creator": "Sara Blædel",
+      "val": 25139,
+      "title": "Dødsenglen : krimi",
+      "pid": "870970-basis:28567057"
+    }
+  ],
+  "createTest": "recommend-popular"
+}
+
+recommend {"recommender":"WAT!?","createTest":"recommend-error-wrong-recommender"}
+{
+  "statusCode": 400,
+  "error": "unknown or unsupported recommender type",
+  "createTest": "recommend-error-wrong-recommender"
+}
+
+renew {"loanId":"non-existing","createTest":"renew-non-existing-loanid"}
+{
+  "statusCode": 500,
+  "error": "Item not renewable",
+  "createTest": "renew-non-existing-loanid"
+}
+
+search {"q":"harry AND potter","fields":["identifier","title","collection","subjectDBCF","hasAdaptation"],"sort":"invalid_sort","createTest":"search_invalid_sort"}
+{
+  "statusCode": 500,
+  "error": "Error: Unknown sort: invalid_sort",
+  "createTest": "search_invalid_sort"
+}
+
+search {"q":"harry ","fields":["identifier","title","collection","subjectDBCF","hasAdaptation","coverUrlFull"],"sort":"rank_title","createTest":"seach_sort"}
+{
+  "statusCode": 200,
+  "data": [
+    {
+      "title": [
+        "Harry Brown"
+      ],
+      "collection": [
+        "775100-katalog:28277229",
+        "775100-katalog:28447698"
+      ],
+      "coverUrlFull": [
+        "//moreinfo.addi.dk/2.1/more_info_get.php?id=49830597&type=forside_stor&key=92cd352c92733708b7d8"
+      ]
+    },
+    {
+      "title": [
+        "Dirty Harry"
+      ],
+      "collection": [
+        "775100-katalog:27447406"
+      ]
+    },
+    {
+      "title": [
+        "Lego creator - Harry Potter"
+      ],
+      "collection": [
+        "775100-katalog:24039978"
+      ],
+      "subjectDBCF": [
+        "legoklodser"
+      ]
+    },
+    {
+      "title": [
+        "Harry Styles"
+      ],
+      "collection": [
+        "775100-katalog:50536661",
+        "870970-basis:51182200"
+      ],
+      "subjectDBCF": [
+        "Harry Styles",
+        "One Direction",
+        "pop",
+        "sangere"
+      ],
+      "coverUrlFull": [
+        "//moreinfo.addi.dk/2.1/more_info_get.php?id=61491204&type=forside_stor&key=e613fc4b42d85459f78d"
+      ]
+    },
+    {
+      "title": [
+        "The story of Harry's"
+      ],
+      "collection": [
+        "150008-public:ebr10440572"
+      ]
+    },
+    {
+      "title": [
+        "Dirty Harry"
+      ],
+      "collection": [
+        "870970-basis:50691446"
+      ]
+    },
+    {
+      "title": [
+        "Harry - stykke for stykke"
+      ],
+      "collection": [
+        "775100-katalog:29395306"
+      ],
+      "coverUrlFull": [
+        "//moreinfo.addi.dk/2.1/more_info_get.php?id=58977222&type=forside_stor&key=a26b794b8c291738121a"
+      ]
+    },
+    {
+      "title": [
+        "Harry - stykke for stykke"
+      ],
+      "collection": [
+        "870970-basis:51088883"
+      ]
+    },
+    {
+      "title": [
+        "Harry Redknapp"
+      ],
+      "collection": [
+        "150008-public:ebr10593006"
+      ]
+    },
+    {
+      "title": [
+        "Panserhjerte"
+      ],
+      "collection": [
+        "775100-katalog:28721420",
+        "775100-katalog:27948022",
+        "775100-katalog:28037880",
+        "775100-katalog:28037929",
+        "775100-katalog:28037937",
+        "775100-katalog:28002769",
+        "775100-katalog:44739194"
+      ],
+      "coverUrlFull": [
+        "//moreinfo.addi.dk/2.1/more_info_get.php?id=52049006&type=forside_stor&key=628d4e1571103dec1228"
+      ]
+    }
+  ],
+  "createTest": "seach_sort"
+}
+
+search {"q":"hest","createTest":"search_simple"}
+{
+  "statusCode": 200,
+  "data": [
+    {
+      "collection": [
+        "150043-atlas:8286"
+      ],
+      "collectionDetails": [
+        {
+          "accessType": [
+            "online"
+          ],
+          "pid": [
+            "150043-atlas:8286"
+          ],
+          "language": [
+            "Dansk"
+          ],
+          "title": [
+            "Hest"
+          ],
+          "titleFull": [
+            "Hest"
+          ],
+          "type": [
+            "Netdokument"
+          ],
+          "workType": [
+            "book"
+          ]
+        }
+      ],
+      "acIdentifier": [
+        "8286|150043"
+      ],
+      "identifierURI": [
+        "http://historiskatlas.dk/Hest_(8286)"
+      ],
+      "acSource": [
+        "Historisk Atlas"
+      ],
+      "dcTitle": [
+        "Hest"
+      ],
+      "dcTitleFull": [
+        "Hest"
+      ],
+      "subject": [
+        "Kunst",
+        "Skulpturer"
+      ],
+      "abstract": [
+        "Agnete Ester Votborg Madsen (1923-1977)\nHest, u.å."
+      ],
+      "audience": [
+        "voksenmaterialer"
+      ],
+      "publisher": [
+        "Historisk Atlas"
+      ],
+      "typeBibDKType": [
+        "Netdokument"
+      ],
+      "languageISO6392": [
+        "dan"
+      ],
+      "dcLanguage": [
+        "Dansk"
+      ],
+      "spatialCoordinates": [
+        "10.427599112429400000000000000,55.366856304806300000000000000"
+      ],
+      "accessType": [
+        "online"
+      ],
+      "pid": [
+        "150043-atlas:8286"
+      ],
+      "language": [
+        "Dansk"
+      ],
+      "title": [
+        "Hest"
+      ],
+      "titleFull": [
+        "Hest"
+      ],
+      "type": [
+        "Netdokument"
+      ],
+      "workType": [
+        "book"
+      ]
+    },
+    {
+      "collection": [
+        "775100-katalog:06402917"
+      ],
+      "collectionDetails": [
+        {
+          "accessType": [
+            "physical"
+          ],
+          "creator": [
+            "Teaterværkstedet Den Blå Hest"
+          ],
+          "pid": [
+            "775100-katalog:06402917"
+          ],
+          "language": [
+            "Engelsk"
+          ],
+          "title": [
+            "Teaterværkstedet Den blå Hest 1976-1986"
+          ],
+          "titleFull": [
+            "Teaterværkstedet Den blå Hest 1976-1986"
+          ],
+          "type": [
+            "Bog"
+          ],
+          "workType": [
+            "book"
+          ]
+        }
+      ],
+      "acIdentifier": [
+        "06402917|870970"
+      ],
+      "identifierISBN": [
+        "87-982191-1-1"
+      ],
+      "acSource": [
+        "Bibliotekskatalog"
+      ],
+      "dcTitle": [
+        "Teaterværkstedet Den blå Hest 1976-1986"
+      ],
+      "dcTitleFull": [
+        "Teaterværkstedet Den blå Hest 1976-1986"
+      ],
+      "subjectDK5": [
+        "77.096"
+      ],
+      "subjectDK5Text": [
+        "Teaterhistorie. Danmark"
+      ],
+      "subjectDBCF": [
+        "Teaterværkstedet Den Blå Hest",
+        "dansk teater",
+        "historie*",
+        "teater"
+      ],
+      "audience": [
+        "voksenmaterialer"
+      ],
+      "publisher": [
+        "Den blå Hest"
+      ],
+      "contributor": [
+        "Teaterværkstedet Den Blå Hest"
+      ],
+      "date": [
+        "1986"
+      ],
+      "typeBibDKType": [
+        "Bog"
+      ],
+      "format": [
+        "illustreret"
+      ],
+      "extent": [
+        "102 sider"
+      ],
+      "languageISO6392": [
+        "mul",
+        "dan",
+        "eng"
+      ],
+      "dcLanguage": [
+        "Flere sprog",
+        "Dansk",
+        "Engelsk"
+      ],
+      "temporalDBCP": [
+        "1970-1979",
+        "1980-1989"
+      ],
+      "accessType": [
+        "physical"
+      ],
+      "creator": [
+        "Teaterværkstedet Den Blå Hest"
+      ],
+      "pid": [
+        "775100-katalog:06402917"
+      ],
+      "language": [
+        "Engelsk"
+      ],
+      "title": [
+        "Teaterværkstedet Den blå Hest 1976-1986"
+      ],
+      "titleFull": [
+        "Teaterværkstedet Den blå Hest 1976-1986"
+      ],
+      "type": [
+        "Bog"
+      ],
+      "workType": [
+        "book"
+      ]
+    },
+    {
+      "collection": [
+        "775100-katalog:26476720",
+        "870970-basis:50542882"
+      ],
+      "collectionDetails": [
+        {
+          "accessType": [
+            "physical"
+          ],
+          "creator": [
+            "Sarah Widdicombe"
+          ],
+          "pid": [
+            "775100-katalog:26476720"
+          ],
+          "language": [
+            "Dansk"
+          ],
+          "title": [
+            "Den sunde hest"
+          ],
+          "titleFull": [
+            "Den sunde hest : hold din hest sund i ryg, ben og tænder"
+          ],
+          "type": [
+            "Bog"
+          ],
+          "workType": [
+            "book"
+          ]
+        },
+        {
+          "accessType": [
+            "online"
+          ],
+          "pid": [
+            "870970-basis:50542882"
+          ],
+          "language": [
+            "Dansk"
+          ],
+          "title": [
+            "Den sunde hest"
+          ],
+          "titleFull": [
+            "Den sunde hest : hvordan du holder din hests ryg, ben og tænder sunde"
+          ],
+          "type": [
+            "Ebog"
+          ],
+          "workType": [
+            "book"
+          ]
+        }
+      ],
+      "acIdentifier": [
+        "26476720|870970"
+      ],
+      "identifierISBN": [
+        "87-7857-483-8"
+      ],
+      "acSource": [
+        "Bibliotekskatalog"
+      ],
+      "dcTitle": [
+        "Den sunde hest"
+      ],
+      "dcTitleFull": [
+        "Den sunde hest : hold din hest sund i ryg, ben og tænder"
+      ],
+      "subjectDK5": [
+        "63.61"
+      ],
+      "subjectDK5Text": [
+        "Heste"
+      ],
+      "subjectDBCF": [
+        "heste",
+        "pasning"
+      ],
+      "audience": [
+        "voksenmaterialer"
+      ],
+      "publisher": [
+        "Atelier"
+      ],
+      "contributor": [
+        "Sarah Widdicombe"
+      ],
+      "date": [
+        "2006"
+      ],
+      "typeBibDKType": [
+        "Bog"
+      ],
+      "format": [
+        "illustreret i farver"
+      ],
+      "extent": [
+        "185 sider"
+      ],
+      "languageISO6392": [
+        "dan"
+      ],
+      "dcLanguage": [
+        "Dansk"
+      ],
+      "accessType": [
+        "physical"
+      ],
+      "creator": [
+        "Sarah Widdicombe"
+      ],
+      "pid": [
+        "775100-katalog:26476720"
+      ],
+      "language": [
+        "Dansk"
+      ],
+      "title": [
+        "Den sunde hest"
+      ],
+      "titleFull": [
+        "Den sunde hest : hold din hest sund i ryg, ben og tænder"
+      ],
+      "type": [
+        "Bog"
+      ],
+      "workType": [
+        "book"
+      ]
+    },
+    {
+      "collection": [
+        "775100-katalog:29567085"
+      ],
+      "collectionDetails": [
+        {
+          "accessType": [
+            "physical"
+          ],
+          "creator": [
+            "Pia Halse"
+          ],
+          "pid": [
+            "775100-katalog:29567085"
+          ],
+          "language": [
+            "Dansk"
+          ],
+          "title": [
+            "Tork og Hest"
+          ],
+          "titleFull": [
+            "Tork og Hest"
+          ],
+          "type": [
+            "Bog"
+          ],
+          "workType": [
+            "book"
+          ]
+        }
+      ],
+      "acIdentifier": [
+        "29567085|870970"
+      ],
+      "identifierISBN": [
+        "9788771150445"
+      ],
+      "acSource": [
+        "Bibliotekskatalog"
+      ],
+      "dcTitle": [
+        "Tork og Hest"
+      ],
+      "dcTitleFull": [
+        "Tork og Hest"
+      ],
+      "creatorAut": [
+        "Louis Jensen (f. 1943)"
+      ],
+      "creatorSort": [
+        "Jensen, Louis (f. 1943)"
+      ],
+      "subjectDK5Text": [
+        "Skønlitteratur"
+      ],
+      "subjectDBCS": [
+        "fantasi",
+        "rejser",
+        "venskab"
+      ],
+      "subjectDBCN": [
+        "for 5 år",
+        "for 6 år",
+        "for 7 år",
+        "for 8 år",
+        "for højtlæsning"
+      ],
+      "subjectDK5": [
+        "sk"
+      ],
+      "abstract": [
+        "Torks vugge er en kuffert, og han drager tidligt ud i verden. Her møder han Hest, og de to venner har mange spændende oplevelse, før historien ender som alle gode eventyr og Tork får prinsessen"
+      ],
+      "descriptionSeries": [
+        "Samhørende: Tork og Hest ; Tork og Hest - den store blyant ; Tork og Hest - på nye eventyr ; Tork og Hest - den porcelæne danserinde"
+      ],
+      "audience": [
+        "børnematerialer"
+      ],
+      "version": [
+        "1. oplag (2012)"
+      ],
+      "publisher": [
+        "Alfa"
+      ],
+      "contributorIll": [
+        "Pia Halse"
+      ],
+      "date": [
+        "2012"
+      ],
+      "typeBibDKType": [
+        "Bog"
+      ],
+      "format": [
+        "illustreret i farver"
+      ],
+      "extent": [
+        "48 sider"
+      ],
+      "languageISO6392": [
+        "dan"
+      ],
+      "dcLanguage": [
+        "Dansk"
+      ],
+      "accessType": [
+        "physical"
+      ],
+      "creator": [
+        "Pia Halse"
+      ],
+      "pid": [
+        "775100-katalog:29567085"
+      ],
+      "language": [
+        "Dansk"
+      ],
+      "title": [
+        "Tork og Hest"
+      ],
+      "titleFull": [
+        "Tork og Hest"
+      ],
+      "type": [
+        "Bog"
+      ],
+      "workType": [
+        "book"
+      ]
+    },
+    {
+      "collection": [
+        "150033-dandyr:11942"
+      ],
+      "collectionDetails": [
+        {
+          "accessType": [
+            "online"
+          ],
+          "creator": [
+            "danske-dyr.dk"
+          ],
+          "pid": [
+            "150033-dandyr:11942"
+          ],
+          "language": [
+            "Dansk"
+          ],
+          "title": [
+            "Jysk hest"
+          ],
+          "titleFull": [
+            "Jysk hest"
+          ],
+          "type": [
+            "Netdokument"
+          ],
+          "workType": [
+            "book"
+          ]
+        }
+      ],
+      "acIdentifier": [
+        "11942|150033"
+      ],
+      "identifierURI": [
+        "http://bibliotek.danske-dyr.dk/Sv%C3%A6r/dyr/Jysk%20hest/"
+      ],
+      "acSource": [
+        "Danske Dyr"
+      ],
+      "dcTitle": [
+        "Jysk hest"
+      ],
+      "dcTitleFull": [
+        "Jysk hest"
+      ],
+      "alternative": [
+        "Den jyske hest"
+      ],
+      "creatorCom": [
+        "danske-dyr.dk"
+      ],
+      "creatorSort": [
+        "danske-dyr.dk"
+      ],
+      "subject": [
+        "Zoologi",
+        "Biologi"
+      ],
+      "audience": [
+        "børnematerialer"
+      ],
+      "publisher": [
+        "ConDidact A/S"
+      ],
+      "date": [
+        "2009"
+      ],
+      "typeBibDKType": [
+        "Netdokument"
+      ],
+      "dcLanguage": [
+        "Dansk"
+      ],
+      "languageISO6392": [
+        "dan"
+      ],
+      "rights": [
+        "Copyright © 2016 ConDidact A/S"
+      ],
+      "accessType": [
+        "online"
+      ],
+      "creator": [
+        "danske-dyr.dk"
+      ],
+      "pid": [
+        "150033-dandyr:11942"
+      ],
+      "language": [
+        "Dansk"
+      ],
+      "title": [
+        "Jysk hest"
+      ],
+      "titleFull": [
+        "Jysk hest"
+      ],
+      "type": [
+        "Netdokument"
+      ],
+      "workType": [
+        "book"
+      ]
+    },
+    {
+      "collection": [
+        "150033-dandyr:8802"
+      ],
+      "collectionDetails": [
+        {
+          "accessType": [
+            "online"
+          ],
+          "creator": [
+            "danske-dyr.dk"
+          ],
+          "pid": [
+            "150033-dandyr:8802"
+          ],
+          "language": [
+            "Dansk"
+          ],
+          "title": [
+            "Hest"
+          ],
+          "titleFull": [
+            "Hest"
+          ],
+          "type": [
+            "Netdokument"
+          ],
+          "workType": [
+            "book"
+          ]
+        }
+      ],
+      "acIdentifier": [
+        "8802|150033"
+      ],
+      "identifierURI": [
+        "http://bibliotek.danske-dyr.dk/Sv%C3%A6r/dyr/Hest/"
+      ],
+      "acSource": [
+        "Danske Dyr"
+      ],
+      "dcTitle": [
+        "Hest"
+      ],
+      "dcTitleFull": [
+        "Hest"
+      ],
+      "alternative": [
+        "Hesten"
+      ],
+      "creatorCom": [
+        "danske-dyr.dk"
+      ],
+      "creatorSort": [
+        "danske-dyr.dk"
+      ],
+      "subject": [
+        "Dyr",
+        "Hvirveldyr",
+        "Pattedyr",
+        "Uparretåede hovdyr",
+        "Heste",
+        "Zoologi",
+        "Biologi"
+      ],
+      "audience": [
+        "børnematerialer"
+      ],
+      "publisher": [
+        "ConDidact A/S"
+      ],
+      "date": [
+        "2009"
+      ],
+      "typeBibDKType": [
+        "Netdokument"
+      ],
+      "dcLanguage": [
+        "Dansk"
+      ],
+      "languageISO6392": [
+        "dan"
+      ],
+      "rights": [
+        "Copyright © 2016 ConDidact A/S"
+      ],
+      "accessType": [
+        "online"
+      ],
+      "creator": [
+        "danske-dyr.dk"
+      ],
+      "pid": [
+        "150033-dandyr:8802"
+      ],
+      "language": [
+        "Dansk"
+      ],
+      "title": [
+        "Hest"
+      ],
+      "titleFull": [
+        "Hest"
+      ],
+      "type": [
+        "Netdokument"
+      ],
+      "workType": [
+        "book"
+      ]
+    },
+    {
+      "collection": [
+        "775100-katalog:28446594"
+      ],
+      "collectionDetails": [
+        {
+          "accessType": [
+            "physical"
+          ],
+          "creator": [
+            "Gerd Heuschmann"
+          ],
+          "pid": [
+            "775100-katalog:28446594"
+          ],
+          "language": [
+            "Dansk"
+          ],
+          "title": [
+            "Min hest har næsen forrest!"
+          ],
+          "titleFull": [
+            "Min hest har næsen forrest! : rid rigtigt og få en sund hest"
+          ],
+          "type": [
+            "Bog"
+          ],
+          "workType": [
+            "book"
+          ]
+        }
+      ],
+      "acIdentifier": [
+        "28446594|870970"
+      ],
+      "identifierISBN": [
+        "9788721036102"
+      ],
+      "acSource": [
+        "Bibliotekskatalog"
+      ],
+      "source": [
+        "Mein Pferd hat die Nase vorn!"
+      ],
+      "dcTitle": [
+        "Min hest har næsen forrest!"
+      ],
+      "dcTitleFull": [
+        "Min hest har næsen forrest! : rid rigtigt og få en sund hest"
+      ],
+      "creatorAut": [
+        "Gerd Heuschmann"
+      ],
+      "creatorSort": [
+        "Heuschmann, Gerd"
+      ],
+      "subjectDK5": [
+        "79.65"
+      ],
+      "subjectDK5Text": [
+        "Ridning. Hestesport"
+      ],
+      "subjectDBCF": [
+        "dressur",
+        "heste",
+        "rideheste",
+        "ridning",
+        "sundhed"
+      ],
+      "subjectDBCN": [
+        "for 14 år",
+        "for 15 år",
+        "for 16 år"
+      ],
+      "description": [
+        "Indhold: Det ømme punkt ; Klassisk ridekunst ; Opstaldning af din hest ; Din hests anatomi ; Uddannelse af heste ; Du og din hest"
+      ],
+      "audience": [
+        "børnematerialer"
+      ],
+      "version": [
+        "1. udgave, 1. oplag (2010)"
+      ],
+      "publisher": [
+        "Borgen"
+      ],
+      "contributorTrl": [
+        "Birgitte Eggeling"
+      ],
+      "contributorIll": [
+        "Katharina Rücker-Weininger",
+        "Kaja Möbius"
+      ],
+      "date": [
+        "2010"
+      ],
+      "typeBibDKType": [
+        "Bog"
+      ],
+      "format": [
+        "ill i farver"
+      ],
+      "extent": [
+        "141 sider"
+      ],
+      "languageISO6392": [
+        "dan"
+      ],
+      "dcLanguage": [
+        "Dansk"
+      ],
+      "accessType": [
+        "physical"
+      ],
+      "creator": [
+        "Gerd Heuschmann"
+      ],
+      "pid": [
+        "775100-katalog:28446594"
+      ],
+      "language": [
+        "Dansk"
+      ],
+      "title": [
+        "Min hest har næsen forrest!"
+      ],
+      "titleFull": [
+        "Min hest har næsen forrest! : rid rigtigt og få en sund hest"
+      ],
+      "type": [
+        "Bog"
+      ],
+      "workType": [
+        "book"
+      ]
+    },
+    {
+      "collection": [
+        "775100-katalog:25230701",
+        "775100-katalog:28250355"
+      ],
+      "collectionDetails": [
+        {
+          "accessType": [
+            "physical"
+          ],
+          "pid": [
+            "775100-katalog:25230701"
+          ],
+          "language": [
+            "Dansk"
+          ],
+          "title": [
+            "Den klassiske grunduddannelse af rytter & hest"
+          ],
+          "titleFull": [
+            "Den klassiske grunduddannelse af rytter & hest"
+          ],
+          "type": [
+            "Bog (Bind 1)"
+          ],
+          "workType": [
+            "book"
+          ]
+        },
+        {
+          "accessType": [
+            "physical"
+          ],
+          "pid": [
+            "775100-katalog:28250355"
+          ],
+          "language": [
+            "Dansk"
+          ],
+          "title": [
+            "Den klassiske grunduddannelse af rytter & hest"
+          ],
+          "titleFull": [
+            "Den klassiske grunduddannelse af rytter & hest"
+          ],
+          "type": [
+            "Bog (bind 2)"
+          ],
+          "workType": [
+            "book"
+          ]
+        }
+      ],
+      "acIdentifier": [
+        "25230701|870970"
+      ],
+      "identifierISBN": [
+        "87-986757-5-3"
+      ],
+      "acSource": [
+        "Bibliotekskatalog"
+      ],
+      "source": [
+        "Richtlinien für Reiten und Fahren, Grundausbildung für Reiter und Pferd"
+      ],
+      "dcTitle": [
+        "Den klassiske grunduddannelse af rytter & hest"
+      ],
+      "dcTitleFull": [
+        "Den klassiske grunduddannelse af rytter & hest. Bind 1"
+      ],
+      "alternative": [
+        "Rytter & hest",
+        "Rytter og hest",
+        "Den klassiske grunduddannelse af rytter og hest"
+      ],
+      "subjectDK5": [
+        "79.65"
+      ],
+      "subjectDK5Text": [
+        "Ridning. Hestesport"
+      ],
+      "subjectDBCF": [
+        "dressur",
+        "heste",
+        "hestesport",
+        "konkurrenceridning",
+        "military",
+        "ridning",
+        "spring",
+        "træning"
+      ],
+      "description": [
+        "Indhold: Rytterens grunduddannelse ; Grundlæggende øvelser ; Hestens grunduddannelse ; Råd om og vejledning i at ride konkurrencer"
+      ],
+      "audience": [
+        "børnematerialer"
+      ],
+      "publisher": [
+        "Dansk Ride Forbund",
+        "Wiegaarden"
+      ],
+      "contributor": [
+        "Jytte Lemkow",
+        "Dansk Ride-Forbund"
+      ],
+      "date": [
+        "2004"
+      ],
+      "typeBibDKType": [
+        "Bog"
+      ],
+      "format": [
+        "illustreret i farver"
+      ],
+      "extent": [
+        "248 sider",
+        "bind"
+      ],
+      "languageISO6392": [
+        "dan"
+      ],
+      "dcLanguage": [
+        "Dansk"
+      ],
+      "accessType": [
+        "physical"
+      ],
+      "pid": [
+        "775100-katalog:25230701"
+      ],
+      "language": [
+        "Dansk"
+      ],
+      "title": [
+        "Den klassiske grunduddannelse af rytter & hest"
+      ],
+      "titleFull": [
+        "Den klassiske grunduddannelse af rytter & hest"
+      ],
+      "type": [
+        "Bog (Bind 1)"
+      ],
+      "workType": [
+        "book"
+      ]
+    },
+    {
+      "collection": [
+        "150043-atlas:2760"
+      ],
+      "collectionDetails": [
+        {
+          "accessType": [
+            "online"
+          ],
+          "pid": [
+            "150043-atlas:2760"
+          ],
+          "language": [
+            "Dansk"
+          ],
+          "title": [
+            "Christian IVs redningsmand"
+          ],
+          "titleFull": [
+            "Christian IVs redningsmand"
+          ],
+          "type": [
+            "Netdokument"
+          ],
+          "workType": [
+            "book"
+          ]
+        }
+      ],
+      "acIdentifier": [
+        "2760|150043"
+      ],
+      "identifierURI": [
+        "http://historiskatlas.dk/Christian_IVs_redningsmand_(2760)"
+      ],
+      "acSource": [
+        "Historisk Atlas"
+      ],
+      "dcTitle": [
+        "Christian IVs redningsmand"
+      ],
+      "dcTitleFull": [
+        "Christian IVs redningsmand"
+      ],
+      "subject": [
+        "Mindesmærker",
+        "Seværdigheder",
+        "Litteratur",
+        "Referencer",
+        "Personer"
+      ],
+      "subjectGenre": [
+        "Renæssance"
+      ],
+      "abstract": [
+        "\"En hest! En hest! Mit kongerige for en hest!\" Sådan råbte Richard III i 1485 ifølge Shakespeare, da hans hest var blevet dræbt i slaget ved Bosworth. I Tjæreborg er en af deltagerne i et dansk sidestykke til den historie begravet, Wentzel Rothkierck."
+      ],
+      "audience": [
+        "voksenmaterialer"
+      ],
+      "publisher": [
+        "Historisk Atlas"
+      ],
+      "typeBibDKType": [
+        "Netdokument"
+      ],
+      "languageISO6392": [
+        "dan"
+      ],
+      "dcLanguage": [
+        "Dansk"
+      ],
+      "spatialCoordinates": [
+        "8.583453387013350000000000000,55.4613264987002"
+      ],
+      "accessType": [
+        "online"
+      ],
+      "pid": [
+        "150043-atlas:2760"
+      ],
+      "language": [
+        "Dansk"
+      ],
+      "title": [
+        "Christian IVs redningsmand"
+      ],
+      "titleFull": [
+        "Christian IVs redningsmand"
+      ],
+      "type": [
+        "Netdokument"
+      ],
+      "workType": [
+        "book"
+      ]
+    },
+    {
+      "collection": [
+        "775100-katalog:28597584"
+      ],
+      "collectionDetails": [
+        {
+          "accessType": [
+            "physical"
+          ],
+          "creator": [
+            "Bettina Hvidemose"
+          ],
+          "pid": [
+            "775100-katalog:28597584"
+          ],
+          "language": [
+            "Dansk"
+          ],
+          "title": [
+            "Indlæringspsykologi for hest og rytter"
+          ],
+          "titleFull": [
+            "Indlæringspsykologi for hest og rytter : lær din hest at forstå dig!"
+          ],
+          "type": [
+            "Bog"
+          ],
+          "workType": [
+            "book"
+          ]
+        }
+      ],
+      "acIdentifier": [
+        "28597584|870970"
+      ],
+      "identifierISBN": [
+        "9788771141320"
+      ],
+      "acSource": [
+        "Bibliotekskatalog"
+      ],
+      "dcTitle": [
+        "Indlæringspsykologi for hest og rytter"
+      ],
+      "dcTitleFull": [
+        "Indlæringspsykologi for hest og rytter : lær din hest at forstå dig!"
+      ],
+      "creatorAut": [
+        "Bettina Hvidemose"
+      ],
+      "creatorSort": [
+        "Hvidemose, Bettina"
+      ],
+      "subjectDK5": [
+        "63.61"
+      ],
+      "subjectDK5Text": [
+        "Heste"
+      ],
+      "subjectDBCF": [
+        "adfærd",
+        "dyrepsykologi",
+        "heste",
+        "kommunikation",
+        "træning"
+      ],
+      "description": [
+        "Indhold: Adfærd og baggrundsviden ; Indlæringsteori ; Træningsmetoder ; Eksempler på øvelser ; Eksempler på cases"
+      ],
+      "audience": [
+        "voksenmaterialer"
+      ],
+      "version": [
+        "1. oplag (2010)"
+      ],
+      "publisher": [
+        "Books on Demand"
+      ],
+      "contributorIll": [
+        "Martin Riis"
+      ],
+      "date": [
+        "2010"
+      ],
+      "typeBibDKType": [
+        "Bog"
+      ],
+      "format": [
+        "illustreret i farver"
+      ],
+      "extent": [
+        "132 sider"
+      ],
+      "languageISO6392": [
+        "dan"
+      ],
+      "dcLanguage": [
+        "Dansk"
+      ],
+      "accessType": [
+        "physical"
+      ],
+      "creator": [
+        "Bettina Hvidemose"
+      ],
+      "pid": [
+        "775100-katalog:28597584"
+      ],
+      "language": [
+        "Dansk"
+      ],
+      "title": [
+        "Indlæringspsykologi for hest og rytter"
+      ],
+      "titleFull": [
+        "Indlæringspsykologi for hest og rytter : lær din hest at forstå dig!"
+      ],
+      "type": [
+        "Bog"
+      ],
+      "workType": [
+        "book"
+      ]
+    }
+  ],
+  "createTest": "search_simple"
+}
+
+search {"q":"ost","fields":["pid","creator","coverUrlFull"],"limit":3,"createTest":"search_coverUrl_limit"}
+{
+  "statusCode": 200,
+  "data": [
+    {
+      "pid": [
+        "775100-katalog:27400337"
+      ],
+      "coverUrlFull": [
+        "//moreinfo.addi.dk/2.1/more_info_get.php?id=44502234&type=forside_stor&key=8e60809c588bc833f760"
+      ]
+    },
+    {
+      "pid": [
+        "775100-katalog:29130612"
+      ],
+      "coverUrlFull": [
+        "//moreinfo.addi.dk/2.1/more_info_get.php?id=54073988&type=forside_stor&key=ab59a99e2df37cd319ca"
+      ]
+    },
+    {
+      "pid": [
+        "775100-katalog:06468853"
+      ],
+      "creator": [
+        "Ingrid Dam"
+      ]
+    }
+  ],
+  "createTest": "search_coverUrl_limit"
+}
+
+search {"q":"ost","fields":["pid","title","creator","coverDataUrl117"],"limit":3,"createTest":"search_coverDataUrl"}
+{
+  "statusCode": 200,
+  "data": [
+    {
+      "pid": [
+        "775100-katalog:27400337"
+      ],
+      "title": [
+        "Spis dig sund - æg, mælk, ost"
+      ],
+      "coverDataUrl117": "data:image/jpeg;base64,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"
+    },
+    {
+      "pid": [
+        "775100-katalog:29130612"
+      ],
+      "title": [
+        "Bogen om ost"
+      ],
+      "coverDataUrl117": "data:image/jpeg;base64,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"
+    },
+    {
+      "pid": [
+        "775100-katalog:06468853"
+      ],
+      "title": [
+        "Ost, smør og surmælksprodukter til husbehov"
+      ],
+      "creator": [
+        "Ingrid Dam"
+      ]
+    }
+  ],
+  "createTest": "search_coverDataUrl"
+}
+
+suggest {"q":"fisk","type":"subject","limit":3,"createTest":"suggest-subject"}
+{
+  "statusCode": 200,
+  "data": [
+    {
+      "str": "biografiske"
+    },
+    {
+      "str": "fisk"
+    },
+    {
+      "str": "fiskeri"
+    }
+  ],
+  "createTest": "suggest-subject"
+}
+
+suggest {"q":"herlev","type":"library","limit":3,"createTest":"suggest-library"}
+{
+  "statusCode": 200,
+  "data": [
+    {
+      "str": {
+        "væsensnavn": "Herlev Bibliotek",
+        "adresse": "Herlev Bygade 70",
+        "id": "716300",
+        "postnr": "2730",
+        "geolokation": {
+          "lat": 55.725455,
+          "lng": 12.435548
+        },
+        "navn": "Herlev-Bibliotek. Hovedbiblioteket",
+        "bibliotekstype": "Folkebibliotek",
+        "by": "Herlev"
+      }
+    }
+  ],
+  "createTest": "suggest-library"
+}
+
+suggest {"q":"herlev","type":"unsupported","limit":3,"createTest":"suggest-unsupported-type"}
+{
+  "statusCode": 400,
+  "error": "Unsupported suggestion type unsupported. Supported types are: creator,library,subject,title",
+  "createTest": "suggest-unsupported-type"
+}
+
+suggest {"q":"hest","type":"title","limit":3,"createTest":"suggest-title"}
+{
+  "statusCode": 200,
+  "data": [
+    {
+      "str": "Hestenes Dal",
+      "id": "870970-basis:06598722",
+      "creator": "Jean M. Auel",
+      "type": "book"
+    },
+    {
+      "str": "Hestetyven",
+      "id": "870970-basis:26191076",
+      "creator": "Ole Frøslev",
+      "type": "book"
+    },
+    {
+      "str": "Hestehovedtågen",
+      "id": "870970-basis:50507173",
+      "creator": "Ola Bauer",
+      "type": "book"
+    }
+  ],
+  "createTest": "suggest-title"
+}
+
+suggest {"q":"rowling","type":"creator","limit":3,"createTest":"suggest-creator"}
+{
+  "statusCode": 200,
+  "data": [
+    {
+      "str": "Joanne K. Rowling"
+    },
+    {
+      "str": "Phelps Sarah aus"
+    },
+    {
+      "str": "Newt Scamander"
+    }
+  ],
+  "createTest": "suggest-creator"
+}

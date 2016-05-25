@@ -56,7 +56,7 @@ function creatorSuggest(params, context) {
   if (params.limit) {
     localParams.n = params.limit;
   }
-  return context.call('creatorsuggest', localParams)
+  return context.call('suggestcreator', localParams)
     .then(body => {
       return {statusCode: 200, data: body.data.response.suggestions.map((obj) => {
         return {str: obj.suggestion};
@@ -77,7 +77,7 @@ function librarySuggest(params, context) {
   if (params.limit) {
     localParams.n = params.limit;
   }
-  return context.call('librarysuggest', localParams)
+  return context.call('suggestlibrary', localParams)
     .then(body => {
       return {statusCode: 200, data: body.data.response.suggestions.map((obj) => {
         return {str: obj.suggestion};
@@ -100,7 +100,7 @@ function subjectSuggest(params, context) {
     localParams.n = params.limit;
   }
 
-  return context.call('subjectsuggest', localParams)
+  return context.call('suggestsubject', localParams)
     .then(body => {
       return {statusCode: 200, data: body.data.response.suggestions.map((obj) => {
         return {str: obj.suggestion};
@@ -144,7 +144,7 @@ function titleSuggest(params, context) {
     localParams.rows = params.limit;
   }
   log.debug('popsuggest params', {params: localParams});
-  return context.call('popsuggest', localParams)
+  return context.call('suggestpopular', localParams)
     .then(body => {
       return {statusCode: 200, data: body.data.response.docs.map((obj) => {
         return mapTitleKeys(obj);

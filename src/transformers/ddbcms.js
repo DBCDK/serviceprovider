@@ -4,7 +4,7 @@ export function ddbcms(params, context) {
   let config = context.data.ddbcms;
   params.agency = config.agency;
   params.key = config.password;
-  return context.query(config.url + 'content/fetch', params);
+  return context.query(context.get('services.ddbcmsapi') + 'content/fetch', params);
 }
 
 let ddbResponse = (result) => ({
