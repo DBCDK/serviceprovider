@@ -151,6 +151,8 @@ export default (request, context) => {
     }
     return createResponse(body.data.moreInfoResponse);
   }, error => {
-    return {statusCode: 500, error: 'Error while communicating with moreinfo'};
+    let errMsg = 'CoverUrls could not be fetched. Server probably unavailable. Try request again without coverUrls.';
+    log.error(errMsg, error);
+    return {statusCode: 500, error: errMsg};
   });
 };
