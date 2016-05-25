@@ -1,6 +1,6 @@
 'use strict';
 
-import coverImageTransformer from './moreinfo';
+import coverImageTransformer from './moreinfo-2.6';
 import openSearchWorkTransformer from './opensearchGetObject';
 import searchTransformer from './opensearchSearch';
 import {requestType, makeTypeID} from '../requestTypeIdentifier';

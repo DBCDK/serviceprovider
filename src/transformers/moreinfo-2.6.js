@@ -79,7 +79,7 @@ function getCoverUrlsFromIdentifierInformation(idInfo) {
   let imageUrlsList = idInfo.coverImage.map(x => getImageSizeAndUrl(x));
   let imageUrls = imageUrlsList.reduce(_.extend, {});
 
-  return {urls: imageUrls};
+  return imageUrls;
 }
 
 function containsError(response) {
@@ -117,7 +117,6 @@ function createErrorResponse(response) {
   return {statusCode: 500, error: 'Internal Server Error'};
 }
 
-
 function createResponse(response) {
 
   if (!response.identifierInformation) {
@@ -134,9 +133,9 @@ function createResponse(response) {
 export default (request, context) => {
   let params = {
     action: 'moreInfo',
-    authenticationUser: context.data.moreinfo.user,
-    authenticationGroup: context.data.moreinfo.group,
-    authenticationPassword: context.data.moreinfo.password,
+    authenticationUser: context.get('netpunkt.user'),
+    authenticationGroup: context.get('netpunkt.group'),
+    authenticationPassword: context.get('netpunkt.password'),
     pidList: request.pids.join('|'),
     // pidList: '775100-katalog:42946400', // javabogen
     // pidList: '870970-basis:28448716', // kadavermarch
