@@ -137,7 +137,7 @@ class Context {
       promise = this.transformerMap[name](params, this);
     }
     else {
-      let url = (this.data[name] && this.data[name].url) || name;
+      let url = this.data.services[name] || name;
 
       if (this.externalCallsInProgress === 0) {
         this.externalTiming -= Date.now();
@@ -158,8 +158,8 @@ class Context {
               ? reject(err || response)
               : resolve(data)));
       } else if (type === 'basesoap') {
-        if (this.data[name].url) {
-          url = this.data[name].url + '/' + name + '.wsdl';
+        if (this.data.services[name]) {
+          url = this.data.services[name] + '/' + name + '.wsdl';
         }
         let client = BaseSoapClient.client(url, params.config, null);
         promise = client.request(params.action, params.params, params.options);
