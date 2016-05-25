@@ -277,10 +277,14 @@ module.exports.run = function (worker) {
     serviceProvider.availableTransforms().forEach(key => {
       connection.on(key, (data, callback) => { // eslint-disable-line no-loop-func
         getContext(data.access_token)
-          .then(context => callApi(key, data, context))
           .catch(err => {
             log.error(err);
-            return {statusCode: 403, error: 'Forbidden'};
+            return null;
+          }).then(context => {
+            if (context === null) {
+              return {statusCode: 403, error: 'Forbidden'};
+            }
+            return callApi(key, data, context);
           }).then(result => callback(null, result));
       });
     });
