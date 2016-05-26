@@ -14,7 +14,7 @@ describe('Automated test of the user endpoint', () => {
     provider.execute('user', {}, context)
       .then(result => {
         assert.deepEqual(result,
-            {"statusCode":200,"data":{"id":"zeEOALqmSuy+ysfz0zYbna0CgwtrhewG","loans":[{"loanId":"NCIPMDAxOXw5OTAwfHw5OTAwLnx8","dueDate":"2016-06-20T00:00:00+02:00","title":"9900."},{"loanId":"NCIPMDAxOXwwMDAwMDMyNDg0fFJvc2VuLCBNaWNoYWVsfFNtdXR8fHw=","dueDate":"2016-06-24T00:00:00+02:00","title":"Smut","author":"Rosen, Michael"}],"orders":[{"title":"Den ·grænseløse","orderId":"Hold:NCIPMDAxOXwyNC0wNS0yMDE2IDIzOjA4OjIwfEFkbGVyLU9sc2VuLCBKdXNzaXxEZW4gJm1pZGRvdDtnciZhZWxpZztuc2VsJm9zbGFzaDtzZXx8fA==","orderDate":"2016-05-24T00:00:00+02:00","status":"In process","library":"DK-100451","author":"Adler-Olsen, Jussi"}],"ddbcmsapi":"http://rest.filmstriben.dbc.inlead.dk/web/"}});
+            {"statusCode":200,"data":{"id":"KbZ0UoBGys8QMLzieTQ5mHZ39ivzulP4","loans":[{"loanId":"NCIPMDAxOXw5OTAwfHw5OTAwLnx8","dueDate":"2016-06-20T00:00:00+02:00","title":"9900."},{"loanId":"NCIPMDAxOXwwMDAwMDMyNDg0fFJvc2VuLCBNaWNoYWVsfFNtdXR8fHw=","dueDate":"2016-06-24T00:00:00+02:00","title":"Smut","author":"Rosen, Michael"}],"orders":[{"title":"Den ·grænseløse","orderId":"Hold:NCIPMDAxOXwyNC0wNS0yMDE2IDIzOjA4OjIwfEFkbGVyLU9sc2VuLCBKdXNzaXxEZW4gJm1pZGRvdDtnciZhZWxpZztuc2VsJm9zbGFzaDtzZXx8fA==","orderDate":"2016-05-24T00:00:00+02:00","status":"In process","library":"DK-100451","author":"Adler-Olsen, Jussi"}],"ddbcmsapi":"http://rest.filmstriben.dbc.inlead.dk/web/"}});
         done();
       })
       .catch(result => {
