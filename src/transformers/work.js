@@ -1,11 +1,12 @@
 'use strict';
 
-import coverImageTransformer from './moreinfo';
+import moreinfo21 from './moreinfo-2.1';
+import moreinfo26 from './moreinfo';
 import openSearchWorkTransformer from './opensearchGetObject';
 import searchTransformer from './opensearchSearch';
 import {requestType, makeTypeID} from '../requestTypeIdentifier';
 import _ from 'lodash';
-
+import {log} from '../utils';
 
 let filePath = __dirname + '/../../doc/work-context.jsonld';
 let typeId = makeTypeID(filePath);
@@ -167,7 +168,12 @@ export default (request, context) => {
   let promises = [];
   if (_.has(params, requestMethod.MOREINFO)) {
     // query moreinfo through its transformer.
-    let moreInfoPromise = coverImageTransformer(params.moreinfo, context);
+
+    // HACK: This is a hack to be able to switch between moreinfo 2.1 and 2.6 just by changing the url in the context.
+    let moreinfoUrl = context.data.services.moreinfo;
+    log.info('moreinfoUrl: ' + moreinfoUrl);
+    let moreInfoPromise = moreinfoUrl.includes('2.1') ? moreinfo21(params.moreinfo, context): moreinfo26(params.moreinfo, context);
+
     promises.push(moreInfoPromise);
     services.push(requestMethod.MOREINFO);
   }
