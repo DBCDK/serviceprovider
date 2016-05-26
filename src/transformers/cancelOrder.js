@@ -79,12 +79,12 @@ export default (request, context) => {
   let params = {
     'cancelOrder.orderId': orderId,
     'cancelOrder.orderType': orderType,
-    agencyId: userstatus.useragency,
-    userId: userstatus.userid,
-    userPincode: userstatus.userpin,
-    'authentication.groupIdAut': userstatus.authgroupid,
-    'authentication.passwordAut': userstatus.authpassword,
-    'authentication.userIdAut': userstatus.authid
+    agencyId: context.get('agency.order'),
+    userId: context.get('user.id'),
+    userPincode: context.get('user.pin'),
+    'authentication.groupIdAut': context.get('netpunkt.group'),
+    'authentication.passwordAut': context.get('netpunkt.password'),
+    'authentication.userIdAut': context.get('netpunkt.user')
   };
 
   let soap = constructSoap(params);
