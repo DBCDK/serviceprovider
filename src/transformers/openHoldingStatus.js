@@ -3,13 +3,12 @@
 import _ from 'lodash';
 
 export default (request, context) => {
-  let holdingContext = context.data.openholdingstatus;
   let params = {
-    authgroupid: holdingContext.authgroupid,
-    authpassword: holdingContext.authpassword,
-    authid: holdingContext.authid,
+    authgroupid: context.get('netpunkt.group'),
+    authpassword: context.get('netpunkt.password'),
+    authid: context.get('netpunkt.user'),
     pid: request.pid,
-    agency: holdingContext.agency
+    agency: context.get('agency.order')
   };
 
   let soap = `
