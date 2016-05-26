@@ -1,17 +1,15 @@
-**This document is a draft in progress.**
-It contains ideas for design, and it is not decided, nor fully implemented yet.
+This contains old/obsoleted design notes. Temporarily kept here for reference.
 
-The documentation is moved into README.md as it is finalised
-
-See also the API-documentation on https://openplatform.dbc.dk, and `spec.yaml`, `README.md`, and `work-context.jsonld` in this directory. 
+Please see `README.md` and https://openplatform.dbc.dk/ for up to date documentation,
+- and `spec.yml` and `work-context.jsonld` for specification.
 
 ----
 
-# Transports
+# old obsolete notes, temporarily kept for reference
 
-- SocketCluster (WebSockets) - send the request over websocket, and gets a result back, - the event is the endpoint name, the data is the parameters, and the result comes through the callback, when using the socketcluster-client (available for JavaScript, iOS and Android from https://github.com/socketcluster/.). Notice: the result received by socketcluster are decycled, so you need to call `require("cycle").retrocycle(result)`.
+----
 
-# Priorities of features
+## Priorities of features
     
 1. Must:
     - `Smaug` - openauth login - password-credentials and client-credential
@@ -56,21 +54,15 @@ See also the API-documentation on https://openplatform.dbc.dk, and `spec.yaml`, 
     - streaming søgeresultater
     - Egentligt linked-data endpoint
     
-# Notes about API endpoints
 
-**The authoritative API-specification is in `spec.yml`, documentation has been migrated into that file**
-
-Generated documentation from the specification can be seen in the running serviceprovider (http://localhost:8080/ locally, or https://openplatform.dbc.dk/.)
-
-These are possible extra endpoints, maybe implemented later:
-
-## `/unknown endpoints` (maybe later)
+## Extra possible endpoints
+### `/unknown endpoints` (maybe later)
 
 community services/profile etc. needed by biblo.
 
-## `/batch` (maybe later)  
+### `/batch`
 
-several queries in one http-request, needed on non-socket clients for efficiency
+several queries in one http-request, useful on non-socket clients for efficiency
 
 request:
 
@@ -89,71 +81,6 @@ response:
  [{"term":"..."}, "..."]
  "..."]
 ```
-
-## `/ddbcms` (not implemented, use news, events, and libraries instead) 
-
-(keeping documentation of the api-ideas here, as it might be useful to add this endpoint later on, to have a general way to get info from the cms)
-
-Access to news, events, library-details unavailable from openagency, etc. 
-This info comes from the APIs outside our control.
-
-This webservice just proxies local DDBCMS instance(based on the agency for the logged in user).
-
-----
-
-Request:
-```json
-{ "path": "getContentList",
-  "query": { "type": "ding_event" } }
-```
-
-NB: `agency`, and `key` is appended to the `query` by the ServiceProvider.
-
-Response:
-```json
-"..."
-```
-
-It just returns the result from the ddbcms-service.
-
-
-# old notes
-## Notes for the concrete API design
-
-
-- http://swagger.io/
-- http://www.vinaysahni.com/best-practices-for-a-pragmatic-restful-api
-
-Below is a brainstorm for categories of api-endpoints, including existing usage in mobilsoeg, and  expected use in first version of biblo:
-
-- user
-    - mobilsoeg: `findMobilSoegProfile`? `getPickupAgencyList` `getUserStatus` `savePickupAgencyToMobilSoegProfile` `renewLoan` `isMobilSoegUserLoggedIn`
-    - biblo: TBD, ie. borrower check
-- search
-    - mobilsoeg: `getOpenSearchBriefDisplayList` `getOpenSearchFacets` `getOpenSearchFacetTerms` `getOpenSearchResultList`
-    - parameter: single serviceprovider, across different libraries.
-- suggest
-    - mobilsoeg: `getPopSuggestions`
-    - biblo: TBD, ie. entity-suggest
-- order
-    - mobilsoeg: `cancelOrder` `getOrderPolicy`? `placeOrder` `updateOrder`
-    - order book
-    - update order (ie. change expiry, and pickup-library)
-- work
-    - mobilsoeg: `getCoverImage` `getOpenSearchWork` `getOpenSearchBriefDisplay` `getRecomendations` `getHoldingStatus`
-    - meta data
-    - access to electronic resources, ie. link to fulltext, ereolen, etc., 
-- recommendations
-    - mobilsoeg: `saveLikeToMobilSoegProfile` `getPersonalRecommendations `also on work`? `deleteLikesFromMobilsoegProfile`
-- library (agency/affiliates)
-    - mobilsoeg: `getAllAffiliates` `getEventById` `getEventList` `getNewsById` `getNewsList` `getOpenAgency`?
-    - opening times, geolocation
-- misc apis/notes - forum(biblo), questions(spørgetjeneste etc.)
-    - community services (ie. forum) (biblo)
-    - questions
-
-List of transforms: getOpenSearchBriefDisplayList getOpenSearchWorkBriefDisplay getOpenSearchFacets getOpenSearchResultList getOpenSearchFacetTerms getOpenSearchWork getCoverImage getPersonalRecommendations getRecommendations commentOnGroupPost createGroup createGroupPost createProfile deleteGroupPost getGroup getGroupPost getProfile joinGroup leaveGroup saveLike loginProfile logoutProfile queryGroups resetLikes updateGroup updateGroupPost updateProfile verifyEmail getPopSuggestions cancelOrder getUserStatus renewLoan updateOrder getFilterGuides getOrderPolicy placeOrder holdingStatus getMultiOpenAgency getOpenAgency getPickupAgencyList searchOpenAgency getEventById getEventList getNewsById getNewsList deleteLikesFromMobilSoegProfile findMobilSoegProfile isMobilSoegUserLoggedIn savePickupAgencyToMobilSoegProfile saveLikeToMobilSoegProfile getAllAffiliates getEntitySuggestions checkBorrower checkBorrowerAndSaveToProfile
-
 
 ## Random thoughts/ideas, perhaps for later.
 
