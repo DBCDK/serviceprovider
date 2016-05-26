@@ -74,7 +74,7 @@ import {assert, fail} from 'chai';
 let provider = Provider();
 let mockData = ${JSON.stringify(test.mockData)};
 
-describe('Automated test of the ${test.name} endpoint', () => {
+describe('Automated test: ${test.filename}', () => {
   it('expected response. ID:${test.requestId}, for ${JSON.stringify(test.params)}', (done) => {
     let context = ${JSON.stringify(test.context)};
     context.mockData = mockData;
