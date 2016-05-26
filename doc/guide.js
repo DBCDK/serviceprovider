@@ -22,6 +22,12 @@
 // as the underlying implementation may change
 // if we change the transport protocol.
 //
+// The JavaScript API, assumes that you are using a web browser
+// with support for WebSockets and Promises
+// (Firefox, Edge, Safari, Chrome, etc.).
+// If you also want to support Internet Explorer 11, you need to add
+// a Promise polyfill before loading `dbc_openplatform.min.js`.
+//
 // This guide assumes familiarity with [Promises](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise) which are used asynchronous JavaScript code.
 //
 // ## Connecting
