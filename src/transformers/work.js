@@ -171,7 +171,7 @@ export default (request, context) => {
 
     // HACK: This is a hack to be able to switch between moreinfo 2.1 and 2.6 just by changing the url in the context.
     let moreinfoUrl = context.data.services.moreinfo;
-    log.info("moreinfoUrl: " + moreinfoUrl);
+    log.info('moreinfoUrl: ' + moreinfoUrl);
     let moreInfoPromise = moreinfoUrl.includes('2.1') ? moreinfo21(params.moreinfo, context): moreinfo26(params.moreinfo, context);
 
     promises.push(moreInfoPromise);
