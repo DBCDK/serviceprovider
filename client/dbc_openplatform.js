@@ -28,8 +28,11 @@
    * and returns a promise with the result.
    */
   function endpoint(name) {
-    return function(params) {
-      params = Object.assign({access_token: apiToken}, params);
+    return function(obj) {
+      params = {access_token: apiToken};
+      for(var key in obj) if(obj.hasOwnProperty(key)) {
+        params[key] = obj[key];
+      }
       var envelope = params.envelope;
       delete params.envelope;
       if(!this.connected()) {
