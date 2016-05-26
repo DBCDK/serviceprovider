@@ -75,14 +75,14 @@ export default (request, context) => {
   }
 
   let params = {
-    agencyId: context.data.userstatus.useragency,
-    userId: context.data.userstatus.userid,
-    userPincode: context.data.userstatus.userpin,
-    'authentication.groupIdAut': context.data.userstatus.authgroupid,
-    'authentication.passwordAut': context.data.userstatus.authpassword,
-    'authentication.userIdAut': context.data.userstatus.authid,
+    agencyId: context.get('agency.order'),
+    userId: context.get('user.id'),
+    userPincode: context.get('user.pin'),
+    'authentication.groupIdAut': context.get('netpunkt.group'),
+    'authentication.passwordAut': context.get('netpunkt.password'),
+    'authentication.userIdAut': context.get('netpunkt.user'),
     outputType: 'json',
-    serviceRequester: context.data.orderpolicy.servicerequester
+    serviceRequester: context.get('app.orderpolicyrequester')
   };
 
   return getOrderPolicy(request.pids, params, context);
