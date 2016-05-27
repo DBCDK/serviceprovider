@@ -25,6 +25,9 @@ let fMap = {creator: creatorSuggest,
  * @api public
  */
 export default (params, context) => {
+  if (!params.fields) {
+    params.fields = ['term'];
+  }
 
   if (!fMap[params.type]) {
     return new Promise(resolve => {
@@ -59,7 +62,7 @@ function creatorSuggest(params, context) {
   return context.call('suggestcreator', localParams)
     .then(body => {
       return {statusCode: 200, data: body.data.response.suggestions.map((obj) => {
-        return {str: obj.suggestion};
+        return {term: obj.suggestion};
       })};
     });
 }
@@ -80,7 +83,22 @@ function librarySuggest(params, context) {
   return context.call('suggestlibrary', localParams)
     .then(body => {
       return {statusCode: 200, data: body.data.response.suggestions.map((obj) => {
-        return {str: obj.suggestion};
+        obj = obj.suggestion;
+        obj.geolokation = obj.geolokation || {};
+
+        return {
+          term: obj.navn,
+          agencyName: obj['væsensnavn'],
+          postalAddress: obj.adresse,
+          branchId: obj.id,
+          postalCode: obj.postnr,
+          geolocation: obj.geolokation && {
+            longitude: obj.geolokation.lng,
+            latitude: obj.geolokation.lat
+          },
+          agencyType: obj.bibliotekstype,
+          city: obj.by
+        };
       })};
     });
 }
@@ -103,7 +121,7 @@ function subjectSuggest(params, context) {
   return context.call('suggestsubject', localParams)
     .then(body => {
       return {statusCode: 200, data: body.data.response.suggestions.map((obj) => {
-        return {str: obj.suggestion};
+        return {term: obj.suggestion};
       })};
     });
 }
@@ -114,7 +132,7 @@ function subjectSuggest(params, context) {
  * @returns response with mapped keys
  */
 function mapTitleKeys(obj) {
-  let retObj = {str: obj['display.title'][0], id: obj.fedoraPid};
+  let retObj = {term: obj['display.title'][0], id: obj.fedoraPid};
   if (obj.hasOwnProperty('display.creator')) {
     retObj.creator = obj['display.creator'][0];
   }
