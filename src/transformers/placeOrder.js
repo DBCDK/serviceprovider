@@ -127,14 +127,18 @@ function placeOrder(request, context) { // eslint-disable-line no-unused-vars
 
   return context.call('openorder', soap).then(body => {
     body = JSON.parse(body).placeOrderResponse;
-
+    let status = 500;
     if (body.orderNotPlaced) {
       let err = 'order not placed';
 
       if (body.orderNotPlaced.placeOrderError) {
         err = body.orderNotPlaced.placeOrderError.$;
+        if (err === 'service_unavailable'){
+          status = 503;
+        }
       }
-      return {statusCode: 500, error: err};
+      
+      return {statusCode: status, error: err};
     }
 
     if (!body.orderPlaced) {
