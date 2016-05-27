@@ -88,14 +88,14 @@ function librarySuggest(params, context) {
 
         return {
           term: obj.navn,
-          agencyName: obj["væsensnavn"],
+          agencyName: obj['væsensnavn'],
           postalAddress: obj.adresse,
           branchId: obj.id,
           postalCode: obj.postnr,
-          geolocation: obj.geolokation
-            ? {longitude: obj.geolokation.lng,
-               latitude: obj.geolokation.lat}
-            : undefined,
+          geolocation: obj.geolokation && {
+            longitude: obj.geolokation.lng,
+            latitude: obj.geolokation.lat
+          },
           agencyType: obj.bibliotekstype,
           city: obj.by
         };
