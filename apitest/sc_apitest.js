@@ -5,7 +5,6 @@ function filterComments(x) { return !x.startsWith('#'); }
 
 var majorVersion = parseInt(require('../package.json').version, 10);
 
-var cycle = require('cycle');
 var reqs = require('fs')
   .readFileSync(process.argv[2] + '.requests.lst', 'utf-8')
   .split('\n')
@@ -28,7 +27,6 @@ function next() {
   //console.log('\n' + req[0] + ' ' + JSON.stringify(req[1]));
   console.log('\n' + req[2]);
   sc.emit(req[0], req[1], function(err, result) {
-    result = cycle.retrocycle(result);
     console.log(JSON.stringify(result, null, 2));
     if(reqs.length) {
       next();
