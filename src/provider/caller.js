@@ -65,18 +65,30 @@ function saveTest(test) {
     fs.writeFileSync(mockFileName, censor(JSON.stringify(mockFile, null, 2), test.context));
     return;
   }
+
+  let cleanedContext = {};
+  for (let key1 in test.context) {
+    cleanedContext[key1] = Object.assign({}, test.context[key1]);
+    for (let key2 in cleanedContext[key1]) {
+      if (blacklist.indexOf(key2) !== -1) {
+        cleanedContext[key1][key2] = 'XXXXX';
+      }
+    }
+  }
+
   let source = `/* eslint-disable max-len, quotes, comma-spacing, key-spacing, quote-props */
 // Request: ${test.name} ${JSON.stringify(test.params)}
 'use strict';
 import Provider from '../../provider/Provider.js';
 import {assert, fail} from 'chai';
 
+let context = ${JSON.stringify(cleanedContext)};`;
+  source += censor(`
 let provider = Provider();
 let mockData = ${JSON.stringify(test.mockData)};
 
 describe('Automated test: ${test.filename}', () => {
   it('expected response. ID:${test.requestId}, for ${JSON.stringify(test.params)}', (done) => {
-    let context = ${JSON.stringify(test.context)};
     context.mockData = mockData;
     provider.execute('${test.name}', ${JSON.stringify(test.params)}, context)
       .then(result => {
@@ -90,8 +102,7 @@ describe('Automated test: ${test.filename}', () => {
       });
   });
 });
-`;
-  source = censor(source, test.context);
+`, test.context);
   fs.writeFile(`${__dirname}/../transformers/__tests__/${test.filename}.js`, source);
 }
 
