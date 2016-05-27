@@ -75,9 +75,19 @@ export default (request, context) => {
       context.get('user.salt'), 100000, 24, 'sha512', (err, key) => err ? reject(err) : resolve(key)));
 
   return context.call('openuserstatus', params).then(body => idPromise.then(id => {
+
+    let loans = [];
+    if (body.data.getUserStatusResponse.userStatus.loanedItems.loan) {
+      loans = body.data.getUserStatusResponse.userStatus.loanedItems.loan;
+    }
+    let orders = [];
+    if (body.data.getUserStatusResponse.userStatus.orderedItems.order) {
+      orders = body.data.getUserStatusResponse.userStatus.orderedItems.order;
+    }
+
     let data = {id: id.toString('base64'),
-                loans: body.data.getUserStatusResponse.userStatus.loanedItems.loan.map(loan),
-                orders: body.data.getUserStatusResponse.userStatus.orderedItems.order.map(order)
+                loans: loans.map(loan),
+                orders: orders.map(order)
                };
     if (context.data.ddbcms) {
       data.ddbcmsapi = context.data.ddbcms.url;
