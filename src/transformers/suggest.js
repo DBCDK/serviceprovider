@@ -25,6 +25,9 @@ let fMap = {creator: creatorSuggest,
  * @api public
  */
 export default (params, context) => {
+  if (!params.fields) {
+    params.fields = ['term'];
+  }
 
   if (!fMap[params.type]) {
     return new Promise(resolve => {
