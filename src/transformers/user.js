@@ -56,29 +56,25 @@ function order(orderItem) {
  */
 export default (request, context) => {
 
-  let userstatus = context.data.userstatus;
-
-  if (!(userstatus && userstatus.salt && userstatus.useragency)) {
-    return {statusCode: 500, error: 'userstatus is missing data in config from Smaug'};
-  }
-  if (!(userstatus.userid && userstatus.userpin)) {
+  if (!(context.get('user.id') && context.get('user.pin'))) {
     return {statusCode: 300, error: 'not logged in'};
   }
   let params = {
-    agencyId: userstatus.useragency,
-    userId: userstatus.userid,
-    userPincode: userstatus.userpin,
-    'authentication.groupIdAut': userstatus.authgroupid,
-    'authentication.passwordAut': userstatus.authpassword,
-    'authentication.userIdAut': userstatus.authid,
+    agencyId: context.get('agency.order'),
+    userId: context.get('user.id'),
+    userPincode: context.get('user.pin'),
+    'authentication.groupIdAut': context.get('netpunkt.group'),
+    'authentication.passwordAut': context.get('netpunkt.password'),
+    'authentication.userIdAut': context.get('netpunkt.user'),
     action: 'getUserStatus',
     outputType: 'json'
   };
 
   let idPromise = new Promise((resolve, reject) =>
-    pbkdf2(userstatus.useragency.replace(/^DK-/, '') + ' ' + userstatus.userid,
-      userstatus.salt, 100000, 24, 'sha512', (err, key) => err ? reject(err) : resolve(key)));
+    pbkdf2(context.get('agency.order').replace(/^DK-/, '') + ' ' + context.get('user.id'),
+      context.get('user.salt'), 100000, 24, 'sha512', (err, key) => err ? reject(err) : resolve(key)));
 
+  console.log('PARAMS\n' + JSON.stringify(params, null, 4)); 
   return context.call('openuserstatus', params).then(body => idPromise.then(id => {
     let data = {id: id.toString('base64'),
                 loans: body.data.getUserStatusResponse.userStatus.loanedItems.loan.map(loan),

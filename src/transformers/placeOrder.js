@@ -173,14 +173,6 @@ export default (request, context) => {
     'authentication.userIdAut': context.get('netpunkt.user'),
     outputType: 'json',
     serviceRequester: context.get('app.orderpolicyrequester')
-    // agencyId: context.data.userstatus.useragency,
-    // userId: context.data.userstatus.userid,
-    // userPincode: context.data.userstatus.userpin,
-    // 'authentication.groupIdAut': context.data.userstatus.authgroupid,
-    // 'authentication.passwordAut': context.data.userstatus.authpassword,
-    // 'authentication.userIdAut': context.data.userstatus.authid,
-    // outputType: 'json',
-    // serviceRequester: context.data.orderpolicy.servicerequester
   };
 
   request = extend(request, params);
