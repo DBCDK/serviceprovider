@@ -168,11 +168,13 @@ Parameters are general across endpoints:
 - `fields` which keys should be in the returned object.
 - `timings` enable some timing statistics in envelope
 
-__Responses__ are returned within an envelope, usually as a JSON object with the following properties:
+__Responses__ are returned within an envelope, as a JSON object with the following properties:
 
 - `statusCode` contains the status of the request, ie `200` if it went ok.
 - `data` contains the actual response, if applicable
 - `error` contains an error, if applicable
+
+To make sure it arrives to all kinds of clients(including jsonp), the HTTP-request itself usually suceeds(200), and the status of the api request is contained within the envelope.
 
 __The API__ is documented using OpenAPI 2.0 Specification (swagger), and the generated documentation can be seen on https://openplatform.dbc.dk/. The swagger specification is generated from a simpler `doc/spec.yaml` in the github repository.
 
