@@ -74,7 +74,6 @@ export default (request, context) => {
     pbkdf2(context.get('agency.order').replace(/^DK-/, '') + ' ' + context.get('user.id'),
       context.get('user.salt'), 100000, 24, 'sha512', (err, key) => err ? reject(err) : resolve(key)));
 
-  console.log('PARAMS\n' + JSON.stringify(params, null, 4)); 
   return context.call('openuserstatus', params).then(body => idPromise.then(id => {
     let data = {id: id.toString('base64'),
                 loans: body.data.getUserStatusResponse.userStatus.loanedItems.loan.map(loan),
