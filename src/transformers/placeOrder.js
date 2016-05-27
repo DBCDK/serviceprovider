@@ -175,7 +175,7 @@ export default (request, context) => {
     serviceRequester: context.get('app.orderpolicyrequester')
   };
 
-  request = extend(request, params);
+  request = extend(params, request);
 
   return placeOrder(request, context);
 };
