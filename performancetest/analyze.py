@@ -20,48 +20,90 @@ def report(name, seq):
     print "min:", f(min(seq)), "\tmax:", f(max(seq))
 
 
+def parseresponse(r):
+    """throw if no timings"""
+    # assume json response
+    response = json.loads(r)
+    #print "STR", r
+    #print "JSON", response
+    result = dict();
+    result['spstatus'] = response[u"statusCode"]
+    result['sptime'] = None
+    result['externaltime'] = None
+    if 'timings' in response:
+         result['sptime'] = response["timings"]["total"]
+         result['externaltime'] = response["timings"]["external"]
+    #print ">>>", result
+    return result
+
+    
+def readlines():
+    hips = []
+    responselines = []
+    #n = 0
+    for line in sys.stdin:
+        #n +=1
+        #print "n", n
+        match = re.search(r'CURL HTTPCODE=(\d+) SECS=(\d+[.,]\d+)', line)        
+        if match:
+            # we have an entry
+            (httpcode, time) = match.group(1,2)                  
+            time = time.replace(',','.')
+            curltime_ms = float(time)*1000            
+            response_str = "".join(responselines)
+            responselines = []
+            hip = {
+                'httpstatus': int(httpcode),
+                'curltime': curltime_ms,
+                'good': False,
+                'response': response_str
+            }
+            try:
+                response = parseresponse(response_str)
+            except:
+                # not json response
+                pass
+            else:
+                hip['spstatus'] = response['spstatus']
+                if hip['spstatus'] == 200:
+                    hip['good'] = True
+                    hip['sptime'] = response['sptime']                    
+                    hip['externaltime'] = response['externaltime']
+
+            hips.append(hip)
+        else:
+            responselines.append(line)
+    return hips
 
 if __name__ == "__main__":
-    errors = dict()
-
     total_times = []
     service_times = []
     overhead_times = []
-    
-    response = None
-    curltime_ms = None
-    totaltime = None
-    externaltime = None
-    n = 0
-    for line in sys.stdin:
-        if line.startswith('{'):
-            # assume json response
-            response = json.loads(line)
-            totaltime = response["timings"]["total"]
-            externaltime = response["timings"]["external"]
-            continue
-        match = re.search(r'CURL HTTPCODE=(\d+) SECS=(\d+[.,]\d+)', line)
-        if match:
-            n+=1
-            #print "n:", n
-            (httpcode, time) = match.group(1,2)                  
-            if not httpcode == "200":
-                if not httpcode in errors:
-                    errors[ httpcode ] = 1
-                else:
-                    errors[ httpcode ] += 1
+    errors = dict()
+    #readlines()
+    #exit(0)
+
+    for x in readlines():
+        #print x
+        if x['good']:
+            overhead = x['curltime'] - x['externaltime']
+            total_times.append(x['curltime'])
+            service_times.append(x['externaltime'])
+            overhead_times.append(overhead)
+        else:
+            print x['response']
+            status = x['httpstatus']
+            if 'spstatus' in x:
+                status = x['spstatus']
+                
+            if not status in errors:
+                errors[status] = 1
             else:
-                time = time.replace(',','.')
-                curltime_ms = float(time)*1000
-                #print "CURL:", curltime_ms
-                #print "TOTAL SP:", totaltime
-                #print "EXTERNAL:", externaltime
-                overhead = curltime_ms - externaltime
-                #print "TOTAL OVERHEAD:", overhead
-                total_times.append(curltime_ms)
-                service_times.append(externaltime)
-                overhead_times.append(overhead)
-                continue
+                errors[status] += 1
+
+ 
+
+
     if errors:
         print "ERRORS:", errors
     else:
@@ -70,3 +112,5 @@ if __name__ == "__main__":
     report("total time", total_times)
     report("webservice time", service_times)
     report("overhead time", overhead_times)
+
+    
