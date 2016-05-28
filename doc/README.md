@@ -9,38 +9,29 @@
 [![Coverage Status](https://coveralls.io/repos/DBCDK/serviceprovider/badge.svg?branch=master&service=github)](https://coveralls.io/github/DBCDK/serviceprovider?branch=master)
 [![Code Climate](https://codeclimate.com/github/DBCDK/serviceprovider/badges/gpa.svg)](https://codeclimate.com/github/DBCDK/serviceprovider)
 
-The DBC Open Platform, is the API for the danish public libraries.
+The ServiceProvider or DBC Open Platform is the API for the danish public libraries.
 
 Documentation restructure in progress, toc+update-checklist:
 
-- [ ] [DBC Open Platform](#dbc-open-platform)
-    - description / motivation
-- [ ] [Getting Started](#getting-started)
-    - usage examples - link to api-doc and guide
-    - prerequisites
-    - code structure
-    - building / installation
-- [ ] Release History
-- [ ] Configuration
-    - authentication
-    - environment variables
-- [ ] Testing
-    - apitest
-    - unittest
-    - spec-test
-    - travis
-- [ ] Design
-    - api structure
-    - spec
-    - transports
-    - bibliographic data model
-- [ ] Contributing
-    - git workflow
-    - versioning / releasing
-    - authors/credits
-    - license
+- [ ] [DBC Open Platform](#dbc-open-platform) - description / motivation
+- [ ] [Getting Started](#getting-started) - usage examples link to api-doc and guide - prerequisites - code structure - building / installation
+- [ ] [Release History](#release-history)
+- [ ] [Configuration](#configuration) - authentication - environment variables
+- [ ] [Testing](#testing) - apitest - unittest - spec-test - travis
+- [ ] [Design](#design) - api structure - spec - transports - bibliographic data model
+- [ ] [Contributing](#contributing) - git workflow - versioning / releasing - authors/credits - license
+
+The ServiceProvider provides access to DBCs services. The purpose is to make a unified, easy-to-use way to access the different bibliographic APIs. The serviceprovider works as a gateway to other services, and does not include the actual search/database/... logic.
 
 # Getting started
+
+The API is available on https://openplatform.dbc.dk/. This also include API-documentation, and a guide to getting started using the API. 
+
+**IMPORTANT** the serviceprovider only works on DBCs internal network as it serves as the gateway to the services. 
+
+You can still run the service provider, with tests and mockdata, but it will not be fully functional without the underlying services.
+
+# ########### Documentation worked through until here #############
 ## Code structure
 
 Overview of files and directories:
@@ -95,7 +86,6 @@ will search for "1q84".
 
 ## Installation / getting it to run
 
-**IMPORTANT** the serviceprovider only runs on DBCs internal network as it serve as the gateway to the services.
 
 It depends on a authorisation server to serve the configuration.
 
