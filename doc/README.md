@@ -1,38 +1,6 @@
-- DBC Open Platform
-    - badges, one-line description
-    - evt. logo
-    - TOC
-    - description / motivation
-- getting started
-    - usage examples - link to api-doc and guide
-    - prerequisites
-    - code structure
-    - building / installation
-- release history
-- configuration
-    - authentication
-    - environment variables
-- testing
-    - apitest
-    - unittest
-    - spec-test
-    - travis
-- design
-    - api structure
-    - spec
-    - transports
-    - bibliographic data model
-- contributing
-    - git workflow
-    - versioning / releasing
-    - authors/credits
-    - license
+<img src="http://www.dbc.dk/logo.png" alt="DBC" title="DBC" align="right">
 
-
-#
-# ---------- OLD ------------
-#
-# ServiceProvider
+# DBC Open Platform
 
 [![GitHub tag](https://img.shields.io/github/tag/DBCDK/serviceprovider.svg?style=flat-square)](https://github.com/DBCDK/serviceprovider)
 [![David](https://img.shields.io/david/DBCDK/serviceprovider.svg?style=flat-square)](https://david-dm.org/DBCDK/serviceprovider#info=dependencies)
@@ -41,9 +9,80 @@
 [![Coverage Status](https://coveralls.io/repos/DBCDK/serviceprovider/badge.svg?branch=master&service=github)](https://coveralls.io/github/DBCDK/serviceprovider?branch=master)
 [![Code Climate](https://codeclimate.com/github/DBCDK/serviceprovider/badges/gpa.svg)](https://codeclimate.com/github/DBCDK/serviceprovider)
 
-This is the repository for the ServiceProvider, ie. the API from [MobilSøg](https://github.com/DBCDK/mobilsoeg).  It starts out as a copy of the MobilSøg repository, and then the client code will be refactored out, etc.
+The DBC Open Platform, is the API for the danish public libraries.
 
-# Communication with the API
+Documentation restructure in progress, toc+update-checklist:
+
+- [ ] [DBC Open Platform](#dbc-open-platform)
+    - description / motivation
+- [ ] [Getting Started](#getting-started)
+    - usage examples - link to api-doc and guide
+    - prerequisites
+    - code structure
+    - building / installation
+- [ ] Release History
+- [ ] Configuration
+    - authentication
+    - environment variables
+- [ ] Testing
+    - apitest
+    - unittest
+    - spec-test
+    - travis
+- [ ] Design
+    - api structure
+    - spec
+    - transports
+    - bibliographic data model
+- [ ] Contributing
+    - git workflow
+    - versioning / releasing
+    - authors/credits
+    - license
+
+# Getting started
+## Code structure
+
+Overview of files and directories:
+
+- `apitest/`, `ave-test/`, `performancetest/`, `add_imports_to_tests.py`, `mocktest.sh`, `siegetestendpoints.txt` - various testing
+- `doc/` - documentation
+- `src/` - the source code
+- `static/` contains a swagger-ui, which is used for documentation. Latest swagger-ui release (as of May 2016) has a bug, with regard to `boolean` types, which is why we include a copy of a recent snapshot of `github:swagger-api/swagger-ui:dist/` instead of just installing it from npm.
+
+In the beginning we work directly on the master branch (decided by the xp-team - lots of refactoring is happening at the moment, and it is easier for those new to github, etc.).
+Later on this can change into using `ready/...`-branches
+
+Quick notes about how to make changes:
+
+    git clone git@github.com:DBCDK/serviceprovider.git
+    
+    # ... make local changes test and commit...
+    # `git add` the changes, and then 
+    git commit
+    
+    git pull # sync from master branch on github
+    # ... merge conflicts, test and commit
+    
+    git push  # sync to master branch on github
+
+## Building (or rebuilding)
+
+    source nvm.sh
+    
+    # install node
+    nvm install
+    
+    # optional clean dependencies
+    # rm -rf node_modules
+    
+    # install deps
+    npm install
+    
+    # start, note that it asserts a smaug somewhere
+    SMAUG=http://localhost:3000 npm run dev
+
+## Communication with the API
 
 HTTP endpoints can be accesses on `/api/$ENDPOINT_NAME` with the parameters in a post request, i.e.:
 
@@ -54,7 +93,7 @@ HTTP endpoints can be accesses on `/api/$ENDPOINT_NAME` with the parameters in a
 
 will search for "1q84".
 
-# Installation / getting it to run
+## Installation / getting it to run
 
 **IMPORTANT** the serviceprovider only runs on DBCs internal network as it serve as the gateway to the services.
 
@@ -88,17 +127,13 @@ If you then open a browser to `localhost:8080`, you will see the API-documentati
 curl -H "Authorization: Bearer qwerty" -H "Content-Type: application/json" -d '{"q": "ost", "fields": ["title","pid"]}' http://localhost:8080/v0/search
 ```
 
-# Auth
+# Release History
 
-Authentication using OAuth 2. 
+- Version 1.1
+- Version 1.0
 
-The authentification server is called Smaug, and lives in another repository: https://github.com/dbcdk/smaug/. This also documents the API for gettin
-g a token.
-
-In the first version it will support logins via "Resource Owner Password Credentials".
-
-
-# Environment Variables
+# Configuration
+## Environment Variables
 The following environment variables can be used to override default settings in the application
 
 - __LOG_LEVEL__
@@ -147,6 +182,17 @@ If a mock file is specified, then the behaviour of the `createTest` parameter is
 Include http as allowed scheme in swagger, this is useful when developing locally.
 
 
+## Auth
+
+Authentication using OAuth 2. 
+
+The authentification server is called Smaug, and lives in another repository: https://github.com/dbcdk/smaug/. This also documents the API for gettin
+g a token.
+
+In the first version it will support logins via "Resource Owner Password Credentials".
+
+
+
 # Testing
 ## Unit tests
 Unit tests are placed with the modules and components in a `__tests__` folder
@@ -188,7 +234,11 @@ There are also various utility scripts for using the apitest during development 
 
 A swagger specification is generated for the API, and the unit tests checks that it is valid.
 
-# API structure
+# Design
+
+This is the repository for the ServiceProvider, ie. the API from [MobilSøg](https://github.com/DBCDK/mobilsoeg).  It starts out as a copy of the MobilSøg repository, and then the client code will be refactored out, etc.
+
+## API structure
 
 __Requests__ to the API consist of the _endpoint name_, and a JSON object of _parameters_.
 
@@ -220,7 +270,8 @@ The production API runs ssl-only (HTTPS/WSS).
 English is the main language for naming of methods, as well as API-documentation.
 We will try to minimise the amount of library jargon, in order to make the API more accessible for developers without domain knowledge.
 
-# Transports
+
+## Transports
 
 There are several transports:
 
@@ -228,7 +279,8 @@ There are several transports:
 - HTTP GET requests - similar to HTTP-POST requests with same url, but the _parameters_ are given as url-parameters. This is a quick way to try out / experiment with the API. Parameters are parsed as JSON(if possible) and otherwise used as strings. Url-parameters can also be used in POST-requests to override values.
 - WebSockets. More details will follow.
 
-# Bibliographic Data Model
+
+## Bibliographic Data Model
 
 Bibliographic objects are returned from both the `/work` and `/search` endpoints. 
 They are identified by a *id*, - an example would be "775100-katalog:29372365".
@@ -266,47 +318,7 @@ it would map to json like:
 This encoding is designed both easy to work directly with in client code. It will also be properly encoded linked data, if we add 1) an `@context` with the url of `work-context.jsonld` and 2) an `@id` with the id of the object.
 
 Note: a source for creator types of dkdcplus is danmarc, ie http://www.kat-format.dk/danMARC2/Danmarc2.bilagJ.htm
-# Development
-
-Overview of files and directories:
-
-- `apitest/`, `ave-test/`, `performancetest/`, `add_imports_to_tests.py`, `mocktest.sh`, `siegetestendpoints.txt` - various testing
-- `doc/` - documentation
-- `src/` - the source code
-- `static/` contains a swagger-ui, which is used for documentation. Latest swagger-ui release (as of May 2016) has a bug, with regard to `boolean` types, which is why we include a copy of a recent snapshot of `github:swagger-api/swagger-ui:dist/` instead of just installing it from npm.
-
-In the beginning we work directly on the master branch (decided by the xp-team - lots of refactoring is happening at the moment, and it is easier for those new to github, etc.).
-Later on this can change into using `ready/...`-branches
-
-Quick notes about how to make changes:
-
-    git clone git@github.com:DBCDK/serviceprovider.git
-    
-    # ... make local changes test and commit...
-    # `git add` the changes, and then 
-    git commit
-    
-    git pull # sync from master branch on github
-    # ... merge conflicts, test and commit
-    
-    git push  # sync to master branch on github
-
-## Building (or rebuilding)
-
-    source nvm.sh
-    
-    # install node
-    nvm install
-    
-    # optional clean dependencies
-    # rm -rf node_modules
-    
-    # install deps
-    npm install
-    
-    # start, note that it asserts a smaug somewhere
-    SMAUG=http://localhost:3000 npm run dev
-
+# Contributing
 ## Tests
 
 The apitest `npm run apitest` sends a bunch of test-requests to the server, and diff the result with a previous result. The server has to be running during this.
@@ -337,3 +349,7 @@ The SP can then be started with:
 ```
 SMAUG=http://localhost:3000 npm run dev
 ```
+
+## License
+
+The project is released as GNU AGPL, see [LICENSE.txt](LICENSE.txt)
