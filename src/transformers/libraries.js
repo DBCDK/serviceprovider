@@ -19,10 +19,18 @@ let getOrderParameters = (context) => (agencyId) => new Promise(resolve => {
     let result = [];
     let parameters = JSON.parse(body)
       .serviceResponse.userOrderParameters.userParameter;
+    let parameterMap = {
+      userName: 'name',
+      userAddress: 'address',
+      userMail: 'email',
+      userTelephone: 'phone'
+    };
     if (parameters) {
       for (let i = 0; i < parameters.length; ++i) {
         if (parameters[i].parameterRequired.$ === '1') {
-          result.push(parameters[i].userParameterType.$);
+          let parameter = parameters[i].userParameterType.$;
+          parameter = parameterMap[parameter] || parameter;
+          result.push(parameter);
         }
       }
     }
