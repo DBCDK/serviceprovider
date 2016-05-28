@@ -1,3 +1,37 @@
+- DBC Open Platform
+    - badges, one-line description
+    - evt. logo
+    - TOC
+    - description / motivation
+- getting started
+    - usage examples - link to api-doc and guide
+    - prerequisites
+    - code structure
+    - building / installation
+- release history
+- configuration
+    - authentication
+    - environment variables
+- testing
+    - apitest
+    - unittest
+    - spec-test
+    - travis
+- design
+    - api structure
+    - spec
+    - transports
+    - bibliographic data model
+- contributing
+    - git workflow
+    - versioning / releasing
+    - authors/credits
+    - license
+
+
+#
+# ---------- OLD ------------
+#
 # ServiceProvider
 
 [![GitHub tag](https://img.shields.io/github/tag/DBCDK/serviceprovider.svg?style=flat-square)](https://github.com/DBCDK/serviceprovider)
@@ -9,7 +43,7 @@
 
 This is the repository for the ServiceProvider, ie. the API from [MobilSøg](https://github.com/DBCDK/mobilsoeg).  It starts out as a copy of the MobilSøg repository, and then the client code will be refactored out, etc.
 
-## Communication with the API
+# Communication with the API
 
 HTTP endpoints can be accesses on `/api/$ENDPOINT_NAME` with the parameters in a post request, i.e.:
 
@@ -20,7 +54,7 @@ HTTP endpoints can be accesses on `/api/$ENDPOINT_NAME` with the parameters in a
 
 will search for "1q84".
 
-## Installation / getting it to run
+# Installation / getting it to run
 
 **IMPORTANT** the serviceprovider only runs on DBCs internal network as it serve as the gateway to the services.
 
