@@ -13,13 +13,12 @@ The ServiceProvider or DBC Open Platform is the API for the danish public librar
 
 Documentation restructure in progress, toc+update-checklist:
 
-- [ ] [DBC Open Platform](#dbc-open-platform) - description / motivation
-- [ ] [Getting Started](#getting-started) - usage examples link to api-doc and guide - prerequisites - code structure - building / installation
-- [ ] [Release History](#release-history)
-- [ ] [Configuration](#configuration) - authentication - environment variables
-- [ ] [Testing](#testing) - apitest - unittest - spec-test - travis
-- [ ] [Design](#design) - api structure - spec - transports - bibliographic data model
-- [ ] [Contributing](#contributing) - git workflow - versioning / releasing - authors/credits - license
+- [DBC Open Platform](#dbc-open-platform) - description / motivation
+- [Getting Started](#getting-started) - usage examples link to api-doc and guide - prerequisites - code structure - building / installation
+- [Configuration](#configuration) - authentication - environment variables
+- [Testing](#testing) - apitest - unittest - spec-test - travis
+- [Design](#design) - api structure - spec - transports - bibliographic data model
+- [Contributing](#contributing) - git workflow - versioning / releasing - authors/credits - license
 
 The ServiceProvider provides access to DBCs services. The purpose is to make a unified, easy-to-use way to access the different bibliographic APIs. The serviceprovider works as a gateway to other services, and does not include the actual search/database/... logic.
 
@@ -31,97 +30,59 @@ The API is available on https://openplatform.dbc.dk/. This also include API-docu
 
 You can still run the service provider, with tests and mockdata, but it will not be fully functional without the underlying services.
 
-# ########### Documentation worked through until here #############
-## Code structure
+## Installing / running
 
-Overview of files and directories:
+First install dependencies
 
-- `apitest/`, `ave-test/`, `performancetest/`, `add_imports_to_tests.py`, `mocktest.sh`, `siegetestendpoints.txt` - various testing
-- `doc/` - documentation
-- `src/` - the source code
-- `static/` contains a swagger-ui, which is used for documentation. Latest swagger-ui release (as of May 2016) has a bug, with regard to `boolean` types, which is why we include a copy of a recent snapshot of `github:swagger-api/swagger-ui:dist/` instead of just installing it from npm.
-
-In the beginning we work directly on the master branch (decided by the xp-team - lots of refactoring is happening at the moment, and it is easier for those new to github, etc.).
-Later on this can change into using `ready/...`-branches
-
-Quick notes about how to make changes:
-
-    git clone git@github.com:DBCDK/serviceprovider.git
-    
-    # ... make local changes test and commit...
-    # `git add` the changes, and then 
-    git commit
-    
-    git pull # sync from master branch on github
-    # ... merge conflicts, test and commit
-    
-    git push  # sync to master branch on github
-
-## Building (or rebuilding)
-
+    # Get / install the expected version of node
     source nvm.sh
-    
-    # install node
     nvm install
     
-    # optional clean dependencies
-    # rm -rf node_modules
+    # Optionally clean dependencies
+    #rm -rf node_modules
     
-    # install deps
+    # Install dependencies
     npm install
+
+And then you can start the server with mock-data with `./start-service-provider.sh`, - or start a development version with:
+
+    # Optionally start a local minimal authorisation server
+    # - which just sends the specified context, and ignores token
+    PORT=3000 node src/smaug/minismaug.js -f context.json
     
-    # start, note that it asserts a smaug somewhere
+    # Start autorestarting developement server.
+    # The SMAUG environment is the authentication server,
+    # if you do not run it locally, use another url.
+    # (examples could be `http://platform-i01:3000` or 
+    # `http://smaug.m.dbc.antistof.dk:3000` if you have
+    # access to these)
+
     SMAUG=http://localhost:3000 npm run dev
 
-## Communication with the API
-
-HTTP endpoints can be accesses on `/api/$ENDPOINT_NAME` with the parameters in a post request, i.e.:
-
-    curl -X POST \
-         -H "Content-Type: application/json" \
-         -d '{"query":"(1q84)","offset":0,"worksPerPage":12,"sort":"rank_frequency"}' \
-         http://localhost:8080/api/getOpenSearchResultList
-
-will search for "1q84".
-
-## Installation / getting it to run
-
-
-It depends on a authorisation server to serve the configuration.
-
-You can run a local configuration server, w
-The current version depends on the existance for `config.json`, which has the list of internal DBC-services etc.
-These information should be delivered through environment or the authentification server later on.
-A sample file without passwords etc. is: `context-sample.json`, and that one can also be used for building / running tests when outside of DBCs network.
-The full config for running on the internal network lies in `context.json.nc` and is encrypted (with the password that was also previously used to get access to the config).
-The `context.json.sample` is automatically copied to `context.json` on npm install.
-
-### Dependencies
-
-- *siege* is used for load-testing. `apt-get install siege`
-- redis, - current version depends assumes a redis server is running for session-storage, - this will be remove later on
-- various dependencies in package.json `npm install`
-
-### Building / running it
-
-- `PORT=3000 node src/smaug/minismaug.js -f context.json` runs a minimal config-serving authorisation server (which ignores tokens).
-- `SMAUG=http://localhost:3000 npm run dev` runs the application in dev-mode. If you have access to another authorisation server, enter that instead of localhost:3000 (examples could be `http://platform-i01:3000` or `http://smaug.m.dbc.antistof.dk:3000`)
-
 By default the ServiceProvider will run on port 8080 on localhost.
-
-Optionally run `mdecrypt context.json.nc`, to decrypt the config.
 
 If you then open a browser to `localhost:8080`, you will see the API-documentation, - and you can now also send requests to the API, for example:
 
 ```bash
 curl -H "Authorization: Bearer qwerty" -H "Content-Type: application/json" -d '{"q": "ost", "fields": ["title","pid"]}' http://localhost:8080/v0/search
+
+curl 'http://localhost:8080/v0/search?q=ost&fields=title,pid'
 ```
 
-# Release History
+## Code structure
 
-- Version 1.1
-- Version 1.0
+Overview of files and directories:
 
+- `doc/` - documentation, guide, and schema/specification of the API and bibliographic data model.
+- `src/` - the source code
+    - `app.js` - the main code entrypoint
+    - `transformers/` - the code that transforms requests/data to/from the different services, and exposes them in the api.
+    - `smaug/` - simple authentification server used during test and development
+- `apitest/`, `ave-test/`, `performancetest/`, `add_imports_to_tests.py`, `mocktest.sh`, `siegetestendpoints.txt` - various testing
+- `static/` contains a swagger-ui, symlinks to guide, client-api, etc. This is served staticly. We are using a recent snapshot of `github:swagger-api:swagger-ui:dist/` as the stable swagger-ui release (as of May 2016) has a bug, with regard to `boolean` thet breaks the documentation.
+- `client/` - implementation and build script for the browser JavaScript client library.
+
+# ###### DOC WORKTHROUGH PROGRESS ######
 # Configuration
 ## Environment Variables
 The following environment variables can be used to override default settings in the application
@@ -181,6 +142,8 @@ g a token.
 
 In the first version it will support logins via "Resource Owner Password Credentials".
 
+It depends on a authorisation server to serve the configuration.
+A sample file without passwords etc. is: `context-sample.json`, and that one can also be used for building / running tests when outside of DBCs network.
 
 
 # Testing
