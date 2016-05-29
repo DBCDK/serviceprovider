@@ -1,6 +1,6 @@
 <img src="http://www.dbc.dk/logo.png" alt="DBC" title="DBC" align="right">
 
-# DBC Open Platform
+# ServiceProvider / DBC Open Platform
 
 [![GitHub tag](https://img.shields.io/github/tag/DBCDK/serviceprovider.svg?style=flat-square)](https://github.com/DBCDK/serviceprovider)
 [![David](https://img.shields.io/david/DBCDK/serviceprovider.svg?style=flat-square)](https://david-dm.org/DBCDK/serviceprovider#info=dependencies)
@@ -13,14 +13,14 @@ The ServiceProvider or DBC Open Platform is the API for the danish public librar
 
 Documentation restructure in progress, toc+update-checklist:
 
-- [DBC Open Platform](#dbc-open-platform) - description / motivation
-- [Getting Started](#getting-started) - usage examples link to api-doc and guide - prerequisites - code structure - building / installation
+- [ServiceProvider / DBC Open Platform](#serviceprovider-dbc-open-platform) - description / motivation
+- [Getting Started](#getting-started) - usage examples link to api-doc and guide - building / installation - code structure 
 - [Configuration](#configuration) - authentication - environment variables
-- [Testing](#testing) - apitest - unittest - spec-test - travis
 - [Design](#design) - api structure - spec - transports - bibliographic data model
+- [Testing](#testing) - apitest - unittest - spec-test - travis
 - [Contributing](#contributing) - git workflow - versioning / releasing - authors/credits - license
 
-The ServiceProvider provides access to DBCs services. The purpose is to make a unified, easy-to-use way to access the different bibliographic APIs. The serviceprovider works as a gateway to other services, and does not include the actual search/database/... logic.
+The ServiceProvider provides access to DBCs services. The purpose is to make a unified, easy-to-use way to access the different bibliographic APIs. The serviceprovider works as a gateway to other services, and does not include the actual search/database/etc. logic.
 
 # Getting started
 
@@ -82,7 +82,6 @@ Overview of files and directories:
 - `static/` contains a swagger-ui, symlinks to guide, client-api, etc. This is served staticly. We are using a recent snapshot of `github:swagger-api:swagger-ui:dist/` as the stable swagger-ui release (as of May 2016) has a bug, with regard to `boolean` thet breaks the documentation.
 - `client/` - implementation and build script for the browser JavaScript client library.
 
-# ###### DOC WORKTHROUGH PROGRESS ######
 # Configuration
 ## Environment Variables
 The following environment variables can be used to override default settings in the application
@@ -145,47 +144,7 @@ In the first version it will support logins via "Resource Owner Password Credent
 It depends on a authorisation server to serve the configuration.
 A sample file without passwords etc. is: `context-sample.json`, and that one can also be used for building / running tests when outside of DBCs network.
 
-
-# Testing
-## Unit tests
-Unit tests are placed with the modules and components in a `__tests__` folder
-to run the tests: `npm run test`
-
-## Api-test
-
-API-test sends a series of requests through HTTP and WebSockets, and checks that the results are as expected. The queries are listed in `apitest/requests.lst`.
-
-You can run it with mock data using `./mocktest.sh`. This starts the ServiceProvider and MiniSmaug in the background, which needs to be killed manually afterwards (quick hack, but it leaving them running also makes it easier to run the code for regenerating the mock data).
-
-To update the mock data, first remove the original mockdata file, and start the ServiceProvider with MOCK_FILE set:
-
-```bash
-rm apitest/mockdata.json
-SMAUG=http://localhost:3000 MOCK_FILE=apitest/mockdata.json SWAGGER_HTTP=true TEST_DEV=true node src/main.js
-```
-
-To generate the mock data, first run the apitest to record the data, and then call somen endpoint with `createTest=mockfile` to write the mock data to disk, ie:
-
-```bash
-cd apitest
-./apitest.sh
-curl 'http://localhost:8080/v0/user?access_token=qwerty&createTest=mockfile'
-```
-
-To update the expected result, make sure that the ServiceProvider is running, and then:
-
-```bash
-cd apitest
-./reset-expected.sh
-```
-(Remember to check that new expected result is as expected, before committing. `git diff` will list the changes).
-
-
-There are also various utility scripts for using the apitest during development in the `apitest/` folder.
-
-## Swagger
-
-A swagger specification is generated for the API, and the unit tests checks that it is valid.
+You can run a local authorisation server, `minismaug` as described in the getting started guide above.
 
 # Design
 
@@ -271,6 +230,47 @@ it would map to json like:
 This encoding is designed both easy to work directly with in client code. It will also be properly encoded linked data, if we add 1) an `@context` with the url of `work-context.jsonld` and 2) an `@id` with the id of the object.
 
 Note: a source for creator types of dkdcplus is danmarc, ie http://www.kat-format.dk/danMARC2/Danmarc2.bilagJ.htm
+# Testing
+## Unit tests
+Unit tests are placed with the modules and components in a `__tests__` folder
+to run the tests: `npm run test`
+
+## Api-test
+
+API-test sends a series of requests through HTTP and WebSockets, and checks that the results are as expected. The queries are listed in `apitest/requests.lst`.
+
+You can run it with mock data using `./mocktest.sh`. This starts the ServiceProvider and MiniSmaug in the background, which needs to be killed manually afterwards (quick hack, but it leaving them running also makes it easier to run the code for regenerating the mock data).
+
+To update the mock data, first remove the original mockdata file, and start the ServiceProvider with MOCK_FILE set:
+
+```bash
+rm apitest/mockdata.json
+SMAUG=http://localhost:3000 MOCK_FILE=apitest/mockdata.json SWAGGER_HTTP=true TEST_DEV=true node src/main.js
+```
+
+To generate the mock data, first run the apitest to record the data, and then call somen endpoint with `createTest=mockfile` to write the mock data to disk, ie:
+
+```bash
+cd apitest
+./apitest.sh
+curl 'http://localhost:8080/v0/user?access_token=qwerty&createTest=mockfile'
+```
+
+To update the expected result, make sure that the ServiceProvider is running, and then:
+
+```bash
+cd apitest
+./reset-expected.sh
+```
+(Remember to check that new expected result is as expected, before committing. `git diff` will list the changes).
+
+
+There are also various utility scripts for using the apitest during development in the `apitest/` folder.
+
+## Swagger
+
+A swagger specification is generated for the API, and the unit tests checks that it is valid.
+
 # Contributing
 ## Tests
 
