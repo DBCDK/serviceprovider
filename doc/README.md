@@ -9,16 +9,16 @@
 [![Coverage Status](https://coveralls.io/repos/DBCDK/serviceprovider/badge.svg?branch=master&service=github)](https://coveralls.io/github/DBCDK/serviceprovider?branch=master)
 [![Code Climate](https://codeclimate.com/github/DBCDK/serviceprovider/badges/gpa.svg)](https://codeclimate.com/github/DBCDK/serviceprovider)
 
-The ServiceProvider or DBC Open Platform is the API for the danish public libraries.
+The [ServiceProvider](https://github.com/dbcdk/serviceprovider) or [DBC Open Platform](https://openplatform.dbc.dk) is the API for the danish public libraries.
 
-Documentation restructure in progress, toc+update-checklist:
-
-- [ServiceProvider / DBC Open Platform](#serviceprovider-dbc-open-platform) - description / motivation
-- [Getting Started](#getting-started) - usage examples link to api-doc and guide - building / installation - code structure 
-- [Configuration](#configuration) - authentication - environment variables
-- [Design](#design) - api structure - spec - transports - bibliographic data model
-- [Testing](#testing) - apitest - unittest - spec-test - travis
-- [Contributing](#contributing) - git workflow - versioning / releasing - authors/credits - license
+- [ServiceProvider / DBC Open Platform](#serviceprovider-dbc-open-platform)
+- [Getting Started](#getting-started)
+    - [Installing / running](#installing-running)
+    - [Code structure](#code-structure)
+- [Configuration](#configuration)
+- [Design](#design)
+- [Testing](#testing)
+- [Contributing](#contributing)
 
 The ServiceProvider provides access to DBCs services. The purpose is to make a unified, easy-to-use way to access the different bibliographic APIs. The serviceprovider works as a gateway to other services, and does not include the actual search/database/etc. logic.
 
@@ -271,7 +271,16 @@ There are also various utility scripts for using the apitest during development 
 
 A swagger specification is generated for the API, and the unit tests checks that it is valid.
 
+## Travis
+
 # Contributing
+
+## Workflow
+
+Use github for issue-tracking, pull-requests, and deployment
+
+We use semantic versioning.
+
 ## Tests
 
 The apitest `npm run apitest` sends a bunch of test-requests to the server, and diff the result with a previous result. The server has to be running during this.
@@ -288,19 +297,6 @@ In addition, the generated swagger-file can be tested with:
 
 ```
 curl localhost:8080/api/swagger.json | swagger validate
-```
-
-## Starting a mini smaug for development
-
-This asserts a working context-file:
-
-```
-PORT=3000 node src/smaug/minismaug.js -f context.json&
-```
-
-The SP can then be started with:
-```
-SMAUG=http://localhost:3000 npm run dev
 ```
 
 ## License
