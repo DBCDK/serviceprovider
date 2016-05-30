@@ -53,5 +53,6 @@ suggest {"q":"fisk","type":"subject","limit":3,"createTest":"suggest-subject"}
 suggest {"q":"herlev","type":"library","limit":3,"createTest":"suggest-library"}
 suggest {"q":"herlev","type":"unsupported","limit":3,"createTest":"suggest-unsupported-type"}
 suggest {"q":"hest","type":"title","limit":3,"createTest":"suggest-title"}
+suggest {"q":"herlev","type":"title","limit":3,"fields":["term","pid"],"createTest":"suggest-title-fields"}
 suggest {"q":"rowling","type":"creator","limit":3,"createTest":"suggest-creator"}
 #user {"createTest":"user-get-user-info"}
