@@ -60,7 +60,7 @@ export default (request, context) => {
     return {statusCode: 300, error: 'not logged in'};
   }
   let params = {
-    agencyId: context.get('agency.order'),
+    agencyId: context.get('user.agency'),
     userId: context.get('user.id'),
     userPincode: context.get('user.pin'),
     'authentication.groupIdAut': context.get('netpunkt.group'),
@@ -71,7 +71,7 @@ export default (request, context) => {
   };
 
   let idPromise = new Promise((resolve, reject) =>
-    pbkdf2(context.get('agency.order').replace(/^DK-/, '') + ' ' + context.get('user.id'),
+    pbkdf2(context.get('user.agency').replace(/^DK-/, '') + ' ' + context.get('user.id'),
       context.get('user.salt'), 100000, 24, 'sha512', (err, key) => err ? reject(err) : resolve(key)));
 
   return context.call('openuserstatus', params).then(body => idPromise.then(id => {
@@ -89,8 +89,8 @@ export default (request, context) => {
                 loans: loans.map(loan),
                 orders: orders.map(order)
                };
-    if (context.data.ddbcms) {
-      data.ddbcmsapi = context.data.ddbcms.url;
+    if (context.get('services.ddbcmsapi')) {
+      data.ddbcmsapi = context.get('services.ddbcmsapi');
     }
 
     return {statusCode: 200, data: data};
