@@ -12,8 +12,8 @@ export default (params, context) => new Promise((resolve) => {
                   ['creator', 'subject', 'language', 'date', 'form'];
   //let agency = context.data.opensearch.agency;
   //let profile = context.data.opensearch.profile;
-  let agency = context.get("search.agency");
-  let profile = context.get("search.profile");
+  let agency = context.get('search.agency');
+  let profile = context.get('search.profile');
   
   
   let soap = `<?xml version="1.0" encoding="UTF-8"?>
