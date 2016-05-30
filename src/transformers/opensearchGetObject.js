@@ -207,7 +207,7 @@ function getRelationData(searchResult) {
 
 export function responseTransform(response, context, state) { // eslint-disable-line no-unused-vars
   if (_.has(response, 'data.searchResponse.error.$')) {
-    let errMsg = "Error in opensearchGetObject response.";
+    let errMsg = 'Error in opensearchGetObject response.';
     log.error(errMsg);
     return {statusCode: 500, error: errMsg};
   }
