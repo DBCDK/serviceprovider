@@ -1,7 +1,7 @@
 {
   "name": "serviceprovider",
   "version": "0.0.1",
-  "description": "API for accessing DBCs services through sockets and HTTP",
+  "description": "The ServiceProvider or DBC Open Platform is the API for the danish public libraries.\n\nThe ServiceProvider provides access to DBCs services. The purpose is to make a unified, easy-to-use way to access the different bibliographic APIs. The serviceprovider works as a gateway to other services, and does not include the actual search/database/etc. logic.",
   "main": "src/main.js",
   "scripts": {
     "preinstall": "cp -n context-sample.json context.json",
