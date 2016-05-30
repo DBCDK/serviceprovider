@@ -83,20 +83,24 @@ Overview of files and directories:
 - `client/` - implementation and build script for the browser JavaScript client library.
 
 # Configuration
+
+Configuration is passed through environment variables, and retrieved from the authorisation server.
+
 ## Environment Variables
-The following environment variables can be used to override default settings in the application
+
+The following environment variables can be used to override default settings in the application.
 
 - __LOG_LEVEL__
-Is either `DEBUG`,  `INFO`, `WARN`, `ERROR` or `OFF`
+Is either `TRACE` `DEBUG`,  `INFO`, `WARN`, `ERROR` or `OFF`
 
 - __APP_NAME__
-This variable is used to configure the name with which the application should appear in logs, and is also appended to secrets used in Redis.
+This variable is used to configure the name with which the application should appear in log.
 
   The default value is `app_name`
 
 - __PORT__
 Defines which port number the application should use.
-If `PORT` is undefined the application will be accecsible at port 8080 (i.e. localhost:8080)
+If `PORT` is undefined the application will be accessible at port 8080 (i.e. localhost:8080)
 
   The default value is `8080`
 
@@ -115,9 +119,6 @@ Defines if a worker reboots on crash. (This does not apply to the whole applicat
 
   The default value is `true`
 
-- __CONFIG_FILE__
-Which config-file to read, default is `./config.json`
-
 - __SMAUG__
 Url of the authorisation server we use.
 
@@ -132,17 +133,17 @@ If a mock file is specified, then the behaviour of the `createTest` parameter is
 Include http as allowed scheme in swagger, this is useful when developing locally.
 
 
-## Auth
+## Authorisation
 
-Authentication using OAuth 2. 
+Authorisation is done using OAuth 2. 
 
-The authentification server is called Smaug, and lives in another repository: https://github.com/dbcdk/smaug/. This also documents the API for gettin
+The authorisation server is called Smaug, and lives in another repository: https://github.com/dbcdk/smaug/. This also documents the API for gettin
 g a token.
 
-In the first version it will support logins via "Resource Owner Password Credentials".
+The first version only support logins via "Resource Owner Password Credentials".
 
-It depends on a authorisation server to serve the configuration.
-A sample file without passwords etc. is: `context-sample.json`, and that one can also be used for building / running tests when outside of DBCs network.
+The ServiceProvider depends on a authorisation server, to serve the configuration.
+A sample context without passwords is included in the repository: `context-sample.json`, and that one can also be used for building / running tests when outside of DBCs network.
 
 You can run a local authorisation server, `minismaug` as described in the getting started guide above.
 
