@@ -31,6 +31,7 @@
     },
     "user": {
       "agency": "100451",
+      "librarytype": "folkebibliotek",
       "id": "XXXXX",
       "pin": "XXXXX",
       "salt": "XXXXX"
