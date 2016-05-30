@@ -13,10 +13,15 @@ The [ServiceProvider](https://github.com/dbcdk/serviceprovider) or [DBC Open Pla
 
 - [ServiceProvider / DBC Open Platform](#serviceprovider-dbc-open-platform)
 - [Getting Started](#getting-started)
-    - [Installing / running](#installing-running)
-    - [Code structure](#code-structure)
+    - [Installing / Running](#installing-running)
+    - [Code Structure](#code-structure)
 - [Configuration](#configuration)
+    - [Environment Variables](#environment-variables)
+    - [Authorisation](#authorisation)
 - [Design](#design)
+    - [API Structure](#api-structure)
+    - [Transports](#transports)
+    - [Bibliographic Data Model](#bibliographic-data-model)
 - [Testing](#testing)
 - [Contributing](#contributing)
 
@@ -30,7 +35,7 @@ The API is available on https://openplatform.dbc.dk/. This also include API-docu
 
 You can still run the service provider, with tests and mockdata, but it will not be fully functional without the underlying services.
 
-## Installing / running
+## Installing / Running
 
 First install dependencies
 
@@ -69,7 +74,7 @@ curl -H "Authorization: Bearer qwerty" -H "Content-Type: application/json" -d '{
 curl 'http://localhost:8080/v0/search?q=ost&fields=title,pid'
 ```
 
-## Code structure
+## Code Structure
 
 Overview of files and directories:
 
@@ -151,7 +156,7 @@ You can run a local authorisation server, `minismaug` as described in the gettin
 
 The ServiceProvider, is based on [MobilSøg](https://github.com/DBCDK/mobilsoeg), with client code removed, and unified APIs / redesigned APIs.
 
-## API structure
+## API Structure
 
 __Requests__ to the API consist of the _endpoint name_, and a JSON object of _parameters_.
 
