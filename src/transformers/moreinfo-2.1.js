@@ -255,9 +255,9 @@ export default (request, context) => {
     params: params,
     config: {
       authentication: {
-        authenticationUser: context.data.moreinfo.user,
-        authenticationGroup: context.data.moreinfo.group,
-        authenticationPassword: context.data.moreinfo.password
+        authenticationUser: context.get('netpunkt.user'),
+        authenticationGroup: context.get('netpunkt.group'),
+        authenticationPassword: context.get('netpunkt.password')
       }
     }
   };
