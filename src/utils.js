@@ -90,9 +90,13 @@ function doLog(level, msg, args) {
     version: version,
     level: level.toUpperCase(),
     host: hostname(),
-    pid: process.pid,
-    msg: msg
+    pid: process.pid
   };
+
+  if (msg) {
+    blob.msg = msg;
+  }
+
   console.log(JSON.stringify(Object.assign(blob, args))); // eslint-disable-line no-console
 }
 
