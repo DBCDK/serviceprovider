@@ -130,11 +130,7 @@ export default function(specName = 'spec') {
         consumes: ['application/json'],
         produces: ['application/json'],
         paths: specToPaths(spec),
-        definitions: spec.definitions,
-        externalDocs: {
-          description: 'Extra documentation in the github repository',
-          url: 'https://github.com/DBCDK/serviceprovider/tree/master/doc'
-        }
+        definitions: spec.definitions
       };
     }).catch(e => {
       return {error: e};
