@@ -148,7 +148,7 @@ You can run a local authorisation server, `minismaug` as described in the gettin
 
 # Design
 
-This is the repository for the ServiceProvider, ie. the API from [MobilSøg](https://github.com/DBCDK/mobilsoeg).  It starts out as a copy of the MobilSøg repository, and then the client code will be refactored out, etc.
+The ServiceProvider, is based on [MobilSøg](https://github.com/DBCDK/mobilsoeg), with client code removed, and unified APIs / redesigned APIs.
 
 ## API structure
 
@@ -157,12 +157,12 @@ __Requests__ to the API consist of the _endpoint name_, and a JSON object of _pa
 Parameters are general across endpoints:
 
 - `access_token` is the access token when needed
+- `fields` which keys should be in the returned object(s).
+- `pretty` determines whether the JSON should be prettyprinted when serialising.
+- `timings` enable some timing statistics in envelope
+- `callback` is the callback name when doing a jsonp request on the HTTP-transport
 - `offset` for paginated results, such as search result.
 - `limit` for paginated results, - number of results per page.
-- `pretty` determines whether the JSON should be prettyprinted when serialising.
-- `callback` is the callback name when doing a jsonp request on the HTTP-transport
-- `fields` which keys should be in the returned object.
-- `timings` enable some timing statistics in envelope
 
 __Responses__ are returned within an envelope, as a JSON object with the following properties:
 
@@ -182,14 +182,13 @@ The production API runs ssl-only (HTTPS/WSS).
 English is the main language for naming of methods, as well as API-documentation.
 We will try to minimise the amount of library jargon, in order to make the API more accessible for developers without domain knowledge.
 
-
 ## Transports
 
 There are several transports:
 
 - HTTP POST requests - the _parameters_ are posted as a JSON object (`Content-Type: application/json`) to an url, given by the `endpoint name`.
 - HTTP GET requests - similar to HTTP-POST requests with same url, but the _parameters_ are given as url-parameters. This is a quick way to try out / experiment with the API. Parameters are parsed as JSON(if possible) and otherwise used as strings. Url-parameters can also be used in POST-requests to override values.
-- WebSockets. More details will follow.
+- WebSockets - enable us to overcome the limited number of parallel HTTP-requests per domain in web browsers. There is a simple browser JavaScript client api `client/`, and the [guide](https://openplatform.dbc.dk/v0/guide.html) describes how it is used.
 
 
 ## Bibliographic Data Model
@@ -203,6 +202,7 @@ The bibliographic object is represented as a JSON-object with fields from:
 - DKABM - defined on biblstandard.dk
 - Relations - http://danbib.dk/index.php?doc=broend3_relationer
 - `collection` list of ids in same "værk" within opensearch search
+- `collectionDetails` - list BriefDisplay of collection elements
 - moreInfo - covers as url and dataurl, - as `coverUrlXXX` or `coverDataUrlXXX` where `XXX` is one of `42`, `117`, `207`, `500`, `Back`, `Thumbnail` or `Full`, ie. `coverUrl42`.
 
 The mapping between keys in the JSON object, and the above sources can be seen in 
@@ -229,7 +229,7 @@ it would map to json like:
 
 This encoding is designed both easy to work directly with in client code. It will also be properly encoded linked data, if we add 1) an `@context` with the url of `work-context.jsonld` and 2) an `@id` with the id of the object.
 
-Note: a source for creator types of dkdcplus is danmarc, ie http://www.kat-format.dk/danMARC2/Danmarc2.bilagJ.htm
+Note: a source for creator types of dkdcplus is danmarc, i.e. http://www.kat-format.dk/danMARC2/Danmarc2.bilagJ.htm
 # Testing
 ## Unit tests
 Unit tests are placed with the modules and components in a `__tests__` folder
