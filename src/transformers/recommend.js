@@ -15,13 +15,13 @@ function createRequestParameters(request, context) {
       maxresults: request.limit
     }
   };
-  const filter = context.get('app.collectionidentifiers');
+  const filter = context.get('search.collectionidentifiers');
   
   if (filter){
     paramsPost.json.filter = [filter];
   }
   let recommenderType = 'default';
-  const urls = context.get('recommend.urls');
+  const urls = context.get('services.recommendurls');
   let defaultType = 'default';
   let uri = urls[defaultType];
   if (request.hasOwnProperty('recommender')) {
