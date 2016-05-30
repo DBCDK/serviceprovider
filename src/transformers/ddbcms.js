@@ -2,8 +2,8 @@
 
 export function ddbcms(params, context) {
   let config = context.data.ddbcms;
-  params.agency = config.agency;
-  params.key = config.password;
+  params.agency = context.get('user.agency');
+  params.key = context.get('app.ddbcmsapipassword');
   return context.query(context.get('services.ddbcmsapi') + 'content/fetch', params);
 }
 
