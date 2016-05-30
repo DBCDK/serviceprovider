@@ -7,8 +7,8 @@ export default (params, context) => {
     return Promise.resolve({statusCode: 400, error: 'missing q parameter'});
   }
 
-  let agency = context.data.opensearch.agency;
-  let profile = context.data.opensearch.profile;
+  let agency = context.get('search.agency');
+  let profile = context.get('search.profile');
   let q = params.q.replace(/</g, '&lt;');
   let sort = (params.sort || '').replace(/</g, '&lt;');
   let offset = 1 + (parseInt(params.offset, 10) || 0);
