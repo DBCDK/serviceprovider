@@ -34,6 +34,24 @@ import validateRequest from './validate.js';
 import validateContext from './validateContext';
 
 
+function accessLogMiddleware (req, res, next) {
+  var timeStart = moment();
+  res.logData = {};
+
+  res.on('finish', () => {
+    var timeEnd = moment();
+    log.info(null, Object.assign(res.logData || {},
+      {
+        type: 'accessLog',
+        request: {method: req.method, path: req.path, query: req.query, hostname: req.hostname, remoteAddress: req.ip},
+        response: {status: res.statusCode},
+        time: {start: timeStart, end: timeEnd, taken: timeEnd.diff(timeStart)}
+      }));
+  });
+
+  next();
+}
+
 module.exports.run = function (worker) {
   // Setup
   const app = express();
@@ -60,6 +78,10 @@ module.exports.run = function (worker) {
 
   // don't set the X-Powered-By header
   app.disable('x-powered-by');
+
+  // trust ip-addresses from X-Forwarded-By header, and log requests
+  app.enable('trust proxy');
+  app.use(accessLogMiddleware);
 
   // Helmet configuration
   // TODO: Setup rest of Helmet, in a way that works with the server setup.
@@ -133,6 +155,7 @@ module.exports.run = function (worker) {
     }
 
     var bearerToken = bearerTokens[0];
+    res.logData.access_token = bearerToken;
 
     if (typeof bearerToken === 'undefined') {
       return next(new MissingTokenError());
@@ -142,6 +165,7 @@ module.exports.run = function (worker) {
       .then((context) => {
         req.authorized = true;
         req.context = context;
+        res.logData.clientId = context.app.clientId;
         return next();
       })
       .catch((err) => {
@@ -165,9 +189,6 @@ module.exports.run = function (worker) {
 
   // Setting paths
   app.all('/', (req, res) => res.redirect(apiPath));
-
-  // Setting logger
-  app.use(expressLoggers.logger);
 
   // Health check
   app.get('/health', (req, res) => {
