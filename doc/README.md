@@ -23,6 +23,8 @@ The [ServiceProvider](https://github.com/dbcdk/serviceprovider) or [DBC Open Pla
     - [Transports](#transports)
     - [Bibliographic Data Model](#bibliographic-data-model)
 - [Testing](#testing)
+    - [API-Test](#api-test)
+    - [Automatic Unit Test Creation](#automatic-unit-test-creation)
 - [Contributing](#contributing)
 
 The ServiceProvider provides access to DBCs services. The purpose is to make a unified, easy-to-use way to access the different bibliographic APIs. The serviceprovider works as a gateway to other services, and does not include the actual search/database/etc. logic.
@@ -237,11 +239,20 @@ This encoding is designed both easy to work directly with in client code. It wil
 
 Note: a source for creator types of dkdcplus is danmarc, i.e. http://www.kat-format.dk/danMARC2/Danmarc2.bilagJ.htm
 # Testing
-## Unit tests
-Unit tests are placed with the modules and components in a `__tests__` folder
-to run the tests: `npm run test`
 
-## Api-test
+We use different kinds of tests:
+
+- Unit tests are placed with the modules and components in a `__tests__` folder. Use `npm run test` to run the tests. *travis*
+- Style checking with eslint. *travis*
+- Validation of generated swagger specification. *travis*
+- Blackbox API-test with mocked data.
+- Semi-manual browser testing of the JavaScript browser client API (run `guide.js`, chekc that console-output is as expected), - tested in IE11, Edge, Mobile Safari (iOS browser), Firefox, Firefox Mobile, Chromium, Mobile Chrome, and Android 4.4 browsers.
+- Manual testing, `ave-test/example.sh` contains example of how to run request.
+- Performancetest
+
+The tests marked with *travis*, are executed automatically on [travis](https://travis-ci.org/DBCDK/serviceprovider/).
+
+## API-Test
 
 API-test sends a series of requests through HTTP and WebSockets, and checks that the results are as expected. The queries are listed in `apitest/requests.lst`.
 
@@ -273,11 +284,17 @@ cd apitest
 
 There are also various utility scripts for using the apitest during development in the `apitest/` folder.
 
-## Swagger
+## Automatic Unit Test Creation
 
-A swagger specification is generated for the API, and the unit tests checks that it is valid.
+We have automated the creation of certain unit tests. If you are running in dev-mode, and send a request with an `createTest=filename` parameter, it will automatically create a unitTest for the given requests.
 
-## Travis
+Remember to check that the result of the request is as expected, as that will be included in the unit test as mock data.
+
+The created unit test, has removed passwords etc. from the mocked data, which may lead to bugs in the test.
+
+The details about the automatic test creation can be seen in `saveTest(..)` within `src/provider/caller.js`.
+
+We also list the automatically created unit-tests in `apitest/createTest.requests.lst`, with those requiring manual intevention commented out. This can be used to regenerate many of the unit tests, when major changes to the code occur.
 
 # Contributing
 
