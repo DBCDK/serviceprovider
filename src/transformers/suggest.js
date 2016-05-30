@@ -132,7 +132,7 @@ function subjectSuggest(params, context) {
  * @returns response with mapped keys
  */
 function mapTitleKeys(obj) {
-  let retObj = {term: obj['display.title'][0], id: obj.fedoraPid};
+  let retObj = {term: obj['display.title'][0], pid: obj.fedoraPid};
   if (obj.hasOwnProperty('display.creator')) {
     retObj.creator = obj['display.creator'][0];
   }
