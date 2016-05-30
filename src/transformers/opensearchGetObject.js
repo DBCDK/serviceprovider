@@ -18,11 +18,11 @@ function getPids(request) {
 }
 
 function getAndValidateOpensearchContext(context) {
-  let searchAgency = context.get('agency.search');
+  let searchAgency = context.get('search.agency');
   if (!searchAgency) {
     throw new Error('No search agency property present in context');
   }
-  let searchProfile = context.get('app.searchprofile');
+  let searchProfile = context.get('search.profile');
   if (!searchProfile) {
     throw new Error('No search profile property present in context');
   }
