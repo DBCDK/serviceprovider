@@ -2,7 +2,7 @@
   "context": {
     "services": {
       "ddbcmsapi": "http://rest.filmstriben.dbc.inlead.dk/web/",
-      "moreinfo": "http://moreinfo.addi.dk/2.1/",
+      "moreinfo": "http://moreinfo.addi.dk/2.6/",
       "openagency": "http://openagency.addi.dk/2.24/",
       "openholdingstatus": "https://openholdingstatus.addi.dk/2.2/",
       "openorder": "https://openorder.addi.dk/test_2.7.1/",
