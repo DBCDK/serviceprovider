@@ -11,9 +11,9 @@
 
 The [ServiceProvider](https://github.com/dbcdk/serviceprovider) or [DBC Open Platform](https://openplatform.dbc.dk) is the API for the danish public libraries.
 
-- [ServiceProvider / DBC Open Platform](#serviceprovider-dbc-open-platform)
+- [ServiceProvider / DBC Open Platform](#serviceprovider--dbc-open-platform)
 - [Getting Started](#getting-started)
-    - [Installing / Running](#installing-running)
+    - [Installing / Running](#installing--running)
     - [Code Structure](#code-structure)
 - [Configuration](#configuration)
     - [Environment Variables](#environment-variables)
