@@ -226,7 +226,7 @@ module.exports.run = function (worker) {
       if (validateErrors.length) {
         return Promise.resolve({
           statusCode: 400,
-          error: validateErrors.map(o => o.message).join('\n')});
+          error: validateErrors.map(o => String(o.stack).replace(/^instance\.?/, '')).join('\n')});
       }
       return serviceProvider.execute(event, query, context);
     })())
