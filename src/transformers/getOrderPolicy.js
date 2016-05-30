@@ -75,7 +75,7 @@ export default (request, context) => {
   }
 
   let params = {
-    agencyId: context.get('agency.order'),
+    agencyId: context.get('user.agency'),
     userId: context.get('user.id'),
     userPincode: context.get('user.pin'),
     'authentication.groupIdAut': context.get('netpunkt.group'),
