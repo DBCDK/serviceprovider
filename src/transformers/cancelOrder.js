@@ -75,11 +75,10 @@ export default (request, context) => {
   let orderType = request.orderId.substring(0, i);
   let orderId = request.orderId.substring(i + 1);
 
-  let userstatus = context.data.userstatus;
   let params = {
     'cancelOrder.orderId': orderId,
     'cancelOrder.orderType': orderType,
-    agencyId: context.get('agency.order'),
+    agencyId: context.get('user.agency'),
     userId: context.get('user.id'),
     userPincode: context.get('user.pin'),
     'authentication.groupIdAut': context.get('netpunkt.group'),
