@@ -25,9 +25,10 @@ The [ServiceProvider](https://github.com/dbcdk/serviceprovider) or [DBC Open Pla
 - [Testing](#testing)
     - [API-Test](#api-test)
     - [Automatic Unit Test Creation](#automatic-unit-test-creation)
-- [Contributing](#contributing)
 
 The ServiceProvider provides access to DBCs services. The purpose is to make a unified, easy-to-use way to access the different bibliographic APIs. The serviceprovider works as a gateway to other services, and does not include the actual search/database/etc. logic.
+
+Issue-tracking, and development, happens fully open on github. The project is licensed under GNU AGPL.
 
 # Getting started
 
@@ -296,32 +297,3 @@ The details about the automatic test creation can be seen in `saveTest(..)` with
 
 We also list the automatically created unit-tests in `apitest/createTest.requests.lst`, with those requiring manual intevention commented out. This can be used to regenerate many of the unit tests, when major changes to the code occur.
 
-# Contributing
-
-## Workflow
-
-Use github for issue-tracking, pull-requests, and deployment
-
-We use semantic versioning.
-
-## Tests
-
-The apitest `npm run apitest` sends a bunch of test-requests to the server, and diff the result with a previous result. The server has to be running during this.
-
-There are also unit tests which is run with `npm test`, and linting, which is run by `npm run lint`, and `npm run lint:checkstyle`.
-
-```
-npm run test
-npm run lint
-npm run lint:checkstyle
-```
-
-In addition, the generated swagger-file can be tested with:
-
-```
-curl localhost:8080/api/swagger.json | swagger validate
-```
-
-## License
-
-The project is released as GNU AGPL, see [LICENSE.txt](LICENSE.txt)
