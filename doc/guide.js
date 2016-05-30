@@ -101,14 +101,20 @@ dbcOpenPlatform.facets({q: '"den lille prins"'})
 
 // # OAuth2 Authentication
 //
-// In order to use the HTTP-API, we need to acquire an `access_token`. 
+// In order to use the HTTP-API, we need to acquire an `access_token`.
 //
 // For this we need various credentials:
 //
 // - `client_id` - identifies app and library
 // - `client_secret` - password connected with the `client_id`
-// - `user_id` - library user id (often consisting of 10 digits) followed by an "@" followed by the library agency id, or `@` for anonymous user. The library agency ids can be found via the `libraries` endpoint, through an anonymous user login.
-// - `user_password` - typically the pin for the library user, or just `@` for anonymous users
+// - `user_id` - library user id (often consisting of 10 digits) followed by an "@"
+//   followed by the library agency id, or `@` for anonymous user, optionally
+//   including agency id. So `@` is the anonymous user, and `@710100`
+//   is the anonymous user at Copenhagen Library. An agency ids are identifiers
+//   for the libraries, and can be found via the `libraries` endpoint,
+//   through an anonymous user login.
+// - `user_password` - typically the pin for the library user.
+//   The anonymous users password is the same as the user id
 //
 
 // The `access_token` is retrieved with a HTTP-POST request,
@@ -141,11 +147,11 @@ xhr_promise(xhr).then(function(result) {
 // # GET API
 //
 // You can also express the entire query in an url,
-// which is useful for interactive testing. 
+// which is useful for interactive testing.
 // An example search url is:
 // <a id=sample_url>https://openplatform.dbc.dk/v0/search?q=hej&pretty=true&access_token=...</a>
 //
-// The serviceprovider tries to parse each individual url parameter 
+// The serviceprovider tries to parse each individual url parameter
 // as a string, and if that fails just use it as a string. This
 // makes it possible to add more complex parameters, such as `.../work?pids=["870970-basis:05760755","870970-basis:27648452"]&...`
 //
@@ -173,8 +179,8 @@ HTTP_POST('https://openplatform.dbc.dk/v0/search',
 // <hr>
 // # Support code
 //
-// The following sections are the utility functions used above. 
-// It is implemented here for completeness. 
+// The following sections are the utility functions used above.
+// It is implemented here for completeness.
 // Feel free to skip the rest of this file.
 //
 // In browser JavaScript, HTTP-POSTing a JSON object
