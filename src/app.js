@@ -18,6 +18,7 @@ import moment from 'moment';
 import lodash from 'lodash';
 import request from 'request';
 import Provider from './provider/Provider';
+import {TokenError, TokenExpiredError, MultipleTokensError, MissingTokenError} from './smaug/errors';
 
 // Middleware
 import bodyParser from 'body-parser';
@@ -80,15 +81,14 @@ module.exports.run = function (worker) {
         uri: SMAUG_LOCATION + '/configuration',
         qs: {token: token}
       }, (err, response, body) => {
-        if (err) {
-          return reject(err);
+        switch (response.statusCode) {
+          case 200:
+            return resolve(JSON.parse(body));
+          case 404:
+            return reject(new TokenExpiredError());
+          default:
+            return reject(err);
         }
-
-        if (response.statusCode !== 200) {
-          return reject(new Error('Smaug status code=' + response.statusCode));
-        }
-
-        resolve(JSON.parse(body));
       });
     });
   };
@@ -129,25 +129,24 @@ module.exports.run = function (worker) {
 
     if (bearerTokens.length > 1) {
       // todo: return a meaningful error, like 'too many tokens'
-      return next();
+      return next(new MultipleTokensError());
     }
 
     var bearerToken = bearerTokens[0];
 
     if (typeof bearerToken === 'undefined') {
-      return next();
+      return next(new MissingTokenError());
     }
 
     getContext(bearerToken)
       .then((context) => {
         req.authorized = true;
         req.context = context;
+        return next();
       })
       .catch((err) => {
         log.error(String(err), {stacktrace: err.stack});
-      })
-      .then(() => {
-        return next();
+        return next(err);
       });
   };
 
@@ -156,6 +155,8 @@ module.exports.run = function (worker) {
       return next();
     }
 
+    // I'm not sure this code can actually be reached, as long as isAuthorized is used after getContextMiddleware,
+    // since an exception is thrown on missing tokens or if getContext(..) fails.
     res.sendStatus(403);
   };
 
@@ -277,21 +278,22 @@ module.exports.run = function (worker) {
     serviceProvider.availableTransforms().forEach(key => {
       connection.on(key, (data, callback) => { // eslint-disable-line no-loop-func
         getContext(data.access_token)
+          .then(context => {
+            return callApi(key, data, context);
+          })
           .catch(err => {
             log.error(String(err), {stacktrace: err.stack});
-            return null;
-          }).then(context => {
-            if (context === null) {
-              return {statusCode: 403, error: 'Forbidden'};
+            if (err instanceof TokenError) {
+              return err.toJson();
             }
-            return callApi(key, data, context);
-          }).catch(err => {
-            log.error(String(err), {stacktrace: err.stack});
+
             return {statusCode: 500, error: String(err)};
-          }).then(result => callback(null, result));
+          })
+          .then(result => callback(null, result));
       });
     });
   });
+
 
   // HTTP Transport
   serviceProvider.availableTransforms().forEach(event => {
@@ -333,6 +335,22 @@ module.exports.run = function (worker) {
     }, (error) => {
       res.jsonp(error);
     });
+  });
+
+  // handle token-related errors
+  app.use((err, req, res, next) => {
+    if (res.headersSent) {
+      return next(err);
+    }
+
+    if (err instanceof TokenError) {
+      res.set('WWW-Authenticate', `Bearer error="${err.httpError}", error_description="${err.message}"`);
+      res.status(err.httpStatusCode);
+      res.jsonp(err.toJson());
+    }
+    else {
+      next(err);
+    }
   });
 
   // Graceful handling of errors
