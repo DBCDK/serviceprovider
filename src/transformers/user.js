@@ -25,6 +25,24 @@ function loan(loanItem) {
 
 
 /**
+ * Maps debt item from backend response to serviceprovider api
+ * @param {Object} obj openuserstatus orders response
+ * @returns response with mapped keys
+ */
+function debt(debtItem) {
+
+  let result = {amount: debtItem.fiscalTransactionAmount.$,
+                currency: debtItem.fiscalTransactionCurrency.$,
+                date: debtItem.fiscalTransactionDate.$.split('T')[0],
+                title: debtItem.title.$};
+  if (debtItem.author) {
+    result.author = debtItem.author.$;
+  }
+  return result;
+}
+
+
+/**
  * Maps order item from backend response to serviceprovider api
  * @param {Object} obj openuserstatus orders response
  * @returns response with mapped keys
@@ -84,11 +102,18 @@ export default (request, context) => {
     if (body.data.getUserStatusResponse.userStatus.orderedItems.order) {
       orders = body.data.getUserStatusResponse.userStatus.orderedItems.order;
     }
+    
+    let debts = [];
+    if (body.data.getUserStatusResponse.userStatus.fiscalAccount) {
+      debts = body.data.getUserStatusResponse.userStatus.fiscalAccount.fiscalTransaction;
+    }
 
     let data = {id: id.toString('base64'),
                 loans: loans.map(loan),
-                orders: orders.map(order)
+                orders: orders.map(order),
+                debt: debts.map(debt)
                };
+
     if (context.get('services.ddbcmsapi')) {
       data.ddbcmsapi = context.get('services.ddbcmsapi');
     }

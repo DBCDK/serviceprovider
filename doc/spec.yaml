@@ -365,12 +365,11 @@ api:
             creator: Jonasson, Jonas
             status: In process
         debt:
-          amount: "20"
-          currency: dkk
-          date: 2015-11-21
-          type: Fine
-          author: Kristín Marja Baldursdóttir
-          title: Kantate
+          - amount: "20"
+            currency: DKK
+            date: 2015-11-21
+            author: Kristín Marja Baldursdóttir
+            title: Kantate
   work:
     tags:
       - Search
