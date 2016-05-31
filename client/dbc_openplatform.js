@@ -152,14 +152,14 @@
     xhr.open('POST', 'https://auth.dbc.dk/oauth/token');
 
     xhr.setRequestHeader('Authorization', 'Basic ' + 
-        btoa(client_id() + ':' + client_secret()));
+        btoa(clientId + ':' + clientSecret));
 
     xhr.setRequestHeader('Content-Type',
         'application/x-www-form-urlencoded');
 
     xhr.send('grant_type=password' +
-        '&username=' + user_id() +
-        '&password=' + user_password());
+        '&username=' + user +
+        '&password=' + passwd);
 
     return new Promise(function(resolve, reject) {
       xhr.onreadystatechange = function() {
