@@ -1,7 +1,6 @@
 'use strict';
 
 export function ddbcms(params, context) {
-  let config = context.data.ddbcms;
   params.agency = context.get('user.agency');
   params.key = context.get('app.ddbcmsapipassword');
   if (!params.key || !context.get('services.ddbcmsapi')) {
