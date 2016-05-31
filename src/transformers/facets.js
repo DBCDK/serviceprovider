@@ -43,12 +43,14 @@ export default (params, context) => new Promise((resolve) => {
     try {
       let result = {};
       body = JSON.parse(body).searchResponse;
+
       if (body.error) {
         return resolve({
           statusCode: 500,
           error: body.error.$
         });
       }
+
       facets = ((body.result.facetResult || {}).facet || []);
       facets.forEach(facet => {
         let name = facet.facetName.$.replace('facet.', '');
