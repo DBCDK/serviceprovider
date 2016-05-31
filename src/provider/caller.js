@@ -82,10 +82,10 @@ function saveTest(test) {
 import Provider from '../../provider/Provider.js';
 import {assert, fail} from 'chai';
 
-let context = ${JSON.stringify(cleanedContext)};`;
+let context = ${JSON.stringify(cleanedContext, null, 2)};`;
   source += censor(`
 let provider = Provider();
-let mockData = ${JSON.stringify(test.mockData)};
+let mockData = ${JSON.stringify(test.mockData, null, 2)};
 
 describe('Automated test: ${test.filename}', () => {
   it('expected response. ID:${test.requestId}, for ${JSON.stringify(test.params)}', (done) => {
@@ -93,11 +93,11 @@ describe('Automated test: ${test.filename}', () => {
     provider.execute('${test.name}', ${JSON.stringify(test.params)}, context)
       .then(result => {
         assert.deepEqual(result,
-            ${JSON.stringify(test.result)});
+            ${JSON.stringify(test.result, null, 2)});
         done();
       })
       .catch(result => {
-        fail({throw: result}, ${JSON.stringify(test.result)});
+        fail({throw: result}, ${JSON.stringify(test.result, null, 2)});
         done();
       });
   });
@@ -274,7 +274,7 @@ class Context {
    */
   get(key){
     let keys = key.split('.');
-    let value = keys.reduce((o, name) => 
+    let value = keys.reduce((o, name) =>
                             { return o && o[name]; }, this.data);
     return value;
   }
