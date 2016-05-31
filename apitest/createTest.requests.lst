@@ -23,11 +23,11 @@ facets {"q":"harry","createTest":"facets_simple"}
 facets {"q":"invalid cql","createTest":"facets_invalid_cql"}
 facets {"q":"ost","fields":["access","acSource","audience","audienceCategory","branch","category","creator","creatorFunction","date","department","dk5","extraTitles","fictionSubject","form","gamePlatform","genre","genreCategory","geographic","language","level","let","literaryForm","lix","musicSubject","nationality","nonFictionSubject","partOf","period","primaryCreator","sheetMusic","subject","titleSeries","type"],"limit":2,"createTest":"facets_all"}
 #libraries {"agencyIds":["717500"],"fields":["agencyId","orderParameters"],"createTest":"libraries_000_agencyIds"}
-# = curl 'http://localhost:8080/v0/libraries?access_token=qwerty&agencyIds=\["717500"\]&fields=agencyId,orderParameters&createTest=libraries_000_agencyIds'
+# = curl 'http://localhost:8080/v1/libraries?access_token=qwerty&agencyIds=\["717500"\]&fields=agencyId,orderParameters&createTest=libraries_000_agencyIds'
 #libraries {"branchIds":["717500","717501","717502"],"fields":["agencyId","branchId","orderParameters"],"createTest":"libraries_branchIds"}
-# = curl 'http://localhost:8080/v0/libraries?access_token=qwerty&branchIds=\["717500","717501","717502"\]&fields=agencyId,branchId,orderParameters&createTest=libraries_branchIds'
+# = curl 'http://localhost:8080/v1/libraries?access_token=qwerty&branchIds=\["717500","717501","717502"\]&fields=agencyId,branchId,orderParameters&createTest=libraries_branchIds'
 ##libraries {"fields":["branchId","city"],"createTest":"libraries_all.js_nol"}
-## = curl 'http://localhost:8080/v0/libraries?access_token=qwerty&fields=branchId,city&createTest=libraries_all.js_nolint'
+## = curl 'http://localhost:8080/v1/libraries?access_token=qwerty&fields=branchId,city&createTest=libraries_all.js_nolint'
 news {"fields":["title","changed","nid","field_ding_news_list_image"],"createTest":"news"}
 news {"nids":["19","40"],"fields":["title","changed","nid","field_ding_news_list_image"],"createTest":"news_nids"}
 #order {"orderId":"Hold:NCIPMDAxOXwxNS0wNC0yMDE1IDE1OjUzOjE4fHxLb21wdXRlciBmb3IgYWxsZXx8MjAxNSwgMDJ8MQ==","delete":true,"createTest":"order-delete-existing-order"}

@@ -113,7 +113,7 @@
             hostname: 'openplatform.dbc.dk', 
             port: 443,
             secure: true,
-            path: '/v0/socketcluster/?access_token=' + token
+            path: '/v1/socketcluster/?access_token=' + token
           });
         sc.on('connectAbort', function(result) {
           reject(result);
