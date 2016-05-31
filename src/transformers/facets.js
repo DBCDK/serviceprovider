@@ -44,10 +44,10 @@ export default (params, context) => new Promise((resolve) => {
       let result = {};
       body = JSON.parse(body).searchResponse;
       if (body.error) {
-        return {
+        return resolve({
           statusCode: 500,
           error: body.error.$
-        };
+        });
       }
       facets = ((body.result.facetResult || {}).facet || []);
       facets.forEach(facet => {
