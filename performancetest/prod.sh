@@ -1,7 +1,7 @@
 #!/bin/bash
 
 export TIMES=500
-export URL='http://localhost:8080/v0/'
+export URL='http://localhost:8080/v1/'
 
 export JOBS=1
 export PRE=''

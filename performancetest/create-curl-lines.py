@@ -7,7 +7,7 @@ import socket
 
 sh = """
 export TIMES=1
-export URL='http://xp-p02.dbc.dk:3000/v0/'
+export URL='http://xp-p02.dbc.dk:3000/v1/'
 export ENDPOINT='search'
 export ACCESS_TOKEN='64141bea42b72443ce3848455f5960e1438fb434'
 export REQUEST='{ "q": "hest", "fields": ["title"], "timings":true}'

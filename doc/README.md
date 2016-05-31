@@ -72,9 +72,9 @@ By default the ServiceProvider will run on port 8080 on localhost.
 If you then open a browser to `localhost:8080`, you will see the API-documentation, - and you can now also send requests to the API, for example:
 
 ```bash
-curl -H "Authorization: Bearer qwerty" -H "Content-Type: application/json" -d '{"q": "ost", "fields": ["title","pid"]}' http://localhost:8080/v0/search
+curl -H "Authorization: Bearer qwerty" -H "Content-Type: application/json" -d '{"q": "ost", "fields": ["title","pid"]}' http://localhost:8080/v1/search
 
-curl 'http://localhost:8080/v0/search?q=ost&fields=title,pid'
+curl 'http://localhost:8080/v1/search?q=ost&fields=title,pid'
 ```
 
 ## Code Structure
@@ -183,8 +183,7 @@ To make sure it arrives to all kinds of clients(including jsonp), the HTTP-reque
 
 __The API__ is documented using OpenAPI 2.0 Specification (swagger), and the generated documentation can be seen on https://openplatform.dbc.dk/. The swagger specification is generated from a simpler `doc/spec.yaml` in the github repository.
 
-The generated documentation is exposed at `/v0/`. The HTTP-API is exposed as `/v0/$ENDPOINT-NAME`. 
-Version 0 (`/v0`) is the unstable API under development. When the API is finalised, we will change to version 1.
+The generated documentation is exposed at `/v1/`. The HTTP-API is exposed as `/v1/$ENDPOINT-NAME`. 
 
 The production API runs ssl-only (HTTPS/WSS).
 
@@ -197,7 +196,7 @@ There are several transports:
 
 - HTTP POST requests - the _parameters_ are posted as a JSON object (`Content-Type: application/json`) to an url, given by the `endpoint name`.
 - HTTP GET requests - similar to HTTP-POST requests with same url, but the _parameters_ are given as url-parameters. This is a quick way to try out / experiment with the API. Parameters are parsed as JSON(if possible) and otherwise used as strings. Url-parameters can also be used in POST-requests to override values.
-- WebSockets - enable us to overcome the limited number of parallel HTTP-requests per domain in web browsers. There is a simple browser JavaScript client api `client/`, and the [guide](https://openplatform.dbc.dk/v0/guide.html) describes how it is used.
+- WebSockets - enable us to overcome the limited number of parallel HTTP-requests per domain in web browsers. There is a simple browser JavaScript client api `client/`, and the [guide](https://openplatform.dbc.dk/v1/guide.html) describes how it is used.
 
 
 ## Bibliographic Data Model
@@ -271,7 +270,7 @@ To generate the mock data, first run the apitest to record the data, and then ca
 ```bash
 cd apitest
 ./apitest.sh
-curl 'http://localhost:8080/v0/user?access_token=qwerty&createTest=mockfile'
+curl 'http://localhost:8080/v1/user?access_token=qwerty&createTest=mockfile'
 ```
 
 To update the expected result, make sure that the ServiceProvider is running, and then:

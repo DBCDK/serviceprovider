@@ -1,8 +1,8 @@
 #!/bin/bash
 
 export TIMES=500
-#export URL='http://xp-p02.dbc.dk:3000/v0/'
-export URL='http://localhost:8080/v0/'
+#export URL='http://xp-p02.dbc.dk:3000/v1/'
+export URL='http://localhost:8080/v1/'
 #export ACCESS_TOKEN='64141bea42b72443ce3848455f5960e1438fb434'
 # platformbe-p01
 export ACCESS_TOKEN="a1d4ba32473cb0b5746a6f4163fc4b9a542d423e"
