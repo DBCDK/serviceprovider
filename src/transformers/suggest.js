@@ -76,7 +76,11 @@ function creatorSuggest(params, context) {
  */
 function librarySuggest(params, context) {
   log.debug('librarysuggest called with ' + params.q);
-  let localParams = {query: params.q, lt: context.data.librarysuggest.librarytype};
+  let libraryType = "folkebibliotek";
+  if (params.librarytype) {
+    libraryType = params.librarytype;
+  }
+  let localParams = {query: params.q, lt: libraryType};
   if (params.limit) {
     localParams.n = params.limit;
   }
@@ -156,7 +160,7 @@ function titleSuggest(params, context) {
 
   let localParams = {query: query,
                      fields: 'display.title,fedoraPid,display.creator,display.workType',
-                     filter: context.data.app.collectionidentifiers};
+                     filter: context.get('search.collectionidentifiers')};
 
   if (params.limit) {
     localParams.rows = params.limit;
