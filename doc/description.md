@@ -20,5 +20,5 @@ Danish libraries can get access directly from DBC, see the description in danish
 The latest version of the API is https://openplatform.dbc.dk/.
 Source code, issue tracking, etc. is on github: https://github.com/dbcdk/serviceprovider/,
 which also contains specification, and additional documentation, in [doc/](https://github.com/DBCDK/serviceprovider/tree/master/doc/).
-A getting started guide is available here: [guide.html](guide.html).
+Example requests, and a getting started guide is available here: [example.html](example.html) [guide.html](guide.html).
 
