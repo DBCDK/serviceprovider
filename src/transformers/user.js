@@ -92,6 +92,13 @@ export default (request, context) => {
       context.get('user.salt'), 100000, 24, 'sha512', (err, key) => err ? reject(err) : resolve(key)));
 
   return context.call('openuserstatus', params).then(body => idPromise.then(id => {
+    let usr = body.data.getUserStatusResponse;
+    if (body.data.getUserStatusResponse.getUserStatusError) {
+      return {
+        statusCode: 500,
+        error: body.data.getUserStatusResponse.getUserStatusError.$
+      };
+    }
 
     let loans = [];
     if (body.data.getUserStatusResponse.userStatus.loanedItems.loan) {
