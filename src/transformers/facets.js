@@ -10,9 +10,12 @@ export default (params, context) => new Promise((resolve) => {
 
   let facets = (Array.isArray(params.fields) && params.fields) ||
                   ['creator', 'subject', 'language', 'date', 'form'];
-  let agency = context.data.opensearch.agency;
-  let profile = context.data.opensearch.profile;
-
+  //let agency = context.data.opensearch.agency;
+  //let profile = context.data.opensearch.profile;
+  let agency = context.get('search.agency');
+  let profile = context.get('search.profile');
+  
+  
   let soap = `<?xml version="1.0" encoding="UTF-8"?>
 <SOAP-ENV:Envelope xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/"
     xmlns:open="http://oss.dbc.dk/ns/opensearch">
