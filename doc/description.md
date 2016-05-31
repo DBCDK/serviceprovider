@@ -6,7 +6,7 @@ Forespørgslen sendes til DBCs kundeservice (https://kundeservice.dbc.dk/) med f
 - Projektejer kontaktperson (bibliotek, email, telefon)
 - Teknisk kontaktperson (navn, email, telefon)
 - Navn/beskrivelse af app/klient
-- Eventuelt søge-profil (per default er dette det indloggede bibliotek. Alternative søgeprofiler kan være landsdækkende (bibliotek.dk), børnematerialer (palle), ...)
+- Eventuelt søge-profil (per default er dette det indloggede bibliotek. Alternative søgeprofiler kan være landsdækkende, såsom bibliotek.dk og biblo.dk)
 
 Herefter vil biblioteket modtage et eller flere `client_id` / `client_secret`, der kan bruges til at få adgang til APIet.
 
