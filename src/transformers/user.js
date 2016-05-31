@@ -48,18 +48,17 @@ function debt(debtItem) {
  * @returns response with mapped keys
  */
 function order(orderItem) {
-  let result = {title: orderItem.title.$,
-                orderId: `${orderItem.orderType.$}:${orderItem.orderId.$}`,
-                orderDate: orderItem.orderDate.$,
-                status: orderItem.orderStatus.$,
-                library: orderItem.pickUpAgency.$
-               };
-  if (orderItem.holdQueuePosition) {
-    result.holdQueuePosition = orderItem.holdQueuePosition.$;
-  }
-  if (orderItem.author) {
-    result.author = orderItem.author.$;
-  }
+  let result = {
+    orderId: `${orderItem.orderType.$}:${orderItem.orderId.$}`,
+    status: orderItem.orderStatus.$,
+    library: orderItem.pickUpAgency.$
+  };
+  ['holdQueuePosition', 'author', 'title', 'orderDate',
+   'pickUpExpiryDate', 'pickUpId'].forEach(key => {
+     if (orderItem[key] && orderItem[key].$) {
+       result[key] = orderItem[key].$;
+     }
+   });
   return result;
 }
 
