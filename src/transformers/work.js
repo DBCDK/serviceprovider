@@ -162,6 +162,14 @@ export function workResponse(response, context, state) { // eslint-disable-line 
 }
 
 export default (request, context) => {
+  let error;
+  if (!request.pids || request.pids.length === 0) {
+    error = {statusCode: 400, error: '\'pids\' not present in request'};
+  }
+  if (error) {
+    return Promise.resolve(error);
+  }
+
   let {transformedRequest: params, state: state} = workRequest(request, context);
 
   let services = []; // state-data for knowing which servies is called and in which order.
