@@ -1,5 +1,5 @@
 (function() {
-  if(typeof Promise === 'undefined') {
+  if (typeof Promise === 'undefined') {
     throw 'old browser without Promise object. Please load a polyfill before loading dbc_openplatform.min.js, if you want to make it work';
   }
   var sc;
@@ -28,21 +28,21 @@
    */
   function endpoint(name) {
     return function(obj) {
-      params = {access_token: apiToken};
-      for(var key in obj) if(obj.hasOwnProperty(key)) {
+      var params = {access_token: apiToken};
+      for (var key in obj) if (obj.hasOwnProperty(key)) {
         params[key] = obj[key];
       }
       var envelope = params.envelope;
       delete params.envelope;
-      if(!this.connected()) {
+      if (!this.connected()) {
         return Promise.reject('need to connect before calling endpoint');
       }
       return new Promise(function(resolve, reject) {
         sc.emit(name, params, function(err, result) {
-          if(err) {
+          if (err) {
             return reject(err);
           }
-          if(!result.statusCode || result.statusCode !== 200) {
+          if (!result.statusCode || result.statusCode !== 200) {
             reject(result);
           } else {
             resolve(envelope ? result : result.data);
@@ -55,7 +55,7 @@
   /**
    * Assign methods for all endpoints.
    */
-  for(var i = 0; i < endpoints.length; ++i) {
+  for (var i = 0; i < endpoints.length; ++i) {
     dbcOpenPlatform[endpoints[i]] = endpoint(endpoints[i]);
   }
 
@@ -71,26 +71,26 @@
     var promise, args, clientId, clientSecret, user, password;
 
     args = Array.prototype.slice.call(arguments);
-    if(!args.length === 0 && !apiToken) {
-      if(!apiToken) {
+    if (!args.length === 0 && !apiToken) {
+      if (!apiToken) {
         throw 'missing token to connect';
       }
       promise = Promise.resolve(apiToken);
-    } else if(args.length === 1) {
+    } else if (args.length === 1) {
       promise = Promise.resolve(args[0]);
     } else {
       clientId = args[0];
       clientSecret = args[1];
-      if(args.length === 2) {
+      if (args.length === 2) {
         user = '@';
         password = '@';
-      } else if(args.length === 4) {
+      } else if (args.length === 4) {
         user = args[2];
         password = args[3];
       } else {
-        throw 'dbcOpenPlatform.connect takes 0, 1, 2 or 4 parameters'
+        throw 'dbcOpenPlatform.connect takes 0, 1, 2 or 4 parameters';
       }
-      if(user.indexOf('@') === -1) {
+      if (user.indexOf('@') === -1) {
         throw 'id should be the concatenation of user-id, "@", and agency-id';
       }
       promise = getToken(clientId, clientSecret, user, password);
@@ -98,13 +98,13 @@
     return promise.then(function(token) {
       apiToken = token;
       return new Promise(function(resolve, reject) {
-        if(sc) {
-          if(dbcOpenPlatform.connected()) {
+        if (sc) {
+          if (dbcOpenPlatform.connected()) {
             return resolve(token);
           }
           sc.on('connectAbort', function() {
             sc = undefined;
-            resolve(dbcServiceProvider.connect(token));
+            resolve(dbcOpenPlatform.connect(token));
           });
           sc.on('connect', function() {
             resolve(token);
@@ -113,11 +113,11 @@
           return;
         } 
         sc = require('socketcluster-client').connect({
-            hostname: 'openplatform.dbc.dk', 
-            port: 443,
-            secure: true,
-            path: '/v1/socketcluster/?access_token=' + token
-          });
+          hostname: 'openplatform.dbc.dk', 
+          port: 443,
+          secure: true,
+          path: '/v1/socketcluster/?access_token=' + token
+        });
         sc.on('connectAbort', function(result) {
           reject(result);
         });
@@ -133,7 +133,7 @@
    * @return a promise of nothing.
    */
   dbcOpenPlatform.disconnect = function() {
-    if(sc) {
+    if (sc) {
       sc.disconnect();
     }
     return Promise.resolve();
@@ -166,8 +166,8 @@
 
     return new Promise(function(resolve, reject) {
       xhr.onreadystatechange = function() {
-        if(xhr.readyState === 4) {
-          if(xhr.status === 200) {
+        if (xhr.readyState === 4) {
+          if (xhr.status === 200) {
             var result = xhr.response;
             result = JSON.parse(result).access_token;
             resolve(result);
@@ -175,7 +175,7 @@
             reject({statusCode: xhr.status, error: xhr.response});
           }
         }
-      }
+      };
     });
   }
 })();

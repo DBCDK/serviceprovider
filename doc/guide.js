@@ -69,7 +69,7 @@ dbcOpenPlatform.search({
 
 // Errors are caught as usual with promises:
 
-dbcOpenPlatform.work({ invalid_parameter: 'foo'})
+dbcOpenPlatform.work({invalid_parameter: 'foo'})
 .catch(function(err) {
     console.log('work error example', err);
 });
@@ -150,7 +150,7 @@ xhr_promise(xhr).then(function(result) {
 // <a id=sample_url>https://openplatform.dbc.dk/v1/search?q=hej&pretty=true&access_token=...</a>
 //
 // The serviceprovider tries to parse each individual url parameter
-// as a string, and if that fails just use it as a string. This
+// as JSON, and if that fails just use it as a string. This
 // makes it possible to add more complex parameters, such as `.../work?pids=["870970-basis:05760755","870970-basis:27648452"]&...`
 //
 // # POST API
@@ -159,8 +159,8 @@ xhr_promise(xhr).then(function(result) {
 // to the API endpoint:
 
 HTTP_POST('https://openplatform.dbc.dk/v1/suggest',
-    { q: 'Steppe', type: 'title',
-      access_token: access_token});
+    {q: 'Steppe', type: 'title',
+     access_token: access_token});
 
 HTTP_POST('https://openplatform.dbc.dk/v1/search',
     {q: 'hello', access_token: access_token});
@@ -216,7 +216,7 @@ function user_id() {
   return location.hash.split(':')[2] || '@'; }
 function user_password() {
   return location.hash.split(':')[3] || '@'; }
-if(client_id() === 'id' || !client_secret()) {
+if (client_id() === 'id' || !client_secret()) {
   throw 'Please use your client_id' +
     ' and client_secret in the url';
 }
@@ -231,13 +231,13 @@ if(client_id() === 'id' || !client_secret()) {
 function xhr_promise(xhr) {
   return new Promise(function(resolve, reject) {
     xhr.onreadystatechange = function() {
-      if(xhr.readyState === 4) {
+      if (xhr.readyState === 4) {
         console.log(xhr.responseURL, xhr);
-        if(xhr.status === 200) {
+        if (xhr.status === 200) {
           var result = xhr.response;
           try {
             result = JSON.parse(result);
-          } catch(e) {
+          } catch (e) {
           }
           resolve(result);
         } else {
