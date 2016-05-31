@@ -42,7 +42,16 @@ export default (params, context) => new Promise((resolve) => {
   context.call('opensearch', soap).then(body => {
     try {
       let result = {};
-      facets = JSON.parse(body).searchResponse.result.facetResult.facet;
+      body = JSON.parse(body).searchResponse;
+
+      if (body.error) {
+        return resolve({
+          statusCode: 500,
+          error: body.error.$
+        });
+      }
+
+      facets = ((body.result.facetResult || {}).facet || []);
       facets.forEach(facet => {
         let name = facet.facetName.$.replace('facet.', '');
         if (Array.isArray(facet.facetTerm)) {
