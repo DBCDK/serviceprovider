@@ -159,9 +159,14 @@ function titleSuggest(params, context) {
   let query = '{!complexphrase inOrder=true}display.title:' + queryString+ '*';
 
   let localParams = {query: query,
-                     fields: 'display.title,fedoraPid,display.creator,display.workType',
-                     filter: context.get('search.collectionidentifiers')};
-
+                     fields: 'display.title,fedoraPid,display.creator,display.workType'
+                    };
+  
+  const filter = context.get('search.collectionidentifiers');  
+  if (filter){
+    localParams.filter = filter;
+  }
+  
   if (params.limit) {
     localParams.rows = params.limit;
   }
