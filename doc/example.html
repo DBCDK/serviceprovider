@@ -3,20 +3,20 @@
   <head>
     <meta charset=utf-8>
     <title>DBC Open Platform Examples</title>
-    <link href='https://fonts.googleapis.com/css?family=Open+Sans:300,600' rel='stylesheet' type='text/css'>
+    <link href=https://fonts.googleapis.com/css?family=Open+Sans:300,600 rel=stylesheet type=text/css>
     <style>
 body {
   text-align: center;
 }
       .container {
         display: inline-block;
-        font-family: "Open Sans", sans-serif;
+        font-family: 'Open Sans', sans-serif;
         text-align: left;
         max-width: 600px;
       }
     </style>
   </head>
-  <body>
+  <body onload=runExamples()>
     <div class=container>
       <table>
         <tr><td>client_id</td><td><input id=client_id></input></td></tr>
@@ -45,7 +45,7 @@ if (defaults[1]) {
   client_secret.value = defaults[1];
 }
 if (defaults[2]) {
-  t = defaults[2].split("@");
+  t = defaults[2].split('@');
   user_id.value = t[0];
   agency.value = t[1];
 }
@@ -60,17 +60,17 @@ function print() {
     .map(function (o) { 
       return typeof o === 'string' 
         ? o : JSON.stringify(o); 
-    }).join(" ").replace(/</g, '&lt;').replace(/\n/g, '<br>');
+    }).join(' ').replace(/</g, '&lt;').replace(/\n/g, '<br>');
 }
 
 function runExample(p, endpoint, params) {
   return p.then(function() {
-  console.log(endpoint, params);
-  return dbcOpenPlatform[endpoint](params)
-    .then(function(result) {
-      print(endpoint, params,
-          '\n↳ ', result);
-    })
+    console.log(endpoint, params);
+    return dbcOpenPlatform[endpoint](params)
+      .then(function(result) {
+        print(endpoint, params,
+            '\n↳ ', result);
+      })
     .catch(function(err) {
       console.log(err);
       print(endpoint, params,
@@ -80,7 +80,7 @@ function runExample(p, endpoint, params) {
 }
 
 function runExamples() {
-  examplesDiv.innerHTML = "";
+  examplesDiv.innerHTML = '';
   var anonymous = (user_id.value === '');
   if (anonymous) {
     user_pin.value = '@' + agency.value;
@@ -96,17 +96,24 @@ function runExamples() {
         'search', {q: 'ost', fields: ['dcTitle', 'dcCreator'], limit: 5},
         'facets', {q: 'københavn', fields: ['subject', 'type', 'dk5'], limit: 3},
         'search', {q: '1q84 AND facet.type=bog', fields: ['pid', 'creator'], limit: 2},
-        'availability', {pid: "710100-katalog:45559572"},
-        'availability', {pid: "710100-katalog:45425037", timings: true, envelope: true},
+        'availability', {pid: '710100-katalog:45559572'},
+        'availability', {pid: '710100-katalog:45425037', timings: true, envelope: true},
         'recommend', {recommender: 'popular', fields: ['title', 'pid'], limit: 4},
         'facets', {q: 'flunkerne', fields: ['type'], limit: 5},
         'search', {q: 'flunkerne AND facet.type=billedbog', fields: ['pid'], limit: 2},
         'libraries', {agencyIds: [agency.value], fields: ['branchId']},
         'libraries', {branchIds: [agency.value], fields: ['branchName', 'geolocation', 'orderParameters']},
-        'recommend', {like: ["870970-basis:45488713","870970-basis:28643713"], limit: 4},
-        'events', {},
-        'news', {}
+        'rank', {'pids':['870970-basis:28511663','870970-basis:28902239'],'like':['870970-basis:45488713','870970-basis:28643713']},
+        'suggest', {q: 'him', type: 'title', fields: ['term', 'creator', 'pid']},
+        'suggest', {q: 'she', type: 'creator'},
+        'work', {pids: ['775100-katalog:28934297'], fields: ['title', 'collectionDetails', 'coverUrlFull']},
+        'recommend', {like: ['870970-basis:45488713','870970-basis:28643713'], limit: 4},
+        'events', {fields: ['title']},
+        'news', {fields: ['title', 'author', 'created', 'status', 'field_ding_news_title_image']}
       ];
+      if(!anonymous) {
+        examples = ['user', {}].concat(examples);
+      }
 
 
       p = Promise.resolve();
