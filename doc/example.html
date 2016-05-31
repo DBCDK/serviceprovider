@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset=utf-8>
+    <title>DBC Open Platform Examples</title>
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans:300,600' rel='stylesheet' type='text/css'>
+    <style>
+body {
+  text-align: center;
+}
+      .container {
+        display: inline-block;
+        font-family: "Open Sans", sans-serif;
+        text-align: left;
+        max-width: 600px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class=container>
+      <table>
+        <tr><td>client_id</td><td><input id=client_id></input></td></tr>
+        <tr><td>client_secret</td><td><input id=client_secret></input></td></tr>
+        <tr><td>user_id</td><td><input id=user_id type=password></input></td></tr>
+        <tr><td>user_pin</td><td><input id=user_pin type=password></input></td></tr>
+        <tr><td>agency</td><td><input id=agency></input></td></tr>
+      </table>
+      <button onclick=runExamples()>Run examples</button>
+    </div>
+    <br/>
+    <div class=container id=examplesDiv></div>
+    <script>
+    </script>
+    <!--script src=https://openplatform.dbc.dk/v1/dbc_openplatform.min.js></script-->
+    <script src=dbc_openplatform.min.js></script>
+    <script>
+
+var t;
+
+var defaults = location.hash.split(':');
+if (defaults[0].length > 1) {
+  client_id.value = defaults[0].slice(1);
+}
+if (defaults[1]) {
+  client_secret.value = defaults[1];
+}
+if (defaults[2]) {
+  t = defaults[2].split("@");
+  user_id.value = t[0];
+  agency.value = t[1];
+}
+if (defaults[3]) {
+  user_pin.value = defaults[3];
+}
+
+function print() {
+  examplesDiv.innerHTML +=
+    '<p>' +
+    Array.prototype.slice.call(arguments)
+    .map(function (o) { 
+      return typeof o === 'string' 
+        ? o : JSON.stringify(o); 
+    }).join(" ").replace(/</g, '&lt;').replace(/\n/g, '<br>');
+}
+
+function runExample(p, endpoint, params) {
+  return p.then(function() {
+  console.log(endpoint, params);
+  return dbcOpenPlatform[endpoint](params)
+    .then(function(result) {
+      print(endpoint, params,
+          '\n↳ ', result);
+    })
+    .catch(function(err) {
+      console.log(err);
+      print(endpoint, params,
+          '\n↳error:', err);
+    });
+  });
+}
+
+function runExamples() {
+  examplesDiv.innerHTML = "";
+  var anonymous = (user_id.value === '');
+  if (anonymous) {
+    user_pin.value = '@' + agency.value;
+  }
+  dbcOpenPlatform
+    .connect(client_id.value, client_secret.value,
+        user_id.value + '@' + agency.value, user_pin.value)
+    .then(function(token) {
+      print('Logged in.', anonymous ? 'Anonymous user' : 'Registrered user.', 
+          '\ntoken:', token);
+
+      var examples = [
+        'search', {q: 'ost', fields: ['dcTitle', 'dcCreator'], limit: 5},
+        'facets', {q: 'københavn', fields: ['subject', 'type', 'dk5'], limit: 3},
+        'search', {q: '1q84 AND facet.type=bog', fields: ['pid', 'creator'], limit: 2},
+        'availability', {pid: "710100-katalog:45559572"},
+        'availability', {pid: "710100-katalog:45425037", timings: true, envelope: true},
+        'recommend', {recommender: 'popular', fields: ['title', 'pid'], limit: 4},
+        'facets', {q: 'flunkerne', fields: ['type'], limit: 5},
+        'search', {q: 'flunkerne AND facet.type=billedbog', fields: ['pid'], limit: 2},
+        'libraries', {agencyIds: [agency.value], fields: ['branchId']},
+        'libraries', {branchIds: [agency.value], fields: ['branchName', 'geolocation', 'orderParameters']},
+        'recommend', {like: ["870970-basis:45488713","870970-basis:28643713"], limit: 4},
+        'events', {},
+        'news', {}
+      ];
+
+
+      p = Promise.resolve();
+      for(var i = 0; i < examples.length; i += 2) {
+        p = runExample(p, examples[i], examples[i + 1]);
+      }
+    })
+  .catch(function(err) {
+    console.log(err);
+    print('Error:\n', err);
+  });
+}
+
+    </script>
+  </body>
+</html>

@@ -99,6 +99,9 @@
       apiToken = token;
       return new Promise(function(resolve, reject) {
         if(sc) {
+          if(dbcOpenPlatform.connected()) {
+            return resolve(token);
+          }
           sc.on('connectAbort', function() {
             sc = undefined;
             resolve(dbcServiceProvider.connect(token));
@@ -152,14 +155,14 @@
     xhr.open('POST', 'https://auth.dbc.dk/oauth/token');
 
     xhr.setRequestHeader('Authorization', 'Basic ' + 
-        btoa(client_id() + ':' + client_secret()));
+        btoa(clientId + ':' + clientSecret));
 
     xhr.setRequestHeader('Content-Type',
         'application/x-www-form-urlencoded');
 
     xhr.send('grant_type=password' +
-        '&username=' + user_id() +
-        '&password=' + user_password());
+        '&username=' + user +
+        '&password=' + passwd);
 
     return new Promise(function(resolve, reject) {
       xhr.onreadystatechange = function() {
@@ -169,7 +172,7 @@
             result = JSON.parse(result).access_token;
             resolve(result);
           } else {
-            reject(xhr);
+            reject({statusCode: xhr.status, error: xhr.response});
           }
         }
       }
