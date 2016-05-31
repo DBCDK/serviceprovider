@@ -99,6 +99,9 @@
       apiToken = token;
       return new Promise(function(resolve, reject) {
         if(sc) {
+          if(dbcOpenPlatform.connected()) {
+            return resolve(token);
+          }
           sc.on('connectAbort', function() {
             sc = undefined;
             resolve(dbcServiceProvider.connect(token));
@@ -169,7 +172,7 @@
             result = JSON.parse(result).access_token;
             resolve(result);
           } else {
-            reject(xhr);
+            reject({statusCode: xhr.status, error: xhr.response});
           }
         }
       }
