@@ -105,7 +105,7 @@ export default (request, context) => {
     
     let debts = [];
     if (body.data.getUserStatusResponse.userStatus.fiscalAccount) {
-      debts = body.data.getUserStatusResponse.userStatus.fiscalAccount.fiscalTransaction;
+      debts = body.data.getUserStatusResponse.userStatus.fiscalAccount.fiscalTransaction || [];
     }
 
     let data = {id: id.toString('base64'),
