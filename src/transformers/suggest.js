@@ -76,7 +76,7 @@ function creatorSuggest(params, context) {
  */
 function librarySuggest(params, context) {
   log.debug('librarysuggest called with ' + params.q);
-  let libraryType = "folkebibliotek";
+  let libraryType = 'folkebibliotek';
   if (params.librarytype) {
     libraryType = params.librarytype;
   }
