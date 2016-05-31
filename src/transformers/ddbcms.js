@@ -5,7 +5,10 @@ export function ddbcms(params, context) {
   params.agency = context.get('user.agency');
   params.key = context.get('app.ddbcmsapipassword');
   if (!params.key || !context.get('services.ddbcmsapi')) {
-    throw `DDBCMS-API not available for the current library. Make sure that DDBCMS-API is running in the relevant DDBCMS deployment (agency: ${params.agency}), and that the ServiceProvider has been configured with the proper url and token.`;
+    throw 'DDBCMS-API not available for the current library. ' +
+      'Make sure that DDBCMS-API is running in the relevant DDBCMS deployment ' +
+      '(agency: ' + params.agency + '), ' +
+      'and that the ServiceProvider has been configured with the proper url and token.';
   }
   return context.query(context.get('services.ddbcmsapi') + 'content/fetch', params);
 }
