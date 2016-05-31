@@ -8,7 +8,7 @@ export default (request, context) => {
     authpassword: context.get('netpunkt.password'),
     authid: context.get('netpunkt.user'),
     pid: request.pid,
-    agency: context.get('agency.order')
+    agency: context.get('user.agency')
   };
 
   let soap = `
