@@ -1,4 +1,4 @@
-/* eslint-disable max-len, quotes, comma-spacing, key-spacing, quote-props */
+/* eslint-disable max-len, quotes, comma-spacing, key-spacing, quote-props, indent */
 // Request: availability {"pid":"870970-basis:28448716","pretty":true}
 'use strict';
 import Provider from '../../provider/Provider.js';

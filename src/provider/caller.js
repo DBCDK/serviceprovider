@@ -76,7 +76,7 @@ function saveTest(test) {
     }
   }
 
-  let source = `/* eslint-disable max-len, quotes, comma-spacing, key-spacing, quote-props */
+  let source = `/* eslint-disable max-len, quotes, comma-spacing, key-spacing, quote-props, indent */
 // Request: ${test.name} ${JSON.stringify(test.params)}
 'use strict';
 import Provider from '../../provider/Provider.js';
@@ -274,7 +274,7 @@ class Context {
    */
   get(key){
     let keys = key.split('.');
-    let value = keys.reduce((o, name) => 
+    let value = keys.reduce((o, name) =>
                             { return o && o[name]; }, this.data);
     return value;
   }
