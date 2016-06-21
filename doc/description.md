@@ -1,4 +1,4 @@
-Dette er DBCs åbne platform, hvilket er APIet for de danske biblioteker.
+Dette er den åbne platform, hvilket er APIet for de danske biblioteker.
 
 Man skal være et dansk bibliotek, eller DDB, for at få API-adgang. Andre må sende forespørgslen gennem en af disse. <br>
 Forespørgslen sendes til DBCs kundeservice (https://kundeservice.dbc.dk/) med følgende informationer:
@@ -13,7 +13,7 @@ Herefter vil biblioteket modtage et eller flere `client_id` / `client_secret`, d
 ----
 <br>
 
-This is the DBCs Open Platform, which is the API for the danish public libraries.
+This is the Open Platform, which is the API for the danish public libraries.
 
 Danish libraries can get access directly from DBC, see the description in danish above. Others have to go through a library to get access.
 
