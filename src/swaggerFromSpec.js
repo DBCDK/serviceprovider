@@ -120,7 +120,7 @@ export default function(specName = 'spec') {
         swagger: '2.0',
         info: {
           version: version,
-          title: 'DBC Open Platform',
+          title: 'Open Platform',
           description: desc
         },
         basePath: '/v' + majorVersion,
