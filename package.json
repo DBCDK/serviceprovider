@@ -15,8 +15,8 @@
     "siege:live": "siege -c50 -d10 -t10M -i -f siegedemoendpoints.txt",
     "start": "node src/main.js",
     "swagger:validate": "curl localhost:8080/v1/swagger.json > swagger.json ; swagger validate swagger.json",
-    "test": "LOG_LEVEL=off mocha --compilers js:babel/register --recursive src/**/__tests__/*",
-    "test:single": "LOG_LEVEL=off mocha --compilers js:babel/register",
+    "test": "LOG_LEVEL=off mocha --compilers js:babel-register --recursive src/**/__tests__/*",
+    "test:single": "LOG_LEVEL=off mocha --compilers js:babel-register",
     "tail": "tail -f log.log",
     "tail:timer": "tail -f log.log | awk '(/event/ || /time_delta/ || /TIMER/) && !/result/'",
     "coverage": "istanbul cover _mocha --report lcovonly --report cobertura --report html -- --compilers js:babel/register src/**/__tests__/*.test.js"
