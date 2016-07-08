@@ -37,7 +37,10 @@
   },
   "homepage": "https://github.com/DBCDK/serviceprovider#readme",
   "dependencies": {
-    "babel": "5.8.29",
+    "babel-core": "^6.4.5",
+    "babel-loader": "^6.2.1",
+    "babel-plugin-transform-es2015-modules-commonjs": "^6.10.3",
+    "babel-register": "^6.9.0",
     "body-parser": "1.14.1",
     "cache-manager": "^1.0.0",
     "compression": "1.6.1",
