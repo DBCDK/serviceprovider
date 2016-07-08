@@ -4,7 +4,7 @@
   "description": "The ServiceProvider or DBC Open Platform is the API for the danish public libraries.\n\nThe ServiceProvider provides access to DBCs services. The purpose is to make a unified, easy-to-use way to access the different bibliographic APIs. The serviceprovider works as a gateway to other services, and does not include the actual search/database/etc. logic.",
   "main": "src/main.js",
   "scripts": {
-    "complexity": "mkdir complexity && rm -r complexity && babel src -d complexity && cr -c .complexrc ./complexity",
+    "complexity": "mkdir complexity && rm -r complexity && babel --plugins transform-es2015-modules-commonjs src -d complexity && cr -c .complexrc ./complexity",
     "preinstall": "cp -n context-sample.json context.json",
     "apitest": "cd apitest; ./apitest.sh",
     "dev": "SWAGGER_HTTP=true TEST_DEV=true supervisor -w src,node_modules src/main.js",
