@@ -1,6 +1,6 @@
 'use strict';
 
-require('babel/register');
+require('babel-register');
 
 var express = require('express');
 var fs = require('fs');
