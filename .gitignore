@@ -8,6 +8,9 @@ output
 test-results.xml
 coverage/*
 dump.rdb
+complexity
+complexity-report*
+
 
 # ============
 # BUILDS
@@ -18,7 +21,6 @@ public/*
 # NODE_MODULES
 # ============
 node_modules
-
 
 # ============
 # IDEA
