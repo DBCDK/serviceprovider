@@ -11,14 +11,10 @@
     "dev:remoteprofile": "PROFILE_SERVICE_URL=\"http://profile-i01.dbc.dk:3001/\" npm run dev",
     "lint": "eslint ./src",
     "lint:checkstyle": "eslint ./src  -o report.xml -f checkstyle",
-    "siege": "siege -c500 -d10 -t30M -i -f siegetestendpoints.txt",
-    "siege:live": "siege -c50 -d10 -t10M -i -f siegedemoendpoints.txt",
     "start": "node src/main.js",
     "swagger:validate": "curl localhost:8080/v1/swagger.json > swagger.json ; swagger validate swagger.json",
     "test": "LOG_LEVEL=off mocha --compilers js:babel-register --recursive src/**/__tests__/*",
     "test:single": "LOG_LEVEL=off mocha --compilers js:babel-register",
-    "tail": "tail -f log.log",
-    "tail:timer": "tail -f log.log | awk '(/event/ || /time_delta/ || /TIMER/) && !/result/'",
     "coverage": "istanbul cover _mocha --report lcovonly --report cobertura --report html -- --compilers js:babel/register src/**/__tests__/*.test.js"
   },
   "repository": {
@@ -72,7 +68,6 @@
     "isparta-loader": "^2.0.0",
     "istanbul": "^0.4.4",
     "mocha": "^2.2.4",
-    "sinon": "^1.17.2",
     "socketcluster-client": "^4.3.9",
     "uglify-js": "^2.7.0"
   }
