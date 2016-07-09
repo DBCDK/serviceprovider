@@ -4,6 +4,7 @@
   "description": "The ServiceProvider or DBC Open Platform is the API for the danish public libraries.\n\nThe ServiceProvider provides access to DBCs services. The purpose is to make a unified, easy-to-use way to access the different bibliographic APIs. The serviceprovider works as a gateway to other services, and does not include the actual search/database/etc. logic.",
   "main": "src/main.js",
   "scripts": {
+    "complexity": "mkdir complexity && rm -r complexity && babel --plugins transform-es2015-modules-commonjs src -d complexity && cr -c .complexrc ./complexity",
     "preinstall": "cp -n context-sample.json context.json",
     "apitest": "cd apitest; ./apitest.sh",
     "dev": "SWAGGER_HTTP=true TEST_DEV=true supervisor -w src,node_modules src/main.js",
@@ -14,8 +15,8 @@
     "siege:live": "siege -c50 -d10 -t10M -i -f siegedemoendpoints.txt",
     "start": "node src/main.js",
     "swagger:validate": "curl localhost:8080/v1/swagger.json > swagger.json ; swagger validate swagger.json",
-    "test": "LOG_LEVEL=off mocha --compilers js:babel/register --recursive src/**/__tests__/*",
-    "test:single": "LOG_LEVEL=off mocha --compilers js:babel/register",
+    "test": "LOG_LEVEL=off mocha --compilers js:babel-register --recursive src/**/__tests__/*",
+    "test:single": "LOG_LEVEL=off mocha --compilers js:babel-register",
     "tail": "tail -f log.log",
     "tail:timer": "tail -f log.log | awk '(/event/ || /time_delta/ || /TIMER/) && !/result/'",
     "coverage": "istanbul cover _mocha --report lcovonly --report cobertura --report html -- --compilers js:babel/register src/**/__tests__/*.test.js"
@@ -36,7 +37,10 @@
   },
   "homepage": "https://github.com/DBCDK/serviceprovider#readme",
   "dependencies": {
-    "babel": "5.8.29",
+    "babel-core": "^6.4.5",
+    "babel-loader": "^6.2.1",
+    "babel-plugin-transform-es2015-modules-commonjs": "^6.10.3",
+    "babel-register": "^6.9.0",
     "body-parser": "1.14.1",
     "cache-manager": "^1.0.0",
     "compression": "1.6.1",
@@ -65,10 +69,12 @@
     "xss-filters": "^1.2.6"
   },
   "devDependencies": {
+    "babel-cli": "^6.10.1",
     "babel-eslint": "^4.0.5",
     "browserify": "^13.0.1",
     "chai": "^3.2.0",
     "codeclimate-test-reporter": "^0.1.1",
+    "complexity-report": "https://github.com/DBCDK/complexity-report/archive/v2.0.1-alpha.tar.gz",
     "coveralls": "^2.11.4",
     "eslint": "^1.0.0",
     "eslint-loader": "^1.0.0",

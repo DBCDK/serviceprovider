@@ -1,0 +1,15 @@
+{
+  "output": "./complexity-report.xml",
+  "format" : "checkstyle",
+  "allfiles": false,
+  "ignoreerrors": true,
+  "filepattern": "\\.js$",
+  "excludepattern": "(__tests__)",
+  "maxfiles": 256,
+  "silent": false,
+  "logicalor": false,
+  "switchcase": false,
+  "forin": false,
+  "trycatch": false,
+  "newmi": false
+}

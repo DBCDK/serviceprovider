@@ -7,7 +7,7 @@
 
 
 // initialize babel, so all JSX and ES6 is transpiled
-require('babel/register');
++require('babel-register');
 
 var SocketCluster = require('socketcluster').SocketCluster;
 var path = require('path');
