@@ -48,7 +48,7 @@ export function workRequest(request, context) { // eslint-disable-line no-unused
           offset: 0,
           limit: 1
         };
-        if (_.contains(fields, 'collectionDetails')) {
+        if (_.includes(fields, 'collectionDetails')) {
           searchRequest.fields.push('collectionDetails');
         }
         transformedRequests[requestMethod.SEARCH].push(searchRequest);
