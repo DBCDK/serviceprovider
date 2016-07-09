@@ -10,7 +10,7 @@ coverage/*
 dump.rdb
 complexity
 complexity-report*
-
+swagger.json
 
 # ============
 # BUILDS
