@@ -30,39 +30,258 @@ import {log} from './utils';
 import swaggerFromSpec from './swaggerFromSpec.js';
 import validateRequest from './validate.js';
 
-// validate context
-import validateContext from './validateContext';
+// Setup
+const app = express();
+const APP_NAME = process.env.APP_NAME || 'app_name'; // eslint-disable-line no-process-env
+const SMAUG_LOCATION = process.env.SMAUG; // eslint-disable-line no-process-env
+const logger = new Logger({app_name: APP_NAME});
+const expressLoggers = logger.getExpressLoggers();
+const serviceProvider = Provider();
 
-
-function accessLogMiddleware (req, res, next) {
-  var timeStart = moment();
+function accessLogMiddleware(req, res, next) {
+  const timeStart = moment();
   res.logData = {};
 
   res.on('finish', () => {
-    var timeEnd = moment();
+    const timeEnd = moment();
     log.info(null, Object.assign(res.logData || {},
       {
         type: 'accessLog',
-        request: {method: req.method, path: req.path, query: req.query, hostname: req.hostname, remoteAddress: req.ip},
+        request: {
+          method: req.method,
+          path: req.path,
+          query: req.query,
+          hostname: req.hostname,
+          remoteAddress: req.ip
+        },
         response: {status: res.statusCode},
-        time: {start: timeStart, end: timeEnd, taken: timeEnd.diff(timeStart)}
+        time: {
+          start: timeStart,
+          end: timeEnd,
+          taken: timeEnd.diff(timeStart)
+        }
       }));
   });
 
   next();
 }
 
-module.exports.run = function (worker) {
-  // Setup
-  const app = express();
-  const server = worker.httpServer;
-  const APP_NAME = process.env.APP_NAME || 'app_name'; // eslint-disable-line no-process-env
-  const SMAUG_LOCATION = process.env.SMAUG; // eslint-disable-line no-process-env
-  const logger = new Logger({app_name: APP_NAME});
-  const expressLoggers = logger.getExpressLoggers();
+function getContext(token) {
+  return new Promise((resolve, reject) => {
+    request.get({
+      uri: SMAUG_LOCATION + '/configuration',
+      qs: {token: token}
+    }, (err, response, body) => {
+      switch (response.statusCode) {
+        case 200:
+          return resolve(JSON.parse(body));
+        case 404:
+          return reject(new TokenExpiredError());
+        default:
+          return reject(err);
+      }
+    });
+  });
+}
 
+function getContextMiddleware(req, res, next) {
+  // list of functions that can extract a token from a request
+  const tokenSearchers = [
+    () => {
+      const authHeader = req.get('authorization');
+      if (typeof authHeader !== 'undefined') {
+        const authType = authHeader.split(' ', 2)[0];
+        const bearerToken = authHeader.split(' ', 2)[1];
+
+        if (authType === 'Bearer') {
+          return bearerToken;
+        }
+      }
+    },
+    () => {
+      const bearerToken = req.query.access_token;
+      if (typeof bearerToken !== 'undefined') {
+        return bearerToken;
+      }
+    },
+    () => {
+      const bearerToken = req.body.access_token;
+      if (typeof bearerToken !== 'undefined') {
+        return bearerToken;
+      }
+    }
+  ];
+
+  let bearerTokens = tokenSearchers
+  // execute all token searchers, and remove failures
+    .map((f) => f())
+    // remove failures
+    .filter((e) => typeof e !== 'undefined');
+
+  if (bearerTokens.length > 1) {
+    // todo: return a meaningful error, like 'too many tokens'
+    return next(new MultipleTokensError());
+  }
+
+  const bearerToken = bearerTokens[0];
+  res.logData.access_token = bearerToken;
+
+  if (typeof bearerToken === 'undefined') {
+    return next(new MissingTokenError());
+  }
+
+  getContext(bearerToken)
+    .then((context) => {
+      req.authorized = true;
+      req.context = context;
+      res.logData.clientId = context.app.clientId;
+      return next();
+    })
+    .catch((err) => {
+      log.error(String(err), {stacktrace: err.stack});
+      return next(err);
+    });
+}
+
+function requireAuthorized(req, res, next) {
+  if (req.authorized) {
+    return next();
+  }
+
+  // I'm not sure this code can actually be reached, as long as isAuthorized is used after getContextMiddleware,
+  // since an exception is thrown on missing tokens or if getContext(..) fails.
+  res.sendStatus(403);
+}
+
+// Execute transform
+function callApi(event, query, context) {
+  Promise.resolve((() => {
+    // validateContext(context);
+    if (!serviceProvider.hasTransformer(event)) {
+      return {
+        statusCode: 400,
+        error: 'Missing transformer: ' + event
+      };
+    }
+    let validateErrors = validateRequest(event, query);
+    if (validateErrors.length) {
+      return Promise.resolve({
+        statusCode: 400,
+        error: validateErrors.map(o => String(o.stack).replace(/^instance\.?/, '')).join('\n')
+      });
+    }
+    return serviceProvider.execute(event, query, context);
+  })())
+    .then(response => {
+      if ((typeof response !== 'object') ||
+        (typeof response.statusCode !== 'number') ||
+        (response.statusCode === 200 && !response.data) ||
+        (response.statusCode !== 200 && !response.error)) {
+        log.error('response is not wrapped in an envelope', {response: response});
+        response = {
+          statusCode: 500,
+          data: response,
+          error: 'missing envelope'
+        };
+      }
+
+      // Fields filter, - filter the result based on the `fields` parameter.
+      function fieldsFilter(obj) {
+        if (!Array.isArray(query.fields) || (typeof obj !== 'object')) {
+          return obj;
+        }
+
+        if (Array.isArray(obj)) {
+          return obj.map(fieldsFilter);
+        }
+
+        let result = {};
+        query.fields.forEach(key => {
+          if (typeof obj[key] !== 'undefined') {
+            result[key] = obj[key];
+          }
+        });
+        return result;
+      }
+
+      if (typeof response.data === 'object') {
+        response.data = fieldsFilter(response.data);
+      }
+
+      return response;
+    }).catch(err => {
+      log.error(String(err), {stacktrace: err.stack});
+
+      return {
+        statusCode: 500,
+        error: String(err)
+      };
+    }
+  );
+}
+
+function healthCheck(req, res) {
+  let result = {ok: {}};
+  let tests = {};
+
+  tests.smaug = new Promise((resolve, reject) => { // eslint-disable-line no-unused-vars
+    const tStart = moment();
+    request.get({
+      uri: SMAUG_LOCATION + '/health'
+    }, (err, response) => { // eslint-disable-line no-unused-vars
+      if (err) {
+        return resolve({
+          responseTime: moment().diff(tStart),
+          result: err
+        });
+      }
+
+      if (response.statusCode !== 200) {
+        return resolve({
+          responseTime: moment().diff(tStart),
+          result: new Error('Smaug returned http status code ' + response.statusCode)
+        });
+      }
+
+      resolve({
+        responseTime: moment().diff(tStart),
+        result: 'ok'
+      });
+    });
+  });
+
+  const testsPromises = Object.keys(tests).map((testId) => tests[testId]);
+
+  Promise.all(testsPromises).then((results) => {
+    lodash.zip(Object.keys(tests), results).forEach((zipElem) => {
+      const [testId, status] = zipElem;
+
+      if (status.result instanceof Error) {
+        if (typeof result.errors === 'undefined') {
+          result.errors = {};
+        }
+        result.errors[testId] = {
+          name: status.result.name,
+          msg: status.result.message,
+          stacktrace: status.result.stack,
+          responseTime: status.responseTime
+        };
+      }
+      else {
+        result.ok[testId] = {responseTime: status.responseTime};
+      }
+    });
+    if (Object.keys(result.errors || {}).length > 0) {
+      res.status(500);
+    }
+    app.set('json spaces', 2);
+    res.json(result);
+  });
+}
+
+module.exports.run = function(worker) {
   // Direct requests to app
-  server.on('request', app);
+  worker.httpServer.on('request', app);
 
   // Setting bodyparser
   app.use(bodyParser.json());
@@ -93,96 +312,8 @@ module.exports.run = function (worker) {
   app.set('port', process.env.PORT || 8080); // eslint-disable-line no-process-env
 
   // Configure app variables
-  let serviceProvider = Provider();
   app.set('serviceProvider', serviceProvider);
   app.set('logger', logger);
-
-  const getContext = function(token) {
-    return new Promise((resolve, reject) => {
-      request.get({
-        uri: SMAUG_LOCATION + '/configuration',
-        qs: {token: token}
-      }, (err, response, body) => {
-        switch (response.statusCode) {
-          case 200:
-            return resolve(JSON.parse(body));
-          case 404:
-            return reject(new TokenExpiredError());
-          default:
-            return reject(err);
-        }
-      });
-    });
-  };
-
-  const getContextMiddleware = function(req, res, next) {
-    // list of functions that can extract a token from a request
-    var tokenSearchers = [
-      () => {
-        var authHeader = req.get('authorization');
-        if (typeof authHeader !== 'undefined') {
-          var authType = authHeader.split(' ', 2)[0];
-          var bearerToken = authHeader.split(' ', 2)[1];
-
-          if (authType === 'Bearer') {
-            return bearerToken;
-          }
-        }
-      },
-      () => {
-        var bearerToken = req.query.access_token;
-        if (typeof bearerToken !== 'undefined') {
-          return bearerToken;
-        }
-      },
-      () => {
-        var bearerToken = req.body.access_token;
-        if (typeof bearerToken !== 'undefined') {
-          return bearerToken;
-        }
-      }
-    ];
-
-    var bearerTokens = tokenSearchers
-      // execute all token searchers, and remove failures
-      .map((f) => f())
-      // remove failures
-      .filter((e) => typeof e !== 'undefined');
-
-    if (bearerTokens.length > 1) {
-      // todo: return a meaningful error, like 'too many tokens'
-      return next(new MultipleTokensError());
-    }
-
-    var bearerToken = bearerTokens[0];
-    res.logData.access_token = bearerToken;
-
-    if (typeof bearerToken === 'undefined') {
-      return next(new MissingTokenError());
-    }
-
-    getContext(bearerToken)
-      .then((context) => {
-        req.authorized = true;
-        req.context = context;
-        res.logData.clientId = context.app.clientId;
-        return next();
-      })
-      .catch((err) => {
-        log.error(String(err), {stacktrace: err.stack});
-        return next(err);
-      });
-  };
-
-  const requireAuthorized = function(req, res, next) {
-    if (req.authorized) {
-      return next();
-    }
-
-    // I'm not sure this code can actually be reached, as long as isAuthorized is used after getContextMiddleware,
-    // since an exception is thrown on missing tokens or if getContext(..) fails.
-    res.sendStatus(403);
-  };
 
   // Adding gzip'ing
   app.use(compression());
@@ -191,108 +322,7 @@ module.exports.run = function (worker) {
   app.all('/', (req, res) => res.redirect(apiPath));
 
   // Health check
-  app.get('/health', (req, res) => {
-    var result = {ok: {}};
-    var tests = {};
-
-    tests.smaug = new Promise((resolve, reject) => { // eslint-disable-line no-unused-vars
-      var tStart = moment();
-      request.get({
-        uri: SMAUG_LOCATION + '/health'
-      }, (err, response, body) => { // eslint-disable-line no-unused-vars
-        if (err) {
-          return resolve({responseTime: moment().diff(tStart), result: err});
-        }
-
-        if (response.statusCode !== 200) {
-          return resolve({responseTime: moment().diff(tStart), result: new Error('Smaug returned http status code ' + response.statusCode)});
-        }
-
-        resolve({responseTime: moment().diff(tStart), result: 'ok'});
-      });
-    });
-
-    var testsPromises = Object.keys(tests).map((testId) => tests[testId]);
-
-    Promise.all(testsPromises).then((results) => {
-      lodash.zip(Object.keys(tests), results).forEach((zipElem) => {
-        let [testId, status] = zipElem;
-
-        if (status.result instanceof Error) {
-          if (typeof result.errors === 'undefined') {
-            result.errors = {};
-          }
-          result.errors[testId] = {name: status.result.name, msg: status.result.message, stacktrace: status.result.stack, responseTime: status.responseTime};
-        }
-        else {
-          result.ok[testId] = {responseTime: status.responseTime};
-        }
-      });
-      if (Object.keys(result.errors || {}).length > 0) {
-        res.status(500);
-      }
-      app.set('json spaces', 2);
-      res.json(result);
-    });
-  });
-
-  // Execute transform
-  let callApi = (event, query, context) =>
-    Promise.resolve((() => {
-      // validateContext(context);
-      if (!serviceProvider.hasTransformer(event)) {
-        return {statusCode: 400,
-                error: 'Missing transformer: ' + event};
-      }
-      let validateErrors = validateRequest(event, query);
-      if (validateErrors.length) {
-        return Promise.resolve({
-          statusCode: 400,
-          error: validateErrors.map(o => String(o.stack).replace(/^instance\.?/, '')).join('\n')});
-      }
-      return serviceProvider.execute(event, query, context);
-    })())
-    .then(response => {
-      if ((typeof response !== 'object') ||
-          (typeof response.statusCode !== 'number') ||
-          (response.statusCode === 200 && !response.data) ||
-          (response.statusCode !== 200 && !response.error)) {
-        log.error('response is not wrapped in an envelope', {response: response});
-        response = {
-          statusCode: 500,
-          data: response,
-          error: 'missing envelope'
-        };
-      }
-
-      // Fields filter, - filter the result based on the `fields` parameter.
-      function fieldsFilter(obj) {
-        if (!Array.isArray(query.fields) || (typeof obj !== 'object')) {
-          return obj;
-        }
-
-        if (Array.isArray(obj)) {
-          return obj.map(fieldsFilter);
-        }
-
-
-        let result = {};
-        query.fields.forEach(key => {
-          if (typeof obj[key] !== 'undefined') {
-            result[key] = obj[key];
-          }
-        });
-        return result;
-      }
-      if (typeof response.data === 'object') {
-        response.data = fieldsFilter(response.data);
-      }
-
-      return response;
-    }).catch(err => {
-      log.error(String(err), {stacktrace: err.stack});
-      return {statusCode: 500, error: String(err)};
-    });
+  app.get('/health', healthCheck);
 
   // WebSocket/SocketCluster transport
   worker.on('connection', (connection) => {
@@ -308,13 +338,15 @@ module.exports.run = function (worker) {
               return err.toJson();
             }
 
-            return {statusCode: 500, error: String(err)};
+            return {
+              statusCode: 500,
+              error: String(err)
+            };
           })
           .then(result => callback(null, result));
       });
     });
   });
-
 
   // HTTP Transport
   serviceProvider.availableTransforms().forEach(event => {
@@ -325,15 +357,16 @@ module.exports.run = function (worker) {
       // We support both POST-body, GET-requests, and a combination of both.
       // This code joins all parameters into a single object.
       query = query || {};
-      for (let key in req.query) { // eslint-disable-line guard-for-in
-        let val = req.query[key];
+      for (const key in req.query) { // eslint-disable-line guard-for-in
+        const val = req.query[key];
         try {
           query[key] = JSON.parse(val);
         }
-        catch (_) {
+        catch (e) {
           query[key] = (val.indexOf(',') !== -1) ? val.split(',').filter(s => s) : val;
         }
       }
+
       if (typeof query.fields === 'string') {
         query.fields = [query.fields];
       }
@@ -382,19 +415,30 @@ module.exports.run = function (worker) {
     }
 
     res.status(500);
-    res.jsonp({statusCode: 500, error: String(err)});
+    res.jsonp({
+      statusCode: 500,
+      error: String(err)
+    });
     res.end();
   });
 
   // Handle 404's
   app.use((req, res) => {
     res.status(404);
-    res.jsonp({statusCode: 404, error: '404 Not Found'});
+    res.jsonp({
+      statusCode: 404,
+      error: '404 Not Found'
+    });
     res.end();
   });
 
   // Setting logger -- should be placed after routes
   app.use(expressLoggers.errorLogger);
 
-  log.info('started', {event: 'started', port: app.get('port'), versions: process.versions, smaug: (SMAUG_LOCATION || false)});
+  log.info('started', {
+    event: 'started',
+    port: app.get('port'),
+    versions: process.versions,
+    smaug: (SMAUG_LOCATION || false)
+  });
 };
