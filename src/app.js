@@ -32,7 +32,6 @@ import validateRequest from './validate.js';
 
 // Setup
 const app = express();
-const server = worker.httpServer;
 const APP_NAME = process.env.APP_NAME || 'app_name'; // eslint-disable-line no-process-env
 const SMAUG_LOCATION = process.env.SMAUG; // eslint-disable-line no-process-env
 const logger = new Logger({app_name: APP_NAME});
@@ -211,12 +210,14 @@ function callApi(event, query, context) {
 
       return response;
     }).catch(err => {
-    log.error(String(err), {stacktrace: err.stack});
-    return {
-      statusCode: 500,
-      error: String(err)
-    };
-  });
+      log.error(String(err), {stacktrace: err.stack});
+
+      return {
+        statusCode: 500,
+        error: String(err)
+      };
+    }
+  );
 }
 
 function healthCheck(req, res) {
@@ -280,7 +281,7 @@ function healthCheck(req, res) {
 
 module.exports.run = function(worker) {
   // Direct requests to app
-  server.on('request', app);
+  worker.httpServer.on('request', app);
 
   // Setting bodyparser
   app.use(bodyParser.json());
