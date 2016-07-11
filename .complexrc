@@ -2,6 +2,7 @@
   "output": "./complexity-report.xml",
   "format" : "checkstyle",
   "allfiles": false,
+  "future": true,
   "ignoreerrors": true,
   "filepattern": "\\.js$",
   "excludepattern": "(__tests__)",
