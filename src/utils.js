@@ -97,7 +97,9 @@ function doLog(level, msg, args) {
     blob.msg = msg;
   }
 
-  console.log(JSON.stringify(Object.assign(blob, args))); // eslint-disable-line no-console
+  if (process.env.NODE_ENV !== 'cucumber-junit') {
+    console.log(JSON.stringify(Object.assign(blob, args))); // eslint-disable-line no-console
+  }
 }
 
 export const log = {

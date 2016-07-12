@@ -15,7 +15,11 @@
     "swagger:validate": "curl localhost:8080/v1/swagger.json > swagger.json ; swagger validate swagger.json",
     "test": "LOG_LEVEL=off mocha --compilers js:babel-register --recursive src/**/__tests__/*",
     "test:single": "LOG_LEVEL=off mocha --compilers js:babel-register",
-    "coverage": "istanbul cover _mocha --report lcovonly --report cobertura --report html -- --compilers js:babel/register src/**/__tests__/*.test.js"
+    "coverage": "istanbul cover _mocha --report lcovonly --report cobertura --report html -- --compilers js:babel/register src/**/__tests__/*.test.js",
+    "cukes": "NODE_ENV=cucumber cucumber.js --compilers js:babel/register features",
+    "cukes:cover": "NODE_ENV=cucumber-coverage babel-istanbul cover node_modules/.bin/cucumber.js --report cobertura --report html -- --compilers js:babel/register features",
+    "cukes:junit": "NODE_ENV=cucumber-junit cucumber.js --format=json --compilers js:babel/register features | cucumber-junit > feature_report.xml",
+    "sonar": "sonar-runner -Dsonar.projectKey=sp:local -Dsonar.projectName=ServiceProviderLocal -Dsonar.projectVersion=1.0 -Dsonar.sources=./src"
   },
   "repository": {
     "type": "git",
@@ -58,17 +62,21 @@
   "devDependencies": {
     "babel-cli": "^6.10.1",
     "babel-eslint": "^4.0.5",
+    "babel-istanbul": "^0.11.0",
     "browserify": "^13.0.1",
     "chai": "^3.2.0",
     "codeclimate-test-reporter": "^0.3.3",
     "complexity-report": "https://github.com/DBCDK/complexity-report/archive/2.0.0-alpha2.tar.gz",
     "coveralls": "^2.11.4",
+    "cucumber": "^1.2.1",
+    "cucumberjs-junitxml": "0.0.12",
     "eslint": "^1.0.0",
     "eslint-loader": "^1.0.0",
     "isparta-loader": "^2.0.0",
     "istanbul": "^0.4.4",
     "mocha": "^2.2.4",
     "socketcluster-client": "^4.3.9",
+    "supertest": "^1.2.0",
     "uglify-js": "^2.7.0"
   }
 }

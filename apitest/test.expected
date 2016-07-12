@@ -4,7 +4,8 @@ availability {"pid": "870970-basis:22503030"}
 {
   "statusCode": 200,
   "data": {
-    "willLend": false
+    "willLend": true,
+    "expectedDelivery": "2016-07-11"
   }
 }
 
@@ -18,31 +19,8 @@ availability {"pid": "870970-basis:51989252"}
 
 events {"fields": ["title", "changed", "nid", "field_ding_event_title_image"]}
 {
-  "statusCode": 200,
-  "data": [
-    {
-      "title": {
-        "name": "Titel",
-        "value": "Mød forfatteren: Tim Buk-Swienty",
-        "attr": []
-      },
-      "changed": {
-        "name": "Opdateret",
-        "value": 1452689863,
-        "attr": []
-      },
-      "nid": 15,
-      "field_ding_event_title_image": {
-        "name": "Title image",
-        "value": [
-          "files/775100/581328cef1630f7c4ca26a5ad814b8edb214f0d2.jpeg"
-        ],
-        "attr": [
-          "image/jpeg"
-        ]
-      }
-    }
-  ]
+  "statusCode": 500,
+  "error": "SyntaxError: Unexpected token E in JSON at position 0"
 }
 
 facets {"q" : "aQueryMatchingNothing"}
@@ -270,1356 +248,14 @@ facets {"q" : "harry"}
 
 facets {"q" : "harry AND potter", "fields": ["creator"], "limit": 0}
 {
-  "statusCode": 200,
-  "data": {
-    "creator": [
-      {
-        "term": "joanne k. rowling",
-        "frequency": 112
-      },
-      {
-        "term": "daniel radcliffe",
-        "frequency": 21
-      },
-      {
-        "term": "emma watson",
-        "frequency": 21
-      },
-      {
-        "term": "robbie coltrane",
-        "frequency": 21
-      },
-      {
-        "term": "rupert grint",
-        "frequency": 21
-      },
-      {
-        "term": "steve kloves",
-        "frequency": 19
-      },
-      {
-        "term": "david yates",
-        "frequency": 16
-      },
-      {
-        "term": "j.k. rowling",
-        "frequency": 16
-      },
-      {
-        "term": "stephen fry",
-        "frequency": 15
-      },
-      {
-        "term": "michael gambon",
-        "frequency": 14
-      }
-    ]
-  }
+  "statusCode": 400,
+  "error": "limit must have a minimum value of 1"
 }
 
 facets {"q" : "harry AND potter", "fields": ["creator"], "limit": -1}
 {
-  "statusCode": 200,
-  "data": {
-    "creator": [
-      {
-        "term": "joanne k. rowling",
-        "frequency": 112
-      },
-      {
-        "term": "daniel radcliffe",
-        "frequency": 21
-      },
-      {
-        "term": "emma watson",
-        "frequency": 21
-      },
-      {
-        "term": "robbie coltrane",
-        "frequency": 21
-      },
-      {
-        "term": "rupert grint",
-        "frequency": 21
-      },
-      {
-        "term": "steve kloves",
-        "frequency": 19
-      },
-      {
-        "term": "david yates",
-        "frequency": 16
-      },
-      {
-        "term": "j.k. rowling",
-        "frequency": 16
-      },
-      {
-        "term": "stephen fry",
-        "frequency": 15
-      },
-      {
-        "term": "michael gambon",
-        "frequency": 14
-      },
-      {
-        "term": "jesper christensen (f. 1948)",
-        "frequency": 13
-      },
-      {
-        "term": "hanna lützen",
-        "frequency": 12
-      },
-      {
-        "term": "john williams (f. 1932)",
-        "frequency": 12
-      },
-      {
-        "term": "bill galliford",
-        "frequency": 10
-      },
-      {
-        "term": "ethan neuburg",
-        "frequency": 10
-      },
-      {
-        "term": "ralph fiennes",
-        "frequency": 10
-      },
-      {
-        "term": "tod edmondson",
-        "frequency": 10
-      },
-      {
-        "term": "helena bonham carter",
-        "frequency": 9
-      },
-      {
-        "term": "chris columbus",
-        "frequency": 8
-      },
-      {
-        "term": "richard griffiths",
-        "frequency": 8
-      },
-      {
-        "term": "eduardo serra",
-        "frequency": 6
-      },
-      {
-        "term": "jesper christensen",
-        "frequency": 6
-      },
-      {
-        "term": "john cleese",
-        "frequency": 6
-      },
-      {
-        "term": "alan rickman",
-        "frequency": 5
-      },
-      {
-        "term": "carol cuellar",
-        "frequency": 5
-      },
-      {
-        "term": "electronic arts",
-        "frequency": 5
-      },
-      {
-        "term": "london voices",
-        "frequency": 5
-      },
-      {
-        "term": "londons symfoniorkester",
-        "frequency": 5
-      },
-      {
-        "term": "roger pratt",
-        "frequency": 5
-      },
-      {
-        "term": "alfonso cuarón",
-        "frequency": 4
-      },
-      {
-        "term": "brendan gleeson",
-        "frequency": 4
-      },
-      {
-        "term": "gary oldman",
-        "frequency": 4
-      },
-      {
-        "term": "mike newell",
-        "frequency": 4
-      },
-      {
-        "term": "nicholas hooper",
-        "frequency": 4
-      },
-      {
-        "term": "bruno delbonnel",
-        "frequency": 3
-      },
-      {
-        "term": "ian hart",
-        "frequency": 3
-      },
-      {
-        "term": "jim broadbent",
-        "frequency": 3
-      },
-      {
-        "term": "jim kay",
-        "frequency": 3
-      },
-      {
-        "term": "joanne k rowling",
-        "frequency": 3
-      },
-      {
-        "term": "john hurt",
-        "frequency": 3
-      },
-      {
-        "term": "john seale",
-        "frequency": 3
-      },
-      {
-        "term": "kenneth branagh",
-        "frequency": 3
-      },
-      {
-        "term": "maggie smith",
-        "frequency": 3
-      },
-      {
-        "term": "richard harris",
-        "frequency": 3
-      },
-      {
-        "term": "torben sekov",
-        "frequency": 3
-      },
-      {
-        "term": "warwick davis",
-        "frequency": 3
-      },
-      {
-        "term": "zobeida pérez",
-        "frequency": 3
-      },
-      {
-        "term": "alastair king",
-        "frequency": 2
-      },
-      {
-        "term": "alexandre desplat",
-        "frequency": 2
-      },
-      {
-        "term": "antonio vivaldi",
-        "frequency": 2
-      },
-      {
-        "term": "boston pops-orkestret",
-        "frequency": 2
-      },
-      {
-        "term": "cate blanchett",
-        "frequency": 2
-      },
-      {
-        "term": "chris columbus (f. 1958)",
-        "frequency": 2
-      },
-      {
-        "term": "christina ricci",
-        "frequency": 2
-      },
-      {
-        "term": "dan blackstone",
-        "frequency": 2
-      },
-      {
-        "term": "dan coates",
-        "frequency": 2
-      },
-      {
-        "term": "david colbert",
-        "frequency": 2
-      },
-      {
-        "term": "edgar lee masters",
-        "frequency": 2
-      },
-      {
-        "term": "edvard grieg",
-        "frequency": 2
-      },
-      {
-        "term": "geoffrey alexander",
-        "frequency": 2
-      },
-      {
-        "term": "harry dean stanton",
-        "frequency": 2
-      },
-      {
-        "term": "itzhak perlman",
-        "frequency": 2
-      },
-      {
-        "term": "jason isaacs",
-        "frequency": 2
-      },
-      {
-        "term": "john turturro",
-        "frequency": 2
-      },
-      {
-        "term": "johnny depp",
-        "frequency": 2
-      },
-      {
-        "term": "julia eccleshare",
-        "frequency": 2
-      },
-      {
-        "term": "julie christie",
-        "frequency": 2
-      },
-      {
-        "term": "londons kammerorkester",
-        "frequency": 2
-      },
-      {
-        "term": "ludwig van beethoven",
-        "frequency": 2
-      },
-      {
-        "term": "michael goldenberg",
-        "frequency": 2
-      },
-      {
-        "term": "michael seresin",
-        "frequency": 2
-      },
-      {
-        "term": "patrick doyle",
-        "frequency": 2
-      },
-      {
-        "term": "pittsburghs symfoniorkester",
-        "frequency": 2
-      },
-      {
-        "term": "recording arts orchestra, los angeles",
-        "frequency": 2
-      },
-      {
-        "term": "sacha vierny",
-        "frequency": 2
-      },
-      {
-        "term": "sally potter",
-        "frequency": 2
-      },
-      {
-        "term": "simon whiteside",
-        "frequency": 2
-      },
-      {
-        "term": "stephane assadourian",
-        "frequency": 2
-      },
-      {
-        "term": "sławomir idziak",
-        "frequency": 2
-      },
-      {
-        "term": "tt games",
-        "frequency": 2
-      },
-      {
-        "term": "wolfgang amadeus mozart",
-        "frequency": 2
-      },
-      {
-        "term": "yo-yo ma",
-        "frequency": 2
-      },
-      {
-        "term": "alan stivell",
-        "frequency": 1
-      },
-      {
-        "term": "alexander hanson",
-        "frequency": 1
-      },
-      {
-        "term": "allan hondé",
-        "frequency": 1
-      },
-      {
-        "term": "andrew lloyd webber",
-        "frequency": 1
-      },
-      {
-        "term": "anna claybourne",
-        "frequency": 1
-      },
-      {
-        "term": "anne petersen (f. 1959-08-01)",
-        "frequency": 1
-      },
-      {
-        "term": "anne sejten",
-        "frequency": 1
-      },
-      {
-        "term": "anne vindum",
-        "frequency": 1
-      },
-      {
-        "term": "annie ebrel",
-        "frequency": 1
-      },
-      {
-        "term": "annie haslam",
-        "frequency": 1
-      },
-      {
-        "term": "anthony mcgill",
-        "frequency": 1
-      },
-      {
-        "term": "antonín dvořák",
-        "frequency": 1
-      },
-      {
-        "term": "anúna",
-        "frequency": 1
-      },
-      {
-        "term": "arvid müller",
-        "frequency": 1
-      },
-      {
-        "term": "ben schoen",
-        "frequency": 1
-      },
-      {
-        "term": "benjamin golus",
-        "frequency": 1
-      },
-      {
-        "term": "birthe kjær",
-        "frequency": 1
-      },
-      {
-        "term": "bob gunton",
-        "frequency": 1
-      },
-      {
-        "term": "bono",
-        "frequency": 1
-      },
-      {
-        "term": "bournemouths symfoniorkester",
-        "frequency": 1
-      },
-      {
-        "term": "bradley miles",
-        "frequency": 1
-      },
-      {
-        "term": "brian dunning",
-        "frequency": 1
-      },
-      {
-        "term": "budapests symfoniorkester",
-        "frequency": 1
-      },
-      {
-        "term": "béla bartók",
-        "frequency": 1
-      },
-      {
-        "term": "béla dráhos",
-        "frequency": 1
-      },
-      {
-        "term": "børge müller",
-        "frequency": 1
-      },
-      {
-        "term": "camille saint-saens",
-        "frequency": 1
-      },
-      {
-        "term": "capella istropolitana",
-        "frequency": 1
-      },
-      {
-        "term": "capercaillie",
-        "frequency": 1
-      },
-      {
-        "term": "carl davis",
-        "frequency": 1
-      },
-      {
-        "term": "chad verrall",
-        "frequency": 1
-      },
-      {
-        "term": "chicagos symfoniorkester",
-        "frequency": 1
-      },
-      {
-        "term": "chicagos symfoniorkesters kor",
-        "frequency": 1
-      },
-      {
-        "term": "chris philips",
-        "frequency": 1
-      },
-      {
-        "term": "christian lei bennedsen",
-        "frequency": 1
-      },
-      {
-        "term": "christina elisabeth ebbesen",
-        "frequency": 1
-      },
-      {
-        "term": "christopher hussey",
-        "frequency": 1
-      },
-      {
-        "term": "christopher lyndon-gee",
-        "frequency": 1
-      },
-      {
-        "term": "clannad",
-        "frequency": 1
-      },
-      {
-        "term": "claude debussy",
-        "frequency": 1
-      },
-      {
-        "term": "claudia fenske",
-        "frequency": 1
-      },
-      {
-        "term": "claus lyne",
-        "frequency": 1
-      },
-      {
-        "term": "dan christoffersen",
-        "frequency": 1
-      },
-      {
-        "term": "dan folke",
-        "frequency": 1
-      },
-      {
-        "term": "daniel london",
-        "frequency": 1
-      },
-      {
-        "term": "daryl griffith",
-        "frequency": 1
-      },
-      {
-        "term": "david arkenstone",
-        "frequency": 1
-      },
-      {
-        "term": "david arnold",
-        "frequency": 1
-      },
-      {
-        "term": "david baggett",
-        "frequency": 1
-      },
-      {
-        "term": "david lawson",
-        "frequency": 1
-      },
-      {
-        "term": "davy spillane",
-        "frequency": 1
-      },
-      {
-        "term": "den slovakiske radios symfoniorkester, bratislava",
-        "frequency": 1
-      },
-      {
-        "term": "det amerikanske drengekor",
-        "frequency": 1
-      },
-      {
-        "term": "die 12 cellisten der berliner philharmoniker",
-        "frequency": 1
-      },
-      {
-        "term": "dinah bucholz",
-        "frequency": 1
-      },
-      {
-        "term": "dmitrij sjostakovitj",
-        "frequency": 1
-      },
-      {
-        "term": "dong-suk kang",
-        "frequency": 1
-      },
-      {
-        "term": "dune",
-        "frequency": 1
-      },
-      {
-        "term": "eder-kvartetten",
-        "frequency": 1
-      },
-      {
-        "term": "edward broadbridge",
-        "frequency": 1
-      },
-      {
-        "term": "egil harder",
-        "frequency": 1
-      },
-      {
-        "term": "elizabeth d. schafer",
-        "frequency": 1
-      },
-      {
-        "term": "elysia",
-        "frequency": 1
-      },
-      {
-        "term": "emerson spartz",
-        "frequency": 1
-      },
-      {
-        "term": "emma slebsager",
-        "frequency": 1
-      },
-      {
-        "term": "esko laine",
-        "frequency": 1
-      },
-      {
-        "term": "failoni-kammerorkestret, budapest",
-        "frequency": 1
-      },
-      {
-        "term": "frances hodgson burnett",
-        "frequency": 1
-      },
-      {
-        "term": "françois-joel thiollier",
-        "frequency": 1
-      },
-      {
-        "term": "frédéric chopin",
-        "frequency": 1
-      },
-      {
-        "term": "gabriel fauré",
-        "frequency": 1
-      },
-      {
-        "term": "gabriela montero",
-        "frequency": 1
-      },
-      {
-        "term": "galt macdermot",
-        "frequency": 1
-      },
-      {
-        "term": "georg tichy",
-        "frequency": 1
-      },
-      {
-        "term": "gilles le bigot",
-        "frequency": 1
-      },
-      {
-        "term": "gioacchino rossini",
-        "frequency": 1
-      },
-      {
-        "term": "glen kirk",
-        "frequency": 1
-      },
-      {
-        "term": "greg macmartin",
-        "frequency": 1
-      },
-      {
-        "term": "guy miller",
-        "frequency": 1
-      },
-      {
-        "term": "göteborgsmusiken",
-        "frequency": 1
-      },
-      {
-        "term": "hanne guldberg mikkelsen",
-        "frequency": 1
-      },
-      {
-        "term": "hans schreiber",
-        "frequency": 1
-      },
-      {
-        "term": "harald h. lund (f. 1902)",
-        "frequency": 1
-      },
-      {
-        "term": "helge kjærulff-schmidt",
-        "frequency": 1
-      },
-      {
-        "term": "helmer olesen",
-        "frequency": 1
-      },
-      {
-        "term": "helmut müller-brühl",
-        "frequency": 1
-      },
-      {
-        "term": "henrik blichmann",
-        "frequency": 1
-      },
-      {
-        "term": "henrik emmer",
-        "frequency": 1
-      },
-      {
-        "term": "henrik krogsgaard",
-        "frequency": 1
-      },
-      {
-        "term": "henry h. neff",
-        "frequency": 1
-      },
-      {
-        "term": "howard shore",
-        "frequency": 1
-      },
-      {
-        "term": "ib thorben jensen (f. 1949)",
-        "frequency": 1
-      },
-      {
-        "term": "idil biret",
-        "frequency": 1
-      },
-      {
-        "term": "igor stravinskij",
-        "frequency": 1
-      },
-      {
-        "term": "irma p. hall",
-        "frequency": 1
-      },
-      {
-        "term": "istván bogár",
-        "frequency": 1
-      },
-      {
-        "term": "james horner",
-        "frequency": 1
-      },
-      {
-        "term": "janne saksala",
-        "frequency": 1
-      },
-      {
-        "term": "jarvis cocker",
-        "frequency": 1
-      },
-      {
-        "term": "jason buckle",
-        "frequency": 1
-      },
-      {
-        "term": "jeanne kimsey",
-        "frequency": 1
-      },
-      {
-        "term": "jeff johnson",
-        "frequency": 1
-      },
-      {
-        "term": "jenő jandó",
-        "frequency": 1
-      },
-      {
-        "term": "jez harris",
-        "frequency": 1
-      },
-      {
-        "term": "johann sebastian bach",
-        "frequency": 1
-      },
-      {
-        "term": "johannes brahms",
-        "frequency": 1
-      },
-      {
-        "term": "john adams (f. 1947)",
-        "frequency": 1
-      },
-      {
-        "term": "john christensen",
-        "frequency": 1
-      },
-      {
-        "term": "johnny reimar",
-        "frequency": 1
-      },
-      {
-        "term": "jokern",
-        "frequency": 1
-      },
-      {
-        "term": "jonny greenwood",
-        "frequency": 1
-      },
-      {
-        "term": "jordan thomas",
-        "frequency": 1
-      },
-      {
-        "term": "josef sommer",
-        "frequency": 1
-      },
-      {
-        "term": "joseph haydn",
-        "frequency": 1
-      },
-      {
-        "term": "judith leclair (f. 1958)",
-        "frequency": 1
-      },
-      {
-        "term": "julian kershaw",
-        "frequency": 1
-      },
-      {
-        "term": "jørgen andresen (f. 1945)",
-        "frequency": 1
-      },
-      {
-        "term": "jürgen schuster",
-        "frequency": 1
-      },
-      {
-        "term": "kai mortensen",
-        "frequency": 1
-      },
-      {
-        "term": "kai normann andersen",
-        "frequency": 1
-      },
-      {
-        "term": "kaj munk",
-        "frequency": 1
-      },
-      {
-        "term": "karen matheson",
-        "frequency": 1
-      },
-      {
-        "term": "kate bush",
-        "frequency": 1
-      },
-      {
-        "term": "katrine lehmann sivertsen",
-        "frequency": 1
-      },
-      {
-        "term": "keld heick",
-        "frequency": 1
-      },
-      {
-        "term": "kenneth jean",
-        "frequency": 1
-      },
-      {
-        "term": "kennilworthy whisp",
-        "frequency": 1
-      },
-      {
-        "term": "knud pheiffer",
-        "frequency": 1
-      },
-      {
-        "term": "knud vad-thomsen",
-        "frequency": 1
-      },
-      {
-        "term": "kris beaumont",
-        "frequency": 1
-      },
-      {
-        "term": "kurt ard",
-        "frequency": 1
-      },
-      {
-        "term": "kölns kammerorkester",
-        "frequency": 1
-      },
-      {
-        "term": "lasse thorning",
-        "frequency": 1
-      },
-      {
-        "term": "leif pedersen",
-        "frequency": 1
-      },
-      {
-        "term": "lene rytter",
-        "frequency": 1
-      },
-      {
-        "term": "leonard forslund",
-        "frequency": 1
-      },
-      {
-        "term": "lisa linn",
-        "frequency": 1
-      },
-      {
-        "term": "lisa lynne",
-        "frequency": 1
-      },
-      {
-        "term": "lisbeth alnor christensen",
-        "frequency": 1
-      },
-      {
-        "term": "liverpools filharmoniske orkester",
-        "frequency": 1
-      },
-      {
-        "term": "lone wessmann",
-        "frequency": 1
-      },
-      {
-        "term": "loreena mckennitt",
-        "frequency": 1
-      },
-      {
-        "term": "louise di tullio",
-        "frequency": 1
-      },
-      {
-        "term": "lucy holliday",
-        "frequency": 1
-      },
-      {
-        "term": "ludvig brandstrup",
-        "frequency": 1
-      },
-      {
-        "term": "lutherska missionskyrkans kör",
-        "frequency": 1
-      },
-      {
-        "term": "m. d. litvinovoj",
-        "frequency": 1
-      },
-      {
-        "term": "maj-britt la cour",
-        "frequency": 1
-      },
-      {
-        "term": "marc shapiro",
-        "frequency": 1
-      },
-      {
-        "term": "marin alsop",
-        "frequency": 1
-      },
-      {
-        "term": "martin schmeling",
-        "frequency": 1
-      },
-      {
-        "term": "mary mclaughlin",
-        "frequency": 1
-      },
-      {
-        "term": "mats rondin",
-        "frequency": 1
-      },
-      {
-        "term": "matt birch",
-        "frequency": 1
-      },
-      {
-        "term": "maurice ravel",
-        "frequency": 1
-      },
-      {
-        "term": "max raabe",
-        "frequency": 1
-      },
-      {
-        "term": "michael gambov",
-        "frequency": 1
-      },
-      {
-        "term": "michael halász",
-        "frequency": 1
-      },
-      {
-        "term": "michael jeter",
-        "frequency": 1
-      },
-      {
-        "term": "mogens dam (f. 1897)",
-        "frequency": 1
-      },
-      {
-        "term": "mogens jermiin nissen",
-        "frequency": 1
-      },
-      {
-        "term": "moira butterfield",
-        "frequency": 1
-      },
-      {
-        "term": "monica potter",
-        "frequency": 1
-      },
-      {
-        "term": "mugglenet.com",
-        "frequency": 1
-      },
-      {
-        "term": "máire brennan",
-        "frequency": 1
-      },
-      {
-        "term": "nette beich",
-        "frequency": 1
-      },
-      {
-        "term": "new zealands symfoniorkester",
-        "frequency": 1
-      },
-      {
-        "term": "nicolaus esterházy sinfonia, budapest",
-        "frequency": 1
-      },
-      {
-        "term": "nightnoise",
-        "frequency": 1
-      },
-      {
-        "term": "nightwish",
-        "frequency": 1
-      },
-      {
-        "term": "norrköpings symfoniorkester",
-        "frequency": 1
-      },
-      {
-        "term": "ola persson",
-        "frequency": 1
-      },
-      {
-        "term": "ole haubo christensen",
-        "frequency": 1
-      },
-      {
-        "term": "ondrej lenárd",
-        "frequency": 1
-      },
-      {
-        "term": "pascal devoyon",
-        "frequency": 1
-      },
-      {
-        "term": "paul dukas",
-        "frequency": 1
-      },
-      {
-        "term": "paul grimster",
-        "frequency": 1
-      },
-      {
-        "term": "peter coyote",
-        "frequency": 1
-      },
-      {
-        "term": "peter himmelstrand",
-        "frequency": 1
-      },
-      {
-        "term": "peter mynte",
-        "frequency": 1
-      },
-      {
-        "term": "petr tjajkovskij",
-        "frequency": 1
-      },
-      {
-        "term": "phedon papamichael",
-        "frequency": 1
-      },
-      {
-        "term": "phil coulter",
-        "frequency": 1
-      },
-      {
-        "term": "philharmonia-orkestret, london",
-        "frequency": 1
-      },
-      {
-        "term": "philip nel (f. 1969)",
-        "frequency": 1
-      },
-      {
-        "term": "philip selway",
-        "frequency": 1
-      },
-      {
-        "term": "philip seymour hoffman",
-        "frequency": 1
-      },
-      {
-        "term": "queens' college's kor, oxford",
-        "frequency": 1
-      },
-      {
-        "term": "rachel o'donnell",
-        "frequency": 1
-      },
-      {
-        "term": "robert arnold",
-        "frequency": 1
-      },
-      {
-        "term": "robert craft",
-        "frequency": 1
-      },
-      {
-        "term": "robert schumann",
-        "frequency": 1
-      },
-      {
-        "term": "robin williams",
-        "frequency": 1
-      },
-      {
-        "term": "royal philharmonic-orkestret, london",
-        "frequency": 1
-      },
-      {
-        "term": "rsvp voices",
-        "frequency": 1
-      },
-      {
-        "term": "ryan o'donnell",
-        "frequency": 1
-      },
-      {
-        "term": "sarah mclachlan",
-        "frequency": 1
-      },
-      {
-        "term": "sayre van young",
-        "frequency": 1
-      },
-      {
-        "term": "scott thomas",
-        "frequency": 1
-      },
-      {
-        "term": "sean smith",
-        "frequency": 1
-      },
-      {
-        "term": "sergej prokof'ev",
-        "frequency": 1
-      },
-      {
-        "term": "shaun mccarthy",
-        "frequency": 1
-      },
-      {
-        "term": "shawn klein",
-        "frequency": 1
-      },
-      {
-        "term": "sigfred pedersen (f. 1903)",
-        "frequency": 1
-      },
-      {
-        "term": "sinéad o'connor",
-        "frequency": 1
-      },
-      {
-        "term": "slovakisk filharmonisk orkester, bratislava",
-        "frequency": 1
-      },
-      {
-        "term": "sonja kristensen",
-        "frequency": 1
-      },
-      {
-        "term": "steen agger (f. 1946)",
-        "frequency": 1
-      },
-      {
-        "term": "stephen gunzenhauser",
-        "frequency": 1
-      },
-      {
-        "term": "steve claydon",
-        "frequency": 1
-      },
-      {
-        "term": "steve howe",
-        "frequency": 1
-      },
-      {
-        "term": "steve mackey",
-        "frequency": 1
-      },
-      {
-        "term": "steve oedekerk",
-        "frequency": 1
-      },
-      {
-        "term": "susanne palsbo",
-        "frequency": 1
-      },
-      {
-        "term": "sven buemann",
-        "frequency": 1
-      },
-      {
-        "term": "svend aage esbensen",
-        "frequency": 1
-      },
-      {
-        "term": "takako nishizaki",
-        "frequency": 1
-      },
-      {
-        "term": "tanglewood festival-kor",
-        "frequency": 1
-      },
-      {
-        "term": "the chieftains",
-        "frequency": 1
-      },
-      {
-        "term": "the corrs",
-        "frequency": 1
-      },
-      {
-        "term": "the skywalker symphony orchestra",
-        "frequency": 1
-      },
-      {
-        "term": "thorkil jacobsen",
-        "frequency": 1
-      },
-      {
-        "term": "thøger olesen",
-        "frequency": 1
-      },
-      {
-        "term": "tim collins",
-        "frequency": 1
-      },
-      {
-        "term": "timothy morrison",
-        "frequency": 1
-      },
-      {
-        "term": "tom shadyac",
-        "frequency": 1
-      },
-      {
-        "term": "tony walther",
-        "frequency": 1
-      },
-      {
-        "term": "toots thielemans",
-        "frequency": 1
-      },
-      {
-        "term": "trine may",
-        "frequency": 1
-      },
-      {
-        "term": "utahs symfoniorkester",
-        "frequency": 1
-      },
-      {
-        "term": "v. babkova",
-        "frequency": 1
-      },
-      {
-        "term": "vangelis",
-        "frequency": 1
-      },
-      {
-        "term": "viggo happel",
-        "frequency": 1
-      },
-      {
-        "term": "vilfred kjær",
-        "frequency": 1
-      },
-      {
-        "term": "volmer-sørensen",
-        "frequency": 1
-      },
-      {
-        "term": "wilhelm kaiser-lindemann",
-        "frequency": 1
-      },
-      {
-        "term": "william coulter",
-        "frequency": 1
-      },
-      {
-        "term": "william irwin",
-        "frequency": 1
-      },
-      {
-        "term": "william ross",
-        "frequency": 1
-      },
-      {
-        "term": "within temptation",
-        "frequency": 1
-      },
-      {
-        "term": "zagrebs festivalorkester",
-        "frequency": 1
-      },
-      {
-        "term": "zdeněk košler",
-        "frequency": 1
-      }
-    ]
-  }
+  "statusCode": 400,
+  "error": "limit must have a minimum value of 1"
 }
 
 facets {"q" : "harry AND potter", "fields": ["creator"], "limit": 20}
@@ -2129,8 +765,8 @@ facets {"q" : "harry", "fields": ["access", "acSource", "audience", "audienceCat
 
 facets {"q" : "invalid cql"}
 {
-  "statusCode": 400,
-  "error": "error fulfilling the request"
+  "statusCode": 500,
+  "error": "10: Query syntax error at pos 11"
 }
 
 facets {"q" : "jensen", "fields": ["access", "acSource", "audience", "audienceCategory", "branch", "category", "creator", "creatorFunction", "date", "department", "dk5", "extraTitles", "fictionSubject", "form", "gamePlatform", "genre", "genreCategory", "geographic", "language", "level", "let", "literaryForm", "lix", "musicSubject", "nationality", "nonFictionSubject", "partOf", "period", "primaryCreator", "sheetMusic", "subject", "titleSeries", "type"], "limit": 1}
@@ -2630,8 +1266,8 @@ libraries {"agencyIds": ["717500"], "fields": ["agencyId", "orderParameters"]}
       "orderParameters": [
         "customId",
         "pincode",
-        "userName",
-        "userAddress"
+        "name",
+        "address"
       ]
     },
     {
@@ -2639,8 +1275,8 @@ libraries {"agencyIds": ["717500"], "fields": ["agencyId", "orderParameters"]}
       "orderParameters": [
         "customId",
         "pincode",
-        "userName",
-        "userAddress"
+        "name",
+        "address"
       ]
     },
     {
@@ -2648,8 +1284,8 @@ libraries {"agencyIds": ["717500"], "fields": ["agencyId", "orderParameters"]}
       "orderParameters": [
         "customId",
         "pincode",
-        "userName",
-        "userAddress"
+        "name",
+        "address"
       ]
     }
   ]
@@ -2688,8 +1324,8 @@ libraries {"branchIds": ["717500","717501","717502"], "fields": ["agencyId", "br
       "orderParameters": [
         "customId",
         "pincode",
-        "userName",
-        "userAddress"
+        "name",
+        "address"
       ]
     },
     {
@@ -2698,8 +1334,8 @@ libraries {"branchIds": ["717500","717501","717502"], "fields": ["agencyId", "br
       "orderParameters": [
         "customId",
         "pincode",
-        "userName",
-        "userAddress"
+        "name",
+        "address"
       ]
     },
     {
@@ -2708,8 +1344,8 @@ libraries {"branchIds": ["717500","717501","717502"], "fields": ["agencyId", "br
       "orderParameters": [
         "customId",
         "pincode",
-        "userName",
-        "userAddress"
+        "name",
+        "address"
       ]
     }
   ]
@@ -9503,148 +8139,14 @@ libraries { "fields": ["branchId", "city", "geolocation"]}
 
 news {"fields": ["title", "changed", "nid", "field_ding_news_list_image"]}
 {
-  "statusCode": 200,
-  "data": [
-    {
-      "title": {
-        "name": "Titel",
-        "value": "Sportsstjerner - bag facaden",
-        "attr": []
-      },
-      "changed": {
-        "name": "Opdateret",
-        "value": 1451918109,
-        "attr": []
-      },
-      "nid": 19,
-      "field_ding_news_list_image": {
-        "name": "List image",
-        "value": [
-          "files/775100/7268c0e6792000b897cea1d0dff628bd41117017.jpeg"
-        ],
-        "attr": [
-          "image/jpeg"
-        ]
-      }
-    },
-    {
-      "title": {
-        "name": "Titel",
-        "value": "Bagud med danskopgaven ? her er hjælp til dig",
-        "attr": []
-      },
-      "changed": {
-        "name": "Opdateret",
-        "value": 1454401649,
-        "attr": []
-      },
-      "nid": 40,
-      "field_ding_news_list_image": {
-        "name": "List image",
-        "value": [
-          "files/775100/97d745b02862cde44e9f4a431e0da175608760b7.jpeg"
-        ],
-        "attr": [
-          "image/jpeg"
-        ]
-      }
-    },
-    {
-      "title": {
-        "name": "Titel",
-        "value": "AFB test nyhed",
-        "attr": []
-      },
-      "changed": {
-        "name": "Opdateret",
-        "value": 1454692591,
-        "attr": []
-      },
-      "nid": 36,
-      "field_ding_news_list_image": {
-        "name": "List image",
-        "value": [
-          "files/775100/9daae4251ddd2684efe21a6164500fb309919c83.jpeg"
-        ],
-        "attr": [
-          "image/jpeg"
-        ]
-      }
-    },
-    {
-      "title": {
-        "name": "Titel",
-        "value": "Vil du interviewes om eReolen?",
-        "attr": []
-      },
-      "changed": {
-        "name": "Opdateret",
-        "value": 1454692950,
-        "attr": []
-      },
-      "nid": 41,
-      "field_ding_news_list_image": {
-        "name": "List image",
-        "value": [
-          "files/775100/e60c0aca678c0f7dfccb9b30bf705f8142471c56.jpeg"
-        ],
-        "attr": [
-          "image/jpeg"
-        ]
-      }
-    }
-  ]
+  "statusCode": 500,
+  "error": "SyntaxError: Unexpected token E in JSON at position 0"
 }
 
 news {"nids": ["19", "40"], "fields": ["title", "changed", "nid", "field_ding_news_list_image"]}
 {
-  "statusCode": 200,
-  "data": [
-    {
-      "title": {
-        "name": "Titel",
-        "value": "Sportsstjerner - bag facaden",
-        "attr": []
-      },
-      "changed": {
-        "name": "Opdateret",
-        "value": 1451918109,
-        "attr": []
-      },
-      "nid": 19,
-      "field_ding_news_list_image": {
-        "name": "List image",
-        "value": [
-          "files/775100/7268c0e6792000b897cea1d0dff628bd41117017.jpeg"
-        ],
-        "attr": [
-          "image/jpeg"
-        ]
-      }
-    },
-    {
-      "title": {
-        "name": "Titel",
-        "value": "Bagud med danskopgaven ? her er hjælp til dig",
-        "attr": []
-      },
-      "changed": {
-        "name": "Opdateret",
-        "value": 1454401649,
-        "attr": []
-      },
-      "nid": 40,
-      "field_ding_news_list_image": {
-        "name": "List image",
-        "value": [
-          "files/775100/97d745b02862cde44e9f4a431e0da175608760b7.jpeg"
-        ],
-        "attr": [
-          "image/jpeg"
-        ]
-      }
-    }
-  ]
+  "statusCode": 500,
+  "error": "SyntaxError: Unexpected token E in JSON at position 0"
 }
 
 order {}
@@ -9792,13 +8294,13 @@ renew {}
 search {}
 {
   "statusCode": 400,
-  "error": "requires property \"q\""
+  "error": " requires property \"q\""
 }
 
 search {"createTest": "search_no_q"}
 {
   "statusCode": 400,
-  "error": "requires property \"q\""
+  "error": " requires property \"q\""
 }
 
 search { "q": "harry AND potter", "fields": ["identifier", "title", "collection", "subjectDBCF", "hasAdaptation", "coverUrlFull"], "sort": "rank_title"}
@@ -9860,7 +8362,7 @@ search { "q": "harry AND potter", "fields": ["identifier", "title", "collection"
         "775100-katalog:28668147"
       ],
       "coverUrlFull": [
-        "//moreinfo.addi.dk/2.1/more_info_get.php?id=51917747&type=forside_stor&key=474042be430fb4e00187"
+        "//moreinfo.addi.dk/2.6/more_info_get.php?lokalid=28668147&attachment_type=forside_stor&bibliotek=870970&source_id=870970&key=7b523440d75eb01507a2"
       ]
     },
     {
@@ -9884,7 +8386,7 @@ search { "q": "harry AND potter", "fields": ["identifier", "title", "collection"
         "775100-katalog:27639798"
       ],
       "coverUrlFull": [
-        "//moreinfo.addi.dk/2.1/more_info_get.php?id=55722038&type=forside_stor&key=1a3c1875669b2d57b283"
+        "//moreinfo.addi.dk/2.6/more_info_get.php?lokalid=29316910&attachment_type=forside_stor&bibliotek=870970&source_id=870970&key=ea895b56d654358be166"
       ]
     },
     {
@@ -9942,7 +8444,7 @@ search { "q": "harry ", "fields": ["identifier", "title", "collection", "subject
         "775100-katalog:28447698"
       ],
       "coverUrlFull": [
-        "//moreinfo.addi.dk/2.1/more_info_get.php?id=49830597&type=forside_stor&key=92cd352c92733708b7d8"
+        "//moreinfo.addi.dk/2.6/more_info_get.php?lokalid=28277229&attachment_type=forside_stor&bibliotek=870970&source_id=870970&key=eac56eba1133d1518f26"
       ]
     },
     {
@@ -9979,7 +8481,7 @@ search { "q": "harry ", "fields": ["identifier", "title", "collection", "subject
         "sangere"
       ],
       "coverUrlFull": [
-        "//moreinfo.addi.dk/2.1/more_info_get.php?id=61491204&type=forside_stor&key=e613fc4b42d85459f78d"
+        "//moreinfo.addi.dk/2.6/more_info_get.php?lokalid=50536661&attachment_type=forside_stor&bibliotek=870970&source_id=870970&key=8931dd7367633d5a26a3"
       ]
     },
     {
@@ -10006,7 +8508,7 @@ search { "q": "harry ", "fields": ["identifier", "title", "collection", "subject
         "775100-katalog:29395306"
       ],
       "coverUrlFull": [
-        "//moreinfo.addi.dk/2.1/more_info_get.php?id=58977222&type=forside_stor&key=a26b794b8c291738121a"
+        "//moreinfo.addi.dk/2.6/more_info_get.php?lokalid=29395306&attachment_type=forside_stor&bibliotek=870970&source_id=870970&key=f0dff1e094e8169bbb85"
       ]
     },
     {
@@ -10039,7 +8541,7 @@ search { "q": "harry ", "fields": ["identifier", "title", "collection", "subject
         "775100-katalog:44739194"
       ],
       "coverUrlFull": [
-        "//moreinfo.addi.dk/2.1/more_info_get.php?id=52049006&type=forside_stor&key=628d4e1571103dec1228"
+        "//moreinfo.addi.dk/2.6/more_info_get.php?lokalid=28721420&attachment_type=forside_stor&bibliotek=870970&source_id=870970&key=486a5fb87016ac0dd26a"
       ]
     }
   ]
@@ -11257,7 +9759,7 @@ search {"q" : "ost", "fields": ["pid", "creator", "coverUrlFull"], "limit": 3}
         "775100-katalog:27400337"
       ],
       "coverUrlFull": [
-        "//moreinfo.addi.dk/2.1/more_info_get.php?id=44502234&type=forside_stor&key=8e60809c588bc833f760"
+        "//moreinfo.addi.dk/2.6/more_info_get.php?lokalid=27400337&attachment_type=forside_stor&bibliotek=870970&source_id=870970&key=934875f1061f867f0ebb"
       ]
     },
     {
@@ -11265,7 +9767,7 @@ search {"q" : "ost", "fields": ["pid", "creator", "coverUrlFull"], "limit": 3}
         "775100-katalog:29130612"
       ],
       "coverUrlFull": [
-        "//moreinfo.addi.dk/2.1/more_info_get.php?id=54073988&type=forside_stor&key=ab59a99e2df37cd319ca"
+        "//moreinfo.addi.dk/2.6/more_info_get.php?lokalid=29130612&attachment_type=forside_stor&bibliotek=870970&source_id=870970&key=72906622ac7d30eedb71"
       ]
     },
     {
@@ -11320,64 +9822,64 @@ suggest {"q" : "harr", "type": "creator"}
   "statusCode": 200,
   "data": [
     {
-      "str": "The Beatles"
+      "term": "The Beatles"
     },
     {
-      "str": "Spielberg Steven"
+      "term": "Spielberg Steven"
     },
     {
-      "str": "Charlaine Harris"
+      "term": "Charlaine Harris"
     },
     {
-      "str": "Flo Rida"
+      "term": "Flo Rida"
     },
     {
-      "str": "Nicholas Harris"
+      "term": "Nicholas Harris"
     },
     {
-      "str": "Joanne Harris"
+      "term": "Joanne Harris"
     },
     {
-      "str": "Emmylou Harris"
+      "term": "Emmylou Harris"
     },
     {
-      "str": "Svenne & Lotta"
+      "term": "Svenne & Lotta"
     },
     {
-      "str": "Harris Savides"
+      "term": "Harris Savides"
     },
     {
-      "str": "Gasolin'"
+      "term": "Gasolin'"
     },
     {
-      "str": "Robert Harris (f. 1957)"
+      "term": "Robert Harris (f. 1957)"
     },
     {
-      "str": "Fiennes, Martha"
+      "term": "Fiennes, Martha"
     },
     {
-      "str": "Harris Clifford"
+      "term": "Harris Clifford"
     },
     {
-      "str": "Katie Melua"
+      "term": "Katie Melua"
     },
     {
-      "str": "Harry Nilsson"
+      "term": "Harry Nilsson"
     },
     {
-      "str": "Russ Harris"
+      "term": "Russ Harris"
     },
     {
-      "str": "Ciara"
+      "term": "Ciara"
     },
     {
-      "str": "Colin Harrison (f. 1960-11-27)"
+      "term": "Colin Harrison (f. 1960-11-27)"
     },
     {
-      "str": "Iron Maiden"
+      "term": "Iron Maiden"
     },
     {
-      "str": "Mahershala Ali"
+      "term": "Mahershala Ali"
     }
   ]
 }
@@ -11387,61 +9889,34 @@ suggest {"q" : "harr", "type": "title"}
   "statusCode": 200,
   "data": [
     {
-      "str": "Harry Potter og De Vises Sten",
-      "id": "870970-basis:22252852",
-      "creator": "Joanne K. Rowling",
-      "type": "book"
+      "term": "Harry Potter og De Vises Sten"
     },
     {
-      "str": "Harry Potter og Hemmelighedernes Kammer",
-      "id": "870970-basis:22375733",
-      "creator": "Joanne K. Rowling",
-      "type": "book"
+      "term": "Harry Potter og Hemmelighedernes Kammer"
     },
     {
-      "str": "Harry Potter og fangen fra Azkaban",
-      "id": "870970-basis:22639862",
-      "creator": "Joanne K. Rowling",
-      "type": "book"
+      "term": "Harry Potter og fangen fra Azkaban"
     },
     {
-      "str": "Harry Potter og dødsregalierne",
-      "id": "870970-basis:26917921",
-      "creator": "Joanne K. Rowling",
-      "type": "book"
+      "term": "Harry Potter og dødsregalierne"
     },
     {
-      "str": "Harry Potter og Flammernes Pokal",
-      "id": "870970-basis:23154382",
-      "creator": "Joanne K. Rowling",
-      "type": "book"
+      "term": "Harry Potter og Flammernes Pokal"
     },
     {
-      "str": "Harry Potter og halvblodsprinsen",
-      "id": "870970-basis:25807995",
-      "creator": "Joanne K. Rowling",
-      "type": "book"
+      "term": "Harry Potter og halvblodsprinsen"
     },
     {
-      "str": "Harry Potter og Fønixordenen",
-      "id": "870970-basis:24880605",
-      "creator": "Joanne K. Rowling",
-      "type": "book"
+      "term": "Harry Potter og Fønixordenen"
     },
     {
-      "str": "Harry Potter og Fønixordenen",
-      "id": "870970-basis:27091423",
-      "type": "movie"
+      "term": "Harry Potter og Fønixordenen"
     },
     {
-      "str": "Harry Potter og halvblodsprinsen",
-      "id": "870970-basis:27831184",
-      "type": "movie"
+      "term": "Harry Potter og halvblodsprinsen"
     },
     {
-      "str": "Harry Potter og de vises sten",
-      "id": "870970-basis:24347370",
-      "type": "movie"
+      "term": "Harry Potter og de vises sten"
     }
   ]
 }
@@ -11451,94 +9926,22 @@ suggest {"q" : "køge", "type": "library"}
   "statusCode": 200,
   "data": [
     {
-      "str": {
-        "væsensnavn": "Stevns Bibliotekerne",
-        "adresse": "Strøby Egede Center 11",
-        "id": "733602",
-        "postnr": "4600",
-        "geolokation": {
-          "lat": 55.4165189,
-          "lng": 12.2424689
-        },
-        "navn": "Strøby Egede Bibliotek",
-        "bibliotekstype": "Folkebibliotek",
-        "by": "Køge"
-      }
+      "term": "Strøby Egede Bibliotek"
     },
     {
-      "str": {
-        "væsensnavn": "KøgeBibliotekerne",
-        "adresse": "Kirkestræde 18",
-        "id": "725900",
-        "postnr": "4600",
-        "geolokation": {
-          "lat": 55.45783460000001,
-          "lng": 12.1822443
-        },
-        "navn": "Køge Bibliotek",
-        "bibliotekstype": "Folkebibliotek",
-        "by": "Køge"
-      }
+      "term": "Køge Bibliotek"
     },
     {
-      "str": {
-        "væsensnavn": "KøgeBibliotekerne",
-        "adresse": "Parkvej 2",
-        "id": "725903",
-        "postnr": "4140",
-        "geolokation": {
-          "lat": 55.5002162,
-          "lng": 11.9804517
-        },
-        "navn": "Borup Bibliotek",
-        "bibliotekstype": "Folkebibliotek",
-        "by": "Borup"
-      }
+      "term": "Borup Bibliotek"
     },
     {
-      "str": {
-        "væsensnavn": "KøgeBibliotekerne",
-        "adresse": "Billesborgvej 1 B",
-        "id": "725902",
-        "postnr": "4681",
-        "geolokation": {
-          "lat": 55.416913,
-          "lng": 12.142357
-        },
-        "navn": "Herfølge Bibliotek",
-        "bibliotekstype": "Folkebibliotek",
-        "by": "Herfølge"
-      }
+      "term": "Herfølge Bibliotek"
     },
     {
-      "str": {
-        "væsensnavn": "KøgeBibliotekerne",
-        "adresse": "Ejby Medborgerhus Gemsevej 19",
-        "id": "725905",
-        "postnr": "4623",
-        "geolokation": {
-          "lat": 0,
-          "lng": 0
-        },
-        "navn": "Ejby Bibliotekspunkt",
-        "bibliotekstype": "Folkebibliotek",
-        "by": "Ll. Skensved"
-      }
+      "term": "Ejby Bibliotekspunkt"
     },
     {
-      "str": {
-        "væsensnavn": "KøgeBibliotekerne",
-        "adresse": "Super Brugsen Bjæverskov Center",
-        "id": "725904",
-        "postnr": "4632",
-        "geolokation": {
-          "lat": 55.457699,
-          "lng": 12.033552
-        },
-        "navn": "Bjæverskov Bibliotekspunkt",
-        "bibliotekstype": "Folkebibliotek",
-        "by": "Bjæverskov"
-      }
+      "term": "Bjæverskov Bibliotekspunkt"
     }
   ]
 }
@@ -11548,47 +9951,21 @@ suggest {"q" : "os", "type": "subject", "limit": 3}
   "statusCode": 200,
   "data": [
     {
-      "str": "oslo"
+      "term": "oslo"
     },
     {
-      "str": "kost"
+      "term": "kost"
     },
     {
-      "str": "los"
+      "term": "los"
     }
   ]
 }
 
 user {}
 {
-  "statusCode": 200,
-  "data": {
-    "id": "KbZ0UoBGys8QMLzieTQ5mHZ39ivzulP4",
-    "loans": [
-      {
-        "loanId": "NCIPMDAxOXw5OTAwfHw5OTAwLnx8",
-        "dueDate": "2016-06-20T00:00:00+02:00",
-        "title": "9900."
-      },
-      {
-        "loanId": "NCIPMDAxOXwwMDAwMDMyNDg0fFJvc2VuLCBNaWNoYWVsfFNtdXR8fHw=",
-        "dueDate": "2016-06-24T00:00:00+02:00",
-        "title": "Smut",
-        "author": "Rosen, Michael"
-      }
-    ],
-    "orders": [
-      {
-        "title": "Den ·grænseløse",
-        "orderId": "Hold:NCIPMDAxOXwyNC0wNS0yMDE2IDIzOjA4OjIwfEFkbGVyLU9sc2VuLCBKdXNzaXxEZW4gJm1pZGRvdDtnciZhZWxpZztuc2VsJm9zbGFzaDtzZXx8fA==",
-        "orderDate": "2016-05-24T00:00:00+02:00",
-        "status": "In process",
-        "library": "DK-100451",
-        "author": "Adler-Olsen, Jussi"
-      }
-    ],
-    "ddbcmsapi": "http://rest.filmstriben.dbc.inlead.dk/web/"
-  }
+  "statusCode": 500,
+  "error": "Unknown user"
 }
 
 work {"pids": ["300185-katalog:100562332", "870970-basis:51989252", "870971-forfweb:86203219", "870970-basis:24284514"]}
@@ -11947,7 +10324,7 @@ work {"pids": ["300185-katalog:100562332", "870970-basis:51989252", "870971-forf
     {},
     {
       "coverUrlFull": [
-        "//moreinfo.addi.dk/2.1/more_info_get.php?id=64951376&type=forside_stor&key=8634575e6015a0d3ef3f"
+        "//moreinfo.addi.dk/2.6/more_info_get.php?lokalid=51989252&attachment_type=forside_stor&bibliotek=870970&source_id=870970&key=c736d5a0bd8ad62dc1ee"
       ],
       "title": [
         "Harry Potter og de vises sten"

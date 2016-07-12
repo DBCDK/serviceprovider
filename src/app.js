@@ -441,4 +441,6 @@ module.exports.run = function(worker) {
     versions: process.versions,
     smaug: (SMAUG_LOCATION || false)
   });
+
+  return app;
 };
