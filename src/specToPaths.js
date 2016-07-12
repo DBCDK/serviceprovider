@@ -138,7 +138,6 @@ function apiMethodIterator(method, specs) {
 export function specToPaths(specs) {
   const paths = {};
   const defaultProperties = specs.defaultProperties;
-  const definitions = specs.definitions;
 
   for (const key in defaultProperties) {
     if (defaultProperties[key].noSwag) {
