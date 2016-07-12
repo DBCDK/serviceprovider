@@ -14,17 +14,17 @@ const apiPath = '/v' + parseInt(version, 10) + '/';
 import express from 'express';
 import path from 'path';
 import Logger from 'dbc-node-logger';
-import moment from 'moment';
-import lodash from 'lodash';
 import request from 'request';
 import Provider from './provider/Provider';
-import {TokenError, TokenExpiredError, MultipleTokensError, MissingTokenError} from './smaug/errors';
+import {TokenError} from './smaug/errors';
 
 // Middleware
 import bodyParser from 'body-parser';
 import compression from 'compression';
 import helmet from 'helmet';
 import {log} from './utils';
+import {accessLogMiddleware, getContextMiddleware, requireAuthorized} from './app.middlewares';
+import {healthCheck, getContext, fieldsFilter} from './app.utils';
 
 // Generation of swagger specification
 import swaggerFromSpec from './swaggerFromSpec.js';
@@ -38,244 +38,133 @@ const logger = new Logger({app_name: APP_NAME});
 const expressLoggers = logger.getExpressLoggers();
 const serviceProvider = Provider();
 
-function accessLogMiddleware(req, res, next) {
-  const timeStart = moment();
-  res.logData = {};
-
-  res.on('finish', () => {
-    const timeEnd = moment();
-    log.info(null, Object.assign(res.logData || {},
-      {
-        type: 'accessLog',
-        request: {
-          method: req.method,
-          path: req.path,
-          query: req.query,
-          hostname: req.hostname,
-          remoteAddress: req.ip
-        },
-        response: {status: res.statusCode},
-        time: {
-          start: timeStart,
-          end: timeEnd,
-          taken: timeEnd.diff(timeStart)
-        }
-      }));
-  });
-
-  next();
-}
-
-function getContext(token) {
-  return new Promise((resolve, reject) => {
-    request.get({
-      uri: SMAUG_LOCATION + '/configuration',
-      qs: {token: token}
-    }, (err, response, body) => {
-      switch (response.statusCode) {
-        case 200:
-          return resolve(JSON.parse(body));
-        case 404:
-          return reject(new TokenExpiredError());
-        default:
-          return reject(err);
-      }
+/**
+ * Validates and executes transform.
+ * Resolves with an error(!) if transform is not found or request is invalid.
+ *
+ * @param {string} event
+ * @param {object} query
+ * @param {object} context
+ * @return {Promise}
+ */
+function validateAndExecuteTransforms(event, query, context) {
+  if (!serviceProvider.hasTransformer(event)) {
+    return Promise.resolve({
+      statusCode: 400,
+      error: 'Missing transformer: ' + event
     });
-  });
-}
-
-function getContextMiddleware(req, res, next) {
-  // list of functions that can extract a token from a request
-  const tokenSearchers = [
-    () => {
-      const authHeader = req.get('authorization');
-      if (typeof authHeader !== 'undefined') {
-        const authType = authHeader.split(' ', 2)[0];
-        const bearerToken = authHeader.split(' ', 2)[1];
-
-        if (authType === 'Bearer') {
-          return bearerToken;
-        }
-      }
-    },
-    () => {
-      const bearerToken = req.query.access_token;
-      if (typeof bearerToken !== 'undefined') {
-        return bearerToken;
-      }
-    },
-    () => {
-      const bearerToken = req.body.access_token;
-      if (typeof bearerToken !== 'undefined') {
-        return bearerToken;
-      }
-    }
-  ];
-
-  let bearerTokens = tokenSearchers
-  // execute all token searchers, and remove failures
-    .map((f) => f())
-    // remove failures
-    .filter((e) => typeof e !== 'undefined');
-
-  if (bearerTokens.length > 1) {
-    // todo: return a meaningful error, like 'too many tokens'
-    return next(new MultipleTokensError());
   }
 
-  const bearerToken = bearerTokens[0];
-  res.logData.access_token = bearerToken;
+  const validateErrors = validateRequest(event, query);
 
-  if (typeof bearerToken === 'undefined') {
-    return next(new MissingTokenError());
-  }
-
-  getContext(bearerToken)
-    .then((context) => {
-      req.authorized = true;
-      req.context = context;
-      res.logData.clientId = context.app.clientId;
-      return next();
-    })
-    .catch((err) => {
-      log.error(String(err), {stacktrace: err.stack});
-      return next(err);
+  if (validateErrors.length) {
+    return Promise.resolve({
+      statusCode: 400,
+      error: validateErrors.map(o => String(o.stack).replace(/^instance\.?/, '')).join('\n')
     });
-}
-
-function requireAuthorized(req, res, next) {
-  if (req.authorized) {
-    return next();
   }
 
-  // I'm not sure this code can actually be reached, as long as isAuthorized is used after getContextMiddleware,
-  // since an exception is thrown on missing tokens or if getContext(..) fails.
-  res.sendStatus(403);
+  return serviceProvider.execute(event, query, context);
 }
 
-// Execute transform
+/**
+ * Execute a transform
+ *
+ * @param {string} event
+ * @param {object} query
+ * @param {object} context
+ * @return {Promise}
+ */
 function callApi(event, query, context) {
-  Promise.resolve((() => {
-    // validateContext(context);
-    if (!serviceProvider.hasTransformer(event)) {
-      return {
-        statusCode: 400,
-        error: 'Missing transformer: ' + event
-      };
-    }
-    let validateErrors = validateRequest(event, query);
-    if (validateErrors.length) {
-      return Promise.resolve({
-        statusCode: 400,
-        error: validateErrors.map(o => String(o.stack).replace(/^instance\.?/, '')).join('\n')
-      });
-    }
-    return serviceProvider.execute(event, query, context);
-  })())
-    .then(response => {
-      if ((typeof response !== 'object') ||
-        (typeof response.statusCode !== 'number') ||
-        (response.statusCode === 200 && !response.data) ||
-        (response.statusCode !== 200 && !response.error)) {
-        log.error('response is not wrapped in an envelope', {response: response});
-        response = {
-          statusCode: 500,
-          data: response,
-          error: 'missing envelope'
-        };
-      }
-
-      // Fields filter, - filter the result based on the `fields` parameter.
-      function fieldsFilter(obj) {
-        if (!Array.isArray(query.fields) || (typeof obj !== 'object')) {
-          return obj;
-        }
-
-        if (Array.isArray(obj)) {
-          return obj.map(fieldsFilter);
-        }
-
-        let result = {};
-        query.fields.forEach(key => {
-          if (typeof obj[key] !== 'undefined') {
-            result[key] = obj[key];
-          }
-        });
-        return result;
-      }
-
-      if (typeof response.data === 'object') {
-        response.data = fieldsFilter(response.data);
-      }
-
-      return response;
-    }).catch(err => {
-      log.error(String(err), {stacktrace: err.stack});
-
-      return {
+  return validateAndExecuteTransforms(event, query, context).then(response => {
+    if ((typeof response !== 'object') ||
+      (typeof response.statusCode !== 'number') ||
+      (response.statusCode === 200 && !response.data) ||
+      (response.statusCode !== 200 && !response.error)) {
+      log.error('response is not wrapped in an envelope', {response: response});
+      response = {
         statusCode: 500,
-        error: String(err)
+        data: response,
+        error: 'missing envelope'
       };
     }
-  );
+
+    if (typeof response.data === 'object') {
+      response.data = fieldsFilter(response.data, query);
+    }
+
+    return response;
+  }).catch(err => {
+    log.error(String(err), {stacktrace: err.stack});
+
+    return {
+      statusCode: 500,
+      error: String(err)
+    };
+  });
 }
 
-function healthCheck(req, res) {
-  let result = {ok: {}};
-  let tests = {};
+/**
+ * Enables WS transport
+ *
+ * @param {object} connection
+ * @return {Array|Object|void|*}
+ */
+function enableWSTransport(connection) {
+  return serviceProvider.availableTransforms().forEach(key => {
+    connection.on(key, (data, callback) => { // eslint-disable-line no-loop-func
+      getContext(data.access_token)
+        .then(context => {
+          return callApi(key, data, context);
+        })
+        .catch(err => {
+          log.error(String(err), {stacktrace: err.stack});
+          if (err instanceof TokenError) {
+            return err.toJson();
+          }
 
-  tests.smaug = new Promise((resolve, reject) => { // eslint-disable-line no-unused-vars
-    const tStart = moment();
-    request.get({
-      uri: SMAUG_LOCATION + '/health'
-    }, (err, response) => { // eslint-disable-line no-unused-vars
-      if (err) {
-        return resolve({
-          responseTime: moment().diff(tStart),
-          result: err
-        });
-      }
-
-      if (response.statusCode !== 200) {
-        return resolve({
-          responseTime: moment().diff(tStart),
-          result: new Error('Smaug returned http status code ' + response.statusCode)
-        });
-      }
-
-      resolve({
-        responseTime: moment().diff(tStart),
-        result: 'ok'
-      });
+          return {
+            statusCode: 500,
+            error: String(err)
+          };
+        })
+        .then(result => callback(null, result));
     });
   });
+}
 
-  const testsPromises = Object.keys(tests).map((testId) => tests[testId]);
+/**
+ * Enables the HTTP transport
+ *
+ * @param {string} event
+ */
+function enableHTTPTransport(event) {
+  app.all(apiPath + event, getContextMiddleware, requireAuthorized, (req, res) => { // eslint-disable-line no-loop-func
+    // TODO: should just be req.body, when all endpoints accept object-only as parameter, until then, this hack supports legacy transforms
+    let query = Array.isArray(req.body) ? req.body[0] : req.body;
 
-  Promise.all(testsPromises).then((results) => {
-    lodash.zip(Object.keys(tests), results).forEach((zipElem) => {
-      const [testId, status] = zipElem;
-
-      if (status.result instanceof Error) {
-        if (typeof result.errors === 'undefined') {
-          result.errors = {};
-        }
-        result.errors[testId] = {
-          name: status.result.name,
-          msg: status.result.message,
-          stacktrace: status.result.stack,
-          responseTime: status.responseTime
-        };
+    // We support both POST-body, GET-requests, and a combination of both.
+    // This code joins all parameters into a single object.
+    query = query || {};
+    for (const key in req.query) { // eslint-disable-line guard-for-in
+      const val = req.query[key];
+      try {
+        query[key] = JSON.parse(val);
       }
-      else {
-        result.ok[testId] = {responseTime: status.responseTime};
+      catch (e) {
+        query[key] = (val.indexOf(',') !== -1) ? val.split(',').filter(s => s) : val;
       }
-    });
-    if (Object.keys(result.errors || {}).length > 0) {
-      res.status(500);
     }
-    app.set('json spaces', 2);
-    res.json(result);
+
+    if (typeof query.fields === 'string') {
+      query.fields = [query.fields];
+    }
+
+    callApi(event, query, req.context)
+      .then(response => {
+        app.set('json spaces', query.pretty ? 2 : null);
+        res.jsonp(response);
+      });
   });
 }
 
@@ -325,59 +214,10 @@ module.exports.run = function(worker) {
   app.get('/health', healthCheck);
 
   // WebSocket/SocketCluster transport
-  worker.on('connection', (connection) => {
-    serviceProvider.availableTransforms().forEach(key => {
-      connection.on(key, (data, callback) => { // eslint-disable-line no-loop-func
-        getContext(data.access_token)
-          .then(context => {
-            return callApi(key, data, context);
-          })
-          .catch(err => {
-            log.error(String(err), {stacktrace: err.stack});
-            if (err instanceof TokenError) {
-              return err.toJson();
-            }
-
-            return {
-              statusCode: 500,
-              error: String(err)
-            };
-          })
-          .then(result => callback(null, result));
-      });
-    });
-  });
+  worker.on('connection', enableWSTransport);
 
   // HTTP Transport
-  serviceProvider.availableTransforms().forEach(event => {
-    app.all(apiPath + event, getContextMiddleware, requireAuthorized, (req, res) => { // eslint-disable-line no-loop-func
-      // TODO: should just be req.body, when all endpoints accept object-only as parameter, until then, this hack supports legacy transforms
-      let query = Array.isArray(req.body) ? req.body[0] : req.body;
-
-      // We support both POST-body, GET-requests, and a combination of both.
-      // This code joins all parameters into a single object.
-      query = query || {};
-      for (const key in req.query) { // eslint-disable-line guard-for-in
-        const val = req.query[key];
-        try {
-          query[key] = JSON.parse(val);
-        }
-        catch (e) {
-          query[key] = (val.indexOf(',') !== -1) ? val.split(',').filter(s => s) : val;
-        }
-      }
-
-      if (typeof query.fields === 'string') {
-        query.fields = [query.fields];
-      }
-
-      callApi(event, query, req.context)
-        .then(response => {
-          app.set('json spaces', query.pretty ? 2 : null);
-          res.jsonp(response);
-        });
-    });
-  });
+  serviceProvider.availableTransforms().forEach(event => enableHTTPTransport(event));
 
   app.use(apiPath, express.static(path.join(__dirname, '../static')));
 
