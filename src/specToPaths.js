@@ -1,3 +1,5 @@
+'use strict';
+
 /**
  * @file: This file contains the specToPaths function, as well as any helper functions required.
  */
