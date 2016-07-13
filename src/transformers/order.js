@@ -8,35 +8,23 @@
 import cancelOrder from './cancelOrder';
 import placeOrder from './placeOrder';
 import {log} from '../utils';
-import {indexOf} from 'lodash';
+import {validateDeleteOrder, validateOrder} from './utils/order.utils';
 
 /**
-* Validate parameters
-*
-* @param {object} params parameters to validate
-* @throws if validation fails
-*/
+ * Validate parameters
+ *
+ * @param {object} params parameters to validate
+ * @throws if validation fails
+ */
 function validateParams(params) {
-
   if (params.delete && params.delete === true) {
     // Delete is set
-    if (!params.orderId) {
-      throw ('Needs orderId to delete order');
-    }
-
-    if (typeof params.orderId !== 'string') {
-      throw ('orderId must be a string');
-    }
+    validateDeleteOrder(params);
   }
 
   if (!params.delete || params.delete === 'false') {
     // Order is set
-    if (!params.pids || params.pids.length < 1) {
-      throw ('At least one pid must be provided to place order');
-    }
-    if (!params.library) {
-      throw ('library must be provided (used for pickup)');
-    }
+    validateOrder(params);
   }
 }
 
@@ -44,19 +32,21 @@ function validateParams(params) {
  * Default transformer.
  * Wraps openorder backend and returns result of call
  *
- * @param {Object} params parameters from the user (no entries from this object is used)
+ * @param {Object} request
  * @param {Object} context The context object fetched from smaug
- * @returns promise with result
+ * @returns {Promise} with result
  * @api public
  */
 export default (request, context) => {
   try {
     log.debug('Validating request');
     validateParams(request);
-  } catch (err) { // eslint-disable-line brace-style
+  } catch (err) {
     return new Promise(resolve => {
-      return resolve({statusCode: 400,
-                      error: err});
+      return resolve({
+        statusCode: 400,
+        error: err
+      });
     });
   }
 

@@ -57,7 +57,7 @@ function constructSoap(params) {
  *
  * @param {Object} params parameters from the user (no entries from this object is used)
  * @param {Object} context The context object fetched from smaug
- * @returns promise with result
+ * @returns {Promise} with result
  * @api public
  */
 export default (request, context) => {
