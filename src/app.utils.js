@@ -38,10 +38,10 @@ export function getContext(token) {
  * @param {Object} res
  */
 export function healthCheck(req, res) {
-  let result = {ok: {}};
-  let tests = {};
+  const result = {ok: {}};
+  const tests = {};
 
-  tests.smaug = new Promise((resolve, reject) => { // eslint-disable-line no-unused-vars
+  tests.smaug = new Promise((resolve) => {
     const tStart = moment();
     request.get({
       uri: SMAUG_LOCATION + '/health'

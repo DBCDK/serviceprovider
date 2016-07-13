@@ -168,6 +168,79 @@ function enableHTTPTransport(event) {
   });
 }
 
+/**
+ * Enables CORS
+ *
+ * @param {object} req
+ * @param {object} res
+ * @param {Function} next
+ */
+function enableCors(req, res, next) {
+  res.header('Access-Control-Allow-Origin', '*');
+  res.header('Access-Control-Allow-Methods', 'GET, POST, OPTIONS');
+  res.header('Access-Control-Allow-Headers', 'Authorization, Origin, X-Requested-With, Content-Type, Accept');
+  next();
+}
+
+/**
+ * Handles token errors
+ *
+ * @param {object} req
+ * @param {object} res
+ * @param {Function} next
+ */
+function tokenErrorHandler(err, req, res, next) {
+  if (res.headersSent) {
+    return next(err);
+  }
+
+  if (err instanceof TokenError) {
+    res.set('WWW-Authenticate', `Bearer error="${err.httpError}", error_description="${err.message}"`);
+    res.status(err.httpStatusCode);
+    res.jsonp(err.toJson());
+  }
+  else {
+    next(err);
+  }
+}
+
+/**
+ * Graceful handling of errors
+ *
+ * @param {object} err
+ * @param {object} req
+ * @param {object} res
+ * @param {Function} next
+ */
+function gracefulErrorHandler(err, req, res, next) {
+  log.error('An error occurred! Got following: ' + err, {stacktrace: err.stack});
+  if (res.headersSent) {
+    return next(err);
+  }
+
+  res.status(500);
+  res.jsonp({
+    statusCode: 500,
+    error: String(err)
+  });
+  res.end();
+}
+
+/**
+ * Handling 404's
+ *
+ * @param {object} req
+ * @param {object} res
+ */
+function notFoundHandler(req, res) {
+  res.status(404);
+  res.jsonp({
+    statusCode: 404,
+    error: '404 Not Found'
+  });
+  res.end();
+}
+
 module.exports.run = function(worker) {
   // Direct requests to app
   worker.httpServer.on('request', app);
@@ -177,12 +250,7 @@ module.exports.run = function(worker) {
   app.use(bodyParser.urlencoded({extended: true}));
 
   // Enable CORS
-  app.use((req, res, next) => {
-    res.header('Access-Control-Allow-Origin', '*');
-    res.header('Access-Control-Allow-Methods', 'GET, POST, OPTIONS');
-    res.header('Access-Control-Allow-Headers', 'Authorization, Origin, X-Requested-With, Content-Type, Accept');
-    next();
-  });
+  app.use(enableCors);
 
   // don't set the X-Powered-By header
   app.disable('x-powered-by');
@@ -192,7 +260,6 @@ module.exports.run = function(worker) {
   app.use(accessLogMiddleware);
 
   // Helmet configuration
-  // TODO: Setup rest of Helmet, in a way that works with the server setup.
   app.use(helmet.frameguard());
   app.use(helmet.ieNoOpen());
   app.use(helmet.noSniff());
@@ -232,45 +299,13 @@ module.exports.run = function(worker) {
   });
 
   // handle token-related errors
-  app.use((err, req, res, next) => {
-    if (res.headersSent) {
-      return next(err);
-    }
-
-    if (err instanceof TokenError) {
-      res.set('WWW-Authenticate', `Bearer error="${err.httpError}", error_description="${err.message}"`);
-      res.status(err.httpStatusCode);
-      res.jsonp(err.toJson());
-    }
-    else {
-      next(err);
-    }
-  });
+  app.use(tokenErrorHandler);
 
   // Graceful handling of errors
-  app.use((err, req, res, next) => {
-    log.error('An error occurred! Got following: ' + err, {stacktrace: err.stack});
-    if (res.headersSent) {
-      return next(err);
-    }
-
-    res.status(500);
-    res.jsonp({
-      statusCode: 500,
-      error: String(err)
-    });
-    res.end();
-  });
+  app.use(gracefulErrorHandler);
 
   // Handle 404's
-  app.use((req, res) => {
-    res.status(404);
-    res.jsonp({
-      statusCode: 404,
-      error: '404 Not Found'
-    });
-    res.end();
-  });
+  app.use(notFoundHandler);
 
   // Setting logger -- should be placed after routes
   app.use(expressLoggers.errorLogger);
