@@ -2,6 +2,11 @@
 
 import _ from 'lodash';
 import {requestType, makeTypeID} from '../../requestTypeIdentifier';
+import {log} from '../../utils';
+import searchTransformer from './../opensearchSearch';
+import moreinfo21 from './../moreinfo-2.1';
+import moreinfo26 from './../moreinfo';
+
 const filePath = __dirname + '/../../../doc/work-context.jsonld';
 const typeId = makeTypeID(filePath);
 
@@ -104,6 +109,37 @@ function handleSearch(resp, envelope) {
 }
 
 /**
+ * Handles switching between moreinfo 2.1 and 2.6 just by changing the MoreInfo URL in in the context.
+ *
+ * @param {object} context
+ * @param {object} params
+ * @return {Promise}
+ */
+export function handleMoreInfoVersion(context, params) {
+  const moreinfoUrl = context.get('services.moreinfo');
+  log.info('moreinfoUrl: ' + moreinfoUrl);
+  return moreinfoUrl.includes('2.1') ? moreinfo21(params.moreinfo, context) : moreinfo26(params.moreinfo, context);
+}
+
+/**
+ * Returns an array of promises for search
+ *
+ * @param {object} context
+ * @param {object} params
+ * @return {Promise[]}
+ */
+export function getSearchPromises(context, params){
+  // query opensearch through search method
+  const searchPromises = [];
+  for (let i = 0; i < params.search.length; i++) {
+    const prom = searchTransformer(params.search[i], context);
+    searchPromises.push(prom);
+  }
+
+  return searchPromises;
+}
+
+/**
  * Collect the data from the different services.
  * I have an assumption, that there will be equally many results in each.
  *
@@ -129,7 +165,8 @@ export function collectDataFromServices(service, resp, envelope) {
       break;
     }
     default:
-    // We should never get here.
+      log.warn('No known requestmethod was in service object', service);
+      break;
   }
 
   return envelope;
