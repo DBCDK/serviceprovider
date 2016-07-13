@@ -27,6 +27,19 @@ function stepDefinitionsWrapper() {
       });
   });
 
+  this.When(/^"([^"]+)" transform is called with form: (.*)$/, function (transform, jsonData, cb) {
+    const body = JSON.parse(jsonData);
+    this.api
+      .post(`/v1/${transform}`)
+      .send(body)
+      .set('Authorization', 'Bearer qwerty')
+      .end((err, res) => {
+        assert.isNotOk(err, 'The transform should not return an error!');
+        this.result = res.body;
+        cb();
+      });
+  });
+
   this.Then(/^the result contains "([a-z0-9]+)"$/i, function (text) {
     expect(this.result).to.contain(text);
   });
