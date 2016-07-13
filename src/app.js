@@ -33,7 +33,7 @@ import validateRequest from './validate.js';
 // Setup
 const app = express();
 const APP_NAME = process.env.APP_NAME || 'app_name'; // eslint-disable-line no-process-env
-const SMAUG_LOCATION = process.env.SMAUG; // eslint-disable-line no-process-env
+const SMAUG_LOCATION = process.env.SMAUG || null; // eslint-disable-line no-process-env
 const logger = new Logger({app_name: APP_NAME});
 const expressLoggers = logger.getExpressLoggers();
 const serviceProvider = Provider();
@@ -314,7 +314,7 @@ module.exports.run = function(worker) {
     event: 'started',
     port: app.get('port'),
     versions: process.versions,
-    smaug: (SMAUG_LOCATION || false)
+    smaug: SMAUG_LOCATION
   });
 
   return app;
