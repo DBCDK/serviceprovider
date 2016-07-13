@@ -13,7 +13,6 @@ const apiPath = '/v' + parseInt(version, 10) + '/';
 // Libraries
 import express from 'express';
 import path from 'path';
-import Logger from 'dbc-node-logger';
 import request from 'request';
 import Provider from './provider/Provider';
 import {TokenError} from './smaug/errors';
@@ -32,10 +31,7 @@ import validateRequest from './validate.js';
 
 // Setup
 const app = express();
-const APP_NAME = process.env.APP_NAME || 'app_name'; // eslint-disable-line no-process-env
 const SMAUG_LOCATION = process.env.SMAUG; // eslint-disable-line no-process-env
-const logger = new Logger({app_name: APP_NAME});
-const expressLoggers = logger.getExpressLoggers();
 const serviceProvider = Provider();
 
 /**
@@ -67,6 +63,13 @@ function validateAndExecuteTransforms(event, query, context) {
   return serviceProvider.execute(event, query, context);
 }
 
+function validateResponseAndStatusCode(response){
+  return (typeof response !== 'object') ||
+    typeof response.statusCode !== 'number' ||
+    (response.statusCode === 200 && !response.data) ||
+    (response.statusCode !== 200 && !response.error);
+}
+
 /**
  * Execute a transform
  *
@@ -77,10 +80,7 @@ function validateAndExecuteTransforms(event, query, context) {
  */
 function callApi(event, query, context) {
   return validateAndExecuteTransforms(event, query, context).then(response => {
-    if ((typeof response !== 'object') ||
-      (typeof response.statusCode !== 'number') ||
-      (response.statusCode === 200 && !response.data) ||
-      (response.statusCode !== 200 && !response.error)) {
+    if (validateResponseAndStatusCode(response)) {
       log.error('response is not wrapped in an envelope', {response: response});
       response = {
         statusCode: 500,
@@ -269,7 +269,6 @@ module.exports.run = function(worker) {
 
   // Configure app variables
   app.set('serviceProvider', serviceProvider);
-  app.set('logger', logger);
 
   // Adding gzip'ing
   app.use(compression());
@@ -306,9 +305,6 @@ module.exports.run = function(worker) {
 
   // Handle 404's
   app.use(notFoundHandler);
-
-  // Setting logger -- should be placed after routes
-  app.use(expressLoggers.errorLogger);
 
   log.info('started', {
     event: 'started',

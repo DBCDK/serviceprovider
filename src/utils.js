@@ -23,21 +23,6 @@ export function functionName(fun) {
   return ret;
 }
 
-/**
-* return true if the given path is an existing directory, false
-* otherwise.
-*/
-export function isDir(path) {
-  try {
-    let stats = fs.lstatSync(path);
-    if (stats.isDirectory()) {
-      return true;
-    }
-  }
-    catch (e) {} // eslint-disable-line
-  return false;
-}
-
 
 /**
  * @returns current log level
@@ -65,8 +50,7 @@ function getNumericalLogLevel(logLevel) {
     TRACE: 5
   };
 
-  var numericalLogLevel = logLevels[logLevel.toUpperCase()];
-  return numericalLogLevel;
+  return logLevels[logLevel.toUpperCase()];
 }
 
 /**
@@ -77,8 +61,8 @@ function getNumericalLogLevel(logLevel) {
  * @param args map of additional key/values to log
  */
 function doLog(level, msg, args) {
-  var currentNumericalLogLevel = getNumericalLogLevel(getCurrentLogLevel());
-  var targetNumericalLogLevel = getNumericalLogLevel(level);
+  const currentNumericalLogLevel = getNumericalLogLevel(getCurrentLogLevel());
+  const targetNumericalLogLevel = getNumericalLogLevel(level);
   if (currentNumericalLogLevel < targetNumericalLogLevel) {
     return; // level low, do nothing
   }
@@ -98,8 +82,25 @@ function doLog(level, msg, args) {
   }
 
   if (process.env.NODE_ENV !== 'cucumber-junit') {
-    console.log(JSON.stringify(Object.assign(blob, args))); // eslint-disable-line no-console
+    console.log(JSON.stringify(Object.assign(blob, args))); //NOSONAR
   }
+}
+
+/**
+ * return true if the given path is an existing directory, false
+ * otherwise.
+ */
+export function isDir(path) {
+  try {
+    const stats = fs.lstatSync(path);
+    if (stats.isDirectory()) {
+      return true;
+    }
+  }
+  catch (e) {
+    doLog('warn', 'Failed checking for directory');
+  }
+  return false;
 }
 
 export const log = {
@@ -118,8 +119,8 @@ export const log = {
  */
 export function timingDecorator(f) {
   return function() {
-    let start = Date.now();
-    let r = f.apply(this, arguments);
+    const start = Date.now();
+    const r = f.apply(this, arguments);
     log.debug('timing', {timing: {function: functionName(f), time: (Date.now() - start)}});
     return r;
   };

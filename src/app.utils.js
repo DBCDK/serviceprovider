@@ -112,7 +112,7 @@ export function fieldsFilter(obj, query) {
     return obj.map((item) => fieldsFilter(item, query));
   }
 
-  let result = {};
+  const result = {};
   query.fields.forEach(key => {
     if (typeof obj[key] !== 'undefined') {
       result[key] = obj[key];
