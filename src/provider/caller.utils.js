@@ -19,7 +19,7 @@ if (mockFileName) {
 
 export function promiseRequest(req) {
   return new Promise((resolve, reject) => {
-    request(req, (err, res) => err ? reject(err) : resolve(res));
+    request(req, (err, res, data) => err ? reject(err) : resolve(data));
   });
 }
 
