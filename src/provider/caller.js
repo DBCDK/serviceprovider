@@ -145,7 +145,7 @@ class Context {
 
     return this._callToPromise(type, name, params, mockId).then(
       result => this._handleCallPromiseResult(type, name, params, mockId, result), // resolve
-      result => { throw _handleCallPromiseResult(type, name, params, mockId, result); } // reject
+      result => { throw this._handleCallPromiseResult(type, name, params, mockId, result); } // reject
     );
   }
 

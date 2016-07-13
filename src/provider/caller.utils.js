@@ -1,3 +1,5 @@
+'use strict';
+
 import fs from 'fs';
 import request from 'request';
 
@@ -40,11 +42,18 @@ const blacklist = ['id', 'pin', 'ddbcmsapipassword', 'salt', 'authid', 'authpass
 function censor(str, context) {
   // Identify strings that needs to be redacted
   const forbidden = {};
-  for (const key in context) { // eslint-disable-line guard-for-in
-    if (context.hasOwnProperty(key)) {
-      blacklist.forEach(a => context[key][a] && (forbidden[context[key][a]] = true));
+  function blackListIterator(key, subkey) {
+    if (context[key][subkey]) {
+      forbidden[context[key][subkey]] = true;
     }
   }
+
+  for (const key in context) { // eslint-disable-line guard-for-in
+    if (context.hasOwnProperty(key)) {
+      blacklist.forEach(blackListIterator.bind(null, key));
+    }
+  }
+
   // construct regex for global replacement in string
   const re = new RegExp('(' + Object.keys(forbidden).map(regexEscape).join('|') + ')', 'g');
   str = str.replace(re, 'XXXXX');
