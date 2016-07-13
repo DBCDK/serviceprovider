@@ -130,14 +130,12 @@ function getIdentifierInformationList(response) {
  */
 function doIdentifierInformationContainsCoverImages(idInfo) {
   let res = true;
-  if (!_.has(idInfo, 'identifierKnown')
-    || !idInfo.identifierKnown === true
-    || !_.has(idInfo, 'coverImage')
-    || idInfo.coverImage.length === 0) {
+  if (!_.has(idInfo, 'identifierKnown') || !idInfo.identifierKnown === true || !_.has(idInfo, 'coverImage') || idInfo.coverImage.length === 0) {
     if (_.has(idInfo, 'identifier.localIdentifier') && _.has(idInfo, 'identifier.libraryCode')) {
-      let pid = id2parameter(idInfo.identifier.libraryCode, idInfo.identifier.localIdentifier);
+      const pid = id2parameter(idInfo.identifier.libraryCode, idInfo.identifier.localIdentifier);
       log.info('Could not find covers for identifier: ' + pid);
-    } else { // eslint-disable-line brace-style
+    }
+    else {
       log.info('Could not find covers for unknown identifier: ' + JSON.stringify(idInfo, null, 4));
     }
     res = false;
@@ -151,9 +149,9 @@ function doIdentifierInformationContainsCoverImages(idInfo) {
  * and "URL" is the coverImageUrl returned from moreinfo.
  */
 function getImageSizeAndUrl(x) {
-  let res = {};
+  const res = {};
   if (_.has(x, 'attributes.imageSize') && _.has(x, '$value')) {
-    let is = IMAGE_SIZES[x.attributes.imageSize];
+    const is = IMAGE_SIZES[x.attributes.imageSize];
     res[is] = [x.$value.replace('http:', '')];
   }
   return res;
@@ -169,18 +167,21 @@ function getCoverUrlsFromIdentifierInformation(idInfo, state) {
     return {};
   }
 
-  let pid = getPid(idInfo.identifier.libraryCode, idInfo.identifier.localIdentifier, state);
-  let imageUrlsList = idInfo.coverImage.map(x => getImageSizeAndUrl(x));
-  let imageUrls = imageUrlsList.reduce(_.extend, {});
+  const pid = getPid(idInfo.identifier.libraryCode, idInfo.identifier.localIdentifier, state);
+  const imageUrlsList = idInfo.coverImage.map(x => getImageSizeAndUrl(x));
+  const imageUrls = imageUrlsList.reduce(_.extend, {});
 
-  return {pid: pid, urls: imageUrls};
+  return {
+    pid: pid,
+    urls: imageUrls
+  };
 }
 
 /**
  * Writes out the error to log, and returns an error envelope
  */
 function handleError(e) {
-  let errorEnvelope = {
+  const errorEnvelope = {
     statusCode: 500,
     error: 'Internal server error'
   };
@@ -192,34 +193,39 @@ function handleError(e) {
   return errorEnvelope;
 }
 
-export function moreInfoRequest(request, context) { // eslint-disable-line no-unused-vars
-                                                    // let pids = request[0].pids;
-  let pids = request.pids;
-  let params = {};
-  let state = {};
+export function moreInfoRequest(request) {
+  const pids = request.pids;
+  const params = {};
+  const state = {};
+
   params.identifier = pids.map(pid => {
-    let pid_obj = pidSplitter(pid);
-    let identifier = {};
+    const pid_obj = pidSplitter(pid);
+    const identifier = {};
     identifier.localIdentifier = pid_obj.localid;
     identifier.libraryCode = pid_obj.agency;
     state[id2parameter(identifier.libraryCode, identifier.localIdentifier)] = pid;
     return identifier;
   });
 
-  return {transformedRequest: params, state: state};
+  return {
+    transformedRequest: params,
+    state: state
+  };
 }
 
 export function moreInfoResponse(response, context, state) { // eslint-disable-line no-unused-vars
-  // The below should probably be converted to some kind of tests:
-  //
-  // response.identifierInformation = [];
-  // delete response.identifierInformation;
-  // delete response.requestStatus.statusEnum;
-  // response.identifierInformation[0].identifierKnown = false;
-  // delete response.identifierInformation[0].identifier.localIdentifier;
-  // delete response.identifierInformation[0].coverImage;
-  // response.identifierInformation[0].coverImage = [];
-  // console.log('RESP: ' + JSON.stringify(response, null, 4));
+  /**
+   * The below should probably be converted to some kind of tests:
+   *
+   * response.identifierInformation = [];
+   * delete response.identifierInformation;
+   * delete response.requestStatus.statusEnum;
+   * response.identifierInformation[0].identifierKnown = false;
+   * delete response.identifierInformation[0].identifier.localIdentifier;
+   * delete response.identifierInformation[0].coverImage;
+   * response.identifierInformation[0].coverImage = [];
+   * console.log('RESP: ' + JSON.stringify(response, null, 4));
+   */
 
   try {
     errorCodeInResponse(response);
@@ -230,7 +236,8 @@ export function moreInfoResponse(response, context, state) { // eslint-disable-l
       let {pid: pid, urls: Z} = getCoverUrlsFromIdentifierInformation(idInfo, state);
       if (pid && Z) {
         Z.pid = pid;
-      } else { // eslint-disable-line brace-style
+      }
+      else { // eslint-disable-line brace-style
         Z = {};
       }
       return Z;
@@ -267,6 +274,9 @@ export default (request, context) => {
   }, error => {
     let errMsg = 'CoverUrls could not be fetched. Server unavailable. Try request again without coverUrls.';
     console.log(errMsg, error);
-    return {statusCode: 500, error: errMsg};
+    return {
+      statusCode: 500,
+      error: errMsg
+    };
   });
 };
