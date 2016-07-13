@@ -21,43 +21,66 @@ class Context {
   }
 
   _callToPromise(type, name, params, mockId) {
-    const url = this.data.services[name] || name;
-
-    if (type !== 'transformer') {
-      if (this.mockData[mockId]) {
-        return Promise.resolve(this.mockData[mockId]);
-      }
-
-      if (this.externalCallsInProgress === 0) {
-        this.externalTiming -= Date.now();
-      }
-
-      ++this.externalCallsInProgress;
+    if (type !== 'transformer' && this.mockData[mockId]) {
+      return Promise.resolve(this.mockData[mockId]);
     }
 
+    let promise;
+    const url = this.data.services[name] || name;
     switch (type) {
       case 'transformer': {
-        return this.transformerMap[name](params, this);
+        promise = this.transformerMap[name](params, this);
+        break;
       }
 
       case 'soapstring': {
-        return promiseRequest({method: 'POST', url: url, form: {xml: params}});
+        promise = promiseRequest({method: 'POST', url: url, form: {xml: params}});
+        break;
       }
 
       case 'request': {
         params.url = url;
-        return promiseRequest(params);
+        promise = promiseRequest(params);
+        break;
       }
 
       case 'basesoap': {
         const wsdl = `${this.data.services[name]}/${name}.wsdl`;
         const client = BaseSoapClient.client(wsdl, params.config, null);
-        return client.request(params.action, params.params, params.options);
+        promise = client.request(params.action, params.params, params.options);
+        break;
       }
 
       default: {
-        return Promise.reject(new Error('unknown type!'));
+        promise = Promise.reject(new Error('unknown type!'));
+        break;
       }
+    }
+
+    return promise;
+  }
+
+  _handleAutoTests(type, name, params, mockId, result) {
+    if ((this.createTest || mockFileName) && type !== 'transformer') {
+      this.mockData[mockId] = result;
+    }
+
+    if (this.createTest && this.callsInProgress === 0) { // save mock-data / create text-code
+      delete params.createTest;
+      delete params.access_token;
+
+      saveTest({
+        filename: this.createTest,
+        createTest: this.createTest,
+        name: name,
+        params: params,
+        context: this.data,
+        mockData: this.mockData,
+        result: result,
+        requestId: this.requestId
+      });
+
+      result.createTest = this.createTest;
     }
   }
 
@@ -74,28 +97,8 @@ class Context {
       }
     }
 
-    if (testDev && (this.createTest || mockFileName) && type !== 'transformer') {
-      this.mockData[mockId] = result;
-    }
-
-    if (testDev && this.createTest && this.callsInProgress === 0) { // save mock-data / create text-code
-      delete params.createTest;
-      delete params.access_token;
-
-      const filename = (this.createTest === 'random')
-        ? `autotest_${test.name}_${this.requestId}`
-        : this.createTest;
-
-      saveTest({
-        filename: filename,
-        createTest: this.createTest,
-        name: name, params: params,
-        context: this.data,
-        mockData: this.mockData, result: result,
-        requestId: this.requestId
-      });
-
-      result.createTest = filename;
+    if (testDev) {
+      this._handleAutoTests(type, name, params, mockId, result);
     }
 
     if (this.callsInProgress === 0 && params.timings) {
@@ -131,6 +134,15 @@ class Context {
     ++this.callsInProgress;
 
     const mockId = JSON.stringify([name, params]); // key for mock data
+
+    if (type !== 'transformer') {
+      if (this.externalCallsInProgress === 0) {
+        this.externalTiming -= Date.now();
+      }
+
+      ++this.externalCallsInProgress;
+    }
+
     return this._callToPromise(type, name, params, mockId).then(
       result => this._handleCallPromiseResult(type, name, params, mockId, result), // resolve
       result => { throw _handleCallPromiseResult(type, name, params, mockId, result); } // reject
