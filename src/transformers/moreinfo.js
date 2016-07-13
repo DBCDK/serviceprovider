@@ -43,7 +43,7 @@ function doIdentifierInformationContainsCoverImages(idInfo) {
     || !_.has(idInfo, 'coverImage')
     || idInfo.coverImage.length === 0) {
     if (_.has(idInfo, 'identifier.pid.$')) {
-      let pid = idInfo.identifier.pid.$;
+      const pid = idInfo.identifier.pid.$;
       log.info('Could not find covers for identifier: ' + pid);
     } else { // eslint-disable-line brace-style
       log.info('Could not find covers for unknown identifier: ' + JSON.stringify(idInfo, null, 4));
@@ -59,9 +59,9 @@ function doIdentifierInformationContainsCoverImages(idInfo) {
  * and "URL" is the coverImageUrl returned from moreinfo.
  */
 function getImageSizeAndUrl(x) {
-  let res = {};
+  const res = {};
   if (_.has(x, '@imageSize.$') && _.has(x, '$')) {
-    let is = IMAGE_SIZES[x['@imageSize'].$];
+    const is = IMAGE_SIZES[x['@imageSize'].$];
     res[is] = [x.$.replace('http:', '')];
   }
   return res;
@@ -76,26 +76,32 @@ function getCoverUrlsFromIdentifierInformation(idInfo) {
     return {};
   }
 
-  let imageUrlsList = idInfo.coverImage.map(x => getImageSizeAndUrl(x));
-  let imageUrls = imageUrlsList.reduce(_.extend, {});
-
-  return imageUrls;
+  const imageUrlsList = idInfo.coverImage.map(x => getImageSizeAndUrl(x));
+  return imageUrlsList.reduce(_.extend, {});
 }
 
+/**
+ *
+ * @param response
+ * @return {boolean}
+ */
 function containsError(response) {
   if (!_.has(response, 'data.moreInfoResponse')) {
     // json invalid?
     log.error('Invalid json');
     return true;
   }
-  let miResponse = response.data.moreInfoResponse;
+
+  const miResponse = response.data.moreInfoResponse;
+
   if (miResponse.error) {
-    let errMsg = miResponse.error.$ ? miResponse.error.$ : 'unknown error';
+    const errMsg = miResponse.error.$ ? miResponse.error.$ : 'unknown error';
     log.error('Error in response: ' + errMsg);
     return true;
   }
+
   if (_.has(miResponse, 'requestStatus.statusEnum.$')) {
-    let status = miResponse.requestStatus;
+    const status = miResponse.requestStatus;
     if (status.statusEnum.$ === 'ok') {
       return false;
     } else { // eslint-disable-line no-else-return
@@ -109,11 +115,13 @@ function containsError(response) {
       return true;
     }
   }
+
   log.error('No statusEnum in response!');
+
   return true;
 }
 
-function createErrorResponse(response) {
+function createErrorResponse() {
   return {statusCode: 500, error: 'Internal Server Error'};
 }
 
@@ -121,17 +129,17 @@ function createResponse(response) {
 
   if (!response.identifierInformation) {
     log.error('no identifierInformation');
-    return createErrorResponse(response);
+    return createErrorResponse();
   }
-  let data = response.identifierInformation.map(idInfo => {
-    return getCoverUrlsFromIdentifierInformation(idInfo, '');
+  const data = response.identifierInformation.map(idInfo => {
+    return getCoverUrlsFromIdentifierInformation(idInfo);
   });
 
   return {statusCode: 200, data: data};
 }
 
 export default (request, context) => {
-  let params = {
+  const params = {
     action: 'moreInfo',
     authenticationUser: context.get('netpunkt.user'),
     authenticationGroup: context.get('netpunkt.group'),
@@ -146,11 +154,11 @@ export default (request, context) => {
 
   return context.call('moreinfo', params).then(body => {
     if (containsError(body)) {
-      return createErrorResponse(body);
+      return createErrorResponse();
     }
     return createResponse(body.data.moreInfoResponse);
   }, error => {
-    let errMsg = 'CoverUrls could not be fetched. Server probably unavailable. Try request again without coverUrls.';
+    const errMsg = 'CoverUrls could not be fetched. Server probably unavailable. Try request again without coverUrls.';
     log.error(errMsg, error);
     return {statusCode: 500, error: errMsg};
   });

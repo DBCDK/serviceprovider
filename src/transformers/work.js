@@ -1,12 +1,8 @@
 'use strict';
 
-import moreinfo21 from './moreinfo-2.1';
-import moreinfo26 from './moreinfo';
 import openSearchWorkTransformer from './opensearchGetObject';
-import searchTransformer from './opensearchSearch';
-import {checkResponseForErrorCodes, collectDataFromServices, handleFieldsRequest, populateEnvelopeData} from './utils/work.utils';
+import {checkResponseForErrorCodes, collectDataFromServices, handleFieldsRequest, populateEnvelopeData, handleMoreInfoVersion, getSearchPromises} from './utils/work.utils';
 import _ from 'lodash';
-import {log} from '../utils';
 
 const requestMethod = {
   MOREINFO: 'moreinfo',
@@ -81,6 +77,38 @@ export function workResponse(response, context, state) { // eslint-disable-line 
   return envelope;
 }
 
+/**
+ * Handling possible requests for coverimages.
+ *
+ * @param {Array} dataUrls
+ * @param {object} result
+ * @param {object} context
+ * @return {Promise}
+ */
+function handleCoverUrlRequests(dataUrls, result, context) {
+  const requests = [];
+  for (const field of dataUrls) {
+    for (let i = 0; i < result.data.length; ++i) {
+      const url = (result.data[i][field.replace('coverDataUrl', 'coverUrl')] || [])[0];
+      if (url) {
+        requests.push({
+          url,
+          field,
+          i
+        });
+      }
+    }
+  }
+
+  const promises = requests.map(req =>
+    context.request('http:' + req.url, {encoding: null}).then(o => {
+      result.data[req.i][req.field] = `data:image/jpeg;base64,${new Buffer(o, 'binary').toString('base64')}`;
+    })
+  );
+
+  return Promise.all(promises).then(() => result);
+}
+
 export default (request, context) => {
   if (!request.pids || request.pids.length === 0) {
     const error = {
@@ -98,11 +126,7 @@ export default (request, context) => {
 
   if (_.has(params, requestMethod.MOREINFO)) {
     // query moreinfo through its transformer.
-
-    // HACK: This is a hack to be able to switch between moreinfo 2.1 and 2.6 just by changing the url in the context.
-    const moreinfoUrl = context.get('services.moreinfo');
-    log.info('moreinfoUrl: ' + moreinfoUrl);
-    const moreInfoPromise = moreinfoUrl.includes('2.1') ? moreinfo21(params.moreinfo, context) : moreinfo26(params.moreinfo, context);
+    const moreInfoPromise = handleMoreInfoVersion(context, params);
 
     promises.push(moreInfoPromise);
     services.push(requestMethod.MOREINFO);
@@ -116,43 +140,18 @@ export default (request, context) => {
   }
 
   if (_.has(params, requestMethod.SEARCH)) {
-    // query opensearch through search method
-    const searchPromises = [];
-    for (let i = 0; i < params.search.length; i++) {
-      const prom = searchTransformer(params.search[i], context);
-      searchPromises.push(prom);
-    }
+    const searchPromises = getSearchPromises(context, params);
     promises.push(Promise.all(searchPromises));
     services.push(requestMethod.SEARCH);
   }
 
   state.services = services;
 
-  return Promise.all(promises).then(body => {
-    return workResponse(body, context, state);
-  }).then(result => {
-    const dataUrls = (request.fields || []).filter(key => key.startsWith('coverDataUrl'));
-    if (dataUrls.length === 0) {
-      return result;
-    }
-    let requests = [];
-    for (const field of dataUrls) {
-      for (let i = 0; i < result.data.length; ++i) {
-        const url = (result.data[i][field.replace('coverDataUrl', 'coverUrl')] || [])[0];
-        if (url) {
-          requests.push({
-            url,
-            field,
-            i
-          });
-        }
-      }
-    }
-    requests = requests.map(req =>
-      context.request('http:' + req.url, {encoding: null}).then(o => {
-        result.data[req.i][req.field] = `data:image/jpeg;base64,${new Buffer(o, 'binary').toString('base64')}`;
-      }));
-
-    return Promise.all(requests).then(any => result);
-  });
+  return Promise.all(promises)
+    .then(body => {
+      return workResponse(body, context, state);
+    }).then(result => {
+      const dataUrls = (request.fields || []).filter(key => key.startsWith('coverDataUrl'));
+      return dataUrls.length === 0 ? result : handleCoverUrlRequests(dataUrls, result, context);
+    });
 };
