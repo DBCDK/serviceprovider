@@ -26,18 +26,20 @@ import {log} from '../utils.js';
  * can not accept pids as identifiers.
  */
 function pidSplitter(pid) {
-  let pid_array = pid.split(':');
+  const pid_array = pid.split(':');
   if (pid_array.length !== 2) {
     throw new Error('Illegal pid: ' + pid);
   }
-  let id = {};
+
+  const id = {};
   id.localid = pid_array[1];
-  let agency_type = pid_array[0].split('-');
+  const agency_type = pid_array[0].split('-');
   if (agency_type.length !== 2) {
     throw new Error('Illegal agency/type in pid: ' + pid);
   }
   id.agency = agency_type[0];
   id.type = agency_type[1];
+
   return id;
 }
 
@@ -57,9 +59,8 @@ function id2parameter(libCode, localId) {
  * This function is needed as long as more-info does not take PIDs as identifiers.
  */
 function getPid(libCode, localId, state) {
-  let stateId = id2parameter(libCode, localId);
-  let pid = state[stateId];
-  return pid;
+  const stateId = id2parameter(libCode, localId);
+  return state[stateId];
 }
 
 /**
@@ -193,6 +194,12 @@ function handleError(e) {
   return errorEnvelope;
 }
 
+/**
+ * Construcsts the MoreInfo request
+ *
+ * @param {object} request
+ * @return {{transformedRequest: {}, state: {}}}
+ */
 export function moreInfoRequest(request) {
   const pids = request.pids;
   const params = {};
@@ -216,7 +223,10 @@ export function moreInfoRequest(request) {
 export function moreInfoResponse(response, context, state) { // eslint-disable-line no-unused-vars
   /**
    * The below should probably be converted to some kind of tests:
+   <<<<<<< HEAD
    *
+   =======
+   >>>>>>> master
    * response.identifierInformation = [];
    * delete response.identifierInformation;
    * delete response.requestStatus.statusEnum;
@@ -230,9 +240,9 @@ export function moreInfoResponse(response, context, state) { // eslint-disable-l
   try {
     errorCodeInResponse(response);
 
-    let identifierInformation = getIdentifierInformationList(response);
+    const identifierInformation = getIdentifierInformationList(response);
 
-    let data = identifierInformation.map(idInfo => {
+    const data = identifierInformation.map(idInfo => {
       let {pid: pid, urls: Z} = getCoverUrlsFromIdentifierInformation(idInfo, state);
       if (pid && Z) {
         Z.pid = pid;
@@ -242,22 +252,21 @@ export function moreInfoResponse(response, context, state) { // eslint-disable-l
       }
       return Z;
     });
-    let envelope = {
+
+    return {
       statusCode: 200,
       data: data
     };
-    return envelope;
   } catch (e) { // eslint-disable-line brace-style
-    let errorEnvelope = handleError(e);
-    return errorEnvelope;
+    return handleError(e);
   }
 }
 
 export default (request, context) => {
 
-  let {transformedRequest: params, state: state} = moreInfoRequest(request, context);
+  const {transformedRequest: params, state: state} = moreInfoRequest(request);
 
-  let req = {
+  const req = {
     action: 'moreInfo',
     params: params,
     config: {
@@ -269,14 +278,15 @@ export default (request, context) => {
     }
   };
 
-  return context.basesoap('moreinfo', req).then(body => {
-    return moreInfoResponse(body, context, state);
-  }, error => {
-    let errMsg = 'CoverUrls could not be fetched. Server unavailable. Try request again without coverUrls.';
-    console.log(errMsg, error);
-    return {
-      statusCode: 500,
-      error: errMsg
-    };
-  });
+  return context.basesoap('moreinfo', req)
+    .then((body) => {
+      return moreInfoResponse(body, context, state);
+    }, (error) => {
+      const errMsg = 'CoverUrls could not be fetched. Server unavailable. Try request again without coverUrls.';
+      log.error(errMsg, error);
+      return {
+        statusCode: 500,
+        error: errMsg
+      };
+    });
 };
