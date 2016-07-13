@@ -31,11 +31,12 @@ function evaluateResponseCode(response) {
   return error;
 }
 
-export function checkResponseForErrorCodes(response){
+export function checkResponseForErrorCodes(response) {
   let result = null;
-  if(Array.isArray(response)){
-    result =  evaluateResponseCode(response);
-  } else if(response.statusCode && response.statusCode !== 200){
+  if (Array.isArray(response)) {
+    result = evaluateResponseCode(response);
+  }
+  else if (response.statusCode && response.statusCode !== 200) {
     result = response;
   }
 
@@ -140,7 +141,7 @@ export function collectDataFromServices(service, resp, envelope) {
  * @param {object} transformedRequests
  * @return {object} transformedRequests
  */
-export function handleFieldsRequest(request, transformedRequests){
+export function handleFieldsRequest(request, transformedRequests) {
   // Only call clients which can contribute the given fields.
   const fields = request.fields;
   // Determine which OpenSearch-method to use:

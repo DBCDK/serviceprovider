@@ -40,7 +40,7 @@ export function workRequest(request) {
 
 export function workResponse(response, context, state) { // eslint-disable-line no-unused-vars
   let envelope = {
-    statusCode: 200,
+    statusCode: 200
   };
 
   // loop over at most three promises (getObject, search and moreInfo):
