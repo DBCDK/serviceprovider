@@ -23,23 +23,6 @@ export function functionName(fun) {
   return ret;
 }
 
-/**
-* return true if the given path is an existing directory, false
-* otherwise.
-*/
-export function isDir(path) {
-  try {
-    const stats = fs.lstatSync(path);
-    if (stats.isDirectory()) {
-      return true;
-    }
-  }
-    catch (e) {
-      doLog('warn', 'Failed checking for directory')
-    }
-  return false;
-}
-
 
 /**
  * @returns current log level
@@ -101,6 +84,23 @@ function doLog(level, msg, args) {
   if (process.env.NODE_ENV !== 'cucumber-junit') {
     console.log(JSON.stringify(Object.assign(blob, args))); // eslint-disable-line no-console
   }
+}
+
+/**
+ * return true if the given path is an existing directory, false
+ * otherwise.
+ */
+export function isDir(path) {
+  try {
+    const stats = fs.lstatSync(path);
+    if (stats.isDirectory()) {
+      return true;
+    }
+  }
+  catch (e) {
+    doLog('warn', 'Failed checking for directory');
+  }
+  return false;
 }
 
 export const log = {
