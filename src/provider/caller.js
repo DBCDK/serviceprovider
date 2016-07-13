@@ -4,110 +4,9 @@
  * are called through this file, which can spy on the results,
  * and optionally create unit-tests, look at timings etc.
  */
-import request from 'request';
 import * as BaseSoapClient from 'dbc-node-basesoap-client';
-import fs from 'fs';
 import {log} from '../utils';
-
-
-// Flag that allows createTest endpoint parameter
-let testDev = process.env.TEST_DEV; // eslint-disable-line no-process-env
-let mockFileName = process.env.MOCK_FILE; // eslint-disable-line no-process-env
-let mockFile;
-
-// Load mock-data if requested via environment
-if (mockFileName) {
-  if (fs.existsSync(mockFileName)) {
-    mockFile = JSON.parse(fs.readFileSync(mockFileName));
-  } else {
-    mockFile = {};
-  }
-}
-
-
-let randomId = () => Math.random().toString(36).slice(2, 8);
-
-// function for escaping special regex characters
-let regexEscape = s => s.replace(/[\\[\](\|)*?+.^$]/g, c => '\\' + c);
-// these keys in entries in config contains information that needs to be removed from the test
-let blacklist = ['id', 'pin', 'ddbcmsapipassword', 'salt', 'authid', 'authpassword', 'authgroupid', 'userpin', 'userid', 'password', 'group', 'user'];
-/**
- * remove sensitive data from a string.
- * The sensitive data is paswords etc. given through the context.
- */
-function censor(str, context) {
-  // Identify strings that needs to be redacted
-  let forbidden = {};
-  for (let key in context) { // eslint-disable-line guard-for-in
-    for (let i = 0; i < blacklist.length; ++i) {
-      let word = context[key][blacklist[i]];
-      if (word) {
-        forbidden[word] = true;
-      }
-    }
-  }
-  // construct regex for global replacement in string
-  let re = new RegExp('(' + Object.keys(forbidden).map(regexEscape).join('|') + ')', 'g');
-  str = str.replace(re, 'XXXXX');
-
-  // remove ncipPassword in results from openagency
-  str = str.replace(/,\\"ncipPassword\\":{[^}]*}/g, '');
-  return str;
-}
-
-
-/**
- * Utility function to write a unittest to a file.
- * The unit tests are typically saved `src/provider/__tests__/autotest_*.js`
- */
-function saveTest(test) {
-  if (test.createTest === 'mockfile') {
-    fs.writeFileSync(mockFileName, censor(JSON.stringify(mockFile, null, 2), test.context));
-    return;
-  }
-
-  let cleanedContext = {};
-  for (let key1 in test.context) {
-    cleanedContext[key1] = Object.assign({}, test.context[key1]);
-    for (let key2 in cleanedContext[key1]) {
-      if (blacklist.indexOf(key2) !== -1) {
-        cleanedContext[key1][key2] = 'XXXXX';
-      }
-    }
-  }
-
-  let source = `/* eslint-disable max-len, quotes, comma-spacing, key-spacing, quote-props, indent */
-// Request: ${test.name} ${JSON.stringify(test.params)}
-'use strict';
-import Provider from '../../provider/Provider.js';
-import {assert, fail} from 'chai';
-
-let context = ${JSON.stringify(cleanedContext, null, 2)};`;
-  source += censor(`
-let provider = Provider();
-let mockData = ${JSON.stringify(test.mockData, null, 2)};
-
-describe('Automated test: ${test.filename}', () => {
-  it('expected response. ID:${test.requestId}, for ${JSON.stringify(test.params)}', (done) => {
-    context.mockData = mockData;
-    provider.execute('${test.name}', ${JSON.stringify(test.params)}, context)
-      .then(result => {
-        assert.deepEqual(result,
-            ${JSON.stringify(test.result, null, 2)});
-        done();
-      })
-      .catch(result => {
-        fail({throw: result}, ${JSON.stringify(test.result, null, 2)});
-        done();
-      });
-  });
-});
-`, test.context);
-  fs.writeFile(`${__dirname}/../transformers/__tests__/${test.filename}.js`, source);
-}
-
-
-
+import {testDev, mockFile, mockFileName, randomId, saveTest, promiseRequest} from './caller.utils';
 
 class Context {
   constructor(transformerMap, data) {
@@ -119,6 +18,97 @@ class Context {
     this.externalTiming = 0;
     this.startTime = Date.now();
     this.requestId = randomId();
+  }
+
+  _callToPromise(type, name, params, mockId) {
+    if (type !== 'transformer' && this.mockData[mockId]) {
+      return Promise.resolve(this.mockData[mockId]);
+    }
+
+    let promise;
+    const url = this.data.services[name] || name;
+    switch (type) {
+      case 'transformer': {
+        promise = this.transformerMap[name](params, this);
+        break;
+      }
+
+      case 'soapstring': {
+        promise = promiseRequest({method: 'POST', url: url, form: {xml: params}});
+        break;
+      }
+
+      case 'request': {
+        params.url = url;
+        promise = promiseRequest(params);
+        break;
+      }
+
+      case 'basesoap': {
+        const wsdl = `${this.data.services[name]}/${name}.wsdl`;
+        const client = BaseSoapClient.client(wsdl, params.config, null);
+        promise = client.request(params.action, params.params, params.options);
+        break;
+      }
+
+      default: {
+        promise = Promise.reject(new Error('unknown type!'));
+        break;
+      }
+    }
+
+    return promise;
+  }
+
+  _handleAutoTests(type, name, params, mockId, result) {
+    if ((this.createTest || mockFileName) && type !== 'transformer') {
+      this.mockData[mockId] = result;
+    }
+
+    if (this.createTest && this.callsInProgress === 0) { // save mock-data / create text-code
+      delete params.createTest;
+      delete params.access_token;
+
+      saveTest({
+        filename: this.createTest,
+        createTest: this.createTest,
+        name: name,
+        params: params,
+        context: this.data,
+        mockData: this.mockData,
+        result: result,
+        requestId: this.requestId
+      });
+
+      result.createTest = this.createTest;
+    }
+  }
+
+  _handleCallPromiseResult(type, name, params, mockId, result) {
+    log.trace(type, {name, params, result});
+
+    --this.callsInProgress;
+
+    if (type !== 'transformer') {
+      --this.externalCallsInProgress;
+
+      if (this.externalCallsInProgress === 0) {
+        this.externalTiming += Date.now();
+      }
+    }
+
+    if (testDev) {
+      this._handleAutoTests(type, name, params, mockId, result);
+    }
+
+    if (this.callsInProgress === 0 && params.timings) {
+      result.timings = {
+        total: Date.now() - this.startTime,
+        external: this.externalTiming
+      };
+    }
+
+    return result;
   }
 
   /**
@@ -140,87 +130,23 @@ class Context {
       this.createTest = params.createTest;
       this.timings = params.timings;
     }
+
     ++this.callsInProgress;
 
-    let promise, mockId;
+    const mockId = JSON.stringify([name, params]); // key for mock data
 
-    if (type === 'transformer') {
-      promise = this.transformerMap[name](params, this);
-    }
-    else {
-      let url = this.data.services[name] || name;
-
+    if (type !== 'transformer') {
       if (this.externalCallsInProgress === 0) {
         this.externalTiming -= Date.now();
       }
-      ++this.externalCallsInProgress;
 
-      mockId = JSON.stringify([name, params]); // key for mock data
-      if (this.mockData[mockId]) {
-        promise = new Promise(resolve => resolve(this.mockData[mockId]));
-      } else if (type === 'soapstring') {
-        promise = new Promise((resolve, reject) =>
-            request.post(url, {form: {xml: params}},
-              (err, _, data) => err ? reject(err) : resolve(data)));
-      } else if (type === 'request') {
-        promise = new Promise((resolve, reject) =>
-          request(url, params, (err, response, data) =>
-              (err || response.statusCode !== 200)
-              ? reject(err || response)
-              : resolve(data)));
-      } else if (type === 'basesoap') {
-        if (this.data.services[name]) {
-          url = this.data.services[name] + '/' + name + '.wsdl';
-        }
-        let client = BaseSoapClient.client(url, params.config, null);
-        promise = client.request(params.action, params.params, params.options);
-      }
+      ++this.externalCallsInProgress;
     }
 
-    let handleResult = result => {
-      log.trace(type, {name, params, result});
-      --this.callsInProgress;
-      if (type !== 'transformer') {
-        --this.externalCallsInProgress;
-        if (this.externalCallsInProgress === 0) {
-          this.externalTiming += Date.now();
-        }
-      }
-      if (testDev && (this.createTest || mockFileName) && type !== 'transformer') {
-        this.mockData[mockId] = result;
-      }
-      if (testDev && this.createTest) { // save mock-data / create text-code
-        if (this.callsInProgress === 0) {
-          delete params.createTest;
-          delete params.access_token;
-
-          let filename = (this.createTest === 'random')
-            ? `autotest_${test.name}_${this.requestId}`
-            : this.createTest;
-          saveTest({
-            filename: filename,
-            createTest: this.createTest,
-            name: name, params: params,
-            context: this.data,
-            mockData: this.mockData, result: result,
-            requestId: this.requestId});
-          result.createTest = filename;
-        }
-      }
-      if (this.callsInProgress === 0 && params.timings) {
-        result.timings = {
-          total: Date.now() - this.startTime,
-          external: this.externalTiming
-        };
-      }
-      return result;
-    };
-
-    return promise.then(
-        handleResult,
-        result => {
-          throw handleResult(result);
-        });
+    return this._callToPromise(type, name, params, mockId).then(
+      result => this._handleCallPromiseResult(type, name, params, mockId, result), // resolve
+      result => { throw this._handleCallPromiseResult(type, name, params, mockId, result); } // reject
+    );
   }
 
   /**
@@ -251,11 +177,13 @@ class Context {
 
   query(name, params) {
     return this._call('request', name, {qs: params})
-          .then(s => ({data: JSON.parse(s)}));
+      .then(s => ({data: JSON.parse(s)}));
   }
+
   request(name, params) {
     return this._call('request', name, params);
   }
+
   soapstring(name, params) {
     return this._call('soapstring', name, params);
   }
@@ -272,10 +200,9 @@ class Context {
    *
    * @param {object} context the context object to wrap
    */
-  get(key){
-    let keys = key.split('.');
-    let value = keys.reduce((o, name) =>
-                            { return o && o[name]; }, this.data);
+  get(key) {
+    const keys = key.split('.');
+    const value = keys.reduce((o, name) => o && o[name], this.data);
     return value;
   }
 }
