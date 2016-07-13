@@ -131,15 +131,12 @@ function getIdentifierInformationList(response) {
  */
 function doIdentifierInformationContainsCoverImages(idInfo) {
   let res = true;
-  if (!_.has(idInfo, 'identifierKnown')
-    || !idInfo.identifierKnown === true
-    || !_.has(idInfo, 'coverImage')
-    || idInfo.coverImage.length === 0) {
+  if (!_.has(idInfo, 'identifierKnown') || !idInfo.identifierKnown === true || !_.has(idInfo, 'coverImage') || idInfo.coverImage.length === 0) {
     if (_.has(idInfo, 'identifier.localIdentifier') && _.has(idInfo, 'identifier.libraryCode')) {
       const pid = id2parameter(idInfo.identifier.libraryCode, idInfo.identifier.localIdentifier);
       log.info('Could not find covers for identifier: ' + pid);
     }
-    else { // eslint-disable-line brace-style
+    else {
       log.info('Could not find covers for unknown identifier: ' + JSON.stringify(idInfo, null, 4));
     }
     res = false;
@@ -226,6 +223,7 @@ export function moreInfoRequest(request) {
 export function moreInfoResponse(response, context, state) { // eslint-disable-line no-unused-vars
   /**
    * The below should probably be converted to some kind of tests:
+   *
    * response.identifierInformation = [];
    * delete response.identifierInformation;
    * delete response.requestStatus.statusEnum;
@@ -277,14 +275,15 @@ export default (request, context) => {
     }
   };
 
-  return context.basesoap('moreinfo', req).then(body => {
-    return moreInfoResponse(body, context, state);
-  }, error => {
-    const errMsg = 'CoverUrls could not be fetched. Server unavailable. Try request again without coverUrls.';
-    log.error(errMsg, error);
-    return {
-      statusCode: 500,
-      error: errMsg
-    };
-  });
+  return context.basesoap('moreinfo', req)
+    .then(
+      body => moreInfoResponse(body, context, state),
+      error => {
+        const errMsg = 'CoverUrls could not be fetched. Server unavailable. Try request again without coverUrls.';
+        log.error(errMsg, error);
+        return {
+          statusCode: 500,
+          error: errMsg
+        };
+      });
 };

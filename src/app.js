@@ -31,7 +31,7 @@ import validateRequest from './validate.js';
 
 // Setup
 const app = express();
-const SMAUG_LOCATION = process.env.SMAUG; // eslint-disable-line no-process-env
+const SMAUG_LOCATION = process.env.SMAUG || null; // eslint-disable-line no-process-env
 const serviceProvider = Provider();
 
 /**
@@ -146,7 +146,7 @@ function enableHTTPTransport(event) {
     // We support both POST-body, GET-requests, and a combination of both.
     // This code joins all parameters into a single object.
     query = query || {};
-    for (const key in req.query) { // eslint-disable-line guard-for-in
+    for (const key in req.query) { // eslint-disable-line guard-for-in NOSONAR
       const val = req.query[key];
       try {
         query[key] = JSON.parse(val);
@@ -310,7 +310,7 @@ module.exports.run = function(worker) {
     event: 'started',
     port: app.get('port'),
     versions: process.versions,
-    smaug: (SMAUG_LOCATION || false)
+    smaug: SMAUG_LOCATION
   });
 
   return app;

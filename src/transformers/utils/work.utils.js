@@ -23,7 +23,7 @@ export function isGetObject(field) {
 /**
  * Checks the responses for errors. Returns bool appropriately.
  *
- * @param {array} response
+ * @param {Array} response
  * @return {boolean}
  */
 function evaluateResponseCode(response) {
