@@ -38,11 +38,26 @@ function stepDefinitionsWrapper() {
     assert.deepEqual(resultKeys, keys, 'Check that the resulting keys are expected');
   });
 
-  this.Then(/^"([^"]*)" file can be found and deleted$/, function(filename) {
+  this.Then(/^"([^"]*)" file can be found and deleted$/i, function(filename) {
     const filePath = path.join(__dirname, filename);
 
     assert.doesNotThrow(() => fs.statSync(filePath), 'File was found');
     assert.doesNotThrow(() => fs.unlinkSync(filePath), 'File was deleted');
+  });
+
+  this.Then(/compare to results file "([^"]*)"/i, function(filename) {
+    const filePath = path.join(__dirname, `../__results__/${filename}.json`);
+
+    try {
+      fs.statSync(filePath);
+    }
+    catch (err) {
+      // Could not find results file, create it.
+      fs.writeFileSync(filePath, JSON.stringify(this.result));
+    }
+
+    const resultsData = JSON.parse(fs.readFileSync(filePath));
+    assert.deepEqual(resultsData, this.result);
   });
 }
 

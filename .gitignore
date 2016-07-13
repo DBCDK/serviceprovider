@@ -40,3 +40,4 @@ NODE_ENV_DOCKERFILE
 # ============
 /versions/
 context.json
+__results__
