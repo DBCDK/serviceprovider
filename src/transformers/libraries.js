@@ -1,11 +1,11 @@
 'use strict';
 
-const timeout = 60*60*1000;
+const timeout = 60 * 60 * 1000;
 let cache;
 let timestamp;
 
-let getOrderParameters = (context) => (agencyId) => new Promise(resolve => {
-  let soap = `
+function getOrderParameters(context, agencyId) {
+  const soap = `
     <?xml version="1.0" encoding="UTF-8"?>
     <SOAP-ENV:Envelope xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ns1="http://oss.dbc.dk/ns/openagency"><SOAP-ENV:Body>
     <ns1:serviceRequest>
@@ -15,16 +15,18 @@ let getOrderParameters = (context) => (agencyId) => new Promise(resolve => {
     </ns1:serviceRequest>
     </SOAP-ENV:Body></SOAP-ENV:Envelope>
     `;
-  context.call('openagency', soap).then(body => {
-    let result = [];
-    let parameters = JSON.parse(body)
-      .serviceResponse.userOrderParameters.userParameter;
-    let parameterMap = {
+
+  return context.call('openagency', soap).then(body => {
+    const result = [];
+    const parameters = JSON.parse(body).serviceResponse.userOrderParameters.userParameter;
+
+    const parameterMap = {
       userName: 'name',
       userAddress: 'address',
       userMail: 'email',
       userTelephone: 'phone'
     };
+
     if (parameters) {
       for (let i = 0; i < parameters.length; ++i) {
         if (parameters[i].parameterRequired.$ === '1') {
@@ -34,12 +36,66 @@ let getOrderParameters = (context) => (agencyId) => new Promise(resolve => {
         }
       }
     }
-    resolve(result);
+
+    return Promise.resolve(result);
   });
-});
+}
+
+function libraryIterator(val) {
+  if (val.$) {
+    return val.$;
+  }
+  else if (Array.isArray(val)) {
+    return val.filter(i => !!i.$).map(j => j.$);
+  }
+
+  const res = {};
+  for (const key2 in val) {
+    if (key2 !== '@' && val[key2].$) {
+      res[key2] = val[key2].$;
+    }
+  }
+
+  return res;
+}
+
+function orderParameterPromiseHandler(results, agencyKeys, orderParameters) {
+  const agencyOrderParameters = {};
+  for (let i = 0; i < agencyKeys.length; ++i) {
+    agencyOrderParameters[agencyKeys[i]] = orderParameters[i];
+  }
+  for (let i = 0; i < results.length; ++i) {
+    results[i].orderParameters =
+      agencyOrderParameters[results[i].agencyId];
+  }
+  cache = results;
+  timestamp = Date.now();
+  return results;
+}
+
+function openAgencyPromiseHandler(context, badgerfish) {
+  const results = badgerfish.map(library => {
+    const result = {};
+
+    Object.keys(library)
+      .filter(libraryKey => libraryKey !== '@' && libraryKey.indexOf('ncip') !== 0)
+      .forEach(key => (result[key] = libraryIterator(library[key])));
+
+    return result;
+  });
+
+  const agencies = {};
+  for (let i = 0; i < results.length; ++i) {
+    agencies[results[i].agencyId] = true;
+  }
+
+  const agencyKeys = Object.keys(agencies);
+  const agencyPromises = agencyKeys.map(getOrderParameters.bind(null, context));
+  return Promise.all(agencyPromises).then(orderParameterPromiseHandler.bind(null, results, agencyKeys));
+}
 
 function getLibraries(context) {
-  let soap = `<soapenv:Envelope
+  const soap = `<soapenv:Envelope
     xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/"
     xmlns:open="http://oss.dbc.dk/ns/openagency">
     <soapenv:Header/>
@@ -50,69 +106,19 @@ function getLibraries(context) {
     </soapenv:Body>
     </soapenv:Envelope>`;
 
-  return context.call('openagency', soap).then(body => {
-    let badgerfish = JSON.parse(body).findLibraryResponse.pickupAgency;
-    let results = [];
-    for (let i = 0; i < badgerfish.length; ++i) {
-      let library = badgerfish[i];
-      let result = {};
-      for (let key in library) {
-        if (key !== '@' && key.slice(0, 4) !== 'ncip') {
-          let val = library[key];
-          if (val.$) {
-            result[key] = val.$;
-          }
-          else if (Array.isArray(val)) {
-            result[key] = [];
-            for (let j = 0; j < val.length; ++j) {
-              if (val[j].$) {
-                result[key].push(val[j].$);
-              }
-            }
-          }
-          else {
-            result[key] = {};
-            for (let key2 in val) {
-              if (key2 !== '@' && val[key2].$) {
-                result[key][key2] = val[key2].$;
-              }
-            }
-          }
-        }
-      }
-      results.push(result);
-    }
-
-    let agencies = {};
-    for (let i = 0; i < results.length; ++i) {
-      agencies[results[i].agencyId] = true;
-    }
-    agencies = Object.keys(agencies);
-    return Promise.all(agencies.map(getOrderParameters(context)))
-      .then(orderParameters => {
-        let agencyOrderParameters = {};
-        for (let i = 0; i < agencies.length; ++i) {
-          agencyOrderParameters[agencies[i]] = orderParameters[i];
-        }
-        for (let i = 0; i < results.length; ++i) {
-          results[i].orderParameters =
-            agencyOrderParameters[results[i].agencyId];
-        }
-        cache = results;
-        timestamp = Date.now();
-        return results;
-      });
-  });
+  return context
+    .call('openagency', soap)
+    .then(body => openAgencyPromiseHandler(context, JSON.parse(body).findLibraryResponse.pickupAgency));
 }
 
-export default (params, context) => Promise.resolve(cache ? cache : getLibraries(context)).then(libraries => {
+function getLibrariesTransformPromiseHandler(params, context, libraries) {
   if (Date.now() - timestamp > timeout) {
     getLibraries(context);
     timestamp = Date.now();
   }
 
   if (Array.isArray(params.agencyIds)) {
-    let agencies = {};
+    const agencies = {};
     for (let i = 0; i < params.agencyIds.length; ++i) {
       agencies[params.agencyIds[i]] = true;
     }
@@ -121,7 +127,7 @@ export default (params, context) => Promise.resolve(cache ? cache : getLibraries
   }
 
   if (Array.isArray(params.branchIds)) {
-    let branches = {};
+    const branches = {};
     for (let i = 0; i < params.branchIds.length; ++i) {
       branches[params.branchIds[i]] = true;
     }
@@ -129,4 +135,17 @@ export default (params, context) => Promise.resolve(cache ? cache : getLibraries
   }
 
   return {statusCode: 200, data: libraries};
-});
+}
+
+export default function getLibrariesTransform(params, context) {
+  let promise;
+
+  if (cache) {
+    promise = Promise.resolve(cache);
+  }
+  else {
+    promise = getLibraries(context);
+  }
+
+  return promise.then(getLibrariesTransformPromiseHandler.bind(null, params, context));
+}
