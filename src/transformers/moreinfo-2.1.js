@@ -223,10 +223,7 @@ export function moreInfoRequest(request) {
 export function moreInfoResponse(response, context, state) { // eslint-disable-line no-unused-vars
   /**
    * The below should probably be converted to some kind of tests:
-   <<<<<<< HEAD
    *
-   =======
-   >>>>>>> master
    * response.identifierInformation = [];
    * delete response.identifierInformation;
    * delete response.requestStatus.statusEnum;
@@ -279,14 +276,14 @@ export default (request, context) => {
   };
 
   return context.basesoap('moreinfo', req)
-    .then((body) => {
-      return moreInfoResponse(body, context, state);
-    }, (error) => {
-      const errMsg = 'CoverUrls could not be fetched. Server unavailable. Try request again without coverUrls.';
-      log.error(errMsg, error);
-      return {
-        statusCode: 500,
-        error: errMsg
-      };
-    });
+    .then(
+      body => moreInfoResponse(body, context, state),
+      error => {
+        const errMsg = 'CoverUrls could not be fetched. Server unavailable. Try request again without coverUrls.';
+        log.error(errMsg, error);
+        return {
+          statusCode: 500,
+          error: errMsg
+        };
+      });
 };

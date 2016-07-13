@@ -90,10 +90,10 @@ export function saveTest(test) {
 import Provider from '../../provider/Provider.js';
 import {assert, fail} from 'chai';
 
-let context = ${JSON.stringify(cleanedContext, null, 2)};`;
+const context = ${JSON.stringify(cleanedContext, null, 2)};`;
   source += censor(`
-let provider = Provider();
-let mockData = ${JSON.stringify(test.mockData, null, 2)};
+const provider = Provider();
+const mockData = ${JSON.stringify(test.mockData, null, 2)};
 
 describe('Automated test: ${test.filename}', () => {
   it('expected response. ID:${test.requestId}, for ${JSON.stringify(test.params)}', (done) => {
