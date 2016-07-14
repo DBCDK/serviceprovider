@@ -115,7 +115,7 @@ ${pidList.map(pid => {
  *
  * @param {Object} request parameters to use in backend call
  * @param {Object} context The context object fetched from smaug
- * @returns promise with result
+ * @returns {Promise} promise with result
  */
 function placeOrder(request, context) { // eslint-disable-line no-unused-vars
 
@@ -137,7 +137,7 @@ function placeOrder(request, context) { // eslint-disable-line no-unused-vars
           status = 503;
         }
       }
-      
+
       return {statusCode: status, error: err};
     }
 
@@ -152,9 +152,9 @@ function placeOrder(request, context) { // eslint-disable-line no-unused-vars
  * Default transformer.
  * Wraps placeOrder functionality of the openorder backend
  *
- * @param {Object} params parameters from the user
+ * @param {Object} request params parameters from the user
  * @param {Object} context The context object fetched from smaug
- * @returns promise with result
+ * @returns {Promise} with result
  * @api public
  */
 export default (request, context) => {
@@ -168,7 +168,7 @@ export default (request, context) => {
     });
   }
 
-  let params = {
+  const params = {
     agencyId: context.get('user.agency'),
     userId: context.get('user.id'),
     userPincode: context.get('user.pin'),
