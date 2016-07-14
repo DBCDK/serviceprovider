@@ -11,6 +11,7 @@ dump.rdb
 complexity
 complexity-report*
 swagger.json
+.sonar/
 
 # ============
 # BUILDS
