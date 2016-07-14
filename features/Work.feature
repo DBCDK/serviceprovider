@@ -11,7 +11,12 @@ Feature: Work endpoint
     Then the results keys are: ["statusCode", "data"]
     Then compare to results file "invalidBobbyPid"
 
-  Scenario: Get
+  Scenario: Get work with empty pids array
     When "work" transform is called with form: {"pids": []}
     Then the results keys are: ["statusCode", "error"]
     Then compare to results file "emptyPids"
+
+  Scenario: Get work with invalid PID and valid fields
+    When "work" transform is called with form: {"pids":["870970-basis:28448717"],"fields":["title","dcTitle","coverUrlFull","collection"]}
+    Then the results keys are: ["statusCode", "data"]
+    Then compare to results file "workInvalidPidValidFields"
