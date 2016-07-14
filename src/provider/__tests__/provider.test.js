@@ -1,4 +1,4 @@
-'use strict';
+
 
 /**
  * @file Testing the provider

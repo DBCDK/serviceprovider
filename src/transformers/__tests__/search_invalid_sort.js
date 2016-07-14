@@ -1,6 +1,6 @@
 /* eslint-disable max-len, quotes, comma-spacing, key-spacing, quote-props */
 // Request: search {"q":"harry AND potter","fields":["identifier","title","collection","subjectDBCF","hasAdaptation"],"sort":"invalid_sort"}
-'use strict';
+
 import Provider from '../../provider/Provider.js';
 import {assert, fail} from 'chai';
 

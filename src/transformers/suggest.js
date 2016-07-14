@@ -1,4 +1,4 @@
-'use strict';
+
 /**
  * @file
  * Suggest transformer.
@@ -161,12 +161,12 @@ function titleSuggest(params, context) {
   let localParams = {query: query,
                      fields: 'display.title,fedoraPid,display.creator,display.workType'
                     };
-  
-  const filter = context.get('search.collectionidentifiers');  
+
+  const filter = context.get('search.collectionidentifiers');
   if (filter){
     localParams.filter = filter;
   }
-  
+
   if (params.limit) {
     localParams.rows = params.limit;
   }

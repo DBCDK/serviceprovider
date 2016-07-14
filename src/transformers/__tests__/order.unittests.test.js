@@ -1,4 +1,3 @@
-'use strict';
 /**
  * @file
  * Unittesting methods in order.utils.js

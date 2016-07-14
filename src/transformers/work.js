@@ -1,4 +1,4 @@
-'use strict';
+
 
 import openSearchWorkTransformer from './opensearchGetObject';
 import {checkResponseForErrorCodes, collectDataFromServices, handleFieldsRequest, populateEnvelopeData, handleMoreInfoVersion, getSearchPromises} from './utils/work.utils';

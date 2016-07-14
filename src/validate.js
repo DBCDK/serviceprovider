@@ -1,4 +1,4 @@
-'use strict';
+
 
 import {validate} from 'jsonschema';
 import fs from 'fs';

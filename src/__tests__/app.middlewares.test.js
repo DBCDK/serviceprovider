@@ -1,4 +1,4 @@
-'use strict';
+
 
 import {assert} from 'chai';
 import {MultipleTokensError, MissingTokenError} from '../smaug/errors';

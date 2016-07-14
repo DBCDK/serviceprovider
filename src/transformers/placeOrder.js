@@ -1,4 +1,4 @@
-'use strict';
+
 /**
  * @file
  * orderPolicy transformer.
@@ -6,7 +6,7 @@
  * Wraps the getorderpolicy functionality of the openorder backend.
  *
  */
-import {extend}from 'lodash';
+import {extend} from 'lodash';
 
 /**
 * Validate parameters

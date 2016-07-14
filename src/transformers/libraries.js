@@ -1,4 +1,4 @@
-'use strict';
+
 
 const timeout = 60 * 60 * 1000;
 let cache;

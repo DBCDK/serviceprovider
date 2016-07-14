@@ -1,4 +1,4 @@
-'use strict';
+
 
 // TODO
 // filter is missing
@@ -16,7 +16,7 @@ function createRequestParameters(request, context) {
     }
   };
   const filter = context.get('search.collectionidentifiers');
-  
+
   if (filter){
     paramsPost.json.filter = [filter];
   }
@@ -52,7 +52,7 @@ export default (request, context) => { // eslint-disable-line no-unused-vars
     let [uri, params] = createRequestParameters(request, context);
     return context.request(uri, params).then(body => {
       var result = [];
-      
+
       if (body.result) {
         for (let i = 0; i < body.result.length; ++i) {
           let o = body.result[i];

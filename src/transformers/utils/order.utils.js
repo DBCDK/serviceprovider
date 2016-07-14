@@ -1,4 +1,3 @@
-'use strict';
 
 export function validateDeleteOrder(params) {
   if (!params.orderId) {

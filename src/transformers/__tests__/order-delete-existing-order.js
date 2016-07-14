@@ -1,6 +1,6 @@
 /* eslint-disable max-len, quotes, comma-spacing, key-spacing, quote-props */
 // Request: order {"orderId":"Hold:NCIPMDAxOXwyNy0wNS0yMDE2IDEwOjA0OjAyfEdlcmxvdywgSmVhbmV0dGUgJk9zbGFzaDticm98RGV0ICZtaWRkb3Q7bm9yc2tlIGpvYnx8fA==","delete":true}
-'use strict';
+
 import Provider from '../../provider/Provider.js';
 import {assert, fail} from 'chai';
 

@@ -1,4 +1,4 @@
-'use strict';
+
 
 /**
  * A Transformer for retreiving cover-image-urls from

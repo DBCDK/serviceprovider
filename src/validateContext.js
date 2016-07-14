@@ -1,4 +1,4 @@
-'use strict';
+
 
 let contextSample = require('../context-sample.json').context;
 

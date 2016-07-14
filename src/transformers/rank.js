@@ -1,4 +1,4 @@
-'use strict';
+
 
 function createRequestParameters(request, context) {
   // create request parameters from request and context
