@@ -1,6 +1,6 @@
 /* eslint-disable max-len, quotes, comma-spacing, key-spacing, quote-props */
 // Request: recommend {"like":["870970-basis:45488713","870970-basis:28643713","870970-basis:29494940","870970-basis:29386404","870970-basis:28429576"],"recommender":"default","limit":10,"pretty":true}
-'use strict';
+
 import Provider from '../../provider/Provider.js';
 import {assert, fail} from 'chai';
 

@@ -1,4 +1,4 @@
-'use strict';
+
 
 import {requestType, makeTypeID} from '../requestTypeIdentifier';
 import _ from 'lodash';

@@ -1,4 +1,4 @@
-'use strict';
+
 
 export function TokenError(message) {
   this.name = 'TokenError';

@@ -1,6 +1,6 @@
 /* eslint-disable max-len, quotes, comma-spacing, key-spacing, quote-props, indent */
 // Request: work {"pids":["775100-katalog:42946400","870970-basis:28448716"],"fields":["title","dcTitle","coverUrlFull","collection"]}
-'use strict';
+
 import Provider from '../../provider/Provider.js';
 import {assert, fail} from 'chai';
 

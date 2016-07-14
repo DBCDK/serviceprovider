@@ -1,4 +1,4 @@
-'use strict';
+
 
 import {workToJSON} from '../requestTypeIdentifier.js';
 

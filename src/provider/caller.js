@@ -1,4 +1,4 @@
-'use strict';
+
 /**
  * Calls to transformers, as well as requests to external services
  * are called through this file, which can spy on the results,

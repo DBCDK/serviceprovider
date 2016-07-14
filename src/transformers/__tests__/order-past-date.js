@@ -1,6 +1,6 @@
 /* eslint-disable max-len, quotes, comma-spacing, key-spacing, quote-props */
 // Request: order {"pids":["870970-basis:28126727"],"expires":"2014-08-01","library":"DK-100451","phone":"123454","address":"ADDRESS","email":"EMAIL"}
-'use strict';
+
 import Provider from '../../provider/Provider.js';
 import {assert, fail} from 'chai';
 

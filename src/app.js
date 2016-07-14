@@ -1,4 +1,4 @@
-'use strict';
+
 
 /**
  * @file
@@ -185,6 +185,7 @@ function enableCors(req, res, next) {
 /**
  * Handles token errors
  *
+ * @param {object} err
  * @param {object} req
  * @param {object} res
  * @param {Function} next

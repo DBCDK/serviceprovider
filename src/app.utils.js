@@ -1,4 +1,4 @@
-'use strict';
+
 import request from 'request';
 import moment from 'moment';
 import _ from 'lodash';
@@ -45,7 +45,7 @@ export function healthCheck(req, res) {
     const tStart = moment();
     request.get({
       uri: SMAUG_LOCATION + '/health'
-    }, (err, response) => { // eslint-disable-line no-unused-vars
+    }, (err, response) => {
       if (err) {
         return resolve({
           responseTime: moment().diff(tStart),

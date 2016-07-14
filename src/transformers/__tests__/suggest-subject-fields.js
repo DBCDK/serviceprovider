@@ -1,6 +1,6 @@
 /* eslint-disable max-len, quotes, comma-spacing, key-spacing, quote-props */
 // Request: suggest {"q":"herlev","type":"subject","limit":3,"fields":["term","id"]}
-'use strict';
+
 import Provider from '../../provider/Provider.js';
 import {assert, fail} from 'chai';
 

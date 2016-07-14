@@ -1,4 +1,4 @@
-'use strict';
+
 
 import fs from 'fs';
 import {hostname} from 'os';

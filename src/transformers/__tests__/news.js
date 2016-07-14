@@ -1,6 +1,6 @@
 /* eslint-disable max-len, quotes, comma-spacing, key-spacing, quote-props */
 // Request: news {"fields":["title","changed","nid","field_ding_news_list_image"]}
-'use strict';
+
 import Provider from '../../provider/Provider.js';
 import {assert, fail} from 'chai';
 

@@ -1,6 +1,6 @@
 /* eslint-disable max-len, quotes, comma-spacing, key-spacing, quote-props */
 // Request: rank {"pids":["870970-basis:28511663","870970-basis:28902239"],"like":["870970-basis:45488713","870970-basis:28643713"]}
-'use strict';
+
 import Provider from '../../provider/Provider.js';
 import {assert, fail} from 'chai';
 

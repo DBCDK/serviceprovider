@@ -1,4 +1,4 @@
-'use strict';
+
 
 import searchTransformer from './opensearchSearch';
 import {makeTypeID} from '../requestTypeIdentifier';

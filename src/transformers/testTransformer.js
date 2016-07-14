@@ -1,4 +1,4 @@
-'use strict';
+
 
 // this is a transformer used for testing
 

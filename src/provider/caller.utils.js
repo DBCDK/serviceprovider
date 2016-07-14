@@ -1,4 +1,4 @@
-'use strict';
+
 
 import fs from 'fs';
 import request from 'request';
@@ -86,7 +86,7 @@ export function saveTest(test) {
 
   let source = `/* eslint-disable max-len, quotes, comma-spacing, key-spacing, quote-props, indent */
 // Request: ${test.name} ${JSON.stringify(test.params)}
-'use strict';
+
 import Provider from '../../provider/Provider.js';
 import {assert, fail} from 'chai';
 

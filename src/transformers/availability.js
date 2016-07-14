@@ -1,4 +1,4 @@
-'use strict';
+
 
 import openHoldingStatus from './openHoldingStatus';
 import getOrderPolicy from './getOrderPolicy';

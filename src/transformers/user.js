@@ -1,4 +1,4 @@
-'use strict';
+
 /**
  * @file
  * User transformer.
@@ -108,7 +108,7 @@ export default (request, context) => {
     if (body.data.getUserStatusResponse.userStatus.orderedItems.order) {
       orders = body.data.getUserStatusResponse.userStatus.orderedItems.order;
     }
-    
+
     let debts = [];
     if (body.data.getUserStatusResponse.userStatus.fiscalAccount) {
       debts = body.data.getUserStatusResponse.userStatus.fiscalAccount.fiscalTransaction || [];
