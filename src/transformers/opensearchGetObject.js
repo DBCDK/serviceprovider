@@ -88,6 +88,10 @@ export function requestTransform(request, context) { // eslint-disable-line no-u
     relationData: getRequestRelationData(defaultBehaviour, fields)
   };
 
+  if (!requestParams.relationData) {
+    delete requestParams.relationData;
+  }
+
   return requestParams;
 }
 
