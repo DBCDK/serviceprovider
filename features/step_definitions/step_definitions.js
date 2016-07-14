@@ -3,10 +3,6 @@ import fs from 'fs';
 import path from 'path';
 
 function stepDefinitionsWrapper() {
-  this.Given(/^"([^"]*)" mock is loaded ([0-9]+) times$/i, function (mockName, times) {
-    this.loadMock(mockName, times);
-  });
-
   this.When(/^the swagger.json file is downloaded$/i, function (cb) {
     this.api.get('/v1/swagger.json').end((err, res) => {
       assert.isNotOk(err, 'The swagger request should not contain an error!');
@@ -27,7 +23,7 @@ function stepDefinitionsWrapper() {
       });
   });
 
-  this.When(/^"([^"]+)" transform is called with form: (.*)$/, function (transform, jsonData, cb) {
+  this.When(/^"([^"]+)" transform is called with form: (.*)$/i, function (transform, jsonData, cb) {
     const body = JSON.parse(jsonData);
     this.api
       .post(`/v1/${transform}`)
@@ -71,6 +67,27 @@ function stepDefinitionsWrapper() {
 
     const resultsData = JSON.parse(fs.readFileSync(filePath));
     assert.deepEqual(resultsData, this.result);
+  });
+
+  this.When(/^a request is dispatched without a token$/i, function (cb) {
+    this.api
+      .get('/v1/work')
+      .end((err, res) => {
+        this.result = res.body;
+        cb();
+      });
+  });
+
+  this.Then(/^an error should occur$/i, function () {
+    assert.notEqual(this.result.statusCode, 200);
+  });
+
+  this.When(/^"([^"]+)" transform is called via ws with: (.*)/i, function (transform, jsonData, cb) {
+    const data = JSON.parse(jsonData);
+    this.ws.emit(transform, data, (err, res) => {
+      this.result = res;
+      cb();
+    });
   });
 }
 
