@@ -31,17 +31,50 @@ function getAndValidateOpensearchContext(context) {
 
 const dataObjectRequestTypes = {
   DKABM: 'dkabm',
-  BRIEFDISPLAY: 'briefdisplay',
+  BRIEFDISPLAY: 'briefDisplay',
   RELATIONS: 'relations'
 };
+
+function getObjectFormats(defaultBehaviour, fields) {
+  const objectFormat = [];
+
+  if (defaultBehaviour
+    || fields.some(field => {
+      return typeId.isType(field, requestType.BRIEFDISPLAY);
+    })) { // eslint-disable-line brace-style
+    objectFormat.push('briefDisplay');
+  }
+
+  if (defaultBehaviour
+    || fields.some(field => {
+      return typeId.isType(field, requestType.DKABM);
+    })) { // eslint-disable-line brace-style
+    objectFormat.push('dkabm');
+  }
+
+  return objectFormat;
+}
+
+function getRequestRelationData(defaultBehaviour, fields) {
+  if (defaultBehaviour
+    || fields.some(field => {
+      return typeId.isType(field, requestType.RELATIONS);
+    })) { // eslint-disable-line brace-style
+    return 'uri';
+  }
+
+  return null;
+}
 
 export function requestTransform(request, context) { // eslint-disable-line no-unused-vars
 
   const pids = getPids(request);
   const osContext = getAndValidateOpensearchContext(context);
-  const state = {
-    dataObjectsRequested: []
-  };
+
+  // If no fields were given, default behaviour is to get
+  // everything from briefDisplay, dkabm and relations.
+  const defaultBehaviour = _.has(request, 'fields') ? false : true;
+  const fields = request.fields;
 
   // Create request params.
   // Only add dkabm, briefDisplay and relations if requested.
@@ -51,35 +84,11 @@ export function requestTransform(request, context) { // eslint-disable-line no-u
     agency: osContext.agency,
     profile: osContext.profile,
     outputType: 'json',
-    objectFormat: [] // to be filled out below
+    objectFormat: getObjectFormats(defaultBehaviour, fields),
+    relationData: getRequestRelationData(defaultBehaviour, fields)
   };
 
-  // If no fields were given, default behaviour is to get
-  // everything from briefDisplay, dkabm and relations.
-  const defaultBehaviour = _.has(request, 'fields') ? false : true;
-  const fields = request.fields;
-  if (defaultBehaviour
-    || fields.some(field => {
-      return typeId.isType(field, requestType.BRIEFDISPLAY);
-    })) { // eslint-disable-line brace-style
-    requestParams.objectFormat.push('briefDisplay');
-    state.dataObjectsRequested.push(dataObjectRequestTypes.BRIEFDISPLAY);
-  }
-  if (defaultBehaviour
-    || fields.some(field => {
-      return typeId.isType(field, requestType.DKABM);
-    })) { // eslint-disable-line brace-style
-    requestParams.objectFormat.push('dkabm');
-    state.dataObjectsRequested.push(dataObjectRequestTypes.DKABM);
-  }
-  if (defaultBehaviour
-    || fields.some(field => {
-      return typeId.isType(field, requestType.RELATIONS);
-    })) { // eslint-disable-line brace-style
-    requestParams.relationData = 'uri';
-    state.dataObjectsRequested.push(dataObjectRequestTypes.RELATIONS);
-  }
-  return {transformedRequest: requestParams, state: state};
+  return requestParams;
 }
 
 function retrieveDkabmFields(result) {
@@ -205,7 +214,7 @@ function getRelationData(searchResult) {
 }
 
 
-export function responseTransform(response, context, state) { // eslint-disable-line no-unused-vars
+export function responseTransform(response, context, params) { // eslint-disable-line no-unused-vars
   if (_.has(response, 'data.searchResponse.error.$')) {
     const errMsg = 'Error in opensearchGetObject response.';
     log.error(errMsg);
@@ -216,7 +225,11 @@ export function responseTransform(response, context, state) { // eslint-disable-
     return {};
   }
 
-  const dataObjectsRequested = state.dataObjectsRequested;
+  const dataObjectsRequested = params.objectFormat;
+  if (params.relationData) {
+    dataObjectsRequested.push(dataObjectRequestTypes.RELATIONS);
+  }
+
   const data = searchResults.map(searchResult => {
     const dkabmData = dataObjectsRequested.includes(dataObjectRequestTypes.DKABM) ? getDkabmData(searchResult) : {};
     const briefDisplayData = dataObjectsRequested.includes(dataObjectRequestTypes.BRIEFDISPLAY) ? getBriefDisplayData(searchResult) : {};
@@ -230,9 +243,6 @@ export function responseTransform(response, context, state) { // eslint-disable-
 }
 
 export default (request, context) => {
-  const {transformedRequest: params, state: state} = requestTransform(request, context);
-
-  return context.call('opensearch', params).then(body => {
-    return responseTransform(body, context, state);
-  });
+  const params = requestTransform(request, context);
+  return context.call('opensearch', params).then(body => responseTransform(body, context, params));
 };
