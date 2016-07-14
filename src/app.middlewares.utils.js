@@ -1,6 +1,6 @@
 'use strict';
 
-function testHest(req) {
+function checkAuthHeader(req) {
   const authHeader = req.get('authorization');
   if (typeof authHeader !== 'undefined') {
     const authType = authHeader.split(' ', 2)[0];
@@ -12,14 +12,14 @@ function testHest(req) {
   }
 }
 
-function testHest2(req) {
+function testQueryAccessToken(req) {
   const bearerToken = req.query.access_token;
   if (typeof bearerToken !== 'undefined') {
     return bearerToken;
   }
 }
 
-function testHest3(req) {
+function testBodyAccessToken(req) {
   const bearerToken = req.body.access_token;
   if (typeof bearerToken !== 'undefined') {
     return bearerToken;
@@ -34,8 +34,8 @@ function testHest3(req) {
  */
 export function getTokenSearchers(req) {
   return [
-    () => testHest(req),
-    () => testHest2(req),
-    () => testHest3(req)
+    () => checkAuthHeader(req),
+    () => testQueryAccessToken(req),
+    () => testBodyAccessToken(req)
   ];
 }
