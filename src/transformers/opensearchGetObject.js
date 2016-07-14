@@ -84,12 +84,12 @@ export function requestTransform(request, context) { // eslint-disable-line no-u
     agency: osContext.agency,
     profile: osContext.profile,
     outputType: 'json',
-    objectFormat: getObjectFormats(defaultBehaviour, fields),
-    relationData: getRequestRelationData(defaultBehaviour, fields)
+    objectFormat: getObjectFormats(defaultBehaviour, fields)
   };
 
-  if (!requestParams.relationData) {
-    delete requestParams.relationData;
+  const rels = getRequestRelationData(defaultBehaviour, fields);
+  if (rels) {
+    requestParams.relationData = rels;
   }
 
   return requestParams;
@@ -222,9 +222,9 @@ export function responseTransform(response, context, params) { // eslint-disable
   if (_.has(response, 'data.searchResponse.error.$')) {
     const errMsg = 'Error in opensearchGetObject response.';
     log.error(errMsg);
-    console.log(response.data.searchResponse.error);
     return {statusCode: 500, error: errMsg};
   }
+
   const searchResults = validateAndGetSearchResult(response);
   if (searchResults.length === 0) {
     return {};
