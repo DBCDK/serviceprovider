@@ -1,4 +1,3 @@
-'use strict';
 const babel = require('babel-core');
 
 module.exports = function(wallaby) {
@@ -6,14 +5,15 @@ module.exports = function(wallaby) {
     files: [
       'package.json',
       'doc/work-context.jsonld',
+      'doc/spec.yaml',
       'src/**/*.js',
       '!src/**/*.test.js',
-      '!src/**/__tests__/*.js',
+      '!src/**/__tests__/*.js'
     ],
 
     tests: [
       'src/**/*.test.js',
-      'src/**/__tests__/*.js',
+      'src/**/__tests__/*.js'
     ],
 
     compilers: {
