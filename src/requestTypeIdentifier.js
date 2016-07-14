@@ -45,7 +45,7 @@ function getField(tagName, type) {
 /**
 * requestType enum. Only these request types are supported.
 */
-export let requestType = {
+export const requestType = {
   RELATIONS: 'relations',
   MOREINFO: 'moreinfo',
   BRIEFDISPLAY: 'briefdisplay',
@@ -95,12 +95,12 @@ export function TypeID() {
    */
   this.getType = function(field) {
 
-    let val = workContext[field];
+    const val = workContext[field];
     if (typeof val === 'undefined' || typeof val === 'string') {
       die('key \'' + field + '\' is unknown');
     }
 
-    let namespace = val['@id'].split(':')[0];
+    const namespace = val['@id'].split(':')[0];
 
     if (typeof this.namespaceMap[namespace] === 'undefined') {
       die('unknown namespace \'' + namespace + '\'. Known namespaces are [' + Object.keys(this.namespaceMap) + ']');
@@ -141,12 +141,12 @@ export function makeTypeID() {
  * Create a lookup table for finding the JSON-name of a tag/type.
  */
 function makeReverseContext() {
-  let result = {};
+  const result = {};
 
-  for (let key in workContext) { // eslint-disable-line guard-for-in
-    let elem = workContext[key];
+  for (const key in workContext) { // eslint-disable-line guard-for-in
+    const elem = workContext[key];
     let id = elem['@id'];
-    let type = elem['@type'];
+    const type = elem['@type'];
     if (id) {
       if (type) {
         id += type.split(':')[1];
@@ -155,6 +155,7 @@ function makeReverseContext() {
       result[id] = key;
     }
   }
+
   return result;
 }
 
@@ -165,7 +166,7 @@ function makeReverseContext() {
  */
 export function workToJSON(o, defaultPrefix) {
   var result = {};
-  for (let key in o) {  // eslint-disable-line guard-for-in
+  for (const key in o) {  // eslint-disable-line guard-for-in
     if (key === '@') {
       continue;
     }
@@ -174,9 +175,10 @@ export function workToJSON(o, defaultPrefix) {
       entries = [entries];
     }
     entries.forEach(entry => { // eslint-disable-line no-loop-func
-      let tagName = (entry['@'] || defaultPrefix) + ':' + key;
-      let type = entry['@type'] ? entry['@type'].$ : undefined; // eslint-disable-line no-undefined
-      let jsonName = getField(tagName, type);
+      const tagName = (entry['@'] || defaultPrefix) + ':' + key;
+      const type = entry['@type'] ? entry['@type'].$ : undefined; // eslint-disable-line no-undefined
+      const jsonName = getField(tagName, type);
+
       if (!jsonName) {
         log.error('invalid id/type', {object: entry});
       }
@@ -186,5 +188,6 @@ export function workToJSON(o, defaultPrefix) {
       }
     });
   }
+
   return result;
 }

@@ -4,8 +4,8 @@ import {requestType, makeTypeID} from '../requestTypeIdentifier';
 import _ from 'lodash';
 import {log} from '../utils';
 
-let filePath = __dirname + '/../../doc/work-context.jsonld';
-let typeId = makeTypeID(filePath);
+const filePath = __dirname + '/../../doc/work-context.jsonld';
+const typeId = makeTypeID(filePath);
 
 function getPids(request) {
   if (!_.has(request, 'pids')) {
@@ -18,76 +18,89 @@ function getPids(request) {
 }
 
 function getAndValidateOpensearchContext(context) {
-  let searchAgency = context.get('search.agency');
+  const searchAgency = context.get('search.agency');
   if (!searchAgency) {
     throw new Error('No search agency property present in context');
   }
-  let searchProfile = context.get('search.profile');
+  const searchProfile = context.get('search.profile');
   if (!searchProfile) {
     throw new Error('No search profile property present in context');
   }
   return {agency: searchAgency, profile: searchProfile};
 }
 
-let dataObjectRequestTypes = {
+const dataObjectRequestTypes = {
   DKABM: 'dkabm',
-  BRIEFDISPLAY: 'briefdisplay',
+  BRIEFDISPLAY: 'briefDisplay',
   RELATIONS: 'relations'
 };
 
+function getObjectFormats(defaultBehaviour, fields) {
+  const objectFormat = [];
+
+  if (defaultBehaviour
+    || fields.some(field => {
+      return typeId.isType(field, requestType.BRIEFDISPLAY);
+    })) { // eslint-disable-line brace-style
+    objectFormat.push('briefDisplay');
+  }
+
+  if (defaultBehaviour
+    || fields.some(field => {
+      return typeId.isType(field, requestType.DKABM);
+    })) { // eslint-disable-line brace-style
+    objectFormat.push('dkabm');
+  }
+
+  return objectFormat;
+}
+
+function getRequestRelationData(defaultBehaviour, fields) {
+  if (defaultBehaviour
+    || fields.some(field => {
+      return typeId.isType(field, requestType.RELATIONS);
+    })) { // eslint-disable-line brace-style
+    return 'uri';
+  }
+
+  return null;
+}
+
 export function requestTransform(request, context) { // eslint-disable-line no-unused-vars
 
-  let pids = getPids(request);
-  let osContext = getAndValidateOpensearchContext(context);
-  let state = {
-    dataObjectsRequested: []
-  };
+  const pids = getPids(request);
+  const osContext = getAndValidateOpensearchContext(context);
+
+  // If no fields were given, default behaviour is to get
+  // everything from briefDisplay, dkabm and relations.
+  const defaultBehaviour = _.has(request, 'fields') ? false : true;
+  const fields = request.fields;
 
   // Create request params.
   // Only add dkabm, briefDisplay and relations if requested.
-  let requestParams = {
+  const requestParams = {
     action: 'getObject',
     identifier: pids,
     agency: osContext.agency,
     profile: osContext.profile,
     outputType: 'json',
-    objectFormat: [] // to be filled out below
+    objectFormat: getObjectFormats(defaultBehaviour, fields)
   };
 
-  // If no fields were given, default behaviour is to get
-  // everything from briefDisplay, dkabm and relations.
-  let defaultBehaviour = _.has(request, 'fields') ? false : true;
-  let fields = request.fields;
-  if (defaultBehaviour
-    || fields.some(field => {
-      return typeId.isType(field, requestType.BRIEFDISPLAY);
-    })) { // eslint-disable-line brace-style
-    requestParams.objectFormat.push('briefDisplay');
-    state.dataObjectsRequested.push(dataObjectRequestTypes.BRIEFDISPLAY);
+  const rels = getRequestRelationData(defaultBehaviour, fields);
+  if (rels) {
+    requestParams.relationData = rels;
   }
-  if (defaultBehaviour
-    || fields.some(field => {
-      return typeId.isType(field, requestType.DKABM);
-    })) { // eslint-disable-line brace-style
-    requestParams.objectFormat.push('dkabm');
-    state.dataObjectsRequested.push(dataObjectRequestTypes.DKABM);
-  }
-  if (defaultBehaviour
-    || fields.some(field => {
-      return typeId.isType(field, requestType.RELATIONS);
-    })) { // eslint-disable-line brace-style
-    requestParams.relationData = 'uri';
-    state.dataObjectsRequested.push(dataObjectRequestTypes.RELATIONS);
-  }
-  return {transformedRequest: requestParams, state: state};
+
+  return requestParams;
 }
 
 function retrieveDkabmFields(result) {
 
   return function (value, key) {
-    let a = [];
-    _.forEach(value, function (z, k) { // eslint-disable-line
-      let x = {key: key};
+    const a = [];
+    _.forEach(value, function (z) { // eslint-disable-line
+      const x = {key: key};
       if (_.has(z, '$') && _.has(z, '@')) {
         x.ns = z['@'];
         x.value = z.$;
@@ -101,8 +114,8 @@ function retrieveDkabmFields(result) {
     });
 
     a.map(X => {
-      let identifier = X.ns + ':' + key;
-      let field = X.type ? typeId.getField(identifier, X.type) : typeId.getField(identifier);
+      const identifier = X.ns + ':' + key;
+      const field = X.type ? typeId.getField(identifier, X.type) : typeId.getField(identifier);
       if (result[field]) {
         result[field].push(X.value);
       } else { // eslint-disable-line brace-style
@@ -117,21 +130,21 @@ function validateAndGetDkabmRecord(searchResult) {
   if (!_.has(searchResult, 'collection.object')) {
     return {};
   }
-  let obj = searchResult.collection.object;
+  const obj = searchResult.collection.object;
   if (obj.length < 1) {
     return {};
   }
   if (!_.has(obj[0], 'record')) {
     return {};
   }
-  let record = obj[0].record; // DKABM-data
+  const record = obj[0].record; // DKABM-data
   return record;
 }
 
 function getDkabmData(searchResult) {
-  let record = validateAndGetDkabmRecord(searchResult);
+  const record = validateAndGetDkabmRecord(searchResult);
 
-  let result = {};
+  const result = {};
   _.forOwn(record, retrieveDkabmFields(result));
   return result;
 }
@@ -140,18 +153,18 @@ function validateAndGetBriefDisplay(searchResult) {
   if (!_.has(searchResult, 'formattedCollection.briefDisplay.manifestation')) {
     return {};
   }
-  let manifestations = searchResult.formattedCollection.briefDisplay.manifestation;
+  const manifestations = searchResult.formattedCollection.briefDisplay.manifestation;
   return (manifestations.length && manifestations.length > 0) ? manifestations[0] : {};
 }
 
 function getBriefDisplayData(searchResult) {
-  let briefDisplay = validateAndGetBriefDisplay(searchResult);
+  const briefDisplay = validateAndGetBriefDisplay(searchResult);
 
-  let res = {};
+  const res = {};
   _.forOwn(briefDisplay, (value, key) => {
-    let ns = 'bd';
-    let identifier = ns + ':' + key;
-    let field = typeId.getField(identifier);
+    const ns = 'bd';
+    const identifier = ns + ':' + key;
+    const field = typeId.getField(identifier);
     if (!res[field]) {
       res[field] = [];
     }
@@ -166,7 +179,7 @@ function validateAndGetSearchResult(response) {
   if (!_.has(response, 'data.searchResponse.result.searchResult')) {
     return [];
   }
-  let searchResult = response.data.searchResponse.result.searchResult;
+  const searchResult = response.data.searchResponse.result.searchResult;
   return (searchResult.length && searchResult.length > 0) ? searchResult : [];
 }
 
@@ -176,11 +189,11 @@ function validateAndGetRelations(searchResult) {
     // no object return empty list:
     return [];
   }
-  let obj = searchResult.collection.object;
+  const obj = searchResult.collection.object;
   if (!obj.length || obj.length === 0) {
     return [];
   }
-  let obj0 = obj[0];
+  const obj0 = obj[0];
   if (!_.has(obj0, 'relations.relation')) {
     return [];
   }
@@ -188,14 +201,14 @@ function validateAndGetRelations(searchResult) {
 }
 
 function getRelationData(searchResult) {
-  let relations = validateAndGetRelations(searchResult);
+  const relations = validateAndGetRelations(searchResult);
 
-  let res = {};
+  const res = {};
   _.forEach(relations, relation => {
     if (!_.has(relation, 'relationType.$')) {
       return;
     }
-    let field = typeId.getField(relation.relationType.$);
+    const field = typeId.getField(relation.relationType.$);
     if (!res[field]) {
       res[field] = [];
     }
@@ -205,23 +218,28 @@ function getRelationData(searchResult) {
 }
 
 
-export function responseTransform(response, context, state) { // eslint-disable-line no-unused-vars
+export function responseTransform(response, context, params) { // eslint-disable-line no-unused-vars
   if (_.has(response, 'data.searchResponse.error.$')) {
-    let errMsg = 'Error in opensearchGetObject response.';
+    const errMsg = 'Error in opensearchGetObject response.';
     log.error(errMsg);
     return {statusCode: 500, error: errMsg};
   }
-  let searchResults = validateAndGetSearchResult(response);
+
+  const searchResults = validateAndGetSearchResult(response);
   if (searchResults.length === 0) {
     return {};
   }
 
-  let dataObjectsRequested = state.dataObjectsRequested;
-  let data = searchResults.map(searchResult => {
-    let dkabmData = dataObjectsRequested.includes(dataObjectRequestTypes.DKABM) ? getDkabmData(searchResult) : {};
-    let briefDisplayData = dataObjectsRequested.includes(dataObjectRequestTypes.BRIEFDISPLAY) ? getBriefDisplayData(searchResult) : {};
-    let relationData = dataObjectsRequested.includes(dataObjectRequestTypes.RELATIONS) ? getRelationData(searchResult) : {};
-    let result = {};
+  const dataObjectsRequested = params.objectFormat;
+  if (params.relationData) {
+    dataObjectsRequested.push(dataObjectRequestTypes.RELATIONS);
+  }
+
+  const data = searchResults.map(searchResult => {
+    const dkabmData = dataObjectsRequested.includes(dataObjectRequestTypes.DKABM) ? getDkabmData(searchResult) : {};
+    const briefDisplayData = dataObjectsRequested.includes(dataObjectRequestTypes.BRIEFDISPLAY) ? getBriefDisplayData(searchResult) : {};
+    const relationData = dataObjectsRequested.includes(dataObjectRequestTypes.RELATIONS) ? getRelationData(searchResult) : {};
+    const result = {};
     _.extend(result, dkabmData, briefDisplayData, relationData);
     return result;
   });
@@ -230,9 +248,6 @@ export function responseTransform(response, context, state) { // eslint-disable-
 }
 
 export default (request, context) => {
-  let {transformedRequest: params, state: state} = requestTransform(request, context);
-
-  return context.call('opensearch', params).then(body => {
-    return responseTransform(body, context, state);
-  });
+  const params = requestTransform(request, context);
+  return context.call('opensearch', params).then(body => responseTransform(body, context, params));
 };
