@@ -222,6 +222,7 @@ export function responseTransform(response, context, params) { // eslint-disable
   if (_.has(response, 'data.searchResponse.error.$')) {
     const errMsg = 'Error in opensearchGetObject response.';
     log.error(errMsg);
+    console.log(response.data.searchResponse.error);
     return {statusCode: 500, error: errMsg};
   }
   const searchResults = validateAndGetSearchResult(response);
