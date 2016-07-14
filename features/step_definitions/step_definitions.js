@@ -44,6 +44,10 @@ function stepDefinitionsWrapper() {
     const keys = JSON.parse(jsonKeys);
     const resultKeys = Object.keys(this.result);
 
+    if (this.result.error) {
+      console.log(this.result.error);
+    }
+
     assert.deepEqual(resultKeys, keys, 'Check that the resulting keys are expected');
   });
 
