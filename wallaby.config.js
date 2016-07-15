@@ -26,7 +26,10 @@ module.exports = function(wallaby) {
 
     env: {
       type: 'node',
-      runner: 'node'
+      runner: 'node',
+      params: {
+        env: 'SMAUG=http://localhost:3000'
+      }
     },
 
     testFramework: 'mocha@2.1.0'

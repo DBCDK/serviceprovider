@@ -5,7 +5,7 @@ import _ from 'lodash';
 
 import {TokenExpiredError} from './smaug/errors';
 
-const SMAUG_LOCATION = process.env.SMAUG; // eslint-disable-line no-process-env
+export const SMAUG_LOCATION = process.env.SMAUG; // eslint-disable-line no-process-env
 
 /**
  * Retreives context based on given token
@@ -88,9 +88,11 @@ export function healthCheck(req, res) {
         result.ok[testId] = {responseTime: status.responseTime};
       }
     });
+
     if (Object.keys(result.errors || {}).length > 0) {
       res.status(500);
     }
+
     req.app.set('json spaces', 2);
     res.json(result);
   });

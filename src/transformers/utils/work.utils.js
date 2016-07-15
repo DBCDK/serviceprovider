@@ -4,7 +4,6 @@ import _ from 'lodash';
 import {requestType, makeTypeID} from '../../requestTypeIdentifier';
 import {log} from '../../utils';
 import searchTransformer from './../opensearchSearch';
-import moreinfo21 from './../moreinfo-2.1';
 import moreinfo26 from './../moreinfo';
 
 const filePath = __dirname + '/../../../doc/work-context.jsonld';
@@ -118,7 +117,7 @@ function handleSearch(resp, envelope) {
 export function handleMoreInfoVersion(context, params) {
   const moreinfoUrl = context.get('services.moreinfo');
   log.info('moreinfoUrl: ' + moreinfoUrl);
-  return moreinfoUrl.includes('2.1') ? moreinfo21(params.moreinfo, context) : moreinfo26(params.moreinfo, context);
+  return moreinfo26(params.moreinfo, context);
 }
 
 /**

@@ -10,7 +10,11 @@ export function TokenError(message) {
 TokenError.prototype = Object.create(Error.prototype);
 TokenError.prototype.constructor = TokenError;
 TokenError.prototype.toJson = function() {
-  return {statusCode: this.httpStatusCode, error: this.httpError, error_description: this.message};
+  return {
+    statusCode: this.httpStatusCode,
+    error: this.httpError,
+    error_description: this.message
+  };
 };
 
 export function TokenExpiredError() {
@@ -19,7 +23,6 @@ export function TokenExpiredError() {
   this.stack = (new Error()).stack;
   this.httpStatusCode = 401;
   this.httpError = 'invalid_token';
-
 }
 TokenExpiredError.prototype = Object.create(TokenError.prototype);
 TokenExpiredError.prototype.constructor = TokenExpiredError;
