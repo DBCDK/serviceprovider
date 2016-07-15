@@ -28,7 +28,7 @@ export function functionName(fun) {
  * @returns current log level
  */
 
-function getCurrentLogLevel() {
+export function getCurrentLogLevel() {
   return process.env.LOG_LEVEL || 'INFO'; // eslint-disable-line no-process-env
 }
 
@@ -81,9 +81,7 @@ function doLog(level, msg, args) {
     blob.msg = msg;
   }
 
-  if (process.env.NODE_ENV !== 'cucumber-junit') {
-    console.log(JSON.stringify(Object.assign(blob, args))); //NOSONAR
-  }
+  console.log(JSON.stringify(Object.assign(blob, args))); //NOSONAR
 }
 
 /**
