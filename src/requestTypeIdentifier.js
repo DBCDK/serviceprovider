@@ -18,6 +18,29 @@ import fs from 'fs';
 import {die, log} from './utils.js';
 
 const workContext = JSON.parse(fs.readFileSync(__dirname + '/../doc/work-context.jsonld', 'utf8'));
+
+/**
+ * Create a lookup table for finding the JSON-name of a tag/type.
+ */
+function makeReverseContext() {
+  const result = {};
+
+  for (const key in workContext) { // eslint-disable-line guard-for-in
+    const elem = workContext[key];
+    let id = elem['@id'];
+    const type = elem['@type'];
+    if (id) {
+      if (type) {
+        id += type.split(':')[1];
+      }
+      id = id.toLowerCase();
+      result[id] = key;
+    }
+  }
+
+  return result;
+}
+
 const reverseContext = makeReverseContext();
 
 /**
@@ -135,28 +158,6 @@ export function TypeID() {
  */
 export function makeTypeID() {
   return new TypeID();
-}
-
-/**
- * Create a lookup table for finding the JSON-name of a tag/type.
- */
-function makeReverseContext() {
-  const result = {};
-
-  for (const key in workContext) { // eslint-disable-line guard-for-in
-    const elem = workContext[key];
-    let id = elem['@id'];
-    const type = elem['@type'];
-    if (id) {
-      if (type) {
-        id += type.split(':')[1];
-      }
-      id = id.toLowerCase();
-      result[id] = key;
-    }
-  }
-
-  return result;
 }
 
 /**

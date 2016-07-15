@@ -41,7 +41,7 @@ export default (params, context) => new Promise((resolve) => {
 
   const soap = generateSoap(params, context);
 
-  context.call('opensearch', soap).then(body => {
+  return context.call('opensearch', soap).then(body => {
     try {
       const result = {};
       body = JSON.parse(body).searchResponse;
@@ -63,7 +63,7 @@ export default (params, context) => new Promise((resolve) => {
           }));
         }
       });
-      resolve({
+      return resolve({
         statusCode: 200,
         data: result
       });
@@ -73,7 +73,7 @@ export default (params, context) => new Promise((resolve) => {
         error: e,
         errorString: String(e)
       });
-      resolve({
+      return resolve({
         statusCode: 400,
         error: 'error fulfilling the request'
       });

@@ -1,4 +1,4 @@
-
+/* eslint-disable consistent-return */
 
 function checkAuthHeader(req) {
   const authHeader = req.get('authorization');

@@ -60,7 +60,7 @@ export function healthCheck(req, res) {
         });
       }
 
-      resolve({
+      return resolve({
         responseTime: moment().diff(tStart),
         result: 'ok'
       });

@@ -32,7 +32,7 @@ export function MissingTokenError() {
   this.httpError = 'invalid_request';
 }
 MissingTokenError.prototype = Object.create(TokenError.prototype);
-MissingTokenError.prototype.constructor = MultipleTokensError;
+MissingTokenError.prototype.constructor = MissingTokenError;
 
 export function MultipleTokensError() {
   this.name = 'MultipleTokensError';
