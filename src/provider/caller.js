@@ -118,10 +118,10 @@ class Context {
    * and different kind of api-requests. And also optionally
    * record timings and mock-data, and replay mock-data.
    *
-   * @param type transformer, soapstring or basesoap
-   * @param name name of service (or url)
-   * @param params parameters for service
-   * @returns promise with result
+   * @param {string} type transformer, soapstring or basesoap
+   * @param {string} name of service (or url)
+   * @param {Object} params parameters for service
+   * @returns {Promise} promise with result
    */
   _call(type, name, params) {
     log.debug(type, {name, params});
@@ -153,9 +153,9 @@ class Context {
    * This is a method on the context object,
    * which allows calling other transformers, and external endpoints.
    *
-   * @param this the context
    * @param name the name of the endpoint
    * @param params the parameters to pass to the endpoint
+   * @returns {Promise}
    */
   call(name, params) {
     if (this.transformerMap[name]) {

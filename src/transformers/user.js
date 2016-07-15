@@ -1,4 +1,3 @@
-
 /**
  * @file
  * User transformer.
@@ -9,56 +8,63 @@ import {pbkdf2} from 'crypto';
 
 /**
  * Maps loan item from backend response to serviceprovider api
- * @param {Object} obj openuserstatus loans response
- * @returns response with mapped keys
+ * @param {Object} loanItem
+ * @returns {Object} response with mapped keys
  */
 function loan(loanItem) {
 
-  let result = {loanId: loanItem.loanId.$,
-                dueDate: loanItem.dateDue.$,
-               title: loanItem.title.$};
+  const result = {
+    loanId: loanItem.loanId.$,
+    dueDate: loanItem.dateDue.$,
+    title: loanItem.title.$
+  };
+
   if (loanItem.author) {
     result.author = loanItem.author.$;
   }
   return result;
 }
 
-
 /**
  * Maps debt item from backend response to serviceprovider api
- * @param {Object} obj openuserstatus orders response
- * @returns response with mapped keys
+ * @param {Object} debtItem openuserstatus orders response
+ * @returns {Object} response with mapped keys
  */
 function debt(debtItem) {
 
-  let result = {amount: debtItem.fiscalTransactionAmount.$,
-                currency: debtItem.fiscalTransactionCurrency.$,
-                date: debtItem.fiscalTransactionDate.$.split('T')[0],
-                title: debtItem.title.$};
+  const result = {
+    amount: debtItem.fiscalTransactionAmount.$,
+    currency: debtItem.fiscalTransactionCurrency.$,
+    date: debtItem.fiscalTransactionDate.$.split('T')[0],
+    title: debtItem.title.$
+  };
+
   if (debtItem.author) {
     result.author = debtItem.author.$;
   }
   return result;
 }
 
-
 /**
  * Maps order item from backend response to serviceprovider api
- * @param {Object} obj openuserstatus orders response
- * @returns response with mapped keys
+ * @param {Object} orderItem openuserstatus orders response
+ * @returns {Object} response with mapped keys
  */
 function order(orderItem) {
-  let result = {
+  const result = {
     orderId: `${orderItem.orderType.$}:${orderItem.orderId.$}`,
     status: orderItem.orderStatus.$,
     library: orderItem.pickUpAgency.$
   };
-  ['holdQueuePosition', 'author', 'title', 'orderDate',
-   'pickUpExpiryDate', 'pickUpId'].forEach(key => {
-     if (orderItem[key] && orderItem[key].$) {
-       result[key] = orderItem[key].$;
-     }
-   });
+
+  const orderFields = ['holdQueuePosition', 'author', 'title', 'orderDate', 'pickUpExpiryDate', 'pickUpId'];
+
+  orderFields.forEach(key => {
+    if (orderItem[key] && orderItem[key].$) {
+      result[key] = orderItem[key].$;
+    }
+  });
+
   return result;
 }
 
@@ -66,17 +72,21 @@ function order(orderItem) {
  * Default transformer.
  * Wraps openuserstatus backend and returns user info
  *
- * @param {Object} params parameters from the user (no entries from this object is used)
+ * @param {Object} request parameters from the user (no entries from this object is used)
  * @param {Object} context The context object fetched from smaug
- * @returns promise with result
+ * @returns {Object|Promise} promise with result
  * @api public
  */
 export default (request, context) => {
 
   if (!(context.get('user.id') && context.get('user.pin'))) {
-    return {statusCode: 300, error: 'not logged in'};
+    return Promise.resolve({
+      statusCode: 300,
+      error: 'not logged in'
+    });
   }
-  let params = {
+
+  const params = {
     agencyId: context.get('user.agency'),
     userId: context.get('user.id'),
     userPincode: context.get('user.pin'),
@@ -87,17 +97,16 @@ export default (request, context) => {
     outputType: 'json'
   };
 
-  let idPromise = new Promise((resolve, reject) =>
+  const idPromise = new Promise((resolve, reject) =>
     pbkdf2(context.get('user.agency').replace(/^DK-/, '') + ' ' + context.get('user.id'),
       context.get('user.salt'), 100000, 24, 'sha512', (err, key) => err ? reject(err) : resolve(key)));
 
   return context.call('openuserstatus', params).then(body => idPromise.then(id => {
-    let usr = body.data.getUserStatusResponse;
     if (body.data.getUserStatusResponse.getUserStatusError) {
-      return {
+      return Promise.resolve({
         statusCode: 500,
         error: body.data.getUserStatusResponse.getUserStatusError.$
-      };
+      });
     }
 
     let loans = [];
@@ -114,16 +123,20 @@ export default (request, context) => {
       debts = body.data.getUserStatusResponse.userStatus.fiscalAccount.fiscalTransaction || [];
     }
 
-    let data = {id: id.toString('base64'),
-                loans: loans.map(loan),
-                orders: orders.map(order),
-                debt: debts.map(debt)
-               };
+    const data = {
+      id: id.toString('base64'),
+      loans: loans.map(loan),
+      orders: orders.map(order),
+      debt: debts.map(debt)
+    };
 
     if (context.get('services.ddbcmsapi')) {
       data.ddbcmsapi = context.get('services.ddbcmsapi');
     }
 
-    return {statusCode: 200, data: data};
+    return Promise.resolve({
+      statusCode: 200,
+      data: data
+    });
   }));
 };
