@@ -22,10 +22,11 @@ const workContext = JSON.parse(fs.readFileSync(__dirname + '/../doc/work-context
 /**
  * Create a lookup table for finding the JSON-name of a tag/type.
  */
-function makeReverseContext() {
+export function makeReverseContext() {
   const result = {};
+  const keys = Object.keys(workContext);
 
-  for (const key in workContext) { // eslint-disable-line guard-for-in
+  keys.forEach((key) => {
     const elem = workContext[key];
     let id = elem['@id'];
     const type = elem['@type'];
@@ -36,7 +37,7 @@ function makeReverseContext() {
       id = id.toLowerCase();
       result[id] = key;
     }
-  }
+  });
 
   return result;
 }
@@ -62,6 +63,7 @@ function getField(tagName, type) {
     xmlName = tagName + 'oth';
     jsonName = reverseContext[xmlName.toLowerCase()];
   }
+
   return jsonName;
 }
 
@@ -85,6 +87,7 @@ function isRequestType(type) {
       return true;
     }
   }
+
   return false;
 }
 
@@ -148,6 +151,7 @@ export function TypeID() {
 
     return this.getType(field) === type;
   };
+
   this.getField = getField;
 }
 
