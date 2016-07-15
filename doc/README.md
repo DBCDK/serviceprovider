@@ -74,7 +74,7 @@ If you then open a browser to `localhost:8080`, you will see the API-documentati
 ```bash
 curl -H "Authorization: Bearer qwerty" -H "Content-Type: application/json" -d '{"q": "ost", "fields": ["title","pid"]}' http://localhost:8080/v1/search
 
-curl -H "Authorization: Bearer qwerty"  'http://localhost:8080/v1/search?q=ost&fields=title,pid'
+curl -H "Authorization: Bearer qwerty"  "http://localhost:8080/v1/search?q=ost&fields=title,pid"
 ```
 
 ## Code Structure
