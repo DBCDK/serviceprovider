@@ -80,10 +80,10 @@ function order(orderItem) {
 export default (request, context) => {
 
   if (!(context.get('user.id') && context.get('user.pin'))) {
-    return {
+    return Promise.resolve({
       statusCode: 300,
       error: 'not logged in'
-    };
+    });
   }
 
   const params = {
@@ -103,10 +103,10 @@ export default (request, context) => {
 
   return context.call('openuserstatus', params).then(body => idPromise.then(id => {
     if (body.data.getUserStatusResponse.getUserStatusError) {
-      return {
+      return Promise.resolve({
         statusCode: 500,
         error: body.data.getUserStatusResponse.getUserStatusError.$
-      };
+      });
     }
 
     let loans = [];
@@ -134,9 +134,9 @@ export default (request, context) => {
       data.ddbcmsapi = context.get('services.ddbcmsapi');
     }
 
-    return {
+    return Promise.resolve({
       statusCode: 200,
       data: data
-    };
+    });
   }));
 };

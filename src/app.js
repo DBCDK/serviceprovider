@@ -43,7 +43,7 @@ const serviceProvider = Provider();
  * @param {object} context
  * @return {Promise}
  */
-function validateAndExecuteTransforms(event, query, context) {
+function validateAndExecuteTransform(event, query, context) {
   if (!serviceProvider.hasTransformer(event)) {
     return Promise.resolve({
       statusCode: 400,
@@ -79,7 +79,7 @@ function validateResponseAndStatusCode(response){
  * @return {Promise}
  */
 function callApi(event, query, context) {
-  return validateAndExecuteTransforms(event, query, context).then(response => {
+  return validateAndExecuteTransform(event, query, context).then(response => {
     if (validateResponseAndStatusCode(response)) {
       log.error('response is not wrapped in an envelope', {response: response});
       response = {

@@ -1,4 +1,3 @@
-
 /**
  * @file
  * renew transformer.
@@ -6,15 +5,14 @@
  * Wraps userstatus backend (only the renew functionality).
  */
 
-
 /**
-* Constructs soap request to perform renew request
-* @param {object} param Parameters to substitute into soap request
-* @returns soap request string
-*/
+ * Constructs soap request to perform renew request
+ * @param {object} param Parameters to substitute into soap request
+ * @returns soap request string
+ */
 function constructSoap(params) {
 
-  let soap = `<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:open="http://oss.dbc.dk/ns/openuserstatus">
+  return `<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:open="http://oss.dbc.dk/ns/openuserstatus">
    <soapenv:Header/>
    <soapenv:Body>
       <open:renewLoanRequest>
@@ -31,22 +29,20 @@ function constructSoap(params) {
       </open:renewLoanRequest>
    </soapenv:Body>
 </soapenv:Envelope>`;
-
-  return soap;
 }
 
 /**
  * Default transformer.
  * Wraps openuserstatus backend and returns result of renew call
  *
- * @param {Object} params parameters from the user (no entries from this object is used)
+ * @param {Object} request parameters from the user (no entries from this object is used)
  * @param {Object} context The context object fetched from smaug
- * @returns promise with result
+ * @returns {Promise} promise with result
  * @api public
  */
 export default (request, context) => {
 
-  let params = {
+  const params = {
     loanId: request.loanId,
     agencyId: context.get('user.agency'),
     userId: context.get('user.id'),
@@ -56,17 +52,26 @@ export default (request, context) => {
     'authentication.userIdAut': context.get('netpunkt.user')
   };
 
-  let soap = constructSoap(params);
+  const soap = constructSoap(params);
   return context.call('openuserstatus', soap).then(body => {
 
     body = JSON.parse(body).renewLoanResponse.renewLoanStatus[0];
 
     if (body.renewLoanError) {
-      return {statusCode: 500, error: body.renewLoanError.$};
+      return Promise.resolve({
+        statusCode: 500,
+        error: body.renewLoanError.$
+      });
     }
     if (body.loanId) {
-      return {statusCode: 200, data: {loanId: body.loanId.$}};
+      return Promise.resolve({
+        statusCode: 200,
+        data: {loanId: body.loanId.$}
+      });
     }
-    return {statusCode: 500, error: 'Unknown error occured'};
+    return Promise.resolve({
+      statusCode: 500,
+      error: 'Unknown error occured'
+    });
   });
 };
