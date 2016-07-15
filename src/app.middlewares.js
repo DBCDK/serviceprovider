@@ -68,7 +68,7 @@ export function getContextMiddleware(req, res, next) {
     return next(new MissingTokenError());
   }
 
-  getContext(bearerToken)
+  return getContext(bearerToken)
     .then((context) => {
       req.authorized = true;
       req.context = context;
@@ -96,5 +96,5 @@ export function requireAuthorized(req, res, next) {
 
   // I'm not sure this code can actually be reached, as long as isAuthorized is used after getContextMiddleware,
   // since an exception is thrown on missing tokens or if getContext(..) fails.
-  res.sendStatus(403);
+  return res.sendStatus(403);
 }

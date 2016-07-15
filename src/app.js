@@ -197,11 +197,10 @@ function tokenErrorHandler(err, req, res, next) {
   if (err instanceof TokenError) {
     res.set('WWW-Authenticate', `Bearer error="${err.httpError}", error_description="${err.message}"`);
     res.status(err.httpStatusCode);
-    res.jsonp(err.toJson());
+    return res.jsonp(err.toJson());
   }
-  else {
-    next(err);
-  }
+
+  return next(err);
 }
 
 /**
@@ -219,11 +218,10 @@ function gracefulErrorHandler(err, req, res, next) {
   }
 
   res.status(500);
-  res.jsonp({
+  return res.jsonp({
     statusCode: 500,
     error: String(err)
   });
-  res.end();
 }
 
 /**

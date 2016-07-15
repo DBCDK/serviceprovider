@@ -48,7 +48,7 @@
     // Best Practices
     "block-scoped-var": 2,
     "complexity": 0,
-    "consistent-return": 1,
+    "consistent-return": 2,
     "curly": 2,
     "default-case": 2,
     "dot-notation": 2,
@@ -107,7 +107,7 @@
     "no-undef-init": 2,
     "no-undefined": 2,
     // XP "no-unused-vars": 2,
-    "no-use-before-define": 1,
+    "no-use-before-define": 2,
     // Stylistic Issues
     "indent": [2, 2, {"SwitchCase": 1}],
     // XP
