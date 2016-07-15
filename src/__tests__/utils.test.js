@@ -13,6 +13,7 @@ describe('Unit tests of utils', () => {
   describe('functionName', () => {
     it('should return the function name', () => {
       function testFunctionName() {}
+      assert.doesNotThrow(testFunctionName);
       assert.equal(utils.functionName(testFunctionName), 'testFunctionName');
     });
   });
@@ -23,6 +24,8 @@ describe('Unit tests of utils', () => {
       console.log = () => {
         throw new Error('Should not be called now!');
       };
+
+      assert.throws(console.log);
 
       const _logLevel = process.env.LOG_LEVEL;
       process.env.LOG_LEVEL = 'off';
