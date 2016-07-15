@@ -20,7 +20,6 @@ import {TokenError} from './smaug/errors';
 // Middleware
 import bodyParser from 'body-parser';
 import compression from 'compression';
-import helmet from 'helmet';
 import {log} from './utils';
 import {accessLogMiddleware, getContextMiddleware, requireAuthorized} from './app.middlewares';
 import {healthCheck, getContext, fieldsFilter} from './app.utils';
@@ -259,11 +258,6 @@ module.exports.run = function(worker) {
   // trust ip-addresses from X-Forwarded-By header, and log requests
   app.enable('trust proxy');
   app.use(accessLogMiddleware);
-
-  // Helmet configuration
-  app.use(helmet.frameguard());
-  app.use(helmet.ieNoOpen());
-  app.use(helmet.noSniff());
 
   // Port config
   app.set('port', process.env.PORT || 8080); // eslint-disable-line no-process-env

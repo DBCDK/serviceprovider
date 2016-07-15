@@ -1,11 +1,35 @@
+/**
+ *
+ * @param {PlainObject} request
+ * @param {Context} context
+ * @returns {String}
+ * @throws {PlainObject}
+ */
+function getRecommenderUrl(request, context) {
+  const urls = context.get('services.recommendurls');
+  const defaultType = 'default';
+  let uri = urls[defaultType];
 
+  if (request.hasOwnProperty('recommender')) {
+    if (!urls[request.recommender]) {
+      throw {statusCode: 400,
+        error: 'unknown or unsupported recommender type'};
+    }
 
-// TODO
-// filter is missing
+    uri = urls[request.recommender];
+  }
 
+  return uri;
+}
 
+/**
+ *
+ * @param {PlainObject} request
+ * @param {Context} context
+ * @returns {Array}
+ */
 function createRequestParameters(request, context) {
-  let paramsPost = {
+  const paramsPost = {
     method: 'POST',
     json: {
       like: [],
@@ -15,58 +39,47 @@ function createRequestParameters(request, context) {
       maxresults: request.limit
     }
   };
+
+  const uri = getRecommenderUrl(request, context);
   const filter = context.get('search.collectionidentifiers');
 
-  if (filter){
+  if (filter) {
     paramsPost.json.filter = [filter];
   }
-  let recommenderType = 'default';
-  const urls = context.get('services.recommendurls');
-  let defaultType = 'default';
-  let uri = urls[defaultType];
-  if (request.hasOwnProperty('recommender')) {
-    if (!urls[request.recommender]) {
-      throw {statusCode: 400,
-             error: 'unknown or unsupported recommender type'};
-    }
-    recommenderType = request.recommender;
-    uri = urls[recommenderType];
-  }
-  let names = {
-    like: 'like',
-    dislike: 'dislike',
-    known: 'known',
-    discard: 'discard'
-  };
-  for (var prop of ['like', 'dislike', 'known', 'discard']) {
+
+  for (const prop of ['like', 'dislike', 'known', 'discard']) {
     if (request.hasOwnProperty(prop)) {
-      paramsPost.json[names[prop]] = request[prop];
+      paramsPost.json[prop] = request[prop];
     }
   }
+
   return [uri, paramsPost];
 }
 
-
-export default (request, context) => { // eslint-disable-line no-unused-vars
+/**
+ *
+ * @param {PlainObject} request
+ * @param {Context} context
+ * @returns {Promise}
+ */
+export default function getRecommendations(request, context) {
   try {
-    let [uri, params] = createRequestParameters(request, context);
+    const [uri, params] = createRequestParameters(request, context);
     return context.request(uri, params).then(body => {
-      var result = [];
+      let result = [];
 
-      if (body.result) {
-        for (let i = 0; i < body.result.length; ++i) {
-          let o = body.result[i];
-          let pid = o[0];
-          let r = o[1];
-          r.pid = pid;
-          result.push(r);
-        }
+      if (Array.isArray(body.result)) {
+        result = body.result.map(o => Object.assign(o[1], {pid: o[0]}));
       }
+
       return {statusCode: 200, data: result};
     });
-  } catch (err){
+  }
+  catch (err){
     if (err.hasOwnProperty('statusCode')){
       return Promise.resolve(err);
     }
   }
-};
+
+  return Promise.resolve({statusCode: 500, error: 'internal server error'});
+}

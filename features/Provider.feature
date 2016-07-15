@@ -6,7 +6,7 @@ Feature: Provider
     Then the results keys are: ["statusCode", "data", "timings"]
 
   Scenario: Create a unittest from a request
-    When "search" transform is called with "q=hest&createTest=ProviderFeatureHestTest"
+    When "search" transform is called with "q=hest&createTest=ProviderFeatureHestTest&pretty=true"
     Then "../../src/transformers/__tests__/ProviderFeatureHestTest.js" file can be found and deleted
 
   Scenario: Call to invalid transform produces error
