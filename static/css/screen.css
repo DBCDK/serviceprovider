@@ -288,6 +288,7 @@
 }
 .swagger-section .swagger-ui-wrap a {
   color: #547f00;
+  word-break: break-all;
 }
 .swagger-section .swagger-ui-wrap a img {
   border: none;
