@@ -47,12 +47,12 @@ export function workResponse(response, context, state) { // eslint-disable-line 
     const errornous = checkResponseForErrorCodes(resp);
     if (errornous) {
       // Setting error envelope if found!
-      envelope = errornous;
-      break;
+      envelope.statusCode = errornous.statusCode;
+      envelope.error = errornous.error;
     }
 
     // Set number of data elements if not done in previous iteration
-    if (!envelope.data) {
+    else if (!envelope.data) {
       // Damn, this feel hacked.
       // But if you just do 'let x = Array(3).fill({})', you will get an array with the same
       // object three times. So if you add to x[0], you will also add to x[1] and x[2].
@@ -66,7 +66,6 @@ export function workResponse(response, context, state) { // eslint-disable-line 
         // but i cant be certain. It might be that the call just returned no data - ie nothing was found.
         // To be sure, i'll return 'ok', and empty data.
         envelope.data = [];
-        return envelope;
       }
     }
 

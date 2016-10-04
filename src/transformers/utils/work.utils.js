@@ -55,6 +55,10 @@ export function checkResponseForErrorCodes(response) {
  * @return {object}
  */
 function handleMoreinfo(resp, envelope) {
+  if (!resp.data) {
+    return envelope;
+  }
+
   for (let x = 0; x < resp.data.length; x++) {
     const respData = resp.data[x];
     if (respData.pid) {
