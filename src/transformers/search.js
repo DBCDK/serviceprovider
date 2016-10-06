@@ -36,7 +36,7 @@ export default (params, context) => {
       // combine the objects from search and work endpoints.
       let result = [];
       for (let i = 0; i < results.data.length; ++i) {
-        result[i] = Object.assign(results.data[i], workResult.data[i]);
+        result[i] = Object.assign(results.data[i], (workResult.data || [])[i]);
       }
       return {statusCode: 200, data: result};
     });
