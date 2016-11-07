@@ -16,6 +16,7 @@
     'recommend',
     'renew',
     'search',
+    'metasearch',
     'suggest',
     'user',
     'work'];
@@ -23,7 +24,7 @@
   dbcOpenPlatform = {};
   /**
    * Create a new method, for an endpoint.
-   * The resulting function takes (an object of parameters) as parameter, 
+   * The resulting function takes (an object of parameters) as parameter,
    * and returns a promise with the result.
    */
   function endpoint(name) {
@@ -61,7 +62,7 @@
 
   /**
    * Connect to the DBC open platform.
-   * takes token, or client_id,client_secret 
+   * takes token, or client_id,client_secret
    * or client_id,client_secret,user_id,user_passed
    * as parameters.
    *
@@ -111,9 +112,9 @@
           });
           sc.connect();
           return;
-        } 
+        }
         sc = require('socketcluster-client').connect({
-          hostname: 'openplatform.dbc.dk', 
+          hostname: 'openplatform.dbc.dk',
           port: 443,
           secure: true,
           path: '/v1/socketcluster/?access_token=' + token
@@ -154,7 +155,7 @@
 
     xhr.open('POST', 'https://auth.dbc.dk/oauth/token');
 
-    xhr.setRequestHeader('Authorization', 'Basic ' + 
+    xhr.setRequestHeader('Authorization', 'Basic ' +
         btoa(clientId + ':' + clientSecret));
 
     xhr.setRequestHeader('Content-Type',

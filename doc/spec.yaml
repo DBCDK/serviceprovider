@@ -305,6 +305,41 @@ api:
     examples:
       - request: { "q": "harry AND potter", "fields": ["identifier", "title", "collection", "subjectDBCF", "hasAdaptation", "coverUrlFull"], "sort": "rank_general", "offset": 2, "limit": 2 }
         response: [{"identifier": ["300185-katalog:100562332"], "title": ["Harry Potter og Fønixordenen DVD"], "coverUrlFull": ["https://moreinfo.addi.dk/2.1/more_info_get.php?id=36565894&type=forside_500&key=55d553c259c9e46291a4"]}, {"identifier": ["870970-basis:51989252"], "title": ["Harry Potter og de vises sten"], "collection": ["300185-katalog:100562332", "870970-basis:51989252", "870971-forfweb:86203219", "870970-basis:24284514", "870970-basis:24284565", "..."], "subjectDBCF": ["fantasy", "magi", "troldmænd"], "hasAdaption": ["870970-basis:27123279", "870970-basis:27963390"], "coverUrlFull": ["https://moreinfo.addi.dk/2.1/more_info_get.php?id=36565894&type=forside_500&key=55d553c259c9e46291a4"]}]
+  metasearch:
+    tags:
+      - Search
+    description: Search electronic resources in universal search.
+    required:
+      - q
+    properties:
+      q:
+        example: "Water equity"
+        description: Query to search for.
+        type: string
+      offset:
+        example: 0
+        description: Starting position in search result
+        type: integer
+        minimum: 0
+      limit:
+        example: 10
+        description: maximum number of results returned
+        minimum: 1
+        maximum: 20
+        type: integer
+      fields:
+        example: ["md-title", "md-description", "md-thumburl"]
+        description: |
+          Which fields to return. Limiting the fields can also yield a performance improvement.
+
+          The entire list of possible fields see docs for pazpar2 service.
+
+          If `fields` are omitted, returns all fields.
+        type: array
+        items: {type: "string"}
+    response:
+      type: object
+      example: [{ 'md-date': [ '2010' ], 'md-title': [ 'Water and Environmental Equity' ], 'md-title-complete': [ 'Water and Environmental Equity' ], 'md-description': [ 'The article discusses the duty of environmental health professionals and the major issues that they need to address. It notes the obligation to provide safe drinking water to urban and rural communities. It cites the need for practitioners to identify and fix decaying distribution systems using environmental health principles, and to solve the problem of water equity. It mentions other problems that extend to water such as contamination by construction materials and failure of policies' ], 'md-electronic-url': ['http://content.ebscohost.com/ContentServer.asp?T=P&P=AN&K=118811239&EbscoContent=dGJyMMvl7ESeprU4zOX0OLCmr06ep7NSs6e4TK%2BWxWXS&ContentCustomer=dGJyMPGps060rLROuePfgeyx%2BEu3q64A&D=f5h' ], 'md-thumburl': [ 'http://www.neha.org/sites/default/files/publications/jeh/JEH_Nov2016_Cover_NEHA-Website_927x1200.jpg' ], 'md-use_thumbnails': [ '1' ], 'md-medium': [ 'web' ]}]
   suggest:
     tags:
       - Suggest
