@@ -74,11 +74,11 @@ export default (params, context) => {
 
     // Check if either object has failed.
     if (responses[0].statusCode !== 200) {
-      return responses[0]
+      return responses[0];
     }
 
     if (responses[1].statusCode !== 200) {
-      return responses[1]
+      return responses[1];
     }
 
     // Merge the responses of the two arrays.
