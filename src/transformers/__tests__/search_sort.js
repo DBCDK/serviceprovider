@@ -1,17 +1,17 @@
-/* eslint-disable max-len, quotes, comma-spacing, key-spacing, quote-props */
+/* eslint-disable max-len, quotes, comma-spacing, key-spacing, quote-props, indent */
 // Request: search {"q":"harry ","fields":["identifier","title","collection","subjectDBCF","hasAdaptation","coverUrlFull"],"sort":"rank_title"}
 
 import Provider from '../../provider/Provider.js';
 import {assert, fail} from 'chai';
 
-let context = {
+const context = {
   "services": {
     "ddbcmsapi": "http://rest.filmstriben.dbc.inlead.dk/web/",
     "moreinfo": "http://moreinfo.addi.dk/2.6/",
     "openagency": "http://openagency.addi.dk/2.24/",
     "openholdingstatus": "https://openholdingstatus.addi.dk/2.2/",
-    "openorder": "https://openorder.addi.dk/2.7.1/",
-    "TESTopenorder": "https://openorder.addi.dk/test_2.7.1/",
+    "PRODopenorder": "https://openorder.addi.dk/2.7.1/",
+    "openorder": "https://openorder.addi.dk/test_2.7.1/",
     "opensearch": "http://opensearch.addi.dk/b3.0_4.2/",
     "openuserstatus": "https://openuserstatus.addi.dk/1.4.1/",
     "rank": "https://xptest.dbc.dk/ms/rank/v1",
@@ -29,564 +29,2536 @@ let context = {
     "profile": "opac",
     "collectionidentifiers": "rec.collectionIdentifier:150013-palle OR rec.collectionIdentifier:758000-katalog"
   },
-  "netpunkt": {"user": "XXXXX", "group": "XXXXX", "password": "XXXXX"},
-  "user": {"agency": "100451", "id": "XXXXX", "pin": "XXXXX", "salt": "XXXXX"},
-  "app": {"clientid": "XXXXX", "ddbcmsapipassword": "XXXXX", "orderpolicyrequester": "190101"}
+  "netpunkt": {
+    "user": "XXXXX",
+    "group": "XXXXX",
+    "password": "XXXXX"
+  },
+  "user": {
+    "agency": "100451",
+    "id": "XXXXX",
+    "pin": "XXXXX",
+    "salt": "XXXXX"
+  },
+  "app": {
+    "clientid": "XXXXX",
+    "ddbcmsapipassword": "XXXXX",
+    "orderpolicyrequester": "190101"
+  }
 };
-let provider = Provider();
-let mockData = {
-  "[\"opensearch\",\"<?xml version=\\\"1.0\\\" encoding=\\\"UTF-8\\\"?>\\n<SOAP-ENV:Envelope xmlns:SOAP-ENV=\\\"http://schemas.xmlsoap.org/soap/envelope/\\\" xmlns:ns1=\\\"http://oss.dbc.dk/ns/opensearch\\\">\\n  <SOAP-ENV:Body>\\n    <ns1:searchRequest>\\n      <ns1:query>harry </ns1:query>\\n      <ns1:agency>775100</ns1:agency>\\n      <ns1:profile>opac</ns1:profile>\\n      <ns1:start>1</ns1:start>\\n      <ns1:stepValue>10</ns1:stepValue>\\n      <ns1:sort>rank_title</ns1:sort>\\n      <ns1:collectionType>work-1</ns1:collectionType>\\n      <ns1:allObjects>1</ns1:allObjects>\\n      <ns1:objectFormat>briefDisplay</ns1:objectFormat>\\n      <ns1:objectFormat>dkabm</ns1:objectFormat>\\n      <ns1:outputType>json</ns1:outputType>\\n    </ns1:searchRequest>\\n  </SOAP-ENV:Body>\\n</SOAP-ENV:Envelope>\\n\"]": "{\"searchResponse\":{\"result\":{\"hitCount\":{\"$\":\"1732\"},\"collectionCount\":{\"$\":\"10\"},\"more\":{\"$\":\"true\"},\"sortUsed\":{\"$\":\"rank_title\"},\"searchResult\":[{\"collection\":{\"resultPosition\":{\"$\":\"1\"},\"numberOfObjects\":{\"$\":\"2\"},\"object\":[{\"record\":{\"identifier\":[{\"$\":\"28277229|870970\",\"@\":\"ac\"}],\"source\":[{\"$\":\"Bibliotekskatalog\",\"@\":\"ac\"}],\"title\":[{\"$\":\"Harry Brown\",\"@\":\"dc\"},{\"$\":\"Harry Brown\",\"@type\":{\"$\":\"dkdcplus:full\",\"@\":\"xsi\"},\"@\":\"dc\"}],\"creator\":[{\"$\":\"Daniel Barber\",\"@type\":{\"$\":\"dkdcplus:drt\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"Barber, Daniel\",\"@type\":{\"$\":\"oss:sort\",\"@\":\"xsi\"},\"@\":\"dc\"}],\"subject\":[{\"$\":\"77.7\",\"@type\":{\"$\":\"dkdcplus:DK5\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"Spillefilm\",\"@type\":{\"$\":\"dkdcplus:DK5-Text\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"actionfilm\",\"@type\":{\"$\":\"dkdcplus:DBCS\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"actionfilm\",\"@type\":{\"$\":\"dkdcplus:genre\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"krimi\",\"@type\":{\"$\":\"dkdcplus:DBCS\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"krimi\",\"@type\":{\"$\":\"dkdcplus:genre\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"narkokriminalitet\",\"@type\":{\"$\":\"dkdcplus:DBCS\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"selvt\\u00e6gt\",\"@type\":{\"$\":\"dkdcplus:DBCS\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"vold\",\"@type\":{\"$\":\"dkdcplus:DBCS\",\"@\":\"xsi\"},\"@\":\"dc\"}],\"abstract\":[{\"$\":\"Da pensionisten Harry Browns gamle ven myrdes af nogle unge b\\u00f8ller, st\\u00e5r politiet magtesl\\u00f8se. Harry, der har en milit\\u00e6r baggrund, tirres derfor til at tage sagen i egen h\\u00e5nd\",\"@\":\"dcterms\"}],\"description\":[{\"$\":\"Originalfilmen: Storbritannien : Marv Partners : UK Film Council : in association with HanWay Films : Prescience : Framestone Features, 2009\",\"@\":\"dc\"}],\"audience\":[{\"$\":\"M\\u00e6rkning: Tilladt for b\\u00f8rn over 15 \\u00e5r\",\"@type\":{\"$\":\"dkdcplus:medieraad\",\"@\":\"xsi\"},\"@\":\"dcterms\"},{\"$\":\"voksenmaterialer\",\"@\":\"dcterms\"}],\"publisher\":[{\"$\":\"Nordisk Film\",\"@\":\"dc\"}],\"contributor\":[{\"$\":\"Daniel Barber\",\"@\":\"dc\"},{\"$\":\"Gary Young (manuskriptforfatter)\",\"@\":\"dc\"},{\"$\":\"Martin Ruhe\",\"@\":\"dc\"},{\"$\":\"Michael Caine\",\"@type\":{\"$\":\"dkdcplus:act\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"Emily Mortimer\",\"@type\":{\"$\":\"dkdcplus:act\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"Charlie Creed Miles\",\"@type\":{\"$\":\"dkdcplus:act\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"David Bradley\",\"@type\":{\"$\":\"dkdcplus:act\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"Iain Glen\",\"@type\":{\"$\":\"dkdcplus:act\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"Sean Harris\",\"@type\":{\"$\":\"dkdcplus:act\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"Ben Drew\",\"@type\":{\"$\":\"dkdcplus:act\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"Jack O'Connell\",\"@type\":{\"$\":\"dkdcplus:act\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"Jamie Downey\",\"@type\":{\"$\":\"dkdcplus:act\",\"@\":\"xsi\"},\"@\":\"dc\"}],\"date\":[{\"$\":\"2010\",\"@\":\"dc\"}],\"type\":[{\"$\":\"Dvd\",\"@type\":{\"$\":\"dkdcplus:BibDK-Type\",\"@\":\"xsi\"},\"@\":\"dc\"}],\"format\":[{\"$\":\"1 dvd-video\",\"@\":\"dc\"}],\"extent\":[{\"$\":\"99 min.\",\"@\":\"dcterms\"}],\"language\":[{\"$\":\"eng\",\"@type\":{\"$\":\"dcterms:ISO639-2\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"Engelsk\",\"@\":\"dc\"},{\"$\":\"Dansk\",\"@type\":{\"$\":\"dkdcplus:subtitles\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"Norsk\",\"@type\":{\"$\":\"dkdcplus:subtitles\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"Svensk\",\"@type\":{\"$\":\"dkdcplus:subtitles\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"Finsk\",\"@type\":{\"$\":\"dkdcplus:subtitles\",\"@\":\"xsi\"},\"@\":\"dc\"}],\"@\":\"dkabm\"},\"identifier\":{\"$\":\"775100-katalog:28277229\"},\"primaryObjectIdentifier\":{\"$\":\"870970-basis:28277229\"},\"recordStatus\":{\"$\":\"active\"},\"formatsAvailable\":{\"format\":[{\"$\":\"dkabm\"},{\"$\":\"marcxchange\"}]},\"objectsAvailable\":{\"identifier\":[{\"$\":\"775100-katalog:28277229\"},{\"$\":\"870970-basis:28277229\"}]}},{\"identifier\":{\"$\":\"775100-katalog:28447698\"},\"formatsAvailable\":{\"format\":[{\"$\":\"dkabm\"},{\"$\":\"marcxchange\"}]}}]},\"formattedCollection\":{\"briefDisplay\":{\"manifestation\":[{\"accessType\":{\"$\":\"physical\"},\"creator\":{\"$\":\"Martin Ruhe\"},\"fedoraPid\":{\"$\":\"820010-katalog:5522001\"},\"identifier\":{\"$\":\"775100-katalog:28277229\"},\"title\":{\"$\":\"Harry Brown\"},\"titleFull\":{\"$\":\"Harry Brown\"},\"type\":{\"$\":\"Dvd\"},\"workType\":{\"$\":\"movie\"}},{\"accessType\":{\"$\":\"physical\"},\"creator\":{\"$\":\"Martin Ruhe\"},\"fedoraPid\":{\"$\":\"820010-katalog:5476924\"},\"identifier\":{\"$\":\"775100-katalog:28447698\"},\"title\":{\"$\":\"Harry Brown\"},\"titleFull\":{\"$\":\"Harry Brown\"},\"type\":{\"$\":\"Blu-ray\"},\"workType\":{\"$\":\"movie\"}}]}}},{\"collection\":{\"resultPosition\":{\"$\":\"2\"},\"numberOfObjects\":{\"$\":\"1\"},\"object\":[{\"record\":{\"identifier\":[{\"$\":\"27447406|870970\",\"@\":\"ac\"}],\"source\":[{\"$\":\"Bibliotekskatalog\",\"@\":\"ac\"}],\"title\":[{\"$\":\"Dirty Harry\",\"@\":\"dc\"},{\"$\":\"Dirty Harry\",\"@type\":{\"$\":\"dkdcplus:full\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"The Dirty Harry collection\",\"@type\":{\"$\":\"dkdcplus:series\",\"@\":\"xsi\"},\"@\":\"dc\"}],\"alternative\":[{\"$\":\"Dirty Harry vender tilbage\",\"@\":\"dcterms\"}],\"creator\":[{\"$\":\"Don Siegel\",\"@type\":{\"$\":\"dkdcplus:drt\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"Siegel, Don\",\"@type\":{\"$\":\"oss:sort\",\"@\":\"xsi\"},\"@\":\"dc\"}],\"subject\":[{\"$\":\"77.7\",\"@type\":{\"$\":\"dkdcplus:DK5\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"Spillefilm\",\"@type\":{\"$\":\"dkdcplus:DK5-Text\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"actionfilm\",\"@type\":{\"$\":\"dkdcplus:DBCS\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"actionfilm\",\"@type\":{\"$\":\"dkdcplus:genre\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"politidetektiver\",\"@type\":{\"$\":\"dkdcplus:DBCS\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"seriemordere\",\"@type\":{\"$\":\"dkdcplus:DBCS\",\"@\":\"xsi\"},\"@\":\"dc\"}],\"abstract\":[{\"$\":\"Kriminalassistent Harry Callahan m\\u00e5 sande, at regler og paragraffer er til for at brydes. Ellers slipper en psykopatisk morder godt fra endnu flere forbrydelser. Og \\\"Dirty Harry\\\" f\\u00e5r altid sin mand og det sidste ord!\",\"@\":\"dcterms\"}],\"description\":[{\"$\":\"Originalfilmen: USA : Warner Bros. : Malpaso Company, 1971\",\"@\":\"dc\"},{\"$\":\"Renewed edition: 1999\",\"@\":\"dc\"},{\"$\":\"Af indholdet: Special features (Commentary by Richard Schickel ; Dirty Harry : the original ; Interview gallery ; Dirty Harry's way ; Dirty Harry trailer gallery) ; Bonus disc: Indhold: The long shadow of Dirty Harry ; Clint Eastwood : the man from Malpaso\",\"@\":\"dc\"}],\"audience\":[{\"$\":\"M\\u00e6rkning: Tilladt for b\\u00f8rn over 15 \\u00e5r\",\"@type\":{\"$\":\"dkdcplus:medieraad\",\"@\":\"xsi\"},\"@\":\"dcterms\"},{\"$\":\"voksenmaterialer\",\"@\":\"dcterms\"}],\"version\":[{\"$\":\"Renewed edition (2 disc special edition)\",\"@\":\"dkdcplus\"}],\"publisher\":[{\"$\":\"Warner Bros. Entertainment Danmark\",\"@\":\"dc\"}],\"contributor\":[{\"$\":\"Bruce Surtees\",\"@\":\"dc\"},{\"$\":\"Harry Julian Fink\",\"@\":\"dc\"},{\"$\":\"R. M. Fink\",\"@\":\"dc\"},{\"$\":\"Dean Riesner\",\"@\":\"dc\"},{\"$\":\"Don Siegel\",\"@\":\"dc\"},{\"$\":\"Clint Eastwood\",\"@type\":{\"$\":\"dkdcplus:act\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"Harry Guardino\",\"@type\":{\"$\":\"dkdcplus:act\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"Reni Santoni\",\"@type\":{\"$\":\"dkdcplus:act\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"Andy Robinson\",\"@type\":{\"$\":\"dkdcplus:act\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"John Larch\",\"@type\":{\"$\":\"dkdcplus:act\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"John Vernon\",\"@type\":{\"$\":\"dkdcplus:act\",\"@\":\"xsi\"},\"@\":\"dc\"}],\"date\":[{\"$\":\"2008\",\"@\":\"dc\"}],\"type\":[{\"$\":\"Dvd\",\"@type\":{\"$\":\"dkdcplus:BibDK-Type\",\"@\":\"xsi\"},\"@\":\"dc\"}],\"format\":[{\"$\":\"1 dvd-video, 1 bonus disc\",\"@\":\"dc\"}],\"extent\":[{\"$\":\"ca. 98 min.\",\"@\":\"dcterms\"}],\"language\":[{\"$\":\"mul\",\"@type\":{\"$\":\"dcterms:ISO639-2\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"Flere sprog\",\"@\":\"dc\"},{\"$\":\"eng\",\"@type\":{\"$\":\"dcterms:ISO639-2\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"Engelsk\",\"@\":\"dc\"},{\"$\":\"Engelsk\",\"@type\":{\"$\":\"dkdcplus:subtitles\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"Tysk\",\"@type\":{\"$\":\"dkdcplus:subtitles\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"Spansk\",\"@type\":{\"$\":\"dkdcplus:subtitles\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"Tjekkisk\",\"@type\":{\"$\":\"dkdcplus:subtitles\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"Dansk\",\"@type\":{\"$\":\"dkdcplus:subtitles\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"Estisk\",\"@type\":{\"$\":\"dkdcplus:subtitles\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"Finsk\",\"@type\":{\"$\":\"dkdcplus:subtitles\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"Gr\\u00e6sk\",\"@type\":{\"$\":\"dkdcplus:subtitles\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"Norsk\",\"@type\":{\"$\":\"dkdcplus:subtitles\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"Portugisisk\",\"@type\":{\"$\":\"dkdcplus:subtitles\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"Polsk\",\"@type\":{\"$\":\"dkdcplus:subtitles\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"Svensk\",\"@type\":{\"$\":\"dkdcplus:subtitles\",\"@\":\"xsi\"},\"@\":\"dc\"}],\"spatial\":[{\"$\":\"USA\",\"@type\":{\"$\":\"dkdcplus:DBCS\",\"@\":\"xsi\"},\"@\":\"dcterms\"}],\"@\":\"dkabm\"},\"identifier\":{\"$\":\"775100-katalog:27447406\"},\"primaryObjectIdentifier\":{\"$\":\"870970-basis:27447406\"},\"recordStatus\":{\"$\":\"active\"},\"formatsAvailable\":{\"format\":[{\"$\":\"dkabm\"},{\"$\":\"marcxchange\"}]},\"objectsAvailable\":{\"identifier\":[{\"$\":\"775100-katalog:27447406\"},{\"$\":\"870970-basis:27447406\"}]}}]},\"formattedCollection\":{\"briefDisplay\":{\"manifestation\":[{\"accessType\":{\"$\":\"physical\"},\"fedoraPid\":{\"$\":\"870970-basis:27447406\"},\"identifier\":{\"$\":\"775100-katalog:27447406\"},\"title\":{\"$\":\"Dirty Harry\"},\"titleFull\":{\"$\":\"Dirty Harry\"},\"type\":{\"$\":\"Dvd\"},\"workType\":{\"$\":\"movie\"}}]}}},{\"collection\":{\"resultPosition\":{\"$\":\"3\"},\"numberOfObjects\":{\"$\":\"1\"},\"object\":[{\"record\":{\"identifier\":[{\"$\":\"24039978|870970\",\"@\":\"ac\"}],\"source\":[{\"$\":\"Bibliotekskatalog\",\"@\":\"ac\"}],\"title\":[{\"$\":\"Lego creator - Harry Potter\",\"@\":\"dc\"},{\"$\":\"Lego creator - Harry Potter\",\"@type\":{\"$\":\"dkdcplus:full\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"Constructive\",\"@type\":{\"$\":\"dkdcplus:series\",\"@\":\"xsi\"},\"@\":\"dc\"}],\"alternative\":[{\"$\":\"Creator - Harry Potter\",\"@\":\"dcterms\"},{\"$\":\"Harry Potter\",\"@\":\"dcterms\"}],\"subject\":[{\"$\":\"79.41\",\"@type\":{\"$\":\"dkdcplus:DK5\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"Computerspil\",\"@type\":{\"$\":\"dkdcplus:DK5-Text\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"computerspil\",\"@type\":{\"$\":\"dkdcplus:DBCO\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"legoklodser\",\"@type\":{\"$\":\"dkdcplus:DBCF\",\"@\":\"xsi\"},\"@\":\"dc\"}],\"abstract\":[{\"$\":\"Leg og l\\u00e6r. Du kender Harry Potter og Hogwarts? Her kan du lege med alle de kendte figurer fra b\\u00f8gerne og samtidig bygge din helt egen magiske Legoverden!\",\"@\":\"dcterms\"}],\"description\":[{\"$\":\"Titlen hentet fra cd-rometiket\",\"@\":\"dc\"}],\"audience\":[{\"$\":\"Fra 6 \\u00e5r\",\"@type\":{\"$\":\"dkdcplus:age\",\"@\":\"xsi\"},\"@\":\"dcterms\"},{\"$\":\"b\\u00f8rnematerialer\",\"@\":\"dcterms\"}],\"publisher\":[{\"$\":\"LEGO Software\",\"@\":\"dc\"}],\"contributor\":[{\"$\":\"Joanne K. Rowling\",\"@\":\"dc\"},{\"$\":\"Paul Grimster\",\"@\":\"dc\"},{\"$\":\"Sonja Kristensen\",\"@\":\"dc\"}],\"date\":[{\"$\":\"2001\",\"@\":\"dc\"}],\"type\":[{\"$\":\"Pc-spil\",\"@type\":{\"$\":\"dkdcplus:BibDK-Type\",\"@\":\"xsi\"},\"@\":\"dc\"}],\"format\":[{\"$\":\"1 cd-rom, lyd, farver, 1 brugermanuel\",\"@\":\"dc\"},{\"$\":\"Pc, Pentium II\\/266 MHz\\/MMX; 64 MB ram; Windows 98, Me eller 2000; 4\\u00d7 cd-rom\\/dvddrev; farvesk\\u00e6rm (800\\u00d7600 billedopl\\u00f8sning, 16 bit farver); DirectSound-kompatibelt lydkort\",\"@\":\"dc\"}],\"language\":[{\"$\":\"dan\",\"@type\":{\"$\":\"dcterms:ISO639-2\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"Dansk\",\"@\":\"dc\"}],\"@\":\"dkabm\"},\"identifier\":{\"$\":\"775100-katalog:24039978\"},\"primaryObjectIdentifier\":{\"$\":\"870970-basis:24039978\"},\"recordStatus\":{\"$\":\"active\"},\"formatsAvailable\":{\"format\":[{\"$\":\"dkabm\"},{\"$\":\"marcxchange\"}]},\"objectsAvailable\":{\"identifier\":[{\"$\":\"775100-katalog:24039978\"},{\"$\":\"870970-basis:24039978\"}]}}]},\"formattedCollection\":{\"briefDisplay\":{\"manifestation\":[{\"accessType\":{\"$\":\"physical\"},\"fedoraPid\":{\"$\":\"870970-basis:24039978\"},\"identifier\":{\"$\":\"775100-katalog:24039978\"},\"title\":{\"$\":\"Lego creator - Harry Potter\"},\"titleFull\":{\"$\":\"Lego creator - Harry Potter\"},\"type\":{\"$\":\"Pc-spil\"},\"workType\":{\"$\":\"game\"}}]}}},{\"collection\":{\"resultPosition\":{\"$\":\"4\"},\"numberOfObjects\":{\"$\":\"2\"},\"object\":[{\"record\":{\"identifier\":[{\"$\":\"50536661|870970\",\"@\":\"ac\"},{\"$\":\"9788771480290\",\"@type\":{\"$\":\"dkdcplus:ISBN\",\"@\":\"xsi\"},\"@\":\"dc\"}],\"source\":[{\"$\":\"Bibliotekskatalog\",\"@\":\"ac\"},{\"$\":\"Harry Styles\",\"@\":\"dc\"}],\"title\":[{\"$\":\"Harry Styles\",\"@\":\"dc\"},{\"$\":\"Harry Styles : superstjerne A-Z\",\"@type\":{\"$\":\"dkdcplus:full\",\"@\":\"xsi\"},\"@\":\"dc\"}],\"creator\":[{\"$\":\"Sarah Oliver\",\"@type\":{\"$\":\"dkdcplus:aut\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"Oliver, Sarah\",\"@type\":{\"$\":\"oss:sort\",\"@\":\"xsi\"},\"@\":\"dc\"}],\"subject\":[{\"$\":\"99.4 Styles, Harry\",\"@type\":{\"$\":\"dkdcplus:DK5\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"Biografier af enkelte personer\",\"@type\":{\"$\":\"dkdcplus:DK5-Text\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"Harry Styles\",\"@type\":{\"$\":\"dkdcplus:DBCF\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"Styles, Harry\",\"@type\":{\"$\":\"oss:sort\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"One Direction\",\"@type\":{\"$\":\"dkdcplus:DBCF\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"biografier\",\"@type\":{\"$\":\"dkdcplus:DBCO\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"for 12 \\u00e5r\",\"@type\":{\"$\":\"dkdcplus:DBCN\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"for 13 \\u00e5r\",\"@type\":{\"$\":\"dkdcplus:DBCN\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"for 14 \\u00e5r\",\"@type\":{\"$\":\"dkdcplus:DBCN\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"for 15 \\u00e5r\",\"@type\":{\"$\":\"dkdcplus:DBCN\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"for 16 \\u00e5r\",\"@type\":{\"$\":\"dkdcplus:DBCN\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"pop\",\"@type\":{\"$\":\"dkdcplus:DBCF\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"sangere\",\"@type\":{\"$\":\"dkdcplus:DBCF\",\"@\":\"xsi\"},\"@\":\"dc\"}],\"abstract\":[{\"$\":\"Om Harry Styles (f. 1994) liv og forel\\u00f8bige karriere i boybandet One Direction\",\"@\":\"dcterms\"}],\"audience\":[{\"$\":\"b\\u00f8rnematerialer\",\"@\":\"dcterms\"}],\"version\":[{\"$\":\"1. udgave, 1. oplag (2013)\",\"@\":\"dkdcplus\"}],\"publisher\":[{\"$\":\"Turbulenz\",\"@\":\"dc\"}],\"contributor\":[{\"$\":\"Brian Christensen\",\"@type\":{\"$\":\"dkdcplus:trl\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"Sarah N\\u00f8rgaard Jensen\",\"@type\":{\"$\":\"dkdcplus:edt\",\"@\":\"xsi\"},\"@\":\"dc\"}],\"date\":[{\"$\":\"2013\",\"@\":\"dc\"}],\"type\":[{\"$\":\"Bog\",\"@type\":{\"$\":\"dkdcplus:BibDK-Type\",\"@\":\"xsi\"},\"@\":\"dc\"}],\"format\":[{\"$\":\"illustreret i farver\",\"@\":\"dc\"}],\"extent\":[{\"$\":\"256 sider\",\"@\":\"dcterms\"}],\"language\":[{\"$\":\"dan\",\"@type\":{\"$\":\"dcterms:ISO639-2\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"Dansk\",\"@\":\"dc\"}],\"spatial\":[{\"$\":\"England\",\"@type\":{\"$\":\"dkdcplus:DBCF\",\"@\":\"xsi\"},\"@\":\"dcterms\"}],\"temporal\":[{\"$\":\"2010-2019\",\"@type\":{\"$\":\"dkdcplus:DBCP\",\"@\":\"xsi\"},\"@\":\"dcterms\"}],\"@\":\"dkabm\"},\"identifier\":{\"$\":\"775100-katalog:50536661\"},\"primaryObjectIdentifier\":{\"$\":\"870970-basis:50536661\"},\"recordStatus\":{\"$\":\"active\"},\"formatsAvailable\":{\"format\":[{\"$\":\"dkabm\"},{\"$\":\"marcxchange\"}]},\"objectsAvailable\":{\"identifier\":[{\"$\":\"775100-katalog:50536661\"},{\"$\":\"870970-basis:50536661\"}]}},{\"identifier\":{\"$\":\"870970-basis:51182200\"},\"creationDate\":{\"$\":\"2014-10-02\"},\"formatsAvailable\":{\"format\":[{\"$\":\"dkabm\"},{\"$\":\"marcxchange\"}]}}]},\"formattedCollection\":{\"briefDisplay\":{\"manifestation\":[{\"accessType\":{\"$\":\"physical\"},\"creator\":{\"$\":\"Sarah Oliver\"},\"fedoraPid\":{\"$\":\"125610-katalog:50536661\"},\"identifier\":{\"$\":\"775100-katalog:50536661\"},\"language\":{\"$\":\"Dansk\"},\"title\":{\"$\":\"Harry Styles\"},\"titleFull\":{\"$\":\"Harry Styles : superstjerne A-Z\"},\"type\":{\"$\":\"Bog\"},\"workType\":{\"$\":\"book\"}},{\"accessType\":{\"$\":\"online\"},\"creator\":{\"$\":\"Sarah Oliver\"},\"fedoraPid\":{\"$\":\"870970-basis:51182200\"},\"identifier\":{\"$\":\"870970-basis:51182200\"},\"language\":{\"$\":\"Dansk\"},\"title\":{\"$\":\"Harry Styles\"},\"titleFull\":{\"$\":\"Harry Styles : superstjerne A-Z\"},\"type\":{\"$\":\"Ebog\"},\"workType\":{\"$\":\"book\"}}]}}},{\"collection\":{\"resultPosition\":{\"$\":\"5\"},\"numberOfObjects\":{\"$\":\"1\"},\"object\":[{\"record\":{\"identifier\":[{\"$\":\"ebr10440572|150008\",\"@\":\"ac\"},{\"$\":\"9789814346078\",\"@type\":{\"$\":\"dkdcplus:ISBN\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"http:\\/\\/site.ebrary.com\\/lib\\/librarytitles\\/docDetail.action?docID=10440572\",\"@type\":{\"$\":\"dcterms:URI\",\"@\":\"xsi\"},\"@\":\"dc\"}],\"source\":[{\"$\":\"Ebrary\",\"@\":\"ac\"}],\"title\":[{\"$\":\"The story of Harry's\",\"@\":\"dc\"},{\"$\":\"The story of Harry's\",\"@type\":{\"$\":\"dkdcplus:full\",\"@\":\"xsi\"},\"@\":\"dc\"}],\"alternative\":[{\"$\":\"Portion of title Harry's\",\"@\":\"dcterms\"}],\"creator\":[{\"$\":\"Mohan Mulani\",\"@type\":{\"$\":\"dkdcplus:aut\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"Mulani, Mohan\",\"@type\":{\"$\":\"oss:sort\",\"@\":\"xsi\"},\"@\":\"dc\"}],\"subject\":[{\"$\":\"Bars (Drinking establishments) -- History\",\"@type\":{\"$\":\"dcterms:LCSH\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"Electronic books\",\"@type\":{\"$\":\"dcterms:LCSH\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"Harry's (Bar : Singapore)\",\"@\":\"dc\"}],\"description\":[{\"$\":\"Electronic reproduction. Palo Alto, Calif. : ebrary, 2013. Available via World Wide Web. Access may be limited to ebrary affiliated libraries\",\"@\":\"dc\"}],\"audience\":[{\"$\":\"voksenmaterialer\",\"@\":\"dcterms\"}],\"publisher\":[{\"$\":\"Marshall Cavendish Business\",\"@\":\"dc\"},{\"$\":\"Marshall Cavendish Corp\",\"@\":\"dc\"}],\"date\":[{\"$\":\"2010\",\"@\":\"dc\"}],\"type\":[{\"$\":\"Ebog\",\"@type\":{\"$\":\"dkdcplus:BibDK-Type\",\"@\":\"xsi\"},\"@\":\"dc\"}],\"format\":[{\"$\":\"illustreret\",\"@\":\"dc\"}],\"extent\":[{\"$\":\"162 s.\",\"@\":\"dcterms\"}],\"language\":[{\"$\":\"eng\",\"@type\":{\"$\":\"dcterms:ISO639-2\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"Engelsk\",\"@\":\"dc\"}],\"@\":\"dkabm\"},\"identifier\":{\"$\":\"150008-public:ebr10440572\"},\"primaryObjectIdentifier\":{\"$\":\"150008-public:ebr10440572\"},\"recordStatus\":{\"$\":\"active\"},\"creationDate\":{\"$\":\"2010-06-09\"},\"formatsAvailable\":{\"format\":[{\"$\":\"dkabm\"},{\"$\":\"marcxchange\"}]},\"objectsAvailable\":{\"identifier\":[{\"$\":\"150008-public:ebr10440572\"}]}}]},\"formattedCollection\":{\"briefDisplay\":{\"manifestation\":[{\"accessType\":{\"$\":\"online\"},\"creator\":{\"$\":\"Mohan Mulani\"},\"fedoraPid\":{\"$\":\"150008-public:ebr10440572\"},\"identifier\":{\"$\":\"150008-public:ebr10440572\"},\"language\":{\"$\":\"Engelsk\"},\"title\":{\"$\":\"The story of Harry's\"},\"titleFull\":{\"$\":\"The story of Harry's\"},\"type\":{\"$\":\"Ebog\"},\"workType\":{\"$\":\"book\"}}]}}},{\"collection\":{\"resultPosition\":{\"$\":\"6\"},\"numberOfObjects\":{\"$\":\"1\"},\"object\":[{\"record\":{\"identifier\":[{\"$\":\"50691446|870970\",\"@\":\"ac\"},{\"$\":\"http:\\/\\/www.filmstriben.dk\\/fjernleje\\/film\\/details.aspx?id=2744740600\",\"@type\":{\"$\":\"dcterms:URI\",\"@\":\"xsi\"},\"@\":\"dc\"}],\"source\":[{\"$\":\"Filmstriben\",\"@\":\"ac\"}],\"title\":[{\"$\":\"Dirty Harry\",\"@\":\"dc\"},{\"$\":\"Dirty Harry\",\"@type\":{\"$\":\"dkdcplus:full\",\"@\":\"xsi\"},\"@\":\"dc\"}],\"alternative\":[{\"$\":\"Dirty Harry vender tilbage\",\"@\":\"dcterms\"}],\"creator\":[{\"$\":\"Don Siegel\",\"@type\":{\"$\":\"dkdcplus:drt\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"Siegel, Don\",\"@type\":{\"$\":\"oss:sort\",\"@\":\"xsi\"},\"@\":\"dc\"}],\"subject\":[{\"$\":\"77.7\",\"@type\":{\"$\":\"dkdcplus:DK5\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"Spillefilm\",\"@type\":{\"$\":\"dkdcplus:DK5-Text\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"actionfilm\",\"@type\":{\"$\":\"dkdcplus:DBCS\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"actionfilm\",\"@type\":{\"$\":\"dkdcplus:genre\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"amerikanske film\",\"@type\":{\"$\":\"dkdcplus:DBCO\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"politidetektiver\",\"@type\":{\"$\":\"dkdcplus:DBCS\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"seriemordere\",\"@type\":{\"$\":\"dkdcplus:DBCS\",\"@\":\"xsi\"},\"@\":\"dc\"}],\"abstract\":[{\"$\":\"Kriminalassistent Harry Callahan m\\u00e5 sande, at regler og paragraffer er til for at brydes. Ellers slipper en psykopatisk morder godt fra endnu flere forbrydelser. Og \\\"Dirty Harry\\\" f\\u00e5r altid sin mand og det sidste ord!\",\"@\":\"dcterms\"}],\"description\":[{\"$\":\"Produktion: Warner Bros. (USA), Malpaso Company (USA), 1971\",\"@\":\"dc\"}],\"audience\":[{\"$\":\"M\\u00e6rkning: Tilladt for b\\u00f8rn over 15 \\u00e5r\",\"@type\":{\"$\":\"dkdcplus:medieraad\",\"@\":\"xsi\"},\"@\":\"dcterms\"},{\"$\":\"voksenmaterialer\",\"@\":\"dcterms\"}],\"publisher\":[{\"$\":\"Warner Bros.\",\"@\":\"dc\"}],\"contributor\":[{\"$\":\"Bruce Surtees\",\"@type\":{\"$\":\"dkdcplus:cng\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"Harry Julian Fink\",\"@type\":{\"$\":\"dkdcplus:aus\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"R. M. Fink\",\"@type\":{\"$\":\"dkdcplus:aus\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"Dean Riesner\",\"@type\":{\"$\":\"dkdcplus:aus\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"Clint Eastwood\",\"@type\":{\"$\":\"dkdcplus:act\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"Harry Guardino\",\"@type\":{\"$\":\"dkdcplus:act\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"Reni Santoni\",\"@type\":{\"$\":\"dkdcplus:act\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"Andy Robinson\",\"@type\":{\"$\":\"dkdcplus:act\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"John Larch\",\"@type\":{\"$\":\"dkdcplus:act\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"John Vernon\",\"@type\":{\"$\":\"dkdcplus:act\",\"@\":\"xsi\"},\"@\":\"dc\"}],\"date\":[{\"$\":\"2013\",\"@\":\"dc\"}],\"type\":[{\"$\":\"Film (net)\",\"@type\":{\"$\":\"dkdcplus:BibDK-Type\",\"@\":\"xsi\"},\"@\":\"dc\"}],\"extent\":[{\"$\":\"98 min.\",\"@\":\"dcterms\"}],\"language\":[{\"$\":\"eng\",\"@type\":{\"$\":\"dcterms:ISO639-2\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"Engelsk\",\"@\":\"dc\"},{\"$\":\"Dansk\",\"@type\":{\"$\":\"dkdcplus:subtitles\",\"@\":\"xsi\"},\"@\":\"dc\"}],\"spatial\":[{\"$\":\"USA\",\"@type\":{\"$\":\"dkdcplus:DBCS\",\"@\":\"xsi\"},\"@\":\"dcterms\"}],\"@\":\"dkabm\"},\"identifier\":{\"$\":\"870970-basis:50691446\"},\"primaryObjectIdentifier\":{\"$\":\"870970-basis:50691446\"},\"recordStatus\":{\"$\":\"active\"},\"creationDate\":{\"$\":\"2013-09-21\"},\"formatsAvailable\":{\"format\":[{\"$\":\"dkabm\"},{\"$\":\"marcxchange\"}]},\"objectsAvailable\":{\"identifier\":[{\"$\":\"870970-basis:50691446\"}]}}]},\"formattedCollection\":{\"briefDisplay\":{\"manifestation\":[{\"accessType\":{\"$\":\"online\"},\"fedoraPid\":{\"$\":\"870970-basis:50691446\"},\"identifier\":{\"$\":\"870970-basis:50691446\"},\"title\":{\"$\":\"Dirty Harry\"},\"titleFull\":{\"$\":\"Dirty Harry\"},\"type\":{\"$\":\"Film (net)\"},\"workType\":{\"$\":\"movie\"}}]}}},{\"collection\":{\"resultPosition\":{\"$\":\"7\"},\"numberOfObjects\":{\"$\":\"1\"},\"object\":[{\"record\":{\"identifier\":[{\"$\":\"29395306|870970\",\"@\":\"ac\"}],\"source\":[{\"$\":\"Bibliotekskatalog\",\"@\":\"ac\"}],\"title\":[{\"$\":\"Harry - stykke for stykke\",\"@\":\"dc\"},{\"$\":\"Harry - stykke for stykke\",\"@type\":{\"$\":\"dkdcplus:full\",\"@\":\"xsi\"},\"@\":\"dc\"}],\"alternative\":[{\"$\":\"Deconstructing Harry\",\"@\":\"dcterms\"}],\"creator\":[{\"$\":\"Woody Allen\",\"@type\":{\"$\":\"dkdcplus:drt\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"Allen, Woody\",\"@type\":{\"$\":\"oss:sort\",\"@\":\"xsi\"},\"@\":\"dc\"}],\"subject\":[{\"$\":\"77.7\",\"@type\":{\"$\":\"dkdcplus:DK5\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"Spillefilm\",\"@type\":{\"$\":\"dkdcplus:DK5-Text\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"forfattere\",\"@type\":{\"$\":\"dkdcplus:DBCS\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"komedier\",\"@type\":{\"$\":\"dkdcplus:DBCS\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"komedier\",\"@type\":{\"$\":\"dkdcplus:genre\",\"@\":\"xsi\"},\"@\":\"dc\"}],\"abstract\":[{\"$\":\"Den sexfikserede, neurotiske new yorker-forfatter Harry Block f\\u00e5r vennekredsen p\\u00e5 nakken med sin selvudleverende roman. Hans fiktive romanfigurer blander sig i hans liv, hvor problemerne t\\u00e5rner sig op\",\"@\":\"dcterms\"}],\"description\":[{\"$\":\"Originalfilmen: USA : Magnolia Productions ; S.l. : Sweetland Films, 1997\",\"@\":\"dc\"}],\"audience\":[{\"$\":\"M\\u00e6rkning: Tilladt for b\\u00f8rn over 15 \\u00e5r\",\"@type\":{\"$\":\"dkdcplus:medieraad\",\"@\":\"xsi\"},\"@\":\"dcterms\"},{\"$\":\"voksenmaterialer\",\"@\":\"dcterms\"}],\"publisher\":[{\"$\":\"Atlantic Film\",\"@\":\"dc\"}],\"contributor\":[{\"$\":\"Carlo Di Palma\",\"@\":\"dc\"},{\"$\":\"Woody Allen\",\"@\":\"dc\"},{\"$\":\"Caroline Aaron\",\"@type\":{\"$\":\"dkdcplus:act\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"Woody Allen\",\"@type\":{\"$\":\"dkdcplus:act\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"Kirstie Alley\",\"@type\":{\"$\":\"dkdcplus:act\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"Bob Balaban\",\"@type\":{\"$\":\"dkdcplus:act\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"Richard Benjamin\",\"@type\":{\"$\":\"dkdcplus:act\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"Eric Bogosian\",\"@type\":{\"$\":\"dkdcplus:act\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"Billy Crystal\",\"@type\":{\"$\":\"dkdcplus:act\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"Judy Davis\",\"@type\":{\"$\":\"dkdcplus:act\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"Hazelle Goodman\",\"@type\":{\"$\":\"dkdcplus:act\",\"@\":\"xsi\"},\"@\":\"dc\"}],\"date\":[{\"$\":\"2012\",\"@\":\"dc\"}],\"type\":[{\"$\":\"Dvd\",\"@type\":{\"$\":\"dkdcplus:BibDK-Type\",\"@\":\"xsi\"},\"@\":\"dc\"}],\"format\":[{\"$\":\"1 dvd-video\",\"@\":\"dc\"}],\"extent\":[{\"$\":\"91 min.\",\"@\":\"dcterms\"}],\"language\":[{\"$\":\"eng\",\"@type\":{\"$\":\"dcterms:ISO639-2\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"Engelsk\",\"@\":\"dc\"},{\"$\":\"Svensk\",\"@type\":{\"$\":\"dkdcplus:subtitles\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"Norsk\",\"@type\":{\"$\":\"dkdcplus:subtitles\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"Dansk\",\"@type\":{\"$\":\"dkdcplus:subtitles\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"Finsk\",\"@type\":{\"$\":\"dkdcplus:subtitles\",\"@\":\"xsi\"},\"@\":\"dc\"}],\"spatial\":[{\"$\":\"USA\",\"@type\":{\"$\":\"dkdcplus:DBCS\",\"@\":\"xsi\"},\"@\":\"dcterms\"},{\"$\":\"New York\",\"@type\":{\"$\":\"dkdcplus:DBCS\",\"@\":\"xsi\"},\"@\":\"dcterms\"}],\"@\":\"dkabm\"},\"identifier\":{\"$\":\"775100-katalog:29395306\"},\"primaryObjectIdentifier\":{\"$\":\"870970-basis:29395306\"},\"recordStatus\":{\"$\":\"active\"},\"formatsAvailable\":{\"format\":[{\"$\":\"dkabm\"},{\"$\":\"marcxchange\"}]},\"objectsAvailable\":{\"identifier\":[{\"$\":\"775100-katalog:29395306\"},{\"$\":\"870970-basis:29395306\"}]}}]},\"formattedCollection\":{\"briefDisplay\":{\"manifestation\":[{\"accessType\":{\"$\":\"physical\"},\"creator\":{\"$\":\"Woody Allen\"},\"fedoraPid\":{\"$\":\"820010-katalog:5530897\"},\"identifier\":{\"$\":\"775100-katalog:29395306\"},\"title\":{\"$\":\"Harry - stykke for stykke\"},\"titleFull\":{\"$\":\"Harry - stykke for stykke\"},\"type\":{\"$\":\"Dvd\"},\"workType\":{\"$\":\"movie\"}}]}}},{\"collection\":{\"resultPosition\":{\"$\":\"8\"},\"numberOfObjects\":{\"$\":\"1\"},\"object\":[{\"record\":{\"identifier\":[{\"$\":\"51088883|870970\",\"@\":\"ac\"},{\"$\":\"http:\\/\\/www.filmstriben.dk\\/fjernleje\\/film\\/details.aspx?id=5080550600\",\"@type\":{\"$\":\"dcterms:URI\",\"@\":\"xsi\"},\"@\":\"dc\"}],\"source\":[{\"$\":\"Filmstriben\",\"@\":\"ac\"}],\"title\":[{\"$\":\"Harry - stykke for stykke\",\"@\":\"dc\"},{\"$\":\"Harry - stykke for stykke\",\"@type\":{\"$\":\"dkdcplus:full\",\"@\":\"xsi\"},\"@\":\"dc\"}],\"alternative\":[{\"$\":\"Deconstructing Harry\",\"@\":\"dcterms\"}],\"creator\":[{\"$\":\"Woody Allen\",\"@type\":{\"$\":\"dkdcplus:drt\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"Allen, Woody\",\"@type\":{\"$\":\"oss:sort\",\"@\":\"xsi\"},\"@\":\"dc\"}],\"subject\":[{\"$\":\"77.7\",\"@type\":{\"$\":\"dkdcplus:DK5\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"Spillefilm\",\"@type\":{\"$\":\"dkdcplus:DK5-Text\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"amerikanske film\",\"@type\":{\"$\":\"dkdcplus:DBCO\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"forfattere\",\"@type\":{\"$\":\"dkdcplus:DBCS\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"komedier\",\"@type\":{\"$\":\"dkdcplus:DBCS\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"komedier\",\"@type\":{\"$\":\"dkdcplus:genre\",\"@\":\"xsi\"},\"@\":\"dc\"}],\"abstract\":[{\"$\":\"Den sexfikserede, neurotiske new yorker-forfatter Harry Block f\\u00e5r vennekredsen p\\u00e5 nakken med sin selvudleverende roman. Hans fiktive romanfigurer blander sig i hans liv, hvor problemerne t\\u00e5rner sig op\",\"@\":\"dcterms\"}],\"description\":[{\"$\":\"Produktion: Magnolia Productions (USA), Sweetland Films, 1997\",\"@\":\"dc\"}],\"audience\":[{\"$\":\"M\\u00e6rkning: Tilladt for b\\u00f8rn over 15 \\u00e5r\",\"@type\":{\"$\":\"dkdcplus:medieraad\",\"@\":\"xsi\"},\"@\":\"dcterms\"},{\"$\":\"voksenmaterialer\",\"@\":\"dcterms\"}],\"publisher\":[{\"$\":\"Atlantic Film\",\"@\":\"dc\"}],\"contributor\":[{\"$\":\"Carlo Di Palma\",\"@type\":{\"$\":\"dkdcplus:cng\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"Woody Allen\",\"@type\":{\"$\":\"dkdcplus:aus\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"Caroline Aaron\",\"@type\":{\"$\":\"dkdcplus:act\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"Woody Allen\",\"@type\":{\"$\":\"dkdcplus:act\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"Kirstie Alley\",\"@type\":{\"$\":\"dkdcplus:act\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"Bob Balaban\",\"@type\":{\"$\":\"dkdcplus:act\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"Richard Benjamin\",\"@type\":{\"$\":\"dkdcplus:act\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"Eric Bogosian\",\"@type\":{\"$\":\"dkdcplus:act\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"Billy Crystal\",\"@type\":{\"$\":\"dkdcplus:act\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"Judy Davis\",\"@type\":{\"$\":\"dkdcplus:act\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"Hazelle Goodman\",\"@type\":{\"$\":\"dkdcplus:act\",\"@\":\"xsi\"},\"@\":\"dc\"}],\"date\":[{\"$\":\"2014\",\"@\":\"dc\"}],\"type\":[{\"$\":\"Film (net)\",\"@type\":{\"$\":\"dkdcplus:BibDK-Type\",\"@\":\"xsi\"},\"@\":\"dc\"}],\"extent\":[{\"$\":\"91 min.\",\"@\":\"dcterms\"}],\"language\":[{\"$\":\"eng\",\"@type\":{\"$\":\"dcterms:ISO639-2\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"Engelsk\",\"@\":\"dc\"},{\"$\":\"Dansk\",\"@type\":{\"$\":\"dkdcplus:subtitles\",\"@\":\"xsi\"},\"@\":\"dc\"}],\"spatial\":[{\"$\":\"USA\",\"@type\":{\"$\":\"dkdcplus:DBCS\",\"@\":\"xsi\"},\"@\":\"dcterms\"},{\"$\":\"New York\",\"@type\":{\"$\":\"dkdcplus:DBCS\",\"@\":\"xsi\"},\"@\":\"dcterms\"}],\"@\":\"dkabm\"},\"identifier\":{\"$\":\"870970-basis:51088883\"},\"primaryObjectIdentifier\":{\"$\":\"870970-basis:51088883\"},\"recordStatus\":{\"$\":\"active\"},\"creationDate\":{\"$\":\"2014-05-05\"},\"formatsAvailable\":{\"format\":[{\"$\":\"dkabm\"},{\"$\":\"marcxchange\"}]},\"objectsAvailable\":{\"identifier\":[{\"$\":\"870970-basis:51088883\"}]}}]},\"formattedCollection\":{\"briefDisplay\":{\"manifestation\":[{\"accessType\":{\"$\":\"online\"},\"fedoraPid\":{\"$\":\"870970-basis:51088883\"},\"identifier\":{\"$\":\"870970-basis:51088883\"},\"title\":{\"$\":\"Harry - stykke for stykke\"},\"titleFull\":{\"$\":\"Deconstructing Harry\"},\"type\":{\"$\":\"Film (net)\"},\"workType\":{\"$\":\"movie\"}}]}}},{\"collection\":{\"resultPosition\":{\"$\":\"9\"},\"numberOfObjects\":{\"$\":\"1\"},\"object\":[{\"record\":{\"identifier\":[{\"$\":\"ebr10593006|150008\",\"@\":\"ac\"},{\"$\":\"http:\\/\\/site.ebrary.com\\/lib\\/librarytitles\\/docDetail.action?docID=10593006\",\"@type\":{\"$\":\"dcterms:URI\",\"@\":\"xsi\"},\"@\":\"dc\"}],\"source\":[{\"$\":\"Ebrary\",\"@\":\"ac\"}],\"title\":[{\"$\":\"Harry Redknapp\",\"@\":\"dc\"},{\"$\":\"Harry Redknapp : the biography\",\"@type\":{\"$\":\"dkdcplus:full\",\"@\":\"xsi\"},\"@\":\"dc\"}],\"creator\":[{\"$\":\"Les Roopanarine\",\"@type\":{\"$\":\"dkdcplus:aut\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"Roopanarine, Les\",\"@type\":{\"$\":\"oss:sort\",\"@\":\"xsi\"},\"@\":\"dc\"}],\"subject\":[{\"$\":\"Electronic books\",\"@type\":{\"$\":\"dcterms:LCSH\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"Harry Redknapp (1947-)\",\"@\":\"dc\"},{\"$\":\"Redknapp, Harry (1947-)\",\"@type\":{\"$\":\"oss:sort\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"Soccer managers\",\"@type\":{\"$\":\"dcterms:LCSH\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"West Ham United (Soccer team)\",\"@\":\"dc\"}],\"description\":[{\"$\":\"Electronic reproduction. Palo Alto, Calif. : ebrary, 2011. Available via World Wide Web. Access may be limited to ebrary affiliated libraries\",\"@\":\"dc\"}],\"audience\":[{\"$\":\"voksenmaterialer\",\"@\":\"dcterms\"}],\"publisher\":[{\"$\":\"John Blake\",\"@\":\"dc\"}],\"date\":[{\"$\":\"2010\",\"@\":\"dc\"}],\"type\":[{\"$\":\"Ebog\",\"@type\":{\"$\":\"dkdcplus:BibDK-Type\",\"@\":\"xsi\"},\"@\":\"dc\"}],\"extent\":[{\"$\":\"xviii, 269 s.\",\"@\":\"dcterms\"}],\"language\":[{\"$\":\"eng\",\"@type\":{\"$\":\"dcterms:ISO639-2\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"Engelsk\",\"@\":\"dc\"}],\"@\":\"dkabm\"},\"identifier\":{\"$\":\"150008-public:ebr10593006\"},\"primaryObjectIdentifier\":{\"$\":\"150008-public:ebr10593006\"},\"recordStatus\":{\"$\":\"active\"},\"creationDate\":{\"$\":\"2012-09-25\"},\"formatsAvailable\":{\"format\":[{\"$\":\"dkabm\"},{\"$\":\"marcxchange\"}]},\"objectsAvailable\":{\"identifier\":[{\"$\":\"150008-public:ebr10593006\"}]}}]},\"formattedCollection\":{\"briefDisplay\":{\"manifestation\":[{\"accessType\":{\"$\":\"online\"},\"creator\":{\"$\":\"Les Roopanarine\"},\"fedoraPid\":{\"$\":\"150008-public:ebr10593006\"},\"identifier\":{\"$\":\"150008-public:ebr10593006\"},\"language\":{\"$\":\"Engelsk\"},\"title\":{\"$\":\"Harry Redknapp\"},\"titleFull\":{\"$\":\"Harry Redknapp : the biography\"},\"type\":{\"$\":\"Ebog\"},\"workType\":{\"$\":\"book\"}}]}}},{\"collection\":{\"resultPosition\":{\"$\":\"10\"},\"numberOfObjects\":{\"$\":\"7\"},\"object\":[{\"record\":{\"identifier\":[{\"$\":\"28721420|870970\",\"@\":\"ac\"},{\"$\":\"9788770535984\",\"@type\":{\"$\":\"dkdcplus:ISBN\",\"@\":\"xsi\"},\"@\":\"dc\"}],\"source\":[{\"$\":\"Bibliotekskatalog\",\"@\":\"ac\"},{\"$\":\"Panserhjerte\",\"@\":\"dc\"}],\"title\":[{\"$\":\"Panserhjerte\",\"@\":\"dc\"},{\"$\":\"Panserhjerte\",\"@type\":{\"$\":\"dkdcplus:full\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"Krimiserien med Harry Hole ; 8\",\"@type\":{\"$\":\"dkdcplus:series\",\"@\":\"xsi\"},\"@\":\"dc\"}],\"creator\":[{\"$\":\"Jo Nesb\\u00f8\",\"@type\":{\"$\":\"dkdcplus:aut\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"Nesb\\u00f8, Jo\",\"@type\":{\"$\":\"oss:sort\",\"@\":\"xsi\"},\"@\":\"dc\"}],\"subject\":[{\"$\":\"Sk\\u00f8nlitteratur\",\"@type\":{\"$\":\"dkdcplus:DK5-Text\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"krimi\",\"@type\":{\"$\":\"dkdcplus:DBCS\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"krimi\",\"@type\":{\"$\":\"dkdcplus:genre\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"seriemordere\",\"@type\":{\"$\":\"dkdcplus:DBCS\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"sk\",\"@type\":{\"$\":\"dkdcplus:DK5\",\"@\":\"xsi\"},\"@\":\"dc\"}],\"abstract\":[{\"$\":\"Krimi. Den alkoholiserede og asociale Harry Hole fra drabsafdelingen i Oslo har egentlig sagt op, men bliver hentet tilbage til en makaber sag, hvor en seriemorder er p\\u00e5 spil. Sagen viser sig at v\\u00e6re vidtforgrenet, og den udvikler sig dramatisk og f\\u00f8rer Harry Hole rundt i Norge og Congo\",\"@\":\"dcterms\"}],\"audience\":[{\"$\":\"voksenmaterialer\",\"@\":\"dcterms\"}],\"version\":[{\"$\":\"3. udgave, 7. oplag (2016)\",\"@\":\"dkdcplus\"}],\"publisher\":[{\"$\":\"Modtryk\",\"@\":\"dc\"}],\"contributor\":[{\"$\":\"Allan Hilton Andersen\",\"@type\":{\"$\":\"dkdcplus:trl\",\"@\":\"xsi\"},\"@\":\"dc\"}],\"date\":[{\"$\":\"2011\",\"@\":\"dc\"}],\"type\":[{\"$\":\"Bog\",\"@type\":{\"$\":\"dkdcplus:BibDK-Type\",\"@\":\"xsi\"},\"@\":\"dc\"}],\"extent\":[{\"$\":\"634 sider\",\"@\":\"dcterms\"}],\"language\":[{\"$\":\"dan\",\"@type\":{\"$\":\"dcterms:ISO639-2\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"Dansk\",\"@\":\"dc\"}],\"spatial\":[{\"$\":\"Norge\",\"@type\":{\"$\":\"dkdcplus:DBCS\",\"@\":\"xsi\"},\"@\":\"dcterms\"},{\"$\":\"Oslo\",\"@type\":{\"$\":\"dkdcplus:DBCS\",\"@\":\"xsi\"},\"@\":\"dcterms\"}],\"temporal\":[{\"$\":\"2000-2009\",\"@type\":{\"$\":\"dkdcplus:DBCP\",\"@\":\"xsi\"},\"@\":\"dcterms\"}],\"@\":\"dkabm\"},\"identifier\":{\"$\":\"775100-katalog:28721420\"},\"primaryObjectIdentifier\":{\"$\":\"870970-basis:28721420\"},\"recordStatus\":{\"$\":\"active\"},\"formatsAvailable\":{\"format\":[{\"$\":\"dkabm\"},{\"$\":\"marcxchange\"}]},\"objectsAvailable\":{\"identifier\":[{\"$\":\"775100-katalog:28721420\"},{\"$\":\"870970-basis:28721420\"}]}},{\"identifier\":{\"$\":\"775100-katalog:27948022\"},\"formatsAvailable\":{\"format\":[{\"$\":\"dkabm\"},{\"$\":\"marcxchange\"}]}},{\"identifier\":{\"$\":\"775100-katalog:28037880\"},\"formatsAvailable\":{\"format\":[{\"$\":\"dkabm\"},{\"$\":\"marcxchange\"}]}},{\"identifier\":{\"$\":\"775100-katalog:28037929\"},\"formatsAvailable\":{\"format\":[{\"$\":\"dkabm\"},{\"$\":\"marcxchange\"}]}},{\"identifier\":{\"$\":\"775100-katalog:28037937\"},\"formatsAvailable\":{\"format\":[{\"$\":\"dkabm\"},{\"$\":\"marcxchange\"}]}},{\"identifier\":{\"$\":\"775100-katalog:28002769\"},\"formatsAvailable\":{\"format\":[{\"$\":\"dkabm\"},{\"$\":\"marcxchange\"}]}},{\"identifier\":{\"$\":\"775100-katalog:44739194\"},\"formatsAvailable\":{\"format\":[{\"$\":\"dkabm\"},{\"$\":\"marcxchange\"}]}}]},\"formattedCollection\":{\"briefDisplay\":{\"manifestation\":[{\"accessType\":{\"$\":\"physical\"},\"creator\":{\"$\":\"Jo Nesb\\u00f8\"},\"fedoraPid\":{\"$\":\"860980-katalog:28721420\"},\"identifier\":{\"$\":\"775100-katalog:28721420\"},\"language\":{\"$\":\"Dansk\"},\"title\":{\"$\":\"Panserhjerte\"},\"titleFull\":{\"$\":\"Panserhjerte\"},\"type\":{\"$\":\"Bog\"},\"workType\":{\"$\":\"book\"}},{\"accessType\":{\"$\":\"physical\"},\"creator\":{\"$\":\"Jo Nesb\\u00f8\"},\"fedoraPid\":{\"$\":\"860980-katalog:27948022\"},\"identifier\":{\"$\":\"775100-katalog:27948022\"},\"language\":{\"$\":\"Dansk\"},\"title\":{\"$\":\"Panserhjerte\"},\"titleFull\":{\"$\":\"Panserhjerte\"},\"type\":{\"$\":\"Bog\"},\"workType\":{\"$\":\"book\"}},{\"accessType\":{\"$\":\"physical\"},\"creator\":{\"$\":\"Jo Nesb\\u00f8\"},\"fedoraPid\":{\"$\":\"870970-basis:28037880\"},\"identifier\":{\"$\":\"775100-katalog:28037880\"},\"language\":{\"$\":\"Dansk\"},\"title\":{\"$\":\"Panserhjerte\"},\"titleFull\":{\"$\":\"Panserhjerte\"},\"type\":{\"$\":\"Bog stor skrift (bind 1)\"},\"workType\":{\"$\":\"book\"}},{\"accessType\":{\"$\":\"physical\"},\"creator\":{\"$\":\"Jo Nesb\\u00f8\"},\"fedoraPid\":{\"$\":\"810015-katalog:007976833__1\"},\"identifier\":{\"$\":\"775100-katalog:28037929\"},\"language\":{\"$\":\"Dansk\"},\"title\":{\"$\":\"Panserhjerte\"},\"titleFull\":{\"$\":\"Panserhjerte\"},\"type\":{\"$\":\"Bog stor skrift (bind 1)\"},\"workType\":{\"$\":\"book\"}},{\"accessType\":{\"$\":\"physical\"},\"creator\":{\"$\":\"Jo Nesb\\u00f8\"},\"fedoraPid\":{\"$\":\"870970-basis:28037937\"},\"identifier\":{\"$\":\"775100-katalog:28037937\"},\"language\":{\"$\":\"Dansk\"},\"title\":{\"$\":\"Panserhjerte\"},\"titleFull\":{\"$\":\"Panserhjerte\"},\"type\":{\"$\":\"Bog stor skrift (bind 3)\"},\"workType\":{\"$\":\"book\"}},{\"accessType\":{\"$\":\"physical\"},\"creator\":{\"$\":\"Jo Nesb\\u00f8\"},\"fedoraPid\":{\"$\":\"870970-basis:28002769\"},\"identifier\":{\"$\":\"775100-katalog:28002769\"},\"language\":{\"$\":\"Dansk\"},\"title\":{\"$\":\"Panserhjerte\"},\"titleFull\":{\"$\":\"Panserhjerte\"},\"type\":{\"$\":\"Lydbog (cd)\"},\"workType\":{\"$\":\"audiobook\"}},{\"accessType\":{\"$\":\"physical\"},\"creator\":{\"$\":\"Jo Nesb\\u00f8\"},\"fedoraPid\":{\"$\":\"125610-katalog:44739194\"},\"identifier\":{\"$\":\"775100-katalog:44739194\"},\"language\":{\"$\":\"Dansk\"},\"title\":{\"$\":\"Panserhjerte\"},\"titleFull\":{\"$\":\"Panserhjerte\"},\"type\":{\"$\":\"Lydbog (cd-mp3)\"},\"workType\":{\"$\":\"audiobook\"}}]}}}],\"facetResult\":null,\"statInfo\":{\"fedoraRecordsCached\":{\"$\":\"97\"},\"fedoraRecordsRead\":{\"$\":\"7\"},\"time\":{\"$\":\"0.750248\"},\"trackingId\":{\"$\":\"2016-05-30T21:03:21:661160:18846\"}}}},\"@namespaces\":{\"ac\":\"http:\\/\\/biblstandard.dk\\/ac\\/namespace\\/\",\"dbcaddi\":\"http:\\/\\/oss.dbc.dk\\/rdf\\/dbcaddi#\",\"dbcbib\":\"http:\\/\\/oss.dbc.dk\\/rdf\\/dbcbib#\",\"dc\":\"http:\\/\\/purl.org\\/dc\\/elements\\/1.1\\/\",\"dcmitype\":\"http:\\/\\/purl.org\\/dc\\/dcmitype\\/\",\"dcterms\":\"http:\\/\\/purl.org\\/dc\\/terms\\/\",\"dkabm\":\"http:\\/\\/biblstandard.dk\\/abm\\/namespace\\/dkabm\\/\",\"dkdcplus\":\"http:\\/\\/biblstandard.dk\\/abm\\/namespace\\/dkdcplus\\/\",\"docbook\":\"http:\\/\\/docbook.org\\/ns\\/docbook\",\"kml\":\"http:\\/\\/www.opengis.net\\/kml\\/2.2\",\"marcx\":\"info:lc\\/xmlns\\/marcxchange-v1\",\"mx\":\"http:\\/\\/www.loc.gov\\/MARC21\\/slim\",\"of\":\"http:\\/\\/oss.dbc.dk\\/ns\\/openformat\",\"ofo\":\"http:\\/\\/oss.dbc.dk\\/ns\\/openformatoutput\",\"os\":\"http:\\/\\/oss.dbc.dk\\/ns\\/opensearch\",\"oso\":\"http:\\/\\/oss.dbc.dk\\/ns\\/opensearchobjects\",\"oss\":\"http:\\/\\/oss.dbc.dk\\/ns\\/osstypes\",\"xs\":\"http:\\/\\/www.w3.org\\/2001\\/XMLSchema\",\"xsi\":\"http:\\/\\/www.w3.org\\/2001\\/XMLSchema-instance\"}}",
-  "[\"moreinfo\",{\"qs\":{\"action\":\"moreInfo\",\"authenticationUser\":\"XXXXX\",\"authenticationGroup\":\"XXXXX\",\"authenticationPassword\":\"XXXXX\",\"pidList\":\"775100-katalog:28277229|775100-katalog:27447406|775100-katalog:24039978|775100-katalog:50536661|150008-public:ebr10440572|870970-basis:50691446|775100-katalog:29395306|870970-basis:51088883|150008-public:ebr10593006|775100-katalog:28721420\",\"outputType\":\"json\"}}]": "{\"moreInfoResponse\":{\"requestStatus\":{\"statusEnum\":{\"$\":\"ok\",\"@\":\"mi\"},\"errorText\":{\"$\":\"\",\"@\":\"mi\"},\"@\":\"mi\"},\"identifierInformation\":[{\"identifierKnown\":{\"$\":\"true\",\"@\":\"mi\"},\"identifier\":{\"pid\":{\"$\":\"775100-katalog:28277229\",\"@\":\"mi\"},\"@\":\"mi\"},\"coverImage\":[{\"$\":\"http:\\/\\/moreinfo.addi.dk\\/2.6\\/more_info_get.php?lokalid=28277229&attachment_type=forside_117&bibliotek=870970&source_id=870970&key=1c1e93fc2a0bf0159930\",\"@imageSize\":{\"$\":\"detail_117\",\"@\":\"mi\"},\"@imageFormat\":{\"$\":\"jpeg\",\"@\":\"mi\"},\"@\":\"mi\"},{\"$\":\"http:\\/\\/moreinfo.addi.dk\\/2.6\\/more_info_get.php?lokalid=28277229&attachment_type=forside_207&bibliotek=870970&source_id=870970&key=eb18326b43f545fbe029\",\"@imageSize\":{\"$\":\"detail_207\",\"@\":\"mi\"},\"@imageFormat\":{\"$\":\"jpeg\",\"@\":\"mi\"},\"@\":\"mi\"},{\"$\":\"http:\\/\\/moreinfo.addi.dk\\/2.6\\/more_info_get.php?lokalid=28277229&attachment_type=forside_42&bibliotek=870970&source_id=870970&key=6a97fff61136f33be1ac\",\"@imageSize\":{\"$\":\"detail_42\",\"@\":\"mi\"},\"@imageFormat\":{\"$\":\"jpeg\",\"@\":\"mi\"},\"@\":\"mi\"},{\"$\":\"http:\\/\\/moreinfo.addi.dk\\/2.6\\/more_info_get.php?lokalid=28277229&attachment_type=forside_500&bibliotek=870970&source_id=870970&key=097686172773cbbb5ff9\",\"@imageSize\":{\"$\":\"detail_500\",\"@\":\"mi\"},\"@imageFormat\":{\"$\":\"jpeg\",\"@\":\"mi\"},\"@\":\"mi\"},{\"$\":\"http:\\/\\/moreinfo.addi.dk\\/2.6\\/more_info_get.php?lokalid=28277229&attachment_type=forside_lille&bibliotek=870970&source_id=870970&key=f41384dea909809d9d6d\",\"@imageSize\":{\"$\":\"thumbnail\",\"@\":\"mi\"},\"@imageFormat\":{\"$\":\"jpeg\",\"@\":\"mi\"},\"@\":\"mi\"},{\"$\":\"http:\\/\\/moreinfo.addi.dk\\/2.6\\/more_info_get.php?lokalid=28277229&attachment_type=forside_stor&bibliotek=870970&source_id=870970&key=b773fd3131c2dac33849\",\"@imageSize\":{\"$\":\"detail\",\"@\":\"mi\"},\"@imageFormat\":{\"$\":\"jpeg\",\"@\":\"mi\"},\"@\":\"mi\"}],\"@\":\"mi\"},{\"identifierKnown\":{\"$\":\"true\",\"@\":\"mi\"},\"identifier\":{\"pid\":{\"$\":\"775100-katalog:27447406\",\"@\":\"mi\"},\"@\":\"mi\"},\"@\":\"mi\"},{\"identifierKnown\":{\"$\":\"true\",\"@\":\"mi\"},\"identifier\":{\"pid\":{\"$\":\"775100-katalog:24039978\",\"@\":\"mi\"},\"@\":\"mi\"},\"@\":\"mi\"},{\"identifierKnown\":{\"$\":\"true\",\"@\":\"mi\"},\"identifier\":{\"pid\":{\"$\":\"775100-katalog:50536661\",\"@\":\"mi\"},\"@\":\"mi\"},\"backImage\":[{\"$\":\"http:\\/\\/moreinfo.addi.dk\\/2.6\\/more_info_get.php?lokalid=50536661&attachment_type=bagside_117&bibliotek=870970&source_id=870970&key=6b11e91d654fe2f6003e\",\"@imageSize\":{\"$\":\"detail_117\",\"@\":\"mi\"},\"@imageFormat\":{\"$\":\"jpeg\",\"@\":\"mi\"},\"@\":\"mi\"},{\"$\":\"http:\\/\\/moreinfo.addi.dk\\/2.6\\/more_info_get.php?lokalid=50536661&attachment_type=bagside_207&bibliotek=870970&source_id=870970&key=86436a071399317a50c8\",\"@imageSize\":{\"$\":\"detail_207\",\"@\":\"mi\"},\"@imageFormat\":{\"$\":\"jpeg\",\"@\":\"mi\"},\"@\":\"mi\"},{\"$\":\"http:\\/\\/moreinfo.addi.dk\\/2.6\\/more_info_get.php?lokalid=50536661&attachment_type=bagside_42&bibliotek=870970&source_id=870970&key=ef946b02b71977601b29\",\"@imageSize\":{\"$\":\"detail_42\",\"@\":\"mi\"},\"@imageFormat\":{\"$\":\"jpeg\",\"@\":\"mi\"},\"@\":\"mi\"},{\"$\":\"http:\\/\\/moreinfo.addi.dk\\/2.6\\/more_info_get.php?lokalid=50536661&attachment_type=bagside_500&bibliotek=870970&source_id=870970&key=25221893362969715282\",\"@imageSize\":{\"$\":\"detail_500\",\"@\":\"mi\"},\"@imageFormat\":{\"$\":\"jpeg\",\"@\":\"mi\"},\"@\":\"mi\"},{\"$\":\"http:\\/\\/moreinfo.addi.dk\\/2.6\\/more_info_get.php?lokalid=50536661&attachment_type=bagside_lille&bibliotek=870970&source_id=870970&key=f59584404bab7bae245d\",\"@imageSize\":{\"$\":\"thumbnail\",\"@\":\"mi\"},\"@imageFormat\":{\"$\":\"jpeg\",\"@\":\"mi\"},\"@\":\"mi\"},{\"$\":\"http:\\/\\/moreinfo.addi.dk\\/2.6\\/more_info_get.php?lokalid=50536661&attachment_type=bagside_stor&bibliotek=870970&source_id=870970&key=41ce09fdf20d1763c9c9\",\"@imageSize\":{\"$\":\"detail\",\"@\":\"mi\"},\"@imageFormat\":{\"$\":\"jpeg\",\"@\":\"mi\"},\"@\":\"mi\"}],\"backPage\":[{\"$\":\"http:\\/\\/moreinfo.addi.dk\\/2.6\\/more_info_get.php?lokalid=50536661&attachment_type=bagside_pdf&bibliotek=870970&source_id=870970&key=f34d24b5b632528cd45f\",\"@\":\"mi\"}],\"coverImage\":[{\"$\":\"http:\\/\\/moreinfo.addi.dk\\/2.6\\/more_info_get.php?lokalid=50536661&attachment_type=forside_117&bibliotek=870970&source_id=870970&key=3c45f1abe3f76fbee17f\",\"@imageSize\":{\"$\":\"detail_117\",\"@\":\"mi\"},\"@imageFormat\":{\"$\":\"jpeg\",\"@\":\"mi\"},\"@\":\"mi\"},{\"$\":\"http:\\/\\/moreinfo.addi.dk\\/2.6\\/more_info_get.php?lokalid=50536661&attachment_type=forside_207&bibliotek=870970&source_id=870970&key=769bc090401f9291ae7a\",\"@imageSize\":{\"$\":\"detail_207\",\"@\":\"mi\"},\"@imageFormat\":{\"$\":\"jpeg\",\"@\":\"mi\"},\"@\":\"mi\"},{\"$\":\"http:\\/\\/moreinfo.addi.dk\\/2.6\\/more_info_get.php?lokalid=50536661&attachment_type=forside_42&bibliotek=870970&source_id=870970&key=bca17d29880b818e23b9\",\"@imageSize\":{\"$\":\"detail_42\",\"@\":\"mi\"},\"@imageFormat\":{\"$\":\"jpeg\",\"@\":\"mi\"},\"@\":\"mi\"},{\"$\":\"http:\\/\\/moreinfo.addi.dk\\/2.6\\/more_info_get.php?lokalid=50536661&attachment_type=forside_500&bibliotek=870970&source_id=870970&key=a6351a52e0811d16e65f\",\"@imageSize\":{\"$\":\"detail_500\",\"@\":\"mi\"},\"@imageFormat\":{\"$\":\"jpeg\",\"@\":\"mi\"},\"@\":\"mi\"},{\"$\":\"http:\\/\\/moreinfo.addi.dk\\/2.6\\/more_info_get.php?lokalid=50536661&attachment_type=forside_lille&bibliotek=870970&source_id=870970&key=81a0f92ab75609218da3\",\"@imageSize\":{\"$\":\"thumbnail\",\"@\":\"mi\"},\"@imageFormat\":{\"$\":\"jpeg\",\"@\":\"mi\"},\"@\":\"mi\"},{\"$\":\"http:\\/\\/moreinfo.addi.dk\\/2.6\\/more_info_get.php?lokalid=50536661&attachment_type=forside_stor&bibliotek=870970&source_id=870970&key=734d34e6925c51213eb3\",\"@imageSize\":{\"$\":\"detail\",\"@\":\"mi\"},\"@imageFormat\":{\"$\":\"jpeg\",\"@\":\"mi\"},\"@\":\"mi\"}],\"@\":\"mi\"},{\"identifierKnown\":{\"$\":\"false\",\"@\":\"mi\"},\"identifier\":{\"pid\":{\"$\":\"150008-public:ebr10440572\",\"@\":\"mi\"},\"@\":\"mi\"},\"@\":\"mi\"},{\"identifierKnown\":{\"$\":\"true\",\"@\":\"mi\"},\"identifier\":{\"pid\":{\"$\":\"870970-basis:50691446\",\"@\":\"mi\"},\"@\":\"mi\"},\"@\":\"mi\"},{\"identifierKnown\":{\"$\":\"true\",\"@\":\"mi\"},\"identifier\":{\"pid\":{\"$\":\"775100-katalog:29395306\",\"@\":\"mi\"},\"@\":\"mi\"},\"coverImage\":[{\"$\":\"http:\\/\\/moreinfo.addi.dk\\/2.6\\/more_info_get.php?lokalid=29395306&attachment_type=forside_117&bibliotek=870970&source_id=870970&key=bdc54984ba9be6afbae1\",\"@imageSize\":{\"$\":\"detail_117\",\"@\":\"mi\"},\"@imageFormat\":{\"$\":\"jpeg\",\"@\":\"mi\"},\"@\":\"mi\"},{\"$\":\"http:\\/\\/moreinfo.addi.dk\\/2.6\\/more_info_get.php?lokalid=29395306&attachment_type=forside_207&bibliotek=870970&source_id=870970&key=09008a29e4bef0e31070\",\"@imageSize\":{\"$\":\"detail_207\",\"@\":\"mi\"},\"@imageFormat\":{\"$\":\"jpeg\",\"@\":\"mi\"},\"@\":\"mi\"},{\"$\":\"http:\\/\\/moreinfo.addi.dk\\/2.6\\/more_info_get.php?lokalid=29395306&attachment_type=forside_42&bibliotek=870970&source_id=870970&key=0818b9623f746f149d9c\",\"@imageSize\":{\"$\":\"detail_42\",\"@\":\"mi\"},\"@imageFormat\":{\"$\":\"jpeg\",\"@\":\"mi\"},\"@\":\"mi\"},{\"$\":\"http:\\/\\/moreinfo.addi.dk\\/2.6\\/more_info_get.php?lokalid=29395306&attachment_type=forside_500&bibliotek=870970&source_id=870970&key=6bad7a31edd673f1d239\",\"@imageSize\":{\"$\":\"detail_500\",\"@\":\"mi\"},\"@imageFormat\":{\"$\":\"jpeg\",\"@\":\"mi\"},\"@\":\"mi\"},{\"$\":\"http:\\/\\/moreinfo.addi.dk\\/2.6\\/more_info_get.php?lokalid=29395306&attachment_type=forside_lille&bibliotek=870970&source_id=870970&key=10fdbf7c81eb8829658a\",\"@imageSize\":{\"$\":\"thumbnail\",\"@\":\"mi\"},\"@imageFormat\":{\"$\":\"jpeg\",\"@\":\"mi\"},\"@\":\"mi\"},{\"$\":\"http:\\/\\/moreinfo.addi.dk\\/2.6\\/more_info_get.php?lokalid=29395306&attachment_type=forside_stor&bibliotek=870970&source_id=870970&key=8b9400015298a073c8bd\",\"@imageSize\":{\"$\":\"detail\",\"@\":\"mi\"},\"@imageFormat\":{\"$\":\"jpeg\",\"@\":\"mi\"},\"@\":\"mi\"}],\"@\":\"mi\"},{\"identifierKnown\":{\"$\":\"true\",\"@\":\"mi\"},\"identifier\":{\"pid\":{\"$\":\"870970-basis:51088883\",\"@\":\"mi\"},\"@\":\"mi\"},\"@\":\"mi\"},{\"identifierKnown\":{\"$\":\"false\",\"@\":\"mi\"},\"identifier\":{\"pid\":{\"$\":\"150008-public:ebr10593006\",\"@\":\"mi\"},\"@\":\"mi\"},\"@\":\"mi\"},{\"identifierKnown\":{\"$\":\"true\",\"@\":\"mi\"},\"identifier\":{\"pid\":{\"$\":\"775100-katalog:28721420\",\"@\":\"mi\"},\"@\":\"mi\"},\"backImage\":[{\"$\":\"http:\\/\\/moreinfo.addi.dk\\/2.6\\/more_info_get.php?lokalid=28721420&attachment_type=bagside_117&bibliotek=870970&source_id=870970&key=a59e759f35d1abc0b4f3\",\"@imageSize\":{\"$\":\"detail_117\",\"@\":\"mi\"},\"@imageFormat\":{\"$\":\"jpeg\",\"@\":\"mi\"},\"@\":\"mi\"},{\"$\":\"http:\\/\\/moreinfo.addi.dk\\/2.6\\/more_info_get.php?lokalid=28721420&attachment_type=bagside_207&bibliotek=870970&source_id=870970&key=09720f8cd9d5bd8465f3\",\"@imageSize\":{\"$\":\"detail_207\",\"@\":\"mi\"},\"@imageFormat\":{\"$\":\"jpeg\",\"@\":\"mi\"},\"@\":\"mi\"},{\"$\":\"http:\\/\\/moreinfo.addi.dk\\/2.6\\/more_info_get.php?lokalid=28721420&attachment_type=bagside_42&bibliotek=870970&source_id=870970&key=1d7e824c004d1e3f293f\",\"@imageSize\":{\"$\":\"detail_42\",\"@\":\"mi\"},\"@imageFormat\":{\"$\":\"jpeg\",\"@\":\"mi\"},\"@\":\"mi\"},{\"$\":\"http:\\/\\/moreinfo.addi.dk\\/2.6\\/more_info_get.php?lokalid=28721420&attachment_type=bagside_500&bibliotek=870970&source_id=870970&key=29ca15a6b7f49ffc9b0f\",\"@imageSize\":{\"$\":\"detail_500\",\"@\":\"mi\"},\"@imageFormat\":{\"$\":\"jpeg\",\"@\":\"mi\"},\"@\":\"mi\"},{\"$\":\"http:\\/\\/moreinfo.addi.dk\\/2.6\\/more_info_get.php?lokalid=28721420&attachment_type=bagside_lille&bibliotek=870970&source_id=870970&key=f4b789e6a5e0c3abf5b1\",\"@imageSize\":{\"$\":\"thumbnail\",\"@\":\"mi\"},\"@imageFormat\":{\"$\":\"jpeg\",\"@\":\"mi\"},\"@\":\"mi\"},{\"$\":\"http:\\/\\/moreinfo.addi.dk\\/2.6\\/more_info_get.php?lokalid=28721420&attachment_type=bagside_stor&bibliotek=870970&source_id=870970&key=df94ac791b91de96edb9\",\"@imageSize\":{\"$\":\"detail\",\"@\":\"mi\"},\"@imageFormat\":{\"$\":\"jpeg\",\"@\":\"mi\"},\"@\":\"mi\"}],\"backPage\":[{\"$\":\"http:\\/\\/moreinfo.addi.dk\\/2.6\\/more_info_get.php?lokalid=28721420&attachment_type=bagside_pdf&bibliotek=870970&source_id=870970&key=4ba3622c4c94c154a0a9\",\"@\":\"mi\"}],\"coverImage\":[{\"$\":\"http:\\/\\/moreinfo.addi.dk\\/2.6\\/more_info_get.php?lokalid=28721420&attachment_type=forside_117&bibliotek=870970&source_id=870970&key=81e14acfc7f81d46058c\",\"@imageSize\":{\"$\":\"detail_117\",\"@\":\"mi\"},\"@imageFormat\":{\"$\":\"jpeg\",\"@\":\"mi\"},\"@\":\"mi\"},{\"$\":\"http:\\/\\/moreinfo.addi.dk\\/2.6\\/more_info_get.php?lokalid=28721420&attachment_type=forside_207&bibliotek=870970&source_id=870970&key=7daa515db53cfc5a258f\",\"@imageSize\":{\"$\":\"detail_207\",\"@\":\"mi\"},\"@imageFormat\":{\"$\":\"jpeg\",\"@\":\"mi\"},\"@\":\"mi\"},{\"$\":\"http:\\/\\/moreinfo.addi.dk\\/2.6\\/more_info_get.php?lokalid=28721420&attachment_type=forside_42&bibliotek=870970&source_id=870970&key=96da116f98976760cb52\",\"@imageSize\":{\"$\":\"detail_42\",\"@\":\"mi\"},\"@imageFormat\":{\"$\":\"jpeg\",\"@\":\"mi\"},\"@\":\"mi\"},{\"$\":\"http:\\/\\/moreinfo.addi.dk\\/2.6\\/more_info_get.php?lokalid=28721420&attachment_type=forside_500&bibliotek=870970&source_id=870970&key=a1cf92282141b587324f\",\"@imageSize\":{\"$\":\"detail_500\",\"@\":\"mi\"},\"@imageFormat\":{\"$\":\"jpeg\",\"@\":\"mi\"},\"@\":\"mi\"},{\"$\":\"http:\\/\\/moreinfo.addi.dk\\/2.6\\/more_info_get.php?lokalid=28721420&attachment_type=forside_lille&bibliotek=870970&source_id=870970&key=db1f992e76c0cf878a5a\",\"@imageSize\":{\"$\":\"thumbnail\",\"@\":\"mi\"},\"@imageFormat\":{\"$\":\"jpeg\",\"@\":\"mi\"},\"@\":\"mi\"},{\"$\":\"http:\\/\\/moreinfo.addi.dk\\/2.6\\/more_info_get.php?lokalid=28721420&attachment_type=forside_stor&bibliotek=870970&source_id=870970&key=70e9d1c18dae1f37a59b\",\"@imageSize\":{\"$\":\"detail\",\"@\":\"mi\"},\"@imageFormat\":{\"$\":\"jpeg\",\"@\":\"mi\"},\"@\":\"mi\"}],\"@\":\"mi\"}],\"@\":\"mi\"},\"@namespaces\":{\"mi\":\"http:\\/\\/oss.dbc.dk\\/ns\\/moreinfo\"}}\n",
-  "[\"opensearch\",{\"qs\":{\"action\":\"getObject\",\"identifier\":[\"775100-katalog:28277229\",\"775100-katalog:27447406\",\"775100-katalog:24039978\",\"775100-katalog:50536661\",\"150008-public:ebr10440572\",\"870970-basis:50691446\",\"775100-katalog:29395306\",\"870970-basis:51088883\",\"150008-public:ebr10593006\",\"775100-katalog:28721420\"],\"agency\":\"775100\",\"profile\":\"opac\",\"outputType\":\"json\",\"objectFormat\":[],\"relationData\":\"uri\"}}]": "{\"searchResponse\":{\"result\":{\"hitCount\":{\"$\":\"10\"},\"collectionCount\":{\"$\":\"10\"},\"more\":{\"$\":\"false\"},\"searchResult\":[{\"collection\":{\"resultPosition\":{\"$\":\"1\"},\"numberOfObjects\":{\"$\":\"1\"},\"object\":[{\"record\":{\"identifier\":[{\"$\":\"28277229|870970\",\"@\":\"ac\"}],\"source\":[{\"$\":\"Bibliotekskatalog\",\"@\":\"ac\"}],\"title\":[{\"$\":\"Harry Brown\",\"@\":\"dc\"},{\"$\":\"Harry Brown\",\"@type\":{\"$\":\"dkdcplus:full\",\"@\":\"xsi\"},\"@\":\"dc\"}],\"creator\":[{\"$\":\"Daniel Barber\",\"@type\":{\"$\":\"dkdcplus:drt\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"Barber, Daniel\",\"@type\":{\"$\":\"oss:sort\",\"@\":\"xsi\"},\"@\":\"dc\"}],\"subject\":[{\"$\":\"77.7\",\"@type\":{\"$\":\"dkdcplus:DK5\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"Spillefilm\",\"@type\":{\"$\":\"dkdcplus:DK5-Text\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"actionfilm\",\"@type\":{\"$\":\"dkdcplus:DBCS\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"actionfilm\",\"@type\":{\"$\":\"dkdcplus:genre\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"krimi\",\"@type\":{\"$\":\"dkdcplus:DBCS\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"krimi\",\"@type\":{\"$\":\"dkdcplus:genre\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"narkokriminalitet\",\"@type\":{\"$\":\"dkdcplus:DBCS\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"selvt\\u00e6gt\",\"@type\":{\"$\":\"dkdcplus:DBCS\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"vold\",\"@type\":{\"$\":\"dkdcplus:DBCS\",\"@\":\"xsi\"},\"@\":\"dc\"}],\"abstract\":[{\"$\":\"Da pensionisten Harry Browns gamle ven myrdes af nogle unge b\\u00f8ller, st\\u00e5r politiet magtesl\\u00f8se. Harry, der har en milit\\u00e6r baggrund, tirres derfor til at tage sagen i egen h\\u00e5nd\",\"@\":\"dcterms\"}],\"description\":[{\"$\":\"Originalfilmen: Storbritannien : Marv Partners : UK Film Council : in association with HanWay Films : Prescience : Framestone Features, 2009\",\"@\":\"dc\"}],\"audience\":[{\"$\":\"M\\u00e6rkning: Tilladt for b\\u00f8rn over 15 \\u00e5r\",\"@type\":{\"$\":\"dkdcplus:medieraad\",\"@\":\"xsi\"},\"@\":\"dcterms\"},{\"$\":\"voksenmaterialer\",\"@\":\"dcterms\"}],\"publisher\":[{\"$\":\"Nordisk Film\",\"@\":\"dc\"}],\"contributor\":[{\"$\":\"Daniel Barber\",\"@\":\"dc\"},{\"$\":\"Gary Young (manuskriptforfatter)\",\"@\":\"dc\"},{\"$\":\"Martin Ruhe\",\"@\":\"dc\"},{\"$\":\"Michael Caine\",\"@type\":{\"$\":\"dkdcplus:act\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"Emily Mortimer\",\"@type\":{\"$\":\"dkdcplus:act\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"Charlie Creed Miles\",\"@type\":{\"$\":\"dkdcplus:act\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"David Bradley\",\"@type\":{\"$\":\"dkdcplus:act\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"Iain Glen\",\"@type\":{\"$\":\"dkdcplus:act\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"Sean Harris\",\"@type\":{\"$\":\"dkdcplus:act\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"Ben Drew\",\"@type\":{\"$\":\"dkdcplus:act\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"Jack O'Connell\",\"@type\":{\"$\":\"dkdcplus:act\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"Jamie Downey\",\"@type\":{\"$\":\"dkdcplus:act\",\"@\":\"xsi\"},\"@\":\"dc\"}],\"date\":[{\"$\":\"2010\",\"@\":\"dc\"}],\"type\":[{\"$\":\"Dvd\",\"@type\":{\"$\":\"dkdcplus:BibDK-Type\",\"@\":\"xsi\"},\"@\":\"dc\"}],\"format\":[{\"$\":\"1 dvd-video\",\"@\":\"dc\"}],\"extent\":[{\"$\":\"99 min.\",\"@\":\"dcterms\"}],\"language\":[{\"$\":\"eng\",\"@type\":{\"$\":\"dcterms:ISO639-2\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"Engelsk\",\"@\":\"dc\"},{\"$\":\"Dansk\",\"@type\":{\"$\":\"dkdcplus:subtitles\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"Norsk\",\"@type\":{\"$\":\"dkdcplus:subtitles\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"Svensk\",\"@type\":{\"$\":\"dkdcplus:subtitles\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"Finsk\",\"@type\":{\"$\":\"dkdcplus:subtitles\",\"@\":\"xsi\"},\"@\":\"dc\"}],\"@\":\"dkabm\"},\"identifier\":{\"$\":\"775100-katalog:28277229\"},\"primaryObjectIdentifier\":{\"$\":\"870970-basis:28277229\"},\"recordStatus\":{\"$\":\"active\"},\"relations\":{\"relation\":[{\"relationType\":{\"$\":\"dbcaddi:hasReview\"},\"relationUri\":{\"$\":\"870971-anmeld:34132593\"}},{\"relationType\":{\"$\":\"dbcaddi:hasReview\"},\"relationUri\":{\"$\":\"870971-anmeld:34141851\"}},{\"relationType\":{\"$\":\"dbcaddi:hasReview\"},\"relationUri\":{\"$\":\"870971-anmeld:34167109\"}},{\"relationType\":{\"$\":\"dbcaddi:hasReview\"},\"relationUri\":{\"$\":\"870971-anmeld:34132623\"}},{\"relationType\":{\"$\":\"dbcaddi:hasReview\"},\"relationUri\":{\"$\":\"870971-anmeld:34132585\"}},{\"relationType\":{\"$\":\"dbcaddi:hasReview\"},\"relationUri\":{\"$\":\"870971-anmeld:34132577\"}},{\"relationType\":{\"$\":\"dbcaddi:hasReview\"},\"relationUri\":{\"$\":\"870971-anmeld:34132569\"}},{\"relationType\":{\"$\":\"dbcaddi:hasReview\"},\"relationUri\":{\"$\":\"870971-anmeld:34132240\"}},{\"relationType\":{\"$\":\"dbcaddi:hasReview\"},\"relationUri\":{\"$\":\"870971-anmeld:34410178\"}},{\"relationType\":{\"$\":\"dbcaddi:hasReview\"},\"relationUri\":{\"$\":\"870976-anmeld:30897048\"}}]},\"formatsAvailable\":{\"format\":[{\"$\":\"dkabm\"},{\"$\":\"marcxchange\"}]},\"objectsAvailable\":{\"identifier\":[{\"$\":\"775100-katalog:28277229\"},{\"$\":\"870970-basis:28277229\"}]}}]}},{\"collection\":{\"resultPosition\":{\"$\":\"2\"},\"numberOfObjects\":{\"$\":\"1\"},\"object\":[{\"record\":{\"identifier\":[{\"$\":\"27447406|870970\",\"@\":\"ac\"}],\"source\":[{\"$\":\"Bibliotekskatalog\",\"@\":\"ac\"}],\"title\":[{\"$\":\"Dirty Harry\",\"@\":\"dc\"},{\"$\":\"Dirty Harry\",\"@type\":{\"$\":\"dkdcplus:full\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"The Dirty Harry collection\",\"@type\":{\"$\":\"dkdcplus:series\",\"@\":\"xsi\"},\"@\":\"dc\"}],\"alternative\":[{\"$\":\"Dirty Harry vender tilbage\",\"@\":\"dcterms\"}],\"creator\":[{\"$\":\"Don Siegel\",\"@type\":{\"$\":\"dkdcplus:drt\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"Siegel, Don\",\"@type\":{\"$\":\"oss:sort\",\"@\":\"xsi\"},\"@\":\"dc\"}],\"subject\":[{\"$\":\"77.7\",\"@type\":{\"$\":\"dkdcplus:DK5\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"Spillefilm\",\"@type\":{\"$\":\"dkdcplus:DK5-Text\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"actionfilm\",\"@type\":{\"$\":\"dkdcplus:DBCS\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"actionfilm\",\"@type\":{\"$\":\"dkdcplus:genre\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"politidetektiver\",\"@type\":{\"$\":\"dkdcplus:DBCS\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"seriemordere\",\"@type\":{\"$\":\"dkdcplus:DBCS\",\"@\":\"xsi\"},\"@\":\"dc\"}],\"abstract\":[{\"$\":\"Kriminalassistent Harry Callahan m\\u00e5 sande, at regler og paragraffer er til for at brydes. Ellers slipper en psykopatisk morder godt fra endnu flere forbrydelser. Og \\\"Dirty Harry\\\" f\\u00e5r altid sin mand og det sidste ord!\",\"@\":\"dcterms\"}],\"description\":[{\"$\":\"Originalfilmen: USA : Warner Bros. : Malpaso Company, 1971\",\"@\":\"dc\"},{\"$\":\"Renewed edition: 1999\",\"@\":\"dc\"},{\"$\":\"Af indholdet: Special features (Commentary by Richard Schickel ; Dirty Harry : the original ; Interview gallery ; Dirty Harry's way ; Dirty Harry trailer gallery) ; Bonus disc: Indhold: The long shadow of Dirty Harry ; Clint Eastwood : the man from Malpaso\",\"@\":\"dc\"}],\"audience\":[{\"$\":\"M\\u00e6rkning: Tilladt for b\\u00f8rn over 15 \\u00e5r\",\"@type\":{\"$\":\"dkdcplus:medieraad\",\"@\":\"xsi\"},\"@\":\"dcterms\"},{\"$\":\"voksenmaterialer\",\"@\":\"dcterms\"}],\"version\":[{\"$\":\"Renewed edition (2 disc special edition)\",\"@\":\"dkdcplus\"}],\"publisher\":[{\"$\":\"Warner Bros. Entertainment Danmark\",\"@\":\"dc\"}],\"contributor\":[{\"$\":\"Bruce Surtees\",\"@\":\"dc\"},{\"$\":\"Harry Julian Fink\",\"@\":\"dc\"},{\"$\":\"R. M. Fink\",\"@\":\"dc\"},{\"$\":\"Dean Riesner\",\"@\":\"dc\"},{\"$\":\"Don Siegel\",\"@\":\"dc\"},{\"$\":\"Clint Eastwood\",\"@type\":{\"$\":\"dkdcplus:act\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"Harry Guardino\",\"@type\":{\"$\":\"dkdcplus:act\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"Reni Santoni\",\"@type\":{\"$\":\"dkdcplus:act\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"Andy Robinson\",\"@type\":{\"$\":\"dkdcplus:act\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"John Larch\",\"@type\":{\"$\":\"dkdcplus:act\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"John Vernon\",\"@type\":{\"$\":\"dkdcplus:act\",\"@\":\"xsi\"},\"@\":\"dc\"}],\"date\":[{\"$\":\"2008\",\"@\":\"dc\"}],\"type\":[{\"$\":\"Dvd\",\"@type\":{\"$\":\"dkdcplus:BibDK-Type\",\"@\":\"xsi\"},\"@\":\"dc\"}],\"format\":[{\"$\":\"1 dvd-video, 1 bonus disc\",\"@\":\"dc\"}],\"extent\":[{\"$\":\"ca. 98 min.\",\"@\":\"dcterms\"}],\"language\":[{\"$\":\"mul\",\"@type\":{\"$\":\"dcterms:ISO639-2\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"Flere sprog\",\"@\":\"dc\"},{\"$\":\"eng\",\"@type\":{\"$\":\"dcterms:ISO639-2\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"Engelsk\",\"@\":\"dc\"},{\"$\":\"Engelsk\",\"@type\":{\"$\":\"dkdcplus:subtitles\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"Tysk\",\"@type\":{\"$\":\"dkdcplus:subtitles\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"Spansk\",\"@type\":{\"$\":\"dkdcplus:subtitles\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"Tjekkisk\",\"@type\":{\"$\":\"dkdcplus:subtitles\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"Dansk\",\"@type\":{\"$\":\"dkdcplus:subtitles\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"Estisk\",\"@type\":{\"$\":\"dkdcplus:subtitles\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"Finsk\",\"@type\":{\"$\":\"dkdcplus:subtitles\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"Gr\\u00e6sk\",\"@type\":{\"$\":\"dkdcplus:subtitles\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"Norsk\",\"@type\":{\"$\":\"dkdcplus:subtitles\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"Portugisisk\",\"@type\":{\"$\":\"dkdcplus:subtitles\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"Polsk\",\"@type\":{\"$\":\"dkdcplus:subtitles\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"Svensk\",\"@type\":{\"$\":\"dkdcplus:subtitles\",\"@\":\"xsi\"},\"@\":\"dc\"}],\"spatial\":[{\"$\":\"USA\",\"@type\":{\"$\":\"dkdcplus:DBCS\",\"@\":\"xsi\"},\"@\":\"dcterms\"}],\"@\":\"dkabm\"},\"identifier\":{\"$\":\"775100-katalog:27447406\"},\"primaryObjectIdentifier\":{\"$\":\"870970-basis:27447406\"},\"recordStatus\":{\"$\":\"active\"},\"relations\":{\"relation\":[{\"relationType\":{\"$\":\"dbcaddi:hasReview\"},\"relationUri\":{\"$\":\"870976-anmeld:30734572\"}}]},\"formatsAvailable\":{\"format\":[{\"$\":\"dkabm\"},{\"$\":\"marcxchange\"}]},\"objectsAvailable\":{\"identifier\":[{\"$\":\"775100-katalog:27447406\"},{\"$\":\"870970-basis:27447406\"}]}}]}},{\"collection\":{\"resultPosition\":{\"$\":\"3\"},\"numberOfObjects\":{\"$\":\"1\"},\"object\":[{\"record\":{\"identifier\":[{\"$\":\"24039978|870970\",\"@\":\"ac\"}],\"source\":[{\"$\":\"Bibliotekskatalog\",\"@\":\"ac\"}],\"title\":[{\"$\":\"Lego creator - Harry Potter\",\"@\":\"dc\"},{\"$\":\"Lego creator - Harry Potter\",\"@type\":{\"$\":\"dkdcplus:full\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"Constructive\",\"@type\":{\"$\":\"dkdcplus:series\",\"@\":\"xsi\"},\"@\":\"dc\"}],\"alternative\":[{\"$\":\"Creator - Harry Potter\",\"@\":\"dcterms\"},{\"$\":\"Harry Potter\",\"@\":\"dcterms\"}],\"subject\":[{\"$\":\"79.41\",\"@type\":{\"$\":\"dkdcplus:DK5\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"Computerspil\",\"@type\":{\"$\":\"dkdcplus:DK5-Text\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"computerspil\",\"@type\":{\"$\":\"dkdcplus:DBCO\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"legoklodser\",\"@type\":{\"$\":\"dkdcplus:DBCF\",\"@\":\"xsi\"},\"@\":\"dc\"}],\"abstract\":[{\"$\":\"Leg og l\\u00e6r. Du kender Harry Potter og Hogwarts? Her kan du lege med alle de kendte figurer fra b\\u00f8gerne og samtidig bygge din helt egen magiske Legoverden!\",\"@\":\"dcterms\"}],\"description\":[{\"$\":\"Titlen hentet fra cd-rometiket\",\"@\":\"dc\"}],\"audience\":[{\"$\":\"Fra 6 \\u00e5r\",\"@type\":{\"$\":\"dkdcplus:age\",\"@\":\"xsi\"},\"@\":\"dcterms\"},{\"$\":\"b\\u00f8rnematerialer\",\"@\":\"dcterms\"}],\"publisher\":[{\"$\":\"LEGO Software\",\"@\":\"dc\"}],\"contributor\":[{\"$\":\"Joanne K. Rowling\",\"@\":\"dc\"},{\"$\":\"Paul Grimster\",\"@\":\"dc\"},{\"$\":\"Sonja Kristensen\",\"@\":\"dc\"}],\"date\":[{\"$\":\"2001\",\"@\":\"dc\"}],\"type\":[{\"$\":\"Pc-spil\",\"@type\":{\"$\":\"dkdcplus:BibDK-Type\",\"@\":\"xsi\"},\"@\":\"dc\"}],\"format\":[{\"$\":\"1 cd-rom, lyd, farver, 1 brugermanuel\",\"@\":\"dc\"},{\"$\":\"Pc, Pentium II\\/266 MHz\\/MMX; 64 MB ram; Windows 98, Me eller 2000; 4\\u00d7 cd-rom\\/dvddrev; farvesk\\u00e6rm (800\\u00d7600 billedopl\\u00f8sning, 16 bit farver); DirectSound-kompatibelt lydkort\",\"@\":\"dc\"}],\"language\":[{\"$\":\"dan\",\"@type\":{\"$\":\"dcterms:ISO639-2\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"Dansk\",\"@\":\"dc\"}],\"@\":\"dkabm\"},\"identifier\":{\"$\":\"775100-katalog:24039978\"},\"primaryObjectIdentifier\":{\"$\":\"870970-basis:24039978\"},\"recordStatus\":{\"$\":\"active\"},\"relations\":{\"relation\":[{\"relationType\":{\"$\":\"dbcaddi:hasReview\"},\"relationUri\":{\"$\":\"870976-anmeld:3036564X\"}}]},\"formatsAvailable\":{\"format\":[{\"$\":\"dkabm\"},{\"$\":\"marcxchange\"}]},\"objectsAvailable\":{\"identifier\":[{\"$\":\"775100-katalog:24039978\"},{\"$\":\"870970-basis:24039978\"}]}}]}},{\"collection\":{\"resultPosition\":{\"$\":\"4\"},\"numberOfObjects\":{\"$\":\"1\"},\"object\":[{\"record\":{\"identifier\":[{\"$\":\"50536661|870970\",\"@\":\"ac\"},{\"$\":\"9788771480290\",\"@type\":{\"$\":\"dkdcplus:ISBN\",\"@\":\"xsi\"},\"@\":\"dc\"}],\"source\":[{\"$\":\"Bibliotekskatalog\",\"@\":\"ac\"},{\"$\":\"Harry Styles\",\"@\":\"dc\"}],\"title\":[{\"$\":\"Harry Styles\",\"@\":\"dc\"},{\"$\":\"Harry Styles : superstjerne A-Z\",\"@type\":{\"$\":\"dkdcplus:full\",\"@\":\"xsi\"},\"@\":\"dc\"}],\"creator\":[{\"$\":\"Sarah Oliver\",\"@type\":{\"$\":\"dkdcplus:aut\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"Oliver, Sarah\",\"@type\":{\"$\":\"oss:sort\",\"@\":\"xsi\"},\"@\":\"dc\"}],\"subject\":[{\"$\":\"99.4 Styles, Harry\",\"@type\":{\"$\":\"dkdcplus:DK5\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"Biografier af enkelte personer\",\"@type\":{\"$\":\"dkdcplus:DK5-Text\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"Harry Styles\",\"@type\":{\"$\":\"dkdcplus:DBCF\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"Styles, Harry\",\"@type\":{\"$\":\"oss:sort\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"One Direction\",\"@type\":{\"$\":\"dkdcplus:DBCF\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"biografier\",\"@type\":{\"$\":\"dkdcplus:DBCO\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"for 12 \\u00e5r\",\"@type\":{\"$\":\"dkdcplus:DBCN\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"for 13 \\u00e5r\",\"@type\":{\"$\":\"dkdcplus:DBCN\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"for 14 \\u00e5r\",\"@type\":{\"$\":\"dkdcplus:DBCN\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"for 15 \\u00e5r\",\"@type\":{\"$\":\"dkdcplus:DBCN\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"for 16 \\u00e5r\",\"@type\":{\"$\":\"dkdcplus:DBCN\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"pop\",\"@type\":{\"$\":\"dkdcplus:DBCF\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"sangere\",\"@type\":{\"$\":\"dkdcplus:DBCF\",\"@\":\"xsi\"},\"@\":\"dc\"}],\"abstract\":[{\"$\":\"Om Harry Styles (f. 1994) liv og forel\\u00f8bige karriere i boybandet One Direction\",\"@\":\"dcterms\"}],\"audience\":[{\"$\":\"b\\u00f8rnematerialer\",\"@\":\"dcterms\"}],\"version\":[{\"$\":\"1. udgave, 1. oplag (2013)\",\"@\":\"dkdcplus\"}],\"publisher\":[{\"$\":\"Turbulenz\",\"@\":\"dc\"}],\"contributor\":[{\"$\":\"Brian Christensen\",\"@type\":{\"$\":\"dkdcplus:trl\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"Sarah N\\u00f8rgaard Jensen\",\"@type\":{\"$\":\"dkdcplus:edt\",\"@\":\"xsi\"},\"@\":\"dc\"}],\"date\":[{\"$\":\"2013\",\"@\":\"dc\"}],\"type\":[{\"$\":\"Bog\",\"@type\":{\"$\":\"dkdcplus:BibDK-Type\",\"@\":\"xsi\"},\"@\":\"dc\"}],\"format\":[{\"$\":\"illustreret i farver\",\"@\":\"dc\"}],\"extent\":[{\"$\":\"256 sider\",\"@\":\"dcterms\"}],\"language\":[{\"$\":\"dan\",\"@type\":{\"$\":\"dcterms:ISO639-2\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"Dansk\",\"@\":\"dc\"}],\"spatial\":[{\"$\":\"England\",\"@type\":{\"$\":\"dkdcplus:DBCF\",\"@\":\"xsi\"},\"@\":\"dcterms\"}],\"temporal\":[{\"$\":\"2010-2019\",\"@type\":{\"$\":\"dkdcplus:DBCP\",\"@\":\"xsi\"},\"@\":\"dcterms\"}],\"@\":\"dkabm\"},\"identifier\":{\"$\":\"775100-katalog:50536661\"},\"primaryObjectIdentifier\":{\"$\":\"870970-basis:50536661\"},\"recordStatus\":{\"$\":\"active\"},\"relations\":{\"relation\":[{\"relationType\":{\"$\":\"dbcaddi:hasReview\"},\"relationUri\":{\"$\":\"870976-anmeld:31081017\"}},{\"relationType\":{\"$\":\"dbcaddi:hasDescriptionFromPublisher\"},\"relationUri\":{\"$\":\"150015-forlag:9788792861917\"}}]},\"formatsAvailable\":{\"format\":[{\"$\":\"dkabm\"},{\"$\":\"marcxchange\"}]},\"objectsAvailable\":{\"identifier\":[{\"$\":\"775100-katalog:50536661\"},{\"$\":\"870970-basis:50536661\"}]}}]}},{\"collection\":{\"resultPosition\":{\"$\":\"5\"},\"numberOfObjects\":{\"$\":\"1\"},\"object\":[{\"record\":{\"identifier\":[{\"$\":\"ebr10440572|150008\",\"@\":\"ac\"},{\"$\":\"9789814346078\",\"@type\":{\"$\":\"dkdcplus:ISBN\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"http:\\/\\/site.ebrary.com\\/lib\\/librarytitles\\/docDetail.action?docID=10440572\",\"@type\":{\"$\":\"dcterms:URI\",\"@\":\"xsi\"},\"@\":\"dc\"}],\"source\":[{\"$\":\"Ebrary\",\"@\":\"ac\"}],\"title\":[{\"$\":\"The story of Harry's\",\"@\":\"dc\"},{\"$\":\"The story of Harry's\",\"@type\":{\"$\":\"dkdcplus:full\",\"@\":\"xsi\"},\"@\":\"dc\"}],\"alternative\":[{\"$\":\"Portion of title Harry's\",\"@\":\"dcterms\"}],\"creator\":[{\"$\":\"Mohan Mulani\",\"@type\":{\"$\":\"dkdcplus:aut\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"Mulani, Mohan\",\"@type\":{\"$\":\"oss:sort\",\"@\":\"xsi\"},\"@\":\"dc\"}],\"subject\":[{\"$\":\"Bars (Drinking establishments) -- History\",\"@type\":{\"$\":\"dcterms:LCSH\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"Electronic books\",\"@type\":{\"$\":\"dcterms:LCSH\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"Harry's (Bar : Singapore)\",\"@\":\"dc\"}],\"description\":[{\"$\":\"Electronic reproduction. Palo Alto, Calif. : ebrary, 2013. Available via World Wide Web. Access may be limited to ebrary affiliated libraries\",\"@\":\"dc\"}],\"audience\":[{\"$\":\"voksenmaterialer\",\"@\":\"dcterms\"}],\"publisher\":[{\"$\":\"Marshall Cavendish Business\",\"@\":\"dc\"},{\"$\":\"Marshall Cavendish Corp\",\"@\":\"dc\"}],\"date\":[{\"$\":\"2010\",\"@\":\"dc\"}],\"type\":[{\"$\":\"Ebog\",\"@type\":{\"$\":\"dkdcplus:BibDK-Type\",\"@\":\"xsi\"},\"@\":\"dc\"}],\"format\":[{\"$\":\"illustreret\",\"@\":\"dc\"}],\"extent\":[{\"$\":\"162 s.\",\"@\":\"dcterms\"}],\"language\":[{\"$\":\"eng\",\"@type\":{\"$\":\"dcterms:ISO639-2\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"Engelsk\",\"@\":\"dc\"}],\"@\":\"dkabm\"},\"identifier\":{\"$\":\"150008-public:ebr10440572\"},\"primaryObjectIdentifier\":{\"$\":\"150008-public:ebr10440572\"},\"recordStatus\":{\"$\":\"active\"},\"creationDate\":{\"$\":\"2010-06-09\"},\"relations\":{\"relation\":[{\"relationType\":{\"$\":\"dbcaddi:hasOnlineAccess\"},\"relationUri\":{\"$\":\"http:\\/\\/site.ebrary.com\\/lib\\/librarytitles\\/docDetail.action?docID=10440572\"},\"linkObject\":{\"access\":{\"$\":\"free\"},\"linkTo\":{\"$\":\"website\"},\"linkCollectionIdentifier\":[{\"$\":\"150008-public\"}]}},{\"relationType\":{\"$\":\"dbcaddi:hasOnlineAccess\"},\"relationUri\":{\"$\":\"http:\\/\\/site.ebrary.com\\/lib\\/[PROVIDERSLIBRARYID]\\/docDetail.action?docID=10440572\"},\"linkObject\":{\"access\":{\"$\":\"remote\"},\"linkTo\":{\"$\":\"proxy\"},\"linkCollectionIdentifier\":[{\"$\":\"150008-public\"}]}}]},\"formatsAvailable\":{\"format\":[{\"$\":\"dkabm\"},{\"$\":\"marcxchange\"}]},\"objectsAvailable\":{\"identifier\":[{\"$\":\"150008-public:ebr10440572\"}]}}]}},{\"collection\":{\"resultPosition\":{\"$\":\"6\"},\"numberOfObjects\":{\"$\":\"1\"},\"object\":[{\"record\":{\"identifier\":[{\"$\":\"50691446|870970\",\"@\":\"ac\"},{\"$\":\"http:\\/\\/www.filmstriben.dk\\/fjernleje\\/film\\/details.aspx?id=2744740600\",\"@type\":{\"$\":\"dcterms:URI\",\"@\":\"xsi\"},\"@\":\"dc\"}],\"source\":[{\"$\":\"Filmstriben\",\"@\":\"ac\"}],\"title\":[{\"$\":\"Dirty Harry\",\"@\":\"dc\"},{\"$\":\"Dirty Harry\",\"@type\":{\"$\":\"dkdcplus:full\",\"@\":\"xsi\"},\"@\":\"dc\"}],\"alternative\":[{\"$\":\"Dirty Harry vender tilbage\",\"@\":\"dcterms\"}],\"creator\":[{\"$\":\"Don Siegel\",\"@type\":{\"$\":\"dkdcplus:drt\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"Siegel, Don\",\"@type\":{\"$\":\"oss:sort\",\"@\":\"xsi\"},\"@\":\"dc\"}],\"subject\":[{\"$\":\"77.7\",\"@type\":{\"$\":\"dkdcplus:DK5\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"Spillefilm\",\"@type\":{\"$\":\"dkdcplus:DK5-Text\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"actionfilm\",\"@type\":{\"$\":\"dkdcplus:DBCS\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"actionfilm\",\"@type\":{\"$\":\"dkdcplus:genre\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"amerikanske film\",\"@type\":{\"$\":\"dkdcplus:DBCO\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"politidetektiver\",\"@type\":{\"$\":\"dkdcplus:DBCS\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"seriemordere\",\"@type\":{\"$\":\"dkdcplus:DBCS\",\"@\":\"xsi\"},\"@\":\"dc\"}],\"abstract\":[{\"$\":\"Kriminalassistent Harry Callahan m\\u00e5 sande, at regler og paragraffer er til for at brydes. Ellers slipper en psykopatisk morder godt fra endnu flere forbrydelser. Og \\\"Dirty Harry\\\" f\\u00e5r altid sin mand og det sidste ord!\",\"@\":\"dcterms\"}],\"description\":[{\"$\":\"Produktion: Warner Bros. (USA), Malpaso Company (USA), 1971\",\"@\":\"dc\"}],\"audience\":[{\"$\":\"M\\u00e6rkning: Tilladt for b\\u00f8rn over 15 \\u00e5r\",\"@type\":{\"$\":\"dkdcplus:medieraad\",\"@\":\"xsi\"},\"@\":\"dcterms\"},{\"$\":\"voksenmaterialer\",\"@\":\"dcterms\"}],\"publisher\":[{\"$\":\"Warner Bros.\",\"@\":\"dc\"}],\"contributor\":[{\"$\":\"Bruce Surtees\",\"@type\":{\"$\":\"dkdcplus:cng\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"Harry Julian Fink\",\"@type\":{\"$\":\"dkdcplus:aus\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"R. M. Fink\",\"@type\":{\"$\":\"dkdcplus:aus\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"Dean Riesner\",\"@type\":{\"$\":\"dkdcplus:aus\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"Clint Eastwood\",\"@type\":{\"$\":\"dkdcplus:act\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"Harry Guardino\",\"@type\":{\"$\":\"dkdcplus:act\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"Reni Santoni\",\"@type\":{\"$\":\"dkdcplus:act\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"Andy Robinson\",\"@type\":{\"$\":\"dkdcplus:act\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"John Larch\",\"@type\":{\"$\":\"dkdcplus:act\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"John Vernon\",\"@type\":{\"$\":\"dkdcplus:act\",\"@\":\"xsi\"},\"@\":\"dc\"}],\"date\":[{\"$\":\"2013\",\"@\":\"dc\"}],\"type\":[{\"$\":\"Film (net)\",\"@type\":{\"$\":\"dkdcplus:BibDK-Type\",\"@\":\"xsi\"},\"@\":\"dc\"}],\"extent\":[{\"$\":\"98 min.\",\"@\":\"dcterms\"}],\"language\":[{\"$\":\"eng\",\"@type\":{\"$\":\"dcterms:ISO639-2\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"Engelsk\",\"@\":\"dc\"},{\"$\":\"Dansk\",\"@type\":{\"$\":\"dkdcplus:subtitles\",\"@\":\"xsi\"},\"@\":\"dc\"}],\"spatial\":[{\"$\":\"USA\",\"@type\":{\"$\":\"dkdcplus:DBCS\",\"@\":\"xsi\"},\"@\":\"dcterms\"}],\"@\":\"dkabm\"},\"identifier\":{\"$\":\"870970-basis:50691446\"},\"primaryObjectIdentifier\":{\"$\":\"870970-basis:50691446\"},\"recordStatus\":{\"$\":\"active\"},\"creationDate\":{\"$\":\"2013-09-21\"},\"relations\":{\"relation\":[{\"relationType\":{\"$\":\"dbcaddi:hasOnlineAccess\"},\"relationUri\":{\"$\":\"http:\\/\\/www.filmstriben.dk\\/fjernleje\\/film\\/details.aspx?id=2744740600\"},\"linkObject\":{\"accessType\":{\"$\":\"streaming\"},\"access\":{\"$\":\"remote\"},\"linkTo\":{\"$\":\"website\"},\"linkCollectionIdentifier\":[{\"$\":\"150021-fjern\"},{\"$\":\"870970-basis\"},{\"$\":\"870970-bibdk\"},{\"$\":\"150021-sofa\"}]}}]},\"formatsAvailable\":{\"format\":[{\"$\":\"dkabm\"},{\"$\":\"marcxchange\"}]},\"objectsAvailable\":{\"identifier\":[{\"$\":\"870970-basis:50691446\"}]}}]}},{\"collection\":{\"resultPosition\":{\"$\":\"7\"},\"numberOfObjects\":{\"$\":\"1\"},\"object\":[{\"record\":{\"identifier\":[{\"$\":\"29395306|870970\",\"@\":\"ac\"}],\"source\":[{\"$\":\"Bibliotekskatalog\",\"@\":\"ac\"}],\"title\":[{\"$\":\"Harry - stykke for stykke\",\"@\":\"dc\"},{\"$\":\"Harry - stykke for stykke\",\"@type\":{\"$\":\"dkdcplus:full\",\"@\":\"xsi\"},\"@\":\"dc\"}],\"alternative\":[{\"$\":\"Deconstructing Harry\",\"@\":\"dcterms\"}],\"creator\":[{\"$\":\"Woody Allen\",\"@type\":{\"$\":\"dkdcplus:drt\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"Allen, Woody\",\"@type\":{\"$\":\"oss:sort\",\"@\":\"xsi\"},\"@\":\"dc\"}],\"subject\":[{\"$\":\"77.7\",\"@type\":{\"$\":\"dkdcplus:DK5\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"Spillefilm\",\"@type\":{\"$\":\"dkdcplus:DK5-Text\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"forfattere\",\"@type\":{\"$\":\"dkdcplus:DBCS\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"komedier\",\"@type\":{\"$\":\"dkdcplus:DBCS\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"komedier\",\"@type\":{\"$\":\"dkdcplus:genre\",\"@\":\"xsi\"},\"@\":\"dc\"}],\"abstract\":[{\"$\":\"Den sexfikserede, neurotiske new yorker-forfatter Harry Block f\\u00e5r vennekredsen p\\u00e5 nakken med sin selvudleverende roman. Hans fiktive romanfigurer blander sig i hans liv, hvor problemerne t\\u00e5rner sig op\",\"@\":\"dcterms\"}],\"description\":[{\"$\":\"Originalfilmen: USA : Magnolia Productions ; S.l. : Sweetland Films, 1997\",\"@\":\"dc\"}],\"audience\":[{\"$\":\"M\\u00e6rkning: Tilladt for b\\u00f8rn over 15 \\u00e5r\",\"@type\":{\"$\":\"dkdcplus:medieraad\",\"@\":\"xsi\"},\"@\":\"dcterms\"},{\"$\":\"voksenmaterialer\",\"@\":\"dcterms\"}],\"publisher\":[{\"$\":\"Atlantic Film\",\"@\":\"dc\"}],\"contributor\":[{\"$\":\"Carlo Di Palma\",\"@\":\"dc\"},{\"$\":\"Woody Allen\",\"@\":\"dc\"},{\"$\":\"Caroline Aaron\",\"@type\":{\"$\":\"dkdcplus:act\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"Woody Allen\",\"@type\":{\"$\":\"dkdcplus:act\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"Kirstie Alley\",\"@type\":{\"$\":\"dkdcplus:act\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"Bob Balaban\",\"@type\":{\"$\":\"dkdcplus:act\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"Richard Benjamin\",\"@type\":{\"$\":\"dkdcplus:act\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"Eric Bogosian\",\"@type\":{\"$\":\"dkdcplus:act\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"Billy Crystal\",\"@type\":{\"$\":\"dkdcplus:act\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"Judy Davis\",\"@type\":{\"$\":\"dkdcplus:act\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"Hazelle Goodman\",\"@type\":{\"$\":\"dkdcplus:act\",\"@\":\"xsi\"},\"@\":\"dc\"}],\"date\":[{\"$\":\"2012\",\"@\":\"dc\"}],\"type\":[{\"$\":\"Dvd\",\"@type\":{\"$\":\"dkdcplus:BibDK-Type\",\"@\":\"xsi\"},\"@\":\"dc\"}],\"format\":[{\"$\":\"1 dvd-video\",\"@\":\"dc\"}],\"extent\":[{\"$\":\"91 min.\",\"@\":\"dcterms\"}],\"language\":[{\"$\":\"eng\",\"@type\":{\"$\":\"dcterms:ISO639-2\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"Engelsk\",\"@\":\"dc\"},{\"$\":\"Svensk\",\"@type\":{\"$\":\"dkdcplus:subtitles\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"Norsk\",\"@type\":{\"$\":\"dkdcplus:subtitles\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"Dansk\",\"@type\":{\"$\":\"dkdcplus:subtitles\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"Finsk\",\"@type\":{\"$\":\"dkdcplus:subtitles\",\"@\":\"xsi\"},\"@\":\"dc\"}],\"spatial\":[{\"$\":\"USA\",\"@type\":{\"$\":\"dkdcplus:DBCS\",\"@\":\"xsi\"},\"@\":\"dcterms\"},{\"$\":\"New York\",\"@type\":{\"$\":\"dkdcplus:DBCS\",\"@\":\"xsi\"},\"@\":\"dcterms\"}],\"@\":\"dkabm\"},\"identifier\":{\"$\":\"775100-katalog:29395306\"},\"primaryObjectIdentifier\":{\"$\":\"870970-basis:29395306\"},\"recordStatus\":{\"$\":\"active\"},\"relations\":{\"relation\":[{\"relationType\":{\"$\":\"dbcaddi:hasReview\"},\"relationUri\":{\"$\":\"870971-anmeld:35193839\"}},{\"relationType\":{\"$\":\"dbcaddi:hasReview\"},\"relationUri\":{\"$\":\"870976-anmeld:31007712\"}}]},\"formatsAvailable\":{\"format\":[{\"$\":\"dkabm\"},{\"$\":\"marcxchange\"}]},\"objectsAvailable\":{\"identifier\":[{\"$\":\"775100-katalog:29395306\"},{\"$\":\"870970-basis:29395306\"}]}}]}},{\"collection\":{\"resultPosition\":{\"$\":\"8\"},\"numberOfObjects\":{\"$\":\"1\"},\"object\":[{\"record\":{\"identifier\":[{\"$\":\"51088883|870970\",\"@\":\"ac\"},{\"$\":\"http:\\/\\/www.filmstriben.dk\\/fjernleje\\/film\\/details.aspx?id=5080550600\",\"@type\":{\"$\":\"dcterms:URI\",\"@\":\"xsi\"},\"@\":\"dc\"}],\"source\":[{\"$\":\"Filmstriben\",\"@\":\"ac\"}],\"title\":[{\"$\":\"Harry - stykke for stykke\",\"@\":\"dc\"},{\"$\":\"Harry - stykke for stykke\",\"@type\":{\"$\":\"dkdcplus:full\",\"@\":\"xsi\"},\"@\":\"dc\"}],\"alternative\":[{\"$\":\"Deconstructing Harry\",\"@\":\"dcterms\"}],\"creator\":[{\"$\":\"Woody Allen\",\"@type\":{\"$\":\"dkdcplus:drt\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"Allen, Woody\",\"@type\":{\"$\":\"oss:sort\",\"@\":\"xsi\"},\"@\":\"dc\"}],\"subject\":[{\"$\":\"77.7\",\"@type\":{\"$\":\"dkdcplus:DK5\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"Spillefilm\",\"@type\":{\"$\":\"dkdcplus:DK5-Text\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"amerikanske film\",\"@type\":{\"$\":\"dkdcplus:DBCO\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"forfattere\",\"@type\":{\"$\":\"dkdcplus:DBCS\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"komedier\",\"@type\":{\"$\":\"dkdcplus:DBCS\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"komedier\",\"@type\":{\"$\":\"dkdcplus:genre\",\"@\":\"xsi\"},\"@\":\"dc\"}],\"abstract\":[{\"$\":\"Den sexfikserede, neurotiske new yorker-forfatter Harry Block f\\u00e5r vennekredsen p\\u00e5 nakken med sin selvudleverende roman. Hans fiktive romanfigurer blander sig i hans liv, hvor problemerne t\\u00e5rner sig op\",\"@\":\"dcterms\"}],\"description\":[{\"$\":\"Produktion: Magnolia Productions (USA), Sweetland Films, 1997\",\"@\":\"dc\"}],\"audience\":[{\"$\":\"M\\u00e6rkning: Tilladt for b\\u00f8rn over 15 \\u00e5r\",\"@type\":{\"$\":\"dkdcplus:medieraad\",\"@\":\"xsi\"},\"@\":\"dcterms\"},{\"$\":\"voksenmaterialer\",\"@\":\"dcterms\"}],\"publisher\":[{\"$\":\"Atlantic Film\",\"@\":\"dc\"}],\"contributor\":[{\"$\":\"Carlo Di Palma\",\"@type\":{\"$\":\"dkdcplus:cng\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"Woody Allen\",\"@type\":{\"$\":\"dkdcplus:aus\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"Caroline Aaron\",\"@type\":{\"$\":\"dkdcplus:act\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"Woody Allen\",\"@type\":{\"$\":\"dkdcplus:act\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"Kirstie Alley\",\"@type\":{\"$\":\"dkdcplus:act\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"Bob Balaban\",\"@type\":{\"$\":\"dkdcplus:act\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"Richard Benjamin\",\"@type\":{\"$\":\"dkdcplus:act\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"Eric Bogosian\",\"@type\":{\"$\":\"dkdcplus:act\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"Billy Crystal\",\"@type\":{\"$\":\"dkdcplus:act\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"Judy Davis\",\"@type\":{\"$\":\"dkdcplus:act\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"Hazelle Goodman\",\"@type\":{\"$\":\"dkdcplus:act\",\"@\":\"xsi\"},\"@\":\"dc\"}],\"date\":[{\"$\":\"2014\",\"@\":\"dc\"}],\"type\":[{\"$\":\"Film (net)\",\"@type\":{\"$\":\"dkdcplus:BibDK-Type\",\"@\":\"xsi\"},\"@\":\"dc\"}],\"extent\":[{\"$\":\"91 min.\",\"@\":\"dcterms\"}],\"language\":[{\"$\":\"eng\",\"@type\":{\"$\":\"dcterms:ISO639-2\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"Engelsk\",\"@\":\"dc\"},{\"$\":\"Dansk\",\"@type\":{\"$\":\"dkdcplus:subtitles\",\"@\":\"xsi\"},\"@\":\"dc\"}],\"spatial\":[{\"$\":\"USA\",\"@type\":{\"$\":\"dkdcplus:DBCS\",\"@\":\"xsi\"},\"@\":\"dcterms\"},{\"$\":\"New York\",\"@type\":{\"$\":\"dkdcplus:DBCS\",\"@\":\"xsi\"},\"@\":\"dcterms\"}],\"@\":\"dkabm\"},\"identifier\":{\"$\":\"870970-basis:51088883\"},\"primaryObjectIdentifier\":{\"$\":\"870970-basis:51088883\"},\"recordStatus\":{\"$\":\"active\"},\"creationDate\":{\"$\":\"2014-05-05\"},\"relations\":{\"relation\":[{\"relationType\":{\"$\":\"dbcaddi:hasOnlineAccess\"},\"relationUri\":{\"$\":\"http:\\/\\/www.filmstriben.dk\\/fjernleje\\/film\\/details.aspx?id=5080550600\"},\"linkObject\":{\"accessType\":{\"$\":\"streaming\"},\"access\":{\"$\":\"remote\"},\"linkTo\":{\"$\":\"website\"},\"linkCollectionIdentifier\":[{\"$\":\"150021-fjern\"},{\"$\":\"870970-basis\"},{\"$\":\"870970-bibdk\"},{\"$\":\"150021-sofa\"}]}}]},\"formatsAvailable\":{\"format\":[{\"$\":\"dkabm\"},{\"$\":\"marcxchange\"}]},\"objectsAvailable\":{\"identifier\":[{\"$\":\"870970-basis:51088883\"}]}}]}},{\"collection\":{\"resultPosition\":{\"$\":\"9\"},\"numberOfObjects\":{\"$\":\"1\"},\"object\":[{\"record\":{\"identifier\":[{\"$\":\"ebr10593006|150008\",\"@\":\"ac\"},{\"$\":\"http:\\/\\/site.ebrary.com\\/lib\\/librarytitles\\/docDetail.action?docID=10593006\",\"@type\":{\"$\":\"dcterms:URI\",\"@\":\"xsi\"},\"@\":\"dc\"}],\"source\":[{\"$\":\"Ebrary\",\"@\":\"ac\"}],\"title\":[{\"$\":\"Harry Redknapp\",\"@\":\"dc\"},{\"$\":\"Harry Redknapp : the biography\",\"@type\":{\"$\":\"dkdcplus:full\",\"@\":\"xsi\"},\"@\":\"dc\"}],\"creator\":[{\"$\":\"Les Roopanarine\",\"@type\":{\"$\":\"dkdcplus:aut\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"Roopanarine, Les\",\"@type\":{\"$\":\"oss:sort\",\"@\":\"xsi\"},\"@\":\"dc\"}],\"subject\":[{\"$\":\"Electronic books\",\"@type\":{\"$\":\"dcterms:LCSH\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"Harry Redknapp (1947-)\",\"@\":\"dc\"},{\"$\":\"Redknapp, Harry (1947-)\",\"@type\":{\"$\":\"oss:sort\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"Soccer managers\",\"@type\":{\"$\":\"dcterms:LCSH\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"West Ham United (Soccer team)\",\"@\":\"dc\"}],\"description\":[{\"$\":\"Electronic reproduction. Palo Alto, Calif. : ebrary, 2011. Available via World Wide Web. Access may be limited to ebrary affiliated libraries\",\"@\":\"dc\"}],\"audience\":[{\"$\":\"voksenmaterialer\",\"@\":\"dcterms\"}],\"publisher\":[{\"$\":\"John Blake\",\"@\":\"dc\"}],\"date\":[{\"$\":\"2010\",\"@\":\"dc\"}],\"type\":[{\"$\":\"Ebog\",\"@type\":{\"$\":\"dkdcplus:BibDK-Type\",\"@\":\"xsi\"},\"@\":\"dc\"}],\"extent\":[{\"$\":\"xviii, 269 s.\",\"@\":\"dcterms\"}],\"language\":[{\"$\":\"eng\",\"@type\":{\"$\":\"dcterms:ISO639-2\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"Engelsk\",\"@\":\"dc\"}],\"@\":\"dkabm\"},\"identifier\":{\"$\":\"150008-public:ebr10593006\"},\"primaryObjectIdentifier\":{\"$\":\"150008-public:ebr10593006\"},\"recordStatus\":{\"$\":\"active\"},\"creationDate\":{\"$\":\"2012-09-25\"},\"relations\":{\"relation\":[{\"relationType\":{\"$\":\"dbcaddi:hasOnlineAccess\"},\"relationUri\":{\"$\":\"http:\\/\\/site.ebrary.com\\/lib\\/librarytitles\\/docDetail.action?docID=10593006\"},\"linkObject\":{\"access\":{\"$\":\"free\"},\"linkTo\":{\"$\":\"website\"},\"linkCollectionIdentifier\":[{\"$\":\"150008-public\"}]}},{\"relationType\":{\"$\":\"dbcaddi:hasOnlineAccess\"},\"relationUri\":{\"$\":\"http:\\/\\/site.ebrary.com\\/lib\\/[PROVIDERSLIBRARYID]\\/docDetail.action?docID=10593006\"},\"linkObject\":{\"access\":{\"$\":\"remote\"},\"linkTo\":{\"$\":\"proxy\"},\"linkCollectionIdentifier\":[{\"$\":\"150008-public\"}]}}]},\"formatsAvailable\":{\"format\":[{\"$\":\"dkabm\"},{\"$\":\"marcxchange\"}]},\"objectsAvailable\":{\"identifier\":[{\"$\":\"150008-public:ebr10593006\"}]}}]}},{\"collection\":{\"resultPosition\":{\"$\":\"10\"},\"numberOfObjects\":{\"$\":\"1\"},\"object\":[{\"record\":{\"identifier\":[{\"$\":\"28721420|870970\",\"@\":\"ac\"},{\"$\":\"9788770535984\",\"@type\":{\"$\":\"dkdcplus:ISBN\",\"@\":\"xsi\"},\"@\":\"dc\"}],\"source\":[{\"$\":\"Bibliotekskatalog\",\"@\":\"ac\"},{\"$\":\"Panserhjerte\",\"@\":\"dc\"}],\"title\":[{\"$\":\"Panserhjerte\",\"@\":\"dc\"},{\"$\":\"Panserhjerte\",\"@type\":{\"$\":\"dkdcplus:full\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"Krimiserien med Harry Hole ; 8\",\"@type\":{\"$\":\"dkdcplus:series\",\"@\":\"xsi\"},\"@\":\"dc\"}],\"creator\":[{\"$\":\"Jo Nesb\\u00f8\",\"@type\":{\"$\":\"dkdcplus:aut\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"Nesb\\u00f8, Jo\",\"@type\":{\"$\":\"oss:sort\",\"@\":\"xsi\"},\"@\":\"dc\"}],\"subject\":[{\"$\":\"Sk\\u00f8nlitteratur\",\"@type\":{\"$\":\"dkdcplus:DK5-Text\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"krimi\",\"@type\":{\"$\":\"dkdcplus:DBCS\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"krimi\",\"@type\":{\"$\":\"dkdcplus:genre\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"seriemordere\",\"@type\":{\"$\":\"dkdcplus:DBCS\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"sk\",\"@type\":{\"$\":\"dkdcplus:DK5\",\"@\":\"xsi\"},\"@\":\"dc\"}],\"abstract\":[{\"$\":\"Krimi. Den alkoholiserede og asociale Harry Hole fra drabsafdelingen i Oslo har egentlig sagt op, men bliver hentet tilbage til en makaber sag, hvor en seriemorder er p\\u00e5 spil. Sagen viser sig at v\\u00e6re vidtforgrenet, og den udvikler sig dramatisk og f\\u00f8rer Harry Hole rundt i Norge og Congo\",\"@\":\"dcterms\"}],\"audience\":[{\"$\":\"voksenmaterialer\",\"@\":\"dcterms\"}],\"version\":[{\"$\":\"3. udgave, 7. oplag (2016)\",\"@\":\"dkdcplus\"}],\"publisher\":[{\"$\":\"Modtryk\",\"@\":\"dc\"}],\"contributor\":[{\"$\":\"Allan Hilton Andersen\",\"@type\":{\"$\":\"dkdcplus:trl\",\"@\":\"xsi\"},\"@\":\"dc\"}],\"date\":[{\"$\":\"2011\",\"@\":\"dc\"}],\"type\":[{\"$\":\"Bog\",\"@type\":{\"$\":\"dkdcplus:BibDK-Type\",\"@\":\"xsi\"},\"@\":\"dc\"}],\"extent\":[{\"$\":\"634 sider\",\"@\":\"dcterms\"}],\"language\":[{\"$\":\"dan\",\"@type\":{\"$\":\"dcterms:ISO639-2\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"Dansk\",\"@\":\"dc\"}],\"spatial\":[{\"$\":\"Norge\",\"@type\":{\"$\":\"dkdcplus:DBCS\",\"@\":\"xsi\"},\"@\":\"dcterms\"},{\"$\":\"Oslo\",\"@type\":{\"$\":\"dkdcplus:DBCS\",\"@\":\"xsi\"},\"@\":\"dcterms\"}],\"temporal\":[{\"$\":\"2000-2009\",\"@type\":{\"$\":\"dkdcplus:DBCP\",\"@\":\"xsi\"},\"@\":\"dcterms\"}],\"@\":\"dkabm\"},\"identifier\":{\"$\":\"775100-katalog:28721420\"},\"primaryObjectIdentifier\":{\"$\":\"870970-basis:28721420\"},\"recordStatus\":{\"$\":\"active\"},\"relations\":{\"relation\":[{\"relationType\":{\"$\":\"dbcaddi:hasReview\"},\"relationUri\":{\"$\":\"870971-anmeld:33929366\"}},{\"relationType\":{\"$\":\"dbcaddi:hasReview\"},\"relationUri\":{\"$\":\"870971-anmeld:33833601\"}},{\"relationType\":{\"$\":\"dbcaddi:hasReview\"},\"relationUri\":{\"$\":\"870971-anmeld:33820372\"}},{\"relationType\":{\"$\":\"dbcaddi:hasReview\"},\"relationUri\":{\"$\":\"870971-anmeld:33819935\"}},{\"relationType\":{\"$\":\"dbcaddi:hasReview\"},\"relationUri\":{\"$\":\"870971-anmeld:33864469\"}},{\"relationType\":{\"$\":\"dbcaddi:hasReview\"},\"relationUri\":{\"$\":\"870971-anmeld:33836643\"}},{\"relationType\":{\"$\":\"dbcaddi:hasReview\"},\"relationUri\":{\"$\":\"870976-anmeld:30833325\"}},{\"relationType\":{\"$\":\"dbcaddi:hasCreatorDescription\"},\"relationUri\":{\"$\":\"870971-forfweb:89234298\"}},{\"relationType\":{\"$\":\"dbcaddi:hasReview\"},\"relationUri\":{\"$\":\"150005-anmeld:81219\"}}]},\"formatsAvailable\":{\"format\":[{\"$\":\"dkabm\"},{\"$\":\"marcxchange\"}]},\"objectsAvailable\":{\"identifier\":[{\"$\":\"775100-katalog:28721420\"},{\"$\":\"870970-basis:28721420\"}]}}]}}],\"facetResult\":{\"$\":\"\"},\"statInfo\":{\"fedoraRecordsCached\":{\"$\":\"54\"},\"fedoraRecordsRead\":{\"$\":\"146\"},\"time\":{\"$\":\"0.66115\"},\"trackingId\":{\"$\":\"2016-05-30T21:03:22:553245:32312\"}}}},\"@namespaces\":{\"ac\":\"http:\\/\\/biblstandard.dk\\/ac\\/namespace\\/\",\"dbcaddi\":\"http:\\/\\/oss.dbc.dk\\/rdf\\/dbcaddi#\",\"dbcbib\":\"http:\\/\\/oss.dbc.dk\\/rdf\\/dbcbib#\",\"dc\":\"http:\\/\\/purl.org\\/dc\\/elements\\/1.1\\/\",\"dcmitype\":\"http:\\/\\/purl.org\\/dc\\/dcmitype\\/\",\"dcterms\":\"http:\\/\\/purl.org\\/dc\\/terms\\/\",\"dkabm\":\"http:\\/\\/biblstandard.dk\\/abm\\/namespace\\/dkabm\\/\",\"dkdcplus\":\"http:\\/\\/biblstandard.dk\\/abm\\/namespace\\/dkdcplus\\/\",\"docbook\":\"http:\\/\\/docbook.org\\/ns\\/docbook\",\"kml\":\"http:\\/\\/www.opengis.net\\/kml\\/2.2\",\"marcx\":\"info:lc\\/xmlns\\/marcxchange-v1\",\"mx\":\"http:\\/\\/www.loc.gov\\/MARC21\\/slim\",\"of\":\"http:\\/\\/oss.dbc.dk\\/ns\\/openformat\",\"ofo\":\"http:\\/\\/oss.dbc.dk\\/ns\\/openformatoutput\",\"os\":\"http:\\/\\/oss.dbc.dk\\/ns\\/opensearch\",\"oso\":\"http:\\/\\/oss.dbc.dk\\/ns\\/opensearchobjects\",\"oss\":\"http:\\/\\/oss.dbc.dk\\/ns\\/osstypes\",\"xs\":\"http:\\/\\/www.w3.org\\/2001\\/XMLSchema\",\"xsi\":\"http:\\/\\/www.w3.org\\/2001\\/XMLSchema-instance\"}}"
+const provider = Provider();
+const mockData = {
+  "[\"opensearch\",\"<?xml version=\\\"1.0\\\" encoding=\\\"UTF-8\\\"?>\\n<SOAP-ENV:Envelope xmlns:SOAP-ENV=\\\"http://schemas.xmlsoap.org/soap/envelope/\\\" xmlns:ns1=\\\"http://oss.dbc.dk/ns/opensearch\\\">\\n  <SOAP-ENV:Body>\\n    <ns1:searchRequest>\\n      <ns1:query>harry </ns1:query>\\n      <ns1:agency>775100</ns1:agency>\\n      <ns1:profile>opac</ns1:profile>\\n      <ns1:start>1</ns1:start>\\n      <ns1:stepValue>10</ns1:stepValue>\\n      <ns1:sort>rank_title</ns1:sort>\\n      <ns1:collectionType>work-1</ns1:collectionType>\\n      <ns1:allObjects>1</ns1:allObjects>\\n      <ns1:objectFormat>briefDisplay</ns1:objectFormat>\\n      <ns1:objectFormat>dkabm</ns1:objectFormat>\\n      <ns1:outputType>json</ns1:outputType>\\n    </ns1:searchRequest>\\n  </SOAP-ENV:Body>\\n</SOAP-ENV:Envelope>\\n\"]": "{\"searchResponse\":{\"result\":{\"hitCount\":{\"$\":\"10134\"},\"collectionCount\":{\"$\":\"10\"},\"more\":{\"$\":\"true\"},\"sortUsed\":{\"$\":\"rank_title\"},\"searchResult\":[{\"collection\":{\"resultPosition\":{\"$\":\"1\"},\"numberOfObjects\":{\"$\":\"1\"},\"object\":[{\"record\":{\"identifier\":[{\"$\":\"70678594|870971\",\"@\":\"ac\"}],\"source\":[{\"$\":\"Avisartikler\",\"@\":\"ac\"}],\"title\":[{\"$\":\"Motoren Harry\",\"@\":\"dc\"},{\"$\":\"Motoren Harry\",\"@type\":{\"$\":\"dkdcplus:full\",\"@\":\"xsi\"},\"@\":\"dc\"}],\"creator\":[{\"$\":\"Anders Mose Poulsen\",\"@\":\"dc\"},{\"$\":\"Mose Poulsen, Anders\",\"@type\":{\"$\":\"oss:sort\",\"@\":\"xsi\"},\"@\":\"dc\"}],\"subject\":[{\"$\":\"99.4 Jensen, Harry, f. 1921\",\"@type\":{\"$\":\"dkdcplus:DK5\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"Biografier af enkelte personer\",\"@type\":{\"$\":\"dkdcplus:DK5-Text\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"Harry Jensen\",\"@\":\"dc\"},{\"$\":\"Jensen, Harry\",\"@type\":{\"$\":\"oss:sort\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"biografier\",\"@\":\"dc\"}],\"abstract\":[{\"$\":\"Harry Motor\",\"@\":\"dcterms\"}],\"audience\":[{\"$\":\"voksenmaterialer\",\"@\":\"dcterms\"}],\"contributor\":[{\"$\":\"Harry Jensen\",\"@type\":{\"$\":\"dkdcplus:ive\",\"@\":\"xsi\"},\"@\":\"dc\"}],\"date\":[{\"$\":\"1982\",\"@\":\"dc\"}],\"type\":[{\"$\":\"Avisartikel\",\"@type\":{\"$\":\"dkdcplus:BibDK-Type\",\"@\":\"xsi\"},\"@\":\"dc\"}],\"format\":[{\"$\":\"Ill.\",\"@\":\"dc\"}],\"language\":[{\"$\":\"dan\",\"@type\":{\"$\":\"dcterms:ISO639-2\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"Dansk\",\"@\":\"dc\"}],\"isPartOf\":[{\"$\":\"Morgenposten, 1982-10-24\",\"@\":\"dcterms\"},{\"$\":\"1399-8595\",\"@type\":{\"$\":\"dkdcplus:ISSN\",\"@\":\"xsi\"},\"@\":\"dcterms\"}],\"@\":\"dkabm\"},\"identifier\":{\"$\":\"870971-avis:70678594\"},\"primaryObjectIdentifier\":{\"$\":\"870971-avis:70678594\"},\"recordStatus\":{\"$\":\"active\"},\"creationDate\":{\"$\":\"2005-03-01\"},\"formatsAvailable\":{\"format\":[{\"$\":\"dkabm\"},{\"$\":\"marcxchange\"}]},\"objectsAvailable\":{\"identifier\":[{\"$\":\"870971-avis:70678594\"}]}}]},\"formattedCollection\":{\"briefDisplay\":{\"manifestation\":[{\"accessType\":{\"$\":\"physical\"},\"creator\":{\"$\":\"Harry Jensen\"},\"fedoraPid\":{\"$\":\"870971-avis:70678594\"},\"identifier\":{\"$\":\"870971-avis:70678594\"},\"language\":{\"$\":\"Dansk\"},\"partOf\":{\"$\":\"Morgenposten, 1982-10-24\"},\"title\":{\"$\":\"Motoren Harry\"},\"titleFull\":{\"$\":\"Motoren Harry\"},\"type\":{\"$\":\"Avisartikel\"},\"workType\":{\"$\":\"article\"}}]}}},{\"collection\":{\"resultPosition\":{\"$\":\"2\"},\"numberOfObjects\":{\"$\":\"1\"},\"object\":[{\"record\":{\"identifier\":[{\"$\":\"70055848|870971\",\"@\":\"ac\"}],\"source\":[{\"$\":\"Tidsskriftsartikler\",\"@\":\"ac\"}],\"title\":[{\"$\":\"Harry Kupfer\",\"@\":\"dc\"},{\"$\":\"Harry Kupfer\",\"@type\":{\"$\":\"dkdcplus:full\",\"@\":\"xsi\"},\"@\":\"dc\"}],\"creator\":[{\"$\":\"Gabor Halasz\",\"@\":\"dc\"},{\"$\":\"Halasz, Gabor\",\"@type\":{\"$\":\"oss:sort\",\"@\":\"xsi\"},\"@\":\"dc\"}],\"subject\":[{\"$\":\"99.4 Kupfer, Harry\",\"@type\":{\"$\":\"dkdcplus:DK5\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"Biografier af enkelte personer\",\"@type\":{\"$\":\"dkdcplus:DK5-Text\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"Harry Kupfer\",\"@\":\"dc\"},{\"$\":\"Kupfer, Harry\",\"@type\":{\"$\":\"oss:sort\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"biografier\",\"@\":\"dc\"}],\"audience\":[{\"$\":\"voksenmaterialer\",\"@\":\"dcterms\"}],\"date\":[{\"$\":\"1982\",\"@\":\"dc\"}],\"type\":[{\"$\":\"Tidsskriftsartikel\",\"@type\":{\"$\":\"dkdcplus:BibDK-Type\",\"@\":\"xsi\"},\"@\":\"dc\"}],\"format\":[{\"$\":\"illustreret\",\"@\":\"dc\"}],\"extent\":[{\"$\":\"S. 26-27\",\"@\":\"dcterms\"}],\"language\":[{\"$\":\"ger\",\"@type\":{\"$\":\"dcterms:ISO639-2\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"Tysk\",\"@\":\"dc\"}],\"isPartOf\":[{\"$\":\"Opernwelt, Bd. 23, nr. 12 (1982)\",\"@\":\"dcterms\"},{\"$\":\"0030-3690\",\"@type\":{\"$\":\"dkdcplus:ISSN\",\"@\":\"xsi\"},\"@\":\"dcterms\"}],\"@\":\"dkabm\"},\"identifier\":{\"$\":\"870971-tsart:70055848\"},\"primaryObjectIdentifier\":{\"$\":\"870971-tsart:70055848\"},\"recordStatus\":{\"$\":\"active\"},\"creationDate\":{\"$\":\"2005-03-01\"},\"formatsAvailable\":{\"format\":[{\"$\":\"dkabm\"},{\"$\":\"marcxchange\"}]},\"objectsAvailable\":{\"identifier\":[{\"$\":\"870971-tsart:70055848\"}]}}]},\"formattedCollection\":{\"briefDisplay\":{\"manifestation\":[{\"accessType\":{\"$\":\"physical\"},\"creator\":{\"$\":\"Gabor Halasz\"},\"fedoraPid\":{\"$\":\"870971-tsart:70055848\"},\"identifier\":{\"$\":\"870971-tsart:70055848\"},\"language\":{\"$\":\"Tysk\"},\"partOf\":{\"$\":\"Opernwelt, Bd. 23, nr. 12 (1982)\"},\"title\":{\"$\":\"Harry Kupfer\"},\"titleFull\":{\"$\":\"Harry Kupfer\"},\"type\":{\"$\":\"Tidsskriftsartikel\"},\"workType\":{\"$\":\"article\"}}]}}},{\"collection\":{\"resultPosition\":{\"$\":\"3\"},\"numberOfObjects\":{\"$\":\"1\"},\"object\":[{\"record\":{\"identifier\":[{\"$\":\"10367573|870970\",\"@\":\"ac\"}],\"source\":[{\"$\":\"Bibliotekskatalog\",\"@\":\"ac\"}],\"title\":[{\"$\":\"Harry Martinson\",\"@\":\"dc\"},{\"$\":\"Harry Martinson\",\"@type\":{\"$\":\"dkdcplus:full\",\"@\":\"xsi\"},\"@\":\"dc\"}],\"creator\":[{\"$\":\"Lars Ulvenstam\",\"@type\":{\"$\":\"dkdcplus:aut\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"Ulvenstam, Lars\",\"@type\":{\"$\":\"oss:sort\",\"@\":\"xsi\"},\"@\":\"dc\"}],\"subject\":[{\"$\":\"99.4 Martinson, Harry\",\"@type\":{\"$\":\"dkdcplus:DK5\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"Biografier af enkelte personer\",\"@type\":{\"$\":\"dkdcplus:DK5-Text\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"Harry Martinson\",\"@\":\"dc\"},{\"$\":\"Martinson, Harry\",\"@type\":{\"$\":\"oss:sort\",\"@\":\"xsi\"},\"@\":\"dc\"}],\"audience\":[{\"$\":\"voksenmaterialer\",\"@\":\"dcterms\"}],\"publisher\":[{\"$\":\"Bonnier\",\"@\":\"dc\"}],\"date\":[{\"$\":\"1950\",\"@\":\"dc\"}],\"type\":[{\"$\":\"Bog\",\"@type\":{\"$\":\"dkdcplus:BibDK-Type\",\"@\":\"xsi\"},\"@\":\"dc\"}],\"language\":[{\"$\":\"swe\",\"@type\":{\"$\":\"dcterms:ISO639-2\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"Svensk\",\"@\":\"dc\"}],\"@\":\"dkabm\"},\"identifier\":{\"$\":\"870970-basis:10367573\"},\"primaryObjectIdentifier\":{\"$\":\"870970-basis:10367573\"},\"recordStatus\":{\"$\":\"active\"},\"creationDate\":{\"$\":\"2005-03-01\"},\"formatsAvailable\":{\"format\":[{\"$\":\"dkabm\"},{\"$\":\"marcxchange\"}]},\"objectsAvailable\":{\"identifier\":[{\"$\":\"870970-basis:10367573\"}]}}]},\"formattedCollection\":{\"briefDisplay\":{\"manifestation\":[{\"accessType\":{\"$\":\"physical\"},\"creator\":{\"$\":\"Lars Ulvenstam\"},\"fedoraPid\":{\"$\":\"870970-basis:10367573\"},\"identifier\":{\"$\":\"870970-basis:10367573\"},\"language\":{\"$\":\"Svensk\"},\"title\":{\"$\":\"Harry Martinson\"},\"titleFull\":{\"$\":\"Harry Martinson\"},\"type\":{\"$\":\"Bog\"},\"workType\":{\"$\":\"book\"}}]}}},{\"collection\":{\"resultPosition\":{\"$\":\"4\"},\"numberOfObjects\":{\"$\":\"1\"},\"object\":[{\"record\":{\"identifier\":[{\"$\":\"70055813|870971\",\"@\":\"ac\"}],\"source\":[{\"$\":\"Tidsskriftsartikler\",\"@\":\"ac\"}],\"title\":[{\"$\":\"Harry Kullman\",\"@\":\"dc\"},{\"$\":\"Harry Kullman\",\"@type\":{\"$\":\"dkdcplus:full\",\"@\":\"xsi\"},\"@\":\"dc\"}],\"creator\":[{\"$\":\"Kenneth Carlsson\",\"@\":\"dc\"},{\"$\":\"Carlsson, Kenneth\",\"@type\":{\"$\":\"oss:sort\",\"@\":\"xsi\"},\"@\":\"dc\"}],\"subject\":[{\"$\":\"99.4 Kullman, Harry\",\"@type\":{\"$\":\"dkdcplus:DK5\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"Biografier af enkelte personer\",\"@type\":{\"$\":\"dkdcplus:DK5-Text\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"Harry Kullman\",\"@\":\"dc\"},{\"$\":\"Kullman, Harry\",\"@type\":{\"$\":\"oss:sort\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"biografier\",\"@\":\"dc\"},{\"$\":\"kriminallitteratur\",\"@\":\"dc\"},{\"$\":\"svensk litteratur\",\"@\":\"dc\"},{\"$\":\"ungdomslitteratur\",\"@\":\"dc\"}],\"abstract\":[{\"$\":\"Svensk ungdoms- og kriminalforfatter\",\"@\":\"dcterms\"}],\"audience\":[{\"$\":\"voksenmaterialer\",\"@\":\"dcterms\"}],\"date\":[{\"$\":\"1982\",\"@\":\"dc\"}],\"type\":[{\"$\":\"Tidsskriftsartikel\",\"@type\":{\"$\":\"dkdcplus:BibDK-Type\",\"@\":\"xsi\"},\"@\":\"dc\"}],\"format\":[{\"$\":\"illustreret\",\"@\":\"dc\"}],\"extent\":[{\"$\":\"S. 36-43\",\"@\":\"dcterms\"}],\"language\":[{\"$\":\"swe\",\"@type\":{\"$\":\"dcterms:ISO639-2\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"Svensk\",\"@\":\"dc\"}],\"isPartOf\":[{\"$\":\"Jury, 1982, nr. 2\",\"@\":\"dcterms\"},{\"$\":\"0345-5734\",\"@type\":{\"$\":\"dkdcplus:ISSN\",\"@\":\"xsi\"},\"@\":\"dcterms\"}],\"@\":\"dkabm\"},\"identifier\":{\"$\":\"870971-tsart:70055813\"},\"primaryObjectIdentifier\":{\"$\":\"870971-tsart:70055813\"},\"recordStatus\":{\"$\":\"active\"},\"creationDate\":{\"$\":\"2005-03-01\"},\"formatsAvailable\":{\"format\":[{\"$\":\"dkabm\"},{\"$\":\"marcxchange\"}]},\"objectsAvailable\":{\"identifier\":[{\"$\":\"870971-tsart:70055813\"}]}}]},\"formattedCollection\":{\"briefDisplay\":{\"manifestation\":[{\"accessType\":{\"$\":\"physical\"},\"creator\":{\"$\":\"Kenneth Carlsson\"},\"fedoraPid\":{\"$\":\"870971-tsart:70055813\"},\"identifier\":{\"$\":\"870971-tsart:70055813\"},\"language\":{\"$\":\"Svensk\"},\"partOf\":{\"$\":\"Jury, 1982, nr. 2\"},\"title\":{\"$\":\"Harry Kullman\"},\"titleFull\":{\"$\":\"Harry Kullman\"},\"type\":{\"$\":\"Tidsskriftsartikel\"},\"workType\":{\"$\":\"article\"}}]}}},{\"collection\":{\"resultPosition\":{\"$\":\"5\"},\"numberOfObjects\":{\"$\":\"1\"},\"object\":[{\"record\":{\"identifier\":[{\"$\":\"80487940|870971\",\"@\":\"ac\"}],\"source\":[{\"$\":\"Tidsskriftsartikler\",\"@\":\"ac\"}],\"title\":[{\"$\":\"Harry Carlsson\",\"@\":\"dc\"},{\"$\":\"Harry Carlsson\",\"@type\":{\"$\":\"dkdcplus:full\",\"@\":\"xsi\"},\"@\":\"dc\"}],\"creator\":[{\"$\":\"Ulf Gudmundsen\",\"@\":\"dc\"},{\"$\":\"Gudmundsen, Ulf\",\"@type\":{\"$\":\"oss:sort\",\"@\":\"xsi\"},\"@\":\"dc\"}],\"subject\":[{\"$\":\"99.4 Carlsson, Harry\",\"@type\":{\"$\":\"dkdcplus:DK5\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"Biografier af enkelte personer\",\"@type\":{\"$\":\"dkdcplus:DK5-Text\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"Harry Carlsson\",\"@\":\"dc\"},{\"$\":\"Carlsson, Harry\",\"@type\":{\"$\":\"oss:sort\",\"@\":\"xsi\"},\"@\":\"dc\"}],\"abstract\":[{\"$\":\"Dansk surrealistisk maler\",\"@\":\"dcterms\"}],\"audience\":[{\"$\":\"voksenmaterialer\",\"@\":\"dcterms\"}],\"date\":[{\"$\":\"1991\",\"@\":\"dc\"}],\"type\":[{\"$\":\"Tidsskriftsartikel\",\"@type\":{\"$\":\"dkdcplus:BibDK-Type\",\"@\":\"xsi\"},\"@\":\"dc\"}],\"format\":[{\"$\":\"illustreret\",\"@\":\"dc\"}],\"extent\":[{\"$\":\"S. 14\",\"@\":\"dcterms\"}],\"language\":[{\"$\":\"dan\",\"@type\":{\"$\":\"dcterms:ISO639-2\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"Dansk\",\"@\":\"dc\"}],\"isPartOf\":[{\"$\":\"Hrymfaxe, \\u00c5rg. 21, nr. 3 (1991)\",\"@\":\"dcterms\"},{\"$\":\"0901-5795\",\"@type\":{\"$\":\"dkdcplus:ISSN\",\"@\":\"xsi\"},\"@\":\"dcterms\"}],\"spatial\":[{\"$\":\"Danmark malerkunst\",\"@\":\"dcterms\"}],\"@\":\"dkabm\"},\"identifier\":{\"$\":\"870971-tsart:80487940\"},\"primaryObjectIdentifier\":{\"$\":\"870971-tsart:80487940\"},\"recordStatus\":{\"$\":\"active\"},\"creationDate\":{\"$\":\"2005-03-01\"},\"formatsAvailable\":{\"format\":[{\"$\":\"dkabm\"},{\"$\":\"marcxchange\"}]},\"objectsAvailable\":{\"identifier\":[{\"$\":\"870971-tsart:80487940\"}]}}]},\"formattedCollection\":{\"briefDisplay\":{\"manifestation\":[{\"accessType\":{\"$\":\"physical\"},\"creator\":{\"$\":\"Ulf Gudmundsen\"},\"fedoraPid\":{\"$\":\"870971-tsart:80487940\"},\"identifier\":{\"$\":\"870971-tsart:80487940\"},\"language\":{\"$\":\"Dansk\"},\"partOf\":{\"$\":\"Hrymfaxe, \\u00c5rg. 21, nr. 3 (1991)\"},\"title\":{\"$\":\"Harry Carlsson\"},\"titleFull\":{\"$\":\"Harry Carlsson\"},\"type\":{\"$\":\"Tidsskriftsartikel\"},\"workType\":{\"$\":\"article\"}}]}}},{\"collection\":{\"resultPosition\":{\"$\":\"6\"},\"numberOfObjects\":{\"$\":\"1\"},\"object\":[{\"record\":{\"identifier\":[{\"$\":\"36616636|870971\",\"@\":\"ac\"}],\"source\":[{\"$\":\"Tidsskriftsartikler\",\"@\":\"ac\"}],\"title\":[{\"$\":\"Harry Harrison\",\"@\":\"dc\"},{\"$\":\"Harry Harrison\",\"@type\":{\"$\":\"dkdcplus:full\",\"@\":\"xsi\"},\"@\":\"dc\"}],\"creator\":[{\"$\":\"Klaus \\u00c6. Mogensen\",\"@type\":{\"$\":\"dkdcplus:aut\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"Mogensen, Klaus \\u00c6.\",\"@type\":{\"$\":\"oss:sort\",\"@\":\"xsi\"},\"@\":\"dc\"}],\"subject\":[{\"$\":\"99.4 Harrison, Harry\",\"@type\":{\"$\":\"dkdcplus:DK5\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"Biografier af enkelte personer\",\"@type\":{\"$\":\"dkdcplus:DK5-Text\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"Harry Harrison\",\"@\":\"dc\"},{\"$\":\"Harrison, Harry\",\"@type\":{\"$\":\"oss:sort\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"amerikansk litteratur\",\"@type\":{\"$\":\"dkdcplus:DBCF\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"science fiction\",\"@type\":{\"$\":\"dkdcplus:DBCF\",\"@\":\"xsi\"},\"@\":\"dc\"}],\"abstract\":[{\"$\":\"Portr\\u00e6t af den amerikanske forfatter\",\"@\":\"dcterms\"}],\"audience\":[{\"$\":\"voksenmaterialer\",\"@\":\"dcterms\"}],\"date\":[{\"$\":\"2015\",\"@\":\"dc\"}],\"type\":[{\"$\":\"Tidsskriftsartikel\",\"@type\":{\"$\":\"dkdcplus:BibDK-Type\",\"@\":\"xsi\"},\"@\":\"dc\"}],\"format\":[{\"$\":\"illustreret\",\"@\":\"dc\"}],\"extent\":[{\"$\":\"S. 41-43\",\"@\":\"dcterms\"}],\"language\":[{\"$\":\"dan\",\"@type\":{\"$\":\"dcterms:ISO639-2\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"Dansk\",\"@\":\"dc\"}],\"isPartOf\":[{\"$\":\"Himmelskibet, Nr. 45 (2015)\",\"@\":\"dcterms\"},{\"$\":\"1603-5836\",\"@type\":{\"$\":\"dkdcplus:ISSN\",\"@\":\"xsi\"},\"@\":\"dcterms\"}],\"@\":\"dkabm\"},\"identifier\":{\"$\":\"870971-tsart:36616636\"},\"primaryObjectIdentifier\":{\"$\":\"870971-tsart:36616636\"},\"recordStatus\":{\"$\":\"active\"},\"creationDate\":{\"$\":\"2015-09-01\"},\"formatsAvailable\":{\"format\":[{\"$\":\"dkabm\"},{\"$\":\"marcxchange\"}]},\"objectsAvailable\":{\"identifier\":[{\"$\":\"870971-tsart:36616636\"}]}}]},\"formattedCollection\":{\"briefDisplay\":{\"manifestation\":[{\"accessType\":{\"$\":\"physical\"},\"creator\":{\"$\":\"Klaus \\u00c6. Mogensen\"},\"fedoraPid\":{\"$\":\"870971-tsart:36616636\"},\"identifier\":{\"$\":\"870971-tsart:36616636\"},\"language\":{\"$\":\"Dansk\"},\"partOf\":{\"$\":\"Himmelskibet, Nr. 45 (2015)\"},\"title\":{\"$\":\"Harry Harrison\"},\"titleFull\":{\"$\":\"Harry Harrison\"},\"type\":{\"$\":\"Tidsskriftsartikel\"},\"workType\":{\"$\":\"article\"}}]}}},{\"collection\":{\"resultPosition\":{\"$\":\"7\"},\"numberOfObjects\":{\"$\":\"1\"},\"object\":[{\"record\":{\"identifier\":[{\"$\":\"87319946|870971\",\"@\":\"ac\"}],\"source\":[{\"$\":\"Avisartikler\",\"@\":\"ac\"}],\"title\":[{\"$\":\"Harry Potter\",\"@\":\"dc\"},{\"$\":\"Harry Potter\",\"@type\":{\"$\":\"dkdcplus:full\",\"@\":\"xsi\"},\"@\":\"dc\"}],\"creator\":[{\"$\":\"Christian Monggaard\",\"@\":\"dc\"},{\"$\":\"Monggaard, Christian\",\"@type\":{\"$\":\"oss:sort\",\"@\":\"xsi\"},\"@\":\"dc\"}],\"subject\":[{\"$\":\"99.4 Rowling, Joanne K.\",\"@type\":{\"$\":\"dkdcplus:DK5\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"Biografier af enkelte personer\",\"@type\":{\"$\":\"dkdcplus:DK5-Text\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"Harry Potter og F\\u00f8nixordenen\",\"@type\":{\"$\":\"dkdcplus:DBCF\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"Joanne K. Rowling\",\"@type\":{\"$\":\"dkdcplus:DBCF\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"Rowling, Joanne K.\",\"@type\":{\"$\":\"oss:sort\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"b\\u00f8rnelitteratur\",\"@type\":{\"$\":\"dkdcplus:DBCF\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"engelsk litteratur\",\"@type\":{\"$\":\"dkdcplus:DBCF\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"litteratur\",\"@type\":{\"$\":\"dkdcplus:DBCF\",\"@\":\"xsi\"},\"@\":\"dc\"}],\"abstract\":[{\"$\":\"\\u00c5rsager til Harry Potter-b\\u00f8gernes succes\",\"@\":\"dcterms\"}],\"description\":[{\"$\":\"I anledning af det 5. bind i serien: \\\"Harry Potter og F\\u00f8niksordenen\\\"\",\"@\":\"dc\"}],\"audience\":[{\"$\":\"voksenmaterialer\",\"@\":\"dcterms\"}],\"date\":[{\"$\":\"2003\",\"@\":\"dc\"}],\"type\":[{\"$\":\"Avisartikel\",\"@type\":{\"$\":\"dkdcplus:BibDK-Type\",\"@\":\"xsi\"},\"@\":\"dc\"}],\"extent\":[{\"$\":\"S. 9\",\"@\":\"dcterms\"}],\"language\":[{\"$\":\"dan\",\"@type\":{\"$\":\"dcterms:ISO639-2\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"Dansk\",\"@\":\"dc\"}],\"isPartOf\":[{\"$\":\"Information, 2003-06-21\",\"@\":\"dcterms\"},{\"$\":\"1602-2572\",\"@type\":{\"$\":\"dkdcplus:ISSN\",\"@\":\"xsi\"},\"@\":\"dcterms\"}],\"@\":\"dkabm\"},\"identifier\":{\"$\":\"870971-avis:87319946\"},\"primaryObjectIdentifier\":{\"$\":\"870971-avis:87319946\"},\"recordStatus\":{\"$\":\"active\"},\"creationDate\":{\"$\":\"2005-03-02\"},\"formatsAvailable\":{\"format\":[{\"$\":\"dkabm\"},{\"$\":\"marcxchange\"}]},\"objectsAvailable\":{\"identifier\":[{\"$\":\"870971-avis:87319946\"}]}}]},\"formattedCollection\":{\"briefDisplay\":{\"manifestation\":[{\"accessType\":{\"$\":\"online\"},\"creator\":{\"$\":\"Christian Monggaard\"},\"fedoraPid\":{\"$\":\"870971-avis:87319946\"},\"identifier\":{\"$\":\"870971-avis:87319946\"},\"language\":{\"$\":\"Dansk\"},\"partOf\":{\"$\":\"Information, 2003-06-21\"},\"title\":{\"$\":\"Harry Potter\"},\"titleFull\":{\"$\":\"Harry Potter\"},\"type\":{\"$\":\"Avisartikel\"},\"workType\":{\"$\":\"article\"}}]}}},{\"collection\":{\"resultPosition\":{\"$\":\"8\"},\"numberOfObjects\":{\"$\":\"1\"},\"object\":[{\"record\":{\"identifier\":[{\"$\":\"36317140|870971\",\"@\":\"ac\"}],\"source\":[{\"$\":\"Avisartikler\",\"@\":\"ac\"}],\"title\":[{\"$\":\"Dynamit Harry\",\"@\":\"dc\"},{\"$\":\"Dynamit Harry\",\"@type\":{\"$\":\"dkdcplus:full\",\"@\":\"xsi\"},\"@\":\"dc\"}],\"creator\":[{\"$\":\"Poul H\\u00f8i\",\"@type\":{\"$\":\"dkdcplus:aut\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"H\\u00f8i, Poul\",\"@type\":{\"$\":\"oss:sort\",\"@\":\"xsi\"},\"@\":\"dc\"}],\"subject\":[{\"$\":\"61.28\",\"@type\":{\"$\":\"dkdcplus:DK5\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"Nervefysiologi\",\"@type\":{\"$\":\"dkdcplus:DK5-Text\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"Potter, Harry\",\"@type\":{\"$\":\"dkdcplus:DBCF\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"empati\",\"@type\":{\"$\":\"dkdcplus:DBCF\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"f\\u00f8lelser\",\"@type\":{\"$\":\"dkdcplus:DBCF\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"hjernen\",\"@type\":{\"$\":\"dkdcplus:DBCF\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"litter\\u00e6re personer\",\"@type\":{\"$\":\"dkdcplus:DBCF\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"psykologi\",\"@type\":{\"$\":\"dkdcplus:DBCF\",\"@\":\"xsi\"},\"@\":\"dc\"}],\"abstract\":[{\"$\":\"Empati er en mangelvare hos Islamisk Stat, empati-neuronerne t\\u00e6nder simpelthen ikke i helligkrigernes hjerner, n\\u00e5r de ser andre lide. Men if\\u00f8lge forskere er der en modgift: De skal l\\u00e6se b\\u00f8ger om Harry Potter\",\"@\":\"dcterms\"}],\"audience\":[{\"$\":\"voksenmaterialer\",\"@\":\"dcterms\"}],\"date\":[{\"$\":\"2014\",\"@\":\"dc\"}],\"type\":[{\"$\":\"Avisartikel\",\"@type\":{\"$\":\"dkdcplus:BibDK-Type\",\"@\":\"xsi\"},\"@\":\"dc\"}],\"format\":[{\"$\":\"illustreret\",\"@\":\"dc\"}],\"extent\":[{\"$\":\"Sektion 2, s. 8-9\",\"@\":\"dcterms\"}],\"language\":[{\"$\":\"dan\",\"@type\":{\"$\":\"dcterms:ISO639-2\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"Dansk\",\"@\":\"dc\"}],\"isPartOf\":[{\"$\":\"Berlingske tidende, 2014-12-26\",\"@\":\"dcterms\"},{\"$\":\"0106-4223\",\"@type\":{\"$\":\"dkdcplus:ISSN\",\"@\":\"xsi\"},\"@\":\"dcterms\"}],\"@\":\"dkabm\"},\"identifier\":{\"$\":\"870971-avis:36317140\"},\"primaryObjectIdentifier\":{\"$\":\"870971-avis:36317140\"},\"recordStatus\":{\"$\":\"active\"},\"creationDate\":{\"$\":\"2014-12-29\"},\"formatsAvailable\":{\"format\":[{\"$\":\"dkabm\"},{\"$\":\"marcxchange\"}]},\"objectsAvailable\":{\"identifier\":[{\"$\":\"870971-avis:36317140\"}]}}]},\"formattedCollection\":{\"briefDisplay\":{\"manifestation\":[{\"accessType\":{\"$\":\"online\"},\"creator\":{\"$\":\"Poul H\\u00f8i\"},\"fedoraPid\":{\"$\":\"870971-avis:36317140\"},\"identifier\":{\"$\":\"870971-avis:36317140\"},\"language\":{\"$\":\"Dansk\"},\"partOf\":{\"$\":\"Berlingske tidende, 2014-12-26\"},\"title\":{\"$\":\"Dynamit Harry\"},\"titleFull\":{\"$\":\"Dynamit Harry\"},\"type\":{\"$\":\"Avisartikel\"},\"workType\":{\"$\":\"article\"}}]}}},{\"collection\":{\"resultPosition\":{\"$\":\"9\"},\"numberOfObjects\":{\"$\":\"1\"},\"object\":[{\"record\":{\"identifier\":[{\"$\":\"24520471|870970\",\"@\":\"ac\"},{\"$\":\"http:\\/\\/harrypotter.warnerbros.com\\/\",\"@type\":{\"$\":\"dcterms:URI\",\"@\":\"xsi\"},\"@\":\"dc\"}],\"source\":[{\"$\":\"Bibliotekskatalog\",\"@\":\"ac\"}],\"title\":[{\"$\":\"Harry Potter\",\"@\":\"dc\"},{\"$\":\"Harry Potter\",\"@type\":{\"$\":\"dkdcplus:full\",\"@\":\"xsi\"},\"@\":\"dc\"}],\"subject\":[{\"$\":\"99.4 Rowling, Joanne K.\",\"@type\":{\"$\":\"dkdcplus:DK5\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"Biografier af enkelte personer\",\"@type\":{\"$\":\"dkdcplus:DK5-Text\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"Harry Potter-film\",\"@type\":{\"$\":\"dkdcplus:DBCF\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"Joanne K. Rowling\",\"@\":\"dc\"},{\"$\":\"Rowling, Joanne K.\",\"@type\":{\"$\":\"oss:sort\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"amerikansk film\",\"@type\":{\"$\":\"dkdcplus:DBCF\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"engelsk litteratur\",\"@type\":{\"$\":\"dkdcplus:DBCF\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"eventyrlige fort\\u00e6llinger\",\"@\":\"dc\"},{\"$\":\"fantastisk litteratur\",\"@\":\"dc\"},{\"$\":\"fantasy\",\"@type\":{\"$\":\"dkdcplus:DBCF\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"film\",\"@type\":{\"$\":\"dkdcplus:DBCF\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"litteratur\",\"@type\":{\"$\":\"dkdcplus:DBCF\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"magi\",\"@type\":{\"$\":\"dkdcplus:DBCF\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"mystik\",\"@type\":{\"$\":\"dkdcplus:DBCF\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"trolddom\",\"@type\":{\"$\":\"dkdcplus:DBCF\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"troldm\\u00e6nd\",\"@type\":{\"$\":\"dkdcplus:DBCF\",\"@\":\"xsi\"},\"@\":\"dc\"}],\"abstract\":[{\"$\":\"Filmselskabets officielle amerikanske  side om Harry Potter. Med bl.a. spil, lege, skoleaktiviteter og videoklip\",\"@\":\"dcterms\"}],\"description\":[{\"$\":\"Ajourf\\u00f8res\",\"@\":\"dc\"},{\"$\":\"Registreret 26.2.2003\",\"@\":\"dc\"}],\"audience\":[{\"$\":\"voksenmaterialer\",\"@\":\"dcterms\"}],\"publisher\":[{\"$\":\"Warnerbros.\",\"@\":\"dc\"}],\"date\":[{\"$\":\"2000\",\"@\":\"dc\"}],\"type\":[{\"$\":\"Netdokument\",\"@type\":{\"$\":\"dkdcplus:BibDK-Type\",\"@\":\"xsi\"},\"@\":\"dc\"}],\"language\":[{\"$\":\"eng\",\"@type\":{\"$\":\"dcterms:ISO639-2\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"Engelsk\",\"@\":\"dc\"}],\"temporal\":[{\"$\":\"1990-1999\",\"@type\":{\"$\":\"dkdcplus:DBCP\",\"@\":\"xsi\"},\"@\":\"dcterms\"},{\"$\":\"2000-2009\",\"@type\":{\"$\":\"dkdcplus:DBCP\",\"@\":\"xsi\"},\"@\":\"dcterms\"}],\"@\":\"dkabm\"},\"identifier\":{\"$\":\"870970-basis:24520471\"},\"primaryObjectIdentifier\":{\"$\":\"870970-basis:24520471\"},\"recordStatus\":{\"$\":\"active\"},\"creationDate\":{\"$\":\"2005-03-01\"},\"formatsAvailable\":{\"format\":[{\"$\":\"dkabm\"},{\"$\":\"marcxchange\"}]},\"objectsAvailable\":{\"identifier\":[{\"$\":\"870970-basis:24520471\"}]}}]},\"formattedCollection\":{\"briefDisplay\":{\"manifestation\":[{\"accessType\":{\"$\":\"online\"},\"fedoraPid\":{\"$\":\"870970-basis:24520471\"},\"identifier\":{\"$\":\"870970-basis:24520471\"},\"language\":{\"$\":\"Engelsk\"},\"title\":{\"$\":\"Harry Potter\"},\"titleFull\":{\"$\":\"Harry Potter\"},\"type\":{\"$\":\"Netdokument\"},\"workType\":{\"$\":\"book\"}}]}}},{\"collection\":{\"resultPosition\":{\"$\":\"10\"},\"numberOfObjects\":{\"$\":\"1\"},\"object\":[{\"record\":{\"identifier\":[{\"$\":\"88657357|870971\",\"@\":\"ac\"}],\"source\":[{\"$\":\"Tidsskriftsartikler\",\"@\":\"ac\"}],\"title\":[{\"$\":\"Harry Nielsen\",\"@\":\"dc\"},{\"$\":\"Harry Nielsen\",\"@type\":{\"$\":\"dkdcplus:full\",\"@\":\"xsi\"},\"@\":\"dc\"}],\"creator\":[{\"$\":\"Nikolaj Zeuthen\",\"@\":\"dc\"},{\"$\":\"Zeuthen, Nikolaj\",\"@type\":{\"$\":\"oss:sort\",\"@\":\"xsi\"},\"@\":\"dc\"}],\"subject\":[{\"$\":\"86\",\"@type\":{\"$\":\"dkdcplus:DK5\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"Dansk sk\\u00f8nlitteratur\",\"@type\":{\"$\":\"dkdcplus:DK5-Text\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"dansk sk\\u00f8nlitteratur\",\"@type\":{\"$\":\"dkdcplus:DBCO\",\"@\":\"xsi\"},\"@\":\"dc\"}],\"audience\":[{\"$\":\"voksenmaterialer\",\"@\":\"dcterms\"}],\"date\":[{\"$\":\"2005\",\"@\":\"dc\"}],\"type\":[{\"$\":\"Tidsskriftsartikel\",\"@type\":{\"$\":\"dkdcplus:BibDK-Type\",\"@\":\"xsi\"},\"@\":\"dc\"}],\"extent\":[{\"$\":\"S. 49-52\",\"@\":\"dcterms\"}],\"language\":[{\"$\":\"dan\",\"@type\":{\"$\":\"dcterms:ISO639-2\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"Dansk\",\"@\":\"dc\"}],\"isPartOf\":[{\"$\":\"Den bl\\u00e5 port, 2005, nr. 67\",\"@\":\"dcterms\"},{\"$\":\"0900-8160\",\"@type\":{\"$\":\"dkdcplus:ISSN\",\"@\":\"xsi\"},\"@\":\"dcterms\"}],\"@\":\"dkabm\"},\"identifier\":{\"$\":\"870971-tsart:88657357\"},\"primaryObjectIdentifier\":{\"$\":\"870971-tsart:88657357\"},\"recordStatus\":{\"$\":\"active\"},\"creationDate\":{\"$\":\"2005-10-27\"},\"formatsAvailable\":{\"format\":[{\"$\":\"dkabm\"},{\"$\":\"marcxchange\"}]},\"objectsAvailable\":{\"identifier\":[{\"$\":\"870971-tsart:88657357\"}]}}]},\"formattedCollection\":{\"briefDisplay\":{\"manifestation\":[{\"accessType\":{\"$\":\"physical\"},\"creator\":{\"$\":\"Nikolaj Zeuthen\"},\"fedoraPid\":{\"$\":\"870971-tsart:88657357\"},\"identifier\":{\"$\":\"870971-tsart:88657357\"},\"language\":{\"$\":\"Dansk\"},\"partOf\":{\"$\":\"Den bl\\u00e5 port, 2005, nr. 67\"},\"title\":{\"$\":\"Harry Nielsen\"},\"titleFull\":{\"$\":\"Harry Nielsen\"},\"type\":{\"$\":\"Tidsskriftsartikel\"},\"workType\":{\"$\":\"article\"}}]}}}],\"facetResult\":null,\"statInfo\":{\"fedoraRecordsCached\":{\"$\":\"40\"},\"fedoraRecordsRead\":{\"$\":\"2\"},\"time\":{\"$\":\"0.219382\"},\"trackingId\":{\"$\":\"2016-12-08T15:46:02:315408:9470\"}}}},\"@namespaces\":{\"ac\":\"http:\\/\\/biblstandard.dk\\/ac\\/namespace\\/\",\"dbcaddi\":\"http:\\/\\/oss.dbc.dk\\/rdf\\/dbcaddi#\",\"dbcbib\":\"http:\\/\\/oss.dbc.dk\\/rdf\\/dbcbib#\",\"dc\":\"http:\\/\\/purl.org\\/dc\\/elements\\/1.1\\/\",\"dcmitype\":\"http:\\/\\/purl.org\\/dc\\/dcmitype\\/\",\"dcterms\":\"http:\\/\\/purl.org\\/dc\\/terms\\/\",\"dkabm\":\"http:\\/\\/biblstandard.dk\\/abm\\/namespace\\/dkabm\\/\",\"dkdcplus\":\"http:\\/\\/biblstandard.dk\\/abm\\/namespace\\/dkdcplus\\/\",\"docbook\":\"http:\\/\\/docbook.org\\/ns\\/docbook\",\"kml\":\"http:\\/\\/www.opengis.net\\/kml\\/2.2\",\"marcx\":\"info:lc\\/xmlns\\/marcxchange-v1\",\"mx\":\"http:\\/\\/www.loc.gov\\/MARC21\\/slim\",\"of\":\"http:\\/\\/oss.dbc.dk\\/ns\\/openformat\",\"ofo\":\"http:\\/\\/oss.dbc.dk\\/ns\\/openformatoutput\",\"os\":\"http:\\/\\/oss.dbc.dk\\/ns\\/opensearch\",\"oso\":\"http:\\/\\/oss.dbc.dk\\/ns\\/opensearchobjects\",\"oss\":\"http:\\/\\/oss.dbc.dk\\/ns\\/osstypes\",\"xs\":\"http:\\/\\/www.w3.org\\/2001\\/XMLSchema\",\"xsi\":\"http:\\/\\/www.w3.org\\/2001\\/XMLSchema-instance\"}}",
+  "[\"opensearch\",\"<?xml version=\\\"1.0\\\" encoding=\\\"UTF-8\\\"?>\\n<SOAP-ENV:Envelope xmlns:SOAP-ENV=\\\"http://schemas.xmlsoap.org/soap/envelope/\\\" xmlns:ns1=\\\"http://oss.dbc.dk/ns/opensearch\\\">\\n  <SOAP-ENV:Body>\\n    <ns1:searchRequest>\\n      <ns1:query>harry </ns1:query>\\n      <ns1:agency>775100</ns1:agency>\\n      <ns1:profile>opac</ns1:profile>\\n      <ns1:start>1</ns1:start>\\n      <ns1:stepValue>10</ns1:stepValue>\\n      <ns1:sort>rank_title</ns1:sort>\\n      <ns1:collectionType>work-1</ns1:collectionType>\\n      <ns1:allObjects>0</ns1:allObjects>\\n      <ns1:objectFormat>briefDisplay</ns1:objectFormat>\\n      <ns1:objectFormat>dkabm</ns1:objectFormat>\\n      <ns1:outputType>json</ns1:outputType>\\n    </ns1:searchRequest>\\n  </SOAP-ENV:Body>\\n</SOAP-ENV:Envelope>\\n\"]": "{\"searchResponse\":{\"result\":{\"hitCount\":{\"$\":\"2597\"},\"collectionCount\":{\"$\":\"10\"},\"more\":{\"$\":\"true\"},\"sortUsed\":{\"$\":\"rank_title\"},\"searchResult\":[{\"collection\":{\"resultPosition\":{\"$\":\"1\"},\"numberOfObjects\":{\"$\":\"1\"},\"object\":[{\"record\":{\"identifier\":[{\"$\":\"70678594|870971\",\"@\":\"ac\"}],\"source\":[{\"$\":\"Avisartikler\",\"@\":\"ac\"}],\"title\":[{\"$\":\"Motoren Harry\",\"@\":\"dc\"},{\"$\":\"Motoren Harry\",\"@type\":{\"$\":\"dkdcplus:full\",\"@\":\"xsi\"},\"@\":\"dc\"}],\"creator\":[{\"$\":\"Anders Mose Poulsen\",\"@\":\"dc\"},{\"$\":\"Mose Poulsen, Anders\",\"@type\":{\"$\":\"oss:sort\",\"@\":\"xsi\"},\"@\":\"dc\"}],\"subject\":[{\"$\":\"99.4 Jensen, Harry, f. 1921\",\"@type\":{\"$\":\"dkdcplus:DK5\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"Biografier af enkelte personer\",\"@type\":{\"$\":\"dkdcplus:DK5-Text\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"Harry Jensen\",\"@\":\"dc\"},{\"$\":\"Jensen, Harry\",\"@type\":{\"$\":\"oss:sort\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"biografier\",\"@\":\"dc\"}],\"abstract\":[{\"$\":\"Harry Motor\",\"@\":\"dcterms\"}],\"audience\":[{\"$\":\"voksenmaterialer\",\"@\":\"dcterms\"}],\"contributor\":[{\"$\":\"Harry Jensen\",\"@type\":{\"$\":\"dkdcplus:ive\",\"@\":\"xsi\"},\"@\":\"dc\"}],\"date\":[{\"$\":\"1982\",\"@\":\"dc\"}],\"type\":[{\"$\":\"Avisartikel\",\"@type\":{\"$\":\"dkdcplus:BibDK-Type\",\"@\":\"xsi\"},\"@\":\"dc\"}],\"format\":[{\"$\":\"Ill.\",\"@\":\"dc\"}],\"language\":[{\"$\":\"dan\",\"@type\":{\"$\":\"dcterms:ISO639-2\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"Dansk\",\"@\":\"dc\"}],\"isPartOf\":[{\"$\":\"Morgenposten, 1982-10-24\",\"@\":\"dcterms\"},{\"$\":\"1399-8595\",\"@type\":{\"$\":\"dkdcplus:ISSN\",\"@\":\"xsi\"},\"@\":\"dcterms\"}],\"@\":\"dkabm\"},\"identifier\":{\"$\":\"870971-avis:70678594\"},\"primaryObjectIdentifier\":{\"$\":\"870971-avis:70678594\"},\"recordStatus\":{\"$\":\"active\"},\"creationDate\":{\"$\":\"2005-03-01\"},\"formatsAvailable\":{\"format\":[{\"$\":\"dkabm\"},{\"$\":\"marcxchange\"}]},\"objectsAvailable\":{\"identifier\":[{\"$\":\"870971-avis:70678594\"}]}}]},\"formattedCollection\":{\"briefDisplay\":{\"manifestation\":[{\"accessType\":{\"$\":\"physical\"},\"creator\":{\"$\":\"Harry Jensen\"},\"fedoraPid\":{\"$\":\"870971-avis:70678594\"},\"identifier\":{\"$\":\"870971-avis:70678594\"},\"language\":{\"$\":\"Dansk\"},\"partOf\":{\"$\":\"Morgenposten, 1982-10-24\"},\"title\":{\"$\":\"Motoren Harry\"},\"titleFull\":{\"$\":\"Motoren Harry\"},\"type\":{\"$\":\"Avisartikel\"},\"workType\":{\"$\":\"article\"}}]}}},{\"collection\":{\"resultPosition\":{\"$\":\"2\"},\"numberOfObjects\":{\"$\":\"1\"},\"object\":[{\"record\":{\"identifier\":[{\"$\":\"70055848|870971\",\"@\":\"ac\"}],\"source\":[{\"$\":\"Tidsskriftsartikler\",\"@\":\"ac\"}],\"title\":[{\"$\":\"Harry Kupfer\",\"@\":\"dc\"},{\"$\":\"Harry Kupfer\",\"@type\":{\"$\":\"dkdcplus:full\",\"@\":\"xsi\"},\"@\":\"dc\"}],\"creator\":[{\"$\":\"Gabor Halasz\",\"@\":\"dc\"},{\"$\":\"Halasz, Gabor\",\"@type\":{\"$\":\"oss:sort\",\"@\":\"xsi\"},\"@\":\"dc\"}],\"subject\":[{\"$\":\"99.4 Kupfer, Harry\",\"@type\":{\"$\":\"dkdcplus:DK5\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"Biografier af enkelte personer\",\"@type\":{\"$\":\"dkdcplus:DK5-Text\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"Harry Kupfer\",\"@\":\"dc\"},{\"$\":\"Kupfer, Harry\",\"@type\":{\"$\":\"oss:sort\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"biografier\",\"@\":\"dc\"}],\"audience\":[{\"$\":\"voksenmaterialer\",\"@\":\"dcterms\"}],\"date\":[{\"$\":\"1982\",\"@\":\"dc\"}],\"type\":[{\"$\":\"Tidsskriftsartikel\",\"@type\":{\"$\":\"dkdcplus:BibDK-Type\",\"@\":\"xsi\"},\"@\":\"dc\"}],\"format\":[{\"$\":\"illustreret\",\"@\":\"dc\"}],\"extent\":[{\"$\":\"S. 26-27\",\"@\":\"dcterms\"}],\"language\":[{\"$\":\"ger\",\"@type\":{\"$\":\"dcterms:ISO639-2\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"Tysk\",\"@\":\"dc\"}],\"isPartOf\":[{\"$\":\"Opernwelt, Bd. 23, nr. 12 (1982)\",\"@\":\"dcterms\"},{\"$\":\"0030-3690\",\"@type\":{\"$\":\"dkdcplus:ISSN\",\"@\":\"xsi\"},\"@\":\"dcterms\"}],\"@\":\"dkabm\"},\"identifier\":{\"$\":\"870971-tsart:70055848\"},\"primaryObjectIdentifier\":{\"$\":\"870971-tsart:70055848\"},\"recordStatus\":{\"$\":\"active\"},\"creationDate\":{\"$\":\"2005-03-01\"},\"formatsAvailable\":{\"format\":[{\"$\":\"dkabm\"},{\"$\":\"marcxchange\"}]},\"objectsAvailable\":{\"identifier\":[{\"$\":\"870971-tsart:70055848\"}]}}]},\"formattedCollection\":{\"briefDisplay\":{\"manifestation\":[{\"accessType\":{\"$\":\"physical\"},\"creator\":{\"$\":\"Gabor Halasz\"},\"fedoraPid\":{\"$\":\"870971-tsart:70055848\"},\"identifier\":{\"$\":\"870971-tsart:70055848\"},\"language\":{\"$\":\"Tysk\"},\"partOf\":{\"$\":\"Opernwelt, Bd. 23, nr. 12 (1982)\"},\"title\":{\"$\":\"Harry Kupfer\"},\"titleFull\":{\"$\":\"Harry Kupfer\"},\"type\":{\"$\":\"Tidsskriftsartikel\"},\"workType\":{\"$\":\"article\"}}]}}},{\"collection\":{\"resultPosition\":{\"$\":\"3\"},\"numberOfObjects\":{\"$\":\"1\"},\"object\":[{\"record\":{\"identifier\":[{\"$\":\"70055813|870971\",\"@\":\"ac\"}],\"source\":[{\"$\":\"Tidsskriftsartikler\",\"@\":\"ac\"}],\"title\":[{\"$\":\"Harry Kullman\",\"@\":\"dc\"},{\"$\":\"Harry Kullman\",\"@type\":{\"$\":\"dkdcplus:full\",\"@\":\"xsi\"},\"@\":\"dc\"}],\"creator\":[{\"$\":\"Kenneth Carlsson\",\"@\":\"dc\"},{\"$\":\"Carlsson, Kenneth\",\"@type\":{\"$\":\"oss:sort\",\"@\":\"xsi\"},\"@\":\"dc\"}],\"subject\":[{\"$\":\"99.4 Kullman, Harry\",\"@type\":{\"$\":\"dkdcplus:DK5\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"Biografier af enkelte personer\",\"@type\":{\"$\":\"dkdcplus:DK5-Text\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"Harry Kullman\",\"@\":\"dc\"},{\"$\":\"Kullman, Harry\",\"@type\":{\"$\":\"oss:sort\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"biografier\",\"@\":\"dc\"},{\"$\":\"kriminallitteratur\",\"@\":\"dc\"},{\"$\":\"svensk litteratur\",\"@\":\"dc\"},{\"$\":\"ungdomslitteratur\",\"@\":\"dc\"}],\"abstract\":[{\"$\":\"Svensk ungdoms- og kriminalforfatter\",\"@\":\"dcterms\"}],\"audience\":[{\"$\":\"voksenmaterialer\",\"@\":\"dcterms\"}],\"date\":[{\"$\":\"1982\",\"@\":\"dc\"}],\"type\":[{\"$\":\"Tidsskriftsartikel\",\"@type\":{\"$\":\"dkdcplus:BibDK-Type\",\"@\":\"xsi\"},\"@\":\"dc\"}],\"format\":[{\"$\":\"illustreret\",\"@\":\"dc\"}],\"extent\":[{\"$\":\"S. 36-43\",\"@\":\"dcterms\"}],\"language\":[{\"$\":\"swe\",\"@type\":{\"$\":\"dcterms:ISO639-2\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"Svensk\",\"@\":\"dc\"}],\"isPartOf\":[{\"$\":\"Jury, 1982, nr. 2\",\"@\":\"dcterms\"},{\"$\":\"0345-5734\",\"@type\":{\"$\":\"dkdcplus:ISSN\",\"@\":\"xsi\"},\"@\":\"dcterms\"}],\"@\":\"dkabm\"},\"identifier\":{\"$\":\"870971-tsart:70055813\"},\"primaryObjectIdentifier\":{\"$\":\"870971-tsart:70055813\"},\"recordStatus\":{\"$\":\"active\"},\"creationDate\":{\"$\":\"2005-03-01\"},\"formatsAvailable\":{\"format\":[{\"$\":\"dkabm\"},{\"$\":\"marcxchange\"}]},\"objectsAvailable\":{\"identifier\":[{\"$\":\"870971-tsart:70055813\"}]}}]},\"formattedCollection\":{\"briefDisplay\":{\"manifestation\":[{\"accessType\":{\"$\":\"physical\"},\"creator\":{\"$\":\"Kenneth Carlsson\"},\"fedoraPid\":{\"$\":\"870971-tsart:70055813\"},\"identifier\":{\"$\":\"870971-tsart:70055813\"},\"language\":{\"$\":\"Svensk\"},\"partOf\":{\"$\":\"Jury, 1982, nr. 2\"},\"title\":{\"$\":\"Harry Kullman\"},\"titleFull\":{\"$\":\"Harry Kullman\"},\"type\":{\"$\":\"Tidsskriftsartikel\"},\"workType\":{\"$\":\"article\"}}]}}},{\"collection\":{\"resultPosition\":{\"$\":\"4\"},\"numberOfObjects\":{\"$\":\"1\"},\"object\":[{\"record\":{\"identifier\":[{\"$\":\"80487940|870971\",\"@\":\"ac\"}],\"source\":[{\"$\":\"Tidsskriftsartikler\",\"@\":\"ac\"}],\"title\":[{\"$\":\"Harry Carlsson\",\"@\":\"dc\"},{\"$\":\"Harry Carlsson\",\"@type\":{\"$\":\"dkdcplus:full\",\"@\":\"xsi\"},\"@\":\"dc\"}],\"creator\":[{\"$\":\"Ulf Gudmundsen\",\"@\":\"dc\"},{\"$\":\"Gudmundsen, Ulf\",\"@type\":{\"$\":\"oss:sort\",\"@\":\"xsi\"},\"@\":\"dc\"}],\"subject\":[{\"$\":\"99.4 Carlsson, Harry\",\"@type\":{\"$\":\"dkdcplus:DK5\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"Biografier af enkelte personer\",\"@type\":{\"$\":\"dkdcplus:DK5-Text\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"Harry Carlsson\",\"@\":\"dc\"},{\"$\":\"Carlsson, Harry\",\"@type\":{\"$\":\"oss:sort\",\"@\":\"xsi\"},\"@\":\"dc\"}],\"abstract\":[{\"$\":\"Dansk surrealistisk maler\",\"@\":\"dcterms\"}],\"audience\":[{\"$\":\"voksenmaterialer\",\"@\":\"dcterms\"}],\"date\":[{\"$\":\"1991\",\"@\":\"dc\"}],\"type\":[{\"$\":\"Tidsskriftsartikel\",\"@type\":{\"$\":\"dkdcplus:BibDK-Type\",\"@\":\"xsi\"},\"@\":\"dc\"}],\"format\":[{\"$\":\"illustreret\",\"@\":\"dc\"}],\"extent\":[{\"$\":\"S. 14\",\"@\":\"dcterms\"}],\"language\":[{\"$\":\"dan\",\"@type\":{\"$\":\"dcterms:ISO639-2\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"Dansk\",\"@\":\"dc\"}],\"isPartOf\":[{\"$\":\"Hrymfaxe, \\u00c5rg. 21, nr. 3 (1991)\",\"@\":\"dcterms\"},{\"$\":\"0901-5795\",\"@type\":{\"$\":\"dkdcplus:ISSN\",\"@\":\"xsi\"},\"@\":\"dcterms\"}],\"spatial\":[{\"$\":\"Danmark malerkunst\",\"@\":\"dcterms\"}],\"@\":\"dkabm\"},\"identifier\":{\"$\":\"870971-tsart:80487940\"},\"primaryObjectIdentifier\":{\"$\":\"870971-tsart:80487940\"},\"recordStatus\":{\"$\":\"active\"},\"creationDate\":{\"$\":\"2005-03-01\"},\"formatsAvailable\":{\"format\":[{\"$\":\"dkabm\"},{\"$\":\"marcxchange\"}]},\"objectsAvailable\":{\"identifier\":[{\"$\":\"870971-tsart:80487940\"}]}}]},\"formattedCollection\":{\"briefDisplay\":{\"manifestation\":[{\"accessType\":{\"$\":\"physical\"},\"creator\":{\"$\":\"Ulf Gudmundsen\"},\"fedoraPid\":{\"$\":\"870971-tsart:80487940\"},\"identifier\":{\"$\":\"870971-tsart:80487940\"},\"language\":{\"$\":\"Dansk\"},\"partOf\":{\"$\":\"Hrymfaxe, \\u00c5rg. 21, nr. 3 (1991)\"},\"title\":{\"$\":\"Harry Carlsson\"},\"titleFull\":{\"$\":\"Harry Carlsson\"},\"type\":{\"$\":\"Tidsskriftsartikel\"},\"workType\":{\"$\":\"article\"}}]}}},{\"collection\":{\"resultPosition\":{\"$\":\"5\"},\"numberOfObjects\":{\"$\":\"1\"},\"object\":[{\"record\":{\"identifier\":[{\"$\":\"36616636|870971\",\"@\":\"ac\"}],\"source\":[{\"$\":\"Tidsskriftsartikler\",\"@\":\"ac\"}],\"title\":[{\"$\":\"Harry Harrison\",\"@\":\"dc\"},{\"$\":\"Harry Harrison\",\"@type\":{\"$\":\"dkdcplus:full\",\"@\":\"xsi\"},\"@\":\"dc\"}],\"creator\":[{\"$\":\"Klaus \\u00c6. Mogensen\",\"@type\":{\"$\":\"dkdcplus:aut\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"Mogensen, Klaus \\u00c6.\",\"@type\":{\"$\":\"oss:sort\",\"@\":\"xsi\"},\"@\":\"dc\"}],\"subject\":[{\"$\":\"99.4 Harrison, Harry\",\"@type\":{\"$\":\"dkdcplus:DK5\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"Biografier af enkelte personer\",\"@type\":{\"$\":\"dkdcplus:DK5-Text\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"Harry Harrison\",\"@\":\"dc\"},{\"$\":\"Harrison, Harry\",\"@type\":{\"$\":\"oss:sort\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"amerikansk litteratur\",\"@type\":{\"$\":\"dkdcplus:DBCF\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"science fiction\",\"@type\":{\"$\":\"dkdcplus:DBCF\",\"@\":\"xsi\"},\"@\":\"dc\"}],\"abstract\":[{\"$\":\"Portr\\u00e6t af den amerikanske forfatter\",\"@\":\"dcterms\"}],\"audience\":[{\"$\":\"voksenmaterialer\",\"@\":\"dcterms\"}],\"date\":[{\"$\":\"2015\",\"@\":\"dc\"}],\"type\":[{\"$\":\"Tidsskriftsartikel\",\"@type\":{\"$\":\"dkdcplus:BibDK-Type\",\"@\":\"xsi\"},\"@\":\"dc\"}],\"format\":[{\"$\":\"illustreret\",\"@\":\"dc\"}],\"extent\":[{\"$\":\"S. 41-43\",\"@\":\"dcterms\"}],\"language\":[{\"$\":\"dan\",\"@type\":{\"$\":\"dcterms:ISO639-2\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"Dansk\",\"@\":\"dc\"}],\"isPartOf\":[{\"$\":\"Himmelskibet, Nr. 45 (2015)\",\"@\":\"dcterms\"},{\"$\":\"1603-5836\",\"@type\":{\"$\":\"dkdcplus:ISSN\",\"@\":\"xsi\"},\"@\":\"dcterms\"}],\"@\":\"dkabm\"},\"identifier\":{\"$\":\"870971-tsart:36616636\"},\"primaryObjectIdentifier\":{\"$\":\"870971-tsart:36616636\"},\"recordStatus\":{\"$\":\"active\"},\"creationDate\":{\"$\":\"2015-09-01\"},\"formatsAvailable\":{\"format\":[{\"$\":\"dkabm\"},{\"$\":\"marcxchange\"}]},\"objectsAvailable\":{\"identifier\":[{\"$\":\"870971-tsart:36616636\"}]}}]},\"formattedCollection\":{\"briefDisplay\":{\"manifestation\":[{\"accessType\":{\"$\":\"physical\"},\"creator\":{\"$\":\"Klaus \\u00c6. Mogensen\"},\"fedoraPid\":{\"$\":\"870971-tsart:36616636\"},\"identifier\":{\"$\":\"870971-tsart:36616636\"},\"language\":{\"$\":\"Dansk\"},\"partOf\":{\"$\":\"Himmelskibet, Nr. 45 (2015)\"},\"title\":{\"$\":\"Harry Harrison\"},\"titleFull\":{\"$\":\"Harry Harrison\"},\"type\":{\"$\":\"Tidsskriftsartikel\"},\"workType\":{\"$\":\"article\"}}]}}},{\"collection\":{\"resultPosition\":{\"$\":\"6\"},\"numberOfObjects\":{\"$\":\"1\"},\"object\":[{\"record\":{\"identifier\":[{\"$\":\"87319946|870971\",\"@\":\"ac\"}],\"source\":[{\"$\":\"Avisartikler\",\"@\":\"ac\"}],\"title\":[{\"$\":\"Harry Potter\",\"@\":\"dc\"},{\"$\":\"Harry Potter\",\"@type\":{\"$\":\"dkdcplus:full\",\"@\":\"xsi\"},\"@\":\"dc\"}],\"creator\":[{\"$\":\"Christian Monggaard\",\"@\":\"dc\"},{\"$\":\"Monggaard, Christian\",\"@type\":{\"$\":\"oss:sort\",\"@\":\"xsi\"},\"@\":\"dc\"}],\"subject\":[{\"$\":\"99.4 Rowling, Joanne K.\",\"@type\":{\"$\":\"dkdcplus:DK5\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"Biografier af enkelte personer\",\"@type\":{\"$\":\"dkdcplus:DK5-Text\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"Harry Potter og F\\u00f8nixordenen\",\"@type\":{\"$\":\"dkdcplus:DBCF\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"Joanne K. Rowling\",\"@type\":{\"$\":\"dkdcplus:DBCF\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"Rowling, Joanne K.\",\"@type\":{\"$\":\"oss:sort\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"b\\u00f8rnelitteratur\",\"@type\":{\"$\":\"dkdcplus:DBCF\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"engelsk litteratur\",\"@type\":{\"$\":\"dkdcplus:DBCF\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"litteratur\",\"@type\":{\"$\":\"dkdcplus:DBCF\",\"@\":\"xsi\"},\"@\":\"dc\"}],\"abstract\":[{\"$\":\"\\u00c5rsager til Harry Potter-b\\u00f8gernes succes\",\"@\":\"dcterms\"}],\"description\":[{\"$\":\"I anledning af det 5. bind i serien: \\\"Harry Potter og F\\u00f8niksordenen\\\"\",\"@\":\"dc\"}],\"audience\":[{\"$\":\"voksenmaterialer\",\"@\":\"dcterms\"}],\"date\":[{\"$\":\"2003\",\"@\":\"dc\"}],\"type\":[{\"$\":\"Avisartikel\",\"@type\":{\"$\":\"dkdcplus:BibDK-Type\",\"@\":\"xsi\"},\"@\":\"dc\"}],\"extent\":[{\"$\":\"S. 9\",\"@\":\"dcterms\"}],\"language\":[{\"$\":\"dan\",\"@type\":{\"$\":\"dcterms:ISO639-2\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"Dansk\",\"@\":\"dc\"}],\"isPartOf\":[{\"$\":\"Information, 2003-06-21\",\"@\":\"dcterms\"},{\"$\":\"1602-2572\",\"@type\":{\"$\":\"dkdcplus:ISSN\",\"@\":\"xsi\"},\"@\":\"dcterms\"}],\"@\":\"dkabm\"},\"identifier\":{\"$\":\"870971-avis:87319946\"},\"primaryObjectIdentifier\":{\"$\":\"870971-avis:87319946\"},\"recordStatus\":{\"$\":\"active\"},\"creationDate\":{\"$\":\"2005-03-02\"},\"formatsAvailable\":{\"format\":[{\"$\":\"dkabm\"},{\"$\":\"marcxchange\"}]},\"objectsAvailable\":{\"identifier\":[{\"$\":\"870971-avis:87319946\"}]}}]},\"formattedCollection\":{\"briefDisplay\":{\"manifestation\":[{\"accessType\":{\"$\":\"online\"},\"creator\":{\"$\":\"Christian Monggaard\"},\"fedoraPid\":{\"$\":\"870971-avis:87319946\"},\"identifier\":{\"$\":\"870971-avis:87319946\"},\"language\":{\"$\":\"Dansk\"},\"partOf\":{\"$\":\"Information, 2003-06-21\"},\"title\":{\"$\":\"Harry Potter\"},\"titleFull\":{\"$\":\"Harry Potter\"},\"type\":{\"$\":\"Avisartikel\"},\"workType\":{\"$\":\"article\"}}]}}},{\"collection\":{\"resultPosition\":{\"$\":\"7\"},\"numberOfObjects\":{\"$\":\"1\"},\"object\":[{\"record\":{\"identifier\":[{\"$\":\"36317140|870971\",\"@\":\"ac\"}],\"source\":[{\"$\":\"Avisartikler\",\"@\":\"ac\"}],\"title\":[{\"$\":\"Dynamit Harry\",\"@\":\"dc\"},{\"$\":\"Dynamit Harry\",\"@type\":{\"$\":\"dkdcplus:full\",\"@\":\"xsi\"},\"@\":\"dc\"}],\"creator\":[{\"$\":\"Poul H\\u00f8i\",\"@type\":{\"$\":\"dkdcplus:aut\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"H\\u00f8i, Poul\",\"@type\":{\"$\":\"oss:sort\",\"@\":\"xsi\"},\"@\":\"dc\"}],\"subject\":[{\"$\":\"61.28\",\"@type\":{\"$\":\"dkdcplus:DK5\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"Nervefysiologi\",\"@type\":{\"$\":\"dkdcplus:DK5-Text\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"Potter, Harry\",\"@type\":{\"$\":\"dkdcplus:DBCF\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"empati\",\"@type\":{\"$\":\"dkdcplus:DBCF\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"f\\u00f8lelser\",\"@type\":{\"$\":\"dkdcplus:DBCF\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"hjernen\",\"@type\":{\"$\":\"dkdcplus:DBCF\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"litter\\u00e6re personer\",\"@type\":{\"$\":\"dkdcplus:DBCF\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"psykologi\",\"@type\":{\"$\":\"dkdcplus:DBCF\",\"@\":\"xsi\"},\"@\":\"dc\"}],\"abstract\":[{\"$\":\"Empati er en mangelvare hos Islamisk Stat, empati-neuronerne t\\u00e6nder simpelthen ikke i helligkrigernes hjerner, n\\u00e5r de ser andre lide. Men if\\u00f8lge forskere er der en modgift: De skal l\\u00e6se b\\u00f8ger om Harry Potter\",\"@\":\"dcterms\"}],\"audience\":[{\"$\":\"voksenmaterialer\",\"@\":\"dcterms\"}],\"date\":[{\"$\":\"2014\",\"@\":\"dc\"}],\"type\":[{\"$\":\"Avisartikel\",\"@type\":{\"$\":\"dkdcplus:BibDK-Type\",\"@\":\"xsi\"},\"@\":\"dc\"}],\"format\":[{\"$\":\"illustreret\",\"@\":\"dc\"}],\"extent\":[{\"$\":\"Sektion 2, s. 8-9\",\"@\":\"dcterms\"}],\"language\":[{\"$\":\"dan\",\"@type\":{\"$\":\"dcterms:ISO639-2\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"Dansk\",\"@\":\"dc\"}],\"isPartOf\":[{\"$\":\"Berlingske tidende, 2014-12-26\",\"@\":\"dcterms\"},{\"$\":\"0106-4223\",\"@type\":{\"$\":\"dkdcplus:ISSN\",\"@\":\"xsi\"},\"@\":\"dcterms\"}],\"@\":\"dkabm\"},\"identifier\":{\"$\":\"870971-avis:36317140\"},\"primaryObjectIdentifier\":{\"$\":\"870971-avis:36317140\"},\"recordStatus\":{\"$\":\"active\"},\"creationDate\":{\"$\":\"2014-12-29\"},\"formatsAvailable\":{\"format\":[{\"$\":\"dkabm\"},{\"$\":\"marcxchange\"}]},\"objectsAvailable\":{\"identifier\":[{\"$\":\"870971-avis:36317140\"}]}}]},\"formattedCollection\":{\"briefDisplay\":{\"manifestation\":[{\"accessType\":{\"$\":\"online\"},\"creator\":{\"$\":\"Poul H\\u00f8i\"},\"fedoraPid\":{\"$\":\"870971-avis:36317140\"},\"identifier\":{\"$\":\"870971-avis:36317140\"},\"language\":{\"$\":\"Dansk\"},\"partOf\":{\"$\":\"Berlingske tidende, 2014-12-26\"},\"title\":{\"$\":\"Dynamit Harry\"},\"titleFull\":{\"$\":\"Dynamit Harry\"},\"type\":{\"$\":\"Avisartikel\"},\"workType\":{\"$\":\"article\"}}]}}},{\"collection\":{\"resultPosition\":{\"$\":\"8\"},\"numberOfObjects\":{\"$\":\"1\"},\"object\":[{\"record\":{\"identifier\":[{\"$\":\"88657357|870971\",\"@\":\"ac\"}],\"source\":[{\"$\":\"Tidsskriftsartikler\",\"@\":\"ac\"}],\"title\":[{\"$\":\"Harry Nielsen\",\"@\":\"dc\"},{\"$\":\"Harry Nielsen\",\"@type\":{\"$\":\"dkdcplus:full\",\"@\":\"xsi\"},\"@\":\"dc\"}],\"creator\":[{\"$\":\"Nikolaj Zeuthen\",\"@\":\"dc\"},{\"$\":\"Zeuthen, Nikolaj\",\"@type\":{\"$\":\"oss:sort\",\"@\":\"xsi\"},\"@\":\"dc\"}],\"subject\":[{\"$\":\"86\",\"@type\":{\"$\":\"dkdcplus:DK5\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"Dansk sk\\u00f8nlitteratur\",\"@type\":{\"$\":\"dkdcplus:DK5-Text\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"dansk sk\\u00f8nlitteratur\",\"@type\":{\"$\":\"dkdcplus:DBCO\",\"@\":\"xsi\"},\"@\":\"dc\"}],\"audience\":[{\"$\":\"voksenmaterialer\",\"@\":\"dcterms\"}],\"date\":[{\"$\":\"2005\",\"@\":\"dc\"}],\"type\":[{\"$\":\"Tidsskriftsartikel\",\"@type\":{\"$\":\"dkdcplus:BibDK-Type\",\"@\":\"xsi\"},\"@\":\"dc\"}],\"extent\":[{\"$\":\"S. 49-52\",\"@\":\"dcterms\"}],\"language\":[{\"$\":\"dan\",\"@type\":{\"$\":\"dcterms:ISO639-2\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"Dansk\",\"@\":\"dc\"}],\"isPartOf\":[{\"$\":\"Den bl\\u00e5 port, 2005, nr. 67\",\"@\":\"dcterms\"},{\"$\":\"0900-8160\",\"@type\":{\"$\":\"dkdcplus:ISSN\",\"@\":\"xsi\"},\"@\":\"dcterms\"}],\"@\":\"dkabm\"},\"identifier\":{\"$\":\"870971-tsart:88657357\"},\"primaryObjectIdentifier\":{\"$\":\"870971-tsart:88657357\"},\"recordStatus\":{\"$\":\"active\"},\"creationDate\":{\"$\":\"2005-10-27\"},\"formatsAvailable\":{\"format\":[{\"$\":\"dkabm\"},{\"$\":\"marcxchange\"}]},\"objectsAvailable\":{\"identifier\":[{\"$\":\"870971-tsart:88657357\"}]}}]},\"formattedCollection\":{\"briefDisplay\":{\"manifestation\":[{\"accessType\":{\"$\":\"physical\"},\"creator\":{\"$\":\"Nikolaj Zeuthen\"},\"fedoraPid\":{\"$\":\"870971-tsart:88657357\"},\"identifier\":{\"$\":\"870971-tsart:88657357\"},\"language\":{\"$\":\"Dansk\"},\"partOf\":{\"$\":\"Den bl\\u00e5 port, 2005, nr. 67\"},\"title\":{\"$\":\"Harry Nielsen\"},\"titleFull\":{\"$\":\"Harry Nielsen\"},\"type\":{\"$\":\"Tidsskriftsartikel\"},\"workType\":{\"$\":\"article\"}}]}}},{\"collection\":{\"resultPosition\":{\"$\":\"9\"},\"numberOfObjects\":{\"$\":\"1\"},\"object\":[{\"record\":{\"identifier\":[{\"$\":\"35460454|870971\",\"@\":\"ac\"}],\"source\":[{\"$\":\"Avisartikler\",\"@\":\"ac\"}],\"title\":[{\"$\":\"Dirty Harry\",\"@\":\"dc\"},{\"$\":\"Dirty Harry\",\"@type\":{\"$\":\"dkdcplus:full\",\"@\":\"xsi\"},\"@\":\"dc\"}],\"creator\":[{\"$\":\"Michael Bjerre\",\"@type\":{\"$\":\"dkdcplus:aut\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"Bjerre, Michael\",\"@type\":{\"$\":\"oss:sort\",\"@\":\"xsi\"},\"@\":\"dc\"}],\"subject\":[{\"$\":\"99.4 Henry, prins af Wales\",\"@type\":{\"$\":\"dkdcplus:DK5\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"Biografier af enkelte personer\",\"@type\":{\"$\":\"dkdcplus:DK5-Text\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"Henry (prins af Wales)\",\"@\":\"dc\"},{\"$\":\"Henry (prins af Wales)\",\"@type\":{\"$\":\"oss:sort\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"kongehuset\",\"@type\":{\"$\":\"dkdcplus:DBCF\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"milit\\u00e6rv\\u00e6sen\",\"@type\":{\"$\":\"dkdcplus:DBCF\",\"@\":\"xsi\"},\"@\":\"dc\"}],\"abstract\":[{\"$\":\"Partyprins, drenger\\u00f8v, charmetrold og en soldat, der praler af at have sl\\u00e5et ihjel i Afghanistan. Prins Harry finder sig bedre tilpas som kaptajn end prins\",\"@\":\"dcterms\"}],\"audience\":[{\"$\":\"voksenmaterialer\",\"@\":\"dcterms\"}],\"date\":[{\"$\":\"2013\",\"@\":\"dc\"}],\"type\":[{\"$\":\"Avisartikel\",\"@type\":{\"$\":\"dkdcplus:BibDK-Type\",\"@\":\"xsi\"},\"@\":\"dc\"}],\"format\":[{\"$\":\"illustreret\",\"@\":\"dc\"}],\"extent\":[{\"$\":\"Sektion 1, s. 14-15\",\"@\":\"dcterms\"}],\"language\":[{\"$\":\"dan\",\"@type\":{\"$\":\"dcterms:ISO639-2\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"Dansk\",\"@\":\"dc\"}],\"isPartOf\":[{\"$\":\"Berlingske tidende, 2013-01-27\",\"@\":\"dcterms\"},{\"$\":\"0106-4223\",\"@type\":{\"$\":\"dkdcplus:ISSN\",\"@\":\"xsi\"},\"@\":\"dcterms\"}],\"spatial\":[{\"$\":\"England\",\"@type\":{\"$\":\"dkdcplus:DBCF\",\"@\":\"xsi\"},\"@\":\"dcterms\"}],\"@\":\"dkabm\"},\"identifier\":{\"$\":\"870971-avis:35460454\"},\"primaryObjectIdentifier\":{\"$\":\"870971-avis:35460454\"},\"recordStatus\":{\"$\":\"active\"},\"creationDate\":{\"$\":\"2013-01-28\"},\"formatsAvailable\":{\"format\":[{\"$\":\"dkabm\"},{\"$\":\"marcxchange\"}]},\"objectsAvailable\":{\"identifier\":[{\"$\":\"870971-avis:35460454\"}]}}]},\"formattedCollection\":{\"briefDisplay\":{\"manifestation\":[{\"accessType\":{\"$\":\"online\"},\"creator\":{\"$\":\"Michael Bjerre\"},\"fedoraPid\":{\"$\":\"870971-avis:35460454\"},\"identifier\":{\"$\":\"870971-avis:35460454\"},\"language\":{\"$\":\"Dansk\"},\"partOf\":{\"$\":\"Berlingske tidende, 2013-01-27\"},\"title\":{\"$\":\"Dirty Harry\"},\"titleFull\":{\"$\":\"Dirty Harry\"},\"type\":{\"$\":\"Avisartikel\"},\"workType\":{\"$\":\"article\"}}]}}},{\"collection\":{\"resultPosition\":{\"$\":\"10\"},\"numberOfObjects\":{\"$\":\"1\"},\"object\":[{\"record\":{\"identifier\":[{\"$\":\"73850452|870971\",\"@\":\"ac\"}],\"source\":[{\"$\":\"Avisartikler\",\"@\":\"ac\"}],\"title\":[{\"$\":\"ang. Harry\",\"@\":\"dc\"},{\"$\":\"ang. Harry\",\"@type\":{\"$\":\"dkdcplus:full\",\"@\":\"xsi\"},\"@\":\"dc\"}],\"creator\":[{\"$\":\"Niels Rohleder\",\"@\":\"dc\"},{\"$\":\"Rohleder, Niels\",\"@type\":{\"$\":\"oss:sort\",\"@\":\"xsi\"},\"@\":\"dc\"}],\"subject\":[{\"$\":\"99.4 Tisch, Harry\",\"@type\":{\"$\":\"dkdcplus:DK5\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"Biografier af enkelte personer\",\"@type\":{\"$\":\"dkdcplus:DK5-Text\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"Harry Tisch\",\"@\":\"dc\"},{\"$\":\"Tisch, Harry\",\"@type\":{\"$\":\"oss:sort\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"biografier\",\"@\":\"dc\"}],\"abstract\":[{\"$\":\"For\\u00e5ret 1961: En gruppe danske kommunister, bl.a. Poul Emanuel, smuglede en visuml\\u00f8s \\u00f8sttysker i land i K\\u00f8benhavn. Tisch blev senere chef for DDR's fagbev\\u00e6gelse og politbureaumedlem i SED. Emanuel blev partisekret\\u00e6r i DKP. I dag sidder Tisch f\\u00e6ngslet i Berlin. Emanuel er efterl\\u00f8nsmodtager p\\u00e5 Amager\",\"@\":\"dcterms\"}],\"audience\":[{\"$\":\"voksenmaterialer\",\"@\":\"dcterms\"}],\"date\":[{\"$\":\"1991\",\"@\":\"dc\"}],\"type\":[{\"$\":\"Avisartikel\",\"@type\":{\"$\":\"dkdcplus:BibDK-Type\",\"@\":\"xsi\"},\"@\":\"dc\"}],\"language\":[{\"$\":\"dan\",\"@type\":{\"$\":\"dcterms:ISO639-2\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"Dansk\",\"@\":\"dc\"}],\"isPartOf\":[{\"$\":\"Information, 1991-04-20\",\"@\":\"dcterms\"},{\"$\":\"1602-2572\",\"@type\":{\"$\":\"dkdcplus:ISSN\",\"@\":\"xsi\"},\"@\":\"dcterms\"}],\"spatial\":[{\"$\":\"Tyskland (DDR) politisk system\",\"@\":\"dcterms\"},{\"$\":\"Danmark politisk system\",\"@\":\"dcterms\"}],\"@\":\"dkabm\"},\"identifier\":{\"$\":\"870971-avis:73850452\"},\"primaryObjectIdentifier\":{\"$\":\"870971-avis:73850452\"},\"recordStatus\":{\"$\":\"active\"},\"creationDate\":{\"$\":\"2005-03-01\"},\"formatsAvailable\":{\"format\":[{\"$\":\"dkabm\"},{\"$\":\"marcxchange\"}]},\"objectsAvailable\":{\"identifier\":[{\"$\":\"870971-avis:73850452\"}]}}]},\"formattedCollection\":{\"briefDisplay\":{\"manifestation\":[{\"accessType\":{\"$\":\"physical\"},\"creator\":{\"$\":\"Niels Rohleder\"},\"fedoraPid\":{\"$\":\"870971-avis:73850452\"},\"identifier\":{\"$\":\"870971-avis:73850452\"},\"language\":{\"$\":\"Dansk\"},\"partOf\":{\"$\":\"Information, 1991-04-20\"},\"title\":{\"$\":\"ang. Harry\"},\"titleFull\":{\"$\":\"ang. Harry\"},\"type\":{\"$\":\"Avisartikel\"},\"workType\":{\"$\":\"article\"}}]}}}],\"facetResult\":null,\"statInfo\":{\"fedoraRecordsCached\":{\"$\":\"44\"},\"fedoraRecordsRead\":{\"$\":\"16\"},\"time\":{\"$\":\"0.292704\"},\"trackingId\":{\"$\":\"2016-12-08T15:46:02:316144:457\"}}}},\"@namespaces\":{\"ac\":\"http:\\/\\/biblstandard.dk\\/ac\\/namespace\\/\",\"dbcaddi\":\"http:\\/\\/oss.dbc.dk\\/rdf\\/dbcaddi#\",\"dbcbib\":\"http:\\/\\/oss.dbc.dk\\/rdf\\/dbcbib#\",\"dc\":\"http:\\/\\/purl.org\\/dc\\/elements\\/1.1\\/\",\"dcmitype\":\"http:\\/\\/purl.org\\/dc\\/dcmitype\\/\",\"dcterms\":\"http:\\/\\/purl.org\\/dc\\/terms\\/\",\"dkabm\":\"http:\\/\\/biblstandard.dk\\/abm\\/namespace\\/dkabm\\/\",\"dkdcplus\":\"http:\\/\\/biblstandard.dk\\/abm\\/namespace\\/dkdcplus\\/\",\"docbook\":\"http:\\/\\/docbook.org\\/ns\\/docbook\",\"kml\":\"http:\\/\\/www.opengis.net\\/kml\\/2.2\",\"marcx\":\"info:lc\\/xmlns\\/marcxchange-v1\",\"mx\":\"http:\\/\\/www.loc.gov\\/MARC21\\/slim\",\"of\":\"http:\\/\\/oss.dbc.dk\\/ns\\/openformat\",\"ofo\":\"http:\\/\\/oss.dbc.dk\\/ns\\/openformatoutput\",\"os\":\"http:\\/\\/oss.dbc.dk\\/ns\\/opensearch\",\"oso\":\"http:\\/\\/oss.dbc.dk\\/ns\\/opensearchobjects\",\"oss\":\"http:\\/\\/oss.dbc.dk\\/ns\\/osstypes\",\"xs\":\"http:\\/\\/www.w3.org\\/2001\\/XMLSchema\",\"xsi\":\"http:\\/\\/www.w3.org\\/2001\\/XMLSchema-instance\"}}",
+  "[\"moreinfo\",{\"qs\":{\"action\":\"moreInfo\",\"authenticationUser\":\"XXXXX\",\"authenticationGroup\":\"XXXXX\",\"authenticationPassword\":\"XXXXX\",\"pidList\":\"870971-avis:70678594|870971-tsart:70055848|870971-tsart:70055813|870971-tsart:80487940|870971-tsart:36616636|870971-avis:87319946|870971-avis:36317140|870971-tsart:88657357|870971-avis:35460454|870971-avis:73850452\",\"outputType\":\"json\"}}]": "{\"moreInfoResponse\":{\"requestStatus\":{\"statusEnum\":{\"$\":\"ok\",\"@\":\"mi\"},\"errorText\":{\"$\":\"\",\"@\":\"mi\"},\"@\":\"mi\"},\"identifierInformation\":[{\"identifierKnown\":{\"$\":\"false\",\"@\":\"mi\"},\"identifier\":{\"pid\":{\"$\":\"870971-avis:70678594\",\"@\":\"mi\"},\"@\":\"mi\"},\"@\":\"mi\"},{\"identifierKnown\":{\"$\":\"true\",\"@\":\"mi\"},\"identifier\":{\"pid\":{\"$\":\"870971-tsart:70055848\",\"@\":\"mi\"},\"@\":\"mi\"},\"@\":\"mi\"},{\"identifierKnown\":{\"$\":\"true\",\"@\":\"mi\"},\"identifier\":{\"pid\":{\"$\":\"870971-tsart:70055813\",\"@\":\"mi\"},\"@\":\"mi\"},\"@\":\"mi\"},{\"identifierKnown\":{\"$\":\"false\",\"@\":\"mi\"},\"identifier\":{\"pid\":{\"$\":\"870971-tsart:80487940\",\"@\":\"mi\"},\"@\":\"mi\"},\"@\":\"mi\"},{\"identifierKnown\":{\"$\":\"false\",\"@\":\"mi\"},\"identifier\":{\"pid\":{\"$\":\"870971-tsart:36616636\",\"@\":\"mi\"},\"@\":\"mi\"},\"@\":\"mi\"},{\"identifierKnown\":{\"$\":\"false\",\"@\":\"mi\"},\"identifier\":{\"pid\":{\"$\":\"870971-avis:87319946\",\"@\":\"mi\"},\"@\":\"mi\"},\"@\":\"mi\"},{\"identifierKnown\":{\"$\":\"false\",\"@\":\"mi\"},\"identifier\":{\"pid\":{\"$\":\"870971-avis:36317140\",\"@\":\"mi\"},\"@\":\"mi\"},\"@\":\"mi\"},{\"identifierKnown\":{\"$\":\"false\",\"@\":\"mi\"},\"identifier\":{\"pid\":{\"$\":\"870971-tsart:88657357\",\"@\":\"mi\"},\"@\":\"mi\"},\"@\":\"mi\"},{\"identifierKnown\":{\"$\":\"false\",\"@\":\"mi\"},\"identifier\":{\"pid\":{\"$\":\"870971-avis:35460454\",\"@\":\"mi\"},\"@\":\"mi\"},\"@\":\"mi\"},{\"identifierKnown\":{\"$\":\"false\",\"@\":\"mi\"},\"identifier\":{\"pid\":{\"$\":\"870971-avis:73850452\",\"@\":\"mi\"},\"@\":\"mi\"},\"@\":\"mi\"}],\"@\":\"mi\"},\"@namespaces\":{\"mi\":\"http:\\/\\/oss.dbc.dk\\/ns\\/moreinfo\"}}\n",
+  "[\"opensearch\",{\"qs\":{\"action\":\"getObject\",\"identifier\":[\"870971-avis:70678594\",\"870971-tsart:70055848\",\"870971-tsart:70055813\",\"870971-tsart:80487940\",\"870971-tsart:36616636\",\"870971-avis:87319946\",\"870971-avis:36317140\",\"870971-tsart:88657357\",\"870971-avis:35460454\",\"870971-avis:73850452\"],\"agency\":\"775100\",\"profile\":\"opac\",\"outputType\":\"json\",\"objectFormat\":[],\"relationData\":\"uri\"}}]": "{\"searchResponse\":{\"result\":{\"hitCount\":{\"$\":\"10\"},\"collectionCount\":{\"$\":\"10\"},\"more\":{\"$\":\"false\"},\"searchResult\":[{\"collection\":{\"resultPosition\":{\"$\":\"1\"},\"numberOfObjects\":{\"$\":\"1\"},\"object\":[{\"record\":{\"identifier\":[{\"$\":\"70678594|870971\",\"@\":\"ac\"}],\"source\":[{\"$\":\"Avisartikler\",\"@\":\"ac\"}],\"title\":[{\"$\":\"Motoren Harry\",\"@\":\"dc\"},{\"$\":\"Motoren Harry\",\"@type\":{\"$\":\"dkdcplus:full\",\"@\":\"xsi\"},\"@\":\"dc\"}],\"creator\":[{\"$\":\"Anders Mose Poulsen\",\"@\":\"dc\"},{\"$\":\"Mose Poulsen, Anders\",\"@type\":{\"$\":\"oss:sort\",\"@\":\"xsi\"},\"@\":\"dc\"}],\"subject\":[{\"$\":\"99.4 Jensen, Harry, f. 1921\",\"@type\":{\"$\":\"dkdcplus:DK5\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"Biografier af enkelte personer\",\"@type\":{\"$\":\"dkdcplus:DK5-Text\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"Harry Jensen\",\"@\":\"dc\"},{\"$\":\"Jensen, Harry\",\"@type\":{\"$\":\"oss:sort\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"biografier\",\"@\":\"dc\"}],\"abstract\":[{\"$\":\"Harry Motor\",\"@\":\"dcterms\"}],\"audience\":[{\"$\":\"voksenmaterialer\",\"@\":\"dcterms\"}],\"contributor\":[{\"$\":\"Harry Jensen\",\"@type\":{\"$\":\"dkdcplus:ive\",\"@\":\"xsi\"},\"@\":\"dc\"}],\"date\":[{\"$\":\"1982\",\"@\":\"dc\"}],\"type\":[{\"$\":\"Avisartikel\",\"@type\":{\"$\":\"dkdcplus:BibDK-Type\",\"@\":\"xsi\"},\"@\":\"dc\"}],\"format\":[{\"$\":\"Ill.\",\"@\":\"dc\"}],\"language\":[{\"$\":\"dan\",\"@type\":{\"$\":\"dcterms:ISO639-2\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"Dansk\",\"@\":\"dc\"}],\"isPartOf\":[{\"$\":\"Morgenposten, 1982-10-24\",\"@\":\"dcterms\"},{\"$\":\"1399-8595\",\"@type\":{\"$\":\"dkdcplus:ISSN\",\"@\":\"xsi\"},\"@\":\"dcterms\"}],\"@\":\"dkabm\"},\"identifier\":{\"$\":\"870971-avis:70678594\"},\"primaryObjectIdentifier\":{\"$\":\"870971-avis:70678594\"},\"recordStatus\":{\"$\":\"active\"},\"creationDate\":{\"$\":\"2005-03-01\"},\"formatsAvailable\":{\"format\":[{\"$\":\"dkabm\"},{\"$\":\"marcxchange\"}]},\"objectsAvailable\":{\"identifier\":[{\"$\":\"870971-avis:70678594\"}]}}]}},{\"collection\":{\"resultPosition\":{\"$\":\"2\"},\"numberOfObjects\":{\"$\":\"1\"},\"object\":[{\"record\":{\"identifier\":[{\"$\":\"70055848|870971\",\"@\":\"ac\"}],\"source\":[{\"$\":\"Tidsskriftsartikler\",\"@\":\"ac\"}],\"title\":[{\"$\":\"Harry Kupfer\",\"@\":\"dc\"},{\"$\":\"Harry Kupfer\",\"@type\":{\"$\":\"dkdcplus:full\",\"@\":\"xsi\"},\"@\":\"dc\"}],\"creator\":[{\"$\":\"Gabor Halasz\",\"@\":\"dc\"},{\"$\":\"Halasz, Gabor\",\"@type\":{\"$\":\"oss:sort\",\"@\":\"xsi\"},\"@\":\"dc\"}],\"subject\":[{\"$\":\"99.4 Kupfer, Harry\",\"@type\":{\"$\":\"dkdcplus:DK5\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"Biografier af enkelte personer\",\"@type\":{\"$\":\"dkdcplus:DK5-Text\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"Harry Kupfer\",\"@\":\"dc\"},{\"$\":\"Kupfer, Harry\",\"@type\":{\"$\":\"oss:sort\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"biografier\",\"@\":\"dc\"}],\"audience\":[{\"$\":\"voksenmaterialer\",\"@\":\"dcterms\"}],\"date\":[{\"$\":\"1982\",\"@\":\"dc\"}],\"type\":[{\"$\":\"Tidsskriftsartikel\",\"@type\":{\"$\":\"dkdcplus:BibDK-Type\",\"@\":\"xsi\"},\"@\":\"dc\"}],\"format\":[{\"$\":\"illustreret\",\"@\":\"dc\"}],\"extent\":[{\"$\":\"S. 26-27\",\"@\":\"dcterms\"}],\"language\":[{\"$\":\"ger\",\"@type\":{\"$\":\"dcterms:ISO639-2\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"Tysk\",\"@\":\"dc\"}],\"isPartOf\":[{\"$\":\"Opernwelt, Bd. 23, nr. 12 (1982)\",\"@\":\"dcterms\"},{\"$\":\"0030-3690\",\"@type\":{\"$\":\"dkdcplus:ISSN\",\"@\":\"xsi\"},\"@\":\"dcterms\"}],\"@\":\"dkabm\"},\"identifier\":{\"$\":\"870971-tsart:70055848\"},\"primaryObjectIdentifier\":{\"$\":\"870971-tsart:70055848\"},\"recordStatus\":{\"$\":\"active\"},\"creationDate\":{\"$\":\"2005-03-01\"},\"formatsAvailable\":{\"format\":[{\"$\":\"dkabm\"},{\"$\":\"marcxchange\"}]},\"objectsAvailable\":{\"identifier\":[{\"$\":\"870971-tsart:70055848\"}]}}]}},{\"collection\":{\"resultPosition\":{\"$\":\"3\"},\"numberOfObjects\":{\"$\":\"1\"},\"object\":[{\"record\":{\"identifier\":[{\"$\":\"70055813|870971\",\"@\":\"ac\"}],\"source\":[{\"$\":\"Tidsskriftsartikler\",\"@\":\"ac\"}],\"title\":[{\"$\":\"Harry Kullman\",\"@\":\"dc\"},{\"$\":\"Harry Kullman\",\"@type\":{\"$\":\"dkdcplus:full\",\"@\":\"xsi\"},\"@\":\"dc\"}],\"creator\":[{\"$\":\"Kenneth Carlsson\",\"@\":\"dc\"},{\"$\":\"Carlsson, Kenneth\",\"@type\":{\"$\":\"oss:sort\",\"@\":\"xsi\"},\"@\":\"dc\"}],\"subject\":[{\"$\":\"99.4 Kullman, Harry\",\"@type\":{\"$\":\"dkdcplus:DK5\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"Biografier af enkelte personer\",\"@type\":{\"$\":\"dkdcplus:DK5-Text\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"Harry Kullman\",\"@\":\"dc\"},{\"$\":\"Kullman, Harry\",\"@type\":{\"$\":\"oss:sort\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"biografier\",\"@\":\"dc\"},{\"$\":\"kriminallitteratur\",\"@\":\"dc\"},{\"$\":\"svensk litteratur\",\"@\":\"dc\"},{\"$\":\"ungdomslitteratur\",\"@\":\"dc\"}],\"abstract\":[{\"$\":\"Svensk ungdoms- og kriminalforfatter\",\"@\":\"dcterms\"}],\"audience\":[{\"$\":\"voksenmaterialer\",\"@\":\"dcterms\"}],\"date\":[{\"$\":\"1982\",\"@\":\"dc\"}],\"type\":[{\"$\":\"Tidsskriftsartikel\",\"@type\":{\"$\":\"dkdcplus:BibDK-Type\",\"@\":\"xsi\"},\"@\":\"dc\"}],\"format\":[{\"$\":\"illustreret\",\"@\":\"dc\"}],\"extent\":[{\"$\":\"S. 36-43\",\"@\":\"dcterms\"}],\"language\":[{\"$\":\"swe\",\"@type\":{\"$\":\"dcterms:ISO639-2\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"Svensk\",\"@\":\"dc\"}],\"isPartOf\":[{\"$\":\"Jury, 1982, nr. 2\",\"@\":\"dcterms\"},{\"$\":\"0345-5734\",\"@type\":{\"$\":\"dkdcplus:ISSN\",\"@\":\"xsi\"},\"@\":\"dcterms\"}],\"@\":\"dkabm\"},\"identifier\":{\"$\":\"870971-tsart:70055813\"},\"primaryObjectIdentifier\":{\"$\":\"870971-tsart:70055813\"},\"recordStatus\":{\"$\":\"active\"},\"creationDate\":{\"$\":\"2005-03-01\"},\"formatsAvailable\":{\"format\":[{\"$\":\"dkabm\"},{\"$\":\"marcxchange\"}]},\"objectsAvailable\":{\"identifier\":[{\"$\":\"870971-tsart:70055813\"}]}}]}},{\"collection\":{\"resultPosition\":{\"$\":\"4\"},\"numberOfObjects\":{\"$\":\"1\"},\"object\":[{\"record\":{\"identifier\":[{\"$\":\"80487940|870971\",\"@\":\"ac\"}],\"source\":[{\"$\":\"Tidsskriftsartikler\",\"@\":\"ac\"}],\"title\":[{\"$\":\"Harry Carlsson\",\"@\":\"dc\"},{\"$\":\"Harry Carlsson\",\"@type\":{\"$\":\"dkdcplus:full\",\"@\":\"xsi\"},\"@\":\"dc\"}],\"creator\":[{\"$\":\"Ulf Gudmundsen\",\"@\":\"dc\"},{\"$\":\"Gudmundsen, Ulf\",\"@type\":{\"$\":\"oss:sort\",\"@\":\"xsi\"},\"@\":\"dc\"}],\"subject\":[{\"$\":\"99.4 Carlsson, Harry\",\"@type\":{\"$\":\"dkdcplus:DK5\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"Biografier af enkelte personer\",\"@type\":{\"$\":\"dkdcplus:DK5-Text\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"Harry Carlsson\",\"@\":\"dc\"},{\"$\":\"Carlsson, Harry\",\"@type\":{\"$\":\"oss:sort\",\"@\":\"xsi\"},\"@\":\"dc\"}],\"abstract\":[{\"$\":\"Dansk surrealistisk maler\",\"@\":\"dcterms\"}],\"audience\":[{\"$\":\"voksenmaterialer\",\"@\":\"dcterms\"}],\"date\":[{\"$\":\"1991\",\"@\":\"dc\"}],\"type\":[{\"$\":\"Tidsskriftsartikel\",\"@type\":{\"$\":\"dkdcplus:BibDK-Type\",\"@\":\"xsi\"},\"@\":\"dc\"}],\"format\":[{\"$\":\"illustreret\",\"@\":\"dc\"}],\"extent\":[{\"$\":\"S. 14\",\"@\":\"dcterms\"}],\"language\":[{\"$\":\"dan\",\"@type\":{\"$\":\"dcterms:ISO639-2\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"Dansk\",\"@\":\"dc\"}],\"isPartOf\":[{\"$\":\"Hrymfaxe, \\u00c5rg. 21, nr. 3 (1991)\",\"@\":\"dcterms\"},{\"$\":\"0901-5795\",\"@type\":{\"$\":\"dkdcplus:ISSN\",\"@\":\"xsi\"},\"@\":\"dcterms\"}],\"spatial\":[{\"$\":\"Danmark malerkunst\",\"@\":\"dcterms\"}],\"@\":\"dkabm\"},\"identifier\":{\"$\":\"870971-tsart:80487940\"},\"primaryObjectIdentifier\":{\"$\":\"870971-tsart:80487940\"},\"recordStatus\":{\"$\":\"active\"},\"creationDate\":{\"$\":\"2005-03-01\"},\"formatsAvailable\":{\"format\":[{\"$\":\"dkabm\"},{\"$\":\"marcxchange\"}]},\"objectsAvailable\":{\"identifier\":[{\"$\":\"870971-tsart:80487940\"}]}}]}},{\"collection\":{\"resultPosition\":{\"$\":\"5\"},\"numberOfObjects\":{\"$\":\"1\"},\"object\":[{\"record\":{\"identifier\":[{\"$\":\"36616636|870971\",\"@\":\"ac\"}],\"source\":[{\"$\":\"Tidsskriftsartikler\",\"@\":\"ac\"}],\"title\":[{\"$\":\"Harry Harrison\",\"@\":\"dc\"},{\"$\":\"Harry Harrison\",\"@type\":{\"$\":\"dkdcplus:full\",\"@\":\"xsi\"},\"@\":\"dc\"}],\"creator\":[{\"$\":\"Klaus \\u00c6. Mogensen\",\"@type\":{\"$\":\"dkdcplus:aut\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"Mogensen, Klaus \\u00c6.\",\"@type\":{\"$\":\"oss:sort\",\"@\":\"xsi\"},\"@\":\"dc\"}],\"subject\":[{\"$\":\"99.4 Harrison, Harry\",\"@type\":{\"$\":\"dkdcplus:DK5\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"Biografier af enkelte personer\",\"@type\":{\"$\":\"dkdcplus:DK5-Text\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"Harry Harrison\",\"@\":\"dc\"},{\"$\":\"Harrison, Harry\",\"@type\":{\"$\":\"oss:sort\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"amerikansk litteratur\",\"@type\":{\"$\":\"dkdcplus:DBCF\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"science fiction\",\"@type\":{\"$\":\"dkdcplus:DBCF\",\"@\":\"xsi\"},\"@\":\"dc\"}],\"abstract\":[{\"$\":\"Portr\\u00e6t af den amerikanske forfatter\",\"@\":\"dcterms\"}],\"audience\":[{\"$\":\"voksenmaterialer\",\"@\":\"dcterms\"}],\"date\":[{\"$\":\"2015\",\"@\":\"dc\"}],\"type\":[{\"$\":\"Tidsskriftsartikel\",\"@type\":{\"$\":\"dkdcplus:BibDK-Type\",\"@\":\"xsi\"},\"@\":\"dc\"}],\"format\":[{\"$\":\"illustreret\",\"@\":\"dc\"}],\"extent\":[{\"$\":\"S. 41-43\",\"@\":\"dcterms\"}],\"language\":[{\"$\":\"dan\",\"@type\":{\"$\":\"dcterms:ISO639-2\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"Dansk\",\"@\":\"dc\"}],\"isPartOf\":[{\"$\":\"Himmelskibet, Nr. 45 (2015)\",\"@\":\"dcterms\"},{\"$\":\"1603-5836\",\"@type\":{\"$\":\"dkdcplus:ISSN\",\"@\":\"xsi\"},\"@\":\"dcterms\"}],\"@\":\"dkabm\"},\"identifier\":{\"$\":\"870971-tsart:36616636\"},\"primaryObjectIdentifier\":{\"$\":\"870971-tsart:36616636\"},\"recordStatus\":{\"$\":\"active\"},\"creationDate\":{\"$\":\"2015-09-01\"},\"formatsAvailable\":{\"format\":[{\"$\":\"dkabm\"},{\"$\":\"marcxchange\"}]},\"objectsAvailable\":{\"identifier\":[{\"$\":\"870971-tsart:36616636\"}]}}]}},{\"collection\":{\"resultPosition\":{\"$\":\"6\"},\"numberOfObjects\":{\"$\":\"1\"},\"object\":[{\"record\":{\"identifier\":[{\"$\":\"87319946|870971\",\"@\":\"ac\"}],\"source\":[{\"$\":\"Avisartikler\",\"@\":\"ac\"}],\"title\":[{\"$\":\"Harry Potter\",\"@\":\"dc\"},{\"$\":\"Harry Potter\",\"@type\":{\"$\":\"dkdcplus:full\",\"@\":\"xsi\"},\"@\":\"dc\"}],\"creator\":[{\"$\":\"Christian Monggaard\",\"@\":\"dc\"},{\"$\":\"Monggaard, Christian\",\"@type\":{\"$\":\"oss:sort\",\"@\":\"xsi\"},\"@\":\"dc\"}],\"subject\":[{\"$\":\"99.4 Rowling, Joanne K.\",\"@type\":{\"$\":\"dkdcplus:DK5\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"Biografier af enkelte personer\",\"@type\":{\"$\":\"dkdcplus:DK5-Text\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"Harry Potter og F\\u00f8nixordenen\",\"@type\":{\"$\":\"dkdcplus:DBCF\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"Joanne K. Rowling\",\"@type\":{\"$\":\"dkdcplus:DBCF\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"Rowling, Joanne K.\",\"@type\":{\"$\":\"oss:sort\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"b\\u00f8rnelitteratur\",\"@type\":{\"$\":\"dkdcplus:DBCF\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"engelsk litteratur\",\"@type\":{\"$\":\"dkdcplus:DBCF\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"litteratur\",\"@type\":{\"$\":\"dkdcplus:DBCF\",\"@\":\"xsi\"},\"@\":\"dc\"}],\"abstract\":[{\"$\":\"\\u00c5rsager til Harry Potter-b\\u00f8gernes succes\",\"@\":\"dcterms\"}],\"description\":[{\"$\":\"I anledning af det 5. bind i serien: \\\"Harry Potter og F\\u00f8niksordenen\\\"\",\"@\":\"dc\"}],\"audience\":[{\"$\":\"voksenmaterialer\",\"@\":\"dcterms\"}],\"date\":[{\"$\":\"2003\",\"@\":\"dc\"}],\"type\":[{\"$\":\"Avisartikel\",\"@type\":{\"$\":\"dkdcplus:BibDK-Type\",\"@\":\"xsi\"},\"@\":\"dc\"}],\"extent\":[{\"$\":\"S. 9\",\"@\":\"dcterms\"}],\"language\":[{\"$\":\"dan\",\"@type\":{\"$\":\"dcterms:ISO639-2\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"Dansk\",\"@\":\"dc\"}],\"isPartOf\":[{\"$\":\"Information, 2003-06-21\",\"@\":\"dcterms\"},{\"$\":\"1602-2572\",\"@type\":{\"$\":\"dkdcplus:ISSN\",\"@\":\"xsi\"},\"@\":\"dcterms\"}],\"@\":\"dkabm\"},\"identifier\":{\"$\":\"870971-avis:87319946\"},\"primaryObjectIdentifier\":{\"$\":\"870971-avis:87319946\"},\"recordStatus\":{\"$\":\"active\"},\"creationDate\":{\"$\":\"2005-03-02\"},\"relations\":{\"relation\":[{\"relationType\":{\"$\":\"dbcaddi:hasOnlineAccess\"},\"relationUri\":{\"$\":\"[useraccessinfomedia]?action=getArticle&faust=87319946&infomediaId=e008981b&libraryCode=[libraryCode]&userId=[userId]&userPinCode=[userPinCode]\"},\"linkObject\":{\"accessType\":{\"$\":\"rest\"},\"access\":{\"$\":\"login\"},\"linkTo\":{\"$\":\"webservice\"},\"linkCollectionIdentifier\":[{\"$\":\"870971-avis\"},{\"$\":\"870971-avisinf\"}]}}]},\"formatsAvailable\":{\"format\":[{\"$\":\"dkabm\"},{\"$\":\"marcxchange\"}]},\"objectsAvailable\":{\"identifier\":[{\"$\":\"870971-avis:87319946\"}]}}]}},{\"collection\":{\"resultPosition\":{\"$\":\"7\"},\"numberOfObjects\":{\"$\":\"1\"},\"object\":[{\"record\":{\"identifier\":[{\"$\":\"36317140|870971\",\"@\":\"ac\"}],\"source\":[{\"$\":\"Avisartikler\",\"@\":\"ac\"}],\"title\":[{\"$\":\"Dynamit Harry\",\"@\":\"dc\"},{\"$\":\"Dynamit Harry\",\"@type\":{\"$\":\"dkdcplus:full\",\"@\":\"xsi\"},\"@\":\"dc\"}],\"creator\":[{\"$\":\"Poul H\\u00f8i\",\"@type\":{\"$\":\"dkdcplus:aut\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"H\\u00f8i, Poul\",\"@type\":{\"$\":\"oss:sort\",\"@\":\"xsi\"},\"@\":\"dc\"}],\"subject\":[{\"$\":\"61.28\",\"@type\":{\"$\":\"dkdcplus:DK5\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"Nervefysiologi\",\"@type\":{\"$\":\"dkdcplus:DK5-Text\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"Potter, Harry\",\"@type\":{\"$\":\"dkdcplus:DBCF\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"empati\",\"@type\":{\"$\":\"dkdcplus:DBCF\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"f\\u00f8lelser\",\"@type\":{\"$\":\"dkdcplus:DBCF\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"hjernen\",\"@type\":{\"$\":\"dkdcplus:DBCF\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"litter\\u00e6re personer\",\"@type\":{\"$\":\"dkdcplus:DBCF\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"psykologi\",\"@type\":{\"$\":\"dkdcplus:DBCF\",\"@\":\"xsi\"},\"@\":\"dc\"}],\"abstract\":[{\"$\":\"Empati er en mangelvare hos Islamisk Stat, empati-neuronerne t\\u00e6nder simpelthen ikke i helligkrigernes hjerner, n\\u00e5r de ser andre lide. Men if\\u00f8lge forskere er der en modgift: De skal l\\u00e6se b\\u00f8ger om Harry Potter\",\"@\":\"dcterms\"}],\"audience\":[{\"$\":\"voksenmaterialer\",\"@\":\"dcterms\"}],\"date\":[{\"$\":\"2014\",\"@\":\"dc\"}],\"type\":[{\"$\":\"Avisartikel\",\"@type\":{\"$\":\"dkdcplus:BibDK-Type\",\"@\":\"xsi\"},\"@\":\"dc\"}],\"format\":[{\"$\":\"illustreret\",\"@\":\"dc\"}],\"extent\":[{\"$\":\"Sektion 2, s. 8-9\",\"@\":\"dcterms\"}],\"language\":[{\"$\":\"dan\",\"@type\":{\"$\":\"dcterms:ISO639-2\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"Dansk\",\"@\":\"dc\"}],\"isPartOf\":[{\"$\":\"Berlingske tidende, 2014-12-26\",\"@\":\"dcterms\"},{\"$\":\"0106-4223\",\"@type\":{\"$\":\"dkdcplus:ISSN\",\"@\":\"xsi\"},\"@\":\"dcterms\"}],\"@\":\"dkabm\"},\"identifier\":{\"$\":\"870971-avis:36317140\"},\"primaryObjectIdentifier\":{\"$\":\"870971-avis:36317140\"},\"recordStatus\":{\"$\":\"active\"},\"creationDate\":{\"$\":\"2014-12-29\"},\"relations\":{\"relation\":[{\"relationType\":{\"$\":\"dbcaddi:hasOnlineAccess\"},\"relationUri\":{\"$\":\"[useraccessinfomedia]?action=getArticle&faust=36317140&infomediaId=e4bc6c6c&libraryCode=[libraryCode]&userId=[userId]&userPinCode=[userPinCode]\"},\"linkObject\":{\"accessType\":{\"$\":\"rest\"},\"access\":{\"$\":\"login\"},\"linkTo\":{\"$\":\"webservice\"},\"linkCollectionIdentifier\":[{\"$\":\"870971-avis\"},{\"$\":\"870971-avisinf\"}]}}]},\"formatsAvailable\":{\"format\":[{\"$\":\"dkabm\"},{\"$\":\"marcxchange\"}]},\"objectsAvailable\":{\"identifier\":[{\"$\":\"870971-avis:36317140\"}]}}]}},{\"collection\":{\"resultPosition\":{\"$\":\"8\"},\"numberOfObjects\":{\"$\":\"1\"},\"object\":[{\"record\":{\"identifier\":[{\"$\":\"88657357|870971\",\"@\":\"ac\"}],\"source\":[{\"$\":\"Tidsskriftsartikler\",\"@\":\"ac\"}],\"title\":[{\"$\":\"Harry Nielsen\",\"@\":\"dc\"},{\"$\":\"Harry Nielsen\",\"@type\":{\"$\":\"dkdcplus:full\",\"@\":\"xsi\"},\"@\":\"dc\"}],\"creator\":[{\"$\":\"Nikolaj Zeuthen\",\"@\":\"dc\"},{\"$\":\"Zeuthen, Nikolaj\",\"@type\":{\"$\":\"oss:sort\",\"@\":\"xsi\"},\"@\":\"dc\"}],\"subject\":[{\"$\":\"86\",\"@type\":{\"$\":\"dkdcplus:DK5\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"Dansk sk\\u00f8nlitteratur\",\"@type\":{\"$\":\"dkdcplus:DK5-Text\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"dansk sk\\u00f8nlitteratur\",\"@type\":{\"$\":\"dkdcplus:DBCO\",\"@\":\"xsi\"},\"@\":\"dc\"}],\"audience\":[{\"$\":\"voksenmaterialer\",\"@\":\"dcterms\"}],\"date\":[{\"$\":\"2005\",\"@\":\"dc\"}],\"type\":[{\"$\":\"Tidsskriftsartikel\",\"@type\":{\"$\":\"dkdcplus:BibDK-Type\",\"@\":\"xsi\"},\"@\":\"dc\"}],\"extent\":[{\"$\":\"S. 49-52\",\"@\":\"dcterms\"}],\"language\":[{\"$\":\"dan\",\"@type\":{\"$\":\"dcterms:ISO639-2\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"Dansk\",\"@\":\"dc\"}],\"isPartOf\":[{\"$\":\"Den bl\\u00e5 port, 2005, nr. 67\",\"@\":\"dcterms\"},{\"$\":\"0900-8160\",\"@type\":{\"$\":\"dkdcplus:ISSN\",\"@\":\"xsi\"},\"@\":\"dcterms\"}],\"@\":\"dkabm\"},\"identifier\":{\"$\":\"870971-tsart:88657357\"},\"primaryObjectIdentifier\":{\"$\":\"870971-tsart:88657357\"},\"recordStatus\":{\"$\":\"active\"},\"creationDate\":{\"$\":\"2005-10-27\"},\"formatsAvailable\":{\"format\":[{\"$\":\"dkabm\"},{\"$\":\"marcxchange\"}]},\"objectsAvailable\":{\"identifier\":[{\"$\":\"870971-tsart:88657357\"}]}}]}},{\"collection\":{\"resultPosition\":{\"$\":\"9\"},\"numberOfObjects\":{\"$\":\"1\"},\"object\":[{\"record\":{\"identifier\":[{\"$\":\"35460454|870971\",\"@\":\"ac\"}],\"source\":[{\"$\":\"Avisartikler\",\"@\":\"ac\"}],\"title\":[{\"$\":\"Dirty Harry\",\"@\":\"dc\"},{\"$\":\"Dirty Harry\",\"@type\":{\"$\":\"dkdcplus:full\",\"@\":\"xsi\"},\"@\":\"dc\"}],\"creator\":[{\"$\":\"Michael Bjerre\",\"@type\":{\"$\":\"dkdcplus:aut\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"Bjerre, Michael\",\"@type\":{\"$\":\"oss:sort\",\"@\":\"xsi\"},\"@\":\"dc\"}],\"subject\":[{\"$\":\"99.4 Henry, prins af Wales\",\"@type\":{\"$\":\"dkdcplus:DK5\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"Biografier af enkelte personer\",\"@type\":{\"$\":\"dkdcplus:DK5-Text\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"Henry (prins af Wales)\",\"@\":\"dc\"},{\"$\":\"Henry (prins af Wales)\",\"@type\":{\"$\":\"oss:sort\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"kongehuset\",\"@type\":{\"$\":\"dkdcplus:DBCF\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"milit\\u00e6rv\\u00e6sen\",\"@type\":{\"$\":\"dkdcplus:DBCF\",\"@\":\"xsi\"},\"@\":\"dc\"}],\"abstract\":[{\"$\":\"Partyprins, drenger\\u00f8v, charmetrold og en soldat, der praler af at have sl\\u00e5et ihjel i Afghanistan. Prins Harry finder sig bedre tilpas som kaptajn end prins\",\"@\":\"dcterms\"}],\"audience\":[{\"$\":\"voksenmaterialer\",\"@\":\"dcterms\"}],\"date\":[{\"$\":\"2013\",\"@\":\"dc\"}],\"type\":[{\"$\":\"Avisartikel\",\"@type\":{\"$\":\"dkdcplus:BibDK-Type\",\"@\":\"xsi\"},\"@\":\"dc\"}],\"format\":[{\"$\":\"illustreret\",\"@\":\"dc\"}],\"extent\":[{\"$\":\"Sektion 1, s. 14-15\",\"@\":\"dcterms\"}],\"language\":[{\"$\":\"dan\",\"@type\":{\"$\":\"dcterms:ISO639-2\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"Dansk\",\"@\":\"dc\"}],\"isPartOf\":[{\"$\":\"Berlingske tidende, 2013-01-27\",\"@\":\"dcterms\"},{\"$\":\"0106-4223\",\"@type\":{\"$\":\"dkdcplus:ISSN\",\"@\":\"xsi\"},\"@\":\"dcterms\"}],\"spatial\":[{\"$\":\"England\",\"@type\":{\"$\":\"dkdcplus:DBCF\",\"@\":\"xsi\"},\"@\":\"dcterms\"}],\"@\":\"dkabm\"},\"identifier\":{\"$\":\"870971-avis:35460454\"},\"primaryObjectIdentifier\":{\"$\":\"870971-avis:35460454\"},\"recordStatus\":{\"$\":\"active\"},\"creationDate\":{\"$\":\"2013-01-28\"},\"relations\":{\"relation\":[{\"relationType\":{\"$\":\"dbcaddi:hasOnlineAccess\"},\"relationUri\":{\"$\":\"[useraccessinfomedia]?action=getArticle&faust=35460454&infomediaId=e3a0340c&libraryCode=[libraryCode]&userId=[userId]&userPinCode=[userPinCode]\"},\"linkObject\":{\"accessType\":{\"$\":\"rest\"},\"access\":{\"$\":\"login\"},\"linkTo\":{\"$\":\"webservice\"},\"linkCollectionIdentifier\":[{\"$\":\"870971-avis\"},{\"$\":\"870971-avisinf\"}]}}]},\"formatsAvailable\":{\"format\":[{\"$\":\"dkabm\"},{\"$\":\"marcxchange\"}]},\"objectsAvailable\":{\"identifier\":[{\"$\":\"870971-avis:35460454\"}]}}]}},{\"collection\":{\"resultPosition\":{\"$\":\"10\"},\"numberOfObjects\":{\"$\":\"1\"},\"object\":[{\"record\":{\"identifier\":[{\"$\":\"73850452|870971\",\"@\":\"ac\"}],\"source\":[{\"$\":\"Avisartikler\",\"@\":\"ac\"}],\"title\":[{\"$\":\"ang. Harry\",\"@\":\"dc\"},{\"$\":\"ang. Harry\",\"@type\":{\"$\":\"dkdcplus:full\",\"@\":\"xsi\"},\"@\":\"dc\"}],\"creator\":[{\"$\":\"Niels Rohleder\",\"@\":\"dc\"},{\"$\":\"Rohleder, Niels\",\"@type\":{\"$\":\"oss:sort\",\"@\":\"xsi\"},\"@\":\"dc\"}],\"subject\":[{\"$\":\"99.4 Tisch, Harry\",\"@type\":{\"$\":\"dkdcplus:DK5\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"Biografier af enkelte personer\",\"@type\":{\"$\":\"dkdcplus:DK5-Text\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"Harry Tisch\",\"@\":\"dc\"},{\"$\":\"Tisch, Harry\",\"@type\":{\"$\":\"oss:sort\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"biografier\",\"@\":\"dc\"}],\"abstract\":[{\"$\":\"For\\u00e5ret 1961: En gruppe danske kommunister, bl.a. Poul Emanuel, smuglede en visuml\\u00f8s \\u00f8sttysker i land i K\\u00f8benhavn. Tisch blev senere chef for DDR's fagbev\\u00e6gelse og politbureaumedlem i SED. Emanuel blev partisekret\\u00e6r i DKP. I dag sidder Tisch f\\u00e6ngslet i Berlin. Emanuel er efterl\\u00f8nsmodtager p\\u00e5 Amager\",\"@\":\"dcterms\"}],\"audience\":[{\"$\":\"voksenmaterialer\",\"@\":\"dcterms\"}],\"date\":[{\"$\":\"1991\",\"@\":\"dc\"}],\"type\":[{\"$\":\"Avisartikel\",\"@type\":{\"$\":\"dkdcplus:BibDK-Type\",\"@\":\"xsi\"},\"@\":\"dc\"}],\"language\":[{\"$\":\"dan\",\"@type\":{\"$\":\"dcterms:ISO639-2\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"Dansk\",\"@\":\"dc\"}],\"isPartOf\":[{\"$\":\"Information, 1991-04-20\",\"@\":\"dcterms\"},{\"$\":\"1602-2572\",\"@type\":{\"$\":\"dkdcplus:ISSN\",\"@\":\"xsi\"},\"@\":\"dcterms\"}],\"spatial\":[{\"$\":\"Tyskland (DDR) politisk system\",\"@\":\"dcterms\"},{\"$\":\"Danmark politisk system\",\"@\":\"dcterms\"}],\"@\":\"dkabm\"},\"identifier\":{\"$\":\"870971-avis:73850452\"},\"primaryObjectIdentifier\":{\"$\":\"870971-avis:73850452\"},\"recordStatus\":{\"$\":\"active\"},\"creationDate\":{\"$\":\"2005-03-01\"},\"formatsAvailable\":{\"format\":[{\"$\":\"dkabm\"},{\"$\":\"marcxchange\"}]},\"objectsAvailable\":{\"identifier\":[{\"$\":\"870971-avis:73850452\"}]}}]}}],\"facetResult\":{\"$\":\"\"},\"statInfo\":{\"fedoraRecordsCached\":{\"$\":\"110\"},\"fedoraRecordsRead\":{\"$\":\"2\"},\"time\":{\"$\":\"0.183025\"},\"trackingId\":{\"$\":\"2016-12-08T15:46:02:651305:16190\"}}}},\"@namespaces\":{\"ac\":\"http:\\/\\/biblstandard.dk\\/ac\\/namespace\\/\",\"dbcaddi\":\"http:\\/\\/oss.dbc.dk\\/rdf\\/dbcaddi#\",\"dbcbib\":\"http:\\/\\/oss.dbc.dk\\/rdf\\/dbcbib#\",\"dc\":\"http:\\/\\/purl.org\\/dc\\/elements\\/1.1\\/\",\"dcmitype\":\"http:\\/\\/purl.org\\/dc\\/dcmitype\\/\",\"dcterms\":\"http:\\/\\/purl.org\\/dc\\/terms\\/\",\"dkabm\":\"http:\\/\\/biblstandard.dk\\/abm\\/namespace\\/dkabm\\/\",\"dkdcplus\":\"http:\\/\\/biblstandard.dk\\/abm\\/namespace\\/dkdcplus\\/\",\"docbook\":\"http:\\/\\/docbook.org\\/ns\\/docbook\",\"kml\":\"http:\\/\\/www.opengis.net\\/kml\\/2.2\",\"marcx\":\"info:lc\\/xmlns\\/marcxchange-v1\",\"mx\":\"http:\\/\\/www.loc.gov\\/MARC21\\/slim\",\"of\":\"http:\\/\\/oss.dbc.dk\\/ns\\/openformat\",\"ofo\":\"http:\\/\\/oss.dbc.dk\\/ns\\/openformatoutput\",\"os\":\"http:\\/\\/oss.dbc.dk\\/ns\\/opensearch\",\"oso\":\"http:\\/\\/oss.dbc.dk\\/ns\\/opensearchobjects\",\"oss\":\"http:\\/\\/oss.dbc.dk\\/ns\\/osstypes\",\"xs\":\"http:\\/\\/www.w3.org\\/2001\\/XMLSchema\",\"xsi\":\"http:\\/\\/www.w3.org\\/2001\\/XMLSchema-instance\"}}"
 };
 
-describe('Automated test: search_sort', () => {
-  it('expected response. ID:sokrna, for {"q":"harry ","fields":["identifier","title","collection","subjectDBCF","hasAdaptation","coverUrlFull"],"sort":"rank_title"}', (done) => {
+describe('Automated test: __search_sort', () => {
+  it('expected response. ID:eutmgb, for {"q":"harry ","fields":["identifier","title","collection","subjectDBCF","hasAdaptation","coverUrlFull"],"sort":"rank_title"}', (done) => {
     context.mockData = mockData;
-    provider.execute('search', {
-      "q": "harry ",
-      "fields": ["identifier", "title", "collection", "subjectDBCF", "hasAdaptation", "coverUrlFull"],
-      "sort": "rank_title"
-    }, context)
+    provider.execute('search', {"q":"harry ","fields":["identifier","title","collection","subjectDBCF","hasAdaptation","coverUrlFull"],"sort":"rank_title"}, context)
       .then(result => {
         assert.deepEqual(result,
-          {
-            "statusCode": 200,
-            "data": [{
-              "collection": ["775100-katalog:28277229", "775100-katalog:28447698"],
-              "collectionDetails": [{
-                "accessType": ["physical"],
-                "creator": ["Martin Ruhe"],
-                "pid": ["775100-katalog:28277229"],
-                "title": ["Harry Brown"],
-                "titleFull": ["Harry Brown"],
-                "type": ["Dvd"],
-                "workType": ["movie"]
-              }, {
-                "accessType": ["physical"],
-                "creator": ["Martin Ruhe"],
-                "pid": ["775100-katalog:28447698"],
-                "title": ["Harry Brown"],
-                "titleFull": ["Harry Brown"],
-                "type": ["Blu-ray"],
-                "workType": ["movie"]
-              }],
-              "acIdentifier": ["28277229|870970"],
-              "acSource": ["Bibliotekskatalog"],
-              "dcTitle": ["Harry Brown"],
-              "dcTitleFull": ["Harry Brown"],
-              "creatorDrt": ["Daniel Barber"],
-              "creatorSort": ["Barber, Daniel"],
-              "subjectDK5": ["77.7"],
-              "subjectDK5Text": ["Spillefilm"],
-              "subjectDBCS": ["actionfilm", "krimi", "narkokriminalitet", "selvtægt", "vold"],
-              "subjectGenre": ["actionfilm", "krimi"],
-              "abstract": ["Da pensionisten Harry Browns gamle ven myrdes af nogle unge bøller, står politiet magtesløse. Harry, der har en militær baggrund, tirres derfor til at tage sagen i egen hånd"],
-              "description": ["Originalfilmen: Storbritannien : Marv Partners : UK Film Council : in association with HanWay Films : Prescience : Framestone Features, 2009"],
-              "audienceMedieraad": ["Mærkning: Tilladt for børn over 15 år"],
-              "audience": ["voksenmaterialer"],
-              "publisher": ["Nordisk Film"],
-              "contributor": ["Daniel Barber", "Gary Young (manuskriptforfatter)", "Martin Ruhe"],
-              "contributorAct": ["Michael Caine", "Emily Mortimer", "Charlie Creed Miles", "David Bradley", "Iain Glen", "Sean Harris", "Ben Drew", "Jack O'Connell", "Jamie Downey"],
-              "date": ["2010"],
-              "typeBibDKType": ["Dvd"],
-              "format": ["1 dvd-video"],
-              "extent": ["99 min."],
-              "languageISO6392": ["eng"],
-              "dcLanguage": ["Engelsk"],
-              "languageSubtitles": ["Dansk", "Norsk", "Svensk", "Finsk"],
-              "accessType": ["physical"],
-              "creator": ["Martin Ruhe"],
-              "pid": ["775100-katalog:28277229"],
-              "title": ["Harry Brown"],
-              "titleFull": ["Harry Brown"],
-              "type": ["Dvd"],
-              "workType": ["movie"],
-              "coverUrl117": ["//moreinfo.addi.dk/2.6/more_info_get.php?lokalid=28277229&attachment_type=forside_117&bibliotek=870970&source_id=870970&key=1c1e93fc2a0bf0159930"],
-              "coverUrl207": ["//moreinfo.addi.dk/2.6/more_info_get.php?lokalid=28277229&attachment_type=forside_207&bibliotek=870970&source_id=870970&key=eb18326b43f545fbe029"],
-              "coverUrl42": ["//moreinfo.addi.dk/2.6/more_info_get.php?lokalid=28277229&attachment_type=forside_42&bibliotek=870970&source_id=870970&key=6a97fff61136f33be1ac"],
-              "coverUrl500": ["//moreinfo.addi.dk/2.6/more_info_get.php?lokalid=28277229&attachment_type=forside_500&bibliotek=870970&source_id=870970&key=097686172773cbbb5ff9"],
-              "coverUrlThumbnail": ["//moreinfo.addi.dk/2.6/more_info_get.php?lokalid=28277229&attachment_type=forside_lille&bibliotek=870970&source_id=870970&key=f41384dea909809d9d6d"],
-              "coverUrlFull": ["//moreinfo.addi.dk/2.6/more_info_get.php?lokalid=28277229&attachment_type=forside_stor&bibliotek=870970&source_id=870970&key=b773fd3131c2dac33849"],
-              "hasReview": ["870971-anmeld:34132593", "870971-anmeld:34141851", "870971-anmeld:34167109", "870971-anmeld:34132623", "870971-anmeld:34132585", "870971-anmeld:34132577", "870971-anmeld:34132569", "870971-anmeld:34132240", "870971-anmeld:34410178", "870976-anmeld:30897048"]
-            }, {
-              "collection": ["775100-katalog:27447406"],
-              "collectionDetails": [{
-                "accessType": ["physical"],
-                "pid": ["775100-katalog:27447406"],
-                "title": ["Dirty Harry"],
-                "titleFull": ["Dirty Harry"],
-                "type": ["Dvd"],
-                "workType": ["movie"]
-              }],
-              "acIdentifier": ["27447406|870970"],
-              "acSource": ["Bibliotekskatalog"],
-              "dcTitle": ["Dirty Harry"],
-              "dcTitleFull": ["Dirty Harry"],
-              "titleSeries": ["The Dirty Harry collection"],
-              "alternative": ["Dirty Harry vender tilbage"],
-              "creatorDrt": ["Don Siegel"],
-              "creatorSort": ["Siegel, Don"],
-              "subjectDK5": ["77.7"],
-              "subjectDK5Text": ["Spillefilm"],
-              "subjectDBCS": ["actionfilm", "politidetektiver", "seriemordere"],
-              "subjectGenre": ["actionfilm"],
-              "abstract": ["Kriminalassistent Harry Callahan må sande, at regler og paragraffer er til for at brydes. Ellers slipper en psykopatisk morder godt fra endnu flere forbrydelser. Og \"Dirty Harry\" får altid sin mand og det sidste ord!"],
-              "description": ["Originalfilmen: USA : Warner Bros. : Malpaso Company, 1971", "Renewed edition: 1999", "Af indholdet: Special features (Commentary by Richard Schickel ; Dirty Harry : the original ; Interview gallery ; Dirty Harry's way ; Dirty Harry trailer gallery) ; Bonus disc: Indhold: The long shadow of Dirty Harry ; Clint Eastwood : the man from Malpaso"],
-              "audienceMedieraad": ["Mærkning: Tilladt for børn over 15 år"],
-              "audience": ["voksenmaterialer"],
-              "version": ["Renewed edition (2 disc special edition)"],
-              "publisher": ["Warner Bros. Entertainment Danmark"],
-              "contributor": ["Bruce Surtees", "Harry Julian Fink", "R. M. Fink", "Dean Riesner", "Don Siegel"],
-              "contributorAct": ["Clint Eastwood", "Harry Guardino", "Reni Santoni", "Andy Robinson", "John Larch", "John Vernon"],
-              "date": ["2008"],
-              "typeBibDKType": ["Dvd"],
-              "format": ["1 dvd-video, 1 bonus disc"],
-              "extent": ["ca. 98 min."],
-              "languageISO6392": ["mul", "eng"],
-              "dcLanguage": ["Flere sprog", "Engelsk"],
-              "languageSubtitles": ["Engelsk", "Tysk", "Spansk", "Tjekkisk", "Dansk", "Estisk", "Finsk", "Græsk", "Norsk", "Portugisisk", "Polsk", "Svensk"],
-              "spatialDBCS": ["USA"],
-              "accessType": ["physical"],
-              "pid": ["775100-katalog:27447406"],
-              "title": ["Dirty Harry"],
-              "titleFull": ["Dirty Harry"],
-              "type": ["Dvd"],
-              "workType": ["movie"],
-              "hasReview": ["870976-anmeld:30734572"]
-            }, {
-              "collection": ["775100-katalog:24039978"],
-              "collectionDetails": [{
-                "accessType": ["physical"],
-                "pid": ["775100-katalog:24039978"],
-                "title": ["Lego creator - Harry Potter"],
-                "titleFull": ["Lego creator - Harry Potter"],
-                "type": ["Pc-spil"],
-                "workType": ["game"]
-              }],
-              "acIdentifier": ["24039978|870970"],
-              "acSource": ["Bibliotekskatalog"],
-              "dcTitle": ["Lego creator - Harry Potter"],
-              "dcTitleFull": ["Lego creator - Harry Potter"],
-              "titleSeries": ["Constructive"],
-              "alternative": ["Creator - Harry Potter", "Harry Potter"],
-              "subjectDK5": ["79.41"],
-              "subjectDK5Text": ["Computerspil"],
-              "subjectDBCO": ["computerspil"],
-              "subjectDBCF": ["legoklodser"],
-              "abstract": ["Leg og lær. Du kender Harry Potter og Hogwarts? Her kan du lege med alle de kendte figurer fra bøgerne og samtidig bygge din helt egen magiske Legoverden!"],
-              "description": ["Titlen hentet fra cd-rometiket"],
-              "audienceAge": ["Fra 6 år"],
-              "audience": ["børnematerialer"],
-              "publisher": ["LEGO Software"],
-              "contributor": ["Joanne K. Rowling", "Paul Grimster", "Sonja Kristensen"],
-              "date": ["2001"],
-              "typeBibDKType": ["Pc-spil"],
-              "format": ["1 cd-rom, lyd, farver, 1 brugermanuel", "Pc, Pentium II/266 MHz/MMX; 64 MB ram; Windows 98, Me eller 2000; 4× cd-rom/dvddrev; farveskærm (800×600 billedopløsning, 16 bit farver); DirectSound-kompatibelt lydkort"],
-              "languageISO6392": ["dan"],
-              "dcLanguage": ["Dansk"],
-              "accessType": ["physical"],
-              "pid": ["775100-katalog:24039978"],
-              "title": ["Lego creator - Harry Potter"],
-              "titleFull": ["Lego creator - Harry Potter"],
-              "type": ["Pc-spil"],
-              "workType": ["game"],
-              "hasReview": ["870976-anmeld:3036564X"]
-            }, {
-              "collection": ["775100-katalog:50536661", "870970-basis:51182200"],
-              "collectionDetails": [{
-                "accessType": ["physical"],
-                "creator": ["Sarah Oliver"],
-                "pid": ["775100-katalog:50536661"],
-                "language": ["Dansk"],
-                "title": ["Harry Styles"],
-                "titleFull": ["Harry Styles : superstjerne A-Z"],
-                "type": ["Bog"],
-                "workType": ["book"]
-              }, {
-                "accessType": ["online"],
-                "creator": ["Sarah Oliver"],
-                "pid": ["870970-basis:51182200"],
-                "language": ["Dansk"],
-                "title": ["Harry Styles"],
-                "titleFull": ["Harry Styles : superstjerne A-Z"],
-                "type": ["Ebog"],
-                "workType": ["book"]
-              }],
-              "acIdentifier": ["50536661|870970"],
-              "identifierISBN": ["9788771480290"],
-              "acSource": ["Bibliotekskatalog"],
-              "source": ["Harry Styles"],
-              "dcTitle": ["Harry Styles"],
-              "dcTitleFull": ["Harry Styles : superstjerne A-Z"],
-              "creatorAut": ["Sarah Oliver"],
-              "creatorSort": ["Oliver, Sarah"],
-              "subjectDK5": ["99.4 Styles, Harry"],
-              "subjectDK5Text": ["Biografier af enkelte personer"],
-              "subjectDBCF": ["Harry Styles", "One Direction", "pop", "sangere"],
-              "subjectSort": ["Styles, Harry"],
-              "subjectDBCO": ["biografier"],
-              "subjectDBCN": ["for 12 år", "for 13 år", "for 14 år", "for 15 år", "for 16 år"],
-              "abstract": ["Om Harry Styles (f. 1994) liv og foreløbige karriere i boybandet One Direction"],
-              "audience": ["børnematerialer"],
-              "version": ["1. udgave, 1. oplag (2013)"],
-              "publisher": ["Turbulenz"],
-              "contributorTrl": ["Brian Christensen"],
-              "contributorEdt": ["Sarah Nørgaard Jensen"],
-              "date": ["2013"],
-              "typeBibDKType": ["Bog"],
-              "format": ["illustreret i farver"],
-              "extent": ["256 sider"],
-              "languageISO6392": ["dan"],
-              "dcLanguage": ["Dansk"],
-              "spatialDBCF": ["England"],
-              "temporalDBCP": ["2010-2019"],
-              "accessType": ["physical"],
-              "creator": ["Sarah Oliver"],
-              "pid": ["775100-katalog:50536661"],
-              "language": ["Dansk"],
-              "title": ["Harry Styles"],
-              "titleFull": ["Harry Styles : superstjerne A-Z"],
-              "type": ["Bog"],
-              "workType": ["book"],
-              "coverUrl117": ["//moreinfo.addi.dk/2.6/more_info_get.php?lokalid=50536661&attachment_type=forside_117&bibliotek=870970&source_id=870970&key=3c45f1abe3f76fbee17f"],
-              "coverUrl207": ["//moreinfo.addi.dk/2.6/more_info_get.php?lokalid=50536661&attachment_type=forside_207&bibliotek=870970&source_id=870970&key=769bc090401f9291ae7a"],
-              "coverUrl42": ["//moreinfo.addi.dk/2.6/more_info_get.php?lokalid=50536661&attachment_type=forside_42&bibliotek=870970&source_id=870970&key=bca17d29880b818e23b9"],
-              "coverUrl500": ["//moreinfo.addi.dk/2.6/more_info_get.php?lokalid=50536661&attachment_type=forside_500&bibliotek=870970&source_id=870970&key=a6351a52e0811d16e65f"],
-              "coverUrlThumbnail": ["//moreinfo.addi.dk/2.6/more_info_get.php?lokalid=50536661&attachment_type=forside_lille&bibliotek=870970&source_id=870970&key=81a0f92ab75609218da3"],
-              "coverUrlFull": ["//moreinfo.addi.dk/2.6/more_info_get.php?lokalid=50536661&attachment_type=forside_stor&bibliotek=870970&source_id=870970&key=734d34e6925c51213eb3"],
-              "hasReview": ["870976-anmeld:31081017"],
-              "hasDescriptionFromPublisher": ["150015-forlag:9788792861917"]
-            }, {
-              "collection": ["150008-public:ebr10440572"],
-              "collectionDetails": [{
-                "accessType": ["online"],
-                "creator": ["Mohan Mulani"],
-                "pid": ["150008-public:ebr10440572"],
-                "language": ["Engelsk"],
-                "title": ["The story of Harry's"],
-                "titleFull": ["The story of Harry's"],
-                "type": ["Ebog"],
-                "workType": ["book"]
-              }],
-              "acIdentifier": ["ebr10440572|150008"],
-              "identifierISBN": ["9789814346078"],
-              "identifierURI": ["http://site.ebrary.com/lib/librarytitles/docDetail.action?docID=10440572"],
-              "acSource": ["Ebrary"],
-              "dcTitle": ["The story of Harry's"],
-              "dcTitleFull": ["The story of Harry's"],
-              "alternative": ["Portion of title Harry's"],
-              "creatorAut": ["Mohan Mulani"],
-              "creatorSort": ["Mulani, Mohan"],
-              "subjectLCSH": ["Bars (Drinking establishments) -- History", "Electronic books"],
-              "subject": ["Harry's (Bar : Singapore)"],
-              "description": ["Electronic reproduction. Palo Alto, Calif. : ebrary, 2013. Available via World Wide Web. Access may be limited to ebrary affiliated libraries"],
-              "audience": ["voksenmaterialer"],
-              "publisher": ["Marshall Cavendish Business", "Marshall Cavendish Corp"],
-              "date": ["2010"],
-              "typeBibDKType": ["Ebog"],
-              "format": ["illustreret"],
-              "extent": ["162 s."],
-              "languageISO6392": ["eng"],
-              "dcLanguage": ["Engelsk"],
-              "accessType": ["online"],
-              "creator": ["Mohan Mulani"],
-              "pid": ["150008-public:ebr10440572"],
-              "language": ["Engelsk"],
-              "title": ["The story of Harry's"],
-              "titleFull": ["The story of Harry's"],
-              "type": ["Ebog"],
-              "workType": ["book"],
-              "hasOnlineAccess": ["http://site.ebrary.com/lib/librarytitles/docDetail.action?docID=10440572", "http://site.ebrary.com/lib/[PROVIDERSLIBRARYID]/docDetail.action?docID=10440572"]
-            }, {
-              "collection": ["870970-basis:50691446"],
-              "collectionDetails": [{
-                "accessType": ["online"],
-                "pid": ["870970-basis:50691446"],
-                "title": ["Dirty Harry"],
-                "titleFull": ["Dirty Harry"],
-                "type": ["Film (net)"],
-                "workType": ["movie"]
-              }],
-              "acIdentifier": ["50691446|870970"],
-              "identifierURI": ["http://www.filmstriben.dk/fjernleje/film/details.aspx?id=2744740600"],
-              "acSource": ["Filmstriben"],
-              "dcTitle": ["Dirty Harry"],
-              "dcTitleFull": ["Dirty Harry"],
-              "alternative": ["Dirty Harry vender tilbage"],
-              "creatorDrt": ["Don Siegel"],
-              "creatorSort": ["Siegel, Don"],
-              "subjectDK5": ["77.7"],
-              "subjectDK5Text": ["Spillefilm"],
-              "subjectDBCS": ["actionfilm", "politidetektiver", "seriemordere"],
-              "subjectGenre": ["actionfilm"],
-              "subjectDBCO": ["amerikanske film"],
-              "abstract": ["Kriminalassistent Harry Callahan må sande, at regler og paragraffer er til for at brydes. Ellers slipper en psykopatisk morder godt fra endnu flere forbrydelser. Og \"Dirty Harry\" får altid sin mand og det sidste ord!"],
-              "description": ["Produktion: Warner Bros. (USA), Malpaso Company (USA), 1971"],
-              "audienceMedieraad": ["Mærkning: Tilladt for børn over 15 år"],
-              "audience": ["voksenmaterialer"],
-              "publisher": ["Warner Bros."],
-              "contributorCng": ["Bruce Surtees"],
-              "contributorAus": ["Harry Julian Fink", "R. M. Fink", "Dean Riesner"],
-              "contributorAct": ["Clint Eastwood", "Harry Guardino", "Reni Santoni", "Andy Robinson", "John Larch", "John Vernon"],
-              "date": ["2013"],
-              "typeBibDKType": ["Film (net)"],
-              "extent": ["98 min."],
-              "languageISO6392": ["eng"],
-              "dcLanguage": ["Engelsk"],
-              "languageSubtitles": ["Dansk"],
-              "spatialDBCS": ["USA"],
-              "accessType": ["online"],
-              "pid": ["870970-basis:50691446"],
-              "title": ["Dirty Harry"],
-              "titleFull": ["Dirty Harry"],
-              "type": ["Film (net)"],
-              "workType": ["movie"],
-              "hasOnlineAccess": ["http://www.filmstriben.dk/fjernleje/film/details.aspx?id=2744740600"]
-            }, {
-              "collection": ["775100-katalog:29395306"],
-              "collectionDetails": [{
-                "accessType": ["physical"],
-                "creator": ["Woody Allen"],
-                "pid": ["775100-katalog:29395306"],
-                "title": ["Harry - stykke for stykke"],
-                "titleFull": ["Harry - stykke for stykke"],
-                "type": ["Dvd"],
-                "workType": ["movie"]
-              }],
-              "acIdentifier": ["29395306|870970"],
-              "acSource": ["Bibliotekskatalog"],
-              "dcTitle": ["Harry - stykke for stykke"],
-              "dcTitleFull": ["Harry - stykke for stykke"],
-              "alternative": ["Deconstructing Harry"],
-              "creatorDrt": ["Woody Allen"],
-              "creatorSort": ["Allen, Woody"],
-              "subjectDK5": ["77.7"],
-              "subjectDK5Text": ["Spillefilm"],
-              "subjectDBCS": ["forfattere", "komedier"],
-              "subjectGenre": ["komedier"],
-              "abstract": ["Den sexfikserede, neurotiske new yorker-forfatter Harry Block får vennekredsen på nakken med sin selvudleverende roman. Hans fiktive romanfigurer blander sig i hans liv, hvor problemerne tårner sig op"],
-              "description": ["Originalfilmen: USA : Magnolia Productions ; S.l. : Sweetland Films, 1997"],
-              "audienceMedieraad": ["Mærkning: Tilladt for børn over 15 år"],
-              "audience": ["voksenmaterialer"],
-              "publisher": ["Atlantic Film"],
-              "contributor": ["Carlo Di Palma", "Woody Allen"],
-              "contributorAct": ["Caroline Aaron", "Woody Allen", "Kirstie Alley", "Bob Balaban", "Richard Benjamin", "Eric Bogosian", "Billy Crystal", "Judy Davis", "Hazelle Goodman"],
-              "date": ["2012"],
-              "typeBibDKType": ["Dvd"],
-              "format": ["1 dvd-video"],
-              "extent": ["91 min."],
-              "languageISO6392": ["eng"],
-              "dcLanguage": ["Engelsk"],
-              "languageSubtitles": ["Svensk", "Norsk", "Dansk", "Finsk"],
-              "spatialDBCS": ["USA", "New York"],
-              "accessType": ["physical"],
-              "creator": ["Woody Allen"],
-              "pid": ["775100-katalog:29395306"],
-              "title": ["Harry - stykke for stykke"],
-              "titleFull": ["Harry - stykke for stykke"],
-              "type": ["Dvd"],
-              "workType": ["movie"],
-              "coverUrl117": ["//moreinfo.addi.dk/2.6/more_info_get.php?lokalid=29395306&attachment_type=forside_117&bibliotek=870970&source_id=870970&key=bdc54984ba9be6afbae1"],
-              "coverUrl207": ["//moreinfo.addi.dk/2.6/more_info_get.php?lokalid=29395306&attachment_type=forside_207&bibliotek=870970&source_id=870970&key=09008a29e4bef0e31070"],
-              "coverUrl42": ["//moreinfo.addi.dk/2.6/more_info_get.php?lokalid=29395306&attachment_type=forside_42&bibliotek=870970&source_id=870970&key=0818b9623f746f149d9c"],
-              "coverUrl500": ["//moreinfo.addi.dk/2.6/more_info_get.php?lokalid=29395306&attachment_type=forside_500&bibliotek=870970&source_id=870970&key=6bad7a31edd673f1d239"],
-              "coverUrlThumbnail": ["//moreinfo.addi.dk/2.6/more_info_get.php?lokalid=29395306&attachment_type=forside_lille&bibliotek=870970&source_id=870970&key=10fdbf7c81eb8829658a"],
-              "coverUrlFull": ["//moreinfo.addi.dk/2.6/more_info_get.php?lokalid=29395306&attachment_type=forside_stor&bibliotek=870970&source_id=870970&key=8b9400015298a073c8bd"],
-              "hasReview": ["870971-anmeld:35193839", "870976-anmeld:31007712"]
-            }, {
-              "collection": ["870970-basis:51088883"],
-              "collectionDetails": [{
-                "accessType": ["online"],
-                "pid": ["870970-basis:51088883"],
-                "title": ["Harry - stykke for stykke"],
-                "titleFull": ["Deconstructing Harry"],
-                "type": ["Film (net)"],
-                "workType": ["movie"]
-              }],
-              "acIdentifier": ["51088883|870970"],
-              "identifierURI": ["http://www.filmstriben.dk/fjernleje/film/details.aspx?id=5080550600"],
-              "acSource": ["Filmstriben"],
-              "dcTitle": ["Harry - stykke for stykke"],
-              "dcTitleFull": ["Harry - stykke for stykke"],
-              "alternative": ["Deconstructing Harry"],
-              "creatorDrt": ["Woody Allen"],
-              "creatorSort": ["Allen, Woody"],
-              "subjectDK5": ["77.7"],
-              "subjectDK5Text": ["Spillefilm"],
-              "subjectDBCO": ["amerikanske film"],
-              "subjectDBCS": ["forfattere", "komedier"],
-              "subjectGenre": ["komedier"],
-              "abstract": ["Den sexfikserede, neurotiske new yorker-forfatter Harry Block får vennekredsen på nakken med sin selvudleverende roman. Hans fiktive romanfigurer blander sig i hans liv, hvor problemerne tårner sig op"],
-              "description": ["Produktion: Magnolia Productions (USA), Sweetland Films, 1997"],
-              "audienceMedieraad": ["Mærkning: Tilladt for børn over 15 år"],
-              "audience": ["voksenmaterialer"],
-              "publisher": ["Atlantic Film"],
-              "contributorCng": ["Carlo Di Palma"],
-              "contributorAus": ["Woody Allen"],
-              "contributorAct": ["Caroline Aaron", "Woody Allen", "Kirstie Alley", "Bob Balaban", "Richard Benjamin", "Eric Bogosian", "Billy Crystal", "Judy Davis", "Hazelle Goodman"],
-              "date": ["2014"],
-              "typeBibDKType": ["Film (net)"],
-              "extent": ["91 min."],
-              "languageISO6392": ["eng"],
-              "dcLanguage": ["Engelsk"],
-              "languageSubtitles": ["Dansk"],
-              "spatialDBCS": ["USA", "New York"],
-              "accessType": ["online"],
-              "pid": ["870970-basis:51088883"],
-              "title": ["Harry - stykke for stykke"],
-              "titleFull": ["Deconstructing Harry"],
-              "type": ["Film (net)"],
-              "workType": ["movie"],
-              "hasOnlineAccess": ["http://www.filmstriben.dk/fjernleje/film/details.aspx?id=5080550600"]
-            }, {
-              "collection": ["150008-public:ebr10593006"],
-              "collectionDetails": [{
-                "accessType": ["online"],
-                "creator": ["Les Roopanarine"],
-                "pid": ["150008-public:ebr10593006"],
-                "language": ["Engelsk"],
-                "title": ["Harry Redknapp"],
-                "titleFull": ["Harry Redknapp : the biography"],
-                "type": ["Ebog"],
-                "workType": ["book"]
-              }],
-              "acIdentifier": ["ebr10593006|150008"],
-              "identifierURI": ["http://site.ebrary.com/lib/librarytitles/docDetail.action?docID=10593006"],
-              "acSource": ["Ebrary"],
-              "dcTitle": ["Harry Redknapp"],
-              "dcTitleFull": ["Harry Redknapp : the biography"],
-              "creatorAut": ["Les Roopanarine"],
-              "creatorSort": ["Roopanarine, Les"],
-              "subjectLCSH": ["Electronic books", "Soccer managers"],
-              "subject": ["Harry Redknapp (1947-)", "West Ham United (Soccer team)"],
-              "subjectSort": ["Redknapp, Harry (1947-)"],
-              "description": ["Electronic reproduction. Palo Alto, Calif. : ebrary, 2011. Available via World Wide Web. Access may be limited to ebrary affiliated libraries"],
-              "audience": ["voksenmaterialer"],
-              "publisher": ["John Blake"],
-              "date": ["2010"],
-              "typeBibDKType": ["Ebog"],
-              "extent": ["xviii, 269 s."],
-              "languageISO6392": ["eng"],
-              "dcLanguage": ["Engelsk"],
-              "accessType": ["online"],
-              "creator": ["Les Roopanarine"],
-              "pid": ["150008-public:ebr10593006"],
-              "language": ["Engelsk"],
-              "title": ["Harry Redknapp"],
-              "titleFull": ["Harry Redknapp : the biography"],
-              "type": ["Ebog"],
-              "workType": ["book"],
-              "hasOnlineAccess": ["http://site.ebrary.com/lib/librarytitles/docDetail.action?docID=10593006", "http://site.ebrary.com/lib/[PROVIDERSLIBRARYID]/docDetail.action?docID=10593006"]
-            }, {
-              "collection": ["775100-katalog:28721420", "775100-katalog:27948022", "775100-katalog:28037880", "775100-katalog:28037929", "775100-katalog:28037937", "775100-katalog:28002769", "775100-katalog:44739194"],
-              "collectionDetails": [{
-                "accessType": ["physical"],
-                "creator": ["Jo Nesbø"],
-                "pid": ["775100-katalog:28721420"],
-                "language": ["Dansk"],
-                "title": ["Panserhjerte"],
-                "titleFull": ["Panserhjerte"],
-                "type": ["Bog"],
-                "workType": ["book"]
-              }, {
-                "accessType": ["physical"],
-                "creator": ["Jo Nesbø"],
-                "pid": ["775100-katalog:27948022"],
-                "language": ["Dansk"],
-                "title": ["Panserhjerte"],
-                "titleFull": ["Panserhjerte"],
-                "type": ["Bog"],
-                "workType": ["book"]
-              }, {
-                "accessType": ["physical"],
-                "creator": ["Jo Nesbø"],
-                "pid": ["775100-katalog:28037880"],
-                "language": ["Dansk"],
-                "title": ["Panserhjerte"],
-                "titleFull": ["Panserhjerte"],
-                "type": ["Bog stor skrift (bind 1)"],
-                "workType": ["book"]
-              }, {
-                "accessType": ["physical"],
-                "creator": ["Jo Nesbø"],
-                "pid": ["775100-katalog:28037929"],
-                "language": ["Dansk"],
-                "title": ["Panserhjerte"],
-                "titleFull": ["Panserhjerte"],
-                "type": ["Bog stor skrift (bind 1)"],
-                "workType": ["book"]
-              }, {
-                "accessType": ["physical"],
-                "creator": ["Jo Nesbø"],
-                "pid": ["775100-katalog:28037937"],
-                "language": ["Dansk"],
-                "title": ["Panserhjerte"],
-                "titleFull": ["Panserhjerte"],
-                "type": ["Bog stor skrift (bind 3)"],
-                "workType": ["book"]
-              }, {
-                "accessType": ["physical"],
-                "creator": ["Jo Nesbø"],
-                "pid": ["775100-katalog:28002769"],
-                "language": ["Dansk"],
-                "title": ["Panserhjerte"],
-                "titleFull": ["Panserhjerte"],
-                "type": ["Lydbog (cd)"],
-                "workType": ["audiobook"]
-              }, {
-                "accessType": ["physical"],
-                "creator": ["Jo Nesbø"],
-                "pid": ["775100-katalog:44739194"],
-                "language": ["Dansk"],
-                "title": ["Panserhjerte"],
-                "titleFull": ["Panserhjerte"],
-                "type": ["Lydbog (cd-mp3)"],
-                "workType": ["audiobook"]
-              }],
-              "acIdentifier": ["28721420|870970"],
-              "identifierISBN": ["9788770535984"],
-              "acSource": ["Bibliotekskatalog"],
-              "source": ["Panserhjerte"],
-              "dcTitle": ["Panserhjerte"],
-              "dcTitleFull": ["Panserhjerte"],
-              "titleSeries": ["Krimiserien med Harry Hole ; 8"],
-              "creatorAut": ["Jo Nesbø"],
-              "creatorSort": ["Nesbø, Jo"],
-              "subjectDK5Text": ["Skønlitteratur"],
-              "subjectDBCS": ["krimi", "seriemordere"],
-              "subjectGenre": ["krimi"],
-              "subjectDK5": ["sk"],
-              "abstract": ["Krimi. Den alkoholiserede og asociale Harry Hole fra drabsafdelingen i Oslo har egentlig sagt op, men bliver hentet tilbage til en makaber sag, hvor en seriemorder er på spil. Sagen viser sig at være vidtforgrenet, og den udvikler sig dramatisk og fører Harry Hole rundt i Norge og Congo"],
-              "audience": ["voksenmaterialer"],
-              "version": ["3. udgave, 7. oplag (2016)"],
-              "publisher": ["Modtryk"],
-              "contributorTrl": ["Allan Hilton Andersen"],
-              "date": ["2011"],
-              "typeBibDKType": ["Bog"],
-              "extent": ["634 sider"],
-              "languageISO6392": ["dan"],
-              "dcLanguage": ["Dansk"],
-              "spatialDBCS": ["Norge", "Oslo"],
-              "temporalDBCP": ["2000-2009"],
-              "accessType": ["physical"],
-              "creator": ["Jo Nesbø"],
-              "pid": ["775100-katalog:28721420"],
-              "language": ["Dansk"],
-              "title": ["Panserhjerte"],
-              "titleFull": ["Panserhjerte"],
-              "type": ["Bog"],
-              "workType": ["book"],
-              "coverUrl117": ["//moreinfo.addi.dk/2.6/more_info_get.php?lokalid=28721420&attachment_type=forside_117&bibliotek=870970&source_id=870970&key=81e14acfc7f81d46058c"],
-              "coverUrl207": ["//moreinfo.addi.dk/2.6/more_info_get.php?lokalid=28721420&attachment_type=forside_207&bibliotek=870970&source_id=870970&key=7daa515db53cfc5a258f"],
-              "coverUrl42": ["//moreinfo.addi.dk/2.6/more_info_get.php?lokalid=28721420&attachment_type=forside_42&bibliotek=870970&source_id=870970&key=96da116f98976760cb52"],
-              "coverUrl500": ["//moreinfo.addi.dk/2.6/more_info_get.php?lokalid=28721420&attachment_type=forside_500&bibliotek=870970&source_id=870970&key=a1cf92282141b587324f"],
-              "coverUrlThumbnail": ["//moreinfo.addi.dk/2.6/more_info_get.php?lokalid=28721420&attachment_type=forside_lille&bibliotek=870970&source_id=870970&key=db1f992e76c0cf878a5a"],
-              "coverUrlFull": ["//moreinfo.addi.dk/2.6/more_info_get.php?lokalid=28721420&attachment_type=forside_stor&bibliotek=870970&source_id=870970&key=70e9d1c18dae1f37a59b"],
-              "hasReview": ["870971-anmeld:33929366", "870971-anmeld:33833601", "870971-anmeld:33820372", "870971-anmeld:33819935", "870971-anmeld:33864469", "870971-anmeld:33836643", "870976-anmeld:30833325", "150005-anmeld:81219"],
-              "hasCreatorDescription": ["870971-forfweb:89234298"]
-            }]
-          });
+            {
+  "statusCode": 200,
+  "data": [
+    {
+      "collection": [
+        "870971-avis:70678594"
+      ],
+      "collectionDetails": [
+        {
+          "accessType": [
+            "physical"
+          ],
+          "creator": [
+            "Harry Jensen"
+          ],
+          "pid": [
+            "870971-avis:70678594"
+          ],
+          "language": [
+            "Dansk"
+          ],
+          "partOf": [
+            "Morgenposten, 1982-10-24"
+          ],
+          "title": [
+            "Motoren Harry"
+          ],
+          "titleFull": [
+            "Motoren Harry"
+          ],
+          "type": [
+            "Avisartikel"
+          ],
+          "workType": [
+            "article"
+          ]
+        }
+      ],
+      "acIdentifier": [
+        "70678594|870971"
+      ],
+      "acSource": [
+        "Avisartikler"
+      ],
+      "dcTitle": [
+        "Motoren Harry"
+      ],
+      "dcTitleFull": [
+        "Motoren Harry"
+      ],
+      "dcCreator": [
+        "Anders Mose Poulsen"
+      ],
+      "creatorSort": [
+        "Mose Poulsen, Anders"
+      ],
+      "subjectDK5": [
+        "99.4 Jensen, Harry, f. 1921"
+      ],
+      "subjectDK5Text": [
+        "Biografier af enkelte personer"
+      ],
+      "subject": [
+        "Harry Jensen",
+        "biografier"
+      ],
+      "subjectSort": [
+        "Jensen, Harry"
+      ],
+      "abstract": [
+        "Harry Motor"
+      ],
+      "audience": [
+        "voksenmaterialer"
+      ],
+      "contributorIve": [
+        "Harry Jensen"
+      ],
+      "date": [
+        "1982"
+      ],
+      "typeBibDKType": [
+        "Avisartikel"
+      ],
+      "format": [
+        "Ill."
+      ],
+      "languageISO6392": [
+        "dan"
+      ],
+      "dcLanguage": [
+        "Dansk"
+      ],
+      "isPartOf": [
+        "Morgenposten, 1982-10-24"
+      ],
+      "isPartOfISSN": [
+        "1399-8595"
+      ],
+      "accessType": [
+        "physical"
+      ],
+      "creator": [
+        "Harry Jensen"
+      ],
+      "pid": [
+        "870971-avis:70678594"
+      ],
+      "language": [
+        "Dansk"
+      ],
+      "partOf": [
+        "Morgenposten, 1982-10-24"
+      ],
+      "title": [
+        "Motoren Harry"
+      ],
+      "titleFull": [
+        "Motoren Harry"
+      ],
+      "type": [
+        "Avisartikel"
+      ],
+      "workType": [
+        "article"
+      ]
+    },
+    {
+      "collection": [
+        "870971-tsart:70055848"
+      ],
+      "collectionDetails": [
+        {
+          "accessType": [
+            "physical"
+          ],
+          "creator": [
+            "Gabor Halasz"
+          ],
+          "pid": [
+            "870971-tsart:70055848"
+          ],
+          "language": [
+            "Tysk"
+          ],
+          "partOf": [
+            "Opernwelt, Bd. 23, nr. 12 (1982)"
+          ],
+          "title": [
+            "Harry Kupfer"
+          ],
+          "titleFull": [
+            "Harry Kupfer"
+          ],
+          "type": [
+            "Tidsskriftsartikel"
+          ],
+          "workType": [
+            "article"
+          ]
+        }
+      ],
+      "acIdentifier": [
+        "70055848|870971"
+      ],
+      "acSource": [
+        "Tidsskriftsartikler"
+      ],
+      "dcTitle": [
+        "Harry Kupfer"
+      ],
+      "dcTitleFull": [
+        "Harry Kupfer"
+      ],
+      "dcCreator": [
+        "Gabor Halasz"
+      ],
+      "creatorSort": [
+        "Halasz, Gabor"
+      ],
+      "subjectDK5": [
+        "99.4 Kupfer, Harry"
+      ],
+      "subjectDK5Text": [
+        "Biografier af enkelte personer"
+      ],
+      "subject": [
+        "Harry Kupfer",
+        "biografier"
+      ],
+      "subjectSort": [
+        "Kupfer, Harry"
+      ],
+      "audience": [
+        "voksenmaterialer"
+      ],
+      "date": [
+        "1982"
+      ],
+      "typeBibDKType": [
+        "Tidsskriftsartikel"
+      ],
+      "format": [
+        "illustreret"
+      ],
+      "extent": [
+        "S. 26-27"
+      ],
+      "languageISO6392": [
+        "ger"
+      ],
+      "dcLanguage": [
+        "Tysk"
+      ],
+      "isPartOf": [
+        "Opernwelt, Bd. 23, nr. 12 (1982)"
+      ],
+      "isPartOfISSN": [
+        "0030-3690"
+      ],
+      "accessType": [
+        "physical"
+      ],
+      "creator": [
+        "Gabor Halasz"
+      ],
+      "pid": [
+        "870971-tsart:70055848"
+      ],
+      "language": [
+        "Tysk"
+      ],
+      "partOf": [
+        "Opernwelt, Bd. 23, nr. 12 (1982)"
+      ],
+      "title": [
+        "Harry Kupfer"
+      ],
+      "titleFull": [
+        "Harry Kupfer"
+      ],
+      "type": [
+        "Tidsskriftsartikel"
+      ],
+      "workType": [
+        "article"
+      ]
+    },
+    {
+      "collection": [
+        "870970-basis:10367573"
+      ],
+      "collectionDetails": [
+        {
+          "accessType": [
+            "physical"
+          ],
+          "creator": [
+            "Lars Ulvenstam"
+          ],
+          "pid": [
+            "870970-basis:10367573"
+          ],
+          "language": [
+            "Svensk"
+          ],
+          "title": [
+            "Harry Martinson"
+          ],
+          "titleFull": [
+            "Harry Martinson"
+          ],
+          "type": [
+            "Bog"
+          ],
+          "workType": [
+            "book"
+          ]
+        }
+      ],
+      "acIdentifier": [
+        "70055813|870971"
+      ],
+      "acSource": [
+        "Tidsskriftsartikler"
+      ],
+      "dcTitle": [
+        "Harry Kullman"
+      ],
+      "dcTitleFull": [
+        "Harry Kullman"
+      ],
+      "dcCreator": [
+        "Kenneth Carlsson"
+      ],
+      "creatorSort": [
+        "Carlsson, Kenneth"
+      ],
+      "subjectDK5": [
+        "99.4 Kullman, Harry"
+      ],
+      "subjectDK5Text": [
+        "Biografier af enkelte personer"
+      ],
+      "subject": [
+        "Harry Kullman",
+        "biografier",
+        "kriminallitteratur",
+        "svensk litteratur",
+        "ungdomslitteratur"
+      ],
+      "subjectSort": [
+        "Kullman, Harry"
+      ],
+      "abstract": [
+        "Svensk ungdoms- og kriminalforfatter"
+      ],
+      "audience": [
+        "voksenmaterialer"
+      ],
+      "date": [
+        "1982"
+      ],
+      "typeBibDKType": [
+        "Tidsskriftsartikel"
+      ],
+      "format": [
+        "illustreret"
+      ],
+      "extent": [
+        "S. 36-43"
+      ],
+      "languageISO6392": [
+        "swe"
+      ],
+      "dcLanguage": [
+        "Svensk"
+      ],
+      "isPartOf": [
+        "Jury, 1982, nr. 2"
+      ],
+      "isPartOfISSN": [
+        "0345-5734"
+      ],
+      "accessType": [
+        "physical"
+      ],
+      "creator": [
+        "Kenneth Carlsson"
+      ],
+      "pid": [
+        "870971-tsart:70055813"
+      ],
+      "language": [
+        "Svensk"
+      ],
+      "partOf": [
+        "Jury, 1982, nr. 2"
+      ],
+      "title": [
+        "Harry Kullman"
+      ],
+      "titleFull": [
+        "Harry Kullman"
+      ],
+      "type": [
+        "Tidsskriftsartikel"
+      ],
+      "workType": [
+        "article"
+      ]
+    },
+    {
+      "collection": [
+        "870971-tsart:70055813"
+      ],
+      "collectionDetails": [
+        {
+          "accessType": [
+            "physical"
+          ],
+          "creator": [
+            "Kenneth Carlsson"
+          ],
+          "pid": [
+            "870971-tsart:70055813"
+          ],
+          "language": [
+            "Svensk"
+          ],
+          "partOf": [
+            "Jury, 1982, nr. 2"
+          ],
+          "title": [
+            "Harry Kullman"
+          ],
+          "titleFull": [
+            "Harry Kullman"
+          ],
+          "type": [
+            "Tidsskriftsartikel"
+          ],
+          "workType": [
+            "article"
+          ]
+        }
+      ],
+      "acIdentifier": [
+        "80487940|870971"
+      ],
+      "acSource": [
+        "Tidsskriftsartikler"
+      ],
+      "dcTitle": [
+        "Harry Carlsson"
+      ],
+      "dcTitleFull": [
+        "Harry Carlsson"
+      ],
+      "dcCreator": [
+        "Ulf Gudmundsen"
+      ],
+      "creatorSort": [
+        "Gudmundsen, Ulf"
+      ],
+      "subjectDK5": [
+        "99.4 Carlsson, Harry"
+      ],
+      "subjectDK5Text": [
+        "Biografier af enkelte personer"
+      ],
+      "subject": [
+        "Harry Carlsson"
+      ],
+      "subjectSort": [
+        "Carlsson, Harry"
+      ],
+      "abstract": [
+        "Dansk surrealistisk maler"
+      ],
+      "audience": [
+        "voksenmaterialer"
+      ],
+      "date": [
+        "1991"
+      ],
+      "typeBibDKType": [
+        "Tidsskriftsartikel"
+      ],
+      "format": [
+        "illustreret"
+      ],
+      "extent": [
+        "S. 14"
+      ],
+      "languageISO6392": [
+        "dan"
+      ],
+      "dcLanguage": [
+        "Dansk"
+      ],
+      "isPartOf": [
+        "Hrymfaxe, Årg. 21, nr. 3 (1991)"
+      ],
+      "isPartOfISSN": [
+        "0901-5795"
+      ],
+      "spatial": [
+        "Danmark malerkunst"
+      ],
+      "accessType": [
+        "physical"
+      ],
+      "creator": [
+        "Ulf Gudmundsen"
+      ],
+      "pid": [
+        "870971-tsart:80487940"
+      ],
+      "language": [
+        "Dansk"
+      ],
+      "partOf": [
+        "Hrymfaxe, Årg. 21, nr. 3 (1991)"
+      ],
+      "title": [
+        "Harry Carlsson"
+      ],
+      "titleFull": [
+        "Harry Carlsson"
+      ],
+      "type": [
+        "Tidsskriftsartikel"
+      ],
+      "workType": [
+        "article"
+      ]
+    },
+    {
+      "collection": [
+        "870971-tsart:80487940"
+      ],
+      "collectionDetails": [
+        {
+          "accessType": [
+            "physical"
+          ],
+          "creator": [
+            "Ulf Gudmundsen"
+          ],
+          "pid": [
+            "870971-tsart:80487940"
+          ],
+          "language": [
+            "Dansk"
+          ],
+          "partOf": [
+            "Hrymfaxe, Årg. 21, nr. 3 (1991)"
+          ],
+          "title": [
+            "Harry Carlsson"
+          ],
+          "titleFull": [
+            "Harry Carlsson"
+          ],
+          "type": [
+            "Tidsskriftsartikel"
+          ],
+          "workType": [
+            "article"
+          ]
+        }
+      ],
+      "acIdentifier": [
+        "36616636|870971"
+      ],
+      "acSource": [
+        "Tidsskriftsartikler"
+      ],
+      "dcTitle": [
+        "Harry Harrison"
+      ],
+      "dcTitleFull": [
+        "Harry Harrison"
+      ],
+      "creatorAut": [
+        "Klaus Æ. Mogensen"
+      ],
+      "creatorSort": [
+        "Mogensen, Klaus Æ."
+      ],
+      "subjectDK5": [
+        "99.4 Harrison, Harry"
+      ],
+      "subjectDK5Text": [
+        "Biografier af enkelte personer"
+      ],
+      "subject": [
+        "Harry Harrison"
+      ],
+      "subjectSort": [
+        "Harrison, Harry"
+      ],
+      "subjectDBCF": [
+        "amerikansk litteratur",
+        "science fiction"
+      ],
+      "abstract": [
+        "Portræt af den amerikanske forfatter"
+      ],
+      "audience": [
+        "voksenmaterialer"
+      ],
+      "date": [
+        "2015"
+      ],
+      "typeBibDKType": [
+        "Tidsskriftsartikel"
+      ],
+      "format": [
+        "illustreret"
+      ],
+      "extent": [
+        "S. 41-43"
+      ],
+      "languageISO6392": [
+        "dan"
+      ],
+      "dcLanguage": [
+        "Dansk"
+      ],
+      "isPartOf": [
+        "Himmelskibet, Nr. 45 (2015)"
+      ],
+      "isPartOfISSN": [
+        "1603-5836"
+      ],
+      "accessType": [
+        "physical"
+      ],
+      "creator": [
+        "Klaus Æ. Mogensen"
+      ],
+      "pid": [
+        "870971-tsart:36616636"
+      ],
+      "language": [
+        "Dansk"
+      ],
+      "partOf": [
+        "Himmelskibet, Nr. 45 (2015)"
+      ],
+      "title": [
+        "Harry Harrison"
+      ],
+      "titleFull": [
+        "Harry Harrison"
+      ],
+      "type": [
+        "Tidsskriftsartikel"
+      ],
+      "workType": [
+        "article"
+      ]
+    },
+    {
+      "collection": [
+        "870971-tsart:36616636"
+      ],
+      "collectionDetails": [
+        {
+          "accessType": [
+            "physical"
+          ],
+          "creator": [
+            "Klaus Æ. Mogensen"
+          ],
+          "pid": [
+            "870971-tsart:36616636"
+          ],
+          "language": [
+            "Dansk"
+          ],
+          "partOf": [
+            "Himmelskibet, Nr. 45 (2015)"
+          ],
+          "title": [
+            "Harry Harrison"
+          ],
+          "titleFull": [
+            "Harry Harrison"
+          ],
+          "type": [
+            "Tidsskriftsartikel"
+          ],
+          "workType": [
+            "article"
+          ]
+        }
+      ],
+      "acIdentifier": [
+        "87319946|870971"
+      ],
+      "acSource": [
+        "Avisartikler"
+      ],
+      "dcTitle": [
+        "Harry Potter"
+      ],
+      "dcTitleFull": [
+        "Harry Potter"
+      ],
+      "dcCreator": [
+        "Christian Monggaard"
+      ],
+      "creatorSort": [
+        "Monggaard, Christian"
+      ],
+      "subjectDK5": [
+        "99.4 Rowling, Joanne K."
+      ],
+      "subjectDK5Text": [
+        "Biografier af enkelte personer"
+      ],
+      "subjectDBCF": [
+        "Harry Potter og Fønixordenen",
+        "Joanne K. Rowling",
+        "børnelitteratur",
+        "engelsk litteratur",
+        "litteratur"
+      ],
+      "subjectSort": [
+        "Rowling, Joanne K."
+      ],
+      "abstract": [
+        "Årsager til Harry Potter-bøgernes succes"
+      ],
+      "description": [
+        "I anledning af det 5. bind i serien: \"Harry Potter og Føniksordenen\""
+      ],
+      "audience": [
+        "voksenmaterialer"
+      ],
+      "date": [
+        "2003"
+      ],
+      "typeBibDKType": [
+        "Avisartikel"
+      ],
+      "extent": [
+        "S. 9"
+      ],
+      "languageISO6392": [
+        "dan"
+      ],
+      "dcLanguage": [
+        "Dansk"
+      ],
+      "isPartOf": [
+        "Information, 2003-06-21"
+      ],
+      "isPartOfISSN": [
+        "1602-2572"
+      ],
+      "accessType": [
+        "online"
+      ],
+      "creator": [
+        "Christian Monggaard"
+      ],
+      "pid": [
+        "870971-avis:87319946"
+      ],
+      "language": [
+        "Dansk"
+      ],
+      "partOf": [
+        "Information, 2003-06-21"
+      ],
+      "title": [
+        "Harry Potter"
+      ],
+      "titleFull": [
+        "Harry Potter"
+      ],
+      "type": [
+        "Avisartikel"
+      ],
+      "workType": [
+        "article"
+      ],
+      "hasOnlineAccess": [
+        "[useraccessinfomedia]?action=getArticle&faust=87319946&infomediaId=e008981b&libraryCode=[libraryCode]&userId=[userId]&userPinCode=[userPinCode]"
+      ]
+    },
+    {
+      "collection": [
+        "870971-avis:87319946"
+      ],
+      "collectionDetails": [
+        {
+          "accessType": [
+            "online"
+          ],
+          "creator": [
+            "Christian Monggaard"
+          ],
+          "pid": [
+            "870971-avis:87319946"
+          ],
+          "language": [
+            "Dansk"
+          ],
+          "partOf": [
+            "Information, 2003-06-21"
+          ],
+          "title": [
+            "Harry Potter"
+          ],
+          "titleFull": [
+            "Harry Potter"
+          ],
+          "type": [
+            "Avisartikel"
+          ],
+          "workType": [
+            "article"
+          ]
+        }
+      ],
+      "acIdentifier": [
+        "36317140|870971"
+      ],
+      "acSource": [
+        "Avisartikler"
+      ],
+      "dcTitle": [
+        "Dynamit Harry"
+      ],
+      "dcTitleFull": [
+        "Dynamit Harry"
+      ],
+      "creatorAut": [
+        "Poul Høi"
+      ],
+      "creatorSort": [
+        "Høi, Poul"
+      ],
+      "subjectDK5": [
+        "61.28"
+      ],
+      "subjectDK5Text": [
+        "Nervefysiologi"
+      ],
+      "subjectDBCF": [
+        "Potter, Harry",
+        "empati",
+        "følelser",
+        "hjernen",
+        "litterære personer",
+        "psykologi"
+      ],
+      "abstract": [
+        "Empati er en mangelvare hos Islamisk Stat, empati-neuronerne tænder simpelthen ikke i helligkrigernes hjerner, når de ser andre lide. Men ifølge forskere er der en modgift: De skal læse bøger om Harry Potter"
+      ],
+      "audience": [
+        "voksenmaterialer"
+      ],
+      "date": [
+        "2014"
+      ],
+      "typeBibDKType": [
+        "Avisartikel"
+      ],
+      "format": [
+        "illustreret"
+      ],
+      "extent": [
+        "Sektion 2, s. 8-9"
+      ],
+      "languageISO6392": [
+        "dan"
+      ],
+      "dcLanguage": [
+        "Dansk"
+      ],
+      "isPartOf": [
+        "Berlingske tidende, 2014-12-26"
+      ],
+      "isPartOfISSN": [
+        "0106-4223"
+      ],
+      "accessType": [
+        "online"
+      ],
+      "creator": [
+        "Poul Høi"
+      ],
+      "pid": [
+        "870971-avis:36317140"
+      ],
+      "language": [
+        "Dansk"
+      ],
+      "partOf": [
+        "Berlingske tidende, 2014-12-26"
+      ],
+      "title": [
+        "Dynamit Harry"
+      ],
+      "titleFull": [
+        "Dynamit Harry"
+      ],
+      "type": [
+        "Avisartikel"
+      ],
+      "workType": [
+        "article"
+      ],
+      "hasOnlineAccess": [
+        "[useraccessinfomedia]?action=getArticle&faust=36317140&infomediaId=e4bc6c6c&libraryCode=[libraryCode]&userId=[userId]&userPinCode=[userPinCode]"
+      ]
+    },
+    {
+      "collection": [
+        "870971-avis:36317140"
+      ],
+      "collectionDetails": [
+        {
+          "accessType": [
+            "online"
+          ],
+          "creator": [
+            "Poul Høi"
+          ],
+          "pid": [
+            "870971-avis:36317140"
+          ],
+          "language": [
+            "Dansk"
+          ],
+          "partOf": [
+            "Berlingske tidende, 2014-12-26"
+          ],
+          "title": [
+            "Dynamit Harry"
+          ],
+          "titleFull": [
+            "Dynamit Harry"
+          ],
+          "type": [
+            "Avisartikel"
+          ],
+          "workType": [
+            "article"
+          ]
+        }
+      ],
+      "acIdentifier": [
+        "88657357|870971"
+      ],
+      "acSource": [
+        "Tidsskriftsartikler"
+      ],
+      "dcTitle": [
+        "Harry Nielsen"
+      ],
+      "dcTitleFull": [
+        "Harry Nielsen"
+      ],
+      "dcCreator": [
+        "Nikolaj Zeuthen"
+      ],
+      "creatorSort": [
+        "Zeuthen, Nikolaj"
+      ],
+      "subjectDK5": [
+        "86"
+      ],
+      "subjectDK5Text": [
+        "Dansk skønlitteratur"
+      ],
+      "subjectDBCO": [
+        "dansk skønlitteratur"
+      ],
+      "audience": [
+        "voksenmaterialer"
+      ],
+      "date": [
+        "2005"
+      ],
+      "typeBibDKType": [
+        "Tidsskriftsartikel"
+      ],
+      "extent": [
+        "S. 49-52"
+      ],
+      "languageISO6392": [
+        "dan"
+      ],
+      "dcLanguage": [
+        "Dansk"
+      ],
+      "isPartOf": [
+        "Den blå port, 2005, nr. 67"
+      ],
+      "isPartOfISSN": [
+        "0900-8160"
+      ],
+      "accessType": [
+        "physical"
+      ],
+      "creator": [
+        "Nikolaj Zeuthen"
+      ],
+      "pid": [
+        "870971-tsart:88657357"
+      ],
+      "language": [
+        "Dansk"
+      ],
+      "partOf": [
+        "Den blå port, 2005, nr. 67"
+      ],
+      "title": [
+        "Harry Nielsen"
+      ],
+      "titleFull": [
+        "Harry Nielsen"
+      ],
+      "type": [
+        "Tidsskriftsartikel"
+      ],
+      "workType": [
+        "article"
+      ]
+    },
+    {
+      "collection": [
+        "870970-basis:24520471"
+      ],
+      "collectionDetails": [
+        {
+          "accessType": [
+            "online"
+          ],
+          "pid": [
+            "870970-basis:24520471"
+          ],
+          "language": [
+            "Engelsk"
+          ],
+          "title": [
+            "Harry Potter"
+          ],
+          "titleFull": [
+            "Harry Potter"
+          ],
+          "type": [
+            "Netdokument"
+          ],
+          "workType": [
+            "book"
+          ]
+        }
+      ],
+      "acIdentifier": [
+        "35460454|870971"
+      ],
+      "acSource": [
+        "Avisartikler"
+      ],
+      "dcTitle": [
+        "Dirty Harry"
+      ],
+      "dcTitleFull": [
+        "Dirty Harry"
+      ],
+      "creatorAut": [
+        "Michael Bjerre"
+      ],
+      "creatorSort": [
+        "Bjerre, Michael"
+      ],
+      "subjectDK5": [
+        "99.4 Henry, prins af Wales"
+      ],
+      "subjectDK5Text": [
+        "Biografier af enkelte personer"
+      ],
+      "subject": [
+        "Henry (prins af Wales)"
+      ],
+      "subjectSort": [
+        "Henry (prins af Wales)"
+      ],
+      "subjectDBCF": [
+        "kongehuset",
+        "militærvæsen"
+      ],
+      "abstract": [
+        "Partyprins, drengerøv, charmetrold og en soldat, der praler af at have slået ihjel i Afghanistan. Prins Harry finder sig bedre tilpas som kaptajn end prins"
+      ],
+      "audience": [
+        "voksenmaterialer"
+      ],
+      "date": [
+        "2013"
+      ],
+      "typeBibDKType": [
+        "Avisartikel"
+      ],
+      "format": [
+        "illustreret"
+      ],
+      "extent": [
+        "Sektion 1, s. 14-15"
+      ],
+      "languageISO6392": [
+        "dan"
+      ],
+      "dcLanguage": [
+        "Dansk"
+      ],
+      "isPartOf": [
+        "Berlingske tidende, 2013-01-27"
+      ],
+      "isPartOfISSN": [
+        "0106-4223"
+      ],
+      "spatialDBCF": [
+        "England"
+      ],
+      "accessType": [
+        "online"
+      ],
+      "creator": [
+        "Michael Bjerre"
+      ],
+      "pid": [
+        "870971-avis:35460454"
+      ],
+      "language": [
+        "Dansk"
+      ],
+      "partOf": [
+        "Berlingske tidende, 2013-01-27"
+      ],
+      "title": [
+        "Dirty Harry"
+      ],
+      "titleFull": [
+        "Dirty Harry"
+      ],
+      "type": [
+        "Avisartikel"
+      ],
+      "workType": [
+        "article"
+      ],
+      "hasOnlineAccess": [
+        "[useraccessinfomedia]?action=getArticle&faust=35460454&infomediaId=e3a0340c&libraryCode=[libraryCode]&userId=[userId]&userPinCode=[userPinCode]"
+      ]
+    },
+    {
+      "collection": [
+        "870971-tsart:88657357"
+      ],
+      "collectionDetails": [
+        {
+          "accessType": [
+            "physical"
+          ],
+          "creator": [
+            "Nikolaj Zeuthen"
+          ],
+          "pid": [
+            "870971-tsart:88657357"
+          ],
+          "language": [
+            "Dansk"
+          ],
+          "partOf": [
+            "Den blå port, 2005, nr. 67"
+          ],
+          "title": [
+            "Harry Nielsen"
+          ],
+          "titleFull": [
+            "Harry Nielsen"
+          ],
+          "type": [
+            "Tidsskriftsartikel"
+          ],
+          "workType": [
+            "article"
+          ]
+        }
+      ],
+      "acIdentifier": [
+        "73850452|870971"
+      ],
+      "acSource": [
+        "Avisartikler"
+      ],
+      "dcTitle": [
+        "ang. Harry"
+      ],
+      "dcTitleFull": [
+        "ang. Harry"
+      ],
+      "dcCreator": [
+        "Niels Rohleder"
+      ],
+      "creatorSort": [
+        "Rohleder, Niels"
+      ],
+      "subjectDK5": [
+        "99.4 Tisch, Harry"
+      ],
+      "subjectDK5Text": [
+        "Biografier af enkelte personer"
+      ],
+      "subject": [
+        "Harry Tisch",
+        "biografier"
+      ],
+      "subjectSort": [
+        "Tisch, Harry"
+      ],
+      "abstract": [
+        "Foråret 1961: En gruppe danske kommunister, bl.a. Poul Emanuel, smuglede en visumløs østtysker i land i København. Tisch blev senere chef for DDR's fagbevægelse og politbureaumedlem i SED. Emanuel blev partisekretær i DKP. I dag sidder Tisch fængslet i Berlin. Emanuel er efterlønsmodtager på Amager"
+      ],
+      "audience": [
+        "voksenmaterialer"
+      ],
+      "date": [
+        "1991"
+      ],
+      "typeBibDKType": [
+        "Avisartikel"
+      ],
+      "languageISO6392": [
+        "dan"
+      ],
+      "dcLanguage": [
+        "Dansk"
+      ],
+      "isPartOf": [
+        "Information, 1991-04-20"
+      ],
+      "isPartOfISSN": [
+        "1602-2572"
+      ],
+      "spatial": [
+        "Tyskland (DDR) politisk system",
+        "Danmark politisk system"
+      ],
+      "accessType": [
+        "physical"
+      ],
+      "creator": [
+        "Niels Rohleder"
+      ],
+      "pid": [
+        "870971-avis:73850452"
+      ],
+      "language": [
+        "Dansk"
+      ],
+      "partOf": [
+        "Information, 1991-04-20"
+      ],
+      "title": [
+        "ang. Harry"
+      ],
+      "titleFull": [
+        "ang. Harry"
+      ],
+      "type": [
+        "Avisartikel"
+      ],
+      "workType": [
+        "article"
+      ]
+    }
+  ]
+});
+        done();
+      })
+      .catch(result => {
+        fail({throw: result}, {
+  "statusCode": 200,
+  "data": [
+    {
+      "collection": [
+        "870971-avis:70678594"
+      ],
+      "collectionDetails": [
+        {
+          "accessType": [
+            "physical"
+          ],
+          "creator": [
+            "Harry Jensen"
+          ],
+          "pid": [
+            "870971-avis:70678594"
+          ],
+          "language": [
+            "Dansk"
+          ],
+          "partOf": [
+            "Morgenposten, 1982-10-24"
+          ],
+          "title": [
+            "Motoren Harry"
+          ],
+          "titleFull": [
+            "Motoren Harry"
+          ],
+          "type": [
+            "Avisartikel"
+          ],
+          "workType": [
+            "article"
+          ]
+        }
+      ],
+      "acIdentifier": [
+        "70678594|870971"
+      ],
+      "acSource": [
+        "Avisartikler"
+      ],
+      "dcTitle": [
+        "Motoren Harry"
+      ],
+      "dcTitleFull": [
+        "Motoren Harry"
+      ],
+      "dcCreator": [
+        "Anders Mose Poulsen"
+      ],
+      "creatorSort": [
+        "Mose Poulsen, Anders"
+      ],
+      "subjectDK5": [
+        "99.4 Jensen, Harry, f. 1921"
+      ],
+      "subjectDK5Text": [
+        "Biografier af enkelte personer"
+      ],
+      "subject": [
+        "Harry Jensen",
+        "biografier"
+      ],
+      "subjectSort": [
+        "Jensen, Harry"
+      ],
+      "abstract": [
+        "Harry Motor"
+      ],
+      "audience": [
+        "voksenmaterialer"
+      ],
+      "contributorIve": [
+        "Harry Jensen"
+      ],
+      "date": [
+        "1982"
+      ],
+      "typeBibDKType": [
+        "Avisartikel"
+      ],
+      "format": [
+        "Ill."
+      ],
+      "languageISO6392": [
+        "dan"
+      ],
+      "dcLanguage": [
+        "Dansk"
+      ],
+      "isPartOf": [
+        "Morgenposten, 1982-10-24"
+      ],
+      "isPartOfISSN": [
+        "1399-8595"
+      ],
+      "accessType": [
+        "physical"
+      ],
+      "creator": [
+        "Harry Jensen"
+      ],
+      "pid": [
+        "870971-avis:70678594"
+      ],
+      "language": [
+        "Dansk"
+      ],
+      "partOf": [
+        "Morgenposten, 1982-10-24"
+      ],
+      "title": [
+        "Motoren Harry"
+      ],
+      "titleFull": [
+        "Motoren Harry"
+      ],
+      "type": [
+        "Avisartikel"
+      ],
+      "workType": [
+        "article"
+      ]
+    },
+    {
+      "collection": [
+        "870971-tsart:70055848"
+      ],
+      "collectionDetails": [
+        {
+          "accessType": [
+            "physical"
+          ],
+          "creator": [
+            "Gabor Halasz"
+          ],
+          "pid": [
+            "870971-tsart:70055848"
+          ],
+          "language": [
+            "Tysk"
+          ],
+          "partOf": [
+            "Opernwelt, Bd. 23, nr. 12 (1982)"
+          ],
+          "title": [
+            "Harry Kupfer"
+          ],
+          "titleFull": [
+            "Harry Kupfer"
+          ],
+          "type": [
+            "Tidsskriftsartikel"
+          ],
+          "workType": [
+            "article"
+          ]
+        }
+      ],
+      "acIdentifier": [
+        "70055848|870971"
+      ],
+      "acSource": [
+        "Tidsskriftsartikler"
+      ],
+      "dcTitle": [
+        "Harry Kupfer"
+      ],
+      "dcTitleFull": [
+        "Harry Kupfer"
+      ],
+      "dcCreator": [
+        "Gabor Halasz"
+      ],
+      "creatorSort": [
+        "Halasz, Gabor"
+      ],
+      "subjectDK5": [
+        "99.4 Kupfer, Harry"
+      ],
+      "subjectDK5Text": [
+        "Biografier af enkelte personer"
+      ],
+      "subject": [
+        "Harry Kupfer",
+        "biografier"
+      ],
+      "subjectSort": [
+        "Kupfer, Harry"
+      ],
+      "audience": [
+        "voksenmaterialer"
+      ],
+      "date": [
+        "1982"
+      ],
+      "typeBibDKType": [
+        "Tidsskriftsartikel"
+      ],
+      "format": [
+        "illustreret"
+      ],
+      "extent": [
+        "S. 26-27"
+      ],
+      "languageISO6392": [
+        "ger"
+      ],
+      "dcLanguage": [
+        "Tysk"
+      ],
+      "isPartOf": [
+        "Opernwelt, Bd. 23, nr. 12 (1982)"
+      ],
+      "isPartOfISSN": [
+        "0030-3690"
+      ],
+      "accessType": [
+        "physical"
+      ],
+      "creator": [
+        "Gabor Halasz"
+      ],
+      "pid": [
+        "870971-tsart:70055848"
+      ],
+      "language": [
+        "Tysk"
+      ],
+      "partOf": [
+        "Opernwelt, Bd. 23, nr. 12 (1982)"
+      ],
+      "title": [
+        "Harry Kupfer"
+      ],
+      "titleFull": [
+        "Harry Kupfer"
+      ],
+      "type": [
+        "Tidsskriftsartikel"
+      ],
+      "workType": [
+        "article"
+      ]
+    },
+    {
+      "collection": [
+        "870970-basis:10367573"
+      ],
+      "collectionDetails": [
+        {
+          "accessType": [
+            "physical"
+          ],
+          "creator": [
+            "Lars Ulvenstam"
+          ],
+          "pid": [
+            "870970-basis:10367573"
+          ],
+          "language": [
+            "Svensk"
+          ],
+          "title": [
+            "Harry Martinson"
+          ],
+          "titleFull": [
+            "Harry Martinson"
+          ],
+          "type": [
+            "Bog"
+          ],
+          "workType": [
+            "book"
+          ]
+        }
+      ],
+      "acIdentifier": [
+        "70055813|870971"
+      ],
+      "acSource": [
+        "Tidsskriftsartikler"
+      ],
+      "dcTitle": [
+        "Harry Kullman"
+      ],
+      "dcTitleFull": [
+        "Harry Kullman"
+      ],
+      "dcCreator": [
+        "Kenneth Carlsson"
+      ],
+      "creatorSort": [
+        "Carlsson, Kenneth"
+      ],
+      "subjectDK5": [
+        "99.4 Kullman, Harry"
+      ],
+      "subjectDK5Text": [
+        "Biografier af enkelte personer"
+      ],
+      "subject": [
+        "Harry Kullman",
+        "biografier",
+        "kriminallitteratur",
+        "svensk litteratur",
+        "ungdomslitteratur"
+      ],
+      "subjectSort": [
+        "Kullman, Harry"
+      ],
+      "abstract": [
+        "Svensk ungdoms- og kriminalforfatter"
+      ],
+      "audience": [
+        "voksenmaterialer"
+      ],
+      "date": [
+        "1982"
+      ],
+      "typeBibDKType": [
+        "Tidsskriftsartikel"
+      ],
+      "format": [
+        "illustreret"
+      ],
+      "extent": [
+        "S. 36-43"
+      ],
+      "languageISO6392": [
+        "swe"
+      ],
+      "dcLanguage": [
+        "Svensk"
+      ],
+      "isPartOf": [
+        "Jury, 1982, nr. 2"
+      ],
+      "isPartOfISSN": [
+        "0345-5734"
+      ],
+      "accessType": [
+        "physical"
+      ],
+      "creator": [
+        "Kenneth Carlsson"
+      ],
+      "pid": [
+        "870971-tsart:70055813"
+      ],
+      "language": [
+        "Svensk"
+      ],
+      "partOf": [
+        "Jury, 1982, nr. 2"
+      ],
+      "title": [
+        "Harry Kullman"
+      ],
+      "titleFull": [
+        "Harry Kullman"
+      ],
+      "type": [
+        "Tidsskriftsartikel"
+      ],
+      "workType": [
+        "article"
+      ]
+    },
+    {
+      "collection": [
+        "870971-tsart:70055813"
+      ],
+      "collectionDetails": [
+        {
+          "accessType": [
+            "physical"
+          ],
+          "creator": [
+            "Kenneth Carlsson"
+          ],
+          "pid": [
+            "870971-tsart:70055813"
+          ],
+          "language": [
+            "Svensk"
+          ],
+          "partOf": [
+            "Jury, 1982, nr. 2"
+          ],
+          "title": [
+            "Harry Kullman"
+          ],
+          "titleFull": [
+            "Harry Kullman"
+          ],
+          "type": [
+            "Tidsskriftsartikel"
+          ],
+          "workType": [
+            "article"
+          ]
+        }
+      ],
+      "acIdentifier": [
+        "80487940|870971"
+      ],
+      "acSource": [
+        "Tidsskriftsartikler"
+      ],
+      "dcTitle": [
+        "Harry Carlsson"
+      ],
+      "dcTitleFull": [
+        "Harry Carlsson"
+      ],
+      "dcCreator": [
+        "Ulf Gudmundsen"
+      ],
+      "creatorSort": [
+        "Gudmundsen, Ulf"
+      ],
+      "subjectDK5": [
+        "99.4 Carlsson, Harry"
+      ],
+      "subjectDK5Text": [
+        "Biografier af enkelte personer"
+      ],
+      "subject": [
+        "Harry Carlsson"
+      ],
+      "subjectSort": [
+        "Carlsson, Harry"
+      ],
+      "abstract": [
+        "Dansk surrealistisk maler"
+      ],
+      "audience": [
+        "voksenmaterialer"
+      ],
+      "date": [
+        "1991"
+      ],
+      "typeBibDKType": [
+        "Tidsskriftsartikel"
+      ],
+      "format": [
+        "illustreret"
+      ],
+      "extent": [
+        "S. 14"
+      ],
+      "languageISO6392": [
+        "dan"
+      ],
+      "dcLanguage": [
+        "Dansk"
+      ],
+      "isPartOf": [
+        "Hrymfaxe, Årg. 21, nr. 3 (1991)"
+      ],
+      "isPartOfISSN": [
+        "0901-5795"
+      ],
+      "spatial": [
+        "Danmark malerkunst"
+      ],
+      "accessType": [
+        "physical"
+      ],
+      "creator": [
+        "Ulf Gudmundsen"
+      ],
+      "pid": [
+        "870971-tsart:80487940"
+      ],
+      "language": [
+        "Dansk"
+      ],
+      "partOf": [
+        "Hrymfaxe, Årg. 21, nr. 3 (1991)"
+      ],
+      "title": [
+        "Harry Carlsson"
+      ],
+      "titleFull": [
+        "Harry Carlsson"
+      ],
+      "type": [
+        "Tidsskriftsartikel"
+      ],
+      "workType": [
+        "article"
+      ]
+    },
+    {
+      "collection": [
+        "870971-tsart:80487940"
+      ],
+      "collectionDetails": [
+        {
+          "accessType": [
+            "physical"
+          ],
+          "creator": [
+            "Ulf Gudmundsen"
+          ],
+          "pid": [
+            "870971-tsart:80487940"
+          ],
+          "language": [
+            "Dansk"
+          ],
+          "partOf": [
+            "Hrymfaxe, Årg. 21, nr. 3 (1991)"
+          ],
+          "title": [
+            "Harry Carlsson"
+          ],
+          "titleFull": [
+            "Harry Carlsson"
+          ],
+          "type": [
+            "Tidsskriftsartikel"
+          ],
+          "workType": [
+            "article"
+          ]
+        }
+      ],
+      "acIdentifier": [
+        "36616636|870971"
+      ],
+      "acSource": [
+        "Tidsskriftsartikler"
+      ],
+      "dcTitle": [
+        "Harry Harrison"
+      ],
+      "dcTitleFull": [
+        "Harry Harrison"
+      ],
+      "creatorAut": [
+        "Klaus Æ. Mogensen"
+      ],
+      "creatorSort": [
+        "Mogensen, Klaus Æ."
+      ],
+      "subjectDK5": [
+        "99.4 Harrison, Harry"
+      ],
+      "subjectDK5Text": [
+        "Biografier af enkelte personer"
+      ],
+      "subject": [
+        "Harry Harrison"
+      ],
+      "subjectSort": [
+        "Harrison, Harry"
+      ],
+      "subjectDBCF": [
+        "amerikansk litteratur",
+        "science fiction"
+      ],
+      "abstract": [
+        "Portræt af den amerikanske forfatter"
+      ],
+      "audience": [
+        "voksenmaterialer"
+      ],
+      "date": [
+        "2015"
+      ],
+      "typeBibDKType": [
+        "Tidsskriftsartikel"
+      ],
+      "format": [
+        "illustreret"
+      ],
+      "extent": [
+        "S. 41-43"
+      ],
+      "languageISO6392": [
+        "dan"
+      ],
+      "dcLanguage": [
+        "Dansk"
+      ],
+      "isPartOf": [
+        "Himmelskibet, Nr. 45 (2015)"
+      ],
+      "isPartOfISSN": [
+        "1603-5836"
+      ],
+      "accessType": [
+        "physical"
+      ],
+      "creator": [
+        "Klaus Æ. Mogensen"
+      ],
+      "pid": [
+        "870971-tsart:36616636"
+      ],
+      "language": [
+        "Dansk"
+      ],
+      "partOf": [
+        "Himmelskibet, Nr. 45 (2015)"
+      ],
+      "title": [
+        "Harry Harrison"
+      ],
+      "titleFull": [
+        "Harry Harrison"
+      ],
+      "type": [
+        "Tidsskriftsartikel"
+      ],
+      "workType": [
+        "article"
+      ]
+    },
+    {
+      "collection": [
+        "870971-tsart:36616636"
+      ],
+      "collectionDetails": [
+        {
+          "accessType": [
+            "physical"
+          ],
+          "creator": [
+            "Klaus Æ. Mogensen"
+          ],
+          "pid": [
+            "870971-tsart:36616636"
+          ],
+          "language": [
+            "Dansk"
+          ],
+          "partOf": [
+            "Himmelskibet, Nr. 45 (2015)"
+          ],
+          "title": [
+            "Harry Harrison"
+          ],
+          "titleFull": [
+            "Harry Harrison"
+          ],
+          "type": [
+            "Tidsskriftsartikel"
+          ],
+          "workType": [
+            "article"
+          ]
+        }
+      ],
+      "acIdentifier": [
+        "87319946|870971"
+      ],
+      "acSource": [
+        "Avisartikler"
+      ],
+      "dcTitle": [
+        "Harry Potter"
+      ],
+      "dcTitleFull": [
+        "Harry Potter"
+      ],
+      "dcCreator": [
+        "Christian Monggaard"
+      ],
+      "creatorSort": [
+        "Monggaard, Christian"
+      ],
+      "subjectDK5": [
+        "99.4 Rowling, Joanne K."
+      ],
+      "subjectDK5Text": [
+        "Biografier af enkelte personer"
+      ],
+      "subjectDBCF": [
+        "Harry Potter og Fønixordenen",
+        "Joanne K. Rowling",
+        "børnelitteratur",
+        "engelsk litteratur",
+        "litteratur"
+      ],
+      "subjectSort": [
+        "Rowling, Joanne K."
+      ],
+      "abstract": [
+        "Årsager til Harry Potter-bøgernes succes"
+      ],
+      "description": [
+        "I anledning af det 5. bind i serien: \"Harry Potter og Føniksordenen\""
+      ],
+      "audience": [
+        "voksenmaterialer"
+      ],
+      "date": [
+        "2003"
+      ],
+      "typeBibDKType": [
+        "Avisartikel"
+      ],
+      "extent": [
+        "S. 9"
+      ],
+      "languageISO6392": [
+        "dan"
+      ],
+      "dcLanguage": [
+        "Dansk"
+      ],
+      "isPartOf": [
+        "Information, 2003-06-21"
+      ],
+      "isPartOfISSN": [
+        "1602-2572"
+      ],
+      "accessType": [
+        "online"
+      ],
+      "creator": [
+        "Christian Monggaard"
+      ],
+      "pid": [
+        "870971-avis:87319946"
+      ],
+      "language": [
+        "Dansk"
+      ],
+      "partOf": [
+        "Information, 2003-06-21"
+      ],
+      "title": [
+        "Harry Potter"
+      ],
+      "titleFull": [
+        "Harry Potter"
+      ],
+      "type": [
+        "Avisartikel"
+      ],
+      "workType": [
+        "article"
+      ],
+      "hasOnlineAccess": [
+        "[useraccessinfomedia]?action=getArticle&faust=87319946&infomediaId=e008981b&libraryCode=[libraryCode]&userId=[userId]&userPinCode=[userPinCode]"
+      ]
+    },
+    {
+      "collection": [
+        "870971-avis:87319946"
+      ],
+      "collectionDetails": [
+        {
+          "accessType": [
+            "online"
+          ],
+          "creator": [
+            "Christian Monggaard"
+          ],
+          "pid": [
+            "870971-avis:87319946"
+          ],
+          "language": [
+            "Dansk"
+          ],
+          "partOf": [
+            "Information, 2003-06-21"
+          ],
+          "title": [
+            "Harry Potter"
+          ],
+          "titleFull": [
+            "Harry Potter"
+          ],
+          "type": [
+            "Avisartikel"
+          ],
+          "workType": [
+            "article"
+          ]
+        }
+      ],
+      "acIdentifier": [
+        "36317140|870971"
+      ],
+      "acSource": [
+        "Avisartikler"
+      ],
+      "dcTitle": [
+        "Dynamit Harry"
+      ],
+      "dcTitleFull": [
+        "Dynamit Harry"
+      ],
+      "creatorAut": [
+        "Poul Høi"
+      ],
+      "creatorSort": [
+        "Høi, Poul"
+      ],
+      "subjectDK5": [
+        "61.28"
+      ],
+      "subjectDK5Text": [
+        "Nervefysiologi"
+      ],
+      "subjectDBCF": [
+        "Potter, Harry",
+        "empati",
+        "følelser",
+        "hjernen",
+        "litterære personer",
+        "psykologi"
+      ],
+      "abstract": [
+        "Empati er en mangelvare hos Islamisk Stat, empati-neuronerne tænder simpelthen ikke i helligkrigernes hjerner, når de ser andre lide. Men ifølge forskere er der en modgift: De skal læse bøger om Harry Potter"
+      ],
+      "audience": [
+        "voksenmaterialer"
+      ],
+      "date": [
+        "2014"
+      ],
+      "typeBibDKType": [
+        "Avisartikel"
+      ],
+      "format": [
+        "illustreret"
+      ],
+      "extent": [
+        "Sektion 2, s. 8-9"
+      ],
+      "languageISO6392": [
+        "dan"
+      ],
+      "dcLanguage": [
+        "Dansk"
+      ],
+      "isPartOf": [
+        "Berlingske tidende, 2014-12-26"
+      ],
+      "isPartOfISSN": [
+        "0106-4223"
+      ],
+      "accessType": [
+        "online"
+      ],
+      "creator": [
+        "Poul Høi"
+      ],
+      "pid": [
+        "870971-avis:36317140"
+      ],
+      "language": [
+        "Dansk"
+      ],
+      "partOf": [
+        "Berlingske tidende, 2014-12-26"
+      ],
+      "title": [
+        "Dynamit Harry"
+      ],
+      "titleFull": [
+        "Dynamit Harry"
+      ],
+      "type": [
+        "Avisartikel"
+      ],
+      "workType": [
+        "article"
+      ],
+      "hasOnlineAccess": [
+        "[useraccessinfomedia]?action=getArticle&faust=36317140&infomediaId=e4bc6c6c&libraryCode=[libraryCode]&userId=[userId]&userPinCode=[userPinCode]"
+      ]
+    },
+    {
+      "collection": [
+        "870971-avis:36317140"
+      ],
+      "collectionDetails": [
+        {
+          "accessType": [
+            "online"
+          ],
+          "creator": [
+            "Poul Høi"
+          ],
+          "pid": [
+            "870971-avis:36317140"
+          ],
+          "language": [
+            "Dansk"
+          ],
+          "partOf": [
+            "Berlingske tidende, 2014-12-26"
+          ],
+          "title": [
+            "Dynamit Harry"
+          ],
+          "titleFull": [
+            "Dynamit Harry"
+          ],
+          "type": [
+            "Avisartikel"
+          ],
+          "workType": [
+            "article"
+          ]
+        }
+      ],
+      "acIdentifier": [
+        "88657357|870971"
+      ],
+      "acSource": [
+        "Tidsskriftsartikler"
+      ],
+      "dcTitle": [
+        "Harry Nielsen"
+      ],
+      "dcTitleFull": [
+        "Harry Nielsen"
+      ],
+      "dcCreator": [
+        "Nikolaj Zeuthen"
+      ],
+      "creatorSort": [
+        "Zeuthen, Nikolaj"
+      ],
+      "subjectDK5": [
+        "86"
+      ],
+      "subjectDK5Text": [
+        "Dansk skønlitteratur"
+      ],
+      "subjectDBCO": [
+        "dansk skønlitteratur"
+      ],
+      "audience": [
+        "voksenmaterialer"
+      ],
+      "date": [
+        "2005"
+      ],
+      "typeBibDKType": [
+        "Tidsskriftsartikel"
+      ],
+      "extent": [
+        "S. 49-52"
+      ],
+      "languageISO6392": [
+        "dan"
+      ],
+      "dcLanguage": [
+        "Dansk"
+      ],
+      "isPartOf": [
+        "Den blå port, 2005, nr. 67"
+      ],
+      "isPartOfISSN": [
+        "0900-8160"
+      ],
+      "accessType": [
+        "physical"
+      ],
+      "creator": [
+        "Nikolaj Zeuthen"
+      ],
+      "pid": [
+        "870971-tsart:88657357"
+      ],
+      "language": [
+        "Dansk"
+      ],
+      "partOf": [
+        "Den blå port, 2005, nr. 67"
+      ],
+      "title": [
+        "Harry Nielsen"
+      ],
+      "titleFull": [
+        "Harry Nielsen"
+      ],
+      "type": [
+        "Tidsskriftsartikel"
+      ],
+      "workType": [
+        "article"
+      ]
+    },
+    {
+      "collection": [
+        "870970-basis:24520471"
+      ],
+      "collectionDetails": [
+        {
+          "accessType": [
+            "online"
+          ],
+          "pid": [
+            "870970-basis:24520471"
+          ],
+          "language": [
+            "Engelsk"
+          ],
+          "title": [
+            "Harry Potter"
+          ],
+          "titleFull": [
+            "Harry Potter"
+          ],
+          "type": [
+            "Netdokument"
+          ],
+          "workType": [
+            "book"
+          ]
+        }
+      ],
+      "acIdentifier": [
+        "35460454|870971"
+      ],
+      "acSource": [
+        "Avisartikler"
+      ],
+      "dcTitle": [
+        "Dirty Harry"
+      ],
+      "dcTitleFull": [
+        "Dirty Harry"
+      ],
+      "creatorAut": [
+        "Michael Bjerre"
+      ],
+      "creatorSort": [
+        "Bjerre, Michael"
+      ],
+      "subjectDK5": [
+        "99.4 Henry, prins af Wales"
+      ],
+      "subjectDK5Text": [
+        "Biografier af enkelte personer"
+      ],
+      "subject": [
+        "Henry (prins af Wales)"
+      ],
+      "subjectSort": [
+        "Henry (prins af Wales)"
+      ],
+      "subjectDBCF": [
+        "kongehuset",
+        "militærvæsen"
+      ],
+      "abstract": [
+        "Partyprins, drengerøv, charmetrold og en soldat, der praler af at have slået ihjel i Afghanistan. Prins Harry finder sig bedre tilpas som kaptajn end prins"
+      ],
+      "audience": [
+        "voksenmaterialer"
+      ],
+      "date": [
+        "2013"
+      ],
+      "typeBibDKType": [
+        "Avisartikel"
+      ],
+      "format": [
+        "illustreret"
+      ],
+      "extent": [
+        "Sektion 1, s. 14-15"
+      ],
+      "languageISO6392": [
+        "dan"
+      ],
+      "dcLanguage": [
+        "Dansk"
+      ],
+      "isPartOf": [
+        "Berlingske tidende, 2013-01-27"
+      ],
+      "isPartOfISSN": [
+        "0106-4223"
+      ],
+      "spatialDBCF": [
+        "England"
+      ],
+      "accessType": [
+        "online"
+      ],
+      "creator": [
+        "Michael Bjerre"
+      ],
+      "pid": [
+        "870971-avis:35460454"
+      ],
+      "language": [
+        "Dansk"
+      ],
+      "partOf": [
+        "Berlingske tidende, 2013-01-27"
+      ],
+      "title": [
+        "Dirty Harry"
+      ],
+      "titleFull": [
+        "Dirty Harry"
+      ],
+      "type": [
+        "Avisartikel"
+      ],
+      "workType": [
+        "article"
+      ],
+      "hasOnlineAccess": [
+        "[useraccessinfomedia]?action=getArticle&faust=35460454&infomediaId=e3a0340c&libraryCode=[libraryCode]&userId=[userId]&userPinCode=[userPinCode]"
+      ]
+    },
+    {
+      "collection": [
+        "870971-tsart:88657357"
+      ],
+      "collectionDetails": [
+        {
+          "accessType": [
+            "physical"
+          ],
+          "creator": [
+            "Nikolaj Zeuthen"
+          ],
+          "pid": [
+            "870971-tsart:88657357"
+          ],
+          "language": [
+            "Dansk"
+          ],
+          "partOf": [
+            "Den blå port, 2005, nr. 67"
+          ],
+          "title": [
+            "Harry Nielsen"
+          ],
+          "titleFull": [
+            "Harry Nielsen"
+          ],
+          "type": [
+            "Tidsskriftsartikel"
+          ],
+          "workType": [
+            "article"
+          ]
+        }
+      ],
+      "acIdentifier": [
+        "73850452|870971"
+      ],
+      "acSource": [
+        "Avisartikler"
+      ],
+      "dcTitle": [
+        "ang. Harry"
+      ],
+      "dcTitleFull": [
+        "ang. Harry"
+      ],
+      "dcCreator": [
+        "Niels Rohleder"
+      ],
+      "creatorSort": [
+        "Rohleder, Niels"
+      ],
+      "subjectDK5": [
+        "99.4 Tisch, Harry"
+      ],
+      "subjectDK5Text": [
+        "Biografier af enkelte personer"
+      ],
+      "subject": [
+        "Harry Tisch",
+        "biografier"
+      ],
+      "subjectSort": [
+        "Tisch, Harry"
+      ],
+      "abstract": [
+        "Foråret 1961: En gruppe danske kommunister, bl.a. Poul Emanuel, smuglede en visumløs østtysker i land i København. Tisch blev senere chef for DDR's fagbevægelse og politbureaumedlem i SED. Emanuel blev partisekretær i DKP. I dag sidder Tisch fængslet i Berlin. Emanuel er efterlønsmodtager på Amager"
+      ],
+      "audience": [
+        "voksenmaterialer"
+      ],
+      "date": [
+        "1991"
+      ],
+      "typeBibDKType": [
+        "Avisartikel"
+      ],
+      "languageISO6392": [
+        "dan"
+      ],
+      "dcLanguage": [
+        "Dansk"
+      ],
+      "isPartOf": [
+        "Information, 1991-04-20"
+      ],
+      "isPartOfISSN": [
+        "1602-2572"
+      ],
+      "spatial": [
+        "Tyskland (DDR) politisk system",
+        "Danmark politisk system"
+      ],
+      "accessType": [
+        "physical"
+      ],
+      "creator": [
+        "Niels Rohleder"
+      ],
+      "pid": [
+        "870971-avis:73850452"
+      ],
+      "language": [
+        "Dansk"
+      ],
+      "partOf": [
+        "Information, 1991-04-20"
+      ],
+      "title": [
+        "ang. Harry"
+      ],
+      "titleFull": [
+        "ang. Harry"
+      ],
+      "type": [
+        "Avisartikel"
+      ],
+      "workType": [
+        "article"
+      ]
+    }
+  ]
+});
         done();
       });
   });

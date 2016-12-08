@@ -11,8 +11,7 @@ export function testTransformer(params, context) { // eslint-disable-line no-unu
   log.info('testTransformer called');
   let now = (new Date()).toString();
   return new Promise(resolve => {
-    return resolve({statusCode: 200,
-                    data: {date: now}});
+    return resolve({statusCode: 200, data: {date: now}});
   });
 }
 
