@@ -163,8 +163,7 @@ export default (request, context) => {
     validateParams(request);
   } catch (err) { // eslint-disable-line brace-style
     return new Promise(resolve => {
-      return resolve({statusCode: 400,
-                      error: err});
+      return resolve({statusCode: 400, error: err});
     });
   }
 
