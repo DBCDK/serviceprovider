@@ -1,17 +1,17 @@
-/* eslint-disable max-len, quotes, comma-spacing, key-spacing, quote-props */
+/* eslint-disable max-len, quotes, comma-spacing, key-spacing, quote-props, indent */
 // Request: search {"q":"hest"}
 
 import Provider from '../../provider/Provider.js';
 import {assert, fail} from 'chai';
 
-let context = {
+const context = {
   "services": {
     "ddbcmsapi": "http://rest.filmstriben.dbc.inlead.dk/web/",
     "moreinfo": "http://moreinfo.addi.dk/2.6/",
     "openagency": "http://openagency.addi.dk/2.24/",
     "openholdingstatus": "https://openholdingstatus.addi.dk/2.2/",
-    "openorder": "https://openorder.addi.dk/2.7.1/",
-    "TESTopenorder": "https://openorder.addi.dk/test_2.7.1/",
+    "PRODopenorder": "https://openorder.addi.dk/2.7.1/",
+    "openorder": "https://openorder.addi.dk/test_2.7.1/",
     "opensearch": "http://opensearch.addi.dk/b3.0_4.2/",
     "openuserstatus": "https://openuserstatus.addi.dk/1.4.1/",
     "rank": "https://xptest.dbc.dk/ms/rank/v1",
@@ -29,785 +29,2238 @@ let context = {
     "profile": "opac",
     "collectionidentifiers": "rec.collectionIdentifier:150013-palle OR rec.collectionIdentifier:758000-katalog"
   },
-  "netpunkt": {"user": "XXXXX", "group": "XXXXX", "password": "XXXXX"},
-  "user": {"agency": "100451", "id": "XXXXX", "pin": "XXXXX", "salt": "XXXXX"},
-  "app": {"clientid": "XXXXX", "ddbcmsapipassword": "XXXXX", "orderpolicyrequester": "190101"}
+  "netpunkt": {
+    "user": "XXXXX",
+    "group": "XXXXX",
+    "password": "XXXXX"
+  },
+  "user": {
+    "agency": "100451",
+    "id": "XXXXX",
+    "pin": "XXXXX",
+    "salt": "XXXXX"
+  },
+  "app": {
+    "clientid": "XXXXX",
+    "ddbcmsapipassword": "XXXXX",
+    "orderpolicyrequester": "190101"
+  }
+};
+const provider = Provider();
+const mockData = {
+  "[\"opensearch\",\"<?xml version=\\\"1.0\\\" encoding=\\\"UTF-8\\\"?>\\n<SOAP-ENV:Envelope xmlns:SOAP-ENV=\\\"http://schemas.xmlsoap.org/soap/envelope/\\\" xmlns:ns1=\\\"http://oss.dbc.dk/ns/opensearch\\\">\\n  <SOAP-ENV:Body>\\n    <ns1:searchRequest>\\n      <ns1:query>hest</ns1:query>\\n      <ns1:agency>775100</ns1:agency>\\n      <ns1:profile>opac</ns1:profile>\\n      <ns1:start>1</ns1:start>\\n      <ns1:stepValue>10</ns1:stepValue>\\n      \\n      <ns1:collectionType>work-1</ns1:collectionType>\\n      <ns1:allObjects>1</ns1:allObjects>\\n      <ns1:objectFormat>briefDisplay</ns1:objectFormat>\\n      <ns1:objectFormat>dkabm</ns1:objectFormat>\\n      <ns1:outputType>json</ns1:outputType>\\n    </ns1:searchRequest>\\n  </SOAP-ENV:Body>\\n</SOAP-ENV:Envelope>\\n\"]": "{\"searchResponse\":{\"result\":{\"hitCount\":{\"$\":\"2355\"},\"collectionCount\":{\"$\":\"10\"},\"more\":{\"$\":\"true\"},\"searchResult\":[{\"collection\":{\"resultPosition\":{\"$\":\"1\"},\"numberOfObjects\":{\"$\":\"1\"},\"object\":[{\"record\":{\"identifier\":[{\"$\":\"72819675|870971\",\"@\":\"ac\"}],\"source\":[{\"$\":\"Tidsskriftsartikler\",\"@\":\"ac\"}],\"title\":[{\"$\":\"Den belgiske hest\",\"@\":\"dc\"},{\"$\":\"Den belgiske hest\",\"@type\":{\"$\":\"dkdcplus:full\",\"@\":\"xsi\"},\"@\":\"dc\"}],\"creator\":[{\"$\":\"Henning Rasmussen\",\"@\":\"dc\"},{\"$\":\"Rasmussen, Henning\",\"@type\":{\"$\":\"oss:sort\",\"@\":\"xsi\"},\"@\":\"dc\"}],\"subject\":[{\"$\":\"63.61\",\"@type\":{\"$\":\"dkdcplus:DK5\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"Heste\",\"@type\":{\"$\":\"dkdcplus:DK5-Text\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"belgisk hest\",\"@\":\"dc\"},{\"$\":\"hesteavl\",\"@\":\"dc\"}],\"audience\":[{\"$\":\"voksenmaterialer\",\"@\":\"dcterms\"}],\"date\":[{\"$\":\"1988\",\"@\":\"dc\"}],\"type\":[{\"$\":\"Tidsskriftsartikel\",\"@type\":{\"$\":\"dkdcplus:BibDK-Type\",\"@\":\"xsi\"},\"@\":\"dc\"}],\"extent\":[{\"$\":\"S. 29-31\",\"@\":\"dcterms\"}],\"language\":[{\"$\":\"dan\",\"@type\":{\"$\":\"dcterms:ISO639-2\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"Dansk\",\"@\":\"dc\"}],\"isPartOf\":[{\"$\":\"Hippologisk tidsskrift, \\u00c5rg. 100, nr. 3 (1988)\",\"@\":\"dcterms\"},{\"$\":\"0018-201X\",\"@type\":{\"$\":\"dkdcplus:ISSN\",\"@\":\"xsi\"},\"@\":\"dcterms\"}],\"@\":\"dkabm\"},\"identifier\":{\"$\":\"870971-tsart:72819675\"},\"primaryObjectIdentifier\":{\"$\":\"870971-tsart:72819675\"},\"recordStatus\":{\"$\":\"active\"},\"creationDate\":{\"$\":\"2005-03-01\"},\"formatsAvailable\":{\"format\":[{\"$\":\"dkabm\"},{\"$\":\"marcxchange\"}]},\"objectsAvailable\":{\"identifier\":[{\"$\":\"870971-tsart:72819675\"}]}}]},\"formattedCollection\":{\"briefDisplay\":{\"manifestation\":[{\"accessType\":{\"$\":\"physical\"},\"creator\":{\"$\":\"Henning Rasmussen\"},\"fedoraPid\":{\"$\":\"870971-tsart:72819675\"},\"identifier\":{\"$\":\"870971-tsart:72819675\"},\"language\":{\"$\":\"Dansk\"},\"partOf\":{\"$\":\"Hippologisk tidsskrift, \\u00c5rg. 100, nr. 3 (1988)\"},\"title\":{\"$\":\"Den belgiske hest\"},\"titleFull\":{\"$\":\"Den belgiske hest\"},\"type\":{\"$\":\"Tidsskriftsartikel\"},\"workType\":{\"$\":\"article\"}}]}}},{\"collection\":{\"resultPosition\":{\"$\":\"2\"},\"numberOfObjects\":{\"$\":\"1\"},\"object\":[{\"record\":{\"identifier\":[{\"$\":\"73458110|870971\",\"@\":\"ac\"}],\"source\":[{\"$\":\"Avisartikler\",\"@\":\"ac\"}],\"title\":[{\"$\":\"Slaget om Sorte Hest. En lang, lang konflikt\",\"@\":\"dc\"},{\"$\":\"Slaget om Sorte Hest : En lang, lang konflikt\",\"@type\":{\"$\":\"dkdcplus:full\",\"@\":\"xsi\"},\"@\":\"dc\"}],\"creator\":[{\"$\":\"Per Mikael Jensen\",\"@\":\"dc\"},{\"$\":\"Jensen, Per Mikael\",\"@type\":{\"$\":\"oss:sort\",\"@\":\"xsi\"},\"@\":\"dc\"}],\"subject\":[{\"$\":\"71.637 Sorte Hest\",\"@type\":{\"$\":\"dkdcplus:DK5\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"BZ'ere\",\"@\":\"dc\"},{\"$\":\"Enkelte k\\u00f8benhavnske lokaliteters arkitekturhistorie\",\"@type\":{\"$\":\"dkdcplus:DK5-Text\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"Sorte Hest (boligkarre)\",\"@\":\"dc\"}],\"abstract\":[{\"$\":\"Sorte Hest, Vesterbro, K\\u00f8benhavn\",\"@\":\"dcterms\"}],\"audience\":[{\"$\":\"voksenmaterialer\",\"@\":\"dcterms\"}],\"date\":[{\"$\":\"1990\",\"@\":\"dc\"}],\"type\":[{\"$\":\"Avisartikel\",\"@type\":{\"$\":\"dkdcplus:BibDK-Type\",\"@\":\"xsi\"},\"@\":\"dc\"}],\"language\":[{\"$\":\"dan\",\"@type\":{\"$\":\"dcterms:ISO639-2\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"Dansk\",\"@\":\"dc\"}],\"isPartOf\":[{\"$\":\"Politiken, 1990-03-11\",\"@\":\"dcterms\"},{\"$\":\"0907-1814\",\"@type\":{\"$\":\"dkdcplus:ISSN\",\"@\":\"xsi\"},\"@\":\"dcterms\"}],\"spatial\":[{\"$\":\"K\\u00f8benhavn arkitektur\",\"@\":\"dcterms\"},{\"$\":\"Vesterbro arkitektur\",\"@\":\"dcterms\"}],\"@\":\"dkabm\"},\"identifier\":{\"$\":\"870971-avis:73458110\"},\"primaryObjectIdentifier\":{\"$\":\"870971-avis:73458110\"},\"recordStatus\":{\"$\":\"active\"},\"creationDate\":{\"$\":\"2005-03-01\"},\"formatsAvailable\":{\"format\":[{\"$\":\"dkabm\"},{\"$\":\"marcxchange\"}]},\"objectsAvailable\":{\"identifier\":[{\"$\":\"870971-avis:73458110\"}]}}]},\"formattedCollection\":{\"briefDisplay\":{\"manifestation\":[{\"accessType\":{\"$\":\"physical\"},\"creator\":{\"$\":\"Per Mikael Jensen\"},\"fedoraPid\":{\"$\":\"870971-avis:73458110\"},\"identifier\":{\"$\":\"870971-avis:73458110\"},\"language\":{\"$\":\"Dansk\"},\"partOf\":{\"$\":\"Politiken, 1990-03-11\"},\"title\":{\"$\":\"Slaget om Sorte Hest. En lang, lang konflikt\"},\"titleFull\":{\"$\":\"Slaget om Sorte Hest. En lang, lang konflikt\"},\"type\":{\"$\":\"Avisartikel\"},\"workType\":{\"$\":\"article\"}}]}}},{\"collection\":{\"resultPosition\":{\"$\":\"3\"},\"numberOfObjects\":{\"$\":\"1\"},\"object\":[{\"record\":{\"identifier\":[{\"$\":\"8286|150043\",\"@\":\"ac\"},{\"$\":\"http:\\/\\/historiskatlas.dk\\/Hest_(8286)\",\"@type\":{\"$\":\"dcterms:URI\",\"@\":\"xsi\"},\"@\":\"dc\"}],\"source\":[{\"$\":\"Historisk Atlas\",\"@\":\"ac\"}],\"title\":[{\"$\":\"Hest\",\"@\":\"dc\"},{\"$\":\"Hest\",\"@type\":{\"$\":\"dkdcplus:full\",\"@\":\"xsi\"},\"@\":\"dc\"}],\"subject\":[{\"$\":\"Kunst\",\"@\":\"dc\"},{\"$\":\"Skulpturer\",\"@\":\"dc\"}],\"abstract\":[{\"$\":\"Agnete Ester Votborg Madsen (1923-1977)\\nHest, u.\\u00e5.\",\"@\":\"dcterms\"}],\"audience\":[{\"$\":\"voksenmaterialer\",\"@\":\"dcterms\"}],\"publisher\":[{\"$\":\"Historisk Atlas\",\"@\":\"dc\"}],\"type\":[{\"$\":\"Netdokument\",\"@type\":{\"$\":\"dkdcplus:BibDK-Type\",\"@\":\"xsi\"},\"@\":\"dc\"}],\"language\":[{\"$\":\"dan\",\"@type\":{\"$\":\"dcterms:ISO639-2\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"Dansk\",\"@\":\"dc\"}],\"spatial\":[{\"$\":\"10.427599112429400000000000000,55.366856304806300000000000000\",\"@type\":{\"$\":\"kml:coordinates\",\"@\":\"xsi\"},\"@\":\"dcterms\"}],\"@\":\"dkabm\"},\"identifier\":{\"$\":\"150043-atlas:8286\"},\"primaryObjectIdentifier\":{\"$\":\"150043-atlas:8286\"},\"recordStatus\":{\"$\":\"active\"},\"creationDate\":{\"$\":\"2013-01-01\"},\"formatsAvailable\":{\"format\":[{\"$\":\"dkabm\"}]},\"objectsAvailable\":{\"identifier\":[{\"$\":\"150043-atlas:8286\"}]}}]},\"formattedCollection\":{\"briefDisplay\":{\"manifestation\":[{\"accessType\":{\"$\":\"online\"},\"fedoraPid\":{\"$\":\"150043-atlas:8286\"},\"identifier\":{\"$\":\"150043-atlas:8286\"},\"language\":{\"$\":\"Dansk\"},\"title\":{\"$\":\"Hest\"},\"titleFull\":{\"$\":\"Hest\"},\"type\":{\"$\":\"Netdokument\"},\"workType\":{\"$\":\"book\"}}]}}},{\"collection\":{\"resultPosition\":{\"$\":\"4\"},\"numberOfObjects\":{\"$\":\"1\"},\"object\":[{\"record\":{\"identifier\":[{\"$\":\"11942|150033\",\"@\":\"ac\"},{\"$\":\"http:\\/\\/bibliotek.danske-dyr.dk\\/Sv%C3%A6r\\/dyr\\/Jysk%20hest\\/\",\"@type\":{\"$\":\"dcterms:URI\",\"@\":\"xsi\"},\"@\":\"dc\"}],\"source\":[{\"$\":\"Danske Dyr\",\"@\":\"ac\"}],\"title\":[{\"$\":\"Jysk hest\",\"@\":\"dc\"},{\"$\":\"Jysk hest\",\"@type\":{\"$\":\"dkdcplus:full\",\"@\":\"xsi\"},\"@\":\"dc\"}],\"alternative\":[{\"$\":\"Den jyske hest\",\"@\":\"dcterms\"},{\"$\":\"den jydske hest\",\"@\":\"dcterms\"},{\"$\":\"Jydsk hest\",\"@\":\"dcterms\"},{\"$\":\"jydske heste\",\"@\":\"dcterms\"}],\"creator\":[{\"$\":\"danske-dyr.dk\",\"@type\":{\"$\":\"dkdcplus:com\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"danske-dyr.dk\",\"@type\":{\"$\":\"oss:sort\",\"@\":\"xsi\"},\"@\":\"dc\"}],\"subject\":[{\"$\":\"Zoologi\",\"@\":\"dc\"},{\"$\":\"Biologi\",\"@\":\"dc\"}],\"audience\":[{\"$\":\"b\\u00f8rnematerialer\",\"@\":\"dcterms\"}],\"publisher\":[{\"$\":\"ConDidact A\\/S\",\"@\":\"dc\"}],\"date\":[{\"$\":\"2009\",\"@\":\"dc\"}],\"type\":[{\"$\":\"Netdokument\",\"@type\":{\"$\":\"dkdcplus:BibDK-Type\",\"@\":\"xsi\"},\"@\":\"dc\"}],\"language\":[{\"$\":\"Dansk\",\"@\":\"dc\"},{\"$\":\"dan\",\"@type\":{\"$\":\"dcterms:ISO639-2\",\"@\":\"xsi\"},\"@\":\"dc\"}],\"rights\":[{\"$\":\"Copyright \\u00a9 2016 ConDidact A\\/S\",\"@\":\"dc\"}],\"@\":\"dkabm\"},\"identifier\":{\"$\":\"150033-dandyr:11942\"},\"primaryObjectIdentifier\":{\"$\":\"150033-dandyr:11942\"},\"recordStatus\":{\"$\":\"active\"},\"creationDate\":{\"$\":\"2009-01-01\"},\"formatsAvailable\":{\"format\":[{\"$\":\"dkabm\"}]},\"objectsAvailable\":{\"identifier\":[{\"$\":\"150033-dandyr:11942\"}]}}]},\"formattedCollection\":{\"briefDisplay\":{\"manifestation\":[{\"accessType\":{\"$\":\"online\"},\"creator\":{\"$\":\"danske-dyr.dk\"},\"fedoraPid\":{\"$\":\"150033-dandyr:11942\"},\"identifier\":{\"$\":\"150033-dandyr:11942\"},\"language\":{\"$\":\"Dansk\"},\"title\":{\"$\":\"Jysk hest\"},\"titleFull\":{\"$\":\"Jysk hest\"},\"type\":{\"$\":\"Netdokument\"},\"workType\":{\"$\":\"book\"}}]}}},{\"collection\":{\"resultPosition\":{\"$\":\"5\"},\"numberOfObjects\":{\"$\":\"1\"},\"object\":[{\"record\":{\"identifier\":[{\"$\":\"83321857|870971\",\"@\":\"ac\"}],\"source\":[{\"$\":\"Tidsskriftsartikler\",\"@\":\"ac\"}],\"title\":[{\"$\":\"Fare for indavl p\\u00e5 l\\u00e6ngere sigt. Den jydske hest i positiv udvikling\",\"@\":\"dc\"},{\"$\":\"Fare for indavl p\\u00e5 l\\u00e6ngere sigt : Den jydske hest i positiv udvikling\",\"@type\":{\"$\":\"dkdcplus:full\",\"@\":\"xsi\"},\"@\":\"dc\"}],\"creator\":[{\"$\":\"Olav Rasmussen\",\"@\":\"dc\"},{\"$\":\"Rasmussen, Olav\",\"@type\":{\"$\":\"oss:sort\",\"@\":\"xsi\"},\"@\":\"dc\"}],\"subject\":[{\"$\":\"63.61\",\"@type\":{\"$\":\"dkdcplus:DK5\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"Heste\",\"@type\":{\"$\":\"dkdcplus:DK5-Text\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"den jydske hest\",\"@type\":{\"$\":\"dkdcplus:DBCF\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"frederiksborgheste\",\"@type\":{\"$\":\"dkdcplus:DBCF\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"heste\",\"@type\":{\"$\":\"dkdcplus:DBCF\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"hesteavl\",\"@type\":{\"$\":\"dkdcplus:DBCF\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"indavl\",\"@type\":{\"$\":\"dkdcplus:DBCF\",\"@\":\"xsi\"},\"@\":\"dc\"}],\"abstract\":[{\"$\":\"Frederiksborgheste og den jydske hest\",\"@\":\"dcterms\"}],\"audience\":[{\"$\":\"voksenmaterialer\",\"@\":\"dcterms\"}],\"date\":[{\"$\":\"1996\",\"@\":\"dc\"}],\"type\":[{\"$\":\"Tidsskriftsartikel\",\"@type\":{\"$\":\"dkdcplus:BibDK-Type\",\"@\":\"xsi\"},\"@\":\"dc\"}],\"format\":[{\"$\":\"illustreret\",\"@\":\"dc\"}],\"extent\":[{\"$\":\"S. 16-18\",\"@\":\"dcterms\"}],\"language\":[{\"$\":\"dan\",\"@type\":{\"$\":\"dcterms:ISO639-2\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"Dansk\",\"@\":\"dc\"}],\"isPartOf\":[{\"$\":\"Landsbladet Hest, 1996, nr. 4\",\"@\":\"dcterms\"},{\"$\":\"0906-6616\",\"@type\":{\"$\":\"dkdcplus:ISSN\",\"@\":\"xsi\"},\"@\":\"dcterms\"}],\"@\":\"dkabm\"},\"identifier\":{\"$\":\"870971-tsart:83321857\"},\"primaryObjectIdentifier\":{\"$\":\"870971-tsart:83321857\"},\"recordStatus\":{\"$\":\"active\"},\"creationDate\":{\"$\":\"2005-03-01\"},\"formatsAvailable\":{\"format\":[{\"$\":\"dkabm\"},{\"$\":\"marcxchange\"}]},\"objectsAvailable\":{\"identifier\":[{\"$\":\"870971-tsart:83321857\"}]}}]},\"formattedCollection\":{\"briefDisplay\":{\"manifestation\":[{\"accessType\":{\"$\":\"physical\"},\"creator\":{\"$\":\"Olav Rasmussen\"},\"fedoraPid\":{\"$\":\"870971-tsart:83321857\"},\"identifier\":{\"$\":\"870971-tsart:83321857\"},\"language\":{\"$\":\"Dansk\"},\"partOf\":{\"$\":\"Landsbladet Hest, 1996, nr. 4\"},\"title\":{\"$\":\"Fare for indavl p\\u00e5 l\\u00e6ngere sigt. Den jydske hest i positiv udvikling\"},\"titleFull\":{\"$\":\"Fare for indavl p\\u00e5 l\\u00e6ngere sigt. Den jydske hest i positiv udvikling\"},\"type\":{\"$\":\"Tidsskriftsartikel\"},\"workType\":{\"$\":\"article\"}}]}}},{\"collection\":{\"resultPosition\":{\"$\":\"6\"},\"numberOfObjects\":{\"$\":\"1\"},\"object\":[{\"record\":{\"identifier\":[{\"$\":\"73336317|870971\",\"@\":\"ac\"}],\"source\":[{\"$\":\"Avisartikler\",\"@\":\"ac\"}],\"title\":[{\"$\":\"H\\u00f8jt til hest\",\"@\":\"dc\"},{\"$\":\"H\\u00f8jt til hest\",\"@type\":{\"$\":\"dkdcplus:full\",\"@\":\"xsi\"},\"@\":\"dc\"}],\"audience\":[{\"$\":\"voksenmaterialer\",\"@\":\"dcterms\"}],\"date\":[{\"$\":\"1989\",\"@\":\"dc\"}],\"type\":[{\"$\":\"Avisartikel\",\"@type\":{\"$\":\"dkdcplus:BibDK-Type\",\"@\":\"xsi\"},\"@\":\"dc\"}],\"language\":[{\"$\":\"dan\",\"@type\":{\"$\":\"dcterms:ISO639-2\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"Dansk\",\"@\":\"dc\"}],\"isPartOf\":[{\"$\":\"Jyllands-posten, 1989-11-19\",\"@\":\"dcterms\"},{\"$\":\"0109-1182\",\"@type\":{\"$\":\"dkdcplus:ISSN\",\"@\":\"xsi\"},\"@\":\"dcterms\"}],\"@\":\"dkabm\"},\"identifier\":{\"$\":\"870971-avis:73336317\"},\"primaryObjectIdentifier\":{\"$\":\"870971-avis:73336317\"},\"recordStatus\":{\"$\":\"active\"},\"creationDate\":{\"$\":\"2005-03-01\"},\"formatsAvailable\":{\"format\":[{\"$\":\"dkabm\"},{\"$\":\"marcxchange\"}]},\"objectsAvailable\":{\"identifier\":[{\"$\":\"870971-avis:73336317\"}]}}]},\"formattedCollection\":{\"briefDisplay\":{\"manifestation\":[{\"accessType\":{\"$\":\"physical\"},\"fedoraPid\":{\"$\":\"870971-avis:73336317\"},\"identifier\":{\"$\":\"870971-avis:73336317\"},\"language\":{\"$\":\"Dansk\"},\"partOf\":{\"$\":\"Jyllands-posten, 1989-11-19\"},\"title\":{\"$\":\"H\\u00f8jt til hest\"},\"titleFull\":{\"$\":\"H\\u00f8jt til hest\"},\"type\":{\"$\":\"Avisartikel\"},\"workType\":{\"$\":\"article\"}}]}}},{\"collection\":{\"resultPosition\":{\"$\":\"7\"},\"numberOfObjects\":{\"$\":\"1\"},\"object\":[{\"record\":{\"identifier\":[{\"$\":\"72922190|870971\",\"@\":\"ac\"}],\"source\":[{\"$\":\"Tidsskriftsartikler\",\"@\":\"ac\"}],\"title\":[{\"$\":\"Boltskydning af hest\",\"@\":\"dc\"},{\"$\":\"Boltskydning af hest\",\"@type\":{\"$\":\"dkdcplus:full\",\"@\":\"xsi\"},\"@\":\"dc\"}],\"audience\":[{\"$\":\"voksenmaterialer\",\"@\":\"dcterms\"}],\"date\":[{\"$\":\"1988\",\"@\":\"dc\"}],\"type\":[{\"$\":\"Tidsskriftsartikel\",\"@type\":{\"$\":\"dkdcplus:BibDK-Type\",\"@\":\"xsi\"},\"@\":\"dc\"}],\"extent\":[{\"$\":\"S. 548\",\"@\":\"dcterms\"}],\"language\":[{\"$\":\"mul\",\"@type\":{\"$\":\"dcterms:ISO639-2\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"Flere sprog\",\"@\":\"dc\"}],\"isPartOf\":[{\"$\":\"Dansk veterin\\u00e6rtidsskrift, \\u00c5rg. 71, nr. 10 (1988)\",\"@\":\"dcterms\"},{\"$\":\"0106-6854\",\"@type\":{\"$\":\"dkdcplus:ISSN\",\"@\":\"xsi\"},\"@\":\"dcterms\"}],\"@\":\"dkabm\"},\"identifier\":{\"$\":\"870971-tsart:72922190\"},\"primaryObjectIdentifier\":{\"$\":\"870971-tsart:72922190\"},\"recordStatus\":{\"$\":\"active\"},\"creationDate\":{\"$\":\"2005-03-01\"},\"formatsAvailable\":{\"format\":[{\"$\":\"dkabm\"},{\"$\":\"marcxchange\"}]},\"objectsAvailable\":{\"identifier\":[{\"$\":\"870971-tsart:72922190\"}]}}]},\"formattedCollection\":{\"briefDisplay\":{\"manifestation\":[{\"accessType\":{\"$\":\"physical\"},\"fedoraPid\":{\"$\":\"870971-tsart:72922190\"},\"identifier\":{\"$\":\"870971-tsart:72922190\"},\"language\":{\"$\":\"Flere sprog\"},\"partOf\":{\"$\":\"Dansk veterin\\u00e6rtidsskrift, \\u00c5rg. 71, nr. 10 (1988)\"},\"title\":{\"$\":\"Boltskydning af hest\"},\"titleFull\":{\"$\":\"Boltskydning af hest\"},\"type\":{\"$\":\"Tidsskriftsartikel\"},\"workType\":{\"$\":\"article\"}}]}}},{\"collection\":{\"resultPosition\":{\"$\":\"8\"},\"numberOfObjects\":{\"$\":\"1\"},\"object\":[{\"record\":{\"identifier\":[{\"$\":\"73528070|870971\",\"@\":\"ac\"}],\"source\":[{\"$\":\"Avisartikler\",\"@\":\"ac\"}],\"title\":[{\"$\":\"Flertal st\\u00f8tter Juhl-J\\u00f8rgensens \\u00f8nskeseddel for Sorte Hest\",\"@\":\"dc\"},{\"$\":\"Flertal st\\u00f8tter Juhl-J\\u00f8rgensens \\u00f8nskeseddel for Sorte Hest\",\"@type\":{\"$\":\"dkdcplus:full\",\"@\":\"xsi\"},\"@\":\"dc\"}],\"creator\":[{\"$\":\"Niels Rohleder\",\"@\":\"dc\"},{\"$\":\"Rohleder, Niels\",\"@type\":{\"$\":\"oss:sort\",\"@\":\"xsi\"},\"@\":\"dc\"}],\"subject\":[{\"$\":\"71.637 Sorte Hest\",\"@type\":{\"$\":\"dkdcplus:DK5\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"Axel Juhl-J\\u00f8rgensen\",\"@\":\"dc\"},{\"$\":\"Juhl-J\\u00f8rgensen, Axel\",\"@type\":{\"$\":\"oss:sort\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"Enkelte k\\u00f8benhavnske lokaliteters arkitekturhistorie\",\"@type\":{\"$\":\"dkdcplus:DK5-Text\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"Sorte Hest (boligkarre)\",\"@\":\"dc\"}],\"audience\":[{\"$\":\"voksenmaterialer\",\"@\":\"dcterms\"}],\"date\":[{\"$\":\"1990\",\"@\":\"dc\"}],\"type\":[{\"$\":\"Avisartikel\",\"@type\":{\"$\":\"dkdcplus:BibDK-Type\",\"@\":\"xsi\"},\"@\":\"dc\"}],\"language\":[{\"$\":\"dan\",\"@type\":{\"$\":\"dcterms:ISO639-2\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"Dansk\",\"@\":\"dc\"}],\"isPartOf\":[{\"$\":\"Information, 1990-05-17\",\"@\":\"dcterms\"},{\"$\":\"1602-2572\",\"@type\":{\"$\":\"dkdcplus:ISSN\",\"@\":\"xsi\"},\"@\":\"dcterms\"}],\"spatial\":[{\"$\":\"K\\u00f8benhavn arkitektur\",\"@\":\"dcterms\"},{\"$\":\"Vesterbro arkitektur\",\"@\":\"dcterms\"}],\"@\":\"dkabm\"},\"identifier\":{\"$\":\"870971-avis:73528070\"},\"primaryObjectIdentifier\":{\"$\":\"870971-avis:73528070\"},\"recordStatus\":{\"$\":\"active\"},\"creationDate\":{\"$\":\"2005-03-01\"},\"formatsAvailable\":{\"format\":[{\"$\":\"dkabm\"},{\"$\":\"marcxchange\"}]},\"objectsAvailable\":{\"identifier\":[{\"$\":\"870971-avis:73528070\"}]}}]},\"formattedCollection\":{\"briefDisplay\":{\"manifestation\":[{\"accessType\":{\"$\":\"physical\"},\"creator\":{\"$\":\"Niels Rohleder\"},\"fedoraPid\":{\"$\":\"870971-avis:73528070\"},\"identifier\":{\"$\":\"870971-avis:73528070\"},\"language\":{\"$\":\"Dansk\"},\"partOf\":{\"$\":\"Information, 1990-05-17\"},\"title\":{\"$\":\"Flertal st\\u00f8tter Juhl-J\\u00f8rgensens \\u00f8nskeseddel for Sorte Hest\"},\"titleFull\":{\"$\":\"Flertal st\\u00f8tter Juhl-J\\u00f8rgensens \\u00f8nskeseddel for Sorte Hest\"},\"type\":{\"$\":\"Avisartikel\"},\"workType\":{\"$\":\"article\"}}]}}},{\"collection\":{\"resultPosition\":{\"$\":\"9\"},\"numberOfObjects\":{\"$\":\"1\"},\"object\":[{\"record\":{\"identifier\":[{\"$\":\"73150272|870971\",\"@\":\"ac\"}],\"source\":[{\"$\":\"Tidsskriftsartikler\",\"@\":\"ac\"}],\"title\":[{\"$\":\"Bryggerhesten - elsket og beundret dansk entertainer\",\"@\":\"dc\"},{\"$\":\"Bryggerhesten - elsket og beundret dansk entertainer\",\"@type\":{\"$\":\"dkdcplus:full\",\"@\":\"xsi\"},\"@\":\"dc\"}],\"creator\":[{\"$\":\"Anna Panum\",\"@\":\"dc\"},{\"$\":\"Panum, Anna\",\"@type\":{\"$\":\"oss:sort\",\"@\":\"xsi\"},\"@\":\"dc\"}],\"subject\":[{\"$\":\"63.61\",\"@type\":{\"$\":\"dkdcplus:DK5\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"Heste\",\"@type\":{\"$\":\"dkdcplus:DK5-Text\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"bryggerheste\",\"@\":\"dc\"},{\"$\":\"hesteavl\",\"@\":\"dc\"},{\"$\":\"jysk hest\",\"@\":\"dc\"}],\"abstract\":[{\"$\":\"Jysk hest\",\"@\":\"dcterms\"}],\"audience\":[{\"$\":\"voksenmaterialer\",\"@\":\"dcterms\"}],\"date\":[{\"$\":\"1988\",\"@\":\"dc\"}],\"type\":[{\"$\":\"Tidsskriftsartikel\",\"@type\":{\"$\":\"dkdcplus:BibDK-Type\",\"@\":\"xsi\"},\"@\":\"dc\"}],\"extent\":[{\"$\":\"S. 4-5\",\"@\":\"dcterms\"}],\"language\":[{\"$\":\"dan\",\"@type\":{\"$\":\"dcterms:ISO639-2\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"Dansk\",\"@\":\"dc\"}],\"isPartOf\":[{\"$\":\"Dyrene og os, \\u00c5rg. 4, nr. 2 (1988)\",\"@\":\"dcterms\"},{\"$\":\"0902-3879\",\"@type\":{\"$\":\"dkdcplus:ISSN\",\"@\":\"xsi\"},\"@\":\"dcterms\"}],\"@\":\"dkabm\"},\"identifier\":{\"$\":\"870971-tsart:73150272\"},\"primaryObjectIdentifier\":{\"$\":\"870971-tsart:73150272\"},\"recordStatus\":{\"$\":\"active\"},\"creationDate\":{\"$\":\"2005-03-01\"},\"formatsAvailable\":{\"format\":[{\"$\":\"dkabm\"},{\"$\":\"marcxchange\"}]},\"objectsAvailable\":{\"identifier\":[{\"$\":\"870971-tsart:73150272\"}]}}]},\"formattedCollection\":{\"briefDisplay\":{\"manifestation\":[{\"accessType\":{\"$\":\"physical\"},\"creator\":{\"$\":\"Anna Panum\"},\"fedoraPid\":{\"$\":\"870971-tsart:73150272\"},\"identifier\":{\"$\":\"870971-tsart:73150272\"},\"language\":{\"$\":\"Dansk\"},\"partOf\":{\"$\":\"Dyrene og os, \\u00c5rg. 4, nr. 2 (1988)\"},\"title\":{\"$\":\"Bryggerhesten - elsket og beundret dansk entertainer\"},\"titleFull\":{\"$\":\"Bryggerhesten - elsket og beundret dansk entertainer\"},\"type\":{\"$\":\"Tidsskriftsartikel\"},\"workType\":{\"$\":\"article\"}}]}}},{\"collection\":{\"resultPosition\":{\"$\":\"10\"},\"numberOfObjects\":{\"$\":\"1\"},\"object\":[{\"record\":{\"identifier\":[{\"$\":\"72819683|870971\",\"@\":\"ac\"}],\"source\":[{\"$\":\"Tidsskriftsartikler\",\"@\":\"ac\"}],\"title\":[{\"$\":\"Den jyske hest\",\"@\":\"dc\"},{\"$\":\"Den jyske hest\",\"@type\":{\"$\":\"dkdcplus:full\",\"@\":\"xsi\"},\"@\":\"dc\"}],\"creator\":[{\"$\":\"Henning Rasmussen\",\"@\":\"dc\"},{\"$\":\"Rasmussen, Henning\",\"@type\":{\"$\":\"oss:sort\",\"@\":\"xsi\"},\"@\":\"dc\"}],\"subject\":[{\"$\":\"63.61\",\"@type\":{\"$\":\"dkdcplus:DK5\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"Heste\",\"@type\":{\"$\":\"dkdcplus:DK5-Text\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"heste\",\"@\":\"dc\"},{\"$\":\"hesteavl\",\"@\":\"dc\"},{\"$\":\"jysk hest\",\"@\":\"dc\"}],\"audience\":[{\"$\":\"voksenmaterialer\",\"@\":\"dcterms\"}],\"date\":[{\"$\":\"1988\",\"@\":\"dc\"}],\"type\":[{\"$\":\"Tidsskriftsartikel\",\"@type\":{\"$\":\"dkdcplus:BibDK-Type\",\"@\":\"xsi\"},\"@\":\"dc\"}],\"extent\":[{\"$\":\"S. 24-28\",\"@\":\"dcterms\"}],\"language\":[{\"$\":\"dan\",\"@type\":{\"$\":\"dcterms:ISO639-2\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"Dansk\",\"@\":\"dc\"}],\"isPartOf\":[{\"$\":\"Hippologisk tidsskrift, \\u00c5rg. 100, nr. 3 (1988)\",\"@\":\"dcterms\"},{\"$\":\"0018-201X\",\"@type\":{\"$\":\"dkdcplus:ISSN\",\"@\":\"xsi\"},\"@\":\"dcterms\"}],\"@\":\"dkabm\"},\"identifier\":{\"$\":\"870971-tsart:72819683\"},\"primaryObjectIdentifier\":{\"$\":\"870971-tsart:72819683\"},\"recordStatus\":{\"$\":\"active\"},\"creationDate\":{\"$\":\"2005-03-01\"},\"formatsAvailable\":{\"format\":[{\"$\":\"dkabm\"},{\"$\":\"marcxchange\"}]},\"objectsAvailable\":{\"identifier\":[{\"$\":\"870971-tsart:72819683\"}]}}]},\"formattedCollection\":{\"briefDisplay\":{\"manifestation\":[{\"accessType\":{\"$\":\"physical\"},\"creator\":{\"$\":\"Henning Rasmussen\"},\"fedoraPid\":{\"$\":\"870971-tsart:72819683\"},\"identifier\":{\"$\":\"870971-tsart:72819683\"},\"language\":{\"$\":\"Dansk\"},\"partOf\":{\"$\":\"Hippologisk tidsskrift, \\u00c5rg. 100, nr. 3 (1988)\"},\"title\":{\"$\":\"Den jyske hest\"},\"titleFull\":{\"$\":\"Den jyske hest\"},\"type\":{\"$\":\"Tidsskriftsartikel\"},\"workType\":{\"$\":\"article\"}}]}}}],\"facetResult\":null,\"statInfo\":{\"fedoraRecordsCached\":{\"$\":\"40\"},\"fedoraRecordsRead\":{\"$\":\"0\"},\"time\":{\"$\":\"0.164911\"},\"trackingId\":{\"$\":\"2016-12-08T15:40:12:222748:7690\"}}}},\"@namespaces\":{\"ac\":\"http:\\/\\/biblstandard.dk\\/ac\\/namespace\\/\",\"dbcaddi\":\"http:\\/\\/oss.dbc.dk\\/rdf\\/dbcaddi#\",\"dbcbib\":\"http:\\/\\/oss.dbc.dk\\/rdf\\/dbcbib#\",\"dc\":\"http:\\/\\/purl.org\\/dc\\/elements\\/1.1\\/\",\"dcmitype\":\"http:\\/\\/purl.org\\/dc\\/dcmitype\\/\",\"dcterms\":\"http:\\/\\/purl.org\\/dc\\/terms\\/\",\"dkabm\":\"http:\\/\\/biblstandard.dk\\/abm\\/namespace\\/dkabm\\/\",\"dkdcplus\":\"http:\\/\\/biblstandard.dk\\/abm\\/namespace\\/dkdcplus\\/\",\"docbook\":\"http:\\/\\/docbook.org\\/ns\\/docbook\",\"kml\":\"http:\\/\\/www.opengis.net\\/kml\\/2.2\",\"marcx\":\"info:lc\\/xmlns\\/marcxchange-v1\",\"mx\":\"http:\\/\\/www.loc.gov\\/MARC21\\/slim\",\"of\":\"http:\\/\\/oss.dbc.dk\\/ns\\/openformat\",\"ofo\":\"http:\\/\\/oss.dbc.dk\\/ns\\/openformatoutput\",\"os\":\"http:\\/\\/oss.dbc.dk\\/ns\\/opensearch\",\"oso\":\"http:\\/\\/oss.dbc.dk\\/ns\\/opensearchobjects\",\"oss\":\"http:\\/\\/oss.dbc.dk\\/ns\\/osstypes\",\"xs\":\"http:\\/\\/www.w3.org\\/2001\\/XMLSchema\",\"xsi\":\"http:\\/\\/www.w3.org\\/2001\\/XMLSchema-instance\"}}",
+  "[\"opensearch\",\"<?xml version=\\\"1.0\\\" encoding=\\\"UTF-8\\\"?>\\n<SOAP-ENV:Envelope xmlns:SOAP-ENV=\\\"http://schemas.xmlsoap.org/soap/envelope/\\\" xmlns:ns1=\\\"http://oss.dbc.dk/ns/opensearch\\\">\\n  <SOAP-ENV:Body>\\n    <ns1:searchRequest>\\n      <ns1:query>hest</ns1:query>\\n      <ns1:agency>775100</ns1:agency>\\n      <ns1:profile>opac</ns1:profile>\\n      <ns1:start>1</ns1:start>\\n      <ns1:stepValue>10</ns1:stepValue>\\n      \\n      <ns1:collectionType>work-1</ns1:collectionType>\\n      <ns1:allObjects>0</ns1:allObjects>\\n      <ns1:objectFormat>briefDisplay</ns1:objectFormat>\\n      <ns1:objectFormat>dkabm</ns1:objectFormat>\\n      <ns1:outputType>json</ns1:outputType>\\n    </ns1:searchRequest>\\n  </SOAP-ENV:Body>\\n</SOAP-ENV:Envelope>\\n\"]": "{\"searchResponse\":{\"result\":{\"hitCount\":{\"$\":\"2355\"},\"collectionCount\":{\"$\":\"10\"},\"more\":{\"$\":\"true\"},\"searchResult\":[{\"collection\":{\"resultPosition\":{\"$\":\"1\"},\"numberOfObjects\":{\"$\":\"1\"},\"object\":[{\"record\":{\"identifier\":[{\"$\":\"72819675|870971\",\"@\":\"ac\"}],\"source\":[{\"$\":\"Tidsskriftsartikler\",\"@\":\"ac\"}],\"title\":[{\"$\":\"Den belgiske hest\",\"@\":\"dc\"},{\"$\":\"Den belgiske hest\",\"@type\":{\"$\":\"dkdcplus:full\",\"@\":\"xsi\"},\"@\":\"dc\"}],\"creator\":[{\"$\":\"Henning Rasmussen\",\"@\":\"dc\"},{\"$\":\"Rasmussen, Henning\",\"@type\":{\"$\":\"oss:sort\",\"@\":\"xsi\"},\"@\":\"dc\"}],\"subject\":[{\"$\":\"63.61\",\"@type\":{\"$\":\"dkdcplus:DK5\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"Heste\",\"@type\":{\"$\":\"dkdcplus:DK5-Text\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"belgisk hest\",\"@\":\"dc\"},{\"$\":\"hesteavl\",\"@\":\"dc\"}],\"audience\":[{\"$\":\"voksenmaterialer\",\"@\":\"dcterms\"}],\"date\":[{\"$\":\"1988\",\"@\":\"dc\"}],\"type\":[{\"$\":\"Tidsskriftsartikel\",\"@type\":{\"$\":\"dkdcplus:BibDK-Type\",\"@\":\"xsi\"},\"@\":\"dc\"}],\"extent\":[{\"$\":\"S. 29-31\",\"@\":\"dcterms\"}],\"language\":[{\"$\":\"dan\",\"@type\":{\"$\":\"dcterms:ISO639-2\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"Dansk\",\"@\":\"dc\"}],\"isPartOf\":[{\"$\":\"Hippologisk tidsskrift, \\u00c5rg. 100, nr. 3 (1988)\",\"@\":\"dcterms\"},{\"$\":\"0018-201X\",\"@type\":{\"$\":\"dkdcplus:ISSN\",\"@\":\"xsi\"},\"@\":\"dcterms\"}],\"@\":\"dkabm\"},\"identifier\":{\"$\":\"870971-tsart:72819675\"},\"primaryObjectIdentifier\":{\"$\":\"870971-tsart:72819675\"},\"recordStatus\":{\"$\":\"active\"},\"creationDate\":{\"$\":\"2005-03-01\"},\"formatsAvailable\":{\"format\":[{\"$\":\"dkabm\"},{\"$\":\"marcxchange\"}]},\"objectsAvailable\":{\"identifier\":[{\"$\":\"870971-tsart:72819675\"}]}}]},\"formattedCollection\":{\"briefDisplay\":{\"manifestation\":[{\"accessType\":{\"$\":\"physical\"},\"creator\":{\"$\":\"Henning Rasmussen\"},\"fedoraPid\":{\"$\":\"870971-tsart:72819675\"},\"identifier\":{\"$\":\"870971-tsart:72819675\"},\"language\":{\"$\":\"Dansk\"},\"partOf\":{\"$\":\"Hippologisk tidsskrift, \\u00c5rg. 100, nr. 3 (1988)\"},\"title\":{\"$\":\"Den belgiske hest\"},\"titleFull\":{\"$\":\"Den belgiske hest\"},\"type\":{\"$\":\"Tidsskriftsartikel\"},\"workType\":{\"$\":\"article\"}}]}}},{\"collection\":{\"resultPosition\":{\"$\":\"2\"},\"numberOfObjects\":{\"$\":\"1\"},\"object\":[{\"record\":{\"identifier\":[{\"$\":\"73458110|870971\",\"@\":\"ac\"}],\"source\":[{\"$\":\"Avisartikler\",\"@\":\"ac\"}],\"title\":[{\"$\":\"Slaget om Sorte Hest. En lang, lang konflikt\",\"@\":\"dc\"},{\"$\":\"Slaget om Sorte Hest : En lang, lang konflikt\",\"@type\":{\"$\":\"dkdcplus:full\",\"@\":\"xsi\"},\"@\":\"dc\"}],\"creator\":[{\"$\":\"Per Mikael Jensen\",\"@\":\"dc\"},{\"$\":\"Jensen, Per Mikael\",\"@type\":{\"$\":\"oss:sort\",\"@\":\"xsi\"},\"@\":\"dc\"}],\"subject\":[{\"$\":\"71.637 Sorte Hest\",\"@type\":{\"$\":\"dkdcplus:DK5\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"BZ'ere\",\"@\":\"dc\"},{\"$\":\"Enkelte k\\u00f8benhavnske lokaliteters arkitekturhistorie\",\"@type\":{\"$\":\"dkdcplus:DK5-Text\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"Sorte Hest (boligkarre)\",\"@\":\"dc\"}],\"abstract\":[{\"$\":\"Sorte Hest, Vesterbro, K\\u00f8benhavn\",\"@\":\"dcterms\"}],\"audience\":[{\"$\":\"voksenmaterialer\",\"@\":\"dcterms\"}],\"date\":[{\"$\":\"1990\",\"@\":\"dc\"}],\"type\":[{\"$\":\"Avisartikel\",\"@type\":{\"$\":\"dkdcplus:BibDK-Type\",\"@\":\"xsi\"},\"@\":\"dc\"}],\"language\":[{\"$\":\"dan\",\"@type\":{\"$\":\"dcterms:ISO639-2\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"Dansk\",\"@\":\"dc\"}],\"isPartOf\":[{\"$\":\"Politiken, 1990-03-11\",\"@\":\"dcterms\"},{\"$\":\"0907-1814\",\"@type\":{\"$\":\"dkdcplus:ISSN\",\"@\":\"xsi\"},\"@\":\"dcterms\"}],\"spatial\":[{\"$\":\"K\\u00f8benhavn arkitektur\",\"@\":\"dcterms\"},{\"$\":\"Vesterbro arkitektur\",\"@\":\"dcterms\"}],\"@\":\"dkabm\"},\"identifier\":{\"$\":\"870971-avis:73458110\"},\"primaryObjectIdentifier\":{\"$\":\"870971-avis:73458110\"},\"recordStatus\":{\"$\":\"active\"},\"creationDate\":{\"$\":\"2005-03-01\"},\"formatsAvailable\":{\"format\":[{\"$\":\"dkabm\"},{\"$\":\"marcxchange\"}]},\"objectsAvailable\":{\"identifier\":[{\"$\":\"870971-avis:73458110\"}]}}]},\"formattedCollection\":{\"briefDisplay\":{\"manifestation\":[{\"accessType\":{\"$\":\"physical\"},\"creator\":{\"$\":\"Per Mikael Jensen\"},\"fedoraPid\":{\"$\":\"870971-avis:73458110\"},\"identifier\":{\"$\":\"870971-avis:73458110\"},\"language\":{\"$\":\"Dansk\"},\"partOf\":{\"$\":\"Politiken, 1990-03-11\"},\"title\":{\"$\":\"Slaget om Sorte Hest. En lang, lang konflikt\"},\"titleFull\":{\"$\":\"Slaget om Sorte Hest. En lang, lang konflikt\"},\"type\":{\"$\":\"Avisartikel\"},\"workType\":{\"$\":\"article\"}}]}}},{\"collection\":{\"resultPosition\":{\"$\":\"3\"},\"numberOfObjects\":{\"$\":\"1\"},\"object\":[{\"record\":{\"identifier\":[{\"$\":\"8286|150043\",\"@\":\"ac\"},{\"$\":\"http:\\/\\/historiskatlas.dk\\/Hest_(8286)\",\"@type\":{\"$\":\"dcterms:URI\",\"@\":\"xsi\"},\"@\":\"dc\"}],\"source\":[{\"$\":\"Historisk Atlas\",\"@\":\"ac\"}],\"title\":[{\"$\":\"Hest\",\"@\":\"dc\"},{\"$\":\"Hest\",\"@type\":{\"$\":\"dkdcplus:full\",\"@\":\"xsi\"},\"@\":\"dc\"}],\"subject\":[{\"$\":\"Kunst\",\"@\":\"dc\"},{\"$\":\"Skulpturer\",\"@\":\"dc\"}],\"abstract\":[{\"$\":\"Agnete Ester Votborg Madsen (1923-1977)\\nHest, u.\\u00e5.\",\"@\":\"dcterms\"}],\"audience\":[{\"$\":\"voksenmaterialer\",\"@\":\"dcterms\"}],\"publisher\":[{\"$\":\"Historisk Atlas\",\"@\":\"dc\"}],\"type\":[{\"$\":\"Netdokument\",\"@type\":{\"$\":\"dkdcplus:BibDK-Type\",\"@\":\"xsi\"},\"@\":\"dc\"}],\"language\":[{\"$\":\"dan\",\"@type\":{\"$\":\"dcterms:ISO639-2\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"Dansk\",\"@\":\"dc\"}],\"spatial\":[{\"$\":\"10.427599112429400000000000000,55.366856304806300000000000000\",\"@type\":{\"$\":\"kml:coordinates\",\"@\":\"xsi\"},\"@\":\"dcterms\"}],\"@\":\"dkabm\"},\"identifier\":{\"$\":\"150043-atlas:8286\"},\"primaryObjectIdentifier\":{\"$\":\"150043-atlas:8286\"},\"recordStatus\":{\"$\":\"active\"},\"creationDate\":{\"$\":\"2013-01-01\"},\"formatsAvailable\":{\"format\":[{\"$\":\"dkabm\"}]},\"objectsAvailable\":{\"identifier\":[{\"$\":\"150043-atlas:8286\"}]}}]},\"formattedCollection\":{\"briefDisplay\":{\"manifestation\":[{\"accessType\":{\"$\":\"online\"},\"fedoraPid\":{\"$\":\"150043-atlas:8286\"},\"identifier\":{\"$\":\"150043-atlas:8286\"},\"language\":{\"$\":\"Dansk\"},\"title\":{\"$\":\"Hest\"},\"titleFull\":{\"$\":\"Hest\"},\"type\":{\"$\":\"Netdokument\"},\"workType\":{\"$\":\"book\"}}]}}},{\"collection\":{\"resultPosition\":{\"$\":\"4\"},\"numberOfObjects\":{\"$\":\"1\"},\"object\":[{\"record\":{\"identifier\":[{\"$\":\"11942|150033\",\"@\":\"ac\"},{\"$\":\"http:\\/\\/bibliotek.danske-dyr.dk\\/Sv%C3%A6r\\/dyr\\/Jysk%20hest\\/\",\"@type\":{\"$\":\"dcterms:URI\",\"@\":\"xsi\"},\"@\":\"dc\"}],\"source\":[{\"$\":\"Danske Dyr\",\"@\":\"ac\"}],\"title\":[{\"$\":\"Jysk hest\",\"@\":\"dc\"},{\"$\":\"Jysk hest\",\"@type\":{\"$\":\"dkdcplus:full\",\"@\":\"xsi\"},\"@\":\"dc\"}],\"alternative\":[{\"$\":\"Den jyske hest\",\"@\":\"dcterms\"},{\"$\":\"den jydske hest\",\"@\":\"dcterms\"},{\"$\":\"Jydsk hest\",\"@\":\"dcterms\"},{\"$\":\"jydske heste\",\"@\":\"dcterms\"}],\"creator\":[{\"$\":\"danske-dyr.dk\",\"@type\":{\"$\":\"dkdcplus:com\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"danske-dyr.dk\",\"@type\":{\"$\":\"oss:sort\",\"@\":\"xsi\"},\"@\":\"dc\"}],\"subject\":[{\"$\":\"Zoologi\",\"@\":\"dc\"},{\"$\":\"Biologi\",\"@\":\"dc\"}],\"audience\":[{\"$\":\"b\\u00f8rnematerialer\",\"@\":\"dcterms\"}],\"publisher\":[{\"$\":\"ConDidact A\\/S\",\"@\":\"dc\"}],\"date\":[{\"$\":\"2009\",\"@\":\"dc\"}],\"type\":[{\"$\":\"Netdokument\",\"@type\":{\"$\":\"dkdcplus:BibDK-Type\",\"@\":\"xsi\"},\"@\":\"dc\"}],\"language\":[{\"$\":\"Dansk\",\"@\":\"dc\"},{\"$\":\"dan\",\"@type\":{\"$\":\"dcterms:ISO639-2\",\"@\":\"xsi\"},\"@\":\"dc\"}],\"rights\":[{\"$\":\"Copyright \\u00a9 2016 ConDidact A\\/S\",\"@\":\"dc\"}],\"@\":\"dkabm\"},\"identifier\":{\"$\":\"150033-dandyr:11942\"},\"primaryObjectIdentifier\":{\"$\":\"150033-dandyr:11942\"},\"recordStatus\":{\"$\":\"active\"},\"creationDate\":{\"$\":\"2009-01-01\"},\"formatsAvailable\":{\"format\":[{\"$\":\"dkabm\"}]},\"objectsAvailable\":{\"identifier\":[{\"$\":\"150033-dandyr:11942\"}]}}]},\"formattedCollection\":{\"briefDisplay\":{\"manifestation\":[{\"accessType\":{\"$\":\"online\"},\"creator\":{\"$\":\"danske-dyr.dk\"},\"fedoraPid\":{\"$\":\"150033-dandyr:11942\"},\"identifier\":{\"$\":\"150033-dandyr:11942\"},\"language\":{\"$\":\"Dansk\"},\"title\":{\"$\":\"Jysk hest\"},\"titleFull\":{\"$\":\"Jysk hest\"},\"type\":{\"$\":\"Netdokument\"},\"workType\":{\"$\":\"book\"}}]}}},{\"collection\":{\"resultPosition\":{\"$\":\"5\"},\"numberOfObjects\":{\"$\":\"1\"},\"object\":[{\"record\":{\"identifier\":[{\"$\":\"83321857|870971\",\"@\":\"ac\"}],\"source\":[{\"$\":\"Tidsskriftsartikler\",\"@\":\"ac\"}],\"title\":[{\"$\":\"Fare for indavl p\\u00e5 l\\u00e6ngere sigt. Den jydske hest i positiv udvikling\",\"@\":\"dc\"},{\"$\":\"Fare for indavl p\\u00e5 l\\u00e6ngere sigt : Den jydske hest i positiv udvikling\",\"@type\":{\"$\":\"dkdcplus:full\",\"@\":\"xsi\"},\"@\":\"dc\"}],\"creator\":[{\"$\":\"Olav Rasmussen\",\"@\":\"dc\"},{\"$\":\"Rasmussen, Olav\",\"@type\":{\"$\":\"oss:sort\",\"@\":\"xsi\"},\"@\":\"dc\"}],\"subject\":[{\"$\":\"63.61\",\"@type\":{\"$\":\"dkdcplus:DK5\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"Heste\",\"@type\":{\"$\":\"dkdcplus:DK5-Text\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"den jydske hest\",\"@type\":{\"$\":\"dkdcplus:DBCF\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"frederiksborgheste\",\"@type\":{\"$\":\"dkdcplus:DBCF\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"heste\",\"@type\":{\"$\":\"dkdcplus:DBCF\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"hesteavl\",\"@type\":{\"$\":\"dkdcplus:DBCF\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"indavl\",\"@type\":{\"$\":\"dkdcplus:DBCF\",\"@\":\"xsi\"},\"@\":\"dc\"}],\"abstract\":[{\"$\":\"Frederiksborgheste og den jydske hest\",\"@\":\"dcterms\"}],\"audience\":[{\"$\":\"voksenmaterialer\",\"@\":\"dcterms\"}],\"date\":[{\"$\":\"1996\",\"@\":\"dc\"}],\"type\":[{\"$\":\"Tidsskriftsartikel\",\"@type\":{\"$\":\"dkdcplus:BibDK-Type\",\"@\":\"xsi\"},\"@\":\"dc\"}],\"format\":[{\"$\":\"illustreret\",\"@\":\"dc\"}],\"extent\":[{\"$\":\"S. 16-18\",\"@\":\"dcterms\"}],\"language\":[{\"$\":\"dan\",\"@type\":{\"$\":\"dcterms:ISO639-2\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"Dansk\",\"@\":\"dc\"}],\"isPartOf\":[{\"$\":\"Landsbladet Hest, 1996, nr. 4\",\"@\":\"dcterms\"},{\"$\":\"0906-6616\",\"@type\":{\"$\":\"dkdcplus:ISSN\",\"@\":\"xsi\"},\"@\":\"dcterms\"}],\"@\":\"dkabm\"},\"identifier\":{\"$\":\"870971-tsart:83321857\"},\"primaryObjectIdentifier\":{\"$\":\"870971-tsart:83321857\"},\"recordStatus\":{\"$\":\"active\"},\"creationDate\":{\"$\":\"2005-03-01\"},\"formatsAvailable\":{\"format\":[{\"$\":\"dkabm\"},{\"$\":\"marcxchange\"}]},\"objectsAvailable\":{\"identifier\":[{\"$\":\"870971-tsart:83321857\"}]}}]},\"formattedCollection\":{\"briefDisplay\":{\"manifestation\":[{\"accessType\":{\"$\":\"physical\"},\"creator\":{\"$\":\"Olav Rasmussen\"},\"fedoraPid\":{\"$\":\"870971-tsart:83321857\"},\"identifier\":{\"$\":\"870971-tsart:83321857\"},\"language\":{\"$\":\"Dansk\"},\"partOf\":{\"$\":\"Landsbladet Hest, 1996, nr. 4\"},\"title\":{\"$\":\"Fare for indavl p\\u00e5 l\\u00e6ngere sigt. Den jydske hest i positiv udvikling\"},\"titleFull\":{\"$\":\"Fare for indavl p\\u00e5 l\\u00e6ngere sigt. Den jydske hest i positiv udvikling\"},\"type\":{\"$\":\"Tidsskriftsartikel\"},\"workType\":{\"$\":\"article\"}}]}}},{\"collection\":{\"resultPosition\":{\"$\":\"6\"},\"numberOfObjects\":{\"$\":\"1\"},\"object\":[{\"record\":{\"identifier\":[{\"$\":\"73336317|870971\",\"@\":\"ac\"}],\"source\":[{\"$\":\"Avisartikler\",\"@\":\"ac\"}],\"title\":[{\"$\":\"H\\u00f8jt til hest\",\"@\":\"dc\"},{\"$\":\"H\\u00f8jt til hest\",\"@type\":{\"$\":\"dkdcplus:full\",\"@\":\"xsi\"},\"@\":\"dc\"}],\"audience\":[{\"$\":\"voksenmaterialer\",\"@\":\"dcterms\"}],\"date\":[{\"$\":\"1989\",\"@\":\"dc\"}],\"type\":[{\"$\":\"Avisartikel\",\"@type\":{\"$\":\"dkdcplus:BibDK-Type\",\"@\":\"xsi\"},\"@\":\"dc\"}],\"language\":[{\"$\":\"dan\",\"@type\":{\"$\":\"dcterms:ISO639-2\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"Dansk\",\"@\":\"dc\"}],\"isPartOf\":[{\"$\":\"Jyllands-posten, 1989-11-19\",\"@\":\"dcterms\"},{\"$\":\"0109-1182\",\"@type\":{\"$\":\"dkdcplus:ISSN\",\"@\":\"xsi\"},\"@\":\"dcterms\"}],\"@\":\"dkabm\"},\"identifier\":{\"$\":\"870971-avis:73336317\"},\"primaryObjectIdentifier\":{\"$\":\"870971-avis:73336317\"},\"recordStatus\":{\"$\":\"active\"},\"creationDate\":{\"$\":\"2005-03-01\"},\"formatsAvailable\":{\"format\":[{\"$\":\"dkabm\"},{\"$\":\"marcxchange\"}]},\"objectsAvailable\":{\"identifier\":[{\"$\":\"870971-avis:73336317\"}]}}]},\"formattedCollection\":{\"briefDisplay\":{\"manifestation\":[{\"accessType\":{\"$\":\"physical\"},\"fedoraPid\":{\"$\":\"870971-avis:73336317\"},\"identifier\":{\"$\":\"870971-avis:73336317\"},\"language\":{\"$\":\"Dansk\"},\"partOf\":{\"$\":\"Jyllands-posten, 1989-11-19\"},\"title\":{\"$\":\"H\\u00f8jt til hest\"},\"titleFull\":{\"$\":\"H\\u00f8jt til hest\"},\"type\":{\"$\":\"Avisartikel\"},\"workType\":{\"$\":\"article\"}}]}}},{\"collection\":{\"resultPosition\":{\"$\":\"7\"},\"numberOfObjects\":{\"$\":\"1\"},\"object\":[{\"record\":{\"identifier\":[{\"$\":\"72922190|870971\",\"@\":\"ac\"}],\"source\":[{\"$\":\"Tidsskriftsartikler\",\"@\":\"ac\"}],\"title\":[{\"$\":\"Boltskydning af hest\",\"@\":\"dc\"},{\"$\":\"Boltskydning af hest\",\"@type\":{\"$\":\"dkdcplus:full\",\"@\":\"xsi\"},\"@\":\"dc\"}],\"audience\":[{\"$\":\"voksenmaterialer\",\"@\":\"dcterms\"}],\"date\":[{\"$\":\"1988\",\"@\":\"dc\"}],\"type\":[{\"$\":\"Tidsskriftsartikel\",\"@type\":{\"$\":\"dkdcplus:BibDK-Type\",\"@\":\"xsi\"},\"@\":\"dc\"}],\"extent\":[{\"$\":\"S. 548\",\"@\":\"dcterms\"}],\"language\":[{\"$\":\"mul\",\"@type\":{\"$\":\"dcterms:ISO639-2\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"Flere sprog\",\"@\":\"dc\"}],\"isPartOf\":[{\"$\":\"Dansk veterin\\u00e6rtidsskrift, \\u00c5rg. 71, nr. 10 (1988)\",\"@\":\"dcterms\"},{\"$\":\"0106-6854\",\"@type\":{\"$\":\"dkdcplus:ISSN\",\"@\":\"xsi\"},\"@\":\"dcterms\"}],\"@\":\"dkabm\"},\"identifier\":{\"$\":\"870971-tsart:72922190\"},\"primaryObjectIdentifier\":{\"$\":\"870971-tsart:72922190\"},\"recordStatus\":{\"$\":\"active\"},\"creationDate\":{\"$\":\"2005-03-01\"},\"formatsAvailable\":{\"format\":[{\"$\":\"dkabm\"},{\"$\":\"marcxchange\"}]},\"objectsAvailable\":{\"identifier\":[{\"$\":\"870971-tsart:72922190\"}]}}]},\"formattedCollection\":{\"briefDisplay\":{\"manifestation\":[{\"accessType\":{\"$\":\"physical\"},\"fedoraPid\":{\"$\":\"870971-tsart:72922190\"},\"identifier\":{\"$\":\"870971-tsart:72922190\"},\"language\":{\"$\":\"Flere sprog\"},\"partOf\":{\"$\":\"Dansk veterin\\u00e6rtidsskrift, \\u00c5rg. 71, nr. 10 (1988)\"},\"title\":{\"$\":\"Boltskydning af hest\"},\"titleFull\":{\"$\":\"Boltskydning af hest\"},\"type\":{\"$\":\"Tidsskriftsartikel\"},\"workType\":{\"$\":\"article\"}}]}}},{\"collection\":{\"resultPosition\":{\"$\":\"8\"},\"numberOfObjects\":{\"$\":\"1\"},\"object\":[{\"record\":{\"identifier\":[{\"$\":\"73528070|870971\",\"@\":\"ac\"}],\"source\":[{\"$\":\"Avisartikler\",\"@\":\"ac\"}],\"title\":[{\"$\":\"Flertal st\\u00f8tter Juhl-J\\u00f8rgensens \\u00f8nskeseddel for Sorte Hest\",\"@\":\"dc\"},{\"$\":\"Flertal st\\u00f8tter Juhl-J\\u00f8rgensens \\u00f8nskeseddel for Sorte Hest\",\"@type\":{\"$\":\"dkdcplus:full\",\"@\":\"xsi\"},\"@\":\"dc\"}],\"creator\":[{\"$\":\"Niels Rohleder\",\"@\":\"dc\"},{\"$\":\"Rohleder, Niels\",\"@type\":{\"$\":\"oss:sort\",\"@\":\"xsi\"},\"@\":\"dc\"}],\"subject\":[{\"$\":\"71.637 Sorte Hest\",\"@type\":{\"$\":\"dkdcplus:DK5\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"Axel Juhl-J\\u00f8rgensen\",\"@\":\"dc\"},{\"$\":\"Juhl-J\\u00f8rgensen, Axel\",\"@type\":{\"$\":\"oss:sort\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"Enkelte k\\u00f8benhavnske lokaliteters arkitekturhistorie\",\"@type\":{\"$\":\"dkdcplus:DK5-Text\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"Sorte Hest (boligkarre)\",\"@\":\"dc\"}],\"audience\":[{\"$\":\"voksenmaterialer\",\"@\":\"dcterms\"}],\"date\":[{\"$\":\"1990\",\"@\":\"dc\"}],\"type\":[{\"$\":\"Avisartikel\",\"@type\":{\"$\":\"dkdcplus:BibDK-Type\",\"@\":\"xsi\"},\"@\":\"dc\"}],\"language\":[{\"$\":\"dan\",\"@type\":{\"$\":\"dcterms:ISO639-2\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"Dansk\",\"@\":\"dc\"}],\"isPartOf\":[{\"$\":\"Information, 1990-05-17\",\"@\":\"dcterms\"},{\"$\":\"1602-2572\",\"@type\":{\"$\":\"dkdcplus:ISSN\",\"@\":\"xsi\"},\"@\":\"dcterms\"}],\"spatial\":[{\"$\":\"K\\u00f8benhavn arkitektur\",\"@\":\"dcterms\"},{\"$\":\"Vesterbro arkitektur\",\"@\":\"dcterms\"}],\"@\":\"dkabm\"},\"identifier\":{\"$\":\"870971-avis:73528070\"},\"primaryObjectIdentifier\":{\"$\":\"870971-avis:73528070\"},\"recordStatus\":{\"$\":\"active\"},\"creationDate\":{\"$\":\"2005-03-01\"},\"formatsAvailable\":{\"format\":[{\"$\":\"dkabm\"},{\"$\":\"marcxchange\"}]},\"objectsAvailable\":{\"identifier\":[{\"$\":\"870971-avis:73528070\"}]}}]},\"formattedCollection\":{\"briefDisplay\":{\"manifestation\":[{\"accessType\":{\"$\":\"physical\"},\"creator\":{\"$\":\"Niels Rohleder\"},\"fedoraPid\":{\"$\":\"870971-avis:73528070\"},\"identifier\":{\"$\":\"870971-avis:73528070\"},\"language\":{\"$\":\"Dansk\"},\"partOf\":{\"$\":\"Information, 1990-05-17\"},\"title\":{\"$\":\"Flertal st\\u00f8tter Juhl-J\\u00f8rgensens \\u00f8nskeseddel for Sorte Hest\"},\"titleFull\":{\"$\":\"Flertal st\\u00f8tter Juhl-J\\u00f8rgensens \\u00f8nskeseddel for Sorte Hest\"},\"type\":{\"$\":\"Avisartikel\"},\"workType\":{\"$\":\"article\"}}]}}},{\"collection\":{\"resultPosition\":{\"$\":\"9\"},\"numberOfObjects\":{\"$\":\"1\"},\"object\":[{\"record\":{\"identifier\":[{\"$\":\"73150272|870971\",\"@\":\"ac\"}],\"source\":[{\"$\":\"Tidsskriftsartikler\",\"@\":\"ac\"}],\"title\":[{\"$\":\"Bryggerhesten - elsket og beundret dansk entertainer\",\"@\":\"dc\"},{\"$\":\"Bryggerhesten - elsket og beundret dansk entertainer\",\"@type\":{\"$\":\"dkdcplus:full\",\"@\":\"xsi\"},\"@\":\"dc\"}],\"creator\":[{\"$\":\"Anna Panum\",\"@\":\"dc\"},{\"$\":\"Panum, Anna\",\"@type\":{\"$\":\"oss:sort\",\"@\":\"xsi\"},\"@\":\"dc\"}],\"subject\":[{\"$\":\"63.61\",\"@type\":{\"$\":\"dkdcplus:DK5\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"Heste\",\"@type\":{\"$\":\"dkdcplus:DK5-Text\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"bryggerheste\",\"@\":\"dc\"},{\"$\":\"hesteavl\",\"@\":\"dc\"},{\"$\":\"jysk hest\",\"@\":\"dc\"}],\"abstract\":[{\"$\":\"Jysk hest\",\"@\":\"dcterms\"}],\"audience\":[{\"$\":\"voksenmaterialer\",\"@\":\"dcterms\"}],\"date\":[{\"$\":\"1988\",\"@\":\"dc\"}],\"type\":[{\"$\":\"Tidsskriftsartikel\",\"@type\":{\"$\":\"dkdcplus:BibDK-Type\",\"@\":\"xsi\"},\"@\":\"dc\"}],\"extent\":[{\"$\":\"S. 4-5\",\"@\":\"dcterms\"}],\"language\":[{\"$\":\"dan\",\"@type\":{\"$\":\"dcterms:ISO639-2\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"Dansk\",\"@\":\"dc\"}],\"isPartOf\":[{\"$\":\"Dyrene og os, \\u00c5rg. 4, nr. 2 (1988)\",\"@\":\"dcterms\"},{\"$\":\"0902-3879\",\"@type\":{\"$\":\"dkdcplus:ISSN\",\"@\":\"xsi\"},\"@\":\"dcterms\"}],\"@\":\"dkabm\"},\"identifier\":{\"$\":\"870971-tsart:73150272\"},\"primaryObjectIdentifier\":{\"$\":\"870971-tsart:73150272\"},\"recordStatus\":{\"$\":\"active\"},\"creationDate\":{\"$\":\"2005-03-01\"},\"formatsAvailable\":{\"format\":[{\"$\":\"dkabm\"},{\"$\":\"marcxchange\"}]},\"objectsAvailable\":{\"identifier\":[{\"$\":\"870971-tsart:73150272\"}]}}]},\"formattedCollection\":{\"briefDisplay\":{\"manifestation\":[{\"accessType\":{\"$\":\"physical\"},\"creator\":{\"$\":\"Anna Panum\"},\"fedoraPid\":{\"$\":\"870971-tsart:73150272\"},\"identifier\":{\"$\":\"870971-tsart:73150272\"},\"language\":{\"$\":\"Dansk\"},\"partOf\":{\"$\":\"Dyrene og os, \\u00c5rg. 4, nr. 2 (1988)\"},\"title\":{\"$\":\"Bryggerhesten - elsket og beundret dansk entertainer\"},\"titleFull\":{\"$\":\"Bryggerhesten - elsket og beundret dansk entertainer\"},\"type\":{\"$\":\"Tidsskriftsartikel\"},\"workType\":{\"$\":\"article\"}}]}}},{\"collection\":{\"resultPosition\":{\"$\":\"10\"},\"numberOfObjects\":{\"$\":\"1\"},\"object\":[{\"record\":{\"identifier\":[{\"$\":\"72819683|870971\",\"@\":\"ac\"}],\"source\":[{\"$\":\"Tidsskriftsartikler\",\"@\":\"ac\"}],\"title\":[{\"$\":\"Den jyske hest\",\"@\":\"dc\"},{\"$\":\"Den jyske hest\",\"@type\":{\"$\":\"dkdcplus:full\",\"@\":\"xsi\"},\"@\":\"dc\"}],\"creator\":[{\"$\":\"Henning Rasmussen\",\"@\":\"dc\"},{\"$\":\"Rasmussen, Henning\",\"@type\":{\"$\":\"oss:sort\",\"@\":\"xsi\"},\"@\":\"dc\"}],\"subject\":[{\"$\":\"63.61\",\"@type\":{\"$\":\"dkdcplus:DK5\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"Heste\",\"@type\":{\"$\":\"dkdcplus:DK5-Text\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"heste\",\"@\":\"dc\"},{\"$\":\"hesteavl\",\"@\":\"dc\"},{\"$\":\"jysk hest\",\"@\":\"dc\"}],\"audience\":[{\"$\":\"voksenmaterialer\",\"@\":\"dcterms\"}],\"date\":[{\"$\":\"1988\",\"@\":\"dc\"}],\"type\":[{\"$\":\"Tidsskriftsartikel\",\"@type\":{\"$\":\"dkdcplus:BibDK-Type\",\"@\":\"xsi\"},\"@\":\"dc\"}],\"extent\":[{\"$\":\"S. 24-28\",\"@\":\"dcterms\"}],\"language\":[{\"$\":\"dan\",\"@type\":{\"$\":\"dcterms:ISO639-2\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"Dansk\",\"@\":\"dc\"}],\"isPartOf\":[{\"$\":\"Hippologisk tidsskrift, \\u00c5rg. 100, nr. 3 (1988)\",\"@\":\"dcterms\"},{\"$\":\"0018-201X\",\"@type\":{\"$\":\"dkdcplus:ISSN\",\"@\":\"xsi\"},\"@\":\"dcterms\"}],\"@\":\"dkabm\"},\"identifier\":{\"$\":\"870971-tsart:72819683\"},\"primaryObjectIdentifier\":{\"$\":\"870971-tsart:72819683\"},\"recordStatus\":{\"$\":\"active\"},\"creationDate\":{\"$\":\"2005-03-01\"},\"formatsAvailable\":{\"format\":[{\"$\":\"dkabm\"},{\"$\":\"marcxchange\"}]},\"objectsAvailable\":{\"identifier\":[{\"$\":\"870971-tsart:72819683\"}]}}]},\"formattedCollection\":{\"briefDisplay\":{\"manifestation\":[{\"accessType\":{\"$\":\"physical\"},\"creator\":{\"$\":\"Henning Rasmussen\"},\"fedoraPid\":{\"$\":\"870971-tsart:72819683\"},\"identifier\":{\"$\":\"870971-tsart:72819683\"},\"language\":{\"$\":\"Dansk\"},\"partOf\":{\"$\":\"Hippologisk tidsskrift, \\u00c5rg. 100, nr. 3 (1988)\"},\"title\":{\"$\":\"Den jyske hest\"},\"titleFull\":{\"$\":\"Den jyske hest\"},\"type\":{\"$\":\"Tidsskriftsartikel\"},\"workType\":{\"$\":\"article\"}}]}}}],\"facetResult\":null,\"statInfo\":{\"fedoraRecordsCached\":{\"$\":\"40\"},\"fedoraRecordsRead\":{\"$\":\"0\"},\"time\":{\"$\":\"0.164492\"},\"trackingId\":{\"$\":\"2016-12-08T15:40:12:224436:16190\"}}}},\"@namespaces\":{\"ac\":\"http:\\/\\/biblstandard.dk\\/ac\\/namespace\\/\",\"dbcaddi\":\"http:\\/\\/oss.dbc.dk\\/rdf\\/dbcaddi#\",\"dbcbib\":\"http:\\/\\/oss.dbc.dk\\/rdf\\/dbcbib#\",\"dc\":\"http:\\/\\/purl.org\\/dc\\/elements\\/1.1\\/\",\"dcmitype\":\"http:\\/\\/purl.org\\/dc\\/dcmitype\\/\",\"dcterms\":\"http:\\/\\/purl.org\\/dc\\/terms\\/\",\"dkabm\":\"http:\\/\\/biblstandard.dk\\/abm\\/namespace\\/dkabm\\/\",\"dkdcplus\":\"http:\\/\\/biblstandard.dk\\/abm\\/namespace\\/dkdcplus\\/\",\"docbook\":\"http:\\/\\/docbook.org\\/ns\\/docbook\",\"kml\":\"http:\\/\\/www.opengis.net\\/kml\\/2.2\",\"marcx\":\"info:lc\\/xmlns\\/marcxchange-v1\",\"mx\":\"http:\\/\\/www.loc.gov\\/MARC21\\/slim\",\"of\":\"http:\\/\\/oss.dbc.dk\\/ns\\/openformat\",\"ofo\":\"http:\\/\\/oss.dbc.dk\\/ns\\/openformatoutput\",\"os\":\"http:\\/\\/oss.dbc.dk\\/ns\\/opensearch\",\"oso\":\"http:\\/\\/oss.dbc.dk\\/ns\\/opensearchobjects\",\"oss\":\"http:\\/\\/oss.dbc.dk\\/ns\\/osstypes\",\"xs\":\"http:\\/\\/www.w3.org\\/2001\\/XMLSchema\",\"xsi\":\"http:\\/\\/www.w3.org\\/2001\\/XMLSchema-instance\"}}"
 };
 
-let provider = Provider();
-let mockData = {"[\"opensearch\",\"<?xml version=\\\"1.0\\\" encoding=\\\"UTF-8\\\"?>\\n<SOAP-ENV:Envelope xmlns:SOAP-ENV=\\\"http://schemas.xmlsoap.org/soap/envelope/\\\" xmlns:ns1=\\\"http://oss.dbc.dk/ns/opensearch\\\">\\n  <SOAP-ENV:Body>\\n    <ns1:searchRequest>\\n      <ns1:query>hest</ns1:query>\\n      <ns1:agency>775100</ns1:agency>\\n      <ns1:profile>opac</ns1:profile>\\n      <ns1:start>1</ns1:start>\\n      <ns1:stepValue>10</ns1:stepValue>\\n      \\n      <ns1:collectionType>work-1</ns1:collectionType>\\n      <ns1:allObjects>1</ns1:allObjects>\\n      <ns1:objectFormat>briefDisplay</ns1:objectFormat>\\n      <ns1:objectFormat>dkabm</ns1:objectFormat>\\n      <ns1:outputType>json</ns1:outputType>\\n    </ns1:searchRequest>\\n  </SOAP-ENV:Body>\\n</SOAP-ENV:Envelope>\\n\"]": "{\"searchResponse\":{\"result\":{\"hitCount\":{\"$\":\"888\"},\"collectionCount\":{\"$\":\"10\"},\"more\":{\"$\":\"true\"},\"searchResult\":[{\"collection\":{\"resultPosition\":{\"$\":\"1\"},\"numberOfObjects\":{\"$\":\"1\"},\"object\":[{\"record\":{\"identifier\":[{\"$\":\"8286|150043\",\"@\":\"ac\"},{\"$\":\"http:\\/\\/historiskatlas.dk\\/Hest_(8286)\",\"@type\":{\"$\":\"dcterms:URI\",\"@\":\"xsi\"},\"@\":\"dc\"}],\"source\":[{\"$\":\"Historisk Atlas\",\"@\":\"ac\"}],\"title\":[{\"$\":\"Hest\",\"@\":\"dc\"},{\"$\":\"Hest\",\"@type\":{\"$\":\"dkdcplus:full\",\"@\":\"xsi\"},\"@\":\"dc\"}],\"subject\":[{\"$\":\"Kunst\",\"@\":\"dc\"},{\"$\":\"Skulpturer\",\"@\":\"dc\"}],\"abstract\":[{\"$\":\"Agnete Ester Votborg Madsen (1923-1977)\\nHest, u.\\u00e5.\",\"@\":\"dcterms\"}],\"audience\":[{\"$\":\"voksenmaterialer\",\"@\":\"dcterms\"}],\"publisher\":[{\"$\":\"Historisk Atlas\",\"@\":\"dc\"}],\"type\":[{\"$\":\"Netdokument\",\"@type\":{\"$\":\"dkdcplus:BibDK-Type\",\"@\":\"xsi\"},\"@\":\"dc\"}],\"language\":[{\"$\":\"dan\",\"@type\":{\"$\":\"dcterms:ISO639-2\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"Dansk\",\"@\":\"dc\"}],\"spatial\":[{\"$\":\"10.427599112429400000000000000,55.366856304806300000000000000\",\"@type\":{\"$\":\"kml:coordinates\",\"@\":\"xsi\"},\"@\":\"dcterms\"}],\"@\":\"dkabm\"},\"identifier\":{\"$\":\"150043-atlas:8286\"},\"primaryObjectIdentifier\":{\"$\":\"150043-atlas:8286\"},\"recordStatus\":{\"$\":\"active\"},\"creationDate\":{\"$\":\"2013-01-01\"},\"formatsAvailable\":{\"format\":[{\"$\":\"dkabm\"}]},\"objectsAvailable\":{\"identifier\":[{\"$\":\"150043-atlas:8286\"}]}}]},\"formattedCollection\":{\"briefDisplay\":{\"manifestation\":[{\"accessType\":{\"$\":\"online\"},\"fedoraPid\":{\"$\":\"150043-atlas:8286\"},\"identifier\":{\"$\":\"150043-atlas:8286\"},\"language\":{\"$\":\"Dansk\"},\"title\":{\"$\":\"Hest\"},\"titleFull\":{\"$\":\"Hest\"},\"type\":{\"$\":\"Netdokument\"},\"workType\":{\"$\":\"book\"}}]}}},{\"collection\":{\"resultPosition\":{\"$\":\"2\"},\"numberOfObjects\":{\"$\":\"1\"},\"object\":[{\"record\":{\"identifier\":[{\"$\":\"06402917|870970\",\"@\":\"ac\"},{\"$\":\"87-982191-1-1\",\"@type\":{\"$\":\"dkdcplus:ISBN\",\"@\":\"xsi\"},\"@\":\"dc\"}],\"source\":[{\"$\":\"Bibliotekskatalog\",\"@\":\"ac\"}],\"title\":[{\"$\":\"Teaterv\\u00e6rkstedet Den bl\\u00e5 Hest 1976-1986\",\"@\":\"dc\"},{\"$\":\"Teaterv\\u00e6rkstedet Den bl\\u00e5 Hest 1976-1986\",\"@type\":{\"$\":\"dkdcplus:full\",\"@\":\"xsi\"},\"@\":\"dc\"}],\"subject\":[{\"$\":\"77.096\",\"@type\":{\"$\":\"dkdcplus:DK5\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"Teaterhistorie. Danmark\",\"@type\":{\"$\":\"dkdcplus:DK5-Text\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"Teaterv\\u00e6rkstedet Den Bl\\u00e5 Hest\",\"@type\":{\"$\":\"dkdcplus:DBCF\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"dansk teater\",\"@type\":{\"$\":\"dkdcplus:DBCF\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"historie*\",\"@type\":{\"$\":\"dkdcplus:DBCF\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"teater\",\"@type\":{\"$\":\"dkdcplus:DBCF\",\"@\":\"xsi\"},\"@\":\"dc\"}],\"audience\":[{\"$\":\"voksenmaterialer\",\"@\":\"dcterms\"}],\"publisher\":[{\"$\":\"Den bl\\u00e5 Hest\",\"@\":\"dc\"}],\"contributor\":[{\"$\":\"Teaterv\\u00e6rkstedet Den Bl\\u00e5 Hest\",\"@\":\"dc\"}],\"date\":[{\"$\":\"1986\",\"@\":\"dc\"}],\"type\":[{\"$\":\"Bog\",\"@type\":{\"$\":\"dkdcplus:BibDK-Type\",\"@\":\"xsi\"},\"@\":\"dc\"}],\"format\":[{\"$\":\"illustreret\",\"@\":\"dc\"}],\"extent\":[{\"$\":\"102 sider\",\"@\":\"dcterms\"}],\"language\":[{\"$\":\"mul\",\"@type\":{\"$\":\"dcterms:ISO639-2\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"Flere sprog\",\"@\":\"dc\"},{\"$\":\"dan\",\"@type\":{\"$\":\"dcterms:ISO639-2\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"Dansk\",\"@\":\"dc\"},{\"$\":\"eng\",\"@type\":{\"$\":\"dcterms:ISO639-2\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"Engelsk\",\"@\":\"dc\"}],\"temporal\":[{\"$\":\"1970-1979\",\"@type\":{\"$\":\"dkdcplus:DBCP\",\"@\":\"xsi\"},\"@\":\"dcterms\"},{\"$\":\"1980-1989\",\"@type\":{\"$\":\"dkdcplus:DBCP\",\"@\":\"xsi\"},\"@\":\"dcterms\"}],\"@\":\"dkabm\"},\"identifier\":{\"$\":\"775100-katalog:06402917\"},\"primaryObjectIdentifier\":{\"$\":\"870970-basis:06402917\"},\"recordStatus\":{\"$\":\"active\"},\"formatsAvailable\":{\"format\":[{\"$\":\"dkabm\"},{\"$\":\"marcxchange\"}]},\"objectsAvailable\":{\"identifier\":[{\"$\":\"775100-katalog:06402917\"},{\"$\":\"870970-basis:06402917\"}]}}]},\"formattedCollection\":{\"briefDisplay\":{\"manifestation\":[{\"accessType\":{\"$\":\"physical\"},\"creator\":{\"$\":\"Teaterv\\u00e6rkstedet Den Bl\\u00e5 Hest\"},\"fedoraPid\":{\"$\":\"820010-katalog:116899\"},\"identifier\":{\"$\":\"775100-katalog:06402917\"},\"language\":{\"$\":\"Engelsk\"},\"title\":{\"$\":\"Teaterv\\u00e6rkstedet Den bl\\u00e5 Hest 1976-1986\"},\"titleFull\":{\"$\":\"Teaterv\\u00e6rkstedet Den bl\\u00e5 Hest 1976-1986\"},\"type\":{\"$\":\"Bog\"},\"workType\":{\"$\":\"book\"}}]}}},{\"collection\":{\"resultPosition\":{\"$\":\"3\"},\"numberOfObjects\":{\"$\":\"2\"},\"object\":[{\"record\":{\"identifier\":[{\"$\":\"26476720|870970\",\"@\":\"ac\"},{\"$\":\"87-7857-483-8\",\"@type\":{\"$\":\"dkdcplus:ISBN\",\"@\":\"xsi\"},\"@\":\"dc\"}],\"source\":[{\"$\":\"Bibliotekskatalog\",\"@\":\"ac\"}],\"title\":[{\"$\":\"Den sunde hest\",\"@\":\"dc\"},{\"$\":\"Den sunde hest : hold din hest sund i ryg, ben og t\\u00e6nder\",\"@type\":{\"$\":\"dkdcplus:full\",\"@\":\"xsi\"},\"@\":\"dc\"}],\"subject\":[{\"$\":\"63.61\",\"@type\":{\"$\":\"dkdcplus:DK5\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"Heste\",\"@type\":{\"$\":\"dkdcplus:DK5-Text\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"heste\",\"@type\":{\"$\":\"dkdcplus:DBCF\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"pasning\",\"@type\":{\"$\":\"dkdcplus:DBCF\",\"@\":\"xsi\"},\"@\":\"dc\"}],\"audience\":[{\"$\":\"voksenmaterialer\",\"@\":\"dcterms\"}],\"publisher\":[{\"$\":\"Atelier\",\"@\":\"dc\"}],\"contributor\":[{\"$\":\"Sarah Widdicombe\",\"@\":\"dc\"}],\"date\":[{\"$\":\"2006\",\"@\":\"dc\"}],\"type\":[{\"$\":\"Bog\",\"@type\":{\"$\":\"dkdcplus:BibDK-Type\",\"@\":\"xsi\"},\"@\":\"dc\"}],\"format\":[{\"$\":\"illustreret i farver\",\"@\":\"dc\"}],\"extent\":[{\"$\":\"185 sider\",\"@\":\"dcterms\"}],\"language\":[{\"$\":\"dan\",\"@type\":{\"$\":\"dcterms:ISO639-2\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"Dansk\",\"@\":\"dc\"}],\"@\":\"dkabm\"},\"identifier\":{\"$\":\"775100-katalog:26476720\"},\"primaryObjectIdentifier\":{\"$\":\"870970-basis:26476720\"},\"recordStatus\":{\"$\":\"active\"},\"formatsAvailable\":{\"format\":[{\"$\":\"dkabm\"},{\"$\":\"marcxchange\"}]},\"objectsAvailable\":{\"identifier\":[{\"$\":\"775100-katalog:26476720\"},{\"$\":\"870970-basis:26476720\"}]}},{\"identifier\":{\"$\":\"870970-basis:50542882\"},\"creationDate\":{\"$\":\"2013-07-02\"},\"formatsAvailable\":{\"format\":[{\"$\":\"dkabm\"},{\"$\":\"marcxchange\"}]}}]},\"formattedCollection\":{\"briefDisplay\":{\"manifestation\":[{\"accessType\":{\"$\":\"physical\"},\"creator\":{\"$\":\"Sarah Widdicombe\"},\"fedoraPid\":{\"$\":\"861330-katalog:26476720\"},\"identifier\":{\"$\":\"775100-katalog:26476720\"},\"language\":{\"$\":\"Dansk\"},\"title\":{\"$\":\"Den sunde hest\"},\"titleFull\":{\"$\":\"Den sunde hest : hold din hest sund i ryg, ben og t\\u00e6nder\"},\"type\":{\"$\":\"Bog\"},\"workType\":{\"$\":\"book\"}},{\"accessType\":{\"$\":\"online\"},\"fedoraPid\":{\"$\":\"870970-basis:50542882\"},\"identifier\":{\"$\":\"870970-basis:50542882\"},\"language\":{\"$\":\"Dansk\"},\"title\":{\"$\":\"Den sunde hest\"},\"titleFull\":{\"$\":\"Den sunde hest : hvordan du holder din hests ryg, ben og t\\u00e6nder sunde\"},\"type\":{\"$\":\"Ebog\"},\"workType\":{\"$\":\"book\"}}]}}},{\"collection\":{\"resultPosition\":{\"$\":\"4\"},\"numberOfObjects\":{\"$\":\"1\"},\"object\":[{\"record\":{\"identifier\":[{\"$\":\"29567085|870970\",\"@\":\"ac\"},{\"$\":\"9788771150445\",\"@type\":{\"$\":\"dkdcplus:ISBN\",\"@\":\"xsi\"},\"@\":\"dc\"}],\"source\":[{\"$\":\"Bibliotekskatalog\",\"@\":\"ac\"}],\"title\":[{\"$\":\"Tork og Hest\",\"@\":\"dc\"},{\"$\":\"Tork og Hest\",\"@type\":{\"$\":\"dkdcplus:full\",\"@\":\"xsi\"},\"@\":\"dc\"}],\"creator\":[{\"$\":\"Louis Jensen (f. 1943)\",\"@type\":{\"$\":\"dkdcplus:aut\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"Jensen, Louis (f. 1943)\",\"@type\":{\"$\":\"oss:sort\",\"@\":\"xsi\"},\"@\":\"dc\"}],\"subject\":[{\"$\":\"Sk\\u00f8nlitteratur\",\"@type\":{\"$\":\"dkdcplus:DK5-Text\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"fantasi\",\"@type\":{\"$\":\"dkdcplus:DBCS\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"for 5 \\u00e5r\",\"@type\":{\"$\":\"dkdcplus:DBCN\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"for 6 \\u00e5r\",\"@type\":{\"$\":\"dkdcplus:DBCN\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"for 7 \\u00e5r\",\"@type\":{\"$\":\"dkdcplus:DBCN\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"for 8 \\u00e5r\",\"@type\":{\"$\":\"dkdcplus:DBCN\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"for h\\u00f8jtl\\u00e6sning\",\"@type\":{\"$\":\"dkdcplus:DBCN\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"rejser\",\"@type\":{\"$\":\"dkdcplus:DBCS\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"sk\",\"@type\":{\"$\":\"dkdcplus:DK5\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"venskab\",\"@type\":{\"$\":\"dkdcplus:DBCS\",\"@\":\"xsi\"},\"@\":\"dc\"}],\"abstract\":[{\"$\":\"Torks vugge er en kuffert, og han drager tidligt ud i verden. Her m\\u00f8der han Hest, og de to venner har mange sp\\u00e6ndende oplevelse, f\\u00f8r historien ender som alle gode eventyr og Tork f\\u00e5r prinsessen\",\"@\":\"dcterms\"}],\"description\":[{\"$\":\"Samh\\u00f8rende: Tork og Hest ; Tork og Hest - den store blyant ; Tork og Hest - p\\u00e5 nye eventyr ; Tork og Hest - den porcel\\u00e6ne danserinde\",\"@type\":{\"$\":\"dkdcplus:series\",\"@\":\"xsi\"},\"@\":\"dc\"}],\"audience\":[{\"$\":\"b\\u00f8rnematerialer\",\"@\":\"dcterms\"}],\"version\":[{\"$\":\"1. oplag (2012)\",\"@\":\"dkdcplus\"}],\"publisher\":[{\"$\":\"Alfa\",\"@\":\"dc\"}],\"contributor\":[{\"$\":\"Pia Halse\",\"@type\":{\"$\":\"dkdcplus:ill\",\"@\":\"xsi\"},\"@\":\"dc\"}],\"date\":[{\"$\":\"2012\",\"@\":\"dc\"}],\"type\":[{\"$\":\"Bog\",\"@type\":{\"$\":\"dkdcplus:BibDK-Type\",\"@\":\"xsi\"},\"@\":\"dc\"}],\"format\":[{\"$\":\"illustreret i farver\",\"@\":\"dc\"}],\"extent\":[{\"$\":\"48 sider\",\"@\":\"dcterms\"}],\"language\":[{\"$\":\"dan\",\"@type\":{\"$\":\"dcterms:ISO639-2\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"Dansk\",\"@\":\"dc\"}],\"@\":\"dkabm\"},\"identifier\":{\"$\":\"775100-katalog:29567085\"},\"primaryObjectIdentifier\":{\"$\":\"870970-basis:29567085\"},\"recordStatus\":{\"$\":\"active\"},\"formatsAvailable\":{\"format\":[{\"$\":\"dkabm\"},{\"$\":\"marcxchange\"}]},\"objectsAvailable\":{\"identifier\":[{\"$\":\"775100-katalog:29567085\"},{\"$\":\"870970-basis:29567085\"}]}}]},\"formattedCollection\":{\"briefDisplay\":{\"manifestation\":[{\"accessType\":{\"$\":\"physical\"},\"creator\":{\"$\":\"Pia Halse\"},\"fedoraPid\":{\"$\":\"810015-katalog:008488913\"},\"identifier\":{\"$\":\"775100-katalog:29567085\"},\"language\":{\"$\":\"Dansk\"},\"title\":{\"$\":\"Tork og Hest\"},\"titleFull\":{\"$\":\"Tork og Hest\"},\"type\":{\"$\":\"Bog\"},\"workType\":{\"$\":\"book\"}}]}}},{\"collection\":{\"resultPosition\":{\"$\":\"5\"},\"numberOfObjects\":{\"$\":\"1\"},\"object\":[{\"record\":{\"identifier\":[{\"$\":\"8802|150033\",\"@\":\"ac\"},{\"$\":\"http:\\/\\/bibliotek.danske-dyr.dk\\/Sv%C3%A6r\\/dyr\\/Hest\\/\",\"@type\":{\"$\":\"dcterms:URI\",\"@\":\"xsi\"},\"@\":\"dc\"}],\"source\":[{\"$\":\"Danske Dyr\",\"@\":\"ac\"}],\"title\":[{\"$\":\"Hest\",\"@\":\"dc\"},{\"$\":\"Hest\",\"@type\":{\"$\":\"dkdcplus:full\",\"@\":\"xsi\"},\"@\":\"dc\"}],\"alternative\":[{\"$\":\"Hesten\",\"@\":\"dcterms\"}],\"creator\":[{\"$\":\"danske-dyr.dk\",\"@type\":{\"$\":\"dkdcplus:com\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"danske-dyr.dk\",\"@type\":{\"$\":\"oss:sort\",\"@\":\"xsi\"},\"@\":\"dc\"}],\"subject\":[{\"$\":\"Dyr\",\"@\":\"dc\"},{\"$\":\"Hvirveldyr\",\"@\":\"dc\"},{\"$\":\"Pattedyr\",\"@\":\"dc\"},{\"$\":\"Uparret\\u00e5ede hovdyr\",\"@\":\"dc\"},{\"$\":\"Heste\",\"@\":\"dc\"},{\"$\":\"Zoologi\",\"@\":\"dc\"},{\"$\":\"Biologi\",\"@\":\"dc\"}],\"audience\":[{\"$\":\"b\\u00f8rnematerialer\",\"@\":\"dcterms\"}],\"publisher\":[{\"$\":\"ConDidact A\\/S\",\"@\":\"dc\"}],\"date\":[{\"$\":\"2009\",\"@\":\"dc\"}],\"type\":[{\"$\":\"Netdokument\",\"@type\":{\"$\":\"dkdcplus:BibDK-Type\",\"@\":\"xsi\"},\"@\":\"dc\"}],\"language\":[{\"$\":\"Dansk\",\"@\":\"dc\"},{\"$\":\"dan\",\"@type\":{\"$\":\"dcterms:ISO639-2\",\"@\":\"xsi\"},\"@\":\"dc\"}],\"rights\":[{\"$\":\"Copyright \\u00a9 2016 ConDidact A\\/S\",\"@\":\"dc\"}],\"@\":\"dkabm\"},\"identifier\":{\"$\":\"150033-dandyr:8802\"},\"primaryObjectIdentifier\":{\"$\":\"150033-dandyr:8802\"},\"recordStatus\":{\"$\":\"active\"},\"creationDate\":{\"$\":\"2009-01-01\"},\"formatsAvailable\":{\"format\":[{\"$\":\"dkabm\"}]},\"objectsAvailable\":{\"identifier\":[{\"$\":\"150033-dandyr:8802\"}]}}]},\"formattedCollection\":{\"briefDisplay\":{\"manifestation\":[{\"accessType\":{\"$\":\"online\"},\"creator\":{\"$\":\"danske-dyr.dk\"},\"fedoraPid\":{\"$\":\"150033-dandyr:8802\"},\"identifier\":{\"$\":\"150033-dandyr:8802\"},\"language\":{\"$\":\"Dansk\"},\"title\":{\"$\":\"Hest\"},\"titleFull\":{\"$\":\"Hest\"},\"type\":{\"$\":\"Netdokument\"},\"workType\":{\"$\":\"book\"}}]}}},{\"collection\":{\"resultPosition\":{\"$\":\"6\"},\"numberOfObjects\":{\"$\":\"1\"},\"object\":[{\"record\":{\"identifier\":[{\"$\":\"11942|150033\",\"@\":\"ac\"},{\"$\":\"http:\\/\\/bibliotek.danske-dyr.dk\\/Sv%C3%A6r\\/dyr\\/Jysk%20hest\\/\",\"@type\":{\"$\":\"dcterms:URI\",\"@\":\"xsi\"},\"@\":\"dc\"}],\"source\":[{\"$\":\"Danske Dyr\",\"@\":\"ac\"}],\"title\":[{\"$\":\"Jysk hest\",\"@\":\"dc\"},{\"$\":\"Jysk hest\",\"@type\":{\"$\":\"dkdcplus:full\",\"@\":\"xsi\"},\"@\":\"dc\"}],\"alternative\":[{\"$\":\"Den jyske hest\",\"@\":\"dcterms\"}],\"creator\":[{\"$\":\"danske-dyr.dk\",\"@type\":{\"$\":\"dkdcplus:com\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"danske-dyr.dk\",\"@type\":{\"$\":\"oss:sort\",\"@\":\"xsi\"},\"@\":\"dc\"}],\"subject\":[{\"$\":\"Zoologi\",\"@\":\"dc\"},{\"$\":\"Biologi\",\"@\":\"dc\"}],\"audience\":[{\"$\":\"b\\u00f8rnematerialer\",\"@\":\"dcterms\"}],\"publisher\":[{\"$\":\"ConDidact A\\/S\",\"@\":\"dc\"}],\"date\":[{\"$\":\"2009\",\"@\":\"dc\"}],\"type\":[{\"$\":\"Netdokument\",\"@type\":{\"$\":\"dkdcplus:BibDK-Type\",\"@\":\"xsi\"},\"@\":\"dc\"}],\"language\":[{\"$\":\"Dansk\",\"@\":\"dc\"},{\"$\":\"dan\",\"@type\":{\"$\":\"dcterms:ISO639-2\",\"@\":\"xsi\"},\"@\":\"dc\"}],\"rights\":[{\"$\":\"Copyright \\u00a9 2016 ConDidact A\\/S\",\"@\":\"dc\"}],\"@\":\"dkabm\"},\"identifier\":{\"$\":\"150033-dandyr:11942\"},\"primaryObjectIdentifier\":{\"$\":\"150033-dandyr:11942\"},\"recordStatus\":{\"$\":\"active\"},\"creationDate\":{\"$\":\"2009-01-01\"},\"formatsAvailable\":{\"format\":[{\"$\":\"dkabm\"}]},\"objectsAvailable\":{\"identifier\":[{\"$\":\"150033-dandyr:11942\"}]}}]},\"formattedCollection\":{\"briefDisplay\":{\"manifestation\":[{\"accessType\":{\"$\":\"online\"},\"creator\":{\"$\":\"danske-dyr.dk\"},\"fedoraPid\":{\"$\":\"150033-dandyr:11942\"},\"identifier\":{\"$\":\"150033-dandyr:11942\"},\"language\":{\"$\":\"Dansk\"},\"title\":{\"$\":\"Jysk hest\"},\"titleFull\":{\"$\":\"Jysk hest\"},\"type\":{\"$\":\"Netdokument\"},\"workType\":{\"$\":\"book\"}}]}}},{\"collection\":{\"resultPosition\":{\"$\":\"7\"},\"numberOfObjects\":{\"$\":\"2\"},\"object\":[{\"record\":{\"identifier\":[{\"$\":\"25230701|870970\",\"@\":\"ac\"},{\"$\":\"87-986757-5-3\",\"@type\":{\"$\":\"dkdcplus:ISBN\",\"@\":\"xsi\"},\"@\":\"dc\"}],\"source\":[{\"$\":\"Bibliotekskatalog\",\"@\":\"ac\"},{\"$\":\"Richtlinien f\\u00fcr Reiten und Fahren, Grundausbildung f\\u00fcr Reiter und Pferd\",\"@\":\"dc\"}],\"title\":[{\"$\":\"Den klassiske grunduddannelse af rytter & hest\",\"@\":\"dc\"},{\"$\":\"Den klassiske grunduddannelse af rytter & hest. Bind 1\",\"@type\":{\"$\":\"dkdcplus:full\",\"@\":\"xsi\"},\"@\":\"dc\"}],\"alternative\":[{\"$\":\"Rytter & hest\",\"@\":\"dcterms\"},{\"$\":\"Rytter og hest\",\"@\":\"dcterms\"},{\"$\":\"Den klassiske grunduddannelse af rytter og hest\",\"@\":\"dcterms\"}],\"subject\":[{\"$\":\"79.65\",\"@type\":{\"$\":\"dkdcplus:DK5\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"Ridning. Hestesport\",\"@type\":{\"$\":\"dkdcplus:DK5-Text\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"dressur\",\"@type\":{\"$\":\"dkdcplus:DBCF\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"heste\",\"@type\":{\"$\":\"dkdcplus:DBCF\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"hestesport\",\"@type\":{\"$\":\"dkdcplus:DBCF\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"konkurrenceridning\",\"@type\":{\"$\":\"dkdcplus:DBCF\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"military\",\"@type\":{\"$\":\"dkdcplus:DBCF\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"ridning\",\"@type\":{\"$\":\"dkdcplus:DBCF\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"spring\",\"@type\":{\"$\":\"dkdcplus:DBCF\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"tr\\u00e6ning\",\"@type\":{\"$\":\"dkdcplus:DBCF\",\"@\":\"xsi\"},\"@\":\"dc\"}],\"description\":[{\"$\":\"Indhold: Rytterens grunduddannelse ; Grundl\\u00e6ggende \\u00f8velser ; Hestens grunduddannelse ; R\\u00e5d om og vejledning i at ride konkurrencer\",\"@\":\"dc\"}],\"audience\":[{\"$\":\"b\\u00f8rnematerialer\",\"@\":\"dcterms\"}],\"publisher\":[{\"$\":\"Dansk Ride Forbund\",\"@\":\"dc\"},{\"$\":\"Wiegaarden\",\"@\":\"dc\"}],\"contributor\":[{\"$\":\"Jytte Lemkow\",\"@\":\"dc\"},{\"$\":\"Dansk Ride-Forbund\",\"@\":\"dc\"}],\"date\":[{\"$\":\"2004\",\"@\":\"dc\"}],\"type\":[{\"$\":\"Bog\",\"@type\":{\"$\":\"dkdcplus:BibDK-Type\",\"@\":\"xsi\"},\"@\":\"dc\"}],\"format\":[{\"$\":\"illustreret i farver\",\"@\":\"dc\"}],\"extent\":[{\"$\":\"248 sider\",\"@\":\"dcterms\"},{\"$\":\"bind\",\"@\":\"dcterms\"}],\"language\":[{\"$\":\"dan\",\"@type\":{\"$\":\"dcterms:ISO639-2\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"Dansk\",\"@\":\"dc\"}],\"@\":\"dkabm\"},\"identifier\":{\"$\":\"775100-katalog:25230701\"},\"primaryObjectIdentifier\":{\"$\":\"870970-basis:25230701\"},\"recordStatus\":{\"$\":\"active\"},\"formatsAvailable\":{\"format\":[{\"$\":\"dkabm\"},{\"$\":\"marcxchange\"}]},\"objectsAvailable\":{\"identifier\":[{\"$\":\"775100-katalog:25230701\"},{\"$\":\"870970-basis:25230701\"}]}},{\"identifier\":{\"$\":\"775100-katalog:28250355\"},\"formatsAvailable\":{\"format\":[{\"$\":\"dkabm\"},{\"$\":\"marcxchange\"}]}}]},\"formattedCollection\":{\"briefDisplay\":{\"manifestation\":[{\"accessType\":{\"$\":\"physical\"},\"fedoraPid\":{\"$\":\"810015-katalog:003805946__1\"},\"identifier\":{\"$\":\"775100-katalog:25230701\"},\"language\":{\"$\":\"Dansk\"},\"title\":{\"$\":\"Den klassiske grunduddannelse af rytter & hest\"},\"titleFull\":{\"$\":\"Den klassiske grunduddannelse af rytter & hest\"},\"type\":{\"$\":\"Bog (Bind 1)\"},\"workType\":{\"$\":\"book\"}},{\"accessType\":{\"$\":\"physical\"},\"fedoraPid\":{\"$\":\"820010-katalog:3755468__1\"},\"identifier\":{\"$\":\"775100-katalog:28250355\"},\"language\":{\"$\":\"Dansk\"},\"title\":{\"$\":\"Den klassiske grunduddannelse af rytter & hest\"},\"titleFull\":{\"$\":\"Den klassiske grunduddannelse af rytter & hest\"},\"type\":{\"$\":\"Bog (bind 2)\"},\"workType\":{\"$\":\"book\"}}]}}},{\"collection\":{\"resultPosition\":{\"$\":\"8\"},\"numberOfObjects\":{\"$\":\"1\"},\"object\":[{\"record\":{\"identifier\":[{\"$\":\"28446594|870970\",\"@\":\"ac\"},{\"$\":\"9788721036102\",\"@type\":{\"$\":\"dkdcplus:ISBN\",\"@\":\"xsi\"},\"@\":\"dc\"}],\"source\":[{\"$\":\"Bibliotekskatalog\",\"@\":\"ac\"},{\"$\":\"Mein Pferd hat die Nase vorn!\",\"@\":\"dc\"}],\"title\":[{\"$\":\"Min hest har n\\u00e6sen forrest!\",\"@\":\"dc\"},{\"$\":\"Min hest har n\\u00e6sen forrest! : rid rigtigt og f\\u00e5 en sund hest\",\"@type\":{\"$\":\"dkdcplus:full\",\"@\":\"xsi\"},\"@\":\"dc\"}],\"creator\":[{\"$\":\"Gerd Heuschmann\",\"@type\":{\"$\":\"dkdcplus:aut\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"Heuschmann, Gerd\",\"@type\":{\"$\":\"oss:sort\",\"@\":\"xsi\"},\"@\":\"dc\"}],\"subject\":[{\"$\":\"79.65\",\"@type\":{\"$\":\"dkdcplus:DK5\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"Ridning. Hestesport\",\"@type\":{\"$\":\"dkdcplus:DK5-Text\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"dressur\",\"@type\":{\"$\":\"dkdcplus:DBCF\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"for 14 \\u00e5r\",\"@type\":{\"$\":\"dkdcplus:DBCN\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"for 15 \\u00e5r\",\"@type\":{\"$\":\"dkdcplus:DBCN\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"for 16 \\u00e5r\",\"@type\":{\"$\":\"dkdcplus:DBCN\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"heste\",\"@type\":{\"$\":\"dkdcplus:DBCF\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"rideheste\",\"@type\":{\"$\":\"dkdcplus:DBCF\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"ridning\",\"@type\":{\"$\":\"dkdcplus:DBCF\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"sundhed\",\"@type\":{\"$\":\"dkdcplus:DBCF\",\"@\":\"xsi\"},\"@\":\"dc\"}],\"description\":[{\"$\":\"Indhold: Det \\u00f8mme punkt ; Klassisk ridekunst ; Opstaldning af din hest ; Din hests anatomi ; Uddannelse af heste ; Du og din hest\",\"@\":\"dc\"}],\"audience\":[{\"$\":\"b\\u00f8rnematerialer\",\"@\":\"dcterms\"}],\"version\":[{\"$\":\"1. udgave, 1. oplag (2010)\",\"@\":\"dkdcplus\"}],\"publisher\":[{\"$\":\"Borgen\",\"@\":\"dc\"}],\"contributor\":[{\"$\":\"Birgitte Eggeling\",\"@type\":{\"$\":\"dkdcplus:trl\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"Katharina R\\u00fccker-Weininger\",\"@type\":{\"$\":\"dkdcplus:ill\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"Kaja M\\u00f6bius\",\"@type\":{\"$\":\"dkdcplus:ill\",\"@\":\"xsi\"},\"@\":\"dc\"}],\"date\":[{\"$\":\"2010\",\"@\":\"dc\"}],\"type\":[{\"$\":\"Bog\",\"@type\":{\"$\":\"dkdcplus:BibDK-Type\",\"@\":\"xsi\"},\"@\":\"dc\"}],\"format\":[{\"$\":\"ill i farver\",\"@\":\"dc\"}],\"extent\":[{\"$\":\"141 sider\",\"@\":\"dcterms\"}],\"language\":[{\"$\":\"dan\",\"@type\":{\"$\":\"dcterms:ISO639-2\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"Dansk\",\"@\":\"dc\"}],\"@\":\"dkabm\"},\"identifier\":{\"$\":\"775100-katalog:28446594\"},\"primaryObjectIdentifier\":{\"$\":\"870970-basis:28446594\"},\"recordStatus\":{\"$\":\"active\"},\"formatsAvailable\":{\"format\":[{\"$\":\"dkabm\"},{\"$\":\"marcxchange\"}]},\"objectsAvailable\":{\"identifier\":[{\"$\":\"775100-katalog:28446594\"},{\"$\":\"870970-basis:28446594\"}]}}]},\"formattedCollection\":{\"briefDisplay\":{\"manifestation\":[{\"accessType\":{\"$\":\"physical\"},\"creator\":{\"$\":\"Gerd Heuschmann\"},\"fedoraPid\":{\"$\":\"862010-katalog:28446594\"},\"identifier\":{\"$\":\"775100-katalog:28446594\"},\"language\":{\"$\":\"Dansk\"},\"title\":{\"$\":\"Min hest har n\\u00e6sen forrest!\"},\"titleFull\":{\"$\":\"Min hest har n\\u00e6sen forrest! : rid rigtigt og f\\u00e5 en sund hest\"},\"type\":{\"$\":\"Bog\"},\"workType\":{\"$\":\"book\"}}]}}},{\"collection\":{\"resultPosition\":{\"$\":\"9\"},\"numberOfObjects\":{\"$\":\"1\"},\"object\":[{\"record\":{\"identifier\":[{\"$\":\"2760|150043\",\"@\":\"ac\"},{\"$\":\"http:\\/\\/historiskatlas.dk\\/Christian_IVs_redningsmand_(2760)\",\"@type\":{\"$\":\"dcterms:URI\",\"@\":\"xsi\"},\"@\":\"dc\"}],\"source\":[{\"$\":\"Historisk Atlas\",\"@\":\"ac\"}],\"title\":[{\"$\":\"Christian IVs redningsmand\",\"@\":\"dc\"},{\"$\":\"Christian IVs redningsmand\",\"@type\":{\"$\":\"dkdcplus:full\",\"@\":\"xsi\"},\"@\":\"dc\"}],\"subject\":[{\"$\":\"Mindesm\\u00e6rker\",\"@\":\"dc\"},{\"$\":\"Sev\\u00e6rdigheder\",\"@\":\"dc\"},{\"$\":\"Litteratur\",\"@\":\"dc\"},{\"$\":\"Referencer\",\"@\":\"dc\"},{\"$\":\"Personer\",\"@\":\"dc\"},{\"$\":\"Ren\\u00e6ssance\",\"@type\":{\"$\":\"dkdcplus:genre\",\"@\":\"xsi\"},\"@\":\"dc\"}],\"abstract\":[{\"$\":\"\\\"En hest! En hest! Mit kongerige for en hest!\\\" S\\u00e5dan r\\u00e5bte Richard III i 1485 if\\u00f8lge Shakespeare, da hans hest var blevet dr\\u00e6bt i slaget ved Bosworth. I Tj\\u00e6reborg er en af deltagerne i et dansk sidestykke til den historie begravet, Wentzel Rothkierck.\",\"@\":\"dcterms\"}],\"audience\":[{\"$\":\"voksenmaterialer\",\"@\":\"dcterms\"}],\"publisher\":[{\"$\":\"Historisk Atlas\",\"@\":\"dc\"}],\"type\":[{\"$\":\"Netdokument\",\"@type\":{\"$\":\"dkdcplus:BibDK-Type\",\"@\":\"xsi\"},\"@\":\"dc\"}],\"language\":[{\"$\":\"dan\",\"@type\":{\"$\":\"dcterms:ISO639-2\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"Dansk\",\"@\":\"dc\"}],\"spatial\":[{\"$\":\"8.583453387013350000000000000,55.4613264987002\",\"@type\":{\"$\":\"kml:coordinates\",\"@\":\"xsi\"},\"@\":\"dcterms\"}],\"@\":\"dkabm\"},\"identifier\":{\"$\":\"150043-atlas:2760\"},\"primaryObjectIdentifier\":{\"$\":\"150043-atlas:2760\"},\"recordStatus\":{\"$\":\"active\"},\"creationDate\":{\"$\":\"2013-01-01\"},\"formatsAvailable\":{\"format\":[{\"$\":\"dkabm\"}]},\"objectsAvailable\":{\"identifier\":[{\"$\":\"150043-atlas:2760\"}]}}]},\"formattedCollection\":{\"briefDisplay\":{\"manifestation\":[{\"accessType\":{\"$\":\"online\"},\"fedoraPid\":{\"$\":\"150043-atlas:2760\"},\"identifier\":{\"$\":\"150043-atlas:2760\"},\"language\":{\"$\":\"Dansk\"},\"title\":{\"$\":\"Christian IVs redningsmand\"},\"titleFull\":{\"$\":\"Christian IVs redningsmand\"},\"type\":{\"$\":\"Netdokument\"},\"workType\":{\"$\":\"book\"}}]}}},{\"collection\":{\"resultPosition\":{\"$\":\"10\"},\"numberOfObjects\":{\"$\":\"1\"},\"object\":[{\"record\":{\"identifier\":[{\"$\":\"28597584|870970\",\"@\":\"ac\"},{\"$\":\"9788771141320\",\"@type\":{\"$\":\"dkdcplus:ISBN\",\"@\":\"xsi\"},\"@\":\"dc\"}],\"source\":[{\"$\":\"Bibliotekskatalog\",\"@\":\"ac\"}],\"title\":[{\"$\":\"Indl\\u00e6ringspsykologi for hest og rytter\",\"@\":\"dc\"},{\"$\":\"Indl\\u00e6ringspsykologi for hest og rytter : l\\u00e6r din hest at forst\\u00e5 dig!\",\"@type\":{\"$\":\"dkdcplus:full\",\"@\":\"xsi\"},\"@\":\"dc\"}],\"creator\":[{\"$\":\"Bettina Hvidemose\",\"@type\":{\"$\":\"dkdcplus:aut\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"Hvidemose, Bettina\",\"@type\":{\"$\":\"oss:sort\",\"@\":\"xsi\"},\"@\":\"dc\"}],\"subject\":[{\"$\":\"63.61\",\"@type\":{\"$\":\"dkdcplus:DK5\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"Heste\",\"@type\":{\"$\":\"dkdcplus:DK5-Text\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"adf\\u00e6rd\",\"@type\":{\"$\":\"dkdcplus:DBCF\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"dyrepsykologi\",\"@type\":{\"$\":\"dkdcplus:DBCF\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"heste\",\"@type\":{\"$\":\"dkdcplus:DBCF\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"kommunikation\",\"@type\":{\"$\":\"dkdcplus:DBCF\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"tr\\u00e6ning\",\"@type\":{\"$\":\"dkdcplus:DBCF\",\"@\":\"xsi\"},\"@\":\"dc\"}],\"description\":[{\"$\":\"Indhold: Adf\\u00e6rd og baggrundsviden ; Indl\\u00e6ringsteori ; Tr\\u00e6ningsmetoder ; Eksempler p\\u00e5 \\u00f8velser ; Eksempler p\\u00e5 cases\",\"@\":\"dc\"}],\"audience\":[{\"$\":\"voksenmaterialer\",\"@\":\"dcterms\"}],\"version\":[{\"$\":\"1. oplag (2010)\",\"@\":\"dkdcplus\"}],\"publisher\":[{\"$\":\"Books on Demand\",\"@\":\"dc\"}],\"contributor\":[{\"$\":\"Martin Riis\",\"@type\":{\"$\":\"dkdcplus:ill\",\"@\":\"xsi\"},\"@\":\"dc\"}],\"date\":[{\"$\":\"2010\",\"@\":\"dc\"}],\"type\":[{\"$\":\"Bog\",\"@type\":{\"$\":\"dkdcplus:BibDK-Type\",\"@\":\"xsi\"},\"@\":\"dc\"}],\"format\":[{\"$\":\"illustreret i farver\",\"@\":\"dc\"}],\"extent\":[{\"$\":\"132 sider\",\"@\":\"dcterms\"}],\"language\":[{\"$\":\"dan\",\"@type\":{\"$\":\"dcterms:ISO639-2\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"Dansk\",\"@\":\"dc\"}],\"@\":\"dkabm\"},\"identifier\":{\"$\":\"775100-katalog:28597584\"},\"primaryObjectIdentifier\":{\"$\":\"870970-basis:28597584\"},\"recordStatus\":{\"$\":\"active\"},\"formatsAvailable\":{\"format\":[{\"$\":\"dkabm\"},{\"$\":\"marcxchange\"}]},\"objectsAvailable\":{\"identifier\":[{\"$\":\"775100-katalog:28597584\"},{\"$\":\"870970-basis:28597584\"}]}}]},\"formattedCollection\":{\"briefDisplay\":{\"manifestation\":[{\"accessType\":{\"$\":\"physical\"},\"creator\":{\"$\":\"Bettina Hvidemose\"},\"fedoraPid\":{\"$\":\"125610-katalog:28597584\"},\"identifier\":{\"$\":\"775100-katalog:28597584\"},\"language\":{\"$\":\"Dansk\"},\"title\":{\"$\":\"Indl\\u00e6ringspsykologi for hest og rytter\"},\"titleFull\":{\"$\":\"Indl\\u00e6ringspsykologi for hest og rytter : l\\u00e6r din hest at forst\\u00e5 dig!\"},\"type\":{\"$\":\"Bog\"},\"workType\":{\"$\":\"book\"}}]}}}],\"facetResult\":null,\"statInfo\":{\"fedoraRecordsCached\":{\"$\":\"24\"},\"fedoraRecordsRead\":{\"$\":\"60\"},\"time\":{\"$\":\"0.710371\"},\"trackingId\":{\"$\":\"2016-05-30T21:11:52:959632:20148\"}}}},\"@namespaces\":{\"ac\":\"http:\\/\\/biblstandard.dk\\/ac\\/namespace\\/\",\"dbcaddi\":\"http:\\/\\/oss.dbc.dk\\/rdf\\/dbcaddi#\",\"dbcbib\":\"http:\\/\\/oss.dbc.dk\\/rdf\\/dbcbib#\",\"dc\":\"http:\\/\\/purl.org\\/dc\\/elements\\/1.1\\/\",\"dcmitype\":\"http:\\/\\/purl.org\\/dc\\/dcmitype\\/\",\"dcterms\":\"http:\\/\\/purl.org\\/dc\\/terms\\/\",\"dkabm\":\"http:\\/\\/biblstandard.dk\\/abm\\/namespace\\/dkabm\\/\",\"dkdcplus\":\"http:\\/\\/biblstandard.dk\\/abm\\/namespace\\/dkdcplus\\/\",\"docbook\":\"http:\\/\\/docbook.org\\/ns\\/docbook\",\"kml\":\"http:\\/\\/www.opengis.net\\/kml\\/2.2\",\"marcx\":\"info:lc\\/xmlns\\/marcxchange-v1\",\"mx\":\"http:\\/\\/www.loc.gov\\/MARC21\\/slim\",\"of\":\"http:\\/\\/oss.dbc.dk\\/ns\\/openformat\",\"ofo\":\"http:\\/\\/oss.dbc.dk\\/ns\\/openformatoutput\",\"os\":\"http:\\/\\/oss.dbc.dk\\/ns\\/opensearch\",\"oso\":\"http:\\/\\/oss.dbc.dk\\/ns\\/opensearchobjects\",\"oss\":\"http:\\/\\/oss.dbc.dk\\/ns\\/osstypes\",\"xs\":\"http:\\/\\/www.w3.org\\/2001\\/XMLSchema\",\"xsi\":\"http:\\/\\/www.w3.org\\/2001\\/XMLSchema-instance\"}}"};
-
-describe('Automated test: search_simple', () => {
-  it('expected response. ID:q3ahdq, for {"q":"hest"}', (done) => {
+describe('Automated test: __search_simple', () => {
+  it('expected response. ID:u17tma, for {"q":"hest"}', (done) => {
     context.mockData = mockData;
-    provider.execute('search', {"q": "hest"}, context)
+    provider.execute('search', {"q":"hest"}, context)
       .then(result => {
         assert.deepEqual(result,
-          {
-            "statusCode": 200,
-            "data": [{
-              "collection": ["150043-atlas:8286"],
-              "collectionDetails": [{
-                "accessType": ["online"],
-                "pid": ["150043-atlas:8286"],
-                "language": ["Dansk"],
-                "title": ["Hest"],
-                "titleFull": ["Hest"],
-                "type": ["Netdokument"],
-                "workType": ["book"]
-              }],
-              "acIdentifier": ["72819675|870971"],
-              "acSource": ["Tidsskriftsartikler"],
-              "dcTitle": ["Den belgiske hest"],
-              "dcTitleFull": ["Den belgiske hest"],
-              "dcCreator": ["Henning Rasmussen"],
-              "creatorSort": ["Rasmussen, Henning"],
-              "subjectDK5": ["63.61"],
-              "subjectDK5Text": ["Heste"],
-              "subject": ["belgisk hest", "hesteavl"],
-              "audience": ["voksenmaterialer"],
-              "date": ["1988"],
-              "typeBibDKType": ["Tidsskriftsartikel"],
-              "extent": ["S. 29-31"],
-              "languageISO6392": ["dan"],
-              "dcLanguage": ["Dansk"],
-              "isPartOf": ["Hippologisk tidsskrift, Årg. 100, nr. 3 (1988)"],
-              "isPartOfISSN": ["0018-201X"],
-              "accessType": ["physical"],
-              "creator": ["Henning Rasmussen"],
-              "pid": ["870971-tsart:72819675"],
-              "language": ["Dansk"],
-              "partOf": ["Hippologisk tidsskrift, Årg. 100, nr. 3 (1988)"],
-              "title": ["Den belgiske hest"],
-              "titleFull": ["Den belgiske hest"],
-              "type": ["Tidsskriftsartikel"],
-              "workType": ["article"]
-            }, {
-              "collection": ["775100-katalog:06402917"],
-              "collectionDetails": [{
-                "accessType": ["physical"],
-                "creator": ["Teaterværkstedet Den Blå Hest"],
-                "pid": ["775100-katalog:06402917"],
-                "language": ["Engelsk"],
-                "title": ["Teaterværkstedet Den blå Hest 1976-1986"],
-                "titleFull": ["Teaterværkstedet Den blå Hest 1976-1986"],
-                "type": ["Bog"],
-                "workType": ["book"]
-              }],
-              "acIdentifier": ["73458110|870971"],
-              "acSource": ["Avisartikler"],
-              "dcTitle": ["Slaget om Sorte Hest. En lang, lang konflikt"],
-              "dcTitleFull": ["Slaget om Sorte Hest : En lang, lang konflikt"],
-              "dcCreator": ["Per Mikael Jensen"],
-              "creatorSort": ["Jensen, Per Mikael"],
-              "subjectDK5": ["71.637 Sorte Hest"],
-              "subject": ["BZ'ere", "Sorte Hest (boligkarre)"],
-              "subjectDK5Text": ["Enkelte københavnske lokaliteters arkitekturhistorie"],
-              "abstract": ["Sorte Hest, Vesterbro, København"],
-              "audience": ["voksenmaterialer"],
-              "date": ["1990"],
-              "typeBibDKType": ["Avisartikel"],
-              "languageISO6392": ["dan"],
-              "dcLanguage": ["Dansk"],
-              "isPartOf": ["Politiken, 1990-03-11"],
-              "isPartOfISSN": ["0907-1814"],
-              "spatial": ["København arkitektur", "Vesterbro arkitektur"],
-              "accessType": ["physical"],
-              "creator": ["Per Mikael Jensen"],
-              "pid": ["870971-avis:73458110"],
-              "language": ["Dansk"],
-              "partOf": ["Politiken, 1990-03-11"],
-              "title": ["Slaget om Sorte Hest. En lang, lang konflikt"],
-              "titleFull": ["Slaget om Sorte Hest. En lang, lang konflikt"],
-              "type": ["Avisartikel"],
-              "workType": ["article"]
-            }, {
-              "collection": ["775100-katalog:26476720", "870970-basis:50542882"],
-              "collectionDetails": [{
-                "accessType": ["physical"],
-                "creator": ["Sarah Widdicombe"],
-                "pid": ["775100-katalog:26476720"],
-                "language": ["Dansk"],
-                "title": ["Den sunde hest"],
-                "titleFull": ["Den sunde hest : hold din hest sund i ryg, ben og tænder"],
-                "type": ["Bog"],
-                "workType": ["book"]
-              }, {
-                "accessType": ["online"],
-                "pid": ["870970-basis:50542882"],
-                "language": ["Dansk"],
-                "title": ["Den sunde hest"],
-                "titleFull": ["Den sunde hest : hvordan du holder din hests ryg, ben og tænder sunde"],
-                "type": ["Ebog"],
-                "workType": ["book"]
-              }],
-              "acIdentifier": ["8286|150043"],
-              "identifierURI": ["http://historiskatlas.dk/Hest_(8286)"],
-              "acSource": ["Historisk Atlas"],
-              "dcTitle": ["Hest"],
-              "dcTitleFull": ["Hest"],
-              "subject": ["Kunst", "Skulpturer"],
-              "abstract": ["Agnete Ester Votborg Madsen (1923-1977)\nHest, u.å."],
-              "audience": ["voksenmaterialer"],
-              "publisher": ["Historisk Atlas"],
-              "typeBibDKType": ["Netdokument"],
-              "languageISO6392": ["dan"],
-              "dcLanguage": ["Dansk"],
-              "spatialCoordinates": ["10.427599112429400000000000000,55.366856304806300000000000000"],
-              "accessType": ["online"],
-              "pid": ["150043-atlas:8286"],
-              "language": ["Dansk"],
-              "title": ["Hest"],
-              "titleFull": ["Hest"],
-              "type": ["Netdokument"],
-              "workType": ["book"]
-            }, {
-              "collection": ["775100-katalog:29567085"],
-              "collectionDetails": [{
-                "accessType": ["physical"],
-                "creator": ["Pia Halse"],
-                "pid": ["775100-katalog:29567085"],
-                "language": ["Dansk"],
-                "title": ["Tork og Hest"],
-                "titleFull": ["Tork og Hest"],
-                "type": ["Bog"],
-                "workType": ["book"]
-              }],
-              "acIdentifier": ["11942|150033"],
-              "identifierURI": ["http://bibliotek.danske-dyr.dk/Sv%C3%A6r/dyr/Jysk%20hest/"],
-              "acSource": ["Danske Dyr"],
-              "dcTitle": ["Jysk hest"],
-              "dcTitleFull": ["Jysk hest"],
-              "alternative": ["Den jyske hest", "den jydske hest", "Jydsk hest", "jydske heste"],
-              "creatorCom": ["danske-dyr.dk"],
-              "creatorSort": ["danske-dyr.dk"],
-              "subject": ["Zoologi", "Biologi"],
-              "audience": ["børnematerialer"],
-              "publisher": ["ConDidact A/S"],
-              "date": ["2009"],
-              "typeBibDKType": ["Netdokument"],
-              "dcLanguage": ["Dansk"],
-              "languageISO6392": ["dan"],
-              "rights": ["Copyright © 2016 ConDidact A/S"],
-              "accessType": ["online"],
-              "creator": ["danske-dyr.dk"],
-              "pid": ["150033-dandyr:11942"],
-              "language": ["Dansk"],
-              "title": ["Jysk hest"],
-              "titleFull": ["Jysk hest"],
-              "type": ["Netdokument"],
-              "workType": ["book"]
-            }, {
-              "collection": ["150033-dandyr:8802"],
-              "collectionDetails": [{
-                "accessType": ["online"],
-                "creator": ["danske-dyr.dk"],
-                "pid": ["150033-dandyr:8802"],
-                "language": ["Dansk"],
-                "title": ["Hest"],
-                "titleFull": ["Hest"],
-                "type": ["Netdokument"],
-                "workType": ["book"]
-              }],
-              "acIdentifier": ["83321857|870971"],
-              "acSource": ["Tidsskriftsartikler"],
-              "dcTitle": ["Fare for indavl på længere sigt. Den jydske hest i positiv udvikling"],
-              "dcTitleFull": ["Fare for indavl på længere sigt : Den jydske hest i positiv udvikling"],
-              "dcCreator": ["Olav Rasmussen"],
-              "creatorSort": ["Rasmussen, Olav"],
-              "subjectDK5": ["63.61"],
-              "subjectDK5Text": ["Heste"],
-              "subjectDBCF": ["den jydske hest", "frederiksborgheste", "heste", "hesteavl", "indavl"],
-              "abstract": ["Frederiksborgheste og den jydske hest"],
-              "audience": ["voksenmaterialer"],
-              "date": ["1996"],
-              "typeBibDKType": ["Tidsskriftsartikel"],
-              "format": ["illustreret"],
-              "extent": ["S. 16-18"],
-              "languageISO6392": ["dan"],
-              "dcLanguage": ["Dansk"],
-              "isPartOf": ["Landsbladet Hest, 1996, nr. 4"],
-              "isPartOfISSN": ["0906-6616"],
-              "accessType": ["physical"],
-              "creator": ["Olav Rasmussen"],
-              "pid": ["870971-tsart:83321857"],
-              "language": ["Dansk"],
-              "partOf": ["Landsbladet Hest, 1996, nr. 4"],
-              "title": ["Fare for indavl på længere sigt. Den jydske hest i positiv udvikling"],
-              "titleFull": ["Fare for indavl på længere sigt. Den jydske hest i positiv udvikling"],
-              "type": ["Tidsskriftsartikel"],
-              "workType": ["article"]
-            }, {
-              "collection": ["150033-dandyr:11942"],
-              "collectionDetails": [{
-                "accessType": ["online"],
-                "creator": ["danske-dyr.dk"],
-                "pid": ["150033-dandyr:11942"],
-                "language": ["Dansk"],
-                "title": ["Jysk hest"],
-                "titleFull": ["Jysk hest"],
-                "type": ["Netdokument"],
-                "workType": ["book"]
-              }],
-              "acIdentifier": ["73336317|870971"],
-              "acSource": ["Avisartikler"],
-              "dcTitle": ["Højt til hest"],
-              "dcTitleFull": ["Højt til hest"],
-              "audience": ["voksenmaterialer"],
-              "date": ["1989"],
-              "typeBibDKType": ["Avisartikel"],
-              "languageISO6392": ["dan"],
-              "dcLanguage": ["Dansk"],
-              "isPartOf": ["Jyllands-posten, 1989-11-19"],
-              "isPartOfISSN": ["0109-1182"],
-              "accessType": ["physical"],
-              "pid": ["870971-avis:73336317"],
-              "language": ["Dansk"],
-              "partOf": ["Jyllands-posten, 1989-11-19"],
-              "title": ["Højt til hest"],
-              "titleFull": ["Højt til hest"],
-              "type": ["Avisartikel"],
-              "workType": ["article"]
-            }, {
-              "collection": ["775100-katalog:25230701", "775100-katalog:28250355"],
-              "collectionDetails": [{
-                "accessType": ["physical"],
-                "pid": ["775100-katalog:25230701"],
-                "language": ["Dansk"],
-                "title": ["Den klassiske grunduddannelse af rytter & hest"],
-                "titleFull": ["Den klassiske grunduddannelse af rytter & hest"],
-                "type": ["Bog (Bind 1)"],
-                "workType": ["book"]
-              }, {
-                "accessType": ["physical"],
-                "pid": ["775100-katalog:28250355"],
-                "language": ["Dansk"],
-                "title": ["Den klassiske grunduddannelse af rytter & hest"],
-                "titleFull": ["Den klassiske grunduddannelse af rytter & hest"],
-                "type": ["Bog (bind 2)"],
-                "workType": ["book"]
-              }],
-              "acIdentifier": ["72922190|870971"],
-              "acSource": ["Tidsskriftsartikler"],
-              "dcTitle": ["Boltskydning af hest"],
-              "dcTitleFull": ["Boltskydning af hest"],
-              "audience": ["voksenmaterialer"],
-              "date": ["1988"],
-              "typeBibDKType": ["Tidsskriftsartikel"],
-              "extent": ["S. 548"],
-              "languageISO6392": ["mul"],
-              "dcLanguage": ["Flere sprog"],
-              "isPartOf": ["Dansk veterinærtidsskrift, Årg. 71, nr. 10 (1988)"],
-              "isPartOfISSN": ["0106-6854"],
-              "accessType": ["physical"],
-              "pid": ["870971-tsart:72922190"],
-              "language": ["Flere sprog"],
-              "partOf": ["Dansk veterinærtidsskrift, Årg. 71, nr. 10 (1988)"],
-              "title": ["Boltskydning af hest"],
-              "titleFull": ["Boltskydning af hest"],
-              "type": ["Tidsskriftsartikel"],
-              "workType": ["article"]
-            }, {
-              "collection": ["775100-katalog:28446594"],
-              "collectionDetails": [{
-                "accessType": ["physical"],
-                "creator": ["Gerd Heuschmann"],
-                "pid": ["775100-katalog:28446594"],
-                "language": ["Dansk"],
-                "title": ["Min hest har næsen forrest!"],
-                "titleFull": ["Min hest har næsen forrest! : rid rigtigt og få en sund hest"],
-                "type": ["Bog"],
-                "workType": ["book"]
-              }],
-              "acIdentifier": ["73528070|870971"],
-              "acSource": ["Avisartikler"],
-              "dcTitle": ["Flertal støtter Juhl-Jørgensens ønskeseddel for Sorte Hest"],
-              "dcTitleFull": ["Flertal støtter Juhl-Jørgensens ønskeseddel for Sorte Hest"],
-              "dcCreator": ["Niels Rohleder"],
-              "creatorSort": ["Rohleder, Niels"],
-              "subjectDK5": ["71.637 Sorte Hest"],
-              "subject": ["Axel Juhl-Jørgensen", "Sorte Hest (boligkarre)"],
-              "subjectSort": ["Juhl-Jørgensen, Axel"],
-              "subjectDK5Text": ["Enkelte københavnske lokaliteters arkitekturhistorie"],
-              "audience": ["voksenmaterialer"],
-              "date": ["1990"],
-              "typeBibDKType": ["Avisartikel"],
-              "languageISO6392": ["dan"],
-              "dcLanguage": ["Dansk"],
-              "isPartOf": ["Information, 1990-05-17"],
-              "isPartOfISSN": ["1602-2572"],
-              "spatial": ["København arkitektur", "Vesterbro arkitektur"],
-              "accessType": ["physical"],
-              "creator": ["Niels Rohleder"],
-              "pid": ["870971-avis:73528070"],
-              "language": ["Dansk"],
-              "partOf": ["Information, 1990-05-17"],
-              "title": ["Flertal støtter Juhl-Jørgensens ønskeseddel for Sorte Hest"],
-              "titleFull": ["Flertal støtter Juhl-Jørgensens ønskeseddel for Sorte Hest"],
-              "type": ["Avisartikel"],
-              "workType": ["article"]
-            }, {
-              "collection": ["150043-atlas:2760"],
-              "collectionDetails": [{
-                "accessType": ["online"],
-                "pid": ["150043-atlas:2760"],
-                "language": ["Dansk"],
-                "title": ["Christian IVs redningsmand"],
-                "titleFull": ["Christian IVs redningsmand"],
-                "type": ["Netdokument"],
-                "workType": ["book"]
-              }],
-              "acIdentifier": ["73150272|870971"],
-              "acSource": ["Tidsskriftsartikler"],
-              "dcTitle": ["Bryggerhesten - elsket og beundret dansk entertainer"],
-              "dcTitleFull": ["Bryggerhesten - elsket og beundret dansk entertainer"],
-              "dcCreator": ["Anna Panum"],
-              "creatorSort": ["Panum, Anna"],
-              "subjectDK5": ["63.61"],
-              "subjectDK5Text": ["Heste"],
-              "subject": ["bryggerheste", "hesteavl", "jysk hest"],
-              "abstract": ["Jysk hest"],
-              "audience": ["voksenmaterialer"],
-              "date": ["1988"],
-              "typeBibDKType": ["Tidsskriftsartikel"],
-              "extent": ["S. 4-5"],
-              "languageISO6392": ["dan"],
-              "dcLanguage": ["Dansk"],
-              "isPartOf": ["Dyrene og os, Årg. 4, nr. 2 (1988)"],
-              "isPartOfISSN": ["0902-3879"],
-              "accessType": ["physical"],
-              "creator": ["Anna Panum"],
-              "pid": ["870971-tsart:73150272"],
-              "language": ["Dansk"],
-              "partOf": ["Dyrene og os, Årg. 4, nr. 2 (1988)"],
-              "title": ["Bryggerhesten - elsket og beundret dansk entertainer"],
-              "titleFull": ["Bryggerhesten - elsket og beundret dansk entertainer"],
-              "type": ["Tidsskriftsartikel"],
-              "workType": ["article"]
-            }, {
-              "collection": ["775100-katalog:28597584"],
-              "collectionDetails": [{
-                "accessType": ["physical"],
-                "creator": ["Bettina Hvidemose"],
-                "pid": ["775100-katalog:28597584"],
-                "language": ["Dansk"],
-                "title": ["Indlæringspsykologi for hest og rytter"],
-                "titleFull": ["Indlæringspsykologi for hest og rytter : lær din hest at forstå dig!"],
-                "type": ["Bog"],
-                "workType": ["book"]
-              }],
-              "acIdentifier": ["72819683|870971"],
-              "acSource": ["Tidsskriftsartikler"],
-              "dcTitle": ["Den jyske hest"],
-              "dcTitleFull": ["Den jyske hest"],
-              "dcCreator": ["Henning Rasmussen"],
-              "creatorSort": ["Rasmussen, Henning"],
-              "subjectDK5": ["63.61"],
-              "subjectDK5Text": ["Heste"],
-              "subject": ["heste", "hesteavl", "jysk hest"],
-              "audience": ["voksenmaterialer"],
-              "date": ["1988"],
-              "typeBibDKType": ["Tidsskriftsartikel"],
-              "extent": ["S. 24-28"],
-              "languageISO6392": ["dan"],
-              "dcLanguage": ["Dansk"],
-              "isPartOf": ["Hippologisk tidsskrift, Årg. 100, nr. 3 (1988)"],
-              "isPartOfISSN": ["0018-201X"],
-              "accessType": ["physical"],
-              "creator": ["Henning Rasmussen"],
-              "pid": ["870971-tsart:72819683"],
-              "language": ["Dansk"],
-              "partOf": ["Hippologisk tidsskrift, Årg. 100, nr. 3 (1988)"],
-              "title": ["Den jyske hest"],
-              "titleFull": ["Den jyske hest"],
-              "type": ["Tidsskriftsartikel"],
-              "workType": ["article"]
-            }]
-          });
+            {
+  "statusCode": 200,
+  "data": [
+    {
+      "collection": [
+        "870971-tsart:72819675"
+      ],
+      "collectionDetails": [
+        {
+          "accessType": [
+            "physical"
+          ],
+          "creator": [
+            "Henning Rasmussen"
+          ],
+          "pid": [
+            "870971-tsart:72819675"
+          ],
+          "language": [
+            "Dansk"
+          ],
+          "partOf": [
+            "Hippologisk tidsskrift, Årg. 100, nr. 3 (1988)"
+          ],
+          "title": [
+            "Den belgiske hest"
+          ],
+          "titleFull": [
+            "Den belgiske hest"
+          ],
+          "type": [
+            "Tidsskriftsartikel"
+          ],
+          "workType": [
+            "article"
+          ]
+        }
+      ],
+      "acIdentifier": [
+        "72819675|870971"
+      ],
+      "acSource": [
+        "Tidsskriftsartikler"
+      ],
+      "dcTitle": [
+        "Den belgiske hest"
+      ],
+      "dcTitleFull": [
+        "Den belgiske hest"
+      ],
+      "dcCreator": [
+        "Henning Rasmussen"
+      ],
+      "creatorSort": [
+        "Rasmussen, Henning"
+      ],
+      "subjectDK5": [
+        "63.61"
+      ],
+      "subjectDK5Text": [
+        "Heste"
+      ],
+      "subject": [
+        "belgisk hest",
+        "hesteavl"
+      ],
+      "audience": [
+        "voksenmaterialer"
+      ],
+      "date": [
+        "1988"
+      ],
+      "typeBibDKType": [
+        "Tidsskriftsartikel"
+      ],
+      "extent": [
+        "S. 29-31"
+      ],
+      "languageISO6392": [
+        "dan"
+      ],
+      "dcLanguage": [
+        "Dansk"
+      ],
+      "isPartOf": [
+        "Hippologisk tidsskrift, Årg. 100, nr. 3 (1988)"
+      ],
+      "isPartOfISSN": [
+        "0018-201X"
+      ],
+      "accessType": [
+        "physical"
+      ],
+      "creator": [
+        "Henning Rasmussen"
+      ],
+      "pid": [
+        "870971-tsart:72819675"
+      ],
+      "language": [
+        "Dansk"
+      ],
+      "partOf": [
+        "Hippologisk tidsskrift, Årg. 100, nr. 3 (1988)"
+      ],
+      "title": [
+        "Den belgiske hest"
+      ],
+      "titleFull": [
+        "Den belgiske hest"
+      ],
+      "type": [
+        "Tidsskriftsartikel"
+      ],
+      "workType": [
+        "article"
+      ]
+    },
+    {
+      "collection": [
+        "870971-avis:73458110"
+      ],
+      "collectionDetails": [
+        {
+          "accessType": [
+            "physical"
+          ],
+          "creator": [
+            "Per Mikael Jensen"
+          ],
+          "pid": [
+            "870971-avis:73458110"
+          ],
+          "language": [
+            "Dansk"
+          ],
+          "partOf": [
+            "Politiken, 1990-03-11"
+          ],
+          "title": [
+            "Slaget om Sorte Hest. En lang, lang konflikt"
+          ],
+          "titleFull": [
+            "Slaget om Sorte Hest. En lang, lang konflikt"
+          ],
+          "type": [
+            "Avisartikel"
+          ],
+          "workType": [
+            "article"
+          ]
+        }
+      ],
+      "acIdentifier": [
+        "73458110|870971"
+      ],
+      "acSource": [
+        "Avisartikler"
+      ],
+      "dcTitle": [
+        "Slaget om Sorte Hest. En lang, lang konflikt"
+      ],
+      "dcTitleFull": [
+        "Slaget om Sorte Hest : En lang, lang konflikt"
+      ],
+      "dcCreator": [
+        "Per Mikael Jensen"
+      ],
+      "creatorSort": [
+        "Jensen, Per Mikael"
+      ],
+      "subjectDK5": [
+        "71.637 Sorte Hest"
+      ],
+      "subject": [
+        "BZ'ere",
+        "Sorte Hest (boligkarre)"
+      ],
+      "subjectDK5Text": [
+        "Enkelte københavnske lokaliteters arkitekturhistorie"
+      ],
+      "abstract": [
+        "Sorte Hest, Vesterbro, København"
+      ],
+      "audience": [
+        "voksenmaterialer"
+      ],
+      "date": [
+        "1990"
+      ],
+      "typeBibDKType": [
+        "Avisartikel"
+      ],
+      "languageISO6392": [
+        "dan"
+      ],
+      "dcLanguage": [
+        "Dansk"
+      ],
+      "isPartOf": [
+        "Politiken, 1990-03-11"
+      ],
+      "isPartOfISSN": [
+        "0907-1814"
+      ],
+      "spatial": [
+        "København arkitektur",
+        "Vesterbro arkitektur"
+      ],
+      "accessType": [
+        "physical"
+      ],
+      "creator": [
+        "Per Mikael Jensen"
+      ],
+      "pid": [
+        "870971-avis:73458110"
+      ],
+      "language": [
+        "Dansk"
+      ],
+      "partOf": [
+        "Politiken, 1990-03-11"
+      ],
+      "title": [
+        "Slaget om Sorte Hest. En lang, lang konflikt"
+      ],
+      "titleFull": [
+        "Slaget om Sorte Hest. En lang, lang konflikt"
+      ],
+      "type": [
+        "Avisartikel"
+      ],
+      "workType": [
+        "article"
+      ]
+    },
+    {
+      "collection": [
+        "150043-atlas:8286"
+      ],
+      "collectionDetails": [
+        {
+          "accessType": [
+            "online"
+          ],
+          "pid": [
+            "150043-atlas:8286"
+          ],
+          "language": [
+            "Dansk"
+          ],
+          "title": [
+            "Hest"
+          ],
+          "titleFull": [
+            "Hest"
+          ],
+          "type": [
+            "Netdokument"
+          ],
+          "workType": [
+            "book"
+          ]
+        }
+      ],
+      "acIdentifier": [
+        "8286|150043"
+      ],
+      "identifierURI": [
+        "http://historiskatlas.dk/Hest_(8286)"
+      ],
+      "acSource": [
+        "Historisk Atlas"
+      ],
+      "dcTitle": [
+        "Hest"
+      ],
+      "dcTitleFull": [
+        "Hest"
+      ],
+      "subject": [
+        "Kunst",
+        "Skulpturer"
+      ],
+      "abstract": [
+        "Agnete Ester Votborg Madsen (1923-1977)\nHest, u.å."
+      ],
+      "audience": [
+        "voksenmaterialer"
+      ],
+      "publisher": [
+        "Historisk Atlas"
+      ],
+      "typeBibDKType": [
+        "Netdokument"
+      ],
+      "languageISO6392": [
+        "dan"
+      ],
+      "dcLanguage": [
+        "Dansk"
+      ],
+      "spatialCoordinates": [
+        "10.427599112429400000000000000,55.366856304806300000000000000"
+      ],
+      "accessType": [
+        "online"
+      ],
+      "pid": [
+        "150043-atlas:8286"
+      ],
+      "language": [
+        "Dansk"
+      ],
+      "title": [
+        "Hest"
+      ],
+      "titleFull": [
+        "Hest"
+      ],
+      "type": [
+        "Netdokument"
+      ],
+      "workType": [
+        "book"
+      ]
+    },
+    {
+      "collection": [
+        "150033-dandyr:11942"
+      ],
+      "collectionDetails": [
+        {
+          "accessType": [
+            "online"
+          ],
+          "creator": [
+            "danske-dyr.dk"
+          ],
+          "pid": [
+            "150033-dandyr:11942"
+          ],
+          "language": [
+            "Dansk"
+          ],
+          "title": [
+            "Jysk hest"
+          ],
+          "titleFull": [
+            "Jysk hest"
+          ],
+          "type": [
+            "Netdokument"
+          ],
+          "workType": [
+            "book"
+          ]
+        }
+      ],
+      "acIdentifier": [
+        "11942|150033"
+      ],
+      "identifierURI": [
+        "http://bibliotek.danske-dyr.dk/Sv%C3%A6r/dyr/Jysk%20hest/"
+      ],
+      "acSource": [
+        "Danske Dyr"
+      ],
+      "dcTitle": [
+        "Jysk hest"
+      ],
+      "dcTitleFull": [
+        "Jysk hest"
+      ],
+      "alternative": [
+        "Den jyske hest",
+        "den jydske hest",
+        "Jydsk hest",
+        "jydske heste"
+      ],
+      "creatorCom": [
+        "danske-dyr.dk"
+      ],
+      "creatorSort": [
+        "danske-dyr.dk"
+      ],
+      "subject": [
+        "Zoologi",
+        "Biologi"
+      ],
+      "audience": [
+        "børnematerialer"
+      ],
+      "publisher": [
+        "ConDidact A/S"
+      ],
+      "date": [
+        "2009"
+      ],
+      "typeBibDKType": [
+        "Netdokument"
+      ],
+      "dcLanguage": [
+        "Dansk"
+      ],
+      "languageISO6392": [
+        "dan"
+      ],
+      "rights": [
+        "Copyright © 2016 ConDidact A/S"
+      ],
+      "accessType": [
+        "online"
+      ],
+      "creator": [
+        "danske-dyr.dk"
+      ],
+      "pid": [
+        "150033-dandyr:11942"
+      ],
+      "language": [
+        "Dansk"
+      ],
+      "title": [
+        "Jysk hest"
+      ],
+      "titleFull": [
+        "Jysk hest"
+      ],
+      "type": [
+        "Netdokument"
+      ],
+      "workType": [
+        "book"
+      ]
+    },
+    {
+      "collection": [
+        "870971-tsart:83321857"
+      ],
+      "collectionDetails": [
+        {
+          "accessType": [
+            "physical"
+          ],
+          "creator": [
+            "Olav Rasmussen"
+          ],
+          "pid": [
+            "870971-tsart:83321857"
+          ],
+          "language": [
+            "Dansk"
+          ],
+          "partOf": [
+            "Landsbladet Hest, 1996, nr. 4"
+          ],
+          "title": [
+            "Fare for indavl på længere sigt. Den jydske hest i positiv udvikling"
+          ],
+          "titleFull": [
+            "Fare for indavl på længere sigt. Den jydske hest i positiv udvikling"
+          ],
+          "type": [
+            "Tidsskriftsartikel"
+          ],
+          "workType": [
+            "article"
+          ]
+        }
+      ],
+      "acIdentifier": [
+        "83321857|870971"
+      ],
+      "acSource": [
+        "Tidsskriftsartikler"
+      ],
+      "dcTitle": [
+        "Fare for indavl på længere sigt. Den jydske hest i positiv udvikling"
+      ],
+      "dcTitleFull": [
+        "Fare for indavl på længere sigt : Den jydske hest i positiv udvikling"
+      ],
+      "dcCreator": [
+        "Olav Rasmussen"
+      ],
+      "creatorSort": [
+        "Rasmussen, Olav"
+      ],
+      "subjectDK5": [
+        "63.61"
+      ],
+      "subjectDK5Text": [
+        "Heste"
+      ],
+      "subjectDBCF": [
+        "den jydske hest",
+        "frederiksborgheste",
+        "heste",
+        "hesteavl",
+        "indavl"
+      ],
+      "abstract": [
+        "Frederiksborgheste og den jydske hest"
+      ],
+      "audience": [
+        "voksenmaterialer"
+      ],
+      "date": [
+        "1996"
+      ],
+      "typeBibDKType": [
+        "Tidsskriftsartikel"
+      ],
+      "format": [
+        "illustreret"
+      ],
+      "extent": [
+        "S. 16-18"
+      ],
+      "languageISO6392": [
+        "dan"
+      ],
+      "dcLanguage": [
+        "Dansk"
+      ],
+      "isPartOf": [
+        "Landsbladet Hest, 1996, nr. 4"
+      ],
+      "isPartOfISSN": [
+        "0906-6616"
+      ],
+      "accessType": [
+        "physical"
+      ],
+      "creator": [
+        "Olav Rasmussen"
+      ],
+      "pid": [
+        "870971-tsart:83321857"
+      ],
+      "language": [
+        "Dansk"
+      ],
+      "partOf": [
+        "Landsbladet Hest, 1996, nr. 4"
+      ],
+      "title": [
+        "Fare for indavl på længere sigt. Den jydske hest i positiv udvikling"
+      ],
+      "titleFull": [
+        "Fare for indavl på længere sigt. Den jydske hest i positiv udvikling"
+      ],
+      "type": [
+        "Tidsskriftsartikel"
+      ],
+      "workType": [
+        "article"
+      ]
+    },
+    {
+      "collection": [
+        "870971-avis:73336317"
+      ],
+      "collectionDetails": [
+        {
+          "accessType": [
+            "physical"
+          ],
+          "pid": [
+            "870971-avis:73336317"
+          ],
+          "language": [
+            "Dansk"
+          ],
+          "partOf": [
+            "Jyllands-posten, 1989-11-19"
+          ],
+          "title": [
+            "Højt til hest"
+          ],
+          "titleFull": [
+            "Højt til hest"
+          ],
+          "type": [
+            "Avisartikel"
+          ],
+          "workType": [
+            "article"
+          ]
+        }
+      ],
+      "acIdentifier": [
+        "73336317|870971"
+      ],
+      "acSource": [
+        "Avisartikler"
+      ],
+      "dcTitle": [
+        "Højt til hest"
+      ],
+      "dcTitleFull": [
+        "Højt til hest"
+      ],
+      "audience": [
+        "voksenmaterialer"
+      ],
+      "date": [
+        "1989"
+      ],
+      "typeBibDKType": [
+        "Avisartikel"
+      ],
+      "languageISO6392": [
+        "dan"
+      ],
+      "dcLanguage": [
+        "Dansk"
+      ],
+      "isPartOf": [
+        "Jyllands-posten, 1989-11-19"
+      ],
+      "isPartOfISSN": [
+        "0109-1182"
+      ],
+      "accessType": [
+        "physical"
+      ],
+      "pid": [
+        "870971-avis:73336317"
+      ],
+      "language": [
+        "Dansk"
+      ],
+      "partOf": [
+        "Jyllands-posten, 1989-11-19"
+      ],
+      "title": [
+        "Højt til hest"
+      ],
+      "titleFull": [
+        "Højt til hest"
+      ],
+      "type": [
+        "Avisartikel"
+      ],
+      "workType": [
+        "article"
+      ]
+    },
+    {
+      "collection": [
+        "870971-tsart:72922190"
+      ],
+      "collectionDetails": [
+        {
+          "accessType": [
+            "physical"
+          ],
+          "pid": [
+            "870971-tsart:72922190"
+          ],
+          "language": [
+            "Flere sprog"
+          ],
+          "partOf": [
+            "Dansk veterinærtidsskrift, Årg. 71, nr. 10 (1988)"
+          ],
+          "title": [
+            "Boltskydning af hest"
+          ],
+          "titleFull": [
+            "Boltskydning af hest"
+          ],
+          "type": [
+            "Tidsskriftsartikel"
+          ],
+          "workType": [
+            "article"
+          ]
+        }
+      ],
+      "acIdentifier": [
+        "72922190|870971"
+      ],
+      "acSource": [
+        "Tidsskriftsartikler"
+      ],
+      "dcTitle": [
+        "Boltskydning af hest"
+      ],
+      "dcTitleFull": [
+        "Boltskydning af hest"
+      ],
+      "audience": [
+        "voksenmaterialer"
+      ],
+      "date": [
+        "1988"
+      ],
+      "typeBibDKType": [
+        "Tidsskriftsartikel"
+      ],
+      "extent": [
+        "S. 548"
+      ],
+      "languageISO6392": [
+        "mul"
+      ],
+      "dcLanguage": [
+        "Flere sprog"
+      ],
+      "isPartOf": [
+        "Dansk veterinærtidsskrift, Årg. 71, nr. 10 (1988)"
+      ],
+      "isPartOfISSN": [
+        "0106-6854"
+      ],
+      "accessType": [
+        "physical"
+      ],
+      "pid": [
+        "870971-tsart:72922190"
+      ],
+      "language": [
+        "Flere sprog"
+      ],
+      "partOf": [
+        "Dansk veterinærtidsskrift, Årg. 71, nr. 10 (1988)"
+      ],
+      "title": [
+        "Boltskydning af hest"
+      ],
+      "titleFull": [
+        "Boltskydning af hest"
+      ],
+      "type": [
+        "Tidsskriftsartikel"
+      ],
+      "workType": [
+        "article"
+      ]
+    },
+    {
+      "collection": [
+        "870971-avis:73528070"
+      ],
+      "collectionDetails": [
+        {
+          "accessType": [
+            "physical"
+          ],
+          "creator": [
+            "Niels Rohleder"
+          ],
+          "pid": [
+            "870971-avis:73528070"
+          ],
+          "language": [
+            "Dansk"
+          ],
+          "partOf": [
+            "Information, 1990-05-17"
+          ],
+          "title": [
+            "Flertal støtter Juhl-Jørgensens ønskeseddel for Sorte Hest"
+          ],
+          "titleFull": [
+            "Flertal støtter Juhl-Jørgensens ønskeseddel for Sorte Hest"
+          ],
+          "type": [
+            "Avisartikel"
+          ],
+          "workType": [
+            "article"
+          ]
+        }
+      ],
+      "acIdentifier": [
+        "73528070|870971"
+      ],
+      "acSource": [
+        "Avisartikler"
+      ],
+      "dcTitle": [
+        "Flertal støtter Juhl-Jørgensens ønskeseddel for Sorte Hest"
+      ],
+      "dcTitleFull": [
+        "Flertal støtter Juhl-Jørgensens ønskeseddel for Sorte Hest"
+      ],
+      "dcCreator": [
+        "Niels Rohleder"
+      ],
+      "creatorSort": [
+        "Rohleder, Niels"
+      ],
+      "subjectDK5": [
+        "71.637 Sorte Hest"
+      ],
+      "subject": [
+        "Axel Juhl-Jørgensen",
+        "Sorte Hest (boligkarre)"
+      ],
+      "subjectSort": [
+        "Juhl-Jørgensen, Axel"
+      ],
+      "subjectDK5Text": [
+        "Enkelte københavnske lokaliteters arkitekturhistorie"
+      ],
+      "audience": [
+        "voksenmaterialer"
+      ],
+      "date": [
+        "1990"
+      ],
+      "typeBibDKType": [
+        "Avisartikel"
+      ],
+      "languageISO6392": [
+        "dan"
+      ],
+      "dcLanguage": [
+        "Dansk"
+      ],
+      "isPartOf": [
+        "Information, 1990-05-17"
+      ],
+      "isPartOfISSN": [
+        "1602-2572"
+      ],
+      "spatial": [
+        "København arkitektur",
+        "Vesterbro arkitektur"
+      ],
+      "accessType": [
+        "physical"
+      ],
+      "creator": [
+        "Niels Rohleder"
+      ],
+      "pid": [
+        "870971-avis:73528070"
+      ],
+      "language": [
+        "Dansk"
+      ],
+      "partOf": [
+        "Information, 1990-05-17"
+      ],
+      "title": [
+        "Flertal støtter Juhl-Jørgensens ønskeseddel for Sorte Hest"
+      ],
+      "titleFull": [
+        "Flertal støtter Juhl-Jørgensens ønskeseddel for Sorte Hest"
+      ],
+      "type": [
+        "Avisartikel"
+      ],
+      "workType": [
+        "article"
+      ]
+    },
+    {
+      "collection": [
+        "870971-tsart:73150272"
+      ],
+      "collectionDetails": [
+        {
+          "accessType": [
+            "physical"
+          ],
+          "creator": [
+            "Anna Panum"
+          ],
+          "pid": [
+            "870971-tsart:73150272"
+          ],
+          "language": [
+            "Dansk"
+          ],
+          "partOf": [
+            "Dyrene og os, Årg. 4, nr. 2 (1988)"
+          ],
+          "title": [
+            "Bryggerhesten - elsket og beundret dansk entertainer"
+          ],
+          "titleFull": [
+            "Bryggerhesten - elsket og beundret dansk entertainer"
+          ],
+          "type": [
+            "Tidsskriftsartikel"
+          ],
+          "workType": [
+            "article"
+          ]
+        }
+      ],
+      "acIdentifier": [
+        "73150272|870971"
+      ],
+      "acSource": [
+        "Tidsskriftsartikler"
+      ],
+      "dcTitle": [
+        "Bryggerhesten - elsket og beundret dansk entertainer"
+      ],
+      "dcTitleFull": [
+        "Bryggerhesten - elsket og beundret dansk entertainer"
+      ],
+      "dcCreator": [
+        "Anna Panum"
+      ],
+      "creatorSort": [
+        "Panum, Anna"
+      ],
+      "subjectDK5": [
+        "63.61"
+      ],
+      "subjectDK5Text": [
+        "Heste"
+      ],
+      "subject": [
+        "bryggerheste",
+        "hesteavl",
+        "jysk hest"
+      ],
+      "abstract": [
+        "Jysk hest"
+      ],
+      "audience": [
+        "voksenmaterialer"
+      ],
+      "date": [
+        "1988"
+      ],
+      "typeBibDKType": [
+        "Tidsskriftsartikel"
+      ],
+      "extent": [
+        "S. 4-5"
+      ],
+      "languageISO6392": [
+        "dan"
+      ],
+      "dcLanguage": [
+        "Dansk"
+      ],
+      "isPartOf": [
+        "Dyrene og os, Årg. 4, nr. 2 (1988)"
+      ],
+      "isPartOfISSN": [
+        "0902-3879"
+      ],
+      "accessType": [
+        "physical"
+      ],
+      "creator": [
+        "Anna Panum"
+      ],
+      "pid": [
+        "870971-tsart:73150272"
+      ],
+      "language": [
+        "Dansk"
+      ],
+      "partOf": [
+        "Dyrene og os, Årg. 4, nr. 2 (1988)"
+      ],
+      "title": [
+        "Bryggerhesten - elsket og beundret dansk entertainer"
+      ],
+      "titleFull": [
+        "Bryggerhesten - elsket og beundret dansk entertainer"
+      ],
+      "type": [
+        "Tidsskriftsartikel"
+      ],
+      "workType": [
+        "article"
+      ]
+    },
+    {
+      "collection": [
+        "870971-tsart:72819683"
+      ],
+      "collectionDetails": [
+        {
+          "accessType": [
+            "physical"
+          ],
+          "creator": [
+            "Henning Rasmussen"
+          ],
+          "pid": [
+            "870971-tsart:72819683"
+          ],
+          "language": [
+            "Dansk"
+          ],
+          "partOf": [
+            "Hippologisk tidsskrift, Årg. 100, nr. 3 (1988)"
+          ],
+          "title": [
+            "Den jyske hest"
+          ],
+          "titleFull": [
+            "Den jyske hest"
+          ],
+          "type": [
+            "Tidsskriftsartikel"
+          ],
+          "workType": [
+            "article"
+          ]
+        }
+      ],
+      "acIdentifier": [
+        "72819683|870971"
+      ],
+      "acSource": [
+        "Tidsskriftsartikler"
+      ],
+      "dcTitle": [
+        "Den jyske hest"
+      ],
+      "dcTitleFull": [
+        "Den jyske hest"
+      ],
+      "dcCreator": [
+        "Henning Rasmussen"
+      ],
+      "creatorSort": [
+        "Rasmussen, Henning"
+      ],
+      "subjectDK5": [
+        "63.61"
+      ],
+      "subjectDK5Text": [
+        "Heste"
+      ],
+      "subject": [
+        "heste",
+        "hesteavl",
+        "jysk hest"
+      ],
+      "audience": [
+        "voksenmaterialer"
+      ],
+      "date": [
+        "1988"
+      ],
+      "typeBibDKType": [
+        "Tidsskriftsartikel"
+      ],
+      "extent": [
+        "S. 24-28"
+      ],
+      "languageISO6392": [
+        "dan"
+      ],
+      "dcLanguage": [
+        "Dansk"
+      ],
+      "isPartOf": [
+        "Hippologisk tidsskrift, Årg. 100, nr. 3 (1988)"
+      ],
+      "isPartOfISSN": [
+        "0018-201X"
+      ],
+      "accessType": [
+        "physical"
+      ],
+      "creator": [
+        "Henning Rasmussen"
+      ],
+      "pid": [
+        "870971-tsart:72819683"
+      ],
+      "language": [
+        "Dansk"
+      ],
+      "partOf": [
+        "Hippologisk tidsskrift, Årg. 100, nr. 3 (1988)"
+      ],
+      "title": [
+        "Den jyske hest"
+      ],
+      "titleFull": [
+        "Den jyske hest"
+      ],
+      "type": [
+        "Tidsskriftsartikel"
+      ],
+      "workType": [
+        "article"
+      ]
+    }
+  ]
+});
         done();
       })
       .catch(result => {
         fail({throw: result}, {
-          "statusCode": 200,
-          "data": [{
-            "collection": ["150043-atlas:8286"],
-            "collectionDetails": [{
-              "accessType": ["online"],
-              "pid": ["150043-atlas:8286"],
-              "language": ["Dansk"],
-              "title": ["Hest"],
-              "titleFull": ["Hest"],
-              "type": ["Netdokument"],
-              "workType": ["book"]
-            }],
-            "acIdentifier": ["72819675|870971"],
-            "acSource": ["Tidsskriftsartikler"],
-            "dcTitle": ["Den belgiske hest"],
-            "dcTitleFull": ["Den belgiske hest"],
-            "dcCreator": ["Henning Rasmussen"],
-            "creatorSort": ["Rasmussen, Henning"],
-            "subjectDK5": ["63.61"],
-            "subjectDK5Text": ["Heste"],
-            "subject": ["belgisk hest", "hesteavl"],
-            "audience": ["voksenmaterialer"],
-            "date": ["1988"],
-            "typeBibDKType": ["Tidsskriftsartikel"],
-            "extent": ["S. 29-31"],
-            "languageISO6392": ["dan"],
-            "dcLanguage": ["Dansk"],
-            "isPartOf": ["Hippologisk tidsskrift, Årg. 100, nr. 3 (1988)"],
-            "isPartOfISSN": ["0018-201X"],
-            "accessType": ["physical"],
-            "creator": ["Henning Rasmussen"],
-            "pid": ["870971-tsart:72819675"],
-            "language": ["Dansk"],
-            "partOf": ["Hippologisk tidsskrift, Årg. 100, nr. 3 (1988)"],
-            "title": ["Den belgiske hest"],
-            "titleFull": ["Den belgiske hest"],
-            "type": ["Tidsskriftsartikel"],
-            "workType": ["article"]
-          }, {
-            "collection": ["775100-katalog:06402917"],
-            "collectionDetails": [{
-              "accessType": ["physical"],
-              "creator": ["Teaterværkstedet Den Blå Hest"],
-              "pid": ["775100-katalog:06402917"],
-              "language": ["Engelsk"],
-              "title": ["Teaterværkstedet Den blå Hest 1976-1986"],
-              "titleFull": ["Teaterværkstedet Den blå Hest 1976-1986"],
-              "type": ["Bog"],
-              "workType": ["book"]
-            }],
-            "acIdentifier": ["73458110|870971"],
-            "acSource": ["Avisartikler"],
-            "dcTitle": ["Slaget om Sorte Hest. En lang, lang konflikt"],
-            "dcTitleFull": ["Slaget om Sorte Hest : En lang, lang konflikt"],
-            "dcCreator": ["Per Mikael Jensen"],
-            "creatorSort": ["Jensen, Per Mikael"],
-            "subjectDK5": ["71.637 Sorte Hest"],
-            "subject": ["BZ'ere", "Sorte Hest (boligkarre)"],
-            "subjectDK5Text": ["Enkelte københavnske lokaliteters arkitekturhistorie"],
-            "abstract": ["Sorte Hest, Vesterbro, København"],
-            "audience": ["voksenmaterialer"],
-            "date": ["1990"],
-            "typeBibDKType": ["Avisartikel"],
-            "languageISO6392": ["dan"],
-            "dcLanguage": ["Dansk"],
-            "isPartOf": ["Politiken, 1990-03-11"],
-            "isPartOfISSN": ["0907-1814"],
-            "spatial": ["København arkitektur", "Vesterbro arkitektur"],
-            "accessType": ["physical"],
-            "creator": ["Per Mikael Jensen"],
-            "pid": ["870971-avis:73458110"],
-            "language": ["Dansk"],
-            "partOf": ["Politiken, 1990-03-11"],
-            "title": ["Slaget om Sorte Hest. En lang, lang konflikt"],
-            "titleFull": ["Slaget om Sorte Hest. En lang, lang konflikt"],
-            "type": ["Avisartikel"],
-            "workType": ["article"]
-          }, {
-            "collection": ["775100-katalog:26476720", "870970-basis:50542882"],
-            "collectionDetails": [{
-              "accessType": ["physical"],
-              "creator": ["Sarah Widdicombe"],
-              "pid": ["775100-katalog:26476720"],
-              "language": ["Dansk"],
-              "title": ["Den sunde hest"],
-              "titleFull": ["Den sunde hest : hold din hest sund i ryg, ben og tænder"],
-              "type": ["Bog"],
-              "workType": ["book"]
-            }, {
-              "accessType": ["online"],
-              "pid": ["870970-basis:50542882"],
-              "language": ["Dansk"],
-              "title": ["Den sunde hest"],
-              "titleFull": ["Den sunde hest : hvordan du holder din hests ryg, ben og tænder sunde"],
-              "type": ["Ebog"],
-              "workType": ["book"]
-            }],
-            "acIdentifier": ["8286|150043"],
-            "identifierURI": ["http://historiskatlas.dk/Hest_(8286)"],
-            "acSource": ["Historisk Atlas"],
-            "dcTitle": ["Hest"],
-            "dcTitleFull": ["Hest"],
-            "subject": ["Kunst", "Skulpturer"],
-            "abstract": ["Agnete Ester Votborg Madsen (1923-1977)\nHest, u.å."],
-            "audience": ["voksenmaterialer"],
-            "publisher": ["Historisk Atlas"],
-            "typeBibDKType": ["Netdokument"],
-            "languageISO6392": ["dan"],
-            "dcLanguage": ["Dansk"],
-            "spatialCoordinates": ["10.427599112429400000000000000,55.366856304806300000000000000"],
-            "accessType": ["online"],
-            "pid": ["150043-atlas:8286"],
-            "language": ["Dansk"],
-            "title": ["Hest"],
-            "titleFull": ["Hest"],
-            "type": ["Netdokument"],
-            "workType": ["book"]
-          }, {
-            "collection": ["775100-katalog:29567085"],
-            "collectionDetails": [{
-              "accessType": ["physical"],
-              "creator": ["Pia Halse"],
-              "pid": ["775100-katalog:29567085"],
-              "language": ["Dansk"],
-              "title": ["Tork og Hest"],
-              "titleFull": ["Tork og Hest"],
-              "type": ["Bog"],
-              "workType": ["book"]
-            }],
-            "acIdentifier": ["11942|150033"],
-            "identifierURI": ["http://bibliotek.danske-dyr.dk/Sv%C3%A6r/dyr/Jysk%20hest/"],
-            "acSource": ["Danske Dyr"],
-            "dcTitle": ["Jysk hest"],
-            "dcTitleFull": ["Jysk hest"],
-            "alternative": ["Den jyske hest", "den jydske hest", "Jydsk hest", "jydske heste"],
-            "creatorCom": ["danske-dyr.dk"],
-            "creatorSort": ["danske-dyr.dk"],
-            "subject": ["Zoologi", "Biologi"],
-            "audience": ["børnematerialer"],
-            "publisher": ["ConDidact A/S"],
-            "date": ["2009"],
-            "typeBibDKType": ["Netdokument"],
-            "dcLanguage": ["Dansk"],
-            "languageISO6392": ["dan"],
-            "rights": ["Copyright © 2016 ConDidact A/S"],
-            "accessType": ["online"],
-            "creator": ["danske-dyr.dk"],
-            "pid": ["150033-dandyr:11942"],
-            "language": ["Dansk"],
-            "title": ["Jysk hest"],
-            "titleFull": ["Jysk hest"],
-            "type": ["Netdokument"],
-            "workType": ["book"]
-          }, {
-            "collection": ["150033-dandyr:8802"],
-            "collectionDetails": [{
-              "accessType": ["online"],
-              "creator": ["danske-dyr.dk"],
-              "pid": ["150033-dandyr:8802"],
-              "language": ["Dansk"],
-              "title": ["Hest"],
-              "titleFull": ["Hest"],
-              "type": ["Netdokument"],
-              "workType": ["book"]
-            }],
-            "acIdentifier": ["83321857|870971"],
-            "acSource": ["Tidsskriftsartikler"],
-            "dcTitle": ["Fare for indavl på længere sigt. Den jydske hest i positiv udvikling"],
-            "dcTitleFull": ["Fare for indavl på længere sigt : Den jydske hest i positiv udvikling"],
-            "dcCreator": ["Olav Rasmussen"],
-            "creatorSort": ["Rasmussen, Olav"],
-            "subjectDK5": ["63.61"],
-            "subjectDK5Text": ["Heste"],
-            "subjectDBCF": ["den jydske hest", "frederiksborgheste", "heste", "hesteavl", "indavl"],
-            "abstract": ["Frederiksborgheste og den jydske hest"],
-            "audience": ["voksenmaterialer"],
-            "date": ["1996"],
-            "typeBibDKType": ["Tidsskriftsartikel"],
-            "format": ["illustreret"],
-            "extent": ["S. 16-18"],
-            "languageISO6392": ["dan"],
-            "dcLanguage": ["Dansk"],
-            "isPartOf": ["Landsbladet Hest, 1996, nr. 4"],
-            "isPartOfISSN": ["0906-6616"],
-            "accessType": ["physical"],
-            "creator": ["Olav Rasmussen"],
-            "pid": ["870971-tsart:83321857"],
-            "language": ["Dansk"],
-            "partOf": ["Landsbladet Hest, 1996, nr. 4"],
-            "title": ["Fare for indavl på længere sigt. Den jydske hest i positiv udvikling"],
-            "titleFull": ["Fare for indavl på længere sigt. Den jydske hest i positiv udvikling"],
-            "type": ["Tidsskriftsartikel"],
-            "workType": ["article"]
-          }, {
-            "collection": ["150033-dandyr:11942"],
-            "collectionDetails": [{
-              "accessType": ["online"],
-              "creator": ["danske-dyr.dk"],
-              "pid": ["150033-dandyr:11942"],
-              "language": ["Dansk"],
-              "title": ["Jysk hest"],
-              "titleFull": ["Jysk hest"],
-              "type": ["Netdokument"],
-              "workType": ["book"]
-            }],
-            "acIdentifier": ["73336317|870971"],
-            "acSource": ["Avisartikler"],
-            "dcTitle": ["Højt til hest"],
-            "dcTitleFull": ["Højt til hest"],
-            "audience": ["voksenmaterialer"],
-            "date": ["1989"],
-            "typeBibDKType": ["Avisartikel"],
-            "languageISO6392": ["dan"],
-            "dcLanguage": ["Dansk"],
-            "isPartOf": ["Jyllands-posten, 1989-11-19"],
-            "isPartOfISSN": ["0109-1182"],
-            "accessType": ["physical"],
-            "pid": ["870971-avis:73336317"],
-            "language": ["Dansk"],
-            "partOf": ["Jyllands-posten, 1989-11-19"],
-            "title": ["Højt til hest"],
-            "titleFull": ["Højt til hest"],
-            "type": ["Avisartikel"],
-            "workType": ["article"]
-          }, {
-            "collection": ["775100-katalog:25230701", "775100-katalog:28250355"],
-            "collectionDetails": [{
-              "accessType": ["physical"],
-              "pid": ["775100-katalog:25230701"],
-              "language": ["Dansk"],
-              "title": ["Den klassiske grunduddannelse af rytter & hest"],
-              "titleFull": ["Den klassiske grunduddannelse af rytter & hest"],
-              "type": ["Bog (Bind 1)"],
-              "workType": ["book"]
-            }, {
-              "accessType": ["physical"],
-              "pid": ["775100-katalog:28250355"],
-              "language": ["Dansk"],
-              "title": ["Den klassiske grunduddannelse af rytter & hest"],
-              "titleFull": ["Den klassiske grunduddannelse af rytter & hest"],
-              "type": ["Bog (bind 2)"],
-              "workType": ["book"]
-            }],
-            "acIdentifier": ["72922190|870971"],
-            "acSource": ["Tidsskriftsartikler"],
-            "dcTitle": ["Boltskydning af hest"],
-            "dcTitleFull": ["Boltskydning af hest"],
-            "audience": ["voksenmaterialer"],
-            "date": ["1988"],
-            "typeBibDKType": ["Tidsskriftsartikel"],
-            "extent": ["S. 548"],
-            "languageISO6392": ["mul"],
-            "dcLanguage": ["Flere sprog"],
-            "isPartOf": ["Dansk veterinærtidsskrift, Årg. 71, nr. 10 (1988)"],
-            "isPartOfISSN": ["0106-6854"],
-            "accessType": ["physical"],
-            "pid": ["870971-tsart:72922190"],
-            "language": ["Flere sprog"],
-            "partOf": ["Dansk veterinærtidsskrift, Årg. 71, nr. 10 (1988)"],
-            "title": ["Boltskydning af hest"],
-            "titleFull": ["Boltskydning af hest"],
-            "type": ["Tidsskriftsartikel"],
-            "workType": ["article"]
-          }, {
-            "collection": ["775100-katalog:28446594"],
-            "collectionDetails": [{
-              "accessType": ["physical"],
-              "creator": ["Gerd Heuschmann"],
-              "pid": ["775100-katalog:28446594"],
-              "language": ["Dansk"],
-              "title": ["Min hest har næsen forrest!"],
-              "titleFull": ["Min hest har næsen forrest! : rid rigtigt og få en sund hest"],
-              "type": ["Bog"],
-              "workType": ["book"]
-            }],
-            "acIdentifier": ["73528070|870971"],
-            "acSource": ["Avisartikler"],
-            "dcTitle": ["Flertal støtter Juhl-Jørgensens ønskeseddel for Sorte Hest"],
-            "dcTitleFull": ["Flertal støtter Juhl-Jørgensens ønskeseddel for Sorte Hest"],
-            "dcCreator": ["Niels Rohleder"],
-            "creatorSort": ["Rohleder, Niels"],
-            "subjectDK5": ["71.637 Sorte Hest"],
-            "subject": ["Axel Juhl-Jørgensen", "Sorte Hest (boligkarre)"],
-            "subjectSort": ["Juhl-Jørgensen, Axel"],
-            "subjectDK5Text": ["Enkelte københavnske lokaliteters arkitekturhistorie"],
-            "audience": ["voksenmaterialer"],
-            "date": ["1990"],
-            "typeBibDKType": ["Avisartikel"],
-            "languageISO6392": ["dan"],
-            "dcLanguage": ["Dansk"],
-            "isPartOf": ["Information, 1990-05-17"],
-            "isPartOfISSN": ["1602-2572"],
-            "spatial": ["København arkitektur", "Vesterbro arkitektur"],
-            "accessType": ["physical"],
-            "creator": ["Niels Rohleder"],
-            "pid": ["870971-avis:73528070"],
-            "language": ["Dansk"],
-            "partOf": ["Information, 1990-05-17"],
-            "title": ["Flertal støtter Juhl-Jørgensens ønskeseddel for Sorte Hest"],
-            "titleFull": ["Flertal støtter Juhl-Jørgensens ønskeseddel for Sorte Hest"],
-            "type": ["Avisartikel"],
-            "workType": ["article"]
-          }, {
-            "collection": ["150043-atlas:2760"],
-            "collectionDetails": [{
-              "accessType": ["online"],
-              "pid": ["150043-atlas:2760"],
-              "language": ["Dansk"],
-              "title": ["Christian IVs redningsmand"],
-              "titleFull": ["Christian IVs redningsmand"],
-              "type": ["Netdokument"],
-              "workType": ["book"]
-            }],
-            "acIdentifier": ["73150272|870971"],
-            "acSource": ["Tidsskriftsartikler"],
-            "dcTitle": ["Bryggerhesten - elsket og beundret dansk entertainer"],
-            "dcTitleFull": ["Bryggerhesten - elsket og beundret dansk entertainer"],
-            "dcCreator": ["Anna Panum"],
-            "creatorSort": ["Panum, Anna"],
-            "subjectDK5": ["63.61"],
-            "subjectDK5Text": ["Heste"],
-            "subject": ["bryggerheste", "hesteavl", "jysk hest"],
-            "abstract": ["Jysk hest"],
-            "audience": ["voksenmaterialer"],
-            "date": ["1988"],
-            "typeBibDKType": ["Tidsskriftsartikel"],
-            "extent": ["S. 4-5"],
-            "languageISO6392": ["dan"],
-            "dcLanguage": ["Dansk"],
-            "isPartOf": ["Dyrene og os, Årg. 4, nr. 2 (1988)"],
-            "isPartOfISSN": ["0902-3879"],
-            "accessType": ["physical"],
-            "creator": ["Anna Panum"],
-            "pid": ["870971-tsart:73150272"],
-            "language": ["Dansk"],
-            "partOf": ["Dyrene og os, Årg. 4, nr. 2 (1988)"],
-            "title": ["Bryggerhesten - elsket og beundret dansk entertainer"],
-            "titleFull": ["Bryggerhesten - elsket og beundret dansk entertainer"],
-            "type": ["Tidsskriftsartikel"],
-            "workType": ["article"]
-          }, {
-            "collection": ["775100-katalog:28597584"],
-            "collectionDetails": [{
-              "accessType": ["physical"],
-              "creator": ["Bettina Hvidemose"],
-              "pid": ["775100-katalog:28597584"],
-              "language": ["Dansk"],
-              "title": ["Indlæringspsykologi for hest og rytter"],
-              "titleFull": ["Indlæringspsykologi for hest og rytter : lær din hest at forstå dig!"],
-              "type": ["Bog"],
-              "workType": ["book"]
-            }],
-            "acIdentifier": ["72819683|870971"],
-            "acSource": ["Tidsskriftsartikler"],
-            "dcTitle": ["Den jyske hest"],
-            "dcTitleFull": ["Den jyske hest"],
-            "dcCreator": ["Henning Rasmussen"],
-            "creatorSort": ["Rasmussen, Henning"],
-            "subjectDK5": ["63.61"],
-            "subjectDK5Text": ["Heste"],
-            "subject": ["heste", "hesteavl", "jysk hest"],
-            "audience": ["voksenmaterialer"],
-            "date": ["1988"],
-            "typeBibDKType": ["Tidsskriftsartikel"],
-            "extent": ["S. 24-28"],
-            "languageISO6392": ["dan"],
-            "dcLanguage": ["Dansk"],
-            "isPartOf": ["Hippologisk tidsskrift, Årg. 100, nr. 3 (1988)"],
-            "isPartOfISSN": ["0018-201X"],
-            "accessType": ["physical"],
-            "creator": ["Henning Rasmussen"],
-            "pid": ["870971-tsart:72819683"],
-            "language": ["Dansk"],
-            "partOf": ["Hippologisk tidsskrift, Årg. 100, nr. 3 (1988)"],
-            "title": ["Den jyske hest"],
-            "titleFull": ["Den jyske hest"],
-            "type": ["Tidsskriftsartikel"],
-            "workType": ["article"]
-          }]
-        });
+  "statusCode": 200,
+  "data": [
+    {
+      "collection": [
+        "870971-tsart:72819675"
+      ],
+      "collectionDetails": [
+        {
+          "accessType": [
+            "physical"
+          ],
+          "creator": [
+            "Henning Rasmussen"
+          ],
+          "pid": [
+            "870971-tsart:72819675"
+          ],
+          "language": [
+            "Dansk"
+          ],
+          "partOf": [
+            "Hippologisk tidsskrift, Årg. 100, nr. 3 (1988)"
+          ],
+          "title": [
+            "Den belgiske hest"
+          ],
+          "titleFull": [
+            "Den belgiske hest"
+          ],
+          "type": [
+            "Tidsskriftsartikel"
+          ],
+          "workType": [
+            "article"
+          ]
+        }
+      ],
+      "acIdentifier": [
+        "72819675|870971"
+      ],
+      "acSource": [
+        "Tidsskriftsartikler"
+      ],
+      "dcTitle": [
+        "Den belgiske hest"
+      ],
+      "dcTitleFull": [
+        "Den belgiske hest"
+      ],
+      "dcCreator": [
+        "Henning Rasmussen"
+      ],
+      "creatorSort": [
+        "Rasmussen, Henning"
+      ],
+      "subjectDK5": [
+        "63.61"
+      ],
+      "subjectDK5Text": [
+        "Heste"
+      ],
+      "subject": [
+        "belgisk hest",
+        "hesteavl"
+      ],
+      "audience": [
+        "voksenmaterialer"
+      ],
+      "date": [
+        "1988"
+      ],
+      "typeBibDKType": [
+        "Tidsskriftsartikel"
+      ],
+      "extent": [
+        "S. 29-31"
+      ],
+      "languageISO6392": [
+        "dan"
+      ],
+      "dcLanguage": [
+        "Dansk"
+      ],
+      "isPartOf": [
+        "Hippologisk tidsskrift, Årg. 100, nr. 3 (1988)"
+      ],
+      "isPartOfISSN": [
+        "0018-201X"
+      ],
+      "accessType": [
+        "physical"
+      ],
+      "creator": [
+        "Henning Rasmussen"
+      ],
+      "pid": [
+        "870971-tsart:72819675"
+      ],
+      "language": [
+        "Dansk"
+      ],
+      "partOf": [
+        "Hippologisk tidsskrift, Årg. 100, nr. 3 (1988)"
+      ],
+      "title": [
+        "Den belgiske hest"
+      ],
+      "titleFull": [
+        "Den belgiske hest"
+      ],
+      "type": [
+        "Tidsskriftsartikel"
+      ],
+      "workType": [
+        "article"
+      ]
+    },
+    {
+      "collection": [
+        "870971-avis:73458110"
+      ],
+      "collectionDetails": [
+        {
+          "accessType": [
+            "physical"
+          ],
+          "creator": [
+            "Per Mikael Jensen"
+          ],
+          "pid": [
+            "870971-avis:73458110"
+          ],
+          "language": [
+            "Dansk"
+          ],
+          "partOf": [
+            "Politiken, 1990-03-11"
+          ],
+          "title": [
+            "Slaget om Sorte Hest. En lang, lang konflikt"
+          ],
+          "titleFull": [
+            "Slaget om Sorte Hest. En lang, lang konflikt"
+          ],
+          "type": [
+            "Avisartikel"
+          ],
+          "workType": [
+            "article"
+          ]
+        }
+      ],
+      "acIdentifier": [
+        "73458110|870971"
+      ],
+      "acSource": [
+        "Avisartikler"
+      ],
+      "dcTitle": [
+        "Slaget om Sorte Hest. En lang, lang konflikt"
+      ],
+      "dcTitleFull": [
+        "Slaget om Sorte Hest : En lang, lang konflikt"
+      ],
+      "dcCreator": [
+        "Per Mikael Jensen"
+      ],
+      "creatorSort": [
+        "Jensen, Per Mikael"
+      ],
+      "subjectDK5": [
+        "71.637 Sorte Hest"
+      ],
+      "subject": [
+        "BZ'ere",
+        "Sorte Hest (boligkarre)"
+      ],
+      "subjectDK5Text": [
+        "Enkelte københavnske lokaliteters arkitekturhistorie"
+      ],
+      "abstract": [
+        "Sorte Hest, Vesterbro, København"
+      ],
+      "audience": [
+        "voksenmaterialer"
+      ],
+      "date": [
+        "1990"
+      ],
+      "typeBibDKType": [
+        "Avisartikel"
+      ],
+      "languageISO6392": [
+        "dan"
+      ],
+      "dcLanguage": [
+        "Dansk"
+      ],
+      "isPartOf": [
+        "Politiken, 1990-03-11"
+      ],
+      "isPartOfISSN": [
+        "0907-1814"
+      ],
+      "spatial": [
+        "København arkitektur",
+        "Vesterbro arkitektur"
+      ],
+      "accessType": [
+        "physical"
+      ],
+      "creator": [
+        "Per Mikael Jensen"
+      ],
+      "pid": [
+        "870971-avis:73458110"
+      ],
+      "language": [
+        "Dansk"
+      ],
+      "partOf": [
+        "Politiken, 1990-03-11"
+      ],
+      "title": [
+        "Slaget om Sorte Hest. En lang, lang konflikt"
+      ],
+      "titleFull": [
+        "Slaget om Sorte Hest. En lang, lang konflikt"
+      ],
+      "type": [
+        "Avisartikel"
+      ],
+      "workType": [
+        "article"
+      ]
+    },
+    {
+      "collection": [
+        "150043-atlas:8286"
+      ],
+      "collectionDetails": [
+        {
+          "accessType": [
+            "online"
+          ],
+          "pid": [
+            "150043-atlas:8286"
+          ],
+          "language": [
+            "Dansk"
+          ],
+          "title": [
+            "Hest"
+          ],
+          "titleFull": [
+            "Hest"
+          ],
+          "type": [
+            "Netdokument"
+          ],
+          "workType": [
+            "book"
+          ]
+        }
+      ],
+      "acIdentifier": [
+        "8286|150043"
+      ],
+      "identifierURI": [
+        "http://historiskatlas.dk/Hest_(8286)"
+      ],
+      "acSource": [
+        "Historisk Atlas"
+      ],
+      "dcTitle": [
+        "Hest"
+      ],
+      "dcTitleFull": [
+        "Hest"
+      ],
+      "subject": [
+        "Kunst",
+        "Skulpturer"
+      ],
+      "abstract": [
+        "Agnete Ester Votborg Madsen (1923-1977)\nHest, u.å."
+      ],
+      "audience": [
+        "voksenmaterialer"
+      ],
+      "publisher": [
+        "Historisk Atlas"
+      ],
+      "typeBibDKType": [
+        "Netdokument"
+      ],
+      "languageISO6392": [
+        "dan"
+      ],
+      "dcLanguage": [
+        "Dansk"
+      ],
+      "spatialCoordinates": [
+        "10.427599112429400000000000000,55.366856304806300000000000000"
+      ],
+      "accessType": [
+        "online"
+      ],
+      "pid": [
+        "150043-atlas:8286"
+      ],
+      "language": [
+        "Dansk"
+      ],
+      "title": [
+        "Hest"
+      ],
+      "titleFull": [
+        "Hest"
+      ],
+      "type": [
+        "Netdokument"
+      ],
+      "workType": [
+        "book"
+      ]
+    },
+    {
+      "collection": [
+        "150033-dandyr:11942"
+      ],
+      "collectionDetails": [
+        {
+          "accessType": [
+            "online"
+          ],
+          "creator": [
+            "danske-dyr.dk"
+          ],
+          "pid": [
+            "150033-dandyr:11942"
+          ],
+          "language": [
+            "Dansk"
+          ],
+          "title": [
+            "Jysk hest"
+          ],
+          "titleFull": [
+            "Jysk hest"
+          ],
+          "type": [
+            "Netdokument"
+          ],
+          "workType": [
+            "book"
+          ]
+        }
+      ],
+      "acIdentifier": [
+        "11942|150033"
+      ],
+      "identifierURI": [
+        "http://bibliotek.danske-dyr.dk/Sv%C3%A6r/dyr/Jysk%20hest/"
+      ],
+      "acSource": [
+        "Danske Dyr"
+      ],
+      "dcTitle": [
+        "Jysk hest"
+      ],
+      "dcTitleFull": [
+        "Jysk hest"
+      ],
+      "alternative": [
+        "Den jyske hest",
+        "den jydske hest",
+        "Jydsk hest",
+        "jydske heste"
+      ],
+      "creatorCom": [
+        "danske-dyr.dk"
+      ],
+      "creatorSort": [
+        "danske-dyr.dk"
+      ],
+      "subject": [
+        "Zoologi",
+        "Biologi"
+      ],
+      "audience": [
+        "børnematerialer"
+      ],
+      "publisher": [
+        "ConDidact A/S"
+      ],
+      "date": [
+        "2009"
+      ],
+      "typeBibDKType": [
+        "Netdokument"
+      ],
+      "dcLanguage": [
+        "Dansk"
+      ],
+      "languageISO6392": [
+        "dan"
+      ],
+      "rights": [
+        "Copyright © 2016 ConDidact A/S"
+      ],
+      "accessType": [
+        "online"
+      ],
+      "creator": [
+        "danske-dyr.dk"
+      ],
+      "pid": [
+        "150033-dandyr:11942"
+      ],
+      "language": [
+        "Dansk"
+      ],
+      "title": [
+        "Jysk hest"
+      ],
+      "titleFull": [
+        "Jysk hest"
+      ],
+      "type": [
+        "Netdokument"
+      ],
+      "workType": [
+        "book"
+      ]
+    },
+    {
+      "collection": [
+        "870971-tsart:83321857"
+      ],
+      "collectionDetails": [
+        {
+          "accessType": [
+            "physical"
+          ],
+          "creator": [
+            "Olav Rasmussen"
+          ],
+          "pid": [
+            "870971-tsart:83321857"
+          ],
+          "language": [
+            "Dansk"
+          ],
+          "partOf": [
+            "Landsbladet Hest, 1996, nr. 4"
+          ],
+          "title": [
+            "Fare for indavl på længere sigt. Den jydske hest i positiv udvikling"
+          ],
+          "titleFull": [
+            "Fare for indavl på længere sigt. Den jydske hest i positiv udvikling"
+          ],
+          "type": [
+            "Tidsskriftsartikel"
+          ],
+          "workType": [
+            "article"
+          ]
+        }
+      ],
+      "acIdentifier": [
+        "83321857|870971"
+      ],
+      "acSource": [
+        "Tidsskriftsartikler"
+      ],
+      "dcTitle": [
+        "Fare for indavl på længere sigt. Den jydske hest i positiv udvikling"
+      ],
+      "dcTitleFull": [
+        "Fare for indavl på længere sigt : Den jydske hest i positiv udvikling"
+      ],
+      "dcCreator": [
+        "Olav Rasmussen"
+      ],
+      "creatorSort": [
+        "Rasmussen, Olav"
+      ],
+      "subjectDK5": [
+        "63.61"
+      ],
+      "subjectDK5Text": [
+        "Heste"
+      ],
+      "subjectDBCF": [
+        "den jydske hest",
+        "frederiksborgheste",
+        "heste",
+        "hesteavl",
+        "indavl"
+      ],
+      "abstract": [
+        "Frederiksborgheste og den jydske hest"
+      ],
+      "audience": [
+        "voksenmaterialer"
+      ],
+      "date": [
+        "1996"
+      ],
+      "typeBibDKType": [
+        "Tidsskriftsartikel"
+      ],
+      "format": [
+        "illustreret"
+      ],
+      "extent": [
+        "S. 16-18"
+      ],
+      "languageISO6392": [
+        "dan"
+      ],
+      "dcLanguage": [
+        "Dansk"
+      ],
+      "isPartOf": [
+        "Landsbladet Hest, 1996, nr. 4"
+      ],
+      "isPartOfISSN": [
+        "0906-6616"
+      ],
+      "accessType": [
+        "physical"
+      ],
+      "creator": [
+        "Olav Rasmussen"
+      ],
+      "pid": [
+        "870971-tsart:83321857"
+      ],
+      "language": [
+        "Dansk"
+      ],
+      "partOf": [
+        "Landsbladet Hest, 1996, nr. 4"
+      ],
+      "title": [
+        "Fare for indavl på længere sigt. Den jydske hest i positiv udvikling"
+      ],
+      "titleFull": [
+        "Fare for indavl på længere sigt. Den jydske hest i positiv udvikling"
+      ],
+      "type": [
+        "Tidsskriftsartikel"
+      ],
+      "workType": [
+        "article"
+      ]
+    },
+    {
+      "collection": [
+        "870971-avis:73336317"
+      ],
+      "collectionDetails": [
+        {
+          "accessType": [
+            "physical"
+          ],
+          "pid": [
+            "870971-avis:73336317"
+          ],
+          "language": [
+            "Dansk"
+          ],
+          "partOf": [
+            "Jyllands-posten, 1989-11-19"
+          ],
+          "title": [
+            "Højt til hest"
+          ],
+          "titleFull": [
+            "Højt til hest"
+          ],
+          "type": [
+            "Avisartikel"
+          ],
+          "workType": [
+            "article"
+          ]
+        }
+      ],
+      "acIdentifier": [
+        "73336317|870971"
+      ],
+      "acSource": [
+        "Avisartikler"
+      ],
+      "dcTitle": [
+        "Højt til hest"
+      ],
+      "dcTitleFull": [
+        "Højt til hest"
+      ],
+      "audience": [
+        "voksenmaterialer"
+      ],
+      "date": [
+        "1989"
+      ],
+      "typeBibDKType": [
+        "Avisartikel"
+      ],
+      "languageISO6392": [
+        "dan"
+      ],
+      "dcLanguage": [
+        "Dansk"
+      ],
+      "isPartOf": [
+        "Jyllands-posten, 1989-11-19"
+      ],
+      "isPartOfISSN": [
+        "0109-1182"
+      ],
+      "accessType": [
+        "physical"
+      ],
+      "pid": [
+        "870971-avis:73336317"
+      ],
+      "language": [
+        "Dansk"
+      ],
+      "partOf": [
+        "Jyllands-posten, 1989-11-19"
+      ],
+      "title": [
+        "Højt til hest"
+      ],
+      "titleFull": [
+        "Højt til hest"
+      ],
+      "type": [
+        "Avisartikel"
+      ],
+      "workType": [
+        "article"
+      ]
+    },
+    {
+      "collection": [
+        "870971-tsart:72922190"
+      ],
+      "collectionDetails": [
+        {
+          "accessType": [
+            "physical"
+          ],
+          "pid": [
+            "870971-tsart:72922190"
+          ],
+          "language": [
+            "Flere sprog"
+          ],
+          "partOf": [
+            "Dansk veterinærtidsskrift, Årg. 71, nr. 10 (1988)"
+          ],
+          "title": [
+            "Boltskydning af hest"
+          ],
+          "titleFull": [
+            "Boltskydning af hest"
+          ],
+          "type": [
+            "Tidsskriftsartikel"
+          ],
+          "workType": [
+            "article"
+          ]
+        }
+      ],
+      "acIdentifier": [
+        "72922190|870971"
+      ],
+      "acSource": [
+        "Tidsskriftsartikler"
+      ],
+      "dcTitle": [
+        "Boltskydning af hest"
+      ],
+      "dcTitleFull": [
+        "Boltskydning af hest"
+      ],
+      "audience": [
+        "voksenmaterialer"
+      ],
+      "date": [
+        "1988"
+      ],
+      "typeBibDKType": [
+        "Tidsskriftsartikel"
+      ],
+      "extent": [
+        "S. 548"
+      ],
+      "languageISO6392": [
+        "mul"
+      ],
+      "dcLanguage": [
+        "Flere sprog"
+      ],
+      "isPartOf": [
+        "Dansk veterinærtidsskrift, Årg. 71, nr. 10 (1988)"
+      ],
+      "isPartOfISSN": [
+        "0106-6854"
+      ],
+      "accessType": [
+        "physical"
+      ],
+      "pid": [
+        "870971-tsart:72922190"
+      ],
+      "language": [
+        "Flere sprog"
+      ],
+      "partOf": [
+        "Dansk veterinærtidsskrift, Årg. 71, nr. 10 (1988)"
+      ],
+      "title": [
+        "Boltskydning af hest"
+      ],
+      "titleFull": [
+        "Boltskydning af hest"
+      ],
+      "type": [
+        "Tidsskriftsartikel"
+      ],
+      "workType": [
+        "article"
+      ]
+    },
+    {
+      "collection": [
+        "870971-avis:73528070"
+      ],
+      "collectionDetails": [
+        {
+          "accessType": [
+            "physical"
+          ],
+          "creator": [
+            "Niels Rohleder"
+          ],
+          "pid": [
+            "870971-avis:73528070"
+          ],
+          "language": [
+            "Dansk"
+          ],
+          "partOf": [
+            "Information, 1990-05-17"
+          ],
+          "title": [
+            "Flertal støtter Juhl-Jørgensens ønskeseddel for Sorte Hest"
+          ],
+          "titleFull": [
+            "Flertal støtter Juhl-Jørgensens ønskeseddel for Sorte Hest"
+          ],
+          "type": [
+            "Avisartikel"
+          ],
+          "workType": [
+            "article"
+          ]
+        }
+      ],
+      "acIdentifier": [
+        "73528070|870971"
+      ],
+      "acSource": [
+        "Avisartikler"
+      ],
+      "dcTitle": [
+        "Flertal støtter Juhl-Jørgensens ønskeseddel for Sorte Hest"
+      ],
+      "dcTitleFull": [
+        "Flertal støtter Juhl-Jørgensens ønskeseddel for Sorte Hest"
+      ],
+      "dcCreator": [
+        "Niels Rohleder"
+      ],
+      "creatorSort": [
+        "Rohleder, Niels"
+      ],
+      "subjectDK5": [
+        "71.637 Sorte Hest"
+      ],
+      "subject": [
+        "Axel Juhl-Jørgensen",
+        "Sorte Hest (boligkarre)"
+      ],
+      "subjectSort": [
+        "Juhl-Jørgensen, Axel"
+      ],
+      "subjectDK5Text": [
+        "Enkelte københavnske lokaliteters arkitekturhistorie"
+      ],
+      "audience": [
+        "voksenmaterialer"
+      ],
+      "date": [
+        "1990"
+      ],
+      "typeBibDKType": [
+        "Avisartikel"
+      ],
+      "languageISO6392": [
+        "dan"
+      ],
+      "dcLanguage": [
+        "Dansk"
+      ],
+      "isPartOf": [
+        "Information, 1990-05-17"
+      ],
+      "isPartOfISSN": [
+        "1602-2572"
+      ],
+      "spatial": [
+        "København arkitektur",
+        "Vesterbro arkitektur"
+      ],
+      "accessType": [
+        "physical"
+      ],
+      "creator": [
+        "Niels Rohleder"
+      ],
+      "pid": [
+        "870971-avis:73528070"
+      ],
+      "language": [
+        "Dansk"
+      ],
+      "partOf": [
+        "Information, 1990-05-17"
+      ],
+      "title": [
+        "Flertal støtter Juhl-Jørgensens ønskeseddel for Sorte Hest"
+      ],
+      "titleFull": [
+        "Flertal støtter Juhl-Jørgensens ønskeseddel for Sorte Hest"
+      ],
+      "type": [
+        "Avisartikel"
+      ],
+      "workType": [
+        "article"
+      ]
+    },
+    {
+      "collection": [
+        "870971-tsart:73150272"
+      ],
+      "collectionDetails": [
+        {
+          "accessType": [
+            "physical"
+          ],
+          "creator": [
+            "Anna Panum"
+          ],
+          "pid": [
+            "870971-tsart:73150272"
+          ],
+          "language": [
+            "Dansk"
+          ],
+          "partOf": [
+            "Dyrene og os, Årg. 4, nr. 2 (1988)"
+          ],
+          "title": [
+            "Bryggerhesten - elsket og beundret dansk entertainer"
+          ],
+          "titleFull": [
+            "Bryggerhesten - elsket og beundret dansk entertainer"
+          ],
+          "type": [
+            "Tidsskriftsartikel"
+          ],
+          "workType": [
+            "article"
+          ]
+        }
+      ],
+      "acIdentifier": [
+        "73150272|870971"
+      ],
+      "acSource": [
+        "Tidsskriftsartikler"
+      ],
+      "dcTitle": [
+        "Bryggerhesten - elsket og beundret dansk entertainer"
+      ],
+      "dcTitleFull": [
+        "Bryggerhesten - elsket og beundret dansk entertainer"
+      ],
+      "dcCreator": [
+        "Anna Panum"
+      ],
+      "creatorSort": [
+        "Panum, Anna"
+      ],
+      "subjectDK5": [
+        "63.61"
+      ],
+      "subjectDK5Text": [
+        "Heste"
+      ],
+      "subject": [
+        "bryggerheste",
+        "hesteavl",
+        "jysk hest"
+      ],
+      "abstract": [
+        "Jysk hest"
+      ],
+      "audience": [
+        "voksenmaterialer"
+      ],
+      "date": [
+        "1988"
+      ],
+      "typeBibDKType": [
+        "Tidsskriftsartikel"
+      ],
+      "extent": [
+        "S. 4-5"
+      ],
+      "languageISO6392": [
+        "dan"
+      ],
+      "dcLanguage": [
+        "Dansk"
+      ],
+      "isPartOf": [
+        "Dyrene og os, Årg. 4, nr. 2 (1988)"
+      ],
+      "isPartOfISSN": [
+        "0902-3879"
+      ],
+      "accessType": [
+        "physical"
+      ],
+      "creator": [
+        "Anna Panum"
+      ],
+      "pid": [
+        "870971-tsart:73150272"
+      ],
+      "language": [
+        "Dansk"
+      ],
+      "partOf": [
+        "Dyrene og os, Årg. 4, nr. 2 (1988)"
+      ],
+      "title": [
+        "Bryggerhesten - elsket og beundret dansk entertainer"
+      ],
+      "titleFull": [
+        "Bryggerhesten - elsket og beundret dansk entertainer"
+      ],
+      "type": [
+        "Tidsskriftsartikel"
+      ],
+      "workType": [
+        "article"
+      ]
+    },
+    {
+      "collection": [
+        "870971-tsart:72819683"
+      ],
+      "collectionDetails": [
+        {
+          "accessType": [
+            "physical"
+          ],
+          "creator": [
+            "Henning Rasmussen"
+          ],
+          "pid": [
+            "870971-tsart:72819683"
+          ],
+          "language": [
+            "Dansk"
+          ],
+          "partOf": [
+            "Hippologisk tidsskrift, Årg. 100, nr. 3 (1988)"
+          ],
+          "title": [
+            "Den jyske hest"
+          ],
+          "titleFull": [
+            "Den jyske hest"
+          ],
+          "type": [
+            "Tidsskriftsartikel"
+          ],
+          "workType": [
+            "article"
+          ]
+        }
+      ],
+      "acIdentifier": [
+        "72819683|870971"
+      ],
+      "acSource": [
+        "Tidsskriftsartikler"
+      ],
+      "dcTitle": [
+        "Den jyske hest"
+      ],
+      "dcTitleFull": [
+        "Den jyske hest"
+      ],
+      "dcCreator": [
+        "Henning Rasmussen"
+      ],
+      "creatorSort": [
+        "Rasmussen, Henning"
+      ],
+      "subjectDK5": [
+        "63.61"
+      ],
+      "subjectDK5Text": [
+        "Heste"
+      ],
+      "subject": [
+        "heste",
+        "hesteavl",
+        "jysk hest"
+      ],
+      "audience": [
+        "voksenmaterialer"
+      ],
+      "date": [
+        "1988"
+      ],
+      "typeBibDKType": [
+        "Tidsskriftsartikel"
+      ],
+      "extent": [
+        "S. 24-28"
+      ],
+      "languageISO6392": [
+        "dan"
+      ],
+      "dcLanguage": [
+        "Dansk"
+      ],
+      "isPartOf": [
+        "Hippologisk tidsskrift, Årg. 100, nr. 3 (1988)"
+      ],
+      "isPartOfISSN": [
+        "0018-201X"
+      ],
+      "accessType": [
+        "physical"
+      ],
+      "creator": [
+        "Henning Rasmussen"
+      ],
+      "pid": [
+        "870971-tsart:72819683"
+      ],
+      "language": [
+        "Dansk"
+      ],
+      "partOf": [
+        "Hippologisk tidsskrift, Årg. 100, nr. 3 (1988)"
+      ],
+      "title": [
+        "Den jyske hest"
+      ],
+      "titleFull": [
+        "Den jyske hest"
+      ],
+      "type": [
+        "Tidsskriftsartikel"
+      ],
+      "workType": [
+        "article"
+      ]
+    }
+  ]
+});
         done();
       });
   });
