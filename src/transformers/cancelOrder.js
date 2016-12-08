@@ -1,4 +1,3 @@
-
 /**
  * @file
  * cancelOrder transformer.
@@ -8,11 +7,11 @@
 import {log} from '../utils';
 
 /**
-* Validate parameters
-*
-* @param {object} params parameters to validate
-* @throws if validation fails
-*/
+ * Validate parameters
+ *
+ * @param {object} params parameters to validate
+ * @throws if validation fails
+ */
 function validateParams(params) {
   if (!params.orderId) {
     throw ('missing orderId. Needed to cancel order');
@@ -20,10 +19,10 @@ function validateParams(params) {
 }
 
 /**
-* Constructs soap request to perform cancelOrder request
-* @param {object} param Parameters to substitute into soap request
-* @returns soap request string
-*/
+ * Constructs soap request to perform cancelOrder request
+ * @param {object} param Parameters to substitute into soap request
+ * @returns soap request string
+ */
 function constructSoap(params) {
 
   let soap = `<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:open="http://oss.dbc.dk/ns/openuserstatus">
@@ -66,8 +65,7 @@ export default (request, context) => {
     validateParams(request);
   } catch (err) { // eslint-disable-line brace-style
     return new Promise(resolve => {
-      return resolve({statusCode: 400,
-                      error: err});
+      return resolve({statusCode: 400, error: err});
     });
   }
 
