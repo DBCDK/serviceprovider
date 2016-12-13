@@ -74,8 +74,7 @@ function getUserParams(params) {
 * @param {object} param Parameters to substitute into soap request
 * @returns soap request string
 */
-function constructSoap(pidList, expireDate, params) {
-
+function constructSoap(pidList, expireDate, params, orderSystem) {
   let userParams = getUserParams(params);
 
   let soap = `<SOAP-ENV:Envelope xmlns="http://oss.dbc.dk/ns/openorder" xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/">
@@ -89,7 +88,7 @@ function constructSoap(pidList, expireDate, params) {
            <copy>false</copy>
            <exactEdition>false</exactEdition>
            <needBeforeDate>${expireDate}</needBeforeDate>
-           <orderSystem>bibliotekdk</orderSystem>
+           <orderSystem>${orderSystem}</orderSystem>
            <pickUpAgencyId>${params.library}</pickUpAgencyId>
 ${pidList.map(pid => {
   return `           <pid>${pid}</pid>`;
@@ -118,12 +117,14 @@ ${pidList.map(pid => {
  * @returns {Promise} promise with result
  */
 function placeOrder(request, context) { // eslint-disable-line no-unused-vars
-
   let expireDate = createNeedBeforeDate();
   if (request.expires) {
     expireDate = request.expires + 'T00:00:00';
   }
-  let soap = constructSoap(request.pids, expireDate, request);
+
+  // Make orderSystem configurable by smaug.
+  const orderSystem = context.get('app.orderSystem');
+  let soap = constructSoap(request.pids, expireDate, request, orderSystem);
 
   return context.call('openorder', soap).then(body => {
     body = JSON.parse(body).placeOrderResponse;
