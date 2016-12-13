@@ -1,0 +1,18 @@
+{
+  "ignore": [
+    "**/deps/**",
+    "**/node_modules/**",
+    "**/thirdparty/**",
+    "**/third_party/**",
+    "**/doc/**",
+    "**/apitest/**",
+    "**/ave-test/**",
+    "**/client/**",
+    "**/performancetest/**",
+    "**/static/**"
+  ],
+  "test": [
+    "**/__tests__/**",
+    "**/features/**"
+  ]
+}

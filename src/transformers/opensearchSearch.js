@@ -36,6 +36,9 @@ export default (params, context) => {
   const offset = 1 + (parseInt(params.offset, 10) || 0);
   const limit = parseInt(params.limit, 10) || 10;
 
+  // We make two simultaneous calls to opensearch improve support for multiVolume works
+  // The first call only gets the work we searched for, that way we can set the correct PID, title and coverUrl
+  // The second call gets all related objects, so you can identify multiVolume works.
   return Promise.all([
     context.call('opensearch', getSoap(agency, profile, q, sort, offset, limit, 0)),
     context.call('opensearch', getSoap(agency, profile, q, sort, offset, limit, 1))
