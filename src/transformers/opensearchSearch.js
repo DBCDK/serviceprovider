@@ -2,12 +2,12 @@
 
 import {workToJSON} from '../requestTypeIdentifier.js';
 
-function getSoap(agency, profile, q, sort, offset, limit, allObject) {
+function getSoap(agency, profile, q, filterAgency, sort, offset, limit, allObject) {
   return `<?xml version="1.0" encoding="UTF-8"?>
 <SOAP-ENV:Envelope xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ns1="http://oss.dbc.dk/ns/opensearch">
   <SOAP-ENV:Body>
     <ns1:searchRequest>
-      <ns1:query>${q}</ns1:query>
+      <ns1:query>${q}${filterAgency && ` AND holdingsitem.agencyId=${filterAgency}` || ''}</ns1:query>
       <ns1:agency>${agency}</ns1:agency>
       <ns1:profile>${profile}</ns1:profile>
       <ns1:start>${offset}</ns1:start>
@@ -31,6 +31,7 @@ export default (params, context) => {
 
   const agency = context.get('search.agency');
   const profile = context.get('search.profile');
+  const filterAgency = context.get('search.holdingsitemagencyid') || null;
   const q = params.q.replace(/</g, '&lt;');
   const sort = (params.sort || '').replace(/</g, '&lt;');
   const offset = 1 + (parseInt(params.offset, 10) || 0);
@@ -40,8 +41,8 @@ export default (params, context) => {
   // The first call only gets the work we searched for, that way we can set the correct PID, title and coverUrl
   // The second call gets all related objects, so you can identify multiVolume works.
   return Promise.all([
-    context.call('opensearch', getSoap(agency, profile, q, sort, offset, limit, 0)),
-    context.call('opensearch', getSoap(agency, profile, q, sort, offset, limit, 1))
+    context.call('opensearch', getSoap(agency, profile, q, filterAgency, sort, offset, limit, 0)),
+    context.call('opensearch', getSoap(agency, profile, q, filterAgency, sort, offset, limit, 1))
   ]).then(bodies => {
     const responses = bodies.map(body => {
       body = JSON.parse(body).searchResponse;
