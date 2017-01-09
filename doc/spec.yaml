@@ -1,7 +1,6 @@
 api:
   availability:
     tags:
-      - Show
       - Order
     description: |
       Get information about whether a material can be ordered /
@@ -23,6 +22,10 @@ api:
 
       The requests are passed directly to/from the DDBCMS-API.
     properties:
+      agency:
+        description: Agency ID to fetch content for
+        type: integer
+        example: 761500
       nids:
         description: to fetch events specified by ids
         type: array
@@ -110,6 +113,10 @@ api:
 
       The requests are passed directly to/from the DDBCMS-API.
     properties:
+      agency:
+        description: Agency ID to fetch content for
+        type: integer
+        example: 761500
       nids:
         description: to fetch news specified by ids
         type: array
@@ -130,7 +137,6 @@ api:
   order:
     tags:
       - Order
-      - Status
     description: Order a library material, or remove an existing order.
     properties:
       orderId:
@@ -373,7 +379,6 @@ api:
   work:
     tags:
       - Search
-      - Show
     description: Retrieve meta information about a creative work
     properties:
       pids:
