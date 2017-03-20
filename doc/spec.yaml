@@ -402,7 +402,82 @@ api:
     examples:
       - request: { "pids": ["870970-basis:51989252",], "fields": ["title", "collection", "subjectDBCF", "hasAdaptation", "coverUrlFull"]}
         response: [{"title": ["Harry Potter og de vises sten"], "collection": ["300185-katalog:100562332", "870970-basis:51989252", "870971-forfweb:86203219", "870970-basis:24284514", "870970-basis:24284565", "..."], "subjectDBCF": ["fantasy", "magi", "troldmænd"], "hasAdaption": ["870970-basis:27123279", "870970-basis:27963390"], "coverUrlFull": ["https://moreinfo.addi.dk/2.1/more_info_get.php?id=36565894&type=forside_500&key=55d553c259c9e46291a4"]}]
-definitions: {}
+paths:
+  /community/profile/{userId}:
+    get:
+      tags:
+        - Profiles
+      summary: Profile in community
+      description: |
+        A profile connected to a community
+      parameters:
+        - name: userId
+          in: path
+          description: Id of profile
+          required: true
+          type: number
+          format: int
+        - $ref: '#/parameters/accessToken'
+      responses:
+        200:
+          description: A profile
+          schema:
+            $ref: '#/definitions/Profile'
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/Error'
+
+parameters:
+  accessToken:
+    name: 'access_token'
+    in: query
+    description: 'Access token from the OAuth2 server'
+    example: 'qwerty'
+    type: 'string'
+    required: true
+
+definitions:
+  Profile:
+    type: object
+    properties:
+      username:
+        type: string
+      displayName:
+        type: string
+      description:
+        type: string
+      email:
+        type: string
+      phone:
+        type: string
+      created:
+        type: string
+        format: date-time
+      lastUpdated:
+        type: string
+        format: date-time
+      birthday:
+        type: string
+        format: date-time
+      fullName:
+        type: string
+      id:
+        type: number
+        format: double
+    required:
+      - username
+    additionalProperties: false
+  Error:
+    type: object
+    properties:
+      code:
+        type: integer
+        format: int32
+      message:
+        type: string
+      fields:
+        type: string
 defaultProperties:
   fields:
     description: which parts of the response to get
