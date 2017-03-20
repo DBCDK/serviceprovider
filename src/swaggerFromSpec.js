@@ -25,6 +25,7 @@ export default function (specName = 'spec') {
     consumes: ['application/json'],
     produces: ['application/json'],
     paths: specToPaths(spec),
-    definitions: spec.definitions
+    definitions: spec.definitions,
+    parameters: spec.parameters
   });
 }
