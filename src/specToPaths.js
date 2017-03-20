@@ -136,7 +136,7 @@ function apiMethodIterator(method, specs) {
  * @returns {PlainObject}
  */
 export function specToPaths(specs) {
-  const paths = {};
+  const paths = specs.paths || {};
   const defaultProperties = specs.defaultProperties;
 
   for (const key in defaultProperties) {
