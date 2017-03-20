@@ -433,7 +433,6 @@ parameters:
     name: 'access_token'
     in: query
     description: 'Access token from the OAuth2 server'
-    example: 'qwerty'
     type: 'string'
     required: true
 
