@@ -17,6 +17,8 @@ import request from 'request';
 import Provider from './provider/Provider';
 import {TokenError} from './smaug/errors';
 
+import community from './transformers/community/community';
+
 // Middleware
 import bodyParser from 'body-parser';
 import compression from 'compression';
@@ -268,6 +270,8 @@ module.exports.run = function(worker) {
 
   // Setting paths
   app.all('/', (req, res) => res.redirect(apiPath));
+
+  app.use(apiPath + 'community', community());
 
   // Health check
   app.get('/health', healthCheck);
