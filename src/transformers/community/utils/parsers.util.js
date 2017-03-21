@@ -3,13 +3,12 @@ import mapper from 'object-mapper';
 import {invert} from 'lodash';
 import {generateSwagger} from '../../../swaggerFromSpec';
 
-
 function utilFactory(map, defaultValues, schema) {
   return {
     mapperToElvis: (data) => mapper(data, map),
     mapperFromElvis: (data) => Object.assign({}, defaultValues, mapper(data, invert(map))),
     validate: (data) => validate(data, schema).errors
-  }
+  };
 }
 
 export const ProfileUtils = () => {
@@ -29,21 +28,20 @@ export const ProfileUtils = () => {
   };
 
   const map = {
-    'id' : 'id',
-    'modified_epoch': 'modified_epoch',
-    'created_epoch' : 'created_epoch',
-    'username': 'name',
-    'email': 'attributes.email',
-    'displayName': 'attributes.displayName',
-    'description': 'attributes.description',
-    'phone': 'attributes.phone',
-    'birthday': 'attributes.birthday',
-    'fullName': 'attributes.fullName'
+    id: 'id',
+    modified_epoch: 'modified_epoch',
+    created_epoch: 'created_epoch',
+    username: 'name',
+    email: 'attributes.email',
+    displayName: 'attributes.displayName',
+    description: 'attributes.description',
+    phone: 'attributes.phone',
+    birthday: 'attributes.birthday',
+    fullName: 'attributes.fullName'
   };
 
   return utilFactory(map, defaultValues, schema);
 };
-
 
 /**
  * Parse an error from Elvis.
@@ -59,5 +57,5 @@ export function parseErrors(errors) {
     status,
     error,
     data: []
-  }
+  };
 }

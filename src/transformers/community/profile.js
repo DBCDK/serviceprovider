@@ -1,5 +1,5 @@
 import {Router} from 'express';
-import {ProfileUtils, parseErrors} from './utils/parsers.util'
+import {ProfileUtils, parseErrors} from './utils/parsers.util';
 import {validate} from 'jsonschema';
 import mapper from 'object-mapper';
 import {invert} from 'lodash';
@@ -21,67 +21,65 @@ router.get('/', (req, res) => {
  * Create profile.
  */
 router.post('/', (req, res) => {
-    const validateErrors = profileUtils.validate(req.body);
-    if (validateErrors.length) {
-      return res.jsonp({
-        status: 400,
-        errors: validateErrors.map(o => String(o.stack).replace(/^instance\.?/, '')).join('\n'),
-        data: []
+  const validateErrors = profileUtils.validate(req.body);
+  if (validateErrors.length) {
+    return res.jsonp({
+      status: 400,
+      errors: validateErrors.map(o => String(o.stack).replace(/^instance\.?/, '')).join('\n'),
+      data: []
+    });
+  }
+
+  const profile = profileUtils.mapperToElvis(req.body);
+
+  return req.communityReguest('profile/', 'post', {json: profile}).then(result => {
+    const {data, errors} = result;
+    if (data) {
+      res.jsonp({
+        status: 200,
+        data: profileUtils.mapperFromElvis(data),
+        errors: []
       });
     }
-
-    const profile = profileUtils.mapperToElvis(req.body);
-
-    req.communityReguest(`profile/`, 'post', {json: profile}).then(result => {
-      const {data, errors} = result;
-      if (data) {
-        res.jsonp({
-          status: 200,
-          data: profileUtils.mapperFromElvis(data),
-          errors: []
-        });
-      }
-      else {
-        res.jsonp(parseErrors(errors));
-      }
-    }).catch(
-      err => res.jsonp(err)
-    );
-  }
-);
+    else {
+      res.jsonp(parseErrors(errors));
+    }
+  }).catch(
+    err => res.jsonp(err)
+  );
+});
 
 /**
  * Create profile.
  */
 router.put('/:id', (req, res) => {
-    const validateErrors = profileUtils.validate(req.body);
-    if (validateErrors.length) {
-      return res.jsonp({
-        status: 400,
-        errors: validateErrors.map(o => String(o.stack).replace(/^instance\.?/, '')).join('\n'),
-        data: []
+  const validateErrors = profileUtils.validate(req.body);
+  if (validateErrors.length) {
+    return res.jsonp({
+      status: 400,
+      errors: validateErrors.map(o => String(o.stack).replace(/^instance\.?/, '')).join('\n'),
+      data: []
+    });
+  }
+
+  const profile = profileUtils.mapperToElvis(req.body);
+  profile.modified_by = Number(req.params.id);
+  return req.communityReguest(`profile/${req.params.id}`, 'put', {json: profile}).then(result => {
+    const {data, errors} = result;
+    if (data) {
+      res.jsonp({
+        status: 200,
+        data: profileUtils.mapperFromElvis(data),
+        errors: []
       });
     }
-
-    const profile = profileUtils.mapperToElvis(req.body);
-    profile.modified_by = Number(req.params.id);
-    req.communityReguest(`profile/${req.params.id}`, 'put', {json: profile}).then(result => {
-      const {data, errors} = result;
-      if (data) {
-        res.jsonp({
-          status: 200,
-          data: profileUtils.mapperFromElvis(data),
-          errors: []
-        });
-      }
-      else {
-        res.jsonp(parseErrors(errors));
-      }
-    }).catch(
-      err => res.jsonp(err)
-    );
-  }
-);
+    else {
+      res.jsonp(parseErrors(errors));
+    }
+  }).catch(
+    err => res.jsonp(err)
+  );
+});
 
 /**
  * Get Profile
@@ -92,7 +90,7 @@ router.get('/:userId', (req, res) => {
     if (data) {
       res.jsonp({
         status: 200,
-        data: mapProfile(data),
+        data: profileUtils.mapperFromElvis(data),
         errors: []
       });
     }
