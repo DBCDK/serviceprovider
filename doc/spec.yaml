@@ -458,7 +458,7 @@ definitions:
         format: integer
       birthday:
         type: string
-        format: date-time
+        format: date
       fullName:
         type: string
       id:

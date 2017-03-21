@@ -51,6 +51,39 @@ router.post('/', (req, res) => {
 );
 
 /**
+ * Create profile.
+ */
+router.put('/:id', (req, res) => {
+    const validateErrors = profileUtils.validate(req.body);
+    if (validateErrors.length) {
+      return res.jsonp({
+        status: 400,
+        errors: validateErrors.map(o => String(o.stack).replace(/^instance\.?/, '')).join('\n'),
+        data: []
+      });
+    }
+
+    const profile = profileUtils.mapperToElvis(req.body);
+    profile.modified_by = Number(req.params.id);
+    req.communityReguest(`profile/${req.params.id}`, 'put', {json: profile}).then(result => {
+      const {data, errors} = result;
+      if (data) {
+        res.jsonp({
+          status: 200,
+          data: profileUtils.mapperFromElvis(data),
+          errors: []
+        });
+      }
+      else {
+        res.jsonp(parseErrors(errors));
+      }
+    }).catch(
+      err => res.jsonp(err)
+    );
+  }
+);
+
+/**
  * Get Profile
  */
 router.get('/:userId', (req, res) => {
