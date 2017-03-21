@@ -450,12 +450,12 @@ definitions:
         type: string
       phone:
         type: string
-      created:
-        type: string
-        format: date-time
-      lastUpdated:
-        type: string
-        format: date-time
+      created_epoch:
+        type: number
+        format: integer
+      modified_epoch:
+        type: number
+        format: integer
       birthday:
         type: string
         format: date-time
@@ -463,7 +463,7 @@ definitions:
         type: string
       id:
         type: number
-        format: double
+        format: integer
     required:
       - username
     additionalProperties: false
