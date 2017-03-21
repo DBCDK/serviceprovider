@@ -31,6 +31,7 @@ export const ProfileUtils = () => {
     id: 'id',
     modified_epoch: 'modified_epoch',
     created_epoch: 'created_epoch',
+    deleted_epoch: 'deleted_epoch',
     username: 'name',
     email: 'attributes.email',
     displayName: 'attributes.displayName',

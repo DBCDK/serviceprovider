@@ -96,3 +96,12 @@ profileRouter.put('/:id', (req, res) => {
   return profileRequest(req, res, {path: `profile/${req.params.id}`, method: 'put', json: profile});
 });
 
+/**
+ * Delete profile.
+ */
+profileRouter.delete('/:id', (req, res) => profileRequest(req, res, {
+  path: `profile/${req.params.id}`,
+  method: 'put',
+  json: {modified_by: Number(req.params.id)}
+}));
+
