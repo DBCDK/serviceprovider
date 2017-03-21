@@ -14,7 +14,21 @@ export default () => {
  * Get list of profiles.
  */
 router.get('/', (req, res) => {
-  // TODO implement list method.
+  return req.communityReguest('profile/', 'get').then(result => {
+    const {data, errors} = JSON.parse(result);
+    if (data) {
+      res.jsonp({
+        status: 200,
+        data: data.map(profileUtils.mapperFromElvis),
+        errors: []
+      });
+    }
+    else {
+      res.jsonp(parseErrors(errors));
+    }
+  }).catch(
+    err => res.jsonp(err)
+  );
 });
 
 /**
