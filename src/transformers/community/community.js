@@ -7,16 +7,13 @@ import {accessLogMiddleware, getContextMiddleware, requireAuthorized} from '../.
 
 function getCommunityClient(req, res, next) {
   const context = caller({}, req.context);
-  const url = context.get('services.communityservice') || 'http://localhost:3000/v1';
+  const baseurl = context.get('services.communityservice') || 'http://localhost:3000/v1';
   const id = context.get('communityservice.id') || 1;
-  req.communityReguest = (path, method, params) => {
-    const options = Object.assign({
-      url: `${url}/community/${id}/${path}`,
-      method
-    }, params);
-    console.log(options);
+  req.communityReguest = (params) => {
+    params.url = `${baseurl}/community/${id}/${params.path}`;
+    delete params.path;
     return new Promise((resolve, reject) => {
-      request(options, (error, response, data) => error ? reject(error) : resolve(data));
+      request(params, (error, response, data) => error ? reject(error) : resolve(data));
     });
   };
   return next();
