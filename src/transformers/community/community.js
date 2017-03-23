@@ -1,5 +1,6 @@
 const router = require('express').Router();
 import profile from './profile';
+import group from './group';
 import caller from '../../provider/caller';
 import request from 'request';
 
@@ -29,5 +30,6 @@ export default () => {
   router.use(getCommunityClient);
   router.use(requireAuthorized);
   router.use('/profile', profile());
+  router.use('/group', group());
   return router;
 };

@@ -440,7 +440,7 @@ paths:
       summary: Profile in community
       description: A profile connected to a community
       parameters:
-        - $ref: '#/parameters/userId'
+        - $ref: '/parameters/userId'
         - $ref: '#/parameters/accessToken'
       responses:
         200:
@@ -475,6 +475,76 @@ paths:
         default:
           $ref: '#/responses/Error'
 
+  /community/group/:
+    get:
+      tags:
+        - Community
+      summary: List of Groups
+      parameters:
+        - $ref: '#/parameters/accessToken'
+      responses:
+        200:
+          $ref: '#/definitions/Groups'
+        default:
+          $ref: '#/definitions/Error'
+
+    post:
+      summary: Create Group
+      tags:
+        - Community
+      parameters:
+        - $ref: '#/parameters/accessToken'
+        - name: group
+          in: body
+          description: The group content.
+          schema:
+            $ref: '#/definitions/Group'
+      responses:
+        200:
+          $ref: '#/definitions/Group'
+        default:
+          $ref: '#/definitions/Error'
+
+  /community/group/{userId}:
+    get:
+      tags:
+        - Community
+      summary: Group in community
+      parameters:
+        - $ref: '/parameters/userId'
+        - $ref: '#/parameters/accessToken'
+      responses:
+        200:
+          $ref: '#/definitions/Group'
+        default:
+          $ref: '#/definitions/Error'
+
+    put:
+      summary: Update group
+      tags:
+        - Community
+      parameters:
+        - $ref: '#/parameters/userId'
+        - $ref: '#/parameters/accessToken'
+        - $ref: '#/parameters/group'
+      responses:
+        200:
+          $ref: '#/definitions/Group'
+        default:
+          $ref: '#/definitions/Error'
+
+    delete:
+      summary: Delete group
+      tags:
+        - Community
+      parameters:
+        - $ref: '#/parameters/userId'
+        - $ref: '#/parameters/accessToken'
+      responses:
+        200:
+          $ref: '#/responses/Group'
+        default:
+          $ref: '#/responses/Error'
 
 parameters:
   accessToken:
@@ -496,12 +566,22 @@ parameters:
     description: The person to create.
     schema:
       $ref: '#/definitions/Profile'
+  group:
+    name: group
+    in: body
+    description: The group to create.
+    schema:
+      $ref: '#/definitions/Group'
 
 responses:
   Profile:
     description: A profile object.
     schema:
       $ref: "#/definitions/Profile"
+  Group:
+    description: A group object.
+    schema:
+      $ref: "#/definitions/Group"
   Error:
     description: An unexpected error occured.
     schema:
@@ -545,6 +625,33 @@ definitions:
     type: array
     items:
       $ref: "#/definitions/Profile"
+  Group:
+    properties:
+      title:
+        type: string
+      contents:
+        type: string
+      created_epoch:
+        type: number,
+        format: integer
+      modified_epoch:
+        type: number
+        format: integer
+      id:
+        type: number,
+        format: integer
+      owner_id:
+        type: number,
+        format: integer
+    required:
+      - title
+      - contents
+      - owner_id
+    additionalProperties: false
+  Groups:
+    type: array
+    items:
+      $ref: "#/definitions/Group"
   Error:
     type: object
     properties:

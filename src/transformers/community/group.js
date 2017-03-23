@@ -26,6 +26,7 @@ export default () => {
 function groupRequest(req, res, params) {
   return req.communityReguest(params).then(result => {
     const {data, errors} = params.method === 'get' && JSON.parse(result) || result;
+    console.log(data);
     if (data) {
       const dataArray = Array.isArray(data) && data || [data];
       res.jsonp({
@@ -65,12 +66,24 @@ function groupValidate(req, res) {
 /**
  * Get list of groups.
  */
-groupRouter.get('/', (req, res) => groupRequest(req, res, {path: 'group', method: 'get'}));
+groupRouter.get('/', (req, res) => {
+  const json = {
+    Entities: {type: 'post'},
+    SortBy: 'created_epoch',
+    Order: 'descending',
+    Limit: 2,
+    Offset: 0,
+    Include: {
+      title: 'title'
+    }
+  };
+  groupRequest(req, res, {path: 'query', method: 'post', json})
+});
 
 /**
  * Get Group
  */
-groupRouter.get('/:id', (req, res) => groupRequest(req, res, {path: `group/${req.params.id}`, method: 'get'}));
+groupRouter.get('/:id', (req, res) => groupRequest(req, res, {path: `entity/${req.params.id}`, method: 'get'}));
 
 /**
  * Create group.
@@ -80,7 +93,7 @@ groupRouter.post('/', (req, res) => {
     return false;
   }
   const group = groupUtils.mapperToElvis(req.body);
-  return groupRequest(req, res, {path: 'group', method: 'post', json: group});
+  return groupRequest(req, res, {path: 'entity', method: 'post', json: group});
 });
 
 /**
@@ -92,14 +105,14 @@ groupRouter.put('/:id', (req, res) => {
   }
 
   const group = groupUtils.mapperToElvis(req.body);
-  return groupRequest(req, res, {path: `group/${req.params.id}`, method: 'put', json: group});
+  return groupRequest(req, res, {path: `entity${req.params.id}`, method: 'put', json: group});
 });
 
 /**
  * Delete group.
  */
-groupRouter.delete('/:id', (req, res) => groupRequest(req, res, {
-  path: `group/${req.params.id}`,
+groupRouter.delete('entity/:id', (req, res) => groupRequest(req, res, {
+  path: `/${req.params.id}`,
   method: 'put',
   json: {modified_by: Number(req.body.profileId)}
 }));
