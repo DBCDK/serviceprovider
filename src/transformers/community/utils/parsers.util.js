@@ -44,6 +44,39 @@ export const ProfileUtils = () => {
   return utilFactory(map, defaultValues, schema);
 };
 
+export const GroupUtils = () => {
+  const schema = generateSwagger().definitions.Profile;
+
+  const defaultValues = {
+    username: '',
+    displayName: '',
+    description: '',
+    email: '',
+    phone: '',
+    modified_epoch: '',
+    created_epoch: '',
+    birthday: '',
+    fullName: '',
+    id: 0
+  };
+
+  const map = {
+    id: 'id',
+    modified_epoch: 'modified_epoch',
+    created_epoch: 'created_epoch',
+    deleted_epoch: 'deleted_epoch',
+    username: 'name',
+    email: 'attributes.email',
+    displayName: 'attributes.displayName',
+    description: 'attributes.description',
+    phone: 'attributes.phone',
+    birthday: 'attributes.birthday',
+    fullName: 'attributes.fullName'
+  };
+
+  return utilFactory(map, defaultValues, schema);
+};
+
 /**
  * Parse an error from Elvis.
  *
