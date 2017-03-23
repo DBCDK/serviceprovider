@@ -105,7 +105,7 @@ groupRouter.put('/:id', (req, res) => {
   }
 
   const group = groupUtils.mapperToElvis(req.body);
-  return groupRequest(req, res, {path: `entity${req.params.id}`, method: 'put', json: group});
+  return groupRequest(req, res, {path: `entity/${req.params.id}`, method: 'put', json: group});
 });
 
 /**
