@@ -26,7 +26,8 @@ export function generateSwagger(specName = 'spec') {
     produces: ['application/json'],
     paths: specToPaths(spec),
     definitions: spec.definitions,
-    parameters: spec.parameters
+    parameters: spec.parameters,
+    responses: spec.responses
   };
 }
 

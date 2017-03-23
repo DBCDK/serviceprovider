@@ -403,30 +403,78 @@ api:
       - request: { "pids": ["870970-basis:51989252",], "fields": ["title", "collection", "subjectDBCF", "hasAdaptation", "coverUrlFull"]}
         response: [{"title": ["Harry Potter og de vises sten"], "collection": ["300185-katalog:100562332", "870970-basis:51989252", "870971-forfweb:86203219", "870970-basis:24284514", "870970-basis:24284565", "..."], "subjectDBCF": ["fantasy", "magi", "troldmænd"], "hasAdaption": ["870970-basis:27123279", "870970-basis:27963390"], "coverUrlFull": ["https://moreinfo.addi.dk/2.1/more_info_get.php?id=36565894&type=forside_500&key=55d553c259c9e46291a4"]}]
 paths:
-  /community/profile/{userId}:
+  /community/profile/:
     get:
       tags:
-        - Profiles
-      summary: Profile in community
-      description: |
-        A profile connected to a community
+        - Community
+      summary: List of Profiles
       parameters:
-        - name: userId
-          in: path
-          description: Id of profile
-          required: true
-          type: number
-          format: int
         - $ref: '#/parameters/accessToken'
       responses:
         200:
-          description: A profile
+          $ref: '#/definitions/Profiles'
+        default:
+          $ref: '#/definitions/Error'
+
+    post:
+      summary: Create profile
+      tags:
+        - Community
+      parameters:
+        - $ref: '#/parameters/accessToken'
+        - name: person
+          in: body
+          description: The person to create.
           schema:
             $ref: '#/definitions/Profile'
+      responses:
+        200:
+          $ref: '#/definitions/Profile'
         default:
-          description: Unexpected error
-          schema:
-            $ref: '#/definitions/Error'
+          $ref: '#/definitions/Error'
+
+  /community/profile/{userId}:
+    get:
+      tags:
+        - Community
+      summary: Profile in community
+      description: A profile connected to a community
+      parameters:
+        - $ref: '#/parameters/userId'
+        - $ref: '#/parameters/accessToken'
+      responses:
+        200:
+          $ref: '#/definitions/Profile'
+        default:
+          $ref: '#/definitions/Error'
+
+    put:
+      summary: Update profile
+      tags:
+        - Community
+      parameters:
+        - $ref: '#/parameters/userId'
+        - $ref: '#/parameters/accessToken'
+        - $ref: '#/parameters/profile'
+      responses:
+        200:
+          $ref: '#/definitions/Profile'
+        default:
+          $ref: '#/definitions/Error'
+
+    delete:
+      summary: Delete profile
+      tags:
+        - Community
+      parameters:
+        - $ref: '#/parameters/userId'
+        - $ref: '#/parameters/accessToken'
+      responses:
+        200:
+          $ref: '#/responses/Profile'
+        default:
+          $ref: '#/responses/Error'
+
 
 parameters:
   accessToken:
@@ -435,6 +483,29 @@ parameters:
     description: 'Access token from the OAuth2 server'
     type: 'string'
     required: true
+  userId:
+    name: userId
+    in: path
+    description: Id of profile
+    required: true
+    type: number
+    format: int
+  profile:
+    name: person
+    in: body
+    description: The person to create.
+    schema:
+      $ref: '#/definitions/Profile'
+
+responses:
+  Profile:
+    description: A profile object.
+    schema:
+      $ref: "#/definitions/Profile"
+  Error:
+    description: An unexpected error occured.
+    schema:
+      $ref: "#/definitions/Error"
 
 definitions:
   Profile:
@@ -453,9 +524,11 @@ definitions:
       created_epoch:
         type: number
         format: integer
+        readOnly: true
       modified_epoch:
         type: number
         format: integer
+        readOnly: true
       birthday:
         type: string
         format: date
@@ -464,9 +537,14 @@ definitions:
       id:
         type: number
         format: integer
+        readOnly: true
     required:
       - username
     additionalProperties: false
+  Profiles:
+    type: array
+    items:
+      $ref: "#/definitions/Profile"
   Error:
     type: object
     properties:
