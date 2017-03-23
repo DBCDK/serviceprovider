@@ -433,14 +433,14 @@ paths:
         default:
           $ref: '#/definitions/Error'
 
-  /community/profile/{userId}:
+  /community/profile/{id}:
     get:
       tags:
         - Community
       summary: Profile in community
       description: A profile connected to a community
       parameters:
-        - $ref: '/parameters/userId'
+        - $ref: '/parameters/id'
         - $ref: '#/parameters/accessToken'
       responses:
         200:
@@ -453,7 +453,7 @@ paths:
       tags:
         - Community
       parameters:
-        - $ref: '#/parameters/userId'
+        - $ref: '#/parameters/id'
         - $ref: '#/parameters/accessToken'
         - $ref: '#/parameters/profile'
       responses:
@@ -467,7 +467,7 @@ paths:
       tags:
         - Community
       parameters:
-        - $ref: '#/parameters/userId'
+        - $ref: '#/parameters/id'
         - $ref: '#/parameters/accessToken'
       responses:
         200:
@@ -505,13 +505,13 @@ paths:
         default:
           $ref: '#/definitions/Error'
 
-  /community/group/{userId}:
+  /community/group/{id}:
     get:
       tags:
         - Community
       summary: Group in community
       parameters:
-        - $ref: '/parameters/userId'
+        - $ref: '/parameters/id'
         - $ref: '#/parameters/accessToken'
       responses:
         200:
@@ -524,7 +524,7 @@ paths:
       tags:
         - Community
       parameters:
-        - $ref: '#/parameters/userId'
+        - $ref: '#/parameters/id'
         - $ref: '#/parameters/accessToken'
         - $ref: '#/parameters/group'
       responses:
@@ -538,7 +538,7 @@ paths:
       tags:
         - Community
       parameters:
-        - $ref: '#/parameters/userId'
+        - $ref: '#/parameters/id'
         - $ref: '#/parameters/accessToken'
       responses:
         200:
@@ -553,10 +553,10 @@ parameters:
     description: 'Access token from the OAuth2 server'
     type: 'string'
     required: true
-  userId:
-    name: userId
+  id:
+    name: id
     in: path
-    description: Id of profile
+    description: Id of object
     required: true
     type: number
     format: int
