@@ -1,11 +1,11 @@
 import {Router} from 'express';
-import {GroupUtils, parseErrors} from './utils/parsers.util';
+import EntityRequest from './utils/EntityRequest';
+
+import {GroupUtils} from './utils/parsers.util';
 import mapper from 'object-mapper';
 import {invert} from 'lodash';
 
 const groupRouter = Router();
-const groupUtils = GroupUtils();
-
 /**
  * Returns group groupRouter.
  *
@@ -15,105 +15,38 @@ export default () => {
   return groupRouter;
 };
 
-/**
- * General group request.
- *
- * @param req
- * @param res
- * @param params
- * @returns {Promise.<T>}
- */
-function groupRequest(req, res, params) {
-  return req.communityReguest(params).then(result => {
-    const {data, errors} = params.method === 'get' && JSON.parse(result) || result;
-    console.log(data);
-    if (data) {
-      const dataArray = Array.isArray(data) && data || [data];
-      res.jsonp({
-        status: 200,
-        data: dataArray.map(groupUtils.mapperFromElvis),
-        errors: []
-      });
-    }
-    else {
-      res.jsonp(parseErrors(errors));
-    }
-  }).catch(
-    err => res.jsonp(err)
-  );
-}
 
 /**
- * General group validation method.
+ * Factory function.
  *
  * @param req
- * @param res
- * @returns {boolean}
+ * @returns {EntityRequest}
  */
-function groupValidate(req, res) {
-  const validateErrors = groupUtils.validate(req.body);
-  if (validateErrors.length) {
-    res.jsonp({
-      status: 400,
-      errors: validateErrors.map(o => String(o.stack).replace(/^instance\.?/, '')).join('\n'),
-      data: []
-    });
-    return false;
-  }
-  return true;
+function groupRequest(req) {
+  return new EntityRequest('group', req.communityReguest, GroupUtils());
 }
 
 /**
  * Get list of groups.
  */
-groupRouter.get('/', (req, res) => {
-  const json = {
-    Entities: {type: 'post'},
-    SortBy: 'created_epoch',
-    Order: 'descending',
-    Limit: 2,
-    Offset: 0,
-    Include: {
-      title: 'title'
-    }
-  };
-  groupRequest(req, res, {path: 'query', method: 'post', json})
-});
+groupRouter.get('/', async (req, res) => res.json(await groupRequest(req, res).getAll()));
 
 /**
  * Get Group
  */
-groupRouter.get('/:id', (req, res) => groupRequest(req, res, {path: `entity/${req.params.id}`, method: 'get'}));
+groupRouter.get('/:id', async (req, res) => res.json(await groupRequest(req, res).get(req.params.id)));
 
 /**
- * Create group.
+ * Create Group.
  */
-groupRouter.post('/', (req, res) => {
-  if (!groupValidate(req, res)) {
-    return false;
-  }
-  const group = groupUtils.mapperToElvis(req.body);
-  return groupRequest(req, res, {path: 'entity', method: 'post', json: group});
-});
+groupRouter.post('/', async (req, res) => res.json(await groupRequest(req, res).post(req.body)));
 
 /**
- * Update group.
+ * Update Group
  */
-groupRouter.put('/:id', (req, res) => {
-  if (!groupValidate(req, res)) {
-    return false;
-  }
-
-  const group = groupUtils.mapperToElvis(req.body);
-  return groupRequest(req, res, {path: `entity/${req.params.id}`, method: 'put', json: group});
-});
+groupRouter.put('/:id', async (req, res) => res.json(await groupRequest(req, res).put(req.params.id, req.body)));
 
 /**
- * Delete group.
+ * Delete Group
  */
-groupRouter.delete('entity/:id', (req, res) => groupRequest(req, res, {
-  path: `/${req.params.id}`,
-  method: 'put',
-  json: {modified_by: Number(req.body.profileId)}
-}));
-
+groupRouter.delete('/', async (req, res) => res.json(await groupRequest(req, res).delete(req.params.id, req.body.profileId)));

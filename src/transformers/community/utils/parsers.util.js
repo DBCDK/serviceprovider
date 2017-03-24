@@ -8,8 +8,10 @@ const swagger = generateSwagger();
 function utilFactory(map, defaultValues, schema) {
   return {
     mapperToElvis: (data) => mapper(data, map),
-    mapperFromElvis: (data) => Object.assign({}, defaultValues, mapper(data, invert(map))),
-    validate: (data) => validate(data, schema).errors
+    mapperFromElvis: (data) => data && Object.assign({}, defaultValues, mapper(data, invert(map))) || {},
+    validate: (data) => validate(data, schema).errors,
+    map,
+    invertedMap: invert(map)
   };
 }
 
@@ -51,7 +53,7 @@ export const GroupUtils = () => {
 
   const defaultValues = {
     title: '',
-    contents: '',
+    body: '',
     created_epoch: 0,
     modified_epoch: 0,
     id: 0,
@@ -62,10 +64,10 @@ export const GroupUtils = () => {
     id: 'id',
     modified_epoch: 'modified_epoch',
     created_epoch: 'created_epoch',
-    deleted_epoch: 'deleted_epoch',
+    modified_by: 'modified_by',
     title: 'title',
-    contents: 'contents',
-    owner_id: 'owner_id',
+    body: 'contents',
+    owner_id: 'owner_id'
   };
 
   return utilFactory(map, defaultValues, schema);
@@ -79,7 +81,7 @@ export const GroupUtils = () => {
  */
 export function parseErrors(errors) {
   const error = Array.isArray(errors) && errors[0] || errors;
-  const status = error.status;
+  const status = error.status || 500;
   delete error.status;
   return {
     status,
