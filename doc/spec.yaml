@@ -647,6 +647,56 @@ definitions:
         type: number,
         format: integer
     additionalProperties: false
+  Post:
+    properties:
+      title:
+        type: string
+      body:
+        type: string
+      created_epoch:
+        type: number,
+        format: integer
+      modified_epoch:
+        type: number
+        format: integer
+      modified_by:
+        type: number
+        format: integer
+      id:
+        type: number,
+        format: integer
+      owner_id:
+        type: number,
+        format: integer
+      group_id:
+        type: number,
+        format: integer
+    additionalProperties: false
+  Comment:
+    properties:
+      title:
+        type: string
+      body:
+        type: string
+      created_epoch:
+        type: number,
+        format: integer
+      modified_epoch:
+        type: number
+        format: integer
+      modified_by:
+        type: number
+        format: integer
+      id:
+        type: number,
+        format: integer
+      owner_id:
+        type: number,
+        format: integer
+      post_id:
+        type: number,
+        format: integer
+    additionalProperties: false
   Groups:
     type: array
     items:

@@ -1,3 +1,5 @@
+import EntityRequest from './EntityRequest';
+
 export default function createCRUD(type, router, utils) {
   const request = (req) => {
     return new EntityRequest(type, req.communityReguest, utils);
