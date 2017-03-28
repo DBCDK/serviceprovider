@@ -43,7 +43,7 @@ export default function createCRUD(elvisType, type, router, remap, schema) {
   router.put('/:id', async (req, res) => res.json(await request(req, res).put(req.params.id, req.body)));
 
   // delete
-  router.delete('/', async (req, res) => res.json(await request(req, res).delete(req.params.id, req.body.profileId)));
+  router.delete('/:id', async (req, res) => res.json(await request(req, res).delete(req.params.id, req.body.profileId)));
 
   return router;
 }

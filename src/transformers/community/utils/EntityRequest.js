@@ -13,7 +13,7 @@ import {invert} from 'lodash';
 const QueryTypeMap = {
   entity: {
     single: 'Entity',
-    list: 'Entitites'
+    list: 'Entities'
   },
   action: {
     single: 'Action',

@@ -93,3 +93,32 @@ export function like() {
 
   return createCRUD('action', 'like', Router(), remap, schema);
 }
+
+/**
+ * Returns like router.
+ *
+ * @returns {*}
+ */
+export function follow() {
+
+  const remap = {
+    id: 'id',
+    entity_id: 'entity_ref',
+    profile_id: 'profile_ref',
+    type: 'type'
+  };
+
+  const schema = {
+    properties: {
+      created_epoch: {type: 'number', format: 'integer'},
+      modified_epoch: {type: 'number', format: 'integer'},
+      modified_by: {type: 'number', format: 'integer'},
+      id: {type: 'number', format: 'integer'},
+      owner_id: {type: 'number', format: 'integer'},
+      entity_id: {type: 'number', format: 'integer'},
+      profile_id: {type: 'number', format: 'integer'}
+    }
+  };
+
+  return createCRUD('action', 'follow', Router(), remap, schema);
+}
