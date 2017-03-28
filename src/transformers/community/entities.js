@@ -1,7 +1,7 @@
 import {Router} from 'express';
 import createCRUD from './utils/createCRUD';
 
-import {GroupUtils, PostUtils} from './utils/parsers.util';
+import {GroupUtils, PostUtils, CommentUtils} from './utils/parsers.util';
 
 /**
  * Returns group router.
@@ -27,5 +27,5 @@ export function post () {
  * @returns {*}
  */
 export function comment () {
-  return createCRUD('comment', Router(), GroupUtils());
+  return createCRUD('comment', Router(), CommentUtils());
 };

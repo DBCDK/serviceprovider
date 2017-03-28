@@ -1,6 +1,6 @@
 const router = require('express').Router();
 import profile from './profile';
-import {group, post} from './entities';
+import {group, post, comment} from './entities';
 import caller from '../../provider/caller';
 import request from 'request';
 
@@ -31,6 +31,7 @@ export default () => {
   router.use(requireAuthorized);
   router.use('/profile', profile());
   router.use('/group', group());
-  router.use('/group', post());
+  router.use('/post', post());
+  router.use('/comment', comment());
   return router;
 };
