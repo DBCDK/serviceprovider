@@ -1,3 +1,11 @@
+/**
+ * @file
+ * Class for making requests to Elvis. Exposes methods for CRUD request.
+ *
+ * @todo
+ * Extend with methods for making nested queries.
+ */
+
 export default class EntityRequest {
   constructor(type, call, modelUtils) {
     this._type = type;
@@ -5,21 +13,42 @@ export default class EntityRequest {
     this._modelUtils = modelUtils;
   }
 
+  /**
+   * Return response (json string or object) as object.
+   *
+   * @param response {String|Object}
+   * @returns {Object}
+   * @private
+   */
   _parseResponse(response) {
-    return typeof response === 'string' && JSON.parse(response) || response;
+    return (typeof response === 'string') && JSON.parse(response) || response;
   }
 
-  _createResponse(data, errors) {
+  /**
+   * Create Response object.
+   *
+   * @param data {Object}
+   * @param errors {Array}
+   * @returns {Object}
+   * @private
+   */
+  _createResponse(data = {}, errors = []) {
     if (errors) {
       return this._parseErrors(errors);
     }
     return {
       status: 200,
       data: data,
-      errors: []
+      errors: errors
     };
   }
 
+  /**
+   * Convert errors to response.
+   * @param errors
+   * @returns {{status: (*|number), error: (boolean|*), data: Array}}
+   * @private
+   */
   _parseErrors(errors) {
     const error = Array.isArray(errors) && errors[0] || errors;
     const status = error.status || 500;
@@ -31,6 +60,13 @@ export default class EntityRequest {
     };
   }
 
+  /**
+   * Validate object against utility method.
+   *
+   * @param object
+   * @returns {Object|null} Returns response object if validation errors exists. Otherwise null.
+   * @private
+   */
   _validate(object) {
     const validateErrors = this._modelUtils.validate(object);
     if (validateErrors.length) {
@@ -43,6 +79,15 @@ export default class EntityRequest {
     return null;
   }
 
+  /**
+   * Make request to Elvis.
+   *
+   * @param path {String} Endpoint in Elvis
+   * @param method {String} post|get|put|delete
+   * @param params {Object} parameters object. most often json or empty.
+   * @returns {Promise}
+   * @private
+   */
   async _request(path, method = 'get', params = {}) {
     const options = Object.assign({path, method}, params);
     try {
@@ -89,7 +134,14 @@ export default class EntityRequest {
     return this._createResponse(this._modelUtils.mapperFromElvis(data), errors);
   }
 
-  async getAll() {
+  /**
+   * Get all objects of type
+   *
+   * @todo Add limit, order and sort parameters.
+   *
+   * @returns {{status, data, errors}|*}
+   */
+  async getList() {
     const json = {
       Entities: {type: this._type},
       SortBy: 'created_epoch',
