@@ -1,8 +1,8 @@
-const router = require('express').Router();
+import {Router} from 'express';
+import request from 'request';
 import profile from './profile';
 import {group, post, comment} from './entities';
 import caller from '../../provider/caller';
-import request from 'request';
 
 import {accessLogMiddleware, getContextMiddleware, requireAuthorized} from '../../app.middlewares';
 
@@ -26,12 +26,17 @@ function getCommunityClient(req, res, next) {
  * @returns {*}
  */
 export default () => {
+  const router = Router();
   router.use(getContextMiddleware);
   router.use(getCommunityClient);
   router.use(requireAuthorized);
+  // Profile
   router.use('/profile', profile());
+  // Entities
   router.use('/group', group());
   router.use('/post', post());
   router.use('/comment', comment());
+  // Actions
+
   return router;
 };

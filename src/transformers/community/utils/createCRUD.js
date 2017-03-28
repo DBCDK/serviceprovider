@@ -8,9 +8,9 @@ import EntityRequest from './EntityRequest';
  * @param utils {Object} Object for mapping and validating values between Elvis and Serviceprovider objects.
  * @returns {Object} Router.
  */
-export default function createCRUD(type, router, utils) {
+export default function createCRUD(type, router, map, schema) {
   const request = (req) => {
-    return new EntityRequest(type, req.communityReguest, utils);
+    return new EntityRequest(type, req.communityReguest, map, schema);
   };
   // Get list
   router.get('/', async (req, res) => res.json(await request(req, res).getList()));

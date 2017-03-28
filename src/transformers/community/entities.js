@@ -1,7 +1,7 @@
 import {Router} from 'express';
 import createCRUD from './utils/createCRUD';
-
-import {GroupUtils, PostUtils, CommentUtils} from './utils/parsers.util';
+import {generateSwagger} from '../../swaggerFromSpec';
+const swagger = generateSwagger();
 
 /**
  * Returns group router.
@@ -9,8 +9,19 @@ import {GroupUtils, PostUtils, CommentUtils} from './utils/parsers.util';
  * @returns {*}
  */
 export function group () {
-  return createCRUD('group', Router(), GroupUtils());
-};
+
+  const map = {
+    id: 'id',
+    modified_epoch: 'modified_epoch',
+    created_epoch: 'created_epoch',
+    modified_by: 'modified_by',
+    title: 'title',
+    body: 'contents',
+    owner_id: 'owner_id'
+  };
+
+  return createCRUD('group', Router(), map, swagger.definitions.Group);
+}
 
 /**
  * Returns post router.
@@ -18,8 +29,20 @@ export function group () {
  * @returns {*}
  */
 export function post () {
-  return createCRUD('post', Router(), PostUtils());
-};
+
+  const map = {
+    id: 'id',
+    modified_epoch: 'modified_epoch',
+    created_epoch: 'created_epoch',
+    modified_by: 'modified_by',
+    title: 'title',
+    body: 'contents',
+    owner_id: 'owner_id',
+    group_id: 'entity_ref'
+  };
+
+  return createCRUD('post', Router(), map, swagger.definitions.Post);
+}
 
 /**
  * Returns comment router.
@@ -27,5 +50,17 @@ export function post () {
  * @returns {*}
  */
 export function comment () {
-  return createCRUD('comment', Router(), CommentUtils());
-};
+
+  const map = {
+    id: 'id',
+    modified_epoch: 'modified_epoch',
+    created_epoch: 'created_epoch',
+    modified_by: 'modified_by',
+    title: 'title',
+    body: 'contents',
+    owner_id: 'owner_id',
+    post_id: 'entity_ref'
+  };
+
+  return createCRUD('comment', Router(), map, swagger.definitions.Comment);
+}
