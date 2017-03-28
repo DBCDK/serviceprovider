@@ -1,7 +1,7 @@
 import {Router} from 'express';
 import request from 'request';
 import profile from './profile';
-import {group, post, comment} from './entities';
+import {group, post, comment, like} from './entities';
 import caller from '../../provider/caller';
 
 import {accessLogMiddleware, getContextMiddleware, requireAuthorized} from '../../app.middlewares';
@@ -37,6 +37,7 @@ export default () => {
   router.use('/post', post());
   router.use('/comment', comment());
   // Actions
+  router.use('/like', like());
 
   return router;
 };

@@ -8,7 +8,7 @@ const swagger = generateSwagger();
  *
  * @returns {*}
  */
-export function group () {
+export function group() {
 
   const map = {
     id: 'id',
@@ -20,7 +20,7 @@ export function group () {
     owner_id: 'owner_id'
   };
 
-  return createCRUD('group', Router(), map, swagger.definitions.Group);
+  return createCRUD('entity', 'group', Router(), map, swagger.definitions.Group);
 }
 
 /**
@@ -28,7 +28,7 @@ export function group () {
  *
  * @returns {*}
  */
-export function post () {
+export function post() {
 
   const map = {
     id: 'id',
@@ -41,7 +41,7 @@ export function post () {
     group_id: 'entity_ref'
   };
 
-  return createCRUD('post', Router(), map, swagger.definitions.Post);
+  return createCRUD('entity', 'post', Router(), map, swagger.definitions.Post);
 }
 
 /**
@@ -49,7 +49,7 @@ export function post () {
  *
  * @returns {*}
  */
-export function comment () {
+export function comment() {
 
   const map = {
     id: 'id',
@@ -62,5 +62,33 @@ export function comment () {
     post_id: 'entity_ref'
   };
 
-  return createCRUD('comment', Router(), map, swagger.definitions.Comment);
+  return createCRUD('entity', 'comment', Router(), map, swagger.definitions.Comment);
+}
+
+/**
+ * Returns like router.
+ *
+ * @returns {*}
+ */
+export function like() {
+
+  const remap = {
+    id: 'id',
+    entity_id: 'entity_ref',
+    owner_id: 'profile_ref',
+    type: 'type'
+  };
+
+  const schema = {
+    properties: {
+      created_epoch: {type: 'number', format: 'integer'},
+      modified_epoch: {type: 'number', format: 'integer'},
+      modified_by: {type: 'number', format: 'integer'},
+      id: {type: 'number', format: 'integer'},
+      owner_id: {type: 'number', format: 'integer'},
+      entity_id: {type: 'number', format: 'integer'}
+    }
+  };
+
+  return createCRUD('action', 'like', Router(), remap, schema);
 }
