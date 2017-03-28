@@ -10,8 +10,24 @@ import {invert} from 'lodash';
  * Extend with methods for making nested queries.
  */
 
+const QueryTypeMap = {
+  entity: {
+    single: 'Entity',
+    list: 'Entitites'
+  },
+  action: {
+    single: 'Action',
+    list: 'Actions'
+  },
+  profile: {
+    single: 'Profile',
+    list: 'Actions'
+  }
+};
+
 export default class EntityRequest {
-  constructor(type, call, map, schema) {
+  constructor(type, elvisType, call, map, schema) {
+    this._elvisType = elvisType;
     this._type = type;
     this._call = call;
     this._map = map;
@@ -113,13 +129,15 @@ export default class EntityRequest {
   }
 
   async get(id) {
+    const Selector = QueryTypeMap[this._elvisType].list;
     const json = {
-      Entities: {type: this._type, id: id},
+      [Selector]: {type: this._type, id: id},
       Limit: 1,
       Include: this._map
     };
     const {data, errors} = await this._request('query', 'post', {json});
-    return this._createResponse(this._mapperFromElvis(data.List[0]), errors);
+    console.log(data, errors);
+    return this._createResponse(this._mapperFromElvis(data && data.List[0]), errors);
   }
 
   async post(object) {
@@ -130,7 +148,7 @@ export default class EntityRequest {
     const json = this._mapperToElvis(object);
     json.type = this._type;
 
-    const {data, errors} = await this._request('entity', 'post', {json});
+    const {data, errors} = await this._request(this._elvisType, 'post', {json});
     return this._createResponse(this._mapperFromElvis(data), errors);
   }
 
@@ -141,14 +159,14 @@ export default class EntityRequest {
     }
     const json = this._mapperToElvis(object);
     console.log(json);
-    const {data, errors} = await this._request(`entity/${id}`, 'put', {json});
+    const {data, errors} = await this._request(`${this._elvisType}/${id}`, 'put', {json});
     return this._createResponse(this._mapperFromElvis(data), errors);
   }
 
   async delete(id, deletedById) {
 
     const json = {modified_by: deletedById};
-    const {data, errors} = await this._request(`entity/${id}`, 'put', {json});
+    const {data, errors} = await this._request(`${this._elvisType}/${id}`, 'put', {json});
     return this._createResponse(this._mapperFromElvis(data), errors);
   }
 
@@ -160,8 +178,9 @@ export default class EntityRequest {
    * @returns {{status, data, errors}|*}
    */
   async getList() {
+    const Selector = QueryTypeMap[this._elvisType].list;
     const json = {
-      Entities: {type: this._type},
+      [Selector]: {type: this._type},
       SortBy: 'created_epoch',
       Order: 'descending',
       Limit: 2,
