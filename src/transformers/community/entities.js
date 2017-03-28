@@ -75,7 +75,7 @@ export function like() {
   const remap = {
     id: 'id',
     entity_id: 'entity_ref',
-    owner_id: 'profile_ref',
+    profile_id: 'profile_ref',
     type: 'type'
   };
 
@@ -86,7 +86,8 @@ export function like() {
       modified_by: {type: 'number', format: 'integer'},
       id: {type: 'number', format: 'integer'},
       owner_id: {type: 'number', format: 'integer'},
-      entity_id: {type: 'number', format: 'integer'}
+      entity_id: {type: 'number', format: 'integer'},
+      profile_id: {type: 'number', format: 'integer'}
     }
   };
 
