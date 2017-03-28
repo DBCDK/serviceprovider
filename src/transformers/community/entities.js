@@ -95,7 +95,7 @@ export function like() {
 }
 
 /**
- * Returns like router.
+ * Returns follow router.
  *
  * @returns {*}
  */
@@ -121,4 +121,33 @@ export function follow() {
   };
 
   return createCRUD('action', 'follow', Router(), remap, schema);
+}
+
+/**
+ * Returns Flag router.
+ *
+ * @returns {*}
+ */
+export function flag() {
+
+  const remap = {
+    id: 'id',
+    profile_id: 'profile_ref',
+    flag_reason: 'attributes.flag_reason'
+  };
+
+  const schema = {
+    properties: {
+      created_epoch: {type: 'number', format: 'integer'},
+      modified_epoch: {type: 'number', format: 'integer'},
+      modified_by: {type: 'number', format: 'integer'},
+      id: {type: 'number', format: 'integer'},
+      owner_id: {type: 'number', format: 'integer'},
+      entity_id: {type: 'number', format: 'integer'},
+      profile_id: {type: 'number', format: 'integer'},
+      flag_reason: {type: 'string'}
+    }
+  };
+
+  return createCRUD('action', 'flag', Router(), remap, schema);
 }
