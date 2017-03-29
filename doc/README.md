@@ -65,7 +65,7 @@ And then you can start the server with mock-data with `./start-service-provider.
     # `http://smaug.m.dbc.antistof.dk:3000` if you have
     # access to these)
 
-    SMAUG=http://localhost:3000 npm run dev
+    SMAUG=http://localhost:3000 npm run start
 
 By default the ServiceProvider will run on port 8080 on localhost.
 

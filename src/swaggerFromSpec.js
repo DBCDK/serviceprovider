@@ -6,12 +6,12 @@ import {specToPaths} from './specToPaths';
 const version = require('../package.json').version;
 const majorVersion = parseInt(version, 10);
 
-export default function (specName = 'spec') {
+export function generateSwagger(specName = 'spec') {
   const path = __dirname + '/../doc/';
   const spec = yaml.safeLoad(fs.readFileSync(`${path}${specName}.yaml`).toString('utf-8'));
   const desc = fs.readFileSync(`${path}description.md`).toString('utf-8');
 
-  return Promise.resolve({
+  return {
     swagger: '2.0',
     info: {
       version: version,
@@ -25,6 +25,12 @@ export default function (specName = 'spec') {
     consumes: ['application/json'],
     produces: ['application/json'],
     paths: specToPaths(spec),
-    definitions: spec.definitions
-  });
+    definitions: spec.definitions,
+    parameters: spec.parameters,
+    responses: spec.responses
+  };
+}
+
+export default function (specName = 'spec') {
+  return Promise.resolve(generateSwagger(specName));
 }
