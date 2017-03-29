@@ -87,3 +87,33 @@ export function flag() {
 
   return createCRUD('action', 'flag', Router(), remap, schema);
 }
+
+/**
+ * Returns Quarantine router.
+ *
+ * @returns {Object}
+ */
+export function quarantine() {
+
+  const remap = {
+    id: 'id',
+    profile_id: 'profile_ref',
+    flag_reason: 'attributes.quarantine_reason',
+    quarantine_flags: 'attributes.quarantine_flags'
+  };
+
+  const schema = {
+    properties: {
+      created_epoch: {type: 'number', format: 'integer'},
+      modified_epoch: {type: 'number', format: 'integer'},
+      modified_by: {type: 'number', format: 'integer'},
+      id: {type: 'number', format: 'integer'},
+      owner_id: {type: 'number', format: 'integer'},
+      profile_id: {type: 'number', format: 'integer'},
+      quarantine_reason: {type: 'string'},
+      quarantine_flags: {type: 'array'}
+    }
+  };
+
+  return createCRUD('action', 'flag', Router(), remap, schema);
+}
