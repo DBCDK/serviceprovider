@@ -28,6 +28,7 @@ function createMap(schema, remap) {
 export default function createCRUD(elvisType, type, router, remap, schema) {
 
   const request = (req) => {
+
     return new EntityRequest(type, elvisType, req.communityReguest, createMap(schema, remap), schema);
   };
   // Get list

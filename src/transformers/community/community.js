@@ -1,11 +1,20 @@
 import {Router} from 'express';
 import request from 'request';
 import profile from './profile';
-import {group, post, comment, like, follow} from './entities';
+import {group, post, comment} from './entities';
+import {like, follow, flag} from './actions';
 import caller from '../../provider/caller';
-
 import {accessLogMiddleware, getContextMiddleware, requireAuthorized} from '../../app.middlewares';
 
+
+/**
+ * Middleware that adds community service and id to context.
+ *
+ * @param req
+ * @param res
+ * @param next
+ * @returns {*}
+ */
 function getCommunityClient(req, res, next) {
   const context = caller({}, req.context);
   const baseurl = context.get('services.communityservice') || 'http://localhost:3000/v1';
@@ -19,6 +28,7 @@ function getCommunityClient(req, res, next) {
   };
   return next();
 }
+
 
 /**
  * Router for all community/profile endpoints.
@@ -39,6 +49,7 @@ export default () => {
   // Actions
   router.use('/like', like());
   router.use('/follow', follow());
+  router.use('/flag', flag());
 
   return router;
 };
