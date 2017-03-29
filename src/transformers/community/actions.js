@@ -4,7 +4,7 @@ import createCRUD from './utils/createCRUD';
 /**
  * Returns like router.
  *
- * @returns {*}
+ * @returns {Object}
  */
 export function like() {
 
@@ -33,7 +33,7 @@ export function like() {
 /**
  * Returns follow router.
  *
- * @returns {*}
+ * @returns {Object}
  */
 export function follow() {
 
@@ -62,7 +62,7 @@ export function follow() {
 /**
  * Returns Flag router.
  *
- * @returns {*}
+ * @returns {Object}
  */
 export function flag() {
 

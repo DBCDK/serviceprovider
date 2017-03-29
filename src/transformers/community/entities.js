@@ -6,7 +6,7 @@ const swagger = generateSwagger();
 /**
  * Returns group router.
  *
- * @returns {*}
+ * @returns {Object}
  */
 export function group() {
 
@@ -26,7 +26,7 @@ export function group() {
 /**
  * Returns post router.
  *
- * @returns {*}
+ * @returns {Object}
  */
 export function post() {
 
@@ -47,7 +47,7 @@ export function post() {
 /**
  * Returns comment router.
  *
- * @returns {*}
+ * @returns {Object}
  */
 export function comment() {
 
