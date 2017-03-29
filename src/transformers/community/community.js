@@ -1,6 +1,6 @@
 import {Router} from 'express';
 import request from 'request';
-import profile from './profile';
+import {profile} from './profile';
 import {group, post, comment} from './entities';
 import {like, follow, flag} from './actions';
 import caller from '../../provider/caller';

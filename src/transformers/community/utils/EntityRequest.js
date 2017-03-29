@@ -21,7 +21,7 @@ const QueryTypeMap = {
   },
   profile: {
     single: 'Profile',
-    list: 'Actions'
+    list: 'Profiles'
   }
 };
 
@@ -129,9 +129,13 @@ export default class EntityRequest {
   }
 
   async get(id) {
-    const Selector = QueryTypeMap[this._elvisType].list;
+    const selectorKey = QueryTypeMap[this._elvisType].list;
+    const selector = {id: id};
+    if (this._type) {
+      selector.type = this._type;
+    }
     const json = {
-      [Selector]: {type: this._type, id: id},
+      [selectorKey]: selector,
       Limit: 1,
       Include: this._map
     };
@@ -146,8 +150,9 @@ export default class EntityRequest {
       return validationError;
     }
     const json = this._mapperToElvis(object);
-    json.type = this._type;
-
+    if (this._type) {
+      json.type = this._type;
+    }
     const {data, errors} = await this._request(this._elvisType, 'post', {json});
     return this._createResponse(this._mapperFromElvis(data), errors);
   }
@@ -178,16 +183,22 @@ export default class EntityRequest {
    * @returns {{status, data, errors}|*}
    */
   async getList() {
-    const Selector = QueryTypeMap[this._elvisType].list;
+    const selectorKey = QueryTypeMap[this._elvisType].list;
+    const selector = {};
+    if (this._type) {
+      selector.type = this._type;
+    }
     const json = {
-      [Selector]: {type: this._type},
+      [selectorKey]: selector,
       SortBy: 'created_epoch',
       Order: 'descending',
       Limit: 2,
       Offset: 0,
       Include: this._map
     };
+    console.log(json);
     const {data, errors} = await this._request('query', 'post', {json});
+    console.log(data, errors);
     return this._createResponse(data, errors);
   }
 }
