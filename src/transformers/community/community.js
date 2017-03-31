@@ -2,7 +2,7 @@ import {Router} from 'express';
 import request from 'request';
 import {profile} from './profile';
 import {group, post, comment} from './entities';
-import {like, follow, flag} from './actions';
+import {like, follow, flag, quarantine} from './actions';
 import caller from '../../provider/caller';
 import {accessLogMiddleware, getContextMiddleware, requireAuthorized} from '../../app.middlewares';
 
@@ -50,6 +50,7 @@ export default () => {
   router.use('/like', like());
   router.use('/follow', follow());
   router.use('/flag', flag());
+  router.use('/quarantine', quarantine());
 
   return router;
 };
