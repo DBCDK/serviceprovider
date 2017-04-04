@@ -1,3 +1,16 @@
+# Models
+@todo Specify models.
+
+* Profile
+* Group
+* Post
+* Comment
+* Review
+* Like
+* Follow
+* Flag
+* Quarantine
+
 # Endpoints
 
 ### The community service includes the following basic models/endpoints. CRUD operations kan be done on all these endpoints. 
@@ -26,8 +39,13 @@
     /group/{id}/followers
     /group/{id}/flags
 
-### This is a special endpoint that can generate a full group view, 
+#### Generate a full group view, 
     /group/{id}/fullView (Custom parameters postLimit,commentslimit)
+#### Check if profile is following group
+    /group/{id}/isFollowing/{profileId}
+    
+#### Check if group name is unique    
+    /group/groupNameExists?name=
 
 ### On a post the following get commands can be applied. 
     /post/{id}/likes
@@ -45,4 +63,29 @@
     * filter (based on values in fields) 
 ### On all entities + profiles 
     * include (predefined relations)
+A view profile will always be included on all entities.
+
+# Examples
+@todo Specify examples
+
+## CRUD Examples
+### Create Profile
+### Create Group
+### Add post to group
+### Add comment to post
+### Follow group
+### Unfollow group
+### Like post
+### unLike post
+### Create review
+### Edit review
+### Flag profile
+### Qarantine profile
+
+## Query Examples
+### Get 10 latest followers
+### Generate group view
+### Get activity feed
+### Get all quarantined profiles
+
 
