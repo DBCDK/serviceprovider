@@ -1,5 +1,3 @@
-import EntityRequest from './EntityRequest';
-
 /**
  * Create a map of values between Elvis and Serviceprovider. Using the schema definition as default, and override
  * specified values.
@@ -26,25 +24,58 @@ function createMap(schema, remap) {
  * @returns {Object} Router.
  */
 export default function createCRUD(elvisType, type, router, remap, schema) {
-
-  const request = (req) => {
-
-    return new EntityRequest(type, elvisType, req.communityRequest, createMap(schema, remap), schema);
+  const request = (req, res, crudType) => {
+    const provider = req.app.get('serviceProvider');
+    return provider.execute('entityRequest', {
+      type: crudType,
+      createTest: req.query.createTest,
+      query: req.query,
+      body: req.body,
+      params: req.params,
+      etParams: {
+        type,
+        elvisType,
+        schemaMap: createMap(schema, remap),
+        schema
+      }
+    }, req.context);
   };
-  // Get list
-  router.get('/', async (req, res) => res.json(await request(req, res).getList(req.query)));
 
-  // Get by id
-  router.get('/:id', async (req, res) => res.json(await request(req, res).get(req.query, req.params.id)));
+  // Setup CRUD transport
+  router.all('/:id?', (req, res) => {
+    req.context.crud = true;
+    const provider = req.app.get('serviceProvider');
+    const context = req.context;
+    const query = Object.assign(
+      {},
+      req.params,
+      req.body,
+      req.query,
+      {_meta: {type, elvisType, schemaMap: createMap(schema, remap), schema}}
+    );
 
-  // Create
-  router.post('/', async (req, res) => res.json(await request(req, res).post(req.query, req.body)));
+    let event;
+    switch (req.method) {
+      case 'GET': {
+        event = req.params.id ? 'getEntity' : 'listEntities';
+        break;
+      }
+      case 'PUT': {
+        event = 'updateEntity';
+        break;
+      }
+      case 'POST': {
+        event = 'createEntity';
+        break;
+      }
+      case 'DELETE': {
+        event = 'deleteEntity';
+        break;
+      }
+    }
 
-  // Update
-  router.put('/:id', async (req, res) => res.json(await request(req, res).put(req.query, req.params.id, req.body)));
-
-  // delete
-  router.delete('/:id', async (req, res) => res.json(await request(req, res).delete(req.query, req.params.id, req.body.profileId)));
+    provider.execute(event, query, context).then(result => res.json(result));
+  });
 
   return router;
 }

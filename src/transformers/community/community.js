@@ -6,31 +6,6 @@ import {like, follow, flag, quarantine} from './actions';
 import caller from '../../provider/caller';
 import {accessLogMiddleware, getContextMiddleware, requireAuthorized} from '../../app.middlewares';
 
-
-/**
- * Middleware that adds community service and id to context.
- *
- * @param req
- * @param res
- * @param next
- * @returns {*}
- */
-function getCommunityClient(req, res, next) {
-  const context = caller({}, req.context);
-  const baseurl = context.get('services.communityservice') || 'http://localhost:3000/v1';
-  const id = context.get('communityservice.id') || 1;
-
-  req.communityRequest = (params) => {
-    const name = `${baseurl}/community/${id}/${params.path}`;
-    delete params.path;
-
-    return context.request(name, params);
-  };
-
-  return next();
-}
-
-
 /**
  * Router for all community/profile endpoints.
  *
@@ -39,7 +14,6 @@ function getCommunityClient(req, res, next) {
 export default () => {
   const router = Router();
   router.use(getContextMiddleware);
-  router.use(getCommunityClient);
   router.use(requireAuthorized);
   // Profile
   router.use('/profile', profile());
