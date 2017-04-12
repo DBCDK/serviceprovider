@@ -25,6 +25,15 @@ const QueryTypeMap = {
   }
 };
 
+export function communityRequest(context, params) {
+  const baseurl = context.get('services.communityservice') || 'http://localhost:3000/v1';
+  const id = context.get('communityservice.id') || 1;
+  const name = `${baseurl}/community/${id}/${params.path}`;
+  delete params.path;
+
+  return context.request(name, params);
+}
+
 export default class EntityRequest {
   constructor(type, elvisType, call, map, schema) {
     this._elvisType = elvisType;
@@ -169,7 +178,6 @@ export default class EntityRequest {
   }
 
   async delete(id, deletedById) {
-
     const json = {modified_by: deletedById};
     const {data, errors} = await this._request(`${this._elvisType}/${id}`, 'put', {json});
     return this._createResponse(this._mapperFromElvis(data), errors);
@@ -188,6 +196,7 @@ export default class EntityRequest {
     if (this._type) {
       selector.type = this._type;
     }
+
     const json = {
       [selectorKey]: selector,
       SortBy: 'created_epoch',
@@ -196,7 +205,7 @@ export default class EntityRequest {
       Offset: 0,
       Include: this._map
     };
-    console.log(json);
+
     const {data, errors} = await this._request('query', 'post', {json});
     console.log(data, errors);
     return this._createResponse(data, errors);

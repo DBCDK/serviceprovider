@@ -20,6 +20,12 @@ import {testTransformer} from '../transformers/testTransformer.js';
 import recommendTransformer from '../transformers/recommend';
 import rankTransformer from '../transformers/rank';
 
+import createEntity from '../transformers/createEntity';
+import updateEntity from '../transformers/updateEntity';
+import listEntities from '../transformers/listEntities';
+import getEntity from '../transformers/getEntity';
+import deleteEntity from '../transformers/deleteEntity';
+
 /**
  * Initialization of the provider and the underlying services.
  *
@@ -49,13 +55,25 @@ export default function Provider() {
     availability: availabilityTransformer
   };
 
+  const crudTransformerMap = {
+    createEntity,
+    updateEntity,
+    listEntities,
+    getEntity,
+    deleteEntity
+  };
+
   // we are going to reimplement a simpler mechanism to call the transformers
   function execute(name, params, context) { // eslint-disable-line no-unused-vars
+    if (context.crud) {
+      return caller(crudTransformerMap, context).call(name, params);
+    }
+
     return caller(transformerMap, context).call(name, params);
   }
 
   function availableTransforms() {
-    return Object.keys(transformerMap);
+    return Object.keys(Object.assign({}, transformerMap, crudTransformerMap));
   }
 
   function hasTransformer(name) {
