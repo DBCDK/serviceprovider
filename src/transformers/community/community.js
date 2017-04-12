@@ -19,13 +19,14 @@ function getCommunityClient(req, res, next) {
   const context = caller({}, req.context);
   const baseurl = context.get('services.communityservice') || 'http://localhost:3000/v1';
   const id = context.get('communityservice.id') || 1;
-  req.communityReguest = (params) => {
-    params.url = `${baseurl}/community/${id}/${params.path}`;
+
+  req.communityRequest = (params) => {
+    const name = `${baseurl}/community/${id}/${params.path}`;
     delete params.path;
-    return new Promise((resolve, reject) => {
-      request(params, (error, response, data) => error ? reject(error) : resolve(data));
-    });
+
+    return context.request(name, params);
   };
+
   return next();
 }
 

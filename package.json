@@ -5,7 +5,7 @@
   "main": "src/main.js",
   "scripts": {
     "complexity": "cr -c .complexrc ./src",
-    "preinstall": "cp -n context-sample.json context.json",
+    "preinstall": "cp -n context-sample.json context.json || true",
     "apitest": "cd apitest; ./apitest.sh",
     "dev": "parallelshell \"npm run start:minismaug\" \"npm run start:sp\"",
     "lint": "eslint ./src",

@@ -29,22 +29,22 @@ export default function createCRUD(elvisType, type, router, remap, schema) {
 
   const request = (req) => {
 
-    return new EntityRequest(type, elvisType, req.communityReguest, createMap(schema, remap), schema);
+    return new EntityRequest(type, elvisType, req.communityRequest, createMap(schema, remap), schema);
   };
   // Get list
-  router.get('/', async (req, res) => res.json(await request(req, res).getList()));
+  router.get('/', async (req, res) => res.json(await request(req, res).getList(req.query)));
 
   // Get by id
-  router.get('/:id', async (req, res) => res.json(await request(req, res).get(req.params.id)));
+  router.get('/:id', async (req, res) => res.json(await request(req, res).get(req.query, req.params.id)));
 
   // Create
-  router.post('/', async (req, res) => res.json(await request(req, res).post(req.body)));
+  router.post('/', async (req, res) => res.json(await request(req, res).post(req.query, req.body)));
 
   // Update
-  router.put('/:id', async (req, res) => res.json(await request(req, res).put(req.params.id, req.body)));
+  router.put('/:id', async (req, res) => res.json(await request(req, res).put(req.query, req.params.id, req.body)));
 
   // delete
-  router.delete('/:id', async (req, res) => res.json(await request(req, res).delete(req.params.id, req.body.profileId)));
+  router.delete('/:id', async (req, res) => res.json(await request(req, res).delete(req.query, req.params.id, req.body.profileId)));
 
   return router;
 }
