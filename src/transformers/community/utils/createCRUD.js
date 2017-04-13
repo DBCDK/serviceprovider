@@ -43,9 +43,10 @@ export default function createCRUD(elvisType, type, router, remap, schema) {
 
   // Setup CRUD transport
   router.all('/:id?', (req, res) => {
-    req.context.crud = true;
     const provider = req.app.get('serviceProvider');
     const context = req.context;
+    context.crud = true;
+
     const query = Object.assign(
       {},
       req.params,

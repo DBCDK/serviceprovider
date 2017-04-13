@@ -16,6 +16,7 @@ export function profile() {
     created_epoch: 'created_epoch',
     deleted_epoch: 'deleted_epoch',
     username: 'name',
+    modified_by: 'modified_by',
     email: 'attributes.email',
     displayName: 'attributes.displayName',
     description: 'attributes.description',

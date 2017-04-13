@@ -149,7 +149,6 @@ export default class EntityRequest {
       Include: this._map
     };
     const {data, errors} = await this._request('query', 'post', {json});
-    console.log(data, errors);
     return this._createResponse(this._mapperFromElvis(data && data.List[0]), errors);
   }
 
@@ -166,13 +165,14 @@ export default class EntityRequest {
     return this._createResponse(this._mapperFromElvis(data), errors);
   }
 
-  async put(id, object) {
+  async put(id, modifiedById, object) {
     const validationError = this._validate(object);
     if (validationError) {
       return validationError;
     }
+
     const json = this._mapperToElvis(object);
-    console.log(json);
+    json.modified_by = modifiedById;
     const {data, errors} = await this._request(`${this._elvisType}/${id}`, 'put', {json});
     return this._createResponse(this._mapperFromElvis(data), errors);
   }
@@ -207,7 +207,6 @@ export default class EntityRequest {
     };
 
     const {data, errors} = await this._request('query', 'post', {json});
-    console.log(data, errors);
     return this._createResponse(data, errors);
   }
 }
