@@ -14,9 +14,9 @@ export default function createEntityTransform(req, context) {
   );
 
   const params = {};
-  Object.keys(req._meta.schemaMap).forEach(scemaKey => {
-    if (req[scemaKey]) {
-      params[scemaKey] = req[scemaKey];
+  Object.keys(req._meta.schemaMap).forEach(schemaKey => {
+    if (req[schemaKey]) {
+      params[schemaKey] = req[schemaKey];
     }
   });
   delete params.id;
