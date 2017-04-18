@@ -73,6 +73,9 @@ export default function createCRUD(elvisType, type, router, remap, schema) {
         event = 'deleteEntity';
         break;
       }
+      default: {
+        break;
+      }
     }
 
     provider.execute(event, query, context).then(result => res.json(result));
