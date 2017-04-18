@@ -13,11 +13,11 @@ export default function updateEntityTransform(req, context) {
     req._meta.schema
   );
 
-  const modifiedById = 1; // @TODO: Get current user id from context?
+  const modifiedById = req.modifiedById;
   const params = {};
-  Object.keys(req._meta.schemaMap).forEach(scemaKey => {
-    if (req[scemaKey]) {
-      params[scemaKey] = req[scemaKey];
+  Object.keys(req._meta.schemaMap).forEach(schemaKey => {
+    if (req[schemaKey]) {
+      params[schemaKey] = req[schemaKey];
     }
   });
   delete params.id;
