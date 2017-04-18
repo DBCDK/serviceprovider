@@ -8,6 +8,7 @@
 import suggestTransformer from '../transformers/suggest.js';
 import facetTransformer from '../transformers/facets';
 import searchTransformer from '../transformers/search';
+import metasearchTransformer from '../transformers/metasearch';
 import librariesTransformer from '../transformers/libraries';
 import userTransformer from '../transformers/user';
 import renewTransformer from '../transformers/renew';
@@ -37,6 +38,7 @@ export default function Provider() {
     news: news,
     renew: renewTransformer,
     search: searchTransformer,
+    metasearch: metasearchTransformer,
     libraries: librariesTransformer,
     facets: facetTransformer,
     recommend: recommendTransformer,
