@@ -1,0 +1,22 @@
+responses:
+  Profile:
+    description: A profile object.
+    schema:
+      $ref: "#/definitions/Profile"
+  Group:
+    description: A group object.
+    schema:
+      $ref: "#/definitions/Group"
+  Post:
+    description: A post object.
+    schema:
+      $ref: "#/definitions/Post"
+  Comment:
+    description: A comment object.
+    schema:
+      $ref: "#/definitions/Comment"
+  Error:
+    description: An unexpected error occured.
+    schema:
+      $ref: "#/definitions/Error"
+
