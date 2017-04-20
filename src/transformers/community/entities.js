@@ -1,7 +1,7 @@
 import {Router} from 'express';
 import createCRUD from './utils/createCRUD';
-import {generateSwagger} from '../../swaggerFromSpec';
-const swagger = generateSwagger();
+import {getSpecification} from '../../swaggerFromSpec';
+const swagger = getSpecification();
 
 /**
  * Returns group router.
