@@ -780,102 +780,45 @@ definitions:
     items:
       $ref: "#/definitions/Profile"
   Group:
+    allOf:
+      - $ref: "#/definitions/Entity"
     properties:
       title:
         type: string
       body:
         type: string
-      created_epoch:
-        type: number
-        format: integer
-      modified_epoch:
-        type: number
-        format: integer
-      modified_by:
-        type: number
-        format: integer
-      id:
-        type: number
-        format: integer
-      owner_id:
-        type: number
-        format: integer
-    additionalProperties: false
   Post:
+    allOf:
+      - $ref: "#/definitions/Entity"
     properties:
       title:
         type: string
       body:
         type: string
-      created_epoch:
-        type: number
-        format: integer
-      modified_epoch:
-        type: number
-        format: integer
-      modified_by:
-        type: number
-        format: integer
-      id:
-        type: number
-        format: integer
-      owner_id:
-        type: number
-        format: integer
       group_id:
         type: number
         format: integer
-    additionalProperties: false
   Comment:
+    allOf:
+      - $ref: "#/definitions/Entity"
     properties:
       title:
         type: string
       body:
         type: string
-      created_epoch:
-        type: number
-        format: integer
-      modified_epoch:
-        type: number
-        format: integer
-      modified_by:
-        type: number
-        format: integer
-      id:
-        type: number
-        format: integer
-      owner_id:
-        type: number
-        format: integer
       post_id:
         type: number
         format: integer
-    additionalProperties: false
   Quarantine:
+    allOf:
+      - $ref: "#/definitions/Entity"
     properties:
-      created_epoch:
-        type: number
-        format: integer
-      modified_epoch:
-        type: number
-        format: integer
-      modified_by:
-        type: number
-        format: integer
-      id:
-        type: number
-        format: integer
-      owner_id:
-        type: number
-        format: integer
-      profile_id:
-        type: number
-        format: integer
-      quarantine_reason:
+      reason:
         type: string
-      quarantine_flags:
+      flags:
         type: array
-    additionalProperties: false
+        items:
+          type: object
   Groups:
     type: array
     items:
@@ -898,6 +841,60 @@ definitions:
         type: string
       fields:
         type: string
+  Entity:
+    allOf:
+      - $ref: "#/definitions/Base"
+    properties:
+      media:
+        $ref: "#/definitions/Media"
+      profile_id:
+        type: number
+        format: integer
+  Action:
+    allOf:
+      - $ref: "#/definitions/Base"
+    properties:
+      reference:
+        $ref: "#/definitions/Reference"
+      profile_id:
+        type: number
+        format: integer
+  Base:
+    discriminator: "base"
+    type: object
+    properties:
+      created_date:
+        type: number
+        format: integer
+      deleted_date:
+        type: number
+        format: integer
+      modified_date:
+        type: number
+        format: integer
+      modified_by:
+        type: number
+        format: integer
+      id:
+        type: number
+        format: integer
+    additionalProperties: false
+
+  Reference:
+    type: object
+    properties:
+      type:
+        type: string
+      value:
+        type: object
+  Media:
+    properties:
+      type:
+        type: string
+      value:
+        type: object
+
+
 defaultProperties:
   fields:
     description: which parts of the response to get
