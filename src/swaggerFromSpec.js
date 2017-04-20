@@ -6,9 +6,14 @@ import {specToPaths} from './specToPaths';
 const version = require('../package.json').version;
 const majorVersion = parseInt(version, 10);
 
-export function generateSwagger(specName = 'spec') {
+export function getSpecification(specName = 'definitions') {
+  const path = __dirname + '/../doc/specs/';
+  return yaml.safeLoad(fs.readFileSync(`${path}${specName}.yaml`).toString('utf-8'));
+}
+
+function generateSwagger(spec) {
   const path = __dirname + '/../doc/';
-  const spec = yaml.safeLoad(fs.readFileSync(`${path}${specName}.yaml`).toString('utf-8'));
+  //const spec = yaml.safeLoad(fs.readFileSync(`${path}${specName}.yaml`).toString('utf-8'));
   const desc = fs.readFileSync(`${path}description.md`).toString('utf-8');
 
   return {
@@ -31,6 +36,27 @@ export function generateSwagger(specName = 'spec') {
   };
 }
 
+const glob = require('glob');
+const extendify = require('extendify');
+function loadYamlFiles() {
+  return new Promise(function(resolve) {
+    const path = __dirname + '/../doc';
+    glob(path + '/**/*.yaml', function (er, files) {
+      console.log(files);
+      const contents = files.map(f => {
+        return yaml.safeLoad(fs.readFileSync(f).toString('utf-8'));
+      });
+      const extend = extendify({
+        inPlace: false,
+        isDeep: true
+      });
+      resolve(contents.reduce(extend));
+    });
+  });
+}
+
 export default function (specName = 'spec') {
-  return Promise.resolve(generateSwagger(specName));
+  return loadYamlFiles().then(function(spec){
+    return generateSwagger(spec);
+  });
 }
