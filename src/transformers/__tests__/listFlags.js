@@ -51,9 +51,9 @@ const context = {
 };
 const provider = Provider();
 const mockData = {
-  "[\"http://localhost:3001/v1/community/1/query\",{\"method\":\"post\",\"json\":{\"Actions\":{\"type\":\"flag\"},\"Limit\":2,\"Offset\":0,\"Include\":{\"created_epoch\":\"created_epoch\",\"modified_epoch\":\"modified_epoch\",\"modified_by\":\"modified_by\",\"id\":\"id\",\"owner_id\":\"owner_id\",\"profile_id\":\"profile_ref\",\"flag_reason\":\"attributes.flag_reason\"}}}]": {
+  "[\"http://localhost:3001/v1/community/1/query\",{\"method\":\"post\",\"json\":{\"Actions\":{\"type\":\"flag\"},\"SortBy\":\"id\",\"Order\":\"descending\",\"Limit\":2,\"Offset\":0,\"Include\":{\"created_epoch\":\"created_epoch\",\"modified_epoch\":\"modified_epoch\",\"modified_by\":\"modified_by\",\"id\":\"id\",\"owner_id\":\"owner_id\",\"profile_id\":\"profile_ref\",\"flag_reason\":\"attributes.flag_reason\"}}}]": {
     "data": {
-      "Total": 2,
+      "Total": 1,
       "NextOffset": null,
       "List": [
         {
@@ -63,14 +63,6 @@ const mockData = {
           "id": 310,
           "owner_id": 1,
           "profile_id": null
-        },
-        {
-          "created_epoch": 1492763608,
-          "modified_epoch": 1492763608,
-          "modified_by": null,
-          "id": 309,
-          "owner_id": 1,
-          "profile_id": null
         }
       ]
     }
@@ -78,7 +70,7 @@ const mockData = {
 };
 
 describe('Automated test: listFlags', () => {
-  it('expected response. ID:tz8rdy, for {"_meta":{"type":"flag","elvisType":"action","schemaMap":{"created_epoch":"created_epoch","modified_epoch":"modified_epoch","modified_by":"modified_by","id":"id","owner_id":"owner_id","profile_id":"profile_ref","flag_reason":"attributes.flag_reason"},"schema":{"properties":{"created_epoch":{"type":"number","format":"integer"},"modified_epoch":{"type":"number","format":"integer"},"modified_by":{"type":"number","format":"integer"},"id":{"type":"number","format":"integer"},"owner_id":{"type":"number","format":"integer"},"profile_id":{"type":"number","format":"integer"},"flag_reason":{"type":"string"}}}}}', (done) => {
+  it('expected response. ID:ew7xfc, for {"_meta":{"type":"flag","elvisType":"action","schemaMap":{"created_epoch":"created_epoch","modified_epoch":"modified_epoch","modified_by":"modified_by","id":"id","owner_id":"owner_id","profile_id":"profile_ref","flag_reason":"attributes.flag_reason"},"schema":{"properties":{"created_epoch":{"type":"number","format":"integer"},"modified_epoch":{"type":"number","format":"integer"},"modified_by":{"type":"number","format":"integer"},"id":{"type":"number","format":"integer"},"owner_id":{"type":"number","format":"integer"},"profile_id":{"type":"number","format":"integer"},"flag_reason":{"type":"string"}}}}}', (done) => {
     context.mockData = mockData;
     provider.execute('listEntities', {"_meta":{"type":"flag","elvisType":"action","schemaMap":{"created_epoch":"created_epoch","modified_epoch":"modified_epoch","modified_by":"modified_by","id":"id","owner_id":"owner_id","profile_id":"profile_ref","flag_reason":"attributes.flag_reason"},"schema":{"properties":{"created_epoch":{"type":"number","format":"integer"},"modified_epoch":{"type":"number","format":"integer"},"modified_by":{"type":"number","format":"integer"},"id":{"type":"number","format":"integer"},"owner_id":{"type":"number","format":"integer"},"profile_id":{"type":"number","format":"integer"},"flag_reason":{"type":"string"}}}}}, context)
       .then(result => {
@@ -86,7 +78,7 @@ describe('Automated test: listFlags', () => {
             {
   "status": 200,
   "data": {
-    "Total": 2,
+    "Total": 1,
     "NextOffset": null,
     "List": [
       {
@@ -94,14 +86,6 @@ describe('Automated test: listFlags', () => {
         "modified_epoch": 1492763734,
         "modified_by": null,
         "id": 310,
-        "owner_id": 1,
-        "profile_id": null
-      },
-      {
-        "created_epoch": 1492763608,
-        "modified_epoch": 1492763608,
-        "modified_by": null,
-        "id": 309,
         "owner_id": 1,
         "profile_id": null
       }
@@ -115,7 +99,7 @@ describe('Automated test: listFlags', () => {
         fail({throw: result}, {
   "status": 200,
   "data": {
-    "Total": 2,
+    "Total": 1,
     "NextOffset": null,
     "List": [
       {
@@ -123,14 +107,6 @@ describe('Automated test: listFlags', () => {
         "modified_epoch": 1492763734,
         "modified_by": null,
         "id": 310,
-        "owner_id": 1,
-        "profile_id": null
-      },
-      {
-        "created_epoch": 1492763608,
-        "modified_epoch": 1492763608,
-        "modified_by": null,
-        "id": 309,
         "owner_id": 1,
         "profile_id": null
       }
