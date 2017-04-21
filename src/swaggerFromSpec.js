@@ -2,6 +2,8 @@
 import fs from 'fs';
 import yaml from 'js-yaml';
 import {specToPaths} from './specToPaths';
+import glob from 'glob';
+import extendify from 'extendify';
 
 const version = require('../package.json').version;
 const majorVersion = parseInt(version, 10);
@@ -13,7 +15,6 @@ export function getSpecification(specName = 'definitions') {
 
 function generateSwagger(spec) {
   const path = __dirname + '/../doc/';
-  //const spec = yaml.safeLoad(fs.readFileSync(`${path}${specName}.yaml`).toString('utf-8'));
   const desc = fs.readFileSync(`${path}description.md`).toString('utf-8');
 
   return {
@@ -36,13 +37,10 @@ function generateSwagger(spec) {
   };
 }
 
-const glob = require('glob');
-const extendify = require('extendify');
 function loadYamlFiles() {
   return new Promise(function(resolve) {
     const path = __dirname + '/../doc';
     glob(path + '/**/*.yaml', function (er, files) {
-      console.log(files);
       const contents = files.map(f => {
         return yaml.safeLoad(fs.readFileSync(f).toString('utf-8'));
       });
@@ -55,7 +53,7 @@ function loadYamlFiles() {
   });
 }
 
-export default function (specName = 'spec') {
+export default function () {
   return loadYamlFiles().then(function(spec){
     return generateSwagger(spec);
   });
