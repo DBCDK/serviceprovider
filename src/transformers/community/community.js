@@ -16,7 +16,7 @@ export default () => {
   router.use(getContextMiddleware);
   router.use(requireAuthorized);
   // Profile
-  router.use('/profile', profile());
+  router.use('/profiles', profile());
   // Entities
   router.use('/group', group());
   router.use('/post', post());

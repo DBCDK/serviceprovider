@@ -3,6 +3,10 @@ responses:
     description: A profile object.
     schema:
       $ref: "#/definitions/Profile"
+  Profiles:
+    description: A list of profiles.
+    schema:
+      $ref: "#/definitions/Profiles"
   Group:
     description: A group object.
     schema:
