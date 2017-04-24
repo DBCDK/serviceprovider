@@ -7,6 +7,10 @@ paths:
       summary: List of Groups
       parameters:
         - $ref: '#/parameters/accessToken'
+        - $ref: '#/parameters/include'
+        - $ref: '#/parameters/limit'
+        - $ref: '#/parameters/offset'
+        - $ref: '#/parameters/count'
       responses:
         200:
           $ref: '#/responses/Groups'
@@ -71,13 +75,17 @@ paths:
         default:
           $ref: '#/responses/Error'
 
-  /community/post/:
+  /community/posts/:
     get:
       tags:
         - Community
       summary: List of Posts
       parameters:
         - $ref: '#/parameters/accessToken'
+        - $ref: '#/parameters/include'
+        - $ref: '#/parameters/limit'
+        - $ref: '#/parameters/offset'
+        - $ref: '#/parameters/count'
       responses:
         200:
           $ref: '#/definitions/Posts'
@@ -97,7 +105,7 @@ paths:
         default:
           $ref: '#/definitions/Error'
 
-  /community/post/{id}:
+  /community/posts/{id}:
     get:
       tags:
         - Community
@@ -138,13 +146,17 @@ paths:
         default:
           $ref: '#/responses/Error'
 
-  /community/comment/:
+  /community/comments/:
     get:
       tags:
         - Community
       summary: List of Comments
       parameters:
         - $ref: '#/parameters/accessToken'
+        - $ref: '#/parameters/include'
+        - $ref: '#/parameters/limit'
+        - $ref: '#/parameters/offset'
+        - $ref: '#/parameters/count'
       responses:
         200:
           $ref: '#/definitions/Comments'
@@ -164,7 +176,7 @@ paths:
         default:
           $ref: '#/definitions/Error'
 
-  /community/comment/{id}:
+  /community/comments/{id}:
     get:
       tags:
         - Community
@@ -172,6 +184,7 @@ paths:
       parameters:
         - $ref: '#/parameters/id'
         - $ref: '#/parameters/accessToken'
+        - $ref: '#/parameters/include'
       responses:
         200:
           $ref: '#/definitions/Comment'

@@ -22,6 +22,13 @@ parameters:
     in: query
     description: 'Include related objects. Json formatted object with type, limit, offset and count (Total number of elements) e.g. {type: post, limit: 10, offset: 0, count: 1}'
     type: string
+  count:
+    name: 'count'
+    in: query
+    description: 'Include count of named related objects e.g. count=flags&count=likes'
+    type: array
+    items:
+      type: string
   id:
     name: id
     in: path
