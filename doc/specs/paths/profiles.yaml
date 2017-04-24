@@ -6,6 +6,9 @@ paths:
       summary: List of Profiles
       parameters:
         - $ref: '#/parameters/accessToken'
+        - $ref: '#/parameters/include'
+        - $ref: '#/parameters/limit'
+        - $ref: '#/parameters/offset'
       responses:
         500:
           $ref: '#/responses/Error'
