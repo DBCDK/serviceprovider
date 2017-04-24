@@ -1,6 +1,6 @@
 paths:
 
-  /community/group/:
+  /community/groups/:
     get:
       tags:
         - Community
@@ -9,9 +9,9 @@ paths:
         - $ref: '#/parameters/accessToken'
       responses:
         200:
-          $ref: '#/definitions/Groups'
-        default:
-          $ref: '#/definitions/Error'
+          $ref: '#/responses/Groups'
+        500:
+          $ref: '#/responses/Error'
 
     post:
       summary: Create Group
@@ -30,7 +30,7 @@ paths:
         default:
           $ref: '#/definitions/Error'
 
-  /community/group/{id}:
+  /community/groups/{id}:
     get:
       tags:
         - Community
