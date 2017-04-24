@@ -76,6 +76,30 @@ definitions:
         type: array
         items:
           type: object
+  Like:
+    allOf:
+      - $ref: "#/definitions/Action"
+  Likes:
+    type: array
+    items:
+      $ref: "#/definitions/Like"
+  Follow:
+    allOf:
+      - $ref: "#/definitions/Action"
+  Follows:
+    type: array
+    items:
+      $ref: "#/definitions/Follow"
+  Flag:
+    allOf:
+      - $ref: "#/definitions/Action"
+    properties:
+      reason:
+        type: string
+  Flags:
+    type: array
+    items:
+      $ref: "#/definitions/Flags"
   Groups:
     type: array
     items:
