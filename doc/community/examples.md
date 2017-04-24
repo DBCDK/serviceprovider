@@ -9,25 +9,25 @@ To get started with building a community, you will need a valid client and clien
 All Create and Update requests needs to be done with a valid profile. Except for Create profile.
 To Create a profile, make a post request to the /profiles endpoint:
 
-      ```javascript
-        const profile = {
-            username: "Some Name",
-        };
-     
-      request.post('/profiles', {body: profile});
-      ```
+```javascript
+const profile = {
+    username: "Some Name",
+};
+
+request.post('/profiles', {body: profile});
+```
 
 Username is a required property.
 
 To update a profile:
 
-      ```javascript
-        const profile = {
-            username: "Some Name",
-        };
-     
-      request.put('/profiles/', {body: profile});
-      ```
+```javascript
+const profile = {
+    username: "Some Name",
+};
+
+request.put('/profiles/', {body: profile});
+```
 
 
 ### Create Group
