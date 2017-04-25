@@ -165,20 +165,19 @@ export default class EntityRequest {
     return this._createResponse(this._mapperFromElvis(data), errors);
   }
 
-  async put(id, modifiedById, object) {
+  async put(id, object) {
     const validationError = this._validate(object);
     if (validationError) {
       return validationError;
     }
 
     const json = this._mapperToElvis(object);
-    json.modified_by = modifiedById;
     const {data, errors} = await this._request(`${this._elvisType}/${id}`, 'put', {json});
     return this._createResponse(this._mapperFromElvis(data), errors);
   }
 
-  async delete(id, deletedById) {
-    const json = {modified_by: deletedById};
+  async delete(id, modified_by) {
+    const json = {modified_by};
     const {data, errors} = await this._request(`${this._elvisType}/${id}`, 'put', {json});
     return this._createResponse(this._mapperFromElvis(data), errors);
   }

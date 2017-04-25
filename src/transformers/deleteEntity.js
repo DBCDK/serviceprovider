@@ -13,5 +13,5 @@ export default function deleteEntityTransform(req, context) {
     req._meta.schema
   );
 
-  return entityRequest.delete(req.id, req.deletedById);
+  return entityRequest.delete(req.id, req.modified_by);
 }
