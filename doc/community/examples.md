@@ -128,9 +128,101 @@ request.delete(openplatform_uri + 'community/profiles/' + id, {json: profile, qs
 
 If delete is successful, response body includes the full profile, with the `deleted_epoch` value set. 
 
+## Setting up a community
+A community is organised around three types of content. Groups, Posts and Comments. These types creates a hierarchy 
+A Group is the top level. Inside a group users can create Posts, and users can comment on posts. This enables threaded discussions on two levels. 
+
+### Creating a group  
+Start by creating a group. A group only requires an owner_id that points to a community profile. A group also have a title, body, media and attributes field. 
+  
+```javascript
+const group = {
+    title: "A group about something",
+    body: "This should not be about nothing"
+    owner_id: 1
+};
+
+request.post(openplatform_uri + 'community/groups', {json: group, qs:{access_token: 'qwerty'}}, (err, response, body) => {
+  console.log(body);
+});
+```
+
+**Response body:**
+```javascript
+{ status: 200,
+  data: 
+   { title: 'A group about something',
+     body: 'This should not be about nothing',
+     id: 2,
+     modified_epoch: 1493122861,
+     created_epoch: 1493122861,
+     owner_id: 1 },
+  errors: [] }
+```
+
+
+### Add Post to Group
+  
+```javascript
+const post = {
+    title: "",
+    body: "This is a post in Group with id 2",
+    owner_id: 1,
+    group_id: 2
+};
+
+request.post(openplatform_uri + 'community/posts', {json: post, qs:{access_token: 'qwerty'}}, (err, response, body) => {
+  console.log(body);
+});
+```
+
+**Response body:**
+```javascript
+{ status: 200,
+  data: 
+   { title: '',
+     body: 'This is a post in Group with id 2',
+     group_id: 2,
+     id: 5,
+     modified_epoch: 1493123760,
+     created_epoch: 1493123760,
+     owner_id: 1 },
+  errors: [] }
+```
+
+### Add Comment to Post
+  
+```javascript
+const comment = {
+    title: "",
+    body: "This is a comment in Group 2 Post 5",
+    owner_id: 1,
+    post_id: 5
+};
+
+request.post(openplatform_uri + 'community/comments', {json: comment, qs:{access_token: 'qwerty'}}, (err, response, body) => {
+  console.log(body);
+});
+```
+
+**Response body:**
+```javascript
+{ status: 200,
+  data: 
+   { title: '',
+     body: 'This is a comment in Group 2 Post 5',
+     post_id: 5,
+     id: 6,
+     modified_epoch: 1493123760,
+     created_epoch: 1493123760,
+     owner_id: 1 },
+  errors: [] }
+```
+
+
 ## Examples
 
-### Create Group
+
 ### Add post to group
 ### Add comment to post
 ### Follow group

@@ -55,8 +55,7 @@ definitions:
       body:
         type: string
       group_id:
-        type: number
-        format: integer
+        type: integer
   Comment:
     allOf:
       - $ref: "#/definitions/Entity"
