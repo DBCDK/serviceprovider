@@ -21,16 +21,17 @@ const profile = {
 request.post(openplatform_uri + 'community/profiles', {json: profile, qs:{access_token: 'qwerty'}}, (err, response, body) => {
   console.log(body);
 });
+```
 
-// Response body:
-// { status: 200,
-//   data: 
-//    { username: 'Some Name',
-//      created_epoch: 1493107039,
-//      modified_epoch: 1493107039,
-//      id: 8 },
-//   errors: [] }
-
+**Response body:**
+```javascript
+{ status: 200,
+  data: 
+    { username: 'Some Name',
+      created_epoch: 1493107039,
+      modified_epoch: 1493107039,
+      id: 8 },
+   errors: [] }
 ```
 
 Username is a required property.
@@ -47,14 +48,17 @@ request.post(openplatform_uri + 'community/profiles', {json: profile, qs:{access
   console.log(body);
 });
 
-// Response body:
-// { status: 200,
-//   data: 
-//    { username: 'Some Name',
-//      created_epoch: 1493107039,
-//      modified_epoch: 1493107039,
-//      id: 8 },
-//   errors: [] }
+```
+
+**Response body:**
+```javascript
+{ status: 200,
+  data: 
+  { username: 'Some Name',
+    created_epoch: 1493107039,
+    modified_epoch: 1493107039,
+    id: 8 },
+  errors: [] }
 
 ```
 
@@ -75,18 +79,19 @@ request.put(openplatform_uri + 'community/profiles/' + id, {json: profile, qs:{a
   console.log(body);
 });
 
-// Response body:
-// { status: 200,
-//   data: 
-//    { username: 'Some Other Name',
-//      displayName: 'My real name',
-//      created_epoch: 1493107039,
-//      modified_epoch: 1493109211,
-//      modified_by: 8,
-//      id: 8 },
-//   errors: [] }
+```
 
-
+**Response body:**
+```javascript
+ { status: 200,
+   data: 
+    { username: 'Some Other Name',
+      displayName: 'My real name',
+      created_epoch: 1493107039,
+      modified_epoch: 1493109211,
+      modified_by: 8,
+      id: 8 },
+   errors: [] }
 ```
 
 The modified_epoch value is automatically updated on update. 
@@ -104,23 +109,23 @@ const profile = {
 request.delete(openplatform_uri + 'community/profiles/' + id, {json: profile, qs:{access_token: 'qwerty'}}, (err, response, body) => {
   console.log(body);
 });
-
-// Response body:
-// { status: 200,
-//   data: 
-//    { username: 'Some Other Name',
-//      displayName: 'My real name',
-//      created_epoch: 1493107039,
-//      modified_epoch: 1493109211,
-//      modified_by: 8,
-//      deleted_epoch: 1493110073, <- value is set
-//      id: 8 },
-//   errors: [] }
-
-
 ```
 
-If deletion is successful, response body includes the full profile, with the `deleted_epoch` value set. 
+**Response body:**
+```javascript
+ { status: 200,
+   data: 
+    { username: 'Some Other Name',
+      displayName: 'My real name',
+      created_epoch: 1493107039,
+      modified_epoch: 1493109211,
+      modified_by: 8,
+      deleted_epoch: 1493110073, // value is set on delete
+      id: 8 },
+   errors: [] }
+```
+
+If delete is successful, response body includes the full profile, with the `deleted_epoch` value set. 
 
 ## Examples
 
