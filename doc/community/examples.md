@@ -219,20 +219,53 @@ request.post(openplatform_uri + 'community/comments', {json: comment, qs:{access
   errors: [] }
 ```
 
+### Get, Update and Delete
+Get, Update and Delete operations on Groups, Posts, and Comments, are similar to the corresponding operations on a profile.  
 
-## Examples
+**GET: Group with ID 2**
+```javascript
+request.get(openplatform_uri + 'community/groups/2', {json: editGroup, qs:{access_token: 'qwerty'}}, (err, response, body) => {
+  console.log(body);
+});
+```
 
+**PUT: Update Group with ID 2**
+```javascript
+const editGroup = {
+    title: "This is a new title",
+    modified_by: 1
+};
 
-### Add post to group
-### Add comment to post
+request.put(openplatform_uri + 'community/groups/2', {json: editGroup, qs:{access_token: 'qwerty'}}, (err, response, body) => {
+  console.log(body);
+});
+```
+
+**DELETE; Group with ID 2**
+```javascript
+const deleteGroup = {
+    modified_by: 1
+};
+
+request.delete(openplatform_uri + 'community/groups/2', {json: deleteGroup, qs:{access_token: 'qwerty'}}, (err, response, body) => {
+  console.log(body);
+});
+```
+
+## Actions
 ### Follow group
 ### Unfollow group
 ### Like post
 ### unLike post
-### Create review
-### Edit review
+
+## Moderation
 ### Flag profile
 ### Qarantine profile
+
+## Reviews
+ ### Create review
+ ### Edit review
+
 
 ## Query Examples
 ### Get 10 latest followers
