@@ -71,7 +71,6 @@ and identifies the id of the profile doing the update. This will most often be t
 ```javascript
 const id = 8;
 const profile = {
-  username: "Some Other Name",
   displayName: "My real name",
   modified_by: id
 };
@@ -81,11 +80,13 @@ request.put(openplatform_uri + 'community/profiles/' + id, {json: profile, qs:{a
 
 ```
 
+Only the values specified on the profile are updated. In the example above example `displayName` is changed, and `username` remains the same
+
 **Response body:**
 ```javascript
  { status: 200,
    data: 
-    { username: 'Some Other Name',
+    { username: 'Some Name',
       displayName: 'My real name',
       created_epoch: 1493107039,
       modified_epoch: 1493109211,
@@ -94,7 +95,7 @@ request.put(openplatform_uri + 'community/profiles/' + id, {json: profile, qs:{a
    errors: [] }
 ```
 
-The modified_epoch value is automatically updated on update. 
+The `modified_epoch` value is automatically updated on update. 
 
 ### Delete profile
 
