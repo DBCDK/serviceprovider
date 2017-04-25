@@ -13,12 +13,15 @@ definitions:
       phone:
         type: string
       created_epoch:
-        type: number
-        format: integer
+        type: integer
         readOnly: true
       modified_epoch:
-        type: number
-        format: integer
+        type: integer
+        readOnly: true
+      modified_by:
+        type: integer
+      deleted_epoch:
+        type: integer
         readOnly: true
       birthday:
         type: string
@@ -26,8 +29,7 @@ definitions:
       fullName:
         type: string
       id:
-        type: number
-        format: integer
+        type: integer
         readOnly: true
     required:
       - username
