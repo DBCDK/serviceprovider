@@ -24,24 +24,7 @@ function createMap(schema, remap) {
  * @returns {Object} Router.
  */
 export default function createCRUD(elvisType, type, router, remap, schema) {
-  const request = (req, res, crudType) => {
-    const provider = req.app.get('serviceProvider');
-    return provider.execute('entityRequest', {
-      type: crudType,
-      createTest: req.query.createTest,
-      query: req.query,
-      body: req.body,
-      params: req.params,
-      etParams: {
-        type,
-        elvisType,
-        schemaMap: createMap(schema, remap),
-        schema
-      }
-    }, req.context);
-  };
-
-  // Setup CRUD transport
+   // Setup CRUD transport
   router.all('/:id?', (req, res) => {
     const provider = req.app.get('serviceProvider');
     const context = req.context;
