@@ -1,21 +1,8 @@
 import {Router} from 'express';
 import createCRUD from './utils/createCRUD';
 
-/**
- * Returns like router.
- *
- * @returns {Object}
- */
-export function like() {
-
-  const remap = {
-    id: 'id',
-    entity_id: 'entity_ref',
-    profile_id: 'profile_ref',
-    type: 'type'
-  };
-
-  const schema = {
+export const schemas = {
+  like: {
     properties: {
       created_epoch: {type: 'number', format: 'integer'},
       modified_epoch: {type: 'number', format: 'integer'},
@@ -25,7 +12,57 @@ export function like() {
       entity_id: {type: 'number', format: 'integer'},
       profile_id: {type: 'number', format: 'integer'}
     }
+  },
+  follow: {
+    properties: {
+      created_epoch: {type: 'number', format: 'integer'},
+      modified_epoch: {type: 'number', format: 'integer'},
+      modified_by: {type: 'number', format: 'integer'},
+      id: {type: 'number', format: 'integer'},
+      owner_id: {type: 'number', format: 'integer'},
+      entity_id: {type: 'number', format: 'integer'},
+      profile_id: {type: 'number', format: 'integer'}
+    }
+  },
+  flag: {
+    properties: {
+      created_epoch: {type: 'number', format: 'integer'},
+      modified_epoch: {type: 'number', format: 'integer'},
+      modified_by: {type: 'number', format: 'integer'},
+      id: {type: 'number', format: 'integer'},
+      owner_id: {type: 'number', format: 'integer'},
+      profile_id: {type: 'number', format: 'integer'},
+      flag_reason: {type: 'string'}
+    }
+  },
+  quarantine: {
+    properties: {
+      created_epoch: {type: 'number', format: 'integer'},
+      modified_epoch: {type: 'number', format: 'integer'},
+      modified_by: {type: 'number', format: 'integer'},
+      id: {type: 'number', format: 'integer'},
+      owner_id: {type: 'number', format: 'integer'},
+      profile_id: {type: 'number', format: 'integer'},
+      quarantine_reason: {type: 'string'},
+      quarantine_flags: {type: 'array'}
+    }
+  }
+};
+
+/**
+ * Returns like router.
+ *
+ * @returns {Object}
+ */
+export function like() {
+  const remap = {
+    id: 'id',
+    entity_id: 'entity_ref',
+    profile_id: 'profile_ref',
+    type: 'type'
   };
+
+  const schema = schemas.like;
 
   return createCRUD('action', 'like', Router(), remap, schema);
 }
@@ -44,17 +81,7 @@ export function follow() {
     type: 'type'
   };
 
-  const schema = {
-    properties: {
-      created_epoch: {type: 'number', format: 'integer'},
-      modified_epoch: {type: 'number', format: 'integer'},
-      modified_by: {type: 'number', format: 'integer'},
-      id: {type: 'number', format: 'integer'},
-      owner_id: {type: 'number', format: 'integer'},
-      entity_id: {type: 'number', format: 'integer'},
-      profile_id: {type: 'number', format: 'integer'}
-    }
-  };
+  const schema = schemas.follow;
 
   return createCRUD('action', 'follow', Router(), remap, schema);
 }
@@ -72,18 +99,7 @@ export function flag() {
     flag_reason: 'attributes.flag_reason'
   };
 
-  const schema = {
-    properties: {
-      created_epoch: {type: 'number', format: 'integer'},
-      modified_epoch: {type: 'number', format: 'integer'},
-      modified_by: {type: 'number', format: 'integer'},
-      id: {type: 'number', format: 'integer'},
-      owner_id: {type: 'number', format: 'integer'},
-      entity_id: {type: 'number', format: 'integer'},
-      profile_id: {type: 'number', format: 'integer'},
-      flag_reason: {type: 'string'}
-    }
-  };
+  const schema = schemas.flag;
 
   return createCRUD('action', 'flag', Router(), remap, schema);
 }
@@ -102,18 +118,7 @@ export function quarantine() {
     quarantine_flags: 'attributes.quarantine_flags'
   };
 
-  const schema = {
-    properties: {
-      created_epoch: {type: 'number', format: 'integer'},
-      modified_epoch: {type: 'number', format: 'integer'},
-      modified_by: {type: 'number', format: 'integer'},
-      id: {type: 'number', format: 'integer'},
-      owner_id: {type: 'number', format: 'integer'},
-      profile_id: {type: 'number', format: 'integer'},
-      quarantine_reason: {type: 'string'},
-      quarantine_flags: {type: 'array'}
-    }
-  };
+  const schema = schemas.quarantine;
 
   return createCRUD('action', 'flag', Router(), remap, schema);
 }

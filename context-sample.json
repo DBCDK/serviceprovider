@@ -18,7 +18,7 @@
         "default": "https://xptest.dbc.dk/ms/recommend-cosim/v1",
         "popular": "https://xptest.dbc.dk/ms/recommend-pop/v1"
       },
-      "communityservice": "http://communitybe-s01:8000/v1"
+      "communityservice": "http://localhost:3001/v1"
     },
     "search": {
       "agency": "775100",
