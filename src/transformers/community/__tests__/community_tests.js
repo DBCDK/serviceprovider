@@ -323,7 +323,11 @@ describe('Test include on group', function() {
   it('should support nested includes with nested includes', function(done) {
     request
       .get(`http://localhost:8080/v1/community/group`)
-      .query({access_token: token, limit: 1, include: '[{"name": "posts", "limit": 1, "include": [{"name": "comments", "include": ["owner"]}]}]'})
+      .query({
+        access_token: token,
+        limit: 1,
+        include: '[{"name": "posts", "limit": 1, "include": [{"name": "comments", "include": ["owner"]}]}]'
+      })
       .end((err, res) => {
         assert.ifError(err);
         const items = res.body.data.List;
@@ -354,7 +358,10 @@ describe('Test include on group', function() {
       .query({
         access_token: token,
         limit: 1,
-        include: '[{"name": "flags"}, {"name":"likes", "include": ["owner"]}]'
+        include: JSON.stringify([
+          {name: 'flags'},
+          {name: 'likes', include: ['owner']}
+        ])
       })
       .end((err, res) => {
         assert.ifError(err);
@@ -370,7 +377,13 @@ describe('Test include on group', function() {
             assert(like.owner);
           });
 
-          console.log(item);
+          assert(item.flags);
+          assert(item.flags.Total);
+
+          item.flags.List.forEach(flag => {
+            assert(flag.id);
+            assert(flag.flag_reason);
+          });
         })
         done();
       });
