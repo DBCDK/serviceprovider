@@ -347,4 +347,32 @@ describe('Test include on group', function() {
         done();
       });
   });
+
+  it('should support including actions', function(done) {
+    request
+      .get(`http://localhost:8080/v1/community/group`)
+      .query({
+        access_token: token,
+        limit: 1,
+        include: '[{"name": "flags"}, {"name":"likes", "include": ["owner"]}]'
+      })
+      .end((err, res) => {
+        assert.ifError(err);
+        const items = res.body.data.List;
+        assert(items.length);
+
+        items.forEach(item => {
+          assert(item.likes);
+          assert(item.likes.Total);
+
+          item.likes.List.forEach(like => {
+            assert(like.id);
+            assert(like.owner);
+          });
+
+          console.log(item);
+        })
+        done();
+      });
+  });
 });

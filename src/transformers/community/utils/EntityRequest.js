@@ -145,17 +145,16 @@ export default class EntityRequest {
           }
         }
         else if (typeof item === 'object' && item.name) {
-          let related = getRelatedModel(name, item.name, item.limit, item.offset, item.filter);
+          const related = getRelatedModel(name, item.name, item.limit, item.offset, item.filter);
+          if (related) {
+            if (item.include) {
+              if (typeof item.include === 'string') {
+                item.include = [item.include];
+              }
 
-          if (item.include) {
-            if (typeof item.include === 'string') {
-              item.include = [item.include];
+              related.Include = Object.assign({}, related.Include, this._getInclude(item.include, item.filter, name = item.name));
             }
 
-            related.Include = Object.assign({}, related.Include, this._getInclude(item.include, item.filter, name = item.name));
-          }
-
-          if (related) {
             Include[item.name] = related;
           }
         }

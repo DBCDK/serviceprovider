@@ -24,6 +24,28 @@ export function getRelatedModel(ownerName, mappingName, limit = 2, offset = 0, f
     Include: schemas.profile.profile
   };
 
+  const likeMapping = {
+    Actions: {type: 'like', entity_ref: '^id'},
+    Limit: limit,
+    Offset: offset,
+    Include: schemas.actions.like
+  };
+
+  const followMapping = {
+
+  };
+
+  const flagMapping = {
+    Actions: {type: 'flag', entity_ref: '^id'},
+    Limit: limit,
+    Offset: offset,
+    Include: schemas.actions.flag
+  };
+
+  const quarantine = {
+
+  };
+
   const models = {
     like: {
       owner: ownerMapping,
@@ -54,6 +76,8 @@ export function getRelatedModel(ownerName, mappingName, limit = 2, offset = 0, f
     group: {
       owner: ownerMapping,
       modified_by: modifiedByMapping,
+      likes: likeMapping,
+      flags: flagMapping,
       posts: {
         Entities: {type: 'post', entity_ref: '^id'},
         Limit: limit,
@@ -64,6 +88,8 @@ export function getRelatedModel(ownerName, mappingName, limit = 2, offset = 0, f
     post: {
       owner: ownerMapping,
       modified_by: modifiedByMapping,
+      likes: likeMapping,
+      flags: flagMapping,
       comments: {
         Entities: {type: 'comment', entity_ref: '^id'},
         Limit: limit,
@@ -73,12 +99,22 @@ export function getRelatedModel(ownerName, mappingName, limit = 2, offset = 0, f
     },
     comment: {
       owner: ownerMapping,
-      modified_by: modifiedByMapping
+      modified_by: modifiedByMapping,
+      likes: likeMapping,
+      flags: flagMapping
     }
   };
 
+  // Plural names
   models.posts = models.post;
   models.comments = models.comment;
+  models.likes = models.like;
+  models.followers = models.follow;
+  models.flags = models.flag;
+  models.quarantines = models.quarantine;
 
+  console.log(models[ownerName], mappingName);
+
+  // Return whatever we find.
   return models[ownerName][mappingName];
 }

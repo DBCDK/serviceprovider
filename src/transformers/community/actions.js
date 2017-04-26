@@ -3,49 +3,47 @@ import createCRUD from './utils/createCRUD';
 
 export const schemas = {
   like: {
-    properties: {
-      created_epoch: {type: 'number', format: 'integer'},
-      modified_epoch: {type: 'number', format: 'integer'},
-      modified_by: {type: 'number', format: 'integer'},
-      id: {type: 'number', format: 'integer'},
-      owner_id: {type: 'number', format: 'integer'},
-      entity_id: {type: 'number', format: 'integer'},
-      profile_id: {type: 'number', format: 'integer'}
-    }
+    id: 'id',
+    entity_id: 'entity_ref',
+    profile_id: 'profile_ref',
+    type: 'type',
+    modified_epoch: 'modified_epoch',
+    modified_by: 'modified_by',
+    created_epoch: 'created_epoch',
+    owner_id: 'owner_id'
   },
   follow: {
-    properties: {
-      created_epoch: {type: 'number', format: 'integer'},
-      modified_epoch: {type: 'number', format: 'integer'},
-      modified_by: {type: 'number', format: 'integer'},
-      id: {type: 'number', format: 'integer'},
-      owner_id: {type: 'number', format: 'integer'},
-      entity_id: {type: 'number', format: 'integer'},
-      profile_id: {type: 'number', format: 'integer'}
-    }
+    id: 'id',
+    entity_id: 'entity_ref',
+    profile_id: 'profile_ref',
+    type: 'type',
+    modified_epoch: 'modified_epoch',
+    modified_by: 'modified_by',
+    created_epoch: 'created_epoch',
+    owner_id: 'owner_id'
   },
   flag: {
-    properties: {
-      created_epoch: {type: 'number', format: 'integer'},
-      modified_epoch: {type: 'number', format: 'integer'},
-      modified_by: {type: 'number', format: 'integer'},
-      id: {type: 'number', format: 'integer'},
-      owner_id: {type: 'number', format: 'integer'},
-      profile_id: {type: 'number', format: 'integer'},
-      flag_reason: {type: 'string'}
-    }
+    id: 'id',
+    entity_id: 'entity_ref',
+    profile_id: 'profile_ref',
+    type: 'type',
+    modified_epoch: 'modified_epoch',
+    modified_by: 'modified_by',
+    created_epoch: 'created_epoch',
+    owner_id: 'owner_id',
+    flag_reason: 'attributes.flag_reason'
   },
   quarantine: {
-    properties: {
-      created_epoch: {type: 'number', format: 'integer'},
-      modified_epoch: {type: 'number', format: 'integer'},
-      modified_by: {type: 'number', format: 'integer'},
-      id: {type: 'number', format: 'integer'},
-      owner_id: {type: 'number', format: 'integer'},
-      profile_id: {type: 'number', format: 'integer'},
-      quarantine_reason: {type: 'string'},
-      quarantine_flags: {type: 'array'}
-    }
+    id: 'id',
+    entity_id: 'entity_ref',
+    profile_id: 'profile_ref',
+    type: 'type',
+    modified_epoch: 'modified_epoch',
+    modified_by: 'modified_by',
+    created_epoch: 'created_epoch',
+    owner_id: 'owner_id',
+    flag_reason: 'attributes.quarantine_reason',
+    quarantine_flags: 'attributes.quarantine_flags'
   }
 };
 
@@ -55,14 +53,19 @@ export const schemas = {
  * @returns {Object}
  */
 export function like() {
-  const remap = {
-    id: 'id',
-    entity_id: 'entity_ref',
-    profile_id: 'profile_ref',
-    type: 'type'
-  };
+  const remap = schemas.like;
 
-  const schema = schemas.like;
+  const schema = {
+    properties: {
+      created_epoch: {type: 'number', format: 'integer'},
+      modified_epoch: {type: 'number', format: 'integer'},
+      modified_by: {type: 'number', format: 'integer'},
+      id: {type: 'number', format: 'integer'},
+      owner_id: {type: 'number', format: 'integer'},
+      entity_id: {type: 'number', format: 'integer'},
+      profile_id: {type: 'number', format: 'integer'}
+    }
+  };
 
   return createCRUD('action', 'like', Router(), remap, schema);
 }
@@ -74,14 +77,19 @@ export function like() {
  */
 export function follow() {
 
-  const remap = {
-    id: 'id',
-    entity_id: 'entity_ref',
-    profile_id: 'profile_ref',
-    type: 'type'
-  };
+  const remap = schemas.follow;
 
-  const schema = schemas.follow;
+  const schema = {
+    properties: {
+      created_epoch: {type: 'number', format: 'integer'},
+      modified_epoch: {type: 'number', format: 'integer'},
+      modified_by: {type: 'number', format: 'integer'},
+      id: {type: 'number', format: 'integer'},
+      owner_id: {type: 'number', format: 'integer'},
+      entity_id: {type: 'number', format: 'integer'},
+      profile_id: {type: 'number', format: 'integer'}
+    }
+  };
 
   return createCRUD('action', 'follow', Router(), remap, schema);
 }
@@ -93,13 +101,19 @@ export function follow() {
  */
 export function flag() {
 
-  const remap = {
-    id: 'id',
-    profile_id: 'profile_ref',
-    flag_reason: 'attributes.flag_reason'
-  };
+  const remap = schemas.flag;
 
-  const schema = schemas.flag;
+  const schema = {
+    properties: {
+      created_epoch: {type: 'number', format: 'integer'},
+      modified_epoch: {type: 'number', format: 'integer'},
+      modified_by: {type: 'number', format: 'integer'},
+      id: {type: 'number', format: 'integer'},
+      owner_id: {type: 'number', format: 'integer'},
+      profile_id: {type: 'number', format: 'integer'},
+      flag_reason: {type: 'string'}
+    }
+  };
 
   return createCRUD('action', 'flag', Router(), remap, schema);
 }
@@ -111,14 +125,20 @@ export function flag() {
  */
 export function quarantine() {
 
-  const remap = {
-    id: 'id',
-    profile_id: 'profile_ref',
-    flag_reason: 'attributes.quarantine_reason',
-    quarantine_flags: 'attributes.quarantine_flags'
-  };
+  const remap = schemas.quarantine;
 
-  const schema = schemas.quarantine;
+  const schema = {
+    properties: {
+      created_epoch: {type: 'number', format: 'integer'},
+      modified_epoch: {type: 'number', format: 'integer'},
+      modified_by: {type: 'number', format: 'integer'},
+      id: {type: 'number', format: 'integer'},
+      owner_id: {type: 'number', format: 'integer'},
+      profile_id: {type: 'number', format: 'integer'},
+      quarantine_reason: {type: 'string'},
+      quarantine_flags: {type: 'array'}
+    }
+  };
 
   return createCRUD('action', 'flag', Router(), remap, schema);
 }
