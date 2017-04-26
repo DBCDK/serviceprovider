@@ -57,6 +57,7 @@ export function getRelatedModel(ownerName, mappingName, limit = 2, offset = 0, f
       posts: {
         Entities: {type: 'post', entity_ref: '^id'},
         Limit: limit,
+        Offset: offset,
         Include: schemas.entities.post
       }
     },
@@ -64,8 +65,9 @@ export function getRelatedModel(ownerName, mappingName, limit = 2, offset = 0, f
       owner: ownerMapping,
       modified_by: modifiedByMapping,
       comments: {
-        Comment: {type: 'comment', entity_ref: '^id'},
+        Entities: {type: 'comment', entity_ref: '^id'},
         Limit: limit,
+        Offset: offset,
         Include: schemas.entities.comment
       }
     },
@@ -74,6 +76,9 @@ export function getRelatedModel(ownerName, mappingName, limit = 2, offset = 0, f
       modified_by: modifiedByMapping
     }
   };
+
+  models.posts = models.post;
+  models.comments = models.comment;
 
   return models[ownerName][mappingName];
 }

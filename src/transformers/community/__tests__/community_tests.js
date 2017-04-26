@@ -284,10 +284,36 @@ describe('Test include on group', function() {
         const items = res.body.data.List;
         items.forEach(item => {
           assert(item.posts);
-          assert(item.posts.List.length > 2); // default limit is 2.
+          assert(item.posts.NextOffset > 2);
           item.posts.List.forEach(post => {
             assert(post.id);
             assert(post.title);
+          });
+        });
+        done();
+      });
+  });
+
+  it('should support nested includes', function(done) {
+    request
+      .get(`http://localhost:8080/v1/community/group`)
+      .query({access_token: token, limit: 1, include: '[{"name": "posts", "limit": 1, "include": ["comments"]}]'})
+      .end((err, res) => {
+        assert.ifError(err);
+        const items = res.body.data.List;
+
+        items.forEach(item => {
+          assert(item.posts);
+          item.posts.List.forEach(post => {
+            assert(post.id);
+            assert(post.title);
+            assert(post.comments);
+            assert(post.comments.Total);
+
+            post.comments.List.forEach(comment => {
+              assert(comment.id);
+              assert(comment.title);
+            });
           });
         });
         done();
