@@ -253,6 +253,40 @@ request.delete(openplatform_uri + 'community/groups/2', {json: deleteGroup, qs:{
 ```
 
 ## Actions
+
+### Like post
+
+```javascript
+const like = {
+    owner_id: 1,
+    
+    reference: {
+        type: "post",
+        id: 5 
+    }
+};
+
+request.post(openplatform_uri + 'community/like', {json: comment, qs:{access_token: 'qwerty'}}, (err, response, body) => {
+  console.log(body);
+});
+```
+
+**Response body:**
+```javascript
+{ status: 200,
+  data: 
+   { id: 10,
+     reference: {
+        type: "post",
+        id: 5
+     },
+     modified_epoch: 1493123760,
+     created_epoch: 1493123760,
+     owner_id: 1 },
+  errors: [] }
+```
+
+
 ### Follow group
 ### Unfollow group
 ### Like post
@@ -272,3 +306,7 @@ request.delete(openplatform_uri + 'community/groups/2', {json: deleteGroup, qs:{
 ### Generate group view
 ### Get activity feed
 ### Get all quarantined profiles
+
+## Errors
+### Validation Error
+### Unexpected Error
