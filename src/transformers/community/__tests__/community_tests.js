@@ -360,7 +360,9 @@ describe('Test include on group', function() {
         limit: 1,
         include: JSON.stringify([
           {name: 'flags'},
-          {name: 'likes', include: ['owner']}
+          {name: 'likes', include: ['owner']},
+          {name: 'followers'},
+          'quarantines'
         ])
       })
       .end((err, res) => {
@@ -384,6 +386,16 @@ describe('Test include on group', function() {
             assert(flag.id);
             assert(flag.flag_reason);
           });
+
+          assert(item.followers);
+          assert(item.followers.Total);
+
+          item.followers.List.forEach(follower => {
+            assert(follower.id);
+            assert(follower.type);
+          });
+
+          console.log(item);
         })
         done();
       });

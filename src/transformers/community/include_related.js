@@ -31,10 +31,6 @@ export function getRelatedModel(ownerName, mappingName, limit = 2, offset = 0, f
     Include: schemas.actions.like
   };
 
-  const followMapping = {
-
-  };
-
   const flagMapping = {
     Actions: {type: 'flag', entity_ref: '^id'},
     Limit: limit,
@@ -42,8 +38,11 @@ export function getRelatedModel(ownerName, mappingName, limit = 2, offset = 0, f
     Include: schemas.actions.flag
   };
 
-  const quarantine = {
-
+  const quarantineMapping = {
+    Actions: {type: 'like', entity_ref: '^id'},
+    Limit: limit,
+    Offset: offset,
+    Include: schemas.actions.like
   };
 
   const models = {
@@ -78,6 +77,13 @@ export function getRelatedModel(ownerName, mappingName, limit = 2, offset = 0, f
       modified_by: modifiedByMapping,
       likes: likeMapping,
       flags: flagMapping,
+      quarantines: quarantineMapping,
+      followers: {
+        Actions: {type: 'member', entity_ref: '^id'},
+        Limit: limit,
+        Offset: offset,
+        Include: schemas.actions.follow
+      },
       posts: {
         Entities: {type: 'post', entity_ref: '^id'},
         Limit: limit,
@@ -112,8 +118,6 @@ export function getRelatedModel(ownerName, mappingName, limit = 2, offset = 0, f
   models.followers = models.follow;
   models.flags = models.flag;
   models.quarantines = models.quarantine;
-
-  console.log(models[ownerName], mappingName);
 
   // Return whatever we find.
   return models[ownerName][mappingName];

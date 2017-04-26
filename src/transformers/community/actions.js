@@ -140,5 +140,5 @@ export function quarantine() {
     }
   };
 
-  return createCRUD('action', 'flag', Router(), remap, schema);
+  return createCRUD('action', 'quarantine', Router(), remap, schema);
 }

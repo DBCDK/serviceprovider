@@ -145,6 +145,7 @@ export default class EntityRequest {
           }
         }
         else if (typeof item === 'object' && item.name) {
+          console.log(item.name);
           const related = getRelatedModel(name, item.name, item.limit, item.offset, item.filter);
           if (related) {
             if (item.include) {
@@ -152,7 +153,7 @@ export default class EntityRequest {
                 item.include = [item.include];
               }
 
-              related.Include = Object.assign({}, related.Include, this._getInclude(item.include, item.filter, name = item.name));
+              related.Include = Object.assign({}, related.Include, this._getInclude(item.include, item.filter, item.name));
             }
 
             Include[item.name] = related;
