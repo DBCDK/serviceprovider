@@ -59,13 +59,8 @@ export function comment() {
 export function review() {
 
   const map = {
-    id: 'id',
-    modified_epoch: 'modified_epoch',
-    created_epoch: 'created_epoch',
-    modified_by: 'modified_by',
-    title: 'title',
     body: 'contents',
-    owner_id: 'owner_id',
+    profile_id: 'owner_id',
     reference: 'entity_ref',
     rating: 'rating'
   };
