@@ -39,7 +39,7 @@ paths:
       tags:
         - Community
       summary: Review in community
-      description: Get A review by ID
+      description: Get a review by ID
       parameters:
         - $ref: '#/parameters/id'
         - $ref: '#/parameters/accessToken'
@@ -50,7 +50,7 @@ paths:
           $ref: '#/responses/Error'
 
     put:
-      summary: Update review
+      summary: Update a review
       tags:
         - Community
       parameters:
@@ -64,7 +64,7 @@ paths:
           $ref: '#/responses/Error'
 
     delete:
-      summary: Delete review
+      summary: Delete a review
       tags:
         - Community
       parameters:
