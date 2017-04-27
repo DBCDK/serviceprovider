@@ -345,7 +345,7 @@ request.delete(openplatform_uri + 'community/likes/', {json: like, qs:{access_to
 Follow is done in the same way as likes. by using the endpoint: `community/follows` 
 
 ## Moderation
-Moderation is done by flagging content created by a user and adding a Quarentine to a Profile.
+Moderation is done by flagging content created by a user and adding a Quarantine to a Profile.
 
 ### Flag profile
 
@@ -354,7 +354,7 @@ Moderation is done by flagging content created by a user and adding a Quarentine
 const flag = {
     owner_id: 1,
     reference: {
-     type: 'profile,
+     type: 'profile',
      id: 5
     },
     reason: "Some reason for flagging"
