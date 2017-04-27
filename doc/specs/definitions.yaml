@@ -163,8 +163,10 @@ definitions:
     properties:
       type:
         type: string
-      value:
-        type: object
+        required: true
+      id:
+        type: integer
+        required: true
   Media:
     properties:
       type:
