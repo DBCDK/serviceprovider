@@ -4,7 +4,27 @@ The examples on this page is written in javascript, and uses the request library
 
 ## Getting startet
 To get started with building a community, you will need a valid client and clientID, and the client needs to be configured with a valid community ID. 
-To apply for access, contact [https://kundeservice.dbc.dk/](https://kundeservice.dbc.dk/).
+To apply for access, contact [https://kundeservice.dbc.dk/](https://kundeservice.dbc.dk/). A valid token is required for all requests. 
+
+### Request a valid token
+```javascript
+
+const req = {
+    form: {
+        grant_type: 'password',
+        username: username,
+        password: password
+    },
+    auth: {
+      user: config.clientId,
+      pass: config.clientSecret
+    }
+};
+
+request.post(smaug_uri + 'oauth/token', req, (err, response, body) => {
+  console.log(body);
+});
+```
 
 ## Handling profiles
 All users of the communityservice needs a profile, to be able to create and update content. 
@@ -325,7 +345,7 @@ request.delete(openplatform_uri + 'community/likes/', {json: like, qs:{access_to
 Follow is done in the same way as likes. by using the endpoint: `community/follows` 
 
 ## Moderation
-Moderation is done by flagging content created by a user and adding a Quarentine to a Profile.
+Moderation is done by flagging content created by a user and adding a Quarantine to a Profile.
 
 ### Flag profile
 
@@ -334,7 +354,7 @@ Moderation is done by flagging content created by a user and adding a Quarentine
 const flag = {
     owner_id: 1,
     reference: {
-     type: 'profile,
+     type: 'profile',
      id: 5
     },
     reason: "Some reason for flagging"
@@ -438,12 +458,113 @@ request.post(openplatform_uri + 'community/reviews', {json: quarantine, qs:{acce
  
 A review can be edited and deleted in the same way as a Profile
 
-## Query Examples
-### Get 10 latest followers
+## Querying thing 
+The examples are querying groups, but can be applied to all types of content. 
+
+### limit
+the maximum number of items to return
+
+### offset
+offset. The first item to return.
+
+### sort
+the key to sort items by. The key can be any key in the model. 
+
+### order
+The order of items (descending or ascending)
+
+### Example
+
+```javascript
+const query = {
+    access_token: 'qwerty'
+    limit: 2,
+    offset: 0,
+    sort: 'created_epoc',
+    order: 'descending'
+}
+
+request.post(openplatform_uri + 'community/groups', {qs:query}, (err, response, body) => {
+  console.log(body);
+});
+```
+
+**Response body:**
+```javascript
+{ status: 200,
+  data:{
+   List: [
+    { title: 'A group about something',
+      body: 'This should not be about nothing',
+      id: 2,
+      modified_epoch: 1493122861,
+      created_epoch: 1493122861,
+      owner_id: 1 },
+    { title: 'A group about something else',
+      body: 'This should not be about something',
+      id: 3,
+      modified_epoch: 1493122861,
+      created_epoch: 1493122861,
+      owner_id: 1 }
+    ]
+  errors: [] }
+```
+
+### Get 10 latest posts for a group
+By using the nested endpoints, you can get a list of related objects. E.g. you can get the latest posts for a group calling `community/groups/{id}/posts`
+
+```javascript
+const query = {
+    access_token: 'qwerty'
+    limit: 10,
+    offset: 0,
+    sort: 'created_epoc',
+    order: 'descending'
+}
+
+request.post(openplatform_uri + 'community/groups/2/posts', {qs:query}, (err, response, body) => {
+  console.log(body);
+});
+```
+
+This request will return a list of posts written in group with ID 2.
+
+**Response body:**
+```javascript
+{ status: 200,
+  data:{
+   List: [
+    { /*post*/ },
+    { /*post*/ },
+    { /*post*/ },
+    ...
+    ]
+  errors: [] }
+```
+
+## Special views
+The community has three special endpoints, that can be used to. 
+
 ### Generate group view
+@todo create example of how to create a group view
+
 ### Get activity feed
+@todo create example of how to create an activity feed
+
 ### Get all quarantined profiles
+@todo create example of how to create quarantined profiles
 
 ## Errors
+There are basically two types of errors. Validation errors that is caused by an invalid request, and unexpected error, that is caused by unknown causes 
+
 ### Validation Error
+@todo add example of validation error
+
 ### Unexpected Error
+An unexpected error has the following format
+```javascript
+{
+  "code": 500,
+  "message": "Some errormessage",
+}
+```
