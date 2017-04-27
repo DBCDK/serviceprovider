@@ -11,13 +11,9 @@ const swagger = getSpecification();
 export function group() {
 
   const map = {
-    id: 'id',
-    modified_epoch: 'modified_epoch',
-    created_epoch: 'created_epoch',
-    modified_by: 'modified_by',
-    title: 'title',
     body: 'contents',
-    owner_id: 'owner_id'
+    profile_id: 'owner_id',
+    media: 'attributes.media'
   };
 
   return createCRUD('entity', 'group', Router(), map, getSchemaDefinition(swagger, 'Group'));
@@ -31,14 +27,10 @@ export function group() {
 export function post() {
 
   const map = {
-    id: 'id',
-    modified_epoch: 'modified_epoch',
-    created_epoch: 'created_epoch',
-    modified_by: 'modified_by',
-    title: 'title',
     body: 'contents',
-    owner_id: 'owner_id',
-    group_id: 'entity_ref'
+    profile_id: 'owner_id',
+    group_id: 'entity_ref',
+    media: 'attributes.media'
   };
 
   return createCRUD('entity', 'post', Router(), map, getSchemaDefinition(swagger, 'Post'));
@@ -52,15 +44,29 @@ export function post() {
 export function comment() {
 
   const map = {
-    id: 'id',
-    modified_epoch: 'modified_epoch',
-    created_epoch: 'created_epoch',
-    modified_by: 'modified_by',
-    title: 'title',
     body: 'contents',
-    owner_id: 'owner_id',
-    post_id: 'entity_ref'
+    profile_id: 'owner_id',
+    post_id: 'entity_ref',
+    media: 'attributes.media'
   };
 
   return createCRUD('entity', 'comment', Router(), map, getSchemaDefinition(swagger, 'Comment'));
+}
+
+/**
+ * Returns comment router.
+ *
+ * @returns {Object}
+ */
+export function review() {
+
+  const map = {
+    body: 'contents',
+    profile_id: 'owner_id',
+    reference: 'entity_ref',
+    rating: 'attributes.rating',
+    media: 'attributes.media'
+  };
+
+  return createCRUD('entity', 'review', Router(), map, getSchemaDefinition(swagger, 'Review'));
 }

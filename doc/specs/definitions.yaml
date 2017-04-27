@@ -56,6 +56,22 @@ definitions:
         type: string
       group_id:
         type: integer
+  Review:
+    allOf:
+      - $ref: "#/definitions/Entity"
+    properties:
+      title:
+        type: string
+      body:
+        type: string
+      rating:
+        type: integer
+      reference:
+        $ref: "#/definitions/Reference"
+  Reviews:
+      type: array
+      items:
+        $ref: "#/definitions/Review"
   Comment:
     allOf:
       - $ref: "#/definitions/Entity"
@@ -160,19 +176,14 @@ definitions:
     discriminator: "base"
     type: object
     properties:
-      created_date:
-        type: number
-        format: integer
-      deleted_date:
-        type: number
-        format: integer
-      modified_date:
-        type: number
-        format: integer
+      created_epoch:
+        type: integer
+      deleted_epoch:
+        type: integer
+      modified_epoch:
+        type: integer
       modified_by:
-        type: number
-        format: integer
+        type: integer
       id:
-        type: number
-        format: integer
+        type: integer
     additionalProperties: false

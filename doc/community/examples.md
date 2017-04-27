@@ -254,6 +254,8 @@ request.delete(openplatform_uri + 'community/groups/2', {json: deleteGroup, qs:{
 
 ## Actions
 
+Actions are events that can be applied to content as Groups, Posts, Comments, Reviews and Profiles. There are two types of actions Likes and Follow. Actions can be created and deleted. 
+
 ### Like post
 
 ```javascript
@@ -266,7 +268,7 @@ const like = {
     }
 };
 
-request.post(openplatform_uri + 'community/like', {json: comment, qs:{access_token: 'qwerty'}}, (err, response, body) => {
+request.post(openplatform_uri + 'community/likes', {json: like, qs:{access_token: 'qwerty'}}, (err, response, body) => {
   console.log(body);
 });
 ```
@@ -286,20 +288,155 @@ request.post(openplatform_uri + 'community/like', {json: comment, qs:{access_tok
   errors: [] }
 ```
 
+### unlike post
 
-### Follow group
-### Unfollow group
-### Like post
-### unLike post
+To remove a like from a post, make a delete request with modified_by set:
+
+```javascript
+
+const like = {
+    modified_by: 1,
+};
+
+request.delete(openplatform_uri + 'community/likes/', {json: like, qs:{access_token: 'qwerty'}}, (err, response, body) => {
+  console.log(body);
+});
+```
+
+**Response body:**
+```javascript
+{ status: 200,
+  data: 
+   { id: 10,
+     reference: {
+        type: "post",
+        id: 5
+     },
+     modified_epoch: 1493123760,
+     created_epoch: 1493123760,
+     deleted_epoch: 1493123760,
+     owner_id: 1 },
+  errors: [] }
+```
+
+
+### Follow Content
+
+Follow is done in the same way as likes. by using the endpoint: `community/follows` 
 
 ## Moderation
+Moderation is done by flagging content created by a user and adding a Quarentine to a Profile.
+
 ### Flag profile
+
+```javascript
+// Flag profile with id 5 
+const flag = {
+    owner_id: 1,
+    reference: {
+     type: 'profile,
+     id: 5
+    },
+    reason: "Some reason for flagging"
+};
+
+request.post(openplatform_uri + 'community/flags', {json: like, qs:{access_token: 'qwerty'}}, (err, response, body) => {
+  console.log(body);
+});
+```
+
+**Response body:**
+```javascript
+{ status: 200,
+  data: 
+   { id: 11,
+     reference: {
+        type: "profile",
+        id: 5
+     },
+     reason: "Some reason for flagging",
+     modified_epoch: 1493123760,
+     created_epoch: 1493123760,
+     owner_id: 1 },
+  errors: [] }
+```
+
 ### Qarantine profile
+
+A quarantine should have a reason for giving the quarantine, a start timestamp and an end timestamp. Optionally an array of flag ids as documentation for the reason.   
+  
+```javascript
+const quarantine = {
+    reason: "This is the reason for the quarantine",
+    start_epoch: 1493123760,
+    end_epoch: 1493983760,
+    owner_id: 1,
+    flags: [11]
+};
+
+request.post(openplatform_uri + 'community/quarantine', {json: quarantine, qs:{access_token: 'qwerty'}}, (err, response, body) => {
+  console.log(body);
+});
+```
+
+**Response body:**
+```javascript
+{ status: 200,
+  data: 
+   { id: 12,
+     modified_epoch: 1493123760,
+     created_epoch: 1493123760,
+     owner_id: 1,
+     reason: "This is the reason for the quarantine",
+     start_epoch: 1493123760,
+     end_epoch: 1493983760,
+     owner_id: 1,
+     flags: [11]
+  },
+  errors: [] }
+```
 
 ## Reviews
  ### Create review
- ### Edit review
+ A review contains a title, body, rating, and a reference to the object being reviewed. 
+   
+```javascript
+const quarantine = {
+    title: "This is a title for the review",
+    body: "This is the actual review",
+    rating: 3
+    owner_id: 1,
+    reference: {
+        type: 'pid',
+        id: '870970-basis:50841316'
+    }
+};
 
+request.post(openplatform_uri + 'community/reviews', {json: quarantine, qs:{access_token: 'qwerty'}}, (err, response, body) => {
+  console.log(body);
+});
+```
+
+**Response body:**
+```javascript
+{ status: 200,
+  data: 
+   { id: 13,
+     modified_epoch: 1493123760,
+     created_epoch: 1493123760,
+     owner_id: 1,
+     title: "This is a title for the review",
+     body: "This is the actual review",
+     rating: 3
+     reference: {
+         type: 'pid',
+         id: '870970-basis:50841316'
+     }
+  },
+  errors: [] }
+```
+ 
+A review can be edited and deleted in the same way as a Profile
 
 ## Query Examples
 ### Get 10 latest followers

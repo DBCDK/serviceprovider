@@ -35,7 +35,14 @@ export default function createCRUD(elvisType, type, router, remap, schema) {
       req.params,
       req.body,
       req.query,
-      {_meta: {type, elvisType, schemaMap: createMap(schema, remap), schema}}
+      {
+        _meta: {
+          type,
+          elvisType,
+          schemaMap: createMap(schema, remap),
+          schema
+        }
+      }
     );
 
     let event;
