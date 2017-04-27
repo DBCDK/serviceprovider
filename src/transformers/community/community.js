@@ -1,7 +1,7 @@
 import {Router} from 'express';
 import request from 'request';
 import {profile} from './profile';
-import {group, post, comment} from './entities';
+import {group, post, comment, review} from './entities';
 import {like, follow, flag, quarantine} from './actions';
 import caller from '../../provider/caller';
 import {accessLogMiddleware, getContextMiddleware, requireAuthorized} from '../../app.middlewares';
@@ -21,6 +21,7 @@ export default () => {
   router.use('/groups', group());
   router.use('/posts', post());
   router.use('/comments', comment());
+  router.use('/reviews', review());
   // Actions
   router.use('/likes', like());
   router.use('/follows', follow());
