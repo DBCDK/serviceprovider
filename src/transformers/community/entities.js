@@ -50,3 +50,25 @@ export function comment() {
 
   return createCRUD('entity', 'comment', Router(), map, getSchemaDefinition(swagger, 'Comment'));
 }
+
+/**
+ * Returns comment router.
+ *
+ * @returns {Object}
+ */
+export function review() {
+
+  const map = {
+    id: 'id',
+    modified_epoch: 'modified_epoch',
+    created_epoch: 'created_epoch',
+    modified_by: 'modified_by',
+    title: 'title',
+    body: 'contents',
+    owner_id: 'owner_id',
+    reference: 'entity_ref',
+    rating: 'rating'
+  };
+
+  return createCRUD('entity', 'review', Router(), map, getSchemaDefinition(swagger, 'Review'));
+}

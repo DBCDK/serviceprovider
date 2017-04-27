@@ -1,0 +1,77 @@
+paths:
+  /community/reviews/:
+    get:
+      tags:
+        - Community
+      summary: List of Reviews
+      parameters:
+        - $ref: '#/parameters/accessToken'
+        - $ref: '#/parameters/include'
+        - $ref: '#/parameters/limit'
+        - $ref: '#/parameters/offset'
+      responses:
+        500:
+          $ref: '#/responses/Error'
+        200:
+          $ref: '#/responses/Reviews'
+        default:
+          $ref: '#/responses/Reviews'
+
+    post:
+      summary: Create review
+      tags:
+        - Community
+      parameters:
+        - $ref: '#/parameters/accessToken'
+        - name: review
+          in: body
+          description: The review
+          schema:
+            $ref: '#/definitions/Review'
+      responses:
+        200:
+          $ref: '#/responses/Review'
+        500:
+          $ref: '#/responses/Error'
+
+  /community/reviews/{id}:
+    get:
+      tags:
+        - Community
+      summary: Review in community
+      description: Get a review by ID
+      parameters:
+        - $ref: '#/parameters/id'
+        - $ref: '#/parameters/accessToken'
+      responses:
+        200:
+          $ref: '#/responses/Review'
+        500:
+          $ref: '#/responses/Error'
+
+    put:
+      summary: Update a review
+      tags:
+        - Community
+      parameters:
+        - $ref: '#/parameters/id'
+        - $ref: '#/parameters/accessToken'
+        - $ref: '#/parameters/profile'
+      responses:
+        200:
+          $ref: '#/responses/Review'
+        500:
+          $ref: '#/responses/Error'
+
+    delete:
+      summary: Delete a review
+      tags:
+        - Community
+      parameters:
+        - $ref: '#/parameters/id'
+        - $ref: '#/parameters/accessToken'
+      responses:
+        200:
+          $ref: '#/responses/Review'
+        default:
+          $ref: '#/responses/Error'
