@@ -159,16 +159,12 @@ export default class EntityRequest {
     }
     const json = this._mapperToElvis(object);
     if (this._elvisType === 'action') {
-      if (json.reference.type === 'profile') {
-          json.profile_ref = json.reference.id;
+      if (json.attributes.reference.type === 'profile') {
+        json.profile_ref = json.attributes.reference.id;
       }
       else {
-        json.entity_ref = json.reference.id;
-        json.attributes = {
-          type: 'post'
-        }
+        json.entity_ref = json.attributes.reference.id;
       }
-      delete json.reference;
     }
     if (this._type) {
       json.type = this._type;
@@ -219,14 +215,5 @@ export default class EntityRequest {
 
     const {data, errors} = await this._request('query', 'post', {json});
     return this._createResponse(data, errors);
-  }
-}
-
-
-const like = {
-  id: 4,
-  reference: {
-    type: 'post',
-    id: 5
   }
 }
