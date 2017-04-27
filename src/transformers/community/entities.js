@@ -1,7 +1,7 @@
 import {Router} from 'express';
 import createCRUD from './utils/createCRUD';
-import {generateSwagger} from '../../swaggerFromSpec';
-const swagger = generateSwagger();
+import {getSpecification, getSchemaDefinition} from '../../swaggerFromSpec';
+const swagger = getSpecification();
 
 /**
  * Returns group router.
@@ -20,7 +20,7 @@ export function group() {
     owner_id: 'owner_id'
   };
 
-  return createCRUD('entity', 'group', Router(), map, swagger.definitions.Group);
+  return createCRUD('entity', 'group', Router(), map, getSchemaDefinition(swagger, 'Group'));
 }
 
 /**
@@ -41,7 +41,7 @@ export function post() {
     group_id: 'entity_ref'
   };
 
-  return createCRUD('entity', 'post', Router(), map, swagger.definitions.Post);
+  return createCRUD('entity', 'post', Router(), map, getSchemaDefinition(swagger, 'Post'));
 }
 
 /**
@@ -62,5 +62,5 @@ export function comment() {
     post_id: 'entity_ref'
   };
 
-  return createCRUD('entity', 'comment', Router(), map, swagger.definitions.Comment);
+  return createCRUD('entity', 'comment', Router(), map, getSchemaDefinition(swagger, 'Comment'));
 }

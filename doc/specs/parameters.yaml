@@ -1,0 +1,61 @@
+parameters:
+  accessToken:
+    name: 'access_token'
+    in: query
+    description: 'Access token from the OAuth2 server'
+    type: 'string'
+    required: true
+  limit:
+    name: limit
+    in: query
+    description: Number of elements to return
+    default: 10
+    type: integer
+  offset:
+    name: offset
+    in: query
+    description: Offset value
+    default: 0
+    type: integer
+  include:
+    name: 'include'
+    in: query
+    description: 'Include related objects. Json formatted object with type, limit, offset and count (Total number of elements) e.g. {type: post, limit: 10, offset: 0, count: 1}'
+    type: string
+  count:
+    name: 'count'
+    in: query
+    description: 'Include count of named related objects e.g. count=flags&count=likes'
+    type: array
+    items:
+      type: string
+  id:
+    name: id
+    in: path
+    description: Id of object
+    required: true
+    type: integer
+  profile:
+    name: person
+    in: body
+    description: The person to create.
+    schema:
+      $ref: '#/definitions/Profile'
+  group:
+    name: group
+    in: body
+    description: The group to create.
+    schema:
+      $ref: '#/definitions/Group'
+  post:
+    name: post
+    in: body
+    description: The post to create.
+    schema:
+      $ref: '#/definitions/Post'
+  comment:
+    name: comment
+    in: body
+    description: The comment to create.
+    schema:
+      $ref: '#/definitions/Comment'

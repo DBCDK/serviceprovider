@@ -1,0 +1,54 @@
+responses:
+  Profile:
+    description: A profile object.
+    schema:
+      $ref: "#/definitions/Profile"
+  Profiles:
+    description: A list of profiles.
+    schema:
+      $ref: "#/definitions/Profiles"
+  Group:
+    description: A group object.
+    schema:
+      $ref: "#/definitions/Group"
+  Groups:
+    description: A list of groups
+    schema:
+      $ref: "#/definitions/Groups"
+  Like:
+    description: A like.
+    schema:
+      $ref: "#/definitions/Like"
+  Likes:
+    description: A list of likes
+    schema:
+      $ref: "#/definitions/Likes"
+  Follow:
+    description: A follow object.
+    schema:
+      $ref: "#/definitions/Follow"
+  Follows:
+    description: A list of follows
+    schema:
+      $ref: "#/definitions/Follows"
+  Flag:
+    description: A flag object.
+    schema:
+      $ref: "#/definitions/Flag"
+  Flags:
+    description: A list of flags
+    schema:
+      $ref: "#/definitions/Flags"
+  Post:
+    description: A post object.
+    schema:
+      $ref: "#/definitions/Post"
+  Comment:
+    description: A comment object.
+    schema:
+      $ref: "#/definitions/Comment"
+  Error:
+    description: An unexpected error occured.
+    schema:
+      $ref: "#/definitions/Error"
+

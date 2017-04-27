@@ -16,16 +16,16 @@ export default () => {
   router.use(getContextMiddleware);
   router.use(requireAuthorized);
   // Profile
-  router.use('/profile', profile());
+  router.use('/profiles', profile());
   // Entities
-  router.use('/group', group());
-  router.use('/post', post());
-  router.use('/comment', comment());
+  router.use('/groups', group());
+  router.use('/posts', post());
+  router.use('/comments', comment());
   // Actions
-  router.use('/like', like());
-  router.use('/follow', follow());
-  router.use('/flag', flag());
-  router.use('/quarantine', quarantine());
+  router.use('/likes', like());
+  router.use('/follows', follow());
+  router.use('/flags', flag());
+  router.use('/quarantines', quarantine());
 
   return router;
 };

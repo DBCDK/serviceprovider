@@ -13,7 +13,6 @@ export default function updateEntityTransform(req, context) {
     req._meta.schema
   );
 
-  const modifiedById = req.modifiedById;
   const params = {};
   Object.keys(req._meta.schemaMap).forEach(schemaKey => {
     if (req[schemaKey]) {
@@ -22,5 +21,5 @@ export default function updateEntityTransform(req, context) {
   });
   delete params.id;
 
-  return entityRequest.put(req.id, modifiedById, params);
+  return entityRequest.put(req.id, params);
 }

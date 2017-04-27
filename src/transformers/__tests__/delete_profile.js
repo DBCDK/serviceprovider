@@ -1,5 +1,5 @@
 /* eslint-disable max-len, quotes, comma-spacing, key-spacing, quote-props, indent */
-// Request: deleteEntity {"id":"1","deletedById":1,"_meta":{"type":null,"elvisType":"profile","schemaMap":{"username":"name","displayName":"attributes.displayName","description":"attributes.description","email":"attributes.email","phone":"attributes.phone","created_epoch":"created_epoch","modified_epoch":"modified_epoch","birthday":"attributes.birthday","fullName":"attributes.fullName","id":"id","deleted_epoch":"deleted_epoch","modified_by":"modified_by"},"schema":{"type":"object","properties":{"username":{"type":"string"},"displayName":{"type":"string"},"description":{"type":"string"},"email":{"type":"string"},"phone":{"type":"string"},"created_epoch":{"type":"number","format":"integer","readOnly":true},"modified_epoch":{"type":"number","format":"integer","readOnly":true},"birthday":{"type":"string","format":"date"},"fullName":{"type":"string"},"id":{"type":"number","format":"integer","readOnly":true}},"required":["username"],"additionalProperties":false}}}
+// Request: deleteEntity {"id":"1","modified_by":1,"_meta":{"type":null,"elvisType":"profile","schemaMap":{"username":"name","displayName":"attributes.displayName","description":"attributes.description","email":"attributes.email","phone":"attributes.phone","created_epoch":"created_epoch","modified_epoch":"modified_epoch","modified_by":"modified_by","deleted_epoch":"deleted_epoch","birthday":"attributes.birthday","fullName":"attributes.fullName","id":"id"},"schema":{"type":"object","properties":{"username":{"type":"string"},"displayName":{"type":"string"},"description":{"type":"string"},"email":{"type":"string"},"phone":{"type":"string"},"created_epoch":{"type":"number","format":"integer","readOnly":true},"modified_epoch":{"type":"number","format":"integer","readOnly":true},"modified_by":{"type":"integer"},"deleted_epoch":{"type":"number","format":"integer","readOnly":true},"birthday":{"type":"string","format":"date"},"fullName":{"type":"string"},"id":{"type":"number","format":"integer","readOnly":true}},"required":["username"],"additionalProperties":false}}}
 
 import Provider from '../../provider/Provider.js';
 import {assert, fail} from 'chai';
@@ -58,8 +58,8 @@ const mockData = {
     "data": {
       "id": 1,
       "created_epoch": 1491984806,
-      "deleted_epoch": 1492065982,
-      "modified_epoch": 1492065905,
+      "deleted_epoch": 1493117130,
+      "modified_epoch": 1493117043,
       "modified_by": 1,
       "deleted_by": 1,
       "community_id": 1,
@@ -87,6 +87,22 @@ const mockData = {
           "name": "hansen",
           "modified_by": 1,
           "modified_epoch": 1492065905
+        },
+        {
+          "modified_by": 1,
+          "modified_epoch": 1492501954
+        },
+        {
+          "modified_by": 1,
+          "modified_epoch": 1493117000
+        },
+        {
+          "modified_by": 1,
+          "modified_epoch": 1493117018
+        },
+        {
+          "modified_by": 1,
+          "modified_epoch": 1493117043
         }
       ]
     }
@@ -94,9 +110,9 @@ const mockData = {
 };
 
 describe('Automated test: delete_profile', () => {
-  it('expected response. ID:luvw8y, for {"id":"1","deletedById":1,"_meta":{"type":null,"elvisType":"profile","schemaMap":{"username":"name","displayName":"attributes.displayName","description":"attributes.description","email":"attributes.email","phone":"attributes.phone","created_epoch":"created_epoch","modified_epoch":"modified_epoch","birthday":"attributes.birthday","fullName":"attributes.fullName","id":"id","deleted_epoch":"deleted_epoch","modified_by":"modified_by"},"schema":{"type":"object","properties":{"username":{"type":"string"},"displayName":{"type":"string"},"description":{"type":"string"},"email":{"type":"string"},"phone":{"type":"string"},"created_epoch":{"type":"number","format":"integer","readOnly":true},"modified_epoch":{"type":"number","format":"integer","readOnly":true},"birthday":{"type":"string","format":"date"},"fullName":{"type":"string"},"id":{"type":"number","format":"integer","readOnly":true}},"required":["username"],"additionalProperties":false}}}', (done) => {
+  it('expected response. ID:w35xnu, for {"id":"1","modified_by":1,"_meta":{"type":null,"elvisType":"profile","schemaMap":{"username":"name","displayName":"attributes.displayName","description":"attributes.description","email":"attributes.email","phone":"attributes.phone","created_epoch":"created_epoch","modified_epoch":"modified_epoch","modified_by":"modified_by","deleted_epoch":"deleted_epoch","birthday":"attributes.birthday","fullName":"attributes.fullName","id":"id"},"schema":{"type":"object","properties":{"username":{"type":"string"},"displayName":{"type":"string"},"description":{"type":"string"},"email":{"type":"string"},"phone":{"type":"string"},"created_epoch":{"type":"number","format":"integer","readOnly":true},"modified_epoch":{"type":"number","format":"integer","readOnly":true},"modified_by":{"type":"integer"},"deleted_epoch":{"type":"number","format":"integer","readOnly":true},"birthday":{"type":"string","format":"date"},"fullName":{"type":"string"},"id":{"type":"number","format":"integer","readOnly":true}},"required":["username"],"additionalProperties":false}}}', (done) => {
     context.mockData = mockData;
-    provider.execute('deleteEntity', {"id":"1","deletedById":1,"_meta":{"type":null,"elvisType":"profile","schemaMap":{"username":"name","displayName":"attributes.displayName","description":"attributes.description","email":"attributes.email","phone":"attributes.phone","created_epoch":"created_epoch","modified_epoch":"modified_epoch","birthday":"attributes.birthday","fullName":"attributes.fullName","id":"id","deleted_epoch":"deleted_epoch","modified_by":"modified_by"},"schema":{"type":"object","properties":{"username":{"type":"string"},"displayName":{"type":"string"},"description":{"type":"string"},"email":{"type":"string"},"phone":{"type":"string"},"created_epoch":{"type":"number","format":"integer","readOnly":true},"modified_epoch":{"type":"number","format":"integer","readOnly":true},"birthday":{"type":"string","format":"date"},"fullName":{"type":"string"},"id":{"type":"number","format":"integer","readOnly":true}},"required":["username"],"additionalProperties":false}}}, context)
+    provider.execute('deleteEntity', {"id":"1","modified_by":1,"_meta":{"type":null,"elvisType":"profile","schemaMap":{"username":"name","displayName":"attributes.displayName","description":"attributes.description","email":"attributes.email","phone":"attributes.phone","created_epoch":"created_epoch","modified_epoch":"modified_epoch","modified_by":"modified_by","deleted_epoch":"deleted_epoch","birthday":"attributes.birthday","fullName":"attributes.fullName","id":"id"},"schema":{"type":"object","properties":{"username":{"type":"string"},"displayName":{"type":"string"},"description":{"type":"string"},"email":{"type":"string"},"phone":{"type":"string"},"created_epoch":{"type":"number","format":"integer","readOnly":true},"modified_epoch":{"type":"number","format":"integer","readOnly":true},"modified_by":{"type":"integer"},"deleted_epoch":{"type":"number","format":"integer","readOnly":true},"birthday":{"type":"string","format":"date"},"fullName":{"type":"string"},"id":{"type":"number","format":"integer","readOnly":true}},"required":["username"],"additionalProperties":false}}}, context)
       .then(result => {
         assert.deepEqual(result,
             {
@@ -104,10 +120,10 @@ describe('Automated test: delete_profile', () => {
   "data": {
     "username": "larsen",
     "created_epoch": 1491984806,
-    "modified_epoch": 1492065905,
-    "id": 1,
-    "deleted_epoch": 1492065982,
-    "modified_by": 1
+    "modified_epoch": 1493117043,
+    "modified_by": 1,
+    "deleted_epoch": 1493117130,
+    "id": 1
   },
   "errors": []
 });
@@ -119,10 +135,10 @@ describe('Automated test: delete_profile', () => {
   "data": {
     "username": "larsen",
     "created_epoch": 1491984806,
-    "modified_epoch": 1492065905,
-    "id": 1,
-    "deleted_epoch": 1492065982,
-    "modified_by": 1
+    "modified_epoch": 1493117043,
+    "modified_by": 1,
+    "deleted_epoch": 1493117130,
+    "id": 1
   },
   "errors": []
 });
