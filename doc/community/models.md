@@ -8,7 +8,7 @@ The following models are defined in the community. For full implementation detai
 * modified_date `(date) date of modification`
 * deleted_date `(date) date of deletion`
 * username `(string) unique username`
-* display__name `(string) display username`
+* display_name `(string) display username`
 * description `(string) profile description`
 * email `(string) user email`
 * phone `(string) user phone number`

@@ -1,0 +1,77 @@
+paths:
+  /community/profiles/:
+    get:
+      tags:
+        - Community
+      summary: List of Profiles
+      parameters:
+        - $ref: '#/parameters/accessToken'
+        - $ref: '#/parameters/include'
+        - $ref: '#/parameters/limit'
+        - $ref: '#/parameters/offset'
+      responses:
+        500:
+          $ref: '#/responses/Error'
+        200:
+          $ref: '#/responses/Profiles'
+        default:
+          $ref: '#/responses/Profiles'
+
+    post:
+      summary: Create profile
+      tags:
+        - Community
+      parameters:
+        - $ref: '#/parameters/accessToken'
+        - name: profile
+          in: body
+          description: The profile
+          schema:
+            $ref: '#/definitions/Profile'
+      responses:
+        200:
+          $ref: '#/responses/Profile'
+        500:
+          $ref: '#/responses/Error'
+
+  /community/profiles/{id}:
+    get:
+      tags:
+        - Community
+      summary: Profile in community
+      description: Get A profile by ID
+      parameters:
+        - $ref: '#/parameters/id'
+        - $ref: '#/parameters/accessToken'
+      responses:
+        200:
+          $ref: '#/responses/Profile'
+        500:
+          $ref: '#/responses/Error'
+
+    put:
+      summary: Update profile
+      tags:
+        - Community
+      parameters:
+        - $ref: '#/parameters/id'
+        - $ref: '#/parameters/accessToken'
+        - $ref: '#/parameters/profile'
+      responses:
+        200:
+          $ref: '#/responses/Profile'
+        500:
+          $ref: '#/responses/Error'
+
+    delete:
+      summary: Delete profile
+      tags:
+        - Community
+      parameters:
+        - $ref: '#/parameters/id'
+        - $ref: '#/parameters/accessToken'
+      responses:
+        200:
+          $ref: '#/responses/Profile'
+        default:
+          $ref: '#/responses/Error'

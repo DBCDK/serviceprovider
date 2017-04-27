@@ -1,0 +1,189 @@
+definitions:
+  Profile:
+    type: object
+    properties:
+      username:
+        type: string
+      displayName:
+        type: string
+      description:
+        type: string
+      email:
+        type: string
+      phone:
+        type: string
+      created_epoch:
+        type: integer
+        readOnly: true
+      modified_epoch:
+        type: integer
+        readOnly: true
+      modified_by:
+        type: integer
+      deleted_epoch:
+        type: integer
+        readOnly: true
+      birthday:
+        type: string
+        format: date
+      fullName:
+        type: string
+      id:
+        type: integer
+        readOnly: true
+    required:
+      - username
+    additionalProperties: false
+  Profiles:
+    type: array
+    items:
+      $ref: "#/definitions/Profile"
+  Group:
+    allOf:
+      - $ref: "#/definitions/Entity"
+    properties:
+      title:
+        type: string
+      body:
+        type: string
+  Post:
+    allOf:
+      - $ref: "#/definitions/Entity"
+    properties:
+      title:
+        type: string
+      body:
+        type: string
+      group_id:
+        type: integer
+  Review:
+    allOf:
+      - $ref: "#/definitions/Entity"
+    properties:
+      title:
+        type: string
+      body:
+        type: string
+      rating:
+        type: integer
+      reference:
+        $ref: "#/definitions/Reference"
+  Reviews:
+      type: array
+      items:
+        $ref: "#/definitions/Review"
+  Comment:
+    allOf:
+      - $ref: "#/definitions/Entity"
+    properties:
+      title:
+        type: string
+      body:
+        type: string
+      post_id:
+        type: number
+        format: integer
+  Quarantine:
+    allOf:
+      - $ref: "#/definitions/Entity"
+    properties:
+      reason:
+        type: string
+      flags:
+        type: array
+        items:
+          type: object
+  Like:
+    allOf:
+      - $ref: "#/definitions/Action"
+  Likes:
+    type: array
+    items:
+      $ref: "#/definitions/Like"
+  Follow:
+    allOf:
+      - $ref: "#/definitions/Action"
+  Follows:
+    type: array
+    items:
+      $ref: "#/definitions/Follow"
+  Flag:
+    allOf:
+      - $ref: "#/definitions/Action"
+    properties:
+      reason:
+        type: string
+  Flags:
+    type: array
+    items:
+      $ref: "#/definitions/Flags"
+  Groups:
+    type: array
+    items:
+      $ref: "#/definitions/Group"
+  Posts:
+    type: array
+    items:
+      $ref: "#/definitions/Post"
+  Comments:
+    type: array
+    items:
+      $ref: "#/definitions/Comment"
+  Error:
+    type: object
+    properties:
+      code:
+        type: integer
+        format: int32
+      message:
+        type: string
+      fields:
+        type: string
+  Entity:
+    allOf:
+      - $ref: "#/definitions/Base"
+    properties:
+      media:
+        $ref: "#/definitions/Media"
+      profile_id:
+        type: number
+        format: integer
+  Action:
+    allOf:
+      - $ref: "#/definitions/Base"
+    properties:
+      reference:
+        $ref: "#/definitions/Reference"
+      profile_id:
+        type: number
+        format: integer
+
+  Reference:
+    type: object
+    properties:
+      type:
+        type: string
+      value:
+        type: object
+  Media:
+    properties:
+      type:
+        type: string
+      value:
+        type: object
+
+  Base:
+    discriminator: "base"
+    type: object
+    properties:
+      created_epoch:
+        type: integer
+      deleted_epoch:
+        type: integer
+      modified_epoch:
+        type: integer
+      modified_by:
+        type: integer
+      id:
+        type: integer
+    additionalProperties: false

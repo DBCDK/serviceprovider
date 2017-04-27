@@ -1,5 +1,5 @@
 /* eslint-disable max-len, quotes, comma-spacing, key-spacing, quote-props, indent */
-// Request: listEntities {"_meta":{"type":null,"elvisType":"profile","schemaMap":{"username":"name","displayName":"attributes.displayName","description":"attributes.description","email":"attributes.email","phone":"attributes.phone","created_epoch":"created_epoch","modified_epoch":"modified_epoch","birthday":"attributes.birthday","fullName":"attributes.fullName","id":"id","deleted_epoch":"deleted_epoch"},"schema":{"type":"object","properties":{"username":{"type":"string"},"displayName":{"type":"string"},"description":{"type":"string"},"email":{"type":"string"},"phone":{"type":"string"},"created_epoch":{"type":"number","format":"integer","readOnly":true},"modified_epoch":{"type":"number","format":"integer","readOnly":true},"birthday":{"type":"string","format":"date"},"fullName":{"type":"string"},"id":{"type":"number","format":"integer","readOnly":true}},"required":["username"],"additionalProperties":false}}}
+// Request: listEntities {"limit":"10","offset":"0","_meta":{"type":null,"elvisType":"profile","schemaMap":{"username":"name","displayName":"attributes.displayName","description":"attributes.description","email":"attributes.email","phone":"attributes.phone","created_epoch":"created_epoch","modified_epoch":"modified_epoch","modified_by":"modified_by","deleted_epoch":"deleted_epoch","birthday":"attributes.birthday","fullName":"attributes.fullName","id":"id"},"schema":{"type":"object","properties":{"username":{"type":"string"},"displayName":{"type":"string"},"description":{"type":"string"},"email":{"type":"string"},"phone":{"type":"string"},"created_epoch":{"type":"integer","readOnly":true},"modified_epoch":{"type":"integer","readOnly":true},"modified_by":{"type":"integer"},"deleted_epoch":{"type":"integer","readOnly":true},"birthday":{"type":"string","format":"date"},"fullName":{"type":"string"},"id":{"type":"integer","readOnly":true}},"required":["username"],"additionalProperties":false}}}
 
 import Provider from '../../provider/Provider.js';
 import {assert, fail} from 'chai';
@@ -23,7 +23,7 @@ const context = {
       "default": "https://xptest.dbc.dk/ms/recommend-cosim/v1",
       "popular": "https://xptest.dbc.dk/ms/recommend-pop/v1"
     },
-    "communityservice": "http://communitybe-s01:8000/v1"
+    "communityservice": "http://localhost:4010/v1"
   },
   "search": {
     "agency": "775100",
@@ -51,24 +51,100 @@ const context = {
 };
 const provider = Provider();
 const mockData = {
-  "[\"http://communitybe-s01:8000/v1/community/1/query\",{\"method\":\"post\",\"json\":{\"Profiles\":{},\"SortBy\":\"created_epoch\",\"Order\":\"descending\",\"Limit\":2,\"Offset\":0,\"Include\":{\"username\":\"name\",\"displayName\":\"attributes.displayName\",\"description\":\"attributes.description\",\"email\":\"attributes.email\",\"phone\":\"attributes.phone\",\"created_epoch\":\"created_epoch\",\"modified_epoch\":\"modified_epoch\",\"birthday\":\"attributes.birthday\",\"fullName\":\"attributes.fullName\",\"id\":\"id\",\"deleted_epoch\":\"deleted_epoch\"}}}]": {
+  "[\"http://localhost:4010/v1/community/1/query\",{\"method\":\"post\",\"json\":{\"Profiles\":{},\"SortBy\":\"id\",\"Order\":\"descending\",\"Limit\":\"10\",\"Offset\":\"0\",\"Include\":{\"username\":\"name\",\"displayName\":\"attributes.displayName\",\"description\":\"attributes.description\",\"email\":\"attributes.email\",\"phone\":\"attributes.phone\",\"created_epoch\":\"created_epoch\",\"modified_epoch\":\"modified_epoch\",\"modified_by\":\"modified_by\",\"deleted_epoch\":\"deleted_epoch\",\"birthday\":\"attributes.birthday\",\"fullName\":\"attributes.fullName\",\"id\":\"id\"}}}]": {
     "data": {
-      "Total": 4,
-      "NextOffset": 2,
+      "Total": 1000,
+      "NextOffset": 10,
       "List": [
         {
-          "username": "larsens",
-          "created_epoch": 1491988700,
-          "modified_epoch": 1491988700,
-          "id": 4,
-          "deleted_epoch": null
+          "username": "Keshawn",
+          "email": "Brayan_Bechtelar93@yahoo.com",
+          "created_epoch": 1493296959,
+          "modified_epoch": 1493296959,
+          "modified_by": null,
+          "deleted_epoch": null,
+          "id": 1000
         },
         {
-          "username": "larsen",
-          "created_epoch": 1491988603,
-          "modified_epoch": 1491988603,
-          "id": 3,
-          "deleted_epoch": null
+          "username": "Dianna",
+          "email": "Jace62@yahoo.com",
+          "created_epoch": 1493296959,
+          "modified_epoch": 1493296959,
+          "modified_by": null,
+          "deleted_epoch": null,
+          "id": 999
+        },
+        {
+          "username": "Barton",
+          "email": "Athena_Crooks86@hotmail.com",
+          "created_epoch": 1493296959,
+          "modified_epoch": 1493296959,
+          "modified_by": null,
+          "deleted_epoch": null,
+          "id": 998
+        },
+        {
+          "username": "Ulices",
+          "email": "Mara20@gmail.com",
+          "created_epoch": 1493296959,
+          "modified_epoch": 1493296959,
+          "modified_by": null,
+          "deleted_epoch": null,
+          "id": 997
+        },
+        {
+          "username": "Fidel",
+          "email": "Allie_Ferry@hotmail.com",
+          "created_epoch": 1493296959,
+          "modified_epoch": 1493296959,
+          "modified_by": null,
+          "deleted_epoch": null,
+          "id": 996
+        },
+        {
+          "username": "Verdie",
+          "email": "Kade_Kohler@gmail.com",
+          "created_epoch": 1493296959,
+          "modified_epoch": 1493296959,
+          "modified_by": null,
+          "deleted_epoch": null,
+          "id": 995
+        },
+        {
+          "username": "Dave",
+          "email": "Maida_Keeling@yahoo.com",
+          "created_epoch": 1493296959,
+          "modified_epoch": 1493296959,
+          "modified_by": null,
+          "deleted_epoch": null,
+          "id": 994
+        },
+        {
+          "username": "Trevor",
+          "email": "Margret20@gmail.com",
+          "created_epoch": 1493296959,
+          "modified_epoch": 1493296959,
+          "modified_by": null,
+          "deleted_epoch": null,
+          "id": 993
+        },
+        {
+          "username": "Raphael",
+          "email": "Liliane.Pfeffer38@hotmail.com",
+          "created_epoch": 1493296959,
+          "modified_epoch": 1493296959,
+          "modified_by": null,
+          "deleted_epoch": null,
+          "id": 992
+        },
+        {
+          "username": "Lenny",
+          "email": "Gerry46@yahoo.com",
+          "created_epoch": 1493296959,
+          "modified_epoch": 1493296959,
+          "modified_by": null,
+          "deleted_epoch": null,
+          "id": 991
         }
       ]
     }
@@ -76,30 +152,106 @@ const mockData = {
 };
 
 describe('Automated test: list_profiles', () => {
-  it('expected response. ID:mj2nyb, for {"_meta":{"type":null,"elvisType":"profile","schemaMap":{"username":"name","displayName":"attributes.displayName","description":"attributes.description","email":"attributes.email","phone":"attributes.phone","created_epoch":"created_epoch","modified_epoch":"modified_epoch","birthday":"attributes.birthday","fullName":"attributes.fullName","id":"id","deleted_epoch":"deleted_epoch"},"schema":{"type":"object","properties":{"username":{"type":"string"},"displayName":{"type":"string"},"description":{"type":"string"},"email":{"type":"string"},"phone":{"type":"string"},"created_epoch":{"type":"number","format":"integer","readOnly":true},"modified_epoch":{"type":"number","format":"integer","readOnly":true},"birthday":{"type":"string","format":"date"},"fullName":{"type":"string"},"id":{"type":"number","format":"integer","readOnly":true}},"required":["username"],"additionalProperties":false}}}', (done) => {
+  it('expected response. ID:dnk728, for {"limit":"10","offset":"0","_meta":{"type":null,"elvisType":"profile","schemaMap":{"username":"name","displayName":"attributes.displayName","description":"attributes.description","email":"attributes.email","phone":"attributes.phone","created_epoch":"created_epoch","modified_epoch":"modified_epoch","modified_by":"modified_by","deleted_epoch":"deleted_epoch","birthday":"attributes.birthday","fullName":"attributes.fullName","id":"id"},"schema":{"type":"object","properties":{"username":{"type":"string"},"displayName":{"type":"string"},"description":{"type":"string"},"email":{"type":"string"},"phone":{"type":"string"},"created_epoch":{"type":"integer","readOnly":true},"modified_epoch":{"type":"integer","readOnly":true},"modified_by":{"type":"integer"},"deleted_epoch":{"type":"integer","readOnly":true},"birthday":{"type":"string","format":"date"},"fullName":{"type":"string"},"id":{"type":"integer","readOnly":true}},"required":["username"],"additionalProperties":false}}}', (done) => {
     context.mockData = mockData;
-    provider.execute('listEntities', {"_meta":{"type":null,"elvisType":"profile","schemaMap":{"username":"name","displayName":"attributes.displayName","description":"attributes.description","email":"attributes.email","phone":"attributes.phone","created_epoch":"created_epoch","modified_epoch":"modified_epoch","birthday":"attributes.birthday","fullName":"attributes.fullName","id":"id","deleted_epoch":"deleted_epoch"},"schema":{"type":"object","properties":{"username":{"type":"string"},"displayName":{"type":"string"},"description":{"type":"string"},"email":{"type":"string"},"phone":{"type":"string"},"created_epoch":{"type":"number","format":"integer","readOnly":true},"modified_epoch":{"type":"number","format":"integer","readOnly":true},"birthday":{"type":"string","format":"date"},"fullName":{"type":"string"},"id":{"type":"number","format":"integer","readOnly":true}},"required":["username"],"additionalProperties":false}}}, context)
+    provider.execute('listEntities', {"limit":"10","offset":"0","_meta":{"type":null,"elvisType":"profile","schemaMap":{"username":"name","displayName":"attributes.displayName","description":"attributes.description","email":"attributes.email","phone":"attributes.phone","created_epoch":"created_epoch","modified_epoch":"modified_epoch","modified_by":"modified_by","deleted_epoch":"deleted_epoch","birthday":"attributes.birthday","fullName":"attributes.fullName","id":"id"},"schema":{"type":"object","properties":{"username":{"type":"string"},"displayName":{"type":"string"},"description":{"type":"string"},"email":{"type":"string"},"phone":{"type":"string"},"created_epoch":{"type":"integer","readOnly":true},"modified_epoch":{"type":"integer","readOnly":true},"modified_by":{"type":"integer"},"deleted_epoch":{"type":"integer","readOnly":true},"birthday":{"type":"string","format":"date"},"fullName":{"type":"string"},"id":{"type":"integer","readOnly":true}},"required":["username"],"additionalProperties":false}}}, context)
       .then(result => {
         assert.deepEqual(result,
             {
   "status": 200,
   "data": {
-    "Total": 4,
-    "NextOffset": 2,
+    "Total": 1000,
+    "NextOffset": 10,
     "List": [
       {
-        "username": "larsens",
-        "created_epoch": 1491988700,
-        "modified_epoch": 1491988700,
-        "id": 4,
-        "deleted_epoch": null
+        "username": "Keshawn",
+        "email": "Brayan_Bechtelar93@yahoo.com",
+        "created_epoch": 1493296959,
+        "modified_epoch": 1493296959,
+        "modified_by": null,
+        "deleted_epoch": null,
+        "id": 1000
       },
       {
-        "username": "larsen",
-        "created_epoch": 1491988603,
-        "modified_epoch": 1491988603,
-        "id": 3,
-        "deleted_epoch": null
+        "username": "Dianna",
+        "email": "Jace62@yahoo.com",
+        "created_epoch": 1493296959,
+        "modified_epoch": 1493296959,
+        "modified_by": null,
+        "deleted_epoch": null,
+        "id": 999
+      },
+      {
+        "username": "Barton",
+        "email": "Athena_Crooks86@hotmail.com",
+        "created_epoch": 1493296959,
+        "modified_epoch": 1493296959,
+        "modified_by": null,
+        "deleted_epoch": null,
+        "id": 998
+      },
+      {
+        "username": "Ulices",
+        "email": "Mara20@gmail.com",
+        "created_epoch": 1493296959,
+        "modified_epoch": 1493296959,
+        "modified_by": null,
+        "deleted_epoch": null,
+        "id": 997
+      },
+      {
+        "username": "Fidel",
+        "email": "Allie_Ferry@hotmail.com",
+        "created_epoch": 1493296959,
+        "modified_epoch": 1493296959,
+        "modified_by": null,
+        "deleted_epoch": null,
+        "id": 996
+      },
+      {
+        "username": "Verdie",
+        "email": "Kade_Kohler@gmail.com",
+        "created_epoch": 1493296959,
+        "modified_epoch": 1493296959,
+        "modified_by": null,
+        "deleted_epoch": null,
+        "id": 995
+      },
+      {
+        "username": "Dave",
+        "email": "Maida_Keeling@yahoo.com",
+        "created_epoch": 1493296959,
+        "modified_epoch": 1493296959,
+        "modified_by": null,
+        "deleted_epoch": null,
+        "id": 994
+      },
+      {
+        "username": "Trevor",
+        "email": "Margret20@gmail.com",
+        "created_epoch": 1493296959,
+        "modified_epoch": 1493296959,
+        "modified_by": null,
+        "deleted_epoch": null,
+        "id": 993
+      },
+      {
+        "username": "Raphael",
+        "email": "Liliane.Pfeffer38@hotmail.com",
+        "created_epoch": 1493296959,
+        "modified_epoch": 1493296959,
+        "modified_by": null,
+        "deleted_epoch": null,
+        "id": 992
+      },
+      {
+        "username": "Lenny",
+        "email": "Gerry46@yahoo.com",
+        "created_epoch": 1493296959,
+        "modified_epoch": 1493296959,
+        "modified_by": null,
+        "deleted_epoch": null,
+        "id": 991
       }
     ]
   },
@@ -111,22 +263,98 @@ describe('Automated test: list_profiles', () => {
         fail({throw: result}, {
   "status": 200,
   "data": {
-    "Total": 4,
-    "NextOffset": 2,
+    "Total": 1000,
+    "NextOffset": 10,
     "List": [
       {
-        "username": "larsens",
-        "created_epoch": 1491988700,
-        "modified_epoch": 1491988700,
-        "id": 4,
-        "deleted_epoch": null
+        "username": "Keshawn",
+        "email": "Brayan_Bechtelar93@yahoo.com",
+        "created_epoch": 1493296959,
+        "modified_epoch": 1493296959,
+        "modified_by": null,
+        "deleted_epoch": null,
+        "id": 1000
       },
       {
-        "username": "larsen",
-        "created_epoch": 1491988603,
-        "modified_epoch": 1491988603,
-        "id": 3,
-        "deleted_epoch": null
+        "username": "Dianna",
+        "email": "Jace62@yahoo.com",
+        "created_epoch": 1493296959,
+        "modified_epoch": 1493296959,
+        "modified_by": null,
+        "deleted_epoch": null,
+        "id": 999
+      },
+      {
+        "username": "Barton",
+        "email": "Athena_Crooks86@hotmail.com",
+        "created_epoch": 1493296959,
+        "modified_epoch": 1493296959,
+        "modified_by": null,
+        "deleted_epoch": null,
+        "id": 998
+      },
+      {
+        "username": "Ulices",
+        "email": "Mara20@gmail.com",
+        "created_epoch": 1493296959,
+        "modified_epoch": 1493296959,
+        "modified_by": null,
+        "deleted_epoch": null,
+        "id": 997
+      },
+      {
+        "username": "Fidel",
+        "email": "Allie_Ferry@hotmail.com",
+        "created_epoch": 1493296959,
+        "modified_epoch": 1493296959,
+        "modified_by": null,
+        "deleted_epoch": null,
+        "id": 996
+      },
+      {
+        "username": "Verdie",
+        "email": "Kade_Kohler@gmail.com",
+        "created_epoch": 1493296959,
+        "modified_epoch": 1493296959,
+        "modified_by": null,
+        "deleted_epoch": null,
+        "id": 995
+      },
+      {
+        "username": "Dave",
+        "email": "Maida_Keeling@yahoo.com",
+        "created_epoch": 1493296959,
+        "modified_epoch": 1493296959,
+        "modified_by": null,
+        "deleted_epoch": null,
+        "id": 994
+      },
+      {
+        "username": "Trevor",
+        "email": "Margret20@gmail.com",
+        "created_epoch": 1493296959,
+        "modified_epoch": 1493296959,
+        "modified_by": null,
+        "deleted_epoch": null,
+        "id": 993
+      },
+      {
+        "username": "Raphael",
+        "email": "Liliane.Pfeffer38@hotmail.com",
+        "created_epoch": 1493296959,
+        "modified_epoch": 1493296959,
+        "modified_by": null,
+        "deleted_epoch": null,
+        "id": 992
+      },
+      {
+        "username": "Lenny",
+        "email": "Gerry46@yahoo.com",
+        "created_epoch": 1493296959,
+        "modified_epoch": 1493296959,
+        "modified_by": null,
+        "deleted_epoch": null,
+        "id": 991
       }
     ]
   },
