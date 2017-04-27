@@ -43,10 +43,22 @@ responses:
     description: A post object.
     schema:
       $ref: "#/definitions/Post"
+  Posts:
+    description: A list of posts.
+    schema:
+      $ref: "#/definitions/Posts"
   Comment:
     description: A comment object.
     schema:
       $ref: "#/definitions/Comment"
+  Review:
+    description: A review object.
+    schema:
+      $ref: "#/definitions/Review"
+  Reviews:
+    description: A list of reviews.
+    schema:
+      $ref: "#/definitions/Reviews"
   Error:
     description: An unexpected error occured.
     schema:

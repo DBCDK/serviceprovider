@@ -56,6 +56,22 @@ definitions:
         type: string
       group_id:
         type: integer
+  Review:
+    allOf:
+      - $ref: "#/definitions/Entity"
+    properties:
+      title:
+        type: string
+      body:
+        type: string
+      rating:
+        type: integer
+      reference:
+        $ref: "#/definitions/Reference"
+  Reviews:
+      type: array
+      items:
+        $ref: "#/definitions/Review"
   Comment:
     allOf:
       - $ref: "#/definitions/Entity"
