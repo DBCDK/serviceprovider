@@ -4,7 +4,27 @@ The examples on this page is written in javascript, and uses the request library
 
 ## Getting startet
 To get started with building a community, you will need a valid client and clientID, and the client needs to be configured with a valid community ID. 
-To apply for access, contact [https://kundeservice.dbc.dk/](https://kundeservice.dbc.dk/).
+To apply for access, contact [https://kundeservice.dbc.dk/](https://kundeservice.dbc.dk/). A valid token is required for all requests. 
+
+### Request a valid token
+```javascript
+
+const req = {
+    form: {
+        grant_type: 'password',
+        username: username,
+        password: password
+    },
+    auth: {
+      user: config.clientId,
+      pass: config.clientSecret
+    }
+};
+
+request.post(smaug_uri + 'oauth/token', req, (err, response, body) => {
+  console.log(body);
+});
+```
 
 ## Handling profiles
 All users of the communityservice needs a profile, to be able to create and update content. 
@@ -448,7 +468,7 @@ the maximum number of items to return
 offset. The first item to return.
 
 ### sort
-the key to sort items by
+the key to sort items by. The key can be any key in the model. 
 
 ### order
 The order of items (descending or ascending)
@@ -490,15 +510,61 @@ request.post(openplatform_uri + 'community/groups', {qs:query}, (err, response, 
   errors: [] }
 ```
 
+### Get 10 latest posts for a group
+By using the nested endpoints, you can get a list of related objects. E.g. you can get the latest posts for a group calling `community/groups/{id}/posts`
 
- 
+```javascript
+const query = {
+    access_token: 'qwerty'
+    limit: 10,
+    offset: 0,
+    sort: 'created_epoc',
+    order: 'descending'
+}
 
+request.post(openplatform_uri + 'community/groups/2/posts', {qs:query}, (err, response, body) => {
+  console.log(body);
+});
+```
 
-### Get 10 latest followers
+This request will return a list of posts written in group with ID 2.
+
+**Response body:**
+```javascript
+{ status: 200,
+  data:{
+   List: [
+    { /*post*/ },
+    { /*post*/ },
+    { /*post*/ },
+    ...
+    ]
+  errors: [] }
+```
+
+## Special views
+The community has three special endpoints, that can be used to. 
+
 ### Generate group view
+@todo create example of how to create a group view
+
 ### Get activity feed
+@todo create example of how to create an activity feed
+
 ### Get all quarantined profiles
+@todo create example of how to create quarantined profiles
 
 ## Errors
+There are basically two types of errors. Validation errors that is caused by an invalid request, and unexpected error, that is caused by unknown causes 
+
 ### Validation Error
+@todo add example of validation error
+
 ### Unexpected Error
+An unexpected error has the following format
+```javascript
+{
+  "code": 500,
+  "message": "Some errormessage",
+}
+```
