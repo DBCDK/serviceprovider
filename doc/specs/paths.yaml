@@ -88,9 +88,9 @@ paths:
         - $ref: '#/parameters/count'
       responses:
         200:
-          $ref: '#/definitions/Posts'
+          $ref: '#/responses/Posts'
         default:
-          $ref: '#/definitions/Error'
+          $ref: '#/responses/Error'
 
     post:
       summary: Create Post
