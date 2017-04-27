@@ -29,7 +29,8 @@ export function post() {
   const map = {
     body: 'contents',
     profile_id: 'owner_id',
-    group_id: 'entity_ref'
+    group_id: 'entity_ref',
+    media: 'attributes.media'
   };
 
   return createCRUD('entity', 'post', Router(), map, getSchemaDefinition(swagger, 'Post'));
@@ -45,7 +46,8 @@ export function comment() {
   const map = {
     body: 'contents',
     profile_id: 'owner_id',
-    post_id: 'entity_ref'
+    post_id: 'entity_ref',
+    media: 'attributes.media'
   };
 
   return createCRUD('entity', 'comment', Router(), map, getSchemaDefinition(swagger, 'Comment'));
@@ -62,7 +64,8 @@ export function review() {
     body: 'contents',
     profile_id: 'owner_id',
     reference: 'entity_ref',
-    rating: 'rating'
+    rating: 'attributes.rating',
+    media: 'attributes.media'
   };
 
   return createCRUD('entity', 'review', Router(), map, getSchemaDefinition(swagger, 'Review'));
