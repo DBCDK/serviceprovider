@@ -11,13 +11,9 @@ const swagger = getSpecification();
 export function group() {
 
   const map = {
-    id: 'id',
-    modified_epoch: 'modified_epoch',
-    created_epoch: 'created_epoch',
-    modified_by: 'modified_by',
-    title: 'title',
     body: 'contents',
-    owner_id: 'owner_id'
+    profile_id: 'owner_id',
+    media: 'attributes.media'
   };
 
   return createCRUD('entity', 'group', Router(), map, getSchemaDefinition(swagger, 'Group'));
@@ -31,13 +27,8 @@ export function group() {
 export function post() {
 
   const map = {
-    id: 'id',
-    modified_epoch: 'modified_epoch',
-    created_epoch: 'created_epoch',
-    modified_by: 'modified_by',
-    title: 'title',
     body: 'contents',
-    owner_id: 'owner_id',
+    profile_id: 'owner_id',
     group_id: 'entity_ref'
   };
 
@@ -52,13 +43,8 @@ export function post() {
 export function comment() {
 
   const map = {
-    id: 'id',
-    modified_epoch: 'modified_epoch',
-    created_epoch: 'created_epoch',
-    modified_by: 'modified_by',
-    title: 'title',
     body: 'contents',
-    owner_id: 'owner_id',
+    profile_id: 'owner_id',
     post_id: 'entity_ref'
   };
 
@@ -73,13 +59,8 @@ export function comment() {
 export function review() {
 
   const map = {
-    id: 'id',
-    modified_epoch: 'modified_epoch',
-    created_epoch: 'created_epoch',
-    modified_by: 'modified_by',
-    title: 'title',
     body: 'contents',
-    owner_id: 'owner_id',
+    profile_id: 'owner_id',
     reference: 'entity_ref',
     rating: 'rating'
   };

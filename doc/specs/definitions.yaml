@@ -176,19 +176,14 @@ definitions:
     discriminator: "base"
     type: object
     properties:
-      created_date:
-        type: number
-        format: integer
-      deleted_date:
-        type: number
-        format: integer
-      modified_date:
-        type: number
-        format: integer
+      created_epoch:
+        type: integer
+      deleted_epoch:
+        type: integer
+      modified_epoch:
+        type: integer
       modified_by:
-        type: number
-        format: integer
+        type: integer
       id:
-        type: number
-        format: integer
+        type: integer
     additionalProperties: false
