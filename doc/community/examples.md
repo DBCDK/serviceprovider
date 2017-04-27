@@ -438,7 +438,62 @@ request.post(openplatform_uri + 'community/reviews', {json: quarantine, qs:{acce
  
 A review can be edited and deleted in the same way as a Profile
 
-## Query Examples
+## Querying thing 
+The examples are querying groups, but can be applied to all types of content. 
+
+### limit
+the maximum number of items to return
+
+### offset
+offset. The first item to return.
+
+### sort
+the key to sort items by
+
+### order
+The order of items (descending or ascending)
+
+### Example
+
+```javascript
+const query = {
+    access_token: 'qwerty'
+    limit: 2,
+    offset: 0,
+    sort: 'created_epoc',
+    order: 'descending'
+}
+
+request.post(openplatform_uri + 'community/groups', {qs:query}, (err, response, body) => {
+  console.log(body);
+});
+```
+
+**Response body:**
+```javascript
+{ status: 200,
+  data:{
+   List: [
+    { title: 'A group about something',
+      body: 'This should not be about nothing',
+      id: 2,
+      modified_epoch: 1493122861,
+      created_epoch: 1493122861,
+      owner_id: 1 },
+    { title: 'A group about something else',
+      body: 'This should not be about something',
+      id: 3,
+      modified_epoch: 1493122861,
+      created_epoch: 1493122861,
+      owner_id: 1 }
+    ]
+  errors: [] }
+```
+
+
+ 
+
+
 ### Get 10 latest followers
 ### Generate group view
 ### Get activity feed
