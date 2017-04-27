@@ -6,7 +6,7 @@ import {schemas as actions} from './actions';
 import {schemas as profile} from './profile';
 import {schemas as entities} from './entities';
 
-const schemas = {actions, profile, entities}
+const schemas = {actions, profile, entities};
 
 export function getRelatedModel(ownerName, mappingName, limit = 2, offset = 0, filter = []) {
   const ownerMapping = {

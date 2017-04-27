@@ -57,7 +57,7 @@ Object.keys(parameters).forEach(entityType => {
 
             const items = res.body.data.List;
 
-            assert(items[0].id < items[1].id)
+            assert(items[0].id < items[1].id);
             done();
           });
       });
@@ -71,7 +71,7 @@ Object.keys(parameters).forEach(entityType => {
 
             const items = res.body.data.List;
 
-            assert(items[0].id > items[1].id)
+            assert(items[0].id > items[1].id);
             done();
           });
       });
@@ -181,7 +181,7 @@ Object.keys(parameters).forEach(entityType => {
 describe('Test include on group', function() {
   it('should include an owner', function(done) {
     request
-      .get(`http://localhost:8080/v1/community/group`)
+      .get('http://localhost:8080/v1/community/group')
       .query({access_token: token, include: ['owner']})
       .end((err, res) => {
         assert.ifError(err);
@@ -196,7 +196,7 @@ describe('Test include on group', function() {
 
   it('should include an posts', function(done) {
     request
-      .get(`http://localhost:8080/v1/community/group`)
+      .get('http://localhost:8080/v1/community/group')
       .query({access_token: token, include: ['posts']})
       .end((err, res) => {
         assert.ifError(err);
@@ -214,7 +214,7 @@ describe('Test include on group', function() {
 
   it('should support objects in arrays for include', function(done) {
     request
-      .get(`http://localhost:8080/v1/community/group`)
+      .get('http://localhost:8080/v1/community/group')
       .query({access_token: token, include: '[{"name": "posts"}, {"name": "owner"}]'})
       .end((err, res) => {
         assert.ifError(err);
@@ -236,7 +236,7 @@ describe('Test include on group', function() {
 
   it('should support mix of strings and objects in arrays for include', function(done) {
     request
-      .get(`http://localhost:8080/v1/community/group`)
+      .get('http://localhost:8080/v1/community/group')
       .query({access_token: token, include: '[{"name": "posts"}, "owner"]'})
       .end((err, res) => {
         assert.ifError(err);
@@ -258,7 +258,7 @@ describe('Test include on group', function() {
 
   it('should support limits', function(done) {
     request
-      .get(`http://localhost:8080/v1/community/group`)
+      .get('http://localhost:8080/v1/community/group')
       .query({access_token: token, include: '[{"name": "posts", "limit": 10}]'})
       .end((err, res) => {
         assert.ifError(err);
@@ -277,7 +277,7 @@ describe('Test include on group', function() {
 
   it('should support offsets', function(done) {
     request
-      .get(`http://localhost:8080/v1/community/group`)
+      .get('http://localhost:8080/v1/community/group')
       .query({access_token: token, include: '[{"name": "posts", "offset": 2}]'})
       .end((err, res) => {
         assert.ifError(err);
@@ -296,7 +296,7 @@ describe('Test include on group', function() {
 
   it('should support nested includes', function(done) {
     request
-      .get(`http://localhost:8080/v1/community/group`)
+      .get('http://localhost:8080/v1/community/group')
       .query({access_token: token, limit: 1, include: '[{"name": "posts", "limit": 1, "include": ["comments"]}]'})
       .end((err, res) => {
         assert.ifError(err);
@@ -322,7 +322,7 @@ describe('Test include on group', function() {
 
   it('should support nested includes with nested includes', function(done) {
     request
-      .get(`http://localhost:8080/v1/community/group`)
+      .get('http://localhost:8080/v1/community/group')
       .query({
         access_token: token,
         limit: 1,
@@ -354,7 +354,7 @@ describe('Test include on group', function() {
 
   it('should support including actions', function(done) {
     request
-      .get(`http://localhost:8080/v1/community/group`)
+      .get('http://localhost:8080/v1/community/group')
       .query({
         access_token: token,
         limit: 1,
@@ -396,7 +396,7 @@ describe('Test include on group', function() {
           });
 
           console.log(item);
-        })
+        });
         done();
       });
   });
