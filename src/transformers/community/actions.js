@@ -10,8 +10,7 @@ export function like() {
 
   const remap = {
     id: 'id',
-    entity_id: 'entity_ref',
-    profile_id: 'profile_ref',
+    reference: 'reference',
     type: 'type'
   };
 
