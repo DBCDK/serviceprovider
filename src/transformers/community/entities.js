@@ -62,7 +62,8 @@ export function review() {
     body: 'contents',
     profile_id: 'owner_id',
     reference: 'entity_ref',
-    rating: 'rating'
+    rating: 'attributes.rating',
+    media: 'attributes.media'
   };
 
   return createCRUD('entity', 'review', Router(), map, getSchemaDefinition(swagger, 'Review'));
