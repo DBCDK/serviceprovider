@@ -60,6 +60,10 @@ export function group() {
       req.params,
       req.body,
       req.query,
+      {selector: {
+        type: 'post',
+        entity_id: req.params.id
+      }},
       {
         _meta: {
           type,

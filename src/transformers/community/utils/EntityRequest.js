@@ -256,7 +256,7 @@ export default class EntityRequest {
     let filter = [];
     let include = {};
     const selectorKey = QueryTypeMap[this._elvisType].list;
-    const selector = {};
+    const selector = req.selector || {};
     if (this._type) {
       selector.type = this._type;
     }
