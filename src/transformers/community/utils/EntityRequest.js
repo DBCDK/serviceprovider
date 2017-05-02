@@ -216,6 +216,14 @@ export default class EntityRequest {
       return validationError;
     }
     const json = this._mapperToElvis(object);
+    if (this._elvisType === 'action') {
+      if (json.attributes.reference.type === 'profile') {
+        json.profile_ref = json.attributes.reference.id;
+      }
+      else {
+        json.entity_ref = json.attributes.reference.id;
+      }
+    }
     if (this._type) {
       json.type = this._type;
     }
