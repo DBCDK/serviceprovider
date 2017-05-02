@@ -1,5 +1,5 @@
 /* eslint-disable max-len, quotes, comma-spacing, key-spacing, quote-props, indent */
-// Request: updateEntity {"id":"309","flag_reason":"nej","modifiedById":2,"_meta":{"type":"flag","elvisType":"action","schemaMap":{"created_epoch":"created_epoch","modified_epoch":"modified_epoch","modified_by":"modified_by","id":"id","owner_id":"owner_id","profile_id":"profile_ref","flag_reason":"attributes.flag_reason"},"schema":{"properties":{"created_epoch":{"type":"number","format":"integer"},"modified_epoch":{"type":"number","format":"integer"},"modified_by":{"type":"number","format":"integer"},"id":{"type":"number","format":"integer"},"owner_id":{"type":"number","format":"integer"},"profile_id":{"type":"number","format":"integer"},"flag_reason":{"type":"string"}}}}}
+// Request: deleteEntity {"id":"15","reason":"this is the reason","modified_by":1,"reference":{"type":"post","id":5},"_meta":{"type":"flag","elvisType":"action","schemaMap":{"reason":"attributes.reason","reference":"attributes.reference","profile_id":"owner_id","created_epoch":"created_epoch","deleted_epoch":"deleted_epoch","modified_epoch":"modified_epoch","modified_by":"modified_by","id":"id"},"schema":{"properties":{"reason":{"type":"string"},"reference":{"type":"object","properties":{"type":{"type":"string","required":true},"id":{"type":"integer","required":true}}},"profile_id":{"type":"number","format":"integer"},"created_epoch":{"type":"integer"},"deleted_epoch":{"type":"integer"},"modified_epoch":{"type":"integer"},"modified_by":{"type":"integer"},"id":{"type":"integer"}}}}}
 
 import Provider from '../../provider/Provider.js';
 import {assert, fail} from 'chai';
@@ -51,17 +51,17 @@ const context = {
 };
 const provider = Provider();
 const mockData = {
-  "[\"http://localhost:3001/v1/community/1/action/309\",{\"method\":\"put\",\"json\":{\"attributes\":{\"flag_reason\":\"nej\"},\"modified_by\":2}}]": {
+  "[\"http://localhost:3001/v1/community/1/action/15\",{\"method\":\"put\",\"json\":{\"modified_by\":1}}]": {
     "links": {
-      "self": "/v1/community/1/action/309"
+      "self": "/v1/community/1/action/15"
     },
     "data": {
-      "id": 309,
-      "created_epoch": 1492763608,
-      "deleted_epoch": null,
-      "modified_epoch": 1492764006,
-      "modified_by": 2,
-      "deleted_by": null,
+      "id": 15,
+      "created_epoch": 1493714644,
+      "deleted_epoch": 1493715007,
+      "modified_epoch": 1493714644,
+      "modified_by": null,
+      "deleted_by": 1,
       "community_id": 1,
       "owner_id": 1,
       "start_epoch": null,
@@ -70,33 +70,34 @@ const mockData = {
       "profile_ref": null,
       "type": "flag",
       "attributes": {
-        "flag_reason": "nej"
-      },
-      "log": [
-        {
-          "modified_by": 2,
-          "modified_epoch": 1492764006
+        "reference": {
+          "id": 5,
+          "type": "post"
         }
-      ]
+      },
+      "log": null
     }
   }
 };
 
 describe('Automated test: updateFlag', () => {
-  it('expected response. ID:kzvfoe, for {"id":"309","flag_reason":"nej","modifiedById":2,"_meta":{"type":"flag","elvisType":"action","schemaMap":{"created_epoch":"created_epoch","modified_epoch":"modified_epoch","modified_by":"modified_by","id":"id","owner_id":"owner_id","profile_id":"profile_ref","flag_reason":"attributes.flag_reason"},"schema":{"properties":{"created_epoch":{"type":"number","format":"integer"},"modified_epoch":{"type":"number","format":"integer"},"modified_by":{"type":"number","format":"integer"},"id":{"type":"number","format":"integer"},"owner_id":{"type":"number","format":"integer"},"profile_id":{"type":"number","format":"integer"},"flag_reason":{"type":"string"}}}}}', (done) => {
+  it('expected response. ID:hndufz, for {"id":"15","reason":"this is the reason","modified_by":1,"reference":{"type":"post","id":5},"_meta":{"type":"flag","elvisType":"action","schemaMap":{"reason":"attributes.reason","reference":"attributes.reference","profile_id":"owner_id","created_epoch":"created_epoch","deleted_epoch":"deleted_epoch","modified_epoch":"modified_epoch","modified_by":"modified_by","id":"id"},"schema":{"properties":{"reason":{"type":"string"},"reference":{"type":"object","properties":{"type":{"type":"string","required":true},"id":{"type":"integer","required":true}}},"profile_id":{"type":"number","format":"integer"},"created_epoch":{"type":"integer"},"deleted_epoch":{"type":"integer"},"modified_epoch":{"type":"integer"},"modified_by":{"type":"integer"},"id":{"type":"integer"}}}}}', (done) => {
     context.mockData = mockData;
-    provider.execute('updateEntity', {"id":"309","flag_reason":"nej","modifiedById":2,"_meta":{"type":"flag","elvisType":"action","schemaMap":{"created_epoch":"created_epoch","modified_epoch":"modified_epoch","modified_by":"modified_by","id":"id","owner_id":"owner_id","profile_id":"profile_ref","flag_reason":"attributes.flag_reason"},"schema":{"properties":{"created_epoch":{"type":"number","format":"integer"},"modified_epoch":{"type":"number","format":"integer"},"modified_by":{"type":"number","format":"integer"},"id":{"type":"number","format":"integer"},"owner_id":{"type":"number","format":"integer"},"profile_id":{"type":"number","format":"integer"},"flag_reason":{"type":"string"}}}}}, context)
+    provider.execute('deleteEntity', {"id":"15","reason":"this is the reason","modified_by":1,"reference":{"type":"post","id":5},"_meta":{"type":"flag","elvisType":"action","schemaMap":{"reason":"attributes.reason","reference":"attributes.reference","profile_id":"owner_id","created_epoch":"created_epoch","deleted_epoch":"deleted_epoch","modified_epoch":"modified_epoch","modified_by":"modified_by","id":"id"},"schema":{"properties":{"reason":{"type":"string"},"reference":{"type":"object","properties":{"type":{"type":"string","required":true},"id":{"type":"integer","required":true}}},"profile_id":{"type":"number","format":"integer"},"created_epoch":{"type":"integer"},"deleted_epoch":{"type":"integer"},"modified_epoch":{"type":"integer"},"modified_by":{"type":"integer"},"id":{"type":"integer"}}}}}, context)
       .then(result => {
         assert.deepEqual(result,
             {
   "status": 200,
   "data": {
-    "created_epoch": 1492763608,
-    "modified_epoch": 1492764006,
-    "modified_by": 2,
-    "id": 309,
-    "owner_id": 1,
-    "flag_reason": "nej"
+    "reference": {
+      "id": 5,
+      "type": "post"
+    },
+    "profile_id": 1,
+    "created_epoch": 1493714644,
+    "deleted_epoch": 1493715007,
+    "modified_epoch": 1493714644,
+    "id": 15
   },
   "errors": []
 });
@@ -106,12 +107,15 @@ describe('Automated test: updateFlag', () => {
         fail({throw: result}, {
   "status": 200,
   "data": {
-    "created_epoch": 1492763608,
-    "modified_epoch": 1492764006,
-    "modified_by": 2,
-    "id": 309,
-    "owner_id": 1,
-    "flag_reason": "nej"
+    "reference": {
+      "id": 5,
+      "type": "post"
+    },
+    "profile_id": 1,
+    "created_epoch": 1493714644,
+    "deleted_epoch": 1493715007,
+    "modified_epoch": 1493714644,
+    "id": 15
   },
   "errors": []
 });
