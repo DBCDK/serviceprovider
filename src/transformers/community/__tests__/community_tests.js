@@ -394,8 +394,6 @@ describe('Test include on group', function() {
             assert(follower.id);
             assert(follower.type);
           });
-
-          console.log(item);
         });
         done();
       });

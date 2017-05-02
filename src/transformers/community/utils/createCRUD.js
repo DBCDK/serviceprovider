@@ -9,7 +9,6 @@ import {createMap} from './createMap';
  * @returns {Object} Router.
  */
 export default function createCRUD(elvisType, type, router, remap, schema) {
-  console.log(schema);
 
    // Setup CRUD transport
   router.all('/:id?', (req, res) => {
