@@ -49,7 +49,32 @@ export const schemas = {
  * @returns {Object}
  */
 export function group() {
-  return createCRUD('entity', 'group', Router(), groupMap, getSchemaDefinition(swagger, 'Group'));
+  const router = createCRUD('entity', 'group', Router(), groupMap, getSchemaDefinition(swagger, 'Group'));
+  router.get(':groupId/posts', (req, res) => {
+    const provider = req.app.get('serviceProvider');
+    const context = req.context;
+    context.crud = true;
+
+    const query = Object.assign(
+      {},
+      req.params,
+      req.body,
+      req.query,
+      {
+        _meta: {
+          type,
+          elvisType,
+          schemaMap: createMap(schema, remap),
+          schema
+        }
+      }
+    );
+
+    provider.execute('listEntities', query, context).then(result => res.json(result));
+
+  });
+
+  return router;
 }
 
 /**
