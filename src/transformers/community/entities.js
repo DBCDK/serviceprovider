@@ -50,7 +50,8 @@ export const schemas = {
  */
 export function group() {
   const router = createCRUD('entity', 'group', Router(), groupMap, getSchemaDefinition(swagger, 'Group'));
-  router.get(':groupId/posts', (req, res) => {
+
+  router.get('/:groupId/posts', (req, res) => {
     const provider = req.app.get('serviceProvider');
     const context = req.context;
     context.crud = true;
@@ -62,14 +63,14 @@ export function group() {
       req.query,
       {selector: {
         type: 'post',
-        entity_id: req.params.id
+        entity_ref: req.params.groupId
       }},
       {
         _meta: {
-          type,
-          elvisType,
-          schemaMap: createMap(schema, remap),
-          schema
+          type: 'post',
+          elvisType: 'entity',
+          schemaMap: createMap(getSchemaDefinition(swagger, 'Post'), postMap),
+          schema: getSchemaDefinition(swagger, 'Post')
         }
       }
     );
