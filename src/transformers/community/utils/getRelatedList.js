@@ -1,3 +1,5 @@
+import {createMap} from './createMap';
+
 /**
  * Constructs a selector filtering to objects related to parent.
  *
@@ -52,5 +54,5 @@ export default function getRelatedList(relatedElvisType, elvisType, type, map, s
     );
 
     provider.execute('listEntities', query, context).then(result => res.json(result));
-  }
+  };
 }

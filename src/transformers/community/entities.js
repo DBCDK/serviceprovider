@@ -23,12 +23,6 @@ export const schemas = {
  * @returns {Object}
  */
 export function group() {
-  const likeMap = {
-    id: 'id',
-    reference: 'attributes.reference',
-    profile_id: 'owner_id'
-  };
-
   const router = createCRUD('entity', 'group', Router(), groupMap, getSchemaDefinition(swagger, 'Group'));
 
   router.get('/:id/posts', getRelatedList('entity', 'entity', 'post', postMap, getSchemaDefinition(swagger, 'Post')));
