@@ -51,6 +51,10 @@ responses:
     description: A comment object.
     schema:
       $ref: "#/definitions/Comment"
+  Comments:
+    description: A list of comments.
+    schema:
+      $ref: "#/definitions/Comments"
   Review:
     description: A review object.
     schema:

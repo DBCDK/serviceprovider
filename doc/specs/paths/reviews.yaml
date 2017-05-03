@@ -75,3 +75,31 @@ paths:
           $ref: '#/responses/Review'
         default:
           $ref: '#/responses/Error'
+
+  /community/reviews/{id}/likes:
+    get:
+      tags:
+        - Community
+      summary: List of Likes related to a specific Review
+      parameterGroup: entityParams
+      parameters:
+        - $ref: '#/parameters/id'
+      responses:
+        200:
+          $ref: '#/responses/Likes'
+        500:
+          $ref: '#/responses/Error'
+
+  /community/reviews/{id}/flags:
+    get:
+      tags:
+        - Community
+      summary: List of Flags related to a specific Review
+      parameterGroup: entityParams
+      parameters:
+        - $ref: '#/parameters/id'
+      responses:
+        200:
+          $ref: '#/responses/Flags'
+        500:
+          $ref: '#/responses/Error'
