@@ -400,9 +400,57 @@ describe('Test include on groups', function() {
         done();
       });
   });
+
+  it('should support counts on top level', function(done) {
+    request
+      .get('http://localhost:8080/v1/community/groups')
+      .query({
+        access_token: token,
+        include: '[{"name": "posts", "limit": 1}]',
+        counts: ['posts']
+      })
+      .end((err, res) => {
+        assert.ifError(err);
+        const items = res.body.data.List;
+        items.forEach(item => {
+          assert(item.postsCount);
+          assert(item.posts);
+          item.posts.List.forEach(post => {
+            assert(post.id);
+            assert(post.title);
+          });
+        });
+
+        done();
+      });
+  });
+
+  it('should support counts on nested includes', function(done) {
+    request
+      .get('http://localhost:8080/v1/community/groups/')
+      .query({
+        access_token: token,
+        limit: 1,
+        include: '[{"name": "posts", "limit": 1, "counts": ["comments"]}]'
+      })
+      .end((err, res) => {
+        assert.ifError(err);
+        const items = res.body.data.List;
+        items.forEach(item => {
+          assert(item.posts);
+          item.posts.List.forEach(post => {
+            assert(post.id);
+            assert(post.title);
+            assert(post.commentsCount)
+          });
+        });
+
+        done();
+      });
+  });
 });
 
-describe('test include on group/{id}', function() {
+describe('Test include on group/{id}', function() {
   it('should support querying a single group', function(done) {
     request
       .get(`http://localhost:8080/v1/community/groups/${singleGroupId}`)
@@ -473,6 +521,48 @@ describe('test include on group/{id}', function() {
             assert(comment.owner.email);
           });
         });
+        done();
+      });
+  });
+
+  it('should support counts on top level', function(done) {
+    request
+      .get(`http://localhost:8080/v1/community/groups/${singleGroupId}`)
+      .query({
+        access_token: token,
+        include: '[{"name": "posts", "limit": 1}]',
+        counts: ['posts']
+      })
+      .end((err, res) => {
+        assert.ifError(err);
+        const item = res.body.data;
+        assert(item.posts);
+        assert(item.postsCount);
+        item.posts.List.forEach(post => {
+          assert(post.id);
+          assert(post.title);
+        });
+        done();
+      });
+  });
+
+  it('should support counts on nested includes', function(done) {
+    request
+      .get(`http://localhost:8080/v1/community/groups/${singleGroupId}`)
+      .query({
+        access_token: token,
+        include: '[{"name": "posts", "limit": 1, "counts": ["comments"]}]'
+      })
+      .end((err, res) => {
+        assert.ifError(err);
+        const item = res.body.data;
+        assert(item.posts);
+        item.posts.List.forEach(post => {
+          assert(post.id);
+          assert(post.title);
+          assert(post.commentsCount)
+        });
+
         done();
       });
   });

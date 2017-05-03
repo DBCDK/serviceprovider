@@ -123,6 +123,26 @@ export default class EntityRequest {
     return null;
   }
 
+  _getCounts(name, count) {
+    const countQuery = {};
+    if (typeof count === 'string') {
+      const relatedModel = getRelatedModel(name, count);
+      if (relatedModel.Entities || relatedModel.Entity) {
+        countQuery.CountEntities = relatedModel.Entities || relatedModel.Entity;
+      }
+
+      if (relatedModel.Profiles || relatedModel.Profile) {
+        countQuery.CountProfiles = relatedModel.Profiles || relatedModel.Profile;
+      }
+
+      if (relatedModel.Action || relatedModel.Actions) {
+        countQuery.CountActions = relatedModel.Action || relatedModel.Actions;
+      }
+    }
+
+    return countQuery;
+  }
+
   /**
    * Generates an Include object for the JSON sent to the community service.
    * Can take nested objects and different input types.
@@ -168,6 +188,14 @@ export default class EntityRequest {
             }
 
             Include[item.name] = related;
+            if (item.counts) {
+              item.counts = typeof item.counts === 'string' ? [item.counts] : item.counts;
+              Array.isArray(item.counts) && item.counts.forEach(count => {
+                const additional = {};
+                additional[`${count}Count`] = this._getCounts(item.name, count);
+                Include[item.name].Include = Object.assign({}, Include[item.name].Include, additional);
+              });
+            }
           }
         }
       });
@@ -204,7 +232,7 @@ export default class EntityRequest {
     }
   }
 
-  async get(id, include = []) {
+  async get(id, include = [], counts = []) {
     const selectorKey = QueryTypeMap[this._elvisType].list;
     const selector = {id: id};
     if (this._type) {
@@ -215,6 +243,15 @@ export default class EntityRequest {
       Limit: 1,
       Include: this._getInclude(include, [], this._type || this._elvisType, this._map)
     };
+
+    if (typeof counts === 'string') {
+      counts = [counts];
+    }
+
+    counts.forEach(count => {
+      json.Include[`${count}Count`] = this._getCounts(this._type || this._elvisType, count);
+    });
+
     const {data, errors} = await this._request('query', 'post', {json});
     return this._createResponse(data && data.List[0], errors);
   }
@@ -301,6 +338,21 @@ export default class EntityRequest {
 
     if (typeof req.sort === 'string') {
       json.SortBy = req.sort;
+    }
+
+    if (typeof req.counts === 'string') {
+      try {
+        req.counts = JSON.parse(req.counts);
+      }
+      catch (er) {
+        req.counts = [req.counts];
+      }
+    }
+
+    if (Array.isArray(req.counts)) {
+      req.counts.forEach(count => {
+        json.Include[`${count}Count`] = this._getCounts(this._type || this._elvisType, count);
+      });
     }
 
     const {data, errors} = await this._request('query', 'post', {json});
