@@ -169,6 +169,8 @@ export default class EntityRequest {
       });
     }
 
+    console.log(JSON.stringify(Include, null, 2 ));
+
     return Include;
   }
 

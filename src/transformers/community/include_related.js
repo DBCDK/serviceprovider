@@ -39,7 +39,7 @@ export function getRelatedModel(ownerName, mappingName, limit = 2, offset = 0, f
   };
 
   const quarantineMapping = {
-    Actions: {type: 'like', entity_ref: '^id'},
+    Actions: {type: 'quarantine', entity_ref: '^id'},
     Limit: limit,
     Offset: offset,
     Include: schemas.actions.like

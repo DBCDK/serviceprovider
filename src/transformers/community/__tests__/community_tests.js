@@ -384,7 +384,7 @@ describe('Test include on group', function() {
 
           item.flags.List.forEach(flag => {
             assert(flag.id);
-            assert(flag.flag_reason);
+            assert(flag.reason);
           });
 
           assert(item.followers);
@@ -392,7 +392,8 @@ describe('Test include on group', function() {
 
           item.followers.List.forEach(follower => {
             assert(follower.id);
-            assert(follower.type);
+            assert(follower.profile_id);
+            assert(follower.created_epoch);
           });
         });
         done();
