@@ -75,3 +75,59 @@ paths:
           $ref: '#/responses/Profile'
         default:
           $ref: '#/responses/Error'
+
+  /community/profiles/{id}/likes:
+    get:
+      tags:
+        - Community
+      summary: List of Likes related to a specific Profile
+      parameterGroup: entityParams
+      parameters:
+        - $ref: '#/parameters/id'
+      responses:
+        200:
+          $ref: '#/responses/Likes'
+        500:
+          $ref: '#/responses/Error'
+
+  /community/groups/{id}/follows:
+    get:
+      tags:
+        - Community
+      summary: List of Followers related to a specific Profile
+      parameterGroup: entityParams
+      parameters:
+        - $ref: '#/parameters/id'
+      responses:
+        200:
+          $ref: '#/responses/Follows'
+        500:
+          $ref: '#/responses/Error'
+
+  /community/groups/{id}/flags:
+    get:
+      tags:
+        - Community
+      summary: List of Flags related to a specific Profile
+      parameterGroup: entityParams
+      parameters:
+        - $ref: '#/parameters/id'
+      responses:
+        200:
+          $ref: '#/responses/Flags'
+        500:
+          $ref: '#/responses/Error'
+
+  /community/groups/{id}/quarantines:
+    get:
+      tags:
+        - Community
+      summary: List of Quarantines related to a specific Profile
+      parameterGroup: entityParams
+      parameters:
+        - $ref: '#/parameters/id'
+      responses:
+        200:
+          $ref: '#/responses/Quarantines'
+        500:
+          $ref: '#/responses/Error'
