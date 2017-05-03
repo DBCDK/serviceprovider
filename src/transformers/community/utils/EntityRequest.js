@@ -135,6 +135,18 @@ export default class EntityRequest {
    */
   _getInclude(include = {}, filter = [], name = '', _map = {}) {
     const Include = Object.assign({}, _map);
+    if (typeof include === 'string') {
+      try {
+        const reqInclude = JSON.parse(include);
+        include = Array.isArray(reqInclude) ? reqInclude : [reqInclude];
+      }
+      catch (e) {
+        include = [include];
+      }
+    }
+    else if (Array.isArray(include)) {
+      include = include;
+    }
 
     if (Array.isArray(include)) {
       include.forEach(item => {
@@ -192,7 +204,7 @@ export default class EntityRequest {
     }
   }
 
-  async get(id) {
+  async get(id, include = []) {
     const selectorKey = QueryTypeMap[this._elvisType].list;
     const selector = {id: id};
     if (this._type) {
@@ -201,10 +213,10 @@ export default class EntityRequest {
     const json = {
       [selectorKey]: selector,
       Limit: 1,
-      Include: this._map
+      Include: this._getInclude(include, [], this._type || this._elvisType, this._map)
     };
     const {data, errors} = await this._request('query', 'post', {json});
-    return this._createResponse(this._mapperFromElvis(data && data.List[0]), errors);
+    return this._createResponse(data && data.List[0], errors);
   }
 
   async post(object) {
@@ -248,30 +260,14 @@ export default class EntityRequest {
   /**
    * Get all objects of type
    *
-   * @todo Add limit, order and sort parameters.
-   *
    * @returns {{status, data, errors}|*}
    */
   async getList(req) {
     let filter = [];
-    let include = {};
     const selectorKey = QueryTypeMap[this._elvisType].list;
     const selector = {};
     if (this._type) {
       selector.type = this._type;
-    }
-
-    if (typeof req.include === 'string') {
-      try {
-        const reqInclude = JSON.parse(req.include);
-        include = Array.isArray(reqInclude) ? reqInclude : [reqInclude];
-      }
-      catch (e) {
-        include = [req.include];
-      }
-    }
-    else if (Array.isArray(req.include)) {
-      include = req.include;
     }
 
     if (Array.isArray(req.filter)) {
@@ -288,7 +284,7 @@ export default class EntityRequest {
       Order: 'descending',
       Limit: 2,
       Offset: 0,
-      Include: this._getInclude(include, filter, this._type || this._elvisType, this._map)
+      Include: this._getInclude(req.include, filter, this._type || this._elvisType, this._map)
     };
 
     if (req.offset && !isNaN(parseFloat(req.offset)) && isFinite(req.offset)) {
