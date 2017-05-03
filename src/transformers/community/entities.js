@@ -1,36 +1,10 @@
 import {Router} from 'express';
 import createCRUD from './utils/createCRUD';
+import getRelatedList from './utils/getRelatedList';
 import {createMap} from './utils/createMap';
+import {groupMap, postMap, commentMap, reviewMap, likeMap, followMap, flagMap} from './maps';
 import {getSpecification, getSchemaDefinition} from '../../swaggerFromSpec';
 const swagger = getSpecification();
-
-const groupMap = {
-  body: 'contents',
-  profile_id: 'owner_id',
-  media: 'attributes.media'
-};
-
-const postMap = {
-  body: 'contents',
-  profile_id: 'owner_id',
-  group_id: 'entity_ref',
-  media: 'attributes.media'
-};
-
-const commentMap = {
-  body: 'contents',
-  profile_id: 'owner_id',
-  post_id: 'entity_ref',
-  media: 'attributes.media'
-};
-
-const reviewMap = {
-  body: 'contents',
-  profile_id: 'owner_id',
-  reference: 'entity_ref',
-  rating: 'attributes.rating',
-  media: 'attributes.media'
-};
 
 function getSchema(type, map) {
   return createMap(getSchemaDefinition(swagger, type), map);
@@ -49,35 +23,18 @@ export const schemas = {
  * @returns {Object}
  */
 export function group() {
+  const likeMap = {
+    id: 'id',
+    reference: 'attributes.reference',
+    profile_id: 'owner_id'
+  };
+
   const router = createCRUD('entity', 'group', Router(), groupMap, getSchemaDefinition(swagger, 'Group'));
 
-  router.get('/:groupId/posts', (req, res) => {
-    const provider = req.app.get('serviceProvider');
-    const context = req.context;
-    context.crud = true;
-
-    const query = Object.assign(
-      {},
-      req.params,
-      req.body,
-      req.query,
-      {selector: {
-        type: 'post',
-        entity_ref: req.params.groupId
-      }},
-      {
-        _meta: {
-          type: 'post',
-          elvisType: 'entity',
-          schemaMap: createMap(getSchemaDefinition(swagger, 'Post'), postMap),
-          schema: getSchemaDefinition(swagger, 'Post')
-        }
-      }
-    );
-
-    provider.execute('listEntities', query, context).then(result => res.json(result));
-
-  });
+  router.get('/:id/posts', getRelatedList('entity', 'entity', 'post', postMap, getSchemaDefinition(swagger, 'Post')));
+  router.get('/:id/likes', getRelatedList('entity', 'action', 'like', likeMap, getSchemaDefinition(swagger, 'Like')));
+  router.get('/:id/follows', getRelatedList('entity', 'action', 'follow', followMap, getSchemaDefinition(swagger, 'Follow')));
+  router.get('/:id/flags', getRelatedList('entity', 'action', 'flag', flagMap, getSchemaDefinition(swagger, 'Flag')));
 
   return router;
 }
