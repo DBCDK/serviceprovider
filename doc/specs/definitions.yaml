@@ -158,13 +158,14 @@ definitions:
 
   Reference:
     type: object
+    required:
+      - type
+      - id
     properties:
       type:
         type: string
-        required: true
       id:
         type: integer
-        required: true
   Media:
     properties:
       type:
