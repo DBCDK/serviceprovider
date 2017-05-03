@@ -45,7 +45,7 @@ export const followMap = {
   profile_id: 'owner_id'
 };
 
-export const profile = {
+export const profileMap = {
   username: 'name',
   email: 'attributes.email',
   displayName: 'attributes.displayName',
@@ -53,4 +53,11 @@ export const profile = {
   phone: 'attributes.phone',
   birthday: 'attributes.birthday',
   fullName: 'attributes.fullName'
+};
+
+export const quarantineMap = {
+  reason: 'attributes.reason',
+  profile_id: 'owner_id',
+  profile_ref: 'profile_ref',
+  flags: 'attributes.flags'
 };

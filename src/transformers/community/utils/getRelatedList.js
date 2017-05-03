@@ -3,7 +3,7 @@ import {createMap} from './createMap';
 
 const typeMapping = {
   profile: 'Profile',
-  quarantine: 'Entity',
+  quarantine: 'Action',
   review: 'Entity',
   group: 'Entity',
   post: 'Entity',
