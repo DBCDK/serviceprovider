@@ -30,7 +30,7 @@ function getSelector(relatedType, type, id) {
     selector.entity_ref = id;
   }
   if (typeMapping[type] === 'Action') {
-    selector['attributes.reference'] = {type: relatedType}
+    selector['attributes.reference'] = {type: relatedType};
   }
 
   return selector;
