@@ -38,6 +38,10 @@ definitions:
     type: array
     items:
       $ref: "#/definitions/Profile"
+  UsernameExists:
+    properties:
+      exists:
+        type: boolean
   Group:
     allOf:
       - $ref: "#/definitions/Entity"

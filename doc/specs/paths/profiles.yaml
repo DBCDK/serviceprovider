@@ -75,3 +75,17 @@ paths:
           $ref: '#/responses/Profile'
         default:
           $ref: '#/responses/Error'
+
+  /community/profiles/usernameExists/{username}:
+    get:
+      summary: Checks if a given username exists
+      tags:
+        - Community
+      parameters:
+        - $ref: '#/parameters/username'
+        - $ref: '#/parameters/accessToken'
+      responses:
+        200:
+          $ref: '#/responses/UsernameExists'
+        500:
+          $ref: '#/responses/Error'

@@ -41,6 +41,12 @@ parameters:
     description: The person to create.
     schema:
       $ref: '#/definitions/Profile'
+  username:
+    name: username
+    in: path
+    description: Username
+    required: true
+    type: string
   group:
     name: group
     in: body

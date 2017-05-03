@@ -23,6 +23,10 @@ responses:
     description: A list of likes
     schema:
       $ref: "#/definitions/Likes"
+  UsernameExists:
+    description: If the value is found true is returned otherwise false
+    schema:
+      $ref: "#/definitions/UsernameExists"
   Follow:
     description: A follow object.
     schema:
