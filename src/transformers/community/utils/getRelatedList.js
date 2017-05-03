@@ -1,5 +1,17 @@
 import {createMap} from './createMap';
 
+
+const typeMapping = {
+  profile: 'Profile',
+  quarantine: 'Entity',
+  review: 'Entity',
+  group: 'Entity',
+  post: 'Entity',
+  comment: 'Entity',
+  like: 'Action',
+  follow: 'Action',
+  flag: 'Action'
+};
 /**
  * Constructs a selector filtering to objects related to parent.
  *
@@ -8,14 +20,17 @@ import {createMap} from './createMap';
  * @param id Id of the parent relation
  * @returns {Object}
  */
-function getSelector(relatedElvisType, type, id) {
+function getSelector(relatedType, type, id) {
   const selector = {type};
 
-  if (relatedElvisType === 'profile') {
+  if (relatedType === 'profile') {
     selector.profile_ref = id;
   }
-  else if (relatedElvisType === 'entity') {
+  else if (typeMapping[relatedType] === 'Entity') {
     selector.entity_ref = id;
+  }
+  if (typeMapping[type] === 'Action') {
+    selector['attributes.reference'] = {type: relatedType}
   }
 
   return selector;
@@ -31,7 +46,7 @@ function getSelector(relatedElvisType, type, id) {
  * @param schema Object schema
  * @returns {Function}
  */
-export default function getRelatedList(relatedElvisType, elvisType, type, map, schema) {
+export default function getRelatedList(relatedType, type, map, schema) {
   return (req, res) => {
     const provider = req.app.get('serviceProvider');
     const context = req.context;
@@ -42,11 +57,11 @@ export default function getRelatedList(relatedElvisType, elvisType, type, map, s
       req.params,
       req.body,
       req.query,
-      {selector: getSelector(relatedElvisType, type, req.params.id)},
+      {selector: getSelector(relatedType, type, req.params.id)},
       {
         _meta: {
           type: type,
-          elvisType: elvisType,
+          elvisType: typeMapping[type].toLowerCase(),
           schemaMap: createMap(schema, map),
           schema: schema
         }
