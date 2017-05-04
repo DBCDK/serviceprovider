@@ -56,7 +56,7 @@ paths:
       parameters:
         - $ref: '#/parameters/id'
         - $ref: '#/parameters/accessToken'
-        - $ref: '#/parameters/profile'
+        - $ref: '#/parameters/review'
       responses:
         200:
           $ref: '#/responses/Review'

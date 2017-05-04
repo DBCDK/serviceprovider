@@ -2,7 +2,7 @@ import {Router} from 'express';
 import createCRUD from './utils/createCRUD';
 import getRelatedList from './utils/getRelatedList';
 import {createMap} from './utils/createMap';
-import {groupMap, postMap, commentMap, reviewMap, likeMap, followMap, flagMap} from './maps';
+import {groupMap, postMap, commentMap, reviewMap, likeMap, followMap, flagMap, quarantineMap} from './maps';
 import {getSpecification, getSchemaDefinition} from '../../swaggerFromSpec';
 const swagger = getSpecification();
 
@@ -65,7 +65,7 @@ export function comment() {
 }
 
 /**
- * Returns comment router.
+ * Returns review router.
  *
  * @returns {Object}
  */

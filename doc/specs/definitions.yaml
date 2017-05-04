@@ -96,7 +96,7 @@ definitions:
       flags:
         type: array
         items:
-          type: object
+          type: integer
   Quarantines:
       type: array
       items:
