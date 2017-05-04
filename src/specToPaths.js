@@ -138,7 +138,7 @@ function apiMethodIterator(method, specs) {
  * @param parameterGroups
  * @returns {Object}
  */
-function parameterGroupToParameters(paths, parameterGroups) {
+export function parameterGroupToParameters(paths, parameterGroups) {
   for (const path in paths) {
     for (const method in paths[path]) {
       const {parameterGroup, parameters = []} = paths[path][method];
