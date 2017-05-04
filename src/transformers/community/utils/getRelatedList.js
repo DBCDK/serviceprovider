@@ -20,7 +20,7 @@ const typeMapping = {
  * @param id Id of the parent relation
  * @returns {Object}
  */
-function getSelector(relatedType, type, id) {
+export function getSelector(relatedType, type, id) {
   const selector = {type};
 
   if (relatedType === 'profile') {

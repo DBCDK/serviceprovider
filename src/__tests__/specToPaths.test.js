@@ -7,7 +7,7 @@ describe('SpecToPaths functions', () => {
       test: {
         get: {
           parameterGroup: 'testGroup',
-          parameters: ['parameter1'],
+          parameters: ['parameter1']
         }
       }
     };
