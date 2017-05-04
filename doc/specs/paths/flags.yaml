@@ -1,0 +1,63 @@
+paths:
+  /community/flags/:
+     get:
+       tags:
+         - Community
+       summary: List of Flags
+       parameters:
+         - $ref: '#/parameters/accessToken'
+         - $ref: '#/parameters/include'
+         - $ref: '#/parameters/limit'
+         - $ref: '#/parameters/offset'
+       responses:
+         500:
+           $ref: '#/responses/Error'
+         200:
+           $ref: '#/responses/Flags'
+         default:
+           $ref: '#/responses/Flags'
+
+     post:
+       summary: Create Flag
+       tags:
+         - Community
+       parameters:
+         - $ref: '#/parameters/accessToken'
+         - name: flag
+           in: body
+           description: a flag object
+           schema:
+             $ref: '#/definitions/Flag'
+       responses:
+         200:
+           $ref: '#/responses/Follow'
+         500:
+           $ref: '#/responses/Error'
+
+  /community/flags/{id}:
+   get:
+     tags:
+       - Community
+     summary: Get flag
+     description: Get a flag by ID
+     parameters:
+       - $ref: '#/parameters/id'
+       - $ref: '#/parameters/accessToken'
+     responses:
+       200:
+         $ref: '#/responses/Flag'
+       500:
+         $ref: '#/responses/Error'
+   delete:
+     summary: Delete flag
+     tags:
+       - Community
+     parameters:
+       - $ref: '#/parameters/id'
+       - $ref: '#/parameters/accessToken'
+     responses:
+       200:
+         $ref: '#/responses/Flag'
+       default:
+         $ref: '#/responses/Error'
+
