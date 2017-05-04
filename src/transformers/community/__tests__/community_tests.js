@@ -441,7 +441,7 @@ describe('Test include on groups', function() {
           item.posts.List.forEach(post => {
             assert(post.id);
             assert(post.title);
-            assert(post.commentsCount)
+            assert(post.commentsCount);
           });
         });
 
@@ -560,7 +560,7 @@ describe('Test include on group/{id}', function() {
         item.posts.List.forEach(post => {
           assert(post.id);
           assert(post.title);
-          assert(post.commentsCount)
+          assert(post.commentsCount);
         });
 
         done();
