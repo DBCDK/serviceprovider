@@ -15,6 +15,10 @@ responses:
     description: A list of groups
     schema:
       $ref: "#/definitions/Groups"
+  GroupnameExists:
+      description: The group ID is returned if the groupname is found otherwise 400 is returned and the data object will be present but empty
+      schema:
+        $ref: "#/definitions/GroupnameExists"
   Like:
     description: A like.
     schema:

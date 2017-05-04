@@ -367,7 +367,7 @@ export default class EntityRequest {
         json.Include[`${count}Count`] = this._getCounts(this._type || this._elvisType, count);
       });
     }
-    
+
     const {data, errors} = await this._request('query', 'post', {json});
     return this._createResponse(data, errors);
   }

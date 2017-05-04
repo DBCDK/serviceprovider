@@ -68,6 +68,21 @@ paths:
           $ref: '#/responses/Group'
         default:
           $ref: '#/responses/Error'
+
+  /community/groups/groupnameExists/{groupname}:
+    get:
+      summary: Checks if the given groupname exists
+      tags:
+        - Community
+      parameters:
+        - $ref: '#/parameters/groupname'
+        - $ref: '#/parameters/accessToken'
+      responses:
+        200:
+          $ref: '#/responses/GroupnameExists'
+        500:
+          $ref: '#/responses/Error'
+
   /community/groups/{id}/posts:
     get:
       tags:

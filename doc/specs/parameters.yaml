@@ -53,6 +53,12 @@ parameters:
     description: The group to create.
     schema:
       $ref: '#/definitions/Group'
+  groupname:
+    name: groupname
+    in: path
+    description: Groupname
+    required: true
+    type: string
   post:
     name: post
     in: body
