@@ -1,4 +1,3 @@
-
 import fs from 'fs';
 import yaml from 'js-yaml';
 import {specToPaths} from './specToPaths';
@@ -33,7 +32,6 @@ export function getSchemaDefinition(swagger, name) {
   return definition;
 }
 
-
 function generateSwagger(spec) {
   const path = __dirname + '/../doc/';
   const desc = fs.readFileSync(`${path}description.md`).toString('utf-8');
@@ -61,7 +59,7 @@ function generateSwagger(spec) {
 function loadYamlFiles() {
   return new Promise(function(resolve) {
     const path = __dirname + '/../doc';
-    glob(path + '/**/*.yaml', function (er, files) {
+    glob(path + '/**/*.yaml', function(er, files) {
       const contents = files.map(f => {
         return yaml.safeLoad(fs.readFileSync(f).toString('utf-8'));
       });
@@ -74,8 +72,8 @@ function loadYamlFiles() {
   });
 }
 
-export default function () {
-  return loadYamlFiles().then(function(spec){
+export default function() {
+  return loadYamlFiles().then(function(spec) {
     return generateSwagger(spec);
   });
 }

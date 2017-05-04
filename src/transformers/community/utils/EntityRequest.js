@@ -1,6 +1,7 @@
 import {validate} from 'jsonschema';
 import mapper from 'object-mapper';
 import {invert} from 'lodash';
+import {getRelatedModel} from '../include_related';
 
 /**
  * @file
@@ -24,6 +25,11 @@ const QueryTypeMap = {
     list: 'Profiles'
   }
 };
+
+const orderPossibilities = [
+  'descending',
+  'ascending'
+];
 
 export function communityRequest(context, params) {
   const baseurl = context.get('services.communityservice') || 'http://localhost:3000/v1';
@@ -117,6 +123,95 @@ export default class EntityRequest {
     return null;
   }
 
+  _getCounts(name, count) {
+    const countQuery = {};
+    if (typeof count === 'string') {
+      const relatedModel = getRelatedModel(name, count);
+      if (relatedModel.Entities || relatedModel.Entity) {
+        countQuery.CountEntities = relatedModel.Entities || relatedModel.Entity;
+      }
+
+      if (relatedModel.Profiles || relatedModel.Profile) {
+        countQuery.CountProfiles = relatedModel.Profiles || relatedModel.Profile;
+      }
+
+      if (relatedModel.Action || relatedModel.Actions) {
+        countQuery.CountActions = relatedModel.Action || relatedModel.Actions;
+      }
+    }
+
+    return countQuery;
+  }
+
+  /**
+   * Generates an Include object for the JSON sent to the community service.
+   * Can take nested objects and different input types.
+   * It also filters out any unwanted parameters.
+   * @param include
+   * @param filter
+   * @param _map
+   * @returns {*}
+   * @private
+   */
+  _getInclude(include = {}, filter = [], name = '', _map = {}) {
+    const Include = Object.assign({}, _map);
+    if (typeof include === 'string') {
+      try {
+        const reqInclude = JSON.parse(include);
+        include = Array.isArray(reqInclude) ? reqInclude : [reqInclude];
+      }
+      catch (e) {
+        include = [include];
+      }
+    }
+    else if (Array.isArray(include)) {
+      include = include;
+    }
+
+    if (Array.isArray(include)) {
+      include.forEach(item => {
+        if (typeof item === 'string') {
+          const related = getRelatedModel(name, item);
+          if (related) {
+            Include[item] = related;
+          }
+        }
+        else if (typeof item === 'object' && item.name) {
+          const related = getRelatedModel(name, item.name, item.limit, item.offset, item.filter);
+          if (related) {
+            if (item.include) {
+              if (typeof item.include === 'string') {
+                item.include = [item.include];
+              }
+
+              related.Include = Object.assign({}, related.Include, this._getInclude(item.include, item.filter, item.name));
+            }
+
+            Include[item.name] = related;
+            if (item.counts) {
+              item.counts = typeof item.counts === 'string' ? [item.counts] : item.counts;
+              Array.isArray(item.counts) && item.counts.forEach(count => {
+                const additional = {};
+                additional[`${count}Count`] = this._getCounts(item.name, count);
+                Include[item.name].Include = Object.assign({}, Include[item.name].Include, additional);
+              });
+            }
+          }
+        }
+      });
+    }
+
+    if (Array.isArray(filter)) {
+      filter.forEach(filterKey => {
+        if (Include[filterKey]) {
+          delete Include[filterKey];
+        }
+      });
+    }
+
+    return Include;
+  }
+
   /**
    * Make request to Elvis.
    *
@@ -137,7 +232,7 @@ export default class EntityRequest {
     }
   }
 
-  async get(id) {
+  async get(id, include = [], counts = []) {
     const selectorKey = QueryTypeMap[this._elvisType].list;
     const selector = {id: id};
     if (this._type) {
@@ -146,10 +241,19 @@ export default class EntityRequest {
     const json = {
       [selectorKey]: selector,
       Limit: 1,
-      Include: this._map
+      Include: this._getInclude(include, [], this._type || this._elvisType, this._map)
     };
+
+    if (typeof counts === 'string') {
+      counts = [counts];
+    }
+
+    counts.forEach(count => {
+      json.Include[`${count}Count`] = this._getCounts(this._type || this._elvisType, count);
+    });
+
     const {data, errors} = await this._request('query', 'post', {json});
-    return this._createResponse(this._mapperFromElvis(data && data.List[0]), errors);
+    return this._createResponse(data && data.List[0], errors);
   }
 
   async post(object) {
@@ -193,25 +297,63 @@ export default class EntityRequest {
   /**
    * Get all objects of type
    *
-   * @todo Add limit, order and sort parameters.
-   *
    * @returns {{status, data, errors}|*}
    */
-  async getList() {
+  async getList(req) {
+    let filter = [];
     const selectorKey = QueryTypeMap[this._elvisType].list;
     const selector = {};
     if (this._type) {
       selector.type = this._type;
     }
 
+    if (Array.isArray(req.filter)) {
+      filter = req.filter;
+    }
+
+    if (typeof req.filter === 'string') {
+      filter.push(req.filter);
+    }
+
     const json = {
       [selectorKey]: selector,
-      SortBy: 'created_epoch',
+      SortBy: 'id',
       Order: 'descending',
       Limit: 2,
       Offset: 0,
-      Include: this._map
+      Include: this._getInclude(req.include, filter, this._type || this._elvisType, this._map)
     };
+
+    if (req.offset && !isNaN(parseFloat(req.offset)) && isFinite(req.offset)) {
+      json.Offset = req.offset;
+    }
+
+    if (req.order && orderPossibilities.indexOf(req.order) >= 0) {
+      json.Order = req.order;
+    }
+
+    if (typeof req.limit !== 'undefined' && !isNaN(parseFloat(req.limit)) && isFinite(req.limit)) {
+      json.Limit = req.limit;
+    }
+
+    if (typeof req.sort === 'string') {
+      json.SortBy = req.sort;
+    }
+
+    if (typeof req.counts === 'string') {
+      try {
+        req.counts = JSON.parse(req.counts);
+      }
+      catch (er) {
+        req.counts = [req.counts];
+      }
+    }
+
+    if (Array.isArray(req.counts)) {
+      req.counts.forEach(count => {
+        json.Include[`${count}Count`] = this._getCounts(this._type || this._elvisType, count);
+      });
+    }
 
     const {data, errors} = await this._request('query', 'post', {json});
     return this._createResponse(data, errors);

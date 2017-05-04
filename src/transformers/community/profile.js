@@ -3,14 +3,8 @@ import createCRUD from './utils/createCRUD';
 import {getSpecification} from '../../swaggerFromSpec';
 const swagger = getSpecification();
 
-/**
- * Returns group router.
- *
- * @returns {Object}
- */
-export function profile() {
-
-  const map = {
+export const schemas = {
+  profile: {
     id: 'id',
     modified_epoch: 'modified_epoch',
     created_epoch: 'created_epoch',
@@ -23,7 +17,15 @@ export function profile() {
     phone: 'attributes.phone',
     birthday: 'attributes.birthday',
     fullName: 'attributes.fullName'
-  };
+  }
+};
 
+/**
+ * Returns group router.
+ *
+ * @returns {Object}
+ */
+export function profile() {
+  const map = schemas.profile;
   return createCRUD('profile', null, Router(), map, swagger.definitions.Profile);
 }

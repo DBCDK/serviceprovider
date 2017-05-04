@@ -1,19 +1,4 @@
-/**
- * Create a map of values between Elvis and Serviceprovider. Using the schema definition as default, and override
- * specified values.
- *
- * @param schema {Object} Schema definition.
- * @param remap {Object} Values to override.
- * @returns {Object} Map.
- */
-function createMap(schema, remap) {
-  const schemaMap = {};
-  // Map property keys to values as default.
-  Object.keys(schema.properties).forEach(key => {schemaMap[key] = key;});
-
-  // Override with remap values.
-  return Object.assign(schemaMap, remap);
-}
+import {createMap} from './createMap';
 
 /**
  * Add CRUD capabilities to Entity type.
@@ -24,6 +9,7 @@ function createMap(schema, remap) {
  * @returns {Object} Router.
  */
 export default function createCRUD(elvisType, type, router, remap, schema) {
+
    // Setup CRUD transport
   router.all('/:id?', (req, res) => {
     const provider = req.app.get('serviceProvider');

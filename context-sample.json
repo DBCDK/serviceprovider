@@ -1,7 +1,7 @@
 {
   "context": {
     "services": {
-      "ddbcmsapi": "http://rest.filmstriben.dbc.inlead.dk/web/",
+      "ddbcmsapi": "https://cmscontent.dbc.dk/",
       "moreinfo": "http://moreinfo.addi.dk/2.6/",
       "openagency": "http://openagency.addi.dk/2.24/",
       "openholdingstatus": "https://openholdingstatus.addi.dk/2.2/",
@@ -18,13 +18,13 @@
         "default": "https://xptest.dbc.dk/ms/recommend-cosim/v1",
         "popular": "https://xptest.dbc.dk/ms/recommend-pop/v1"
       },
-      "communityservice": "http://communitybe-s01:8000/v1"
+      "communityservice": "http://localhost:4010/v1"
     },
     "search": {
       "agency": "775100",
       "profile": "opac",
       "collectionidentifiers": "rec.collectionIdentifier:150013-palle OR rec.collectionIdentifier:758000-katalog"
-    },    
+    },
     "netpunkt": {
       "user": "XXXXX",
       "group": "XXXXX",
@@ -37,7 +37,7 @@
       "salt": "XXXXX"
     },
     "app": {
-      "clientid": "XXXXX",      
+      "clientid": "XXXXX",
       "ddbcmsapipassword": "XXXXX",
       "orderpolicyrequester": "190101",
       "orderSystem": "bibliotekdk"
