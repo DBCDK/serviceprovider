@@ -29,6 +29,26 @@ parameters:
     type: array
     items:
       type: string
+  postLimit:
+    name: 'postLimit'
+    in: query
+    description: 'limit of posts to include'
+    type: integer
+  postOffset:
+    name: 'postOffset'
+    in: query
+    description: 'Offset of included posts'
+    type: integer
+  commentLimit:
+    name: 'commentLimit'
+    in: query
+    description: 'limit of comments to include'
+    type: integer
+  commentOffset:
+    name: 'commentOffset'
+    in: query
+    description: 'Offset of included comments'
+    type: integer
   id:
     name: id
     in: path
