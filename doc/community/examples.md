@@ -6,6 +6,14 @@ The examples on this page is written in javascript, and uses the request library
 To get started with building a community, you will need a valid client and clientID, and the client needs to be configured with a valid community ID. 
 To apply for access, contact [https://kundeservice.dbc.dk/](https://kundeservice.dbc.dk/). A valid token is required for all requests. 
 
+### Responses
+Responses are returned within an envelope, as a JSON object with the following properties:
+
+* statusCode contains the status of the request, ie 200 if it went ok.
+* data contains the actual response, if applicable
+* error contains an error, if applicable
+
+
 ### Request a valid token
 ```javascript
 
@@ -59,16 +67,16 @@ Username is a required property.
 ### Get Profile
 To Get a profile, make a get request to `community/profiles/{id}` where id is the id of the profile.
 
+**node request**
 ```javascript
-const profile = {
-    username: "Some Name",
-};
-
-request.post(openplatform_uri + 'community/profiles', {json: profile, qs:{access_token: 'qwerty'}}, (err, response, body) => {
+request.get(openplatform_uri + 'community/profiles', {qs:{access_token: 'qwerty'}}, (err, response, body) => {
   console.log(body);
 });
 
 ```
+
+**request URL**
+`https://openplatform.dbc.dk/v1/community/profiles/1?access_token=qwerty`
 
 **Response body:**
 ```javascript
@@ -484,30 +492,119 @@ const query = {
     order: 'descending'
 }
 
-request.post(openplatform_uri + 'community/groups', {qs:query}, (err, response, body) => {
+request.get(openplatform_uri + 'community/groups', {qs:query}, (err, response, body) => {
+  console.log(body);
+});
+```
+
+**url request**
+`https://openplatform.dbc.dk/v1/community/groups/?access_token=qwerty&limit=10&offset=0&sort=created_epoch&order=descending`
+
+### include
+The include parameter enables a set of complex queries for nested data structures. Include has to be a json formatted array of types of objects that should be included e.g. `include=["owner", "posts", "likes"]`
+
+It is also possible to add nested parameters e.g. for limitting, filtering, ordering. As well as creating nested includes. This is done by turning an include into an json object.
+
+`include=[{"name": "posts", "limit": 10, offset: 0}]`
+
+To create nested includes add an include property, to the included object:
+
+`include=[{"name": "posts", "include": ["owner"]]`
+ 
+    
+```javascript
+
+// This request will return a list of posts to group with id 1, and include max 2. comments with included owner for each post 
+const qs = {
+ access_token: 'qwerty',
+  include: `[
+    {
+      "name": "comments",
+      "limit": 2,
+      "offset": 0,
+      "include": ["owner"]
+    }
+  ]`
+} 
+
+request.get(openplatform_uri + 'community/groups/1/posts', {qs: qs}, (err, response, body) => {
   console.log(body);
 });
 ```
 
 **Response body:**
 ```javascript
-{ status: 200,
-  data:{
-   List: [
-    { title: 'A group about something',
-      body: 'This should not be about nothing',
-      id: 2,
-      modified_epoch: 1493122861,
-      created_epoch: 1493122861,
-      owner_id: 1 },
-    { title: 'A group about something else',
-      body: 'This should not be about something',
-      id: 3,
-      modified_epoch: 1493122861,
-      created_epoch: 1493122861,
-      owner_id: 1 }
-    ]
-  errors: [] }
+{
+    "status": 200,
+    "data": {
+        "Total": 2,
+        "NextOffset": null,
+        "List": [
+            {
+                "title": "Ab consectetur nisi",
+                "body": "some body",
+                "group_id": 1,
+                "profile_id": 469,
+                "created_epoch": 1490363218,
+                "deleted_epoch": null,
+                "modified_epoch": 1490363218,
+                "modified_by": null,
+                "id": 419,
+                "comments": {
+                    "Total": 1,
+                    "NextOffset": null,
+                    "List": [
+                        {
+                            "title": "",
+                            "body": "This is a comment for post 419",
+                            "post_id": 419,
+                            "media": {
+                                "type": "image",
+                                "value": {
+                                    "full": "http://lorempixel.com/1600/800/",
+                                    "thumb": "http://lorempixel.com/400/200/"
+                                }
+                            },
+                            "profile_id": 1,
+                            "created_epoch": 1493888056,
+                            "deleted_epoch": null,
+                            "modified_epoch": 1493888056,
+                            "modified_by": null,
+                            "id": 6484,
+                            "owner": {
+                                "id": 1,
+                                "modified_epoch": 1490363149,
+                                "created_epoch": 1490363149,
+                                "deleted_epoch": null,
+                                "username": "Marjolaine",
+                                "modified_by": null,
+                                "email": "Jazmyn_Gleason@gmail.com"
+                            }
+                        }
+                    ]
+                }
+            },
+            {
+                "title": "At velit perferendis",
+                "body": "Aut dolorum sed velit",
+                "group_id": 1,
+                "profile_id": 316,
+                "created_epoch": 1490363215,
+                "deleted_epoch": null,
+                "modified_epoch": 1490363215,
+                "modified_by": null,
+                "id": 340,
+                "comments": {
+                    "Total": 0,
+                    "NextOffset": null,
+                    "List": []
+                }
+            }
+        ]
+    },
+    "errors": []
+}
+
 ```
 
 ### Get 10 latest posts for a group
@@ -558,7 +655,15 @@ The community has three special endpoints, that can be used to.
 There are basically two types of errors. Validation errors that is caused by an invalid request, and unexpected error, that is caused by unknown causes 
 
 ### Validation Error
-@todo add example of validation error
+If post and put request does not validate, An error object is returned, with a message of which fields does not validate:
+
+```javascript
+{
+  "status": 400,
+  "errors": " requires property \"body\"",
+  "data": []
+}
+```
 
 ### Unexpected Error
 An unexpected error has the following format
