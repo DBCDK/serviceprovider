@@ -136,7 +136,10 @@ function apiMethodIterator(method, specs) {
  * @returns {PlainObject}
  */
 export function specToPaths(specs) {
-  const paths = specs.paths || {};
+  let paths = {};
+  if (process.env.NODE_ENV !== 'production') {
+    paths = specs.paths || {};
+  }
   const defaultProperties = specs.defaultProperties;
 
   for (const key in defaultProperties) {
