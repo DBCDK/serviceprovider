@@ -1,18 +1,10 @@
-# Examples
+# Community Guide
 
 The examples on this page is written in javascript, and uses the request library (https://github.com/request/request) to make requests.
 
 ## Getting startet
 To get started with building a community, you will need a valid client and clientID, and the client needs to be configured with a valid community ID. 
 To apply for access, contact [https://kundeservice.dbc.dk/](https://kundeservice.dbc.dk/). A valid token is required for all requests. 
-
-### Responses
-Responses are returned within an envelope, as a JSON object with the following properties:
-
-* statusCode contains the status of the request, ie 200 if it went ok.
-* data contains the actual response, if applicable
-* error contains an error, if applicable
-
 
 ### Request a valid token
 ```javascript
@@ -33,6 +25,45 @@ request.post(smaug_uri + 'oauth/token', req, (err, response, body) => {
   console.log(body);
 });
 ```
+
+## Responses
+Responses are returned within an envelope, as a JSON object with the following properties:
+
+* statusCode contains the status of the request, ie 200 if it went ok.
+* data contains the actual response, if applicable
+* error contains an error, if applicable
+
+### Response with single object
+if you request a single object e.g. a Profile, the `data` property will include the _Profile_ object. 
+
+```javascript
+{ status: 200,
+  data: 
+    { username: 'Some Name',
+      created_epoch: 1493107039,
+      modified_epoch: 1493107039,
+      id: 8 },
+   errors: [] }
+```
+
+if the object does not exists `data` is an empty object
+
+### response with list of objects
+If you request a list of objects the data property will contain a `List` property with an array of objects and a `Total` property with the total number of objects:
+
+```javascript
+{ status: 200,
+  data:{
+  "Total": 100,
+  "NextOffset": null,
+   List: [
+    { Profile },
+    ...
+    ]
+  errors: [] }
+```
+
+If the request have no results, and `List`is an empty array
 
 ## Handling profiles
 All users of the communityservice needs a profile, to be able to create and update content. 
