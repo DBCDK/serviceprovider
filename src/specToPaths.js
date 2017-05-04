@@ -138,7 +138,7 @@ function apiMethodIterator(method, specs) {
  * @param parameterGroups
  * @returns {Object}
  */
-function parameterGroupToParameters(paths, parameterGroups) {
+export function parameterGroupToParameters(paths, parameterGroups) {
   for (const path in paths) {
     for (const method in paths[path]) {
       const {parameterGroup, parameters = []} = paths[path][method];
@@ -157,7 +157,10 @@ function parameterGroupToParameters(paths, parameterGroups) {
  * @returns {Object}
  */
 export function specToPaths(specs) {
-  const paths = specs.paths || {};
+  let paths = {};
+  if (process.env.NODE_ENV !== 'production') {
+    paths = specs.paths || {};
+  }
   const defaultProperties = specs.defaultProperties;
 
   for (const key in defaultProperties) {

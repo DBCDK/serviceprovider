@@ -1,5 +1,5 @@
 /* eslint-disable max-len, quotes, comma-spacing, key-spacing, quote-props, indent */
-// Request: getEntity {"id":"309","_meta":{"type":"flag","elvisType":"action","schemaMap":{"created_epoch":"created_epoch","modified_epoch":"modified_epoch","modified_by":"modified_by","id":"id","owner_id":"owner_id","profile_id":"profile_ref","flag_reason":"attributes.flag_reason"},"schema":{"properties":{"created_epoch":{"type":"number","format":"integer"},"modified_epoch":{"type":"number","format":"integer"},"modified_by":{"type":"number","format":"integer"},"id":{"type":"number","format":"integer"},"owner_id":{"type":"number","format":"integer"},"profile_id":{"type":"number","format":"integer"},"flag_reason":{"type":"string"}}}}}
+// Request: getEntity {"id":"3888","_meta":{"type":"flag","elvisType":"action","schemaMap":{"reason":"attributes.reason","reference":"attributes.reference","profile_id":"owner_id","created_epoch":"created_epoch","deleted_epoch":"deleted_epoch","modified_epoch":"modified_epoch","modified_by":"modified_by","id":"id"},"schema":{"properties":{"reason":{"type":"string"},"reference":{"type":"object","properties":{"type":{"type":"string","required":true},"id":{"type":"integer","required":true}}},"profile_id":{"type":"number","format":"integer"},"created_epoch":{"type":"integer"},"deleted_epoch":{"type":"integer"},"modified_epoch":{"type":"integer"},"modified_by":{"type":"integer"},"id":{"type":"integer"}}}}}
 
 import Provider from '../../provider/Provider.js';
 import {assert, fail} from 'chai';
@@ -23,7 +23,7 @@ const context = {
       "default": "https://xptest.dbc.dk/ms/recommend-cosim/v1",
       "popular": "https://xptest.dbc.dk/ms/recommend-pop/v1"
     },
-    "communityservice": "http://localhost:3001/v1"
+    "communityservice": "http://localhost:4010/v1"
   },
   "search": {
     "agency": "775100",
@@ -51,18 +51,23 @@ const context = {
 };
 const provider = Provider();
 const mockData = {
-  "[\"http://localhost:3001/v1/community/1/query\",{\"method\":\"post\",\"json\":{\"Actions\":{\"id\":\"309\",\"type\":\"flag\"},\"Limit\":1,\"Include\":{\"created_epoch\":\"created_epoch\",\"modified_epoch\":\"modified_epoch\",\"modified_by\":\"modified_by\",\"id\":\"id\",\"owner_id\":\"owner_id\",\"profile_id\":\"profile_ref\",\"flag_reason\":\"attributes.flag_reason\"}}}]": {
+  "[\"http://localhost:4010/v1/community/1/query\",{\"method\":\"post\",\"json\":{\"Actions\":{\"id\":\"3888\",\"type\":\"flag\"},\"Limit\":1,\"Include\":{\"reason\":\"attributes.reason\",\"reference\":\"attributes.reference\",\"profile_id\":\"owner_id\",\"created_epoch\":\"created_epoch\",\"deleted_epoch\":\"deleted_epoch\",\"modified_epoch\":\"modified_epoch\",\"modified_by\":\"modified_by\",\"id\":\"id\"}}}]": {
     "data": {
       "Total": 1,
       "NextOffset": null,
       "List": [
         {
-          "created_epoch": 1492763608,
-          "modified_epoch": 1492763608,
+          "reason": "this is the reason",
+          "reference": {
+            "id": 1,
+            "type": "group"
+          },
+          "profile_id": 1,
+          "created_epoch": 1493804583,
+          "deleted_epoch": null,
+          "modified_epoch": 1493804583,
           "modified_by": null,
-          "id": 309,
-          "owner_id": 1,
-          "profile_id": null
+          "id": 3888
         }
       ]
     }
@@ -70,18 +75,25 @@ const mockData = {
 };
 
 describe('Automated test: getFlag', () => {
-  it('expected response. ID:r2oezi, for {"id":"309","_meta":{"type":"flag","elvisType":"action","schemaMap":{"created_epoch":"created_epoch","modified_epoch":"modified_epoch","modified_by":"modified_by","id":"id","owner_id":"owner_id","profile_id":"profile_ref","flag_reason":"attributes.flag_reason"},"schema":{"properties":{"created_epoch":{"type":"number","format":"integer"},"modified_epoch":{"type":"number","format":"integer"},"modified_by":{"type":"number","format":"integer"},"id":{"type":"number","format":"integer"},"owner_id":{"type":"number","format":"integer"},"profile_id":{"type":"number","format":"integer"},"flag_reason":{"type":"string"}}}}}', (done) => {
+  it('expected response. ID:t9ll8u, for {"id":"3888","_meta":{"type":"flag","elvisType":"action","schemaMap":{"reason":"attributes.reason","reference":"attributes.reference","profile_id":"owner_id","created_epoch":"created_epoch","deleted_epoch":"deleted_epoch","modified_epoch":"modified_epoch","modified_by":"modified_by","id":"id"},"schema":{"properties":{"reason":{"type":"string"},"reference":{"type":"object","properties":{"type":{"type":"string","required":true},"id":{"type":"integer","required":true}}},"profile_id":{"type":"number","format":"integer"},"created_epoch":{"type":"integer"},"deleted_epoch":{"type":"integer"},"modified_epoch":{"type":"integer"},"modified_by":{"type":"integer"},"id":{"type":"integer"}}}}}', (done) => {
     context.mockData = mockData;
-    provider.execute('getEntity', {"id":"309","_meta":{"type":"flag","elvisType":"action","schemaMap":{"created_epoch":"created_epoch","modified_epoch":"modified_epoch","modified_by":"modified_by","id":"id","owner_id":"owner_id","profile_id":"profile_ref","flag_reason":"attributes.flag_reason"},"schema":{"properties":{"created_epoch":{"type":"number","format":"integer"},"modified_epoch":{"type":"number","format":"integer"},"modified_by":{"type":"number","format":"integer"},"id":{"type":"number","format":"integer"},"owner_id":{"type":"number","format":"integer"},"profile_id":{"type":"number","format":"integer"},"flag_reason":{"type":"string"}}}}}, context)
+    provider.execute('getEntity', {"id":"3888","_meta":{"type":"flag","elvisType":"action","schemaMap":{"reason":"attributes.reason","reference":"attributes.reference","profile_id":"owner_id","created_epoch":"created_epoch","deleted_epoch":"deleted_epoch","modified_epoch":"modified_epoch","modified_by":"modified_by","id":"id"},"schema":{"properties":{"reason":{"type":"string"},"reference":{"type":"object","properties":{"type":{"type":"string","required":true},"id":{"type":"integer","required":true}}},"profile_id":{"type":"number","format":"integer"},"created_epoch":{"type":"integer"},"deleted_epoch":{"type":"integer"},"modified_epoch":{"type":"integer"},"modified_by":{"type":"integer"},"id":{"type":"integer"}}}}}, context)
       .then(result => {
         assert.deepEqual(result,
             {
   "status": 200,
   "data": {
-    "created_epoch": 1492763608,
-    "modified_epoch": 1492763608,
-    "id": 309,
-    "owner_id": 1
+    "reason": "this is the reason",
+    "reference": {
+      "id": 1,
+      "type": "group"
+    },
+    "profile_id": 1,
+    "created_epoch": 1493804583,
+    "deleted_epoch": null,
+    "modified_epoch": 1493804583,
+    "modified_by": null,
+    "id": 3888
   },
   "errors": []
 });
@@ -91,10 +103,17 @@ describe('Automated test: getFlag', () => {
         fail({throw: result}, {
   "status": 200,
   "data": {
-    "created_epoch": 1492763608,
-    "modified_epoch": 1492763608,
-    "id": 309,
-    "owner_id": 1
+    "reason": "this is the reason",
+    "reference": {
+      "id": 1,
+      "type": "group"
+    },
+    "profile_id": 1,
+    "created_epoch": 1493804583,
+    "deleted_epoch": null,
+    "modified_epoch": 1493804583,
+    "modified_by": null,
+    "id": 3888
   },
   "errors": []
 });

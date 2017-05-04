@@ -14,7 +14,7 @@ import renewTransformer from '../transformers/renew';
 import orderTransformer from '../transformers/order';
 import workTransformer from '../transformers/work';
 import availabilityTransformer from '../transformers/availability';
-import {ddbcms, news, events} from '../transformers/ddbcms';
+import {ddbcms, news, events, library} from '../transformers/ddbcms';
 import caller from './caller';
 import {testTransformer} from '../transformers/testTransformer.js';
 import recommendTransformer from '../transformers/recommend';
@@ -42,6 +42,7 @@ export default function Provider() {
     ddbcms: ddbcms,
     events: events,
     news: news,
+    library: library,
     renew: renewTransformer,
     search: searchTransformer,
     libraries: librariesTransformer,
