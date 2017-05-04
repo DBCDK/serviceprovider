@@ -259,10 +259,15 @@ export default class EntityRequest {
   async getSingleProperty(_selector) {
     const selectorKey = QueryTypeMap[this._elvisType].single;
     const selector = _selector;
+    const include = this._map;
+
+    if (this._elvisType === 'entity') {
+      selector.type = this._type;
+    }
 
     const json = {
       [selectorKey]: selector,
-      Include: this._map
+      Include: include
     };
 
     const {data, errors} = await this._request('query', 'post', {json});

@@ -2,7 +2,8 @@ import {createMap} from './createMap';
 
 
 const typeMapping = {
-  profile: 'Profile'
+  profile: 'Profile',
+  group: 'Entity'
 };
 
 /**
@@ -11,7 +12,8 @@ const typeMapping = {
  * @type {{name: string}}
  */
 const selectorMapping = {
-  name: 'username'
+  name: 'username',
+  title: 'groupname'
 };
 
 /**

@@ -1,9 +1,15 @@
+/**
+ * Returns group router.
+ *
+ * @returns {Object}
+ */
 import {Router} from 'express';
 import createCRUD from './utils/createCRUD';
 import getRelatedList from './utils/getRelatedList';
 import {createMap} from './utils/createMap';
-import {groupMap, postMap, commentMap, reviewMap, likeMap, followMap, flagMap, quarantineMap} from './maps';
+import {groupMap, postMap, commentMap, reviewMap, likeMap, followMap, flagMap, usernameMap} from './maps';
 import {getSpecification, getSchemaDefinition} from '../../swaggerFromSpec';
+import getSingleProperty from './utils/getSingleProperty';
 const swagger = getSpecification();
 
 function getSchema(type, map) {
@@ -17,11 +23,6 @@ export const schemas = {
   review: getSchema('Review', reviewMap)
 };
 
-/**
- * Returns group router.
- *
- * @returns {Object}
- */
 export function group() {
   const router = createCRUD('entity', 'group', Router(), groupMap, getSchemaDefinition(swagger, 'Group'));
 
@@ -29,6 +30,7 @@ export function group() {
   router.get('/:id/likes', getRelatedList('group', 'like', likeMap, getSchemaDefinition(swagger, 'Like')));
   router.get('/:id/follows', getRelatedList('group', 'follow', followMap, getSchemaDefinition(swagger, 'Follow')));
   router.get('/:id/flags', getRelatedList('group', 'flag', flagMap, getSchemaDefinition(swagger, 'Flag')));
+  router.get('/groupnameExists/:groupname', getSingleProperty('title', 'group', usernameMap, getSchemaDefinition(swagger, 'GroupnameExists')));
 
   return router;
 }
