@@ -40,8 +40,8 @@ definitions:
       $ref: "#/definitions/Profile"
   UsernameExists:
     properties:
-      exists:
-        type: boolean
+      id:
+        type: integer
   Group:
     allOf:
       - $ref: "#/definitions/Entity"

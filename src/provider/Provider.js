@@ -23,6 +23,7 @@ import rankTransformer from '../transformers/rank';
 import createEntity from '../transformers/createEntity';
 import updateEntity from '../transformers/updateEntity';
 import listEntities from '../transformers/listEntities';
+import getSingleProperty from '../transformers/getSingleProperty';
 import getEntity from '../transformers/getEntity';
 import deleteEntity from '../transformers/deleteEntity';
 
@@ -60,7 +61,8 @@ export default function Provider() {
     updateEntity,
     listEntities,
     getEntity,
-    deleteEntity
+    deleteEntity,
+    getSingleProperty
   };
 
   // we are going to reimplement a simpler mechanism to call the transformers

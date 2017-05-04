@@ -45,6 +45,10 @@ export const followMap = {
   profile_id: 'owner_id'
 };
 
+export const usernameMap = {
+  id: 'id'
+};
+
 export const profileMap = {
   username: 'name',
   email: 'attributes.email',

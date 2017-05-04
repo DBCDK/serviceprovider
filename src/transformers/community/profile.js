@@ -1,7 +1,8 @@
 import {Router} from 'express';
 import createCRUD from './utils/createCRUD';
 import getRelatedList from './utils/getRelatedList';
-import {likeMap, followMap, flagMap, quarantineMap} from './maps';
+import getSingleProperty from './utils/getSingleProperty';
+import {likeMap, followMap, flagMap, quarantineMap, usernameMap} from './maps';
 import {getSpecification, getSchemaDefinition} from '../../swaggerFromSpec';
 const swagger = getSpecification();
 
@@ -34,6 +35,7 @@ export function profile() {
   router.get('/:id/follows', getRelatedList('profile', 'follow', followMap, getSchemaDefinition(swagger, 'Follow')));
   router.get('/:id/flags', getRelatedList('profile', 'flag', flagMap, getSchemaDefinition(swagger, 'Flag')));
   router.get('/:id/quarantines', getRelatedList('profile', 'quarantine', quarantineMap, getSchemaDefinition(swagger, 'Quarantine')));
+  router.get('/usernameExists/:username', getSingleProperty('name', 'profile', usernameMap, getSchemaDefinition(swagger, 'UsernameExists')));
 
   return router;
 }

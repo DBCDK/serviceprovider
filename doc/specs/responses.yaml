@@ -24,7 +24,7 @@ responses:
     schema:
       $ref: "#/definitions/Likes"
   UsernameExists:
-    description: If the value is found true is returned otherwise false
+    description: The profile ID is returned if the username is found otherwise 400 is returned and the data object will be present but empty
     schema:
       $ref: "#/definitions/UsernameExists"
   Follow:
