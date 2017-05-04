@@ -1,70 +1,65 @@
 paths:
-  /community/reviews/:
+  /community/comments/:
     get:
       tags:
         - Community
-      summary: List of Reviews
+      summary: List of Comments
       parameters:
         - $ref: '#/parameters/accessToken'
         - $ref: '#/parameters/include'
         - $ref: '#/parameters/limit'
         - $ref: '#/parameters/offset'
+        - $ref: '#/parameters/count'
       responses:
-        500:
-          $ref: '#/responses/Error'
         200:
-          $ref: '#/responses/Reviews'
+          $ref: '#/definitions/Comments'
         default:
-          $ref: '#/responses/Reviews'
+          $ref: '#/definitions/Error'
 
     post:
-      summary: Create review
+      summary: Create Comment
       tags:
         - Community
       parameters:
         - $ref: '#/parameters/accessToken'
-        - name: review
-          in: body
-          description: The review
-          schema:
-            $ref: '#/definitions/Review'
+        - $ref: '#/parameters/comment'
       responses:
         200:
-          $ref: '#/responses/Review'
-        500:
-          $ref: '#/responses/Error'
+          $ref: '#/definitions/Comment'
+        default:
+          $ref: '#/definitions/Error'
 
-  /community/reviews/{id}:
+  /community/comments/{id}:
     get:
       tags:
         - Community
-      summary: Review in community
-      description: Get a review by ID
+      summary: Comment in community
       parameters:
         - $ref: '#/parameters/id'
         - $ref: '#/parameters/accessToken'
+        - $ref: '#/parameters/include'
       responses:
         200:
-          $ref: '#/responses/Review'
-        500:
-          $ref: '#/responses/Error'
+          $ref: '#/definitions/Comment'
+        default:
+          $ref: '#/definitions/Error'
 
     put:
-      summary: Update a review
+      summary: Update comment
       tags:
         - Community
       parameters:
         - $ref: '#/parameters/id'
         - $ref: '#/parameters/accessToken'
-        - $ref: '#/parameters/review'
+        - $ref: '#/parameters/comment'
       responses:
         200:
-          $ref: '#/responses/Review'
-        500:
-          $ref: '#/responses/Error'
+          $ref: '#/definitions/Comment'
+        default:
+          $ref: '#/definitions/Error'
 
     delete:
-      summary: Delete a review
+      summary: Delete comment
       tags:
         - Community
       parameters:
@@ -72,15 +67,14 @@ paths:
         - $ref: '#/parameters/accessToken'
       responses:
         200:
-          $ref: '#/responses/Review'
+          $ref: '#/responses/Comment'
         default:
           $ref: '#/responses/Error'
-
-  /community/reviews/{id}/likes:
+  /community/comments/{id}/likes:
     get:
       tags:
         - Community
-      summary: List of Likes related to a specific Review
+      summary: List of Likes related to a specific Comment
       parameterGroup: entityParams
       parameters:
         - $ref: '#/parameters/id'
@@ -89,17 +83,29 @@ paths:
           $ref: '#/responses/Likes'
         500:
           $ref: '#/responses/Error'
-
-  /community/reviews/{id}/flags:
+  /community/comments/{id}/follows:
     get:
       tags:
         - Community
-      summary: List of Flags related to a specific Review
+      summary: List of Followers related to a specific Comment
       parameterGroup: entityParams
       parameters:
         - $ref: '#/parameters/id'
       responses:
         200:
-          $ref: '#/responses/Flags'
+          $ref: '#/responses/Follow'
+        500:
+          $ref: '#/responses/Error'
+  /community/comments/{id}/flags:
+    get:
+      tags:
+        - Community
+      summary: List of Flags related to a specific Comment
+      parameterGroup: entityParams
+      parameters:
+        - $ref: '#/parameters/id'
+      responses:
+        200:
+          $ref: '#/responses/Flag'
         500:
           $ref: '#/responses/Error'

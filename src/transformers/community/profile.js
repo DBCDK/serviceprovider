@@ -1,16 +1,12 @@
 import {Router} from 'express';
 import createCRUD from './utils/createCRUD';
-import {getSpecification} from '../../swaggerFromSpec';
+import getRelatedList from './utils/getRelatedList';
+import {likeMap, followMap, flagMap, quarantineMap} from './maps';
+import {getSpecification, getSchemaDefinition} from '../../swaggerFromSpec';
 const swagger = getSpecification();
 
-/**
- * Returns group router.
- *
- * @returns {Object}
- */
-export function profile() {
-
-  const map = {
+export const schemas = {
+  profile: {
     id: 'id',
     modified_epoch: 'modified_epoch',
     created_epoch: 'created_epoch',
@@ -23,7 +19,21 @@ export function profile() {
     phone: 'attributes.phone',
     birthday: 'attributes.birthday',
     fullName: 'attributes.fullName'
-  };
+  }
+};
 
-  return createCRUD('profile', null, Router(), map, swagger.definitions.Profile);
+/**
+ * Returns group router.
+ *
+ * @returns {Object}
+ */
+export function profile() {
+  const map = schemas.profile;
+  const router = createCRUD('profile', null, Router(), map, getSchemaDefinition(swagger, 'Profile'));
+  router.get('/:id/likes', getRelatedList('profile', 'like', likeMap, getSchemaDefinition(swagger, 'Like')));
+  router.get('/:id/follows', getRelatedList('profile', 'follow', followMap, getSchemaDefinition(swagger, 'Follow')));
+  router.get('/:id/flags', getRelatedList('profile', 'flag', flagMap, getSchemaDefinition(swagger, 'Flag')));
+  router.get('/:id/quarantines', getRelatedList('profile', 'quarantine', quarantineMap, getSchemaDefinition(swagger, 'Quarantine')));
+
+  return router;
 }

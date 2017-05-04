@@ -1,7 +1,21 @@
 import {Router} from 'express';
 import createCRUD from './utils/createCRUD';
+import getRelatedList from './utils/getRelatedList';
+import {createMap} from './utils/createMap';
+import {groupMap, postMap, commentMap, reviewMap, likeMap, followMap, flagMap, quarantineMap} from './maps';
 import {getSpecification, getSchemaDefinition} from '../../swaggerFromSpec';
 const swagger = getSpecification();
+
+function getSchema(type, map) {
+  return createMap(getSchemaDefinition(swagger, type), map);
+}
+
+export const schemas = {
+  group: getSchema('Group', groupMap),
+  post: getSchema('Post', postMap),
+  comment: getSchema('Comment', commentMap),
+  review: getSchema('Review', reviewMap)
+};
 
 /**
  * Returns group router.
@@ -9,14 +23,14 @@ const swagger = getSpecification();
  * @returns {Object}
  */
 export function group() {
+  const router = createCRUD('entity', 'group', Router(), groupMap, getSchemaDefinition(swagger, 'Group'));
 
-  const map = {
-    body: 'contents',
-    profile_id: 'owner_id',
-    media: 'attributes.media'
-  };
+  router.get('/:id/posts', getRelatedList('group', 'post', postMap, getSchemaDefinition(swagger, 'Post')));
+  router.get('/:id/likes', getRelatedList('group', 'like', likeMap, getSchemaDefinition(swagger, 'Like')));
+  router.get('/:id/follows', getRelatedList('group', 'follow', followMap, getSchemaDefinition(swagger, 'Follow')));
+  router.get('/:id/flags', getRelatedList('group', 'flag', flagMap, getSchemaDefinition(swagger, 'Flag')));
 
-  return createCRUD('entity', 'group', Router(), map, getSchemaDefinition(swagger, 'Group'));
+  return router;
 }
 
 /**
@@ -25,15 +39,14 @@ export function group() {
  * @returns {Object}
  */
 export function post() {
+  const router = createCRUD('entity', 'post', Router(), postMap, getSchemaDefinition(swagger, 'Post'));
 
-  const map = {
-    body: 'contents',
-    profile_id: 'owner_id',
-    group_id: 'entity_ref',
-    media: 'attributes.media'
-  };
+  router.get('/:id/comments', getRelatedList('post', 'comment', commentMap, getSchemaDefinition(swagger, 'Comment')));
+  router.get('/:id/likes', getRelatedList('post', 'like', likeMap, getSchemaDefinition(swagger, 'Like')));
+  router.get('/:id/follows', getRelatedList('post', 'follow', followMap, getSchemaDefinition(swagger, 'Follow')));
+  router.get('/:id/flags', getRelatedList('post', 'flag', flagMap, getSchemaDefinition(swagger, 'Flag')));
 
-  return createCRUD('entity', 'post', Router(), map, getSchemaDefinition(swagger, 'Post'));
+  return router;
 }
 
 /**
@@ -42,31 +55,25 @@ export function post() {
  * @returns {Object}
  */
 export function comment() {
+  const router = createCRUD('entity', 'comment', Router(), commentMap, getSchemaDefinition(swagger, 'Comment'));
 
-  const map = {
-    body: 'contents',
-    profile_id: 'owner_id',
-    post_id: 'entity_ref',
-    media: 'attributes.media'
-  };
+  router.get('/:id/likes', getRelatedList('comment', 'like', likeMap, getSchemaDefinition(swagger, 'Like')));
+  router.get('/:id/follows', getRelatedList('comment', 'follow', followMap, getSchemaDefinition(swagger, 'Follow')));
+  router.get('/:id/flags', getRelatedList('comment', 'flag', flagMap, getSchemaDefinition(swagger, 'Flag')));
 
-  return createCRUD('entity', 'comment', Router(), map, getSchemaDefinition(swagger, 'Comment'));
+  return router;
 }
 
 /**
- * Returns comment router.
+ * Returns review router.
  *
  * @returns {Object}
  */
 export function review() {
+  const router = createCRUD('entity', 'review', Router(), reviewMap, getSchemaDefinition(swagger, 'Review'));
 
-  const map = {
-    body: 'contents',
-    profile_id: 'owner_id',
-    reference: 'entity_ref',
-    rating: 'attributes.rating',
-    media: 'attributes.media'
-  };
+  router.get('/:id/likes', getRelatedList('review', 'like', likeMap, getSchemaDefinition(swagger, 'Like')));
+  router.get('/:id/flags', getRelatedList('review', 'flag', flagMap, getSchemaDefinition(swagger, 'Flag')));
 
-  return createCRUD('entity', 'review', Router(), map, getSchemaDefinition(swagger, 'Review'));
+  return router;
 }

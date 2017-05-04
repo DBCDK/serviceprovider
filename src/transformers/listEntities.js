@@ -13,5 +13,5 @@ export default function listEntitiesTransform(req, context) {
     req._meta.schema
   );
 
-  return entityRequest.getList();
+  return entityRequest.getList(req);
 }

@@ -89,14 +89,22 @@ definitions:
         format: integer
   Quarantine:
     allOf:
-      - $ref: "#/definitions/Entity"
+      - $ref: "#/definitions/Base"
     properties:
+      profile_id:
+        type: integer
+      profile_ref:
+        type: integer
       reason:
         type: string
       flags:
         type: array
         items:
-          type: object
+          type: integer
+  Quarantines:
+      type: array
+      items:
+        $ref: "#/definitions/Quarantine"
   Like:
     allOf:
       - $ref: "#/definitions/Action"
@@ -162,13 +170,14 @@ definitions:
 
   Reference:
     type: object
+    required:
+      - type
+      - id
     properties:
       type:
         type: string
-        required: true
       id:
         type: integer
-        required: true
   Media:
     properties:
       type:

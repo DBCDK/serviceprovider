@@ -1,5 +1,3 @@
-
-
 /**
  * @file: This file contains the specToPaths function, as well as any helper functions required.
  */
@@ -131,9 +129,32 @@ function apiMethodIterator(method, specs) {
 }
 
 /**
+ * Converts parameterGroups to parameters.
+ *
+ * ParameterGroups are not supported by the swagger specification, so we need to map them to parameters to get valid
+ * specs.
+ *
+ * @param paths
+ * @param parameterGroups
+ * @returns {Object}
+ */
+function parameterGroupToParameters(paths, parameterGroups) {
+  for (const path in paths) {
+    for (const method in paths[path]) {
+      const {parameterGroup, parameters = []} = paths[path][method];
+      if (parameterGroup && parameterGroups[parameterGroup]) {
+        paths[path][method].parameters = parameters.concat(parameterGroups[parameterGroup]);
+        delete paths[path][method].parameterGroup;
+      }
+    }
+  }
+  return paths;
+}
+
+/**
  * This function constructs API-paths from the YAML spec.
- * @param {PlainObject} specs
- * @returns {PlainObject}
+ * @param {Object} specs
+ * @returns {Object}
  */
 export function specToPaths(specs) {
   const paths = specs.paths || {};
@@ -151,6 +172,5 @@ export function specToPaths(specs) {
     }
   }
 
-  return paths;
+  return parameterGroupToParameters(paths, specs.parameterGroups);
 }
-
