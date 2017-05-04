@@ -1,70 +1,65 @@
 paths:
-  /community/profiles/:
+  /community/comments/:
     get:
       tags:
         - Community
-      summary: List of Profiles
+      summary: List of Comments
       parameters:
         - $ref: '#/parameters/accessToken'
         - $ref: '#/parameters/include'
         - $ref: '#/parameters/limit'
         - $ref: '#/parameters/offset'
+        - $ref: '#/parameters/count'
       responses:
-        500:
-          $ref: '#/responses/Error'
         200:
-          $ref: '#/responses/Profiles'
+          $ref: '#/definitions/Comments'
         default:
-          $ref: '#/responses/Profiles'
+          $ref: '#/definitions/Error'
 
     post:
-      summary: Create profile
+      summary: Create Comment
       tags:
         - Community
       parameters:
         - $ref: '#/parameters/accessToken'
-        - name: profile
-          in: body
-          description: The profile
-          schema:
-            $ref: '#/definitions/Profile'
+        - $ref: '#/parameters/comment'
       responses:
         200:
-          $ref: '#/responses/Profile'
-        500:
-          $ref: '#/responses/Error'
+          $ref: '#/definitions/Comment'
+        default:
+          $ref: '#/definitions/Error'
 
-  /community/profiles/{id}:
+  /community/comments/{id}:
     get:
       tags:
         - Community
-      summary: Profile in community
-      description: Get A profile by ID
+      summary: Comment in community
       parameters:
         - $ref: '#/parameters/id'
         - $ref: '#/parameters/accessToken'
+        - $ref: '#/parameters/include'
       responses:
         200:
-          $ref: '#/responses/Profile'
-        500:
-          $ref: '#/responses/Error'
+          $ref: '#/definitions/Comment'
+        default:
+          $ref: '#/definitions/Error'
 
     put:
-      summary: Update profile
+      summary: Update comment
       tags:
         - Community
       parameters:
         - $ref: '#/parameters/id'
         - $ref: '#/parameters/accessToken'
-        - $ref: '#/parameters/profile'
+        - $ref: '#/parameters/comment'
       responses:
         200:
-          $ref: '#/responses/Profile'
-        500:
-          $ref: '#/responses/Error'
+          $ref: '#/definitions/Comment'
+        default:
+          $ref: '#/definitions/Error'
 
     delete:
-      summary: Delete profile
+      summary: Delete comment
       tags:
         - Community
       parameters:
@@ -72,15 +67,14 @@ paths:
         - $ref: '#/parameters/accessToken'
       responses:
         200:
-          $ref: '#/responses/Profile'
+          $ref: '#/responses/Comment'
         default:
           $ref: '#/responses/Error'
-
-  /community/profiles/{id}/likes:
+  /community/comments/{id}/likes:
     get:
       tags:
         - Community
-      summary: List of Likes related to a specific Profile
+      summary: List of Likes related to a specific Comment
       parameterGroup: entityParams
       parameters:
         - $ref: '#/parameters/id'
@@ -89,45 +83,29 @@ paths:
           $ref: '#/responses/Likes'
         500:
           $ref: '#/responses/Error'
-
-  /community/groups/{id}/follows:
+  /community/comments/{id}/follows:
     get:
       tags:
         - Community
-      summary: List of Followers related to a specific Profile
+      summary: List of Followers related to a specific Comment
       parameterGroup: entityParams
       parameters:
         - $ref: '#/parameters/id'
       responses:
         200:
-          $ref: '#/responses/Follows'
+          $ref: '#/responses/Follow'
         500:
           $ref: '#/responses/Error'
-
-  /community/groups/{id}/flags:
+  /community/comments/{id}/flags:
     get:
       tags:
         - Community
-      summary: List of Flags related to a specific Profile
+      summary: List of Flags related to a specific Comment
       parameterGroup: entityParams
       parameters:
         - $ref: '#/parameters/id'
       responses:
         200:
-          $ref: '#/responses/Flags'
-        500:
-          $ref: '#/responses/Error'
-
-  /community/groups/{id}/quarantines:
-    get:
-      tags:
-        - Community
-      summary: List of Quarantines related to a specific Profile
-      parameterGroup: entityParams
-      parameters:
-        - $ref: '#/parameters/id'
-      responses:
-        200:
-          $ref: '#/responses/Quarantines'
+          $ref: '#/responses/Flag'
         500:
           $ref: '#/responses/Error'

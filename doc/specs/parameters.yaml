@@ -59,3 +59,25 @@ parameters:
     description: The comment to create.
     schema:
       $ref: '#/definitions/Comment'
+  review:
+    name: review
+    in: body
+    description: a review definition
+    schema:
+      $ref: '#/definitions/Review'
+  quarantine:
+    name: quarantine
+    in: body
+    description: a quarantine definition
+    schema:
+      $ref: '#/definitions/Quarantine'
+
+parameterGroups:
+  entityParams:
+    - $ref: '#/parameters/accessToken'
+    - $ref: '#/parameters/include'
+    - $ref: '#/parameters/limit'
+    - $ref: '#/parameters/offset'
+    - $ref: '#/parameters/count'
+
+

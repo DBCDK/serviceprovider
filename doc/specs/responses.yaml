@@ -51,6 +51,10 @@ responses:
     description: A comment object.
     schema:
       $ref: "#/definitions/Comment"
+  Comments:
+    description: A list of comments.
+    schema:
+      $ref: "#/definitions/Comments"
   Review:
     description: A review object.
     schema:
@@ -59,6 +63,14 @@ responses:
     description: A list of reviews.
     schema:
       $ref: "#/definitions/Reviews"
+  Quarantine:
+    description: A Quarantine object.
+    schema:
+      $ref: "#/definitions/Quarantine"
+  Quarantines:
+    description: A list of Quarantines.
+    schema:
+      $ref: "#/definitions/Quarantines"
   Error:
     description: An unexpected error occured.
     schema:

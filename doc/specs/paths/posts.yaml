@@ -1,0 +1,108 @@
+paths:
+  /community/posts/:
+    get:
+      tags:
+        - Community
+      summary: List of Posts
+      parameterGroup: entityParams
+      responses:
+        200:
+          $ref: '#/responses/Posts'
+
+    post:
+      summary: Create Post
+      tags:
+        - Community
+      parameters:
+        - $ref: '#/parameters/accessToken'
+        - $ref: '#/parameters/post'
+      responses:
+        200:
+          $ref: '#/responses/Post'
+        default:
+          $ref: '#/responses/Error'
+
+  /community/posts/{id}:
+    get:
+      tags:
+        - Community
+      summary: Post in community
+      parameters:
+        - $ref: '#/parameters/id'
+        - $ref: '#/parameters/accessToken'
+      responses:
+        200:
+          $ref: '#/responses/Post'
+
+    put:
+      summary: Update post
+      tags:
+        - Community
+      parameters:
+        - $ref: '#/parameters/id'
+        - $ref: '#/parameters/accessToken'
+        - $ref: '#/parameters/post'
+      responses:
+        200:
+          $ref: '#/responses/Post'
+
+    delete:
+      summary: Delete post
+      tags:
+        - Community
+      parameters:
+        - $ref: '#/parameters/id'
+        - $ref: '#/parameters/accessToken'
+      responses:
+        200:
+          $ref: '#/responses/Post'
+  /community/posts/{id}/comments:
+    get:
+      tags:
+        - Community
+      summary: List of Comments related to a specific Post
+      parameterGroup: entityParams
+      parameters:
+        - $ref: '#/parameters/id'
+      responses:
+        200:
+          $ref: '#/responses/Comments'
+  /community/posts/{id}/likes:
+    get:
+      tags:
+        - Community
+      summary: List of Likes related to a specific Post
+      parameterGroup: entityParams
+      parameters:
+        - $ref: '#/parameters/id'
+      responses:
+        200:
+          $ref: '#/responses/Likes'
+        500:
+          $ref: '#/responses/Error'
+  /community/posts/{id}/follows:
+    get:
+      tags:
+        - Community
+      summary: List of Followers related to a specific Post
+      parameterGroup: entityParams
+      parameters:
+        - $ref: '#/parameters/id'
+      responses:
+        200:
+          $ref: '#/responses/Follow'
+        500:
+          $ref: '#/responses/Error'
+  /community/posts/{id}/flags:
+    get:
+      tags:
+        - Community
+      summary: List of Flags related to a specific Post
+      parameterGroup: entityParams
+      parameters:
+        - $ref: '#/parameters/id'
+      responses:
+        200:
+          $ref: '#/responses/Flag'
+        500:
+          $ref: '#/responses/Error'
