@@ -77,9 +77,11 @@ describe('Automated test: get_profile', () => {
             {
   "status": 200,
   "data": {
-    "created_epoch": 1491984806,
-    "modified_epoch": 1491984806,
-    "id": 1
+    username: 'hans',
+    created_epoch: 1491984806,
+    modified_epoch: 1491984806,
+    id: 1,
+    deleted_epoch: null
   },
   "errors": []
 });

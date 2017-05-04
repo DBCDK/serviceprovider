@@ -13,5 +13,5 @@ export default function getEntityTransform(req, context) {
     req._meta.schema
   );
 
-  return entityRequest.get(req.id);
+  return entityRequest.get(req.id, req.include, req.counts);
 }

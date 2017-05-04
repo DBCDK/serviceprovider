@@ -29,8 +29,10 @@ let ddbRequest = (type) => (params, context) => {
   return ddbcms({
     type: type,
     amount: (typeof params.limit === 'undefined') ? 10 : params.limit,
-    skip: (typeof params.offset === 'undefined') ? 0 : params.offset
+    skip: (typeof params.offset === 'undefined') ? 0 : params.offset,
+    agency: params.agency
   }, context).then(ddbResponse);
 };
 export const news = ddbRequest('ding_news');
 export const events = ddbRequest('ding_event');
+export const library = ddbRequest('ding_library');
