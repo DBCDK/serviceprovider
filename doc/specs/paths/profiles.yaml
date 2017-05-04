@@ -90,7 +90,7 @@ paths:
         500:
           $ref: '#/responses/Error'
 
-  /community/groups/{id}/follows:
+  /community/profiles/{id}/follows:
     get:
       tags:
         - Community
@@ -104,7 +104,7 @@ paths:
         500:
           $ref: '#/responses/Error'
 
-  /community/groups/{id}/flags:
+  /community/profiles/{id}/flags:
     get:
       tags:
         - Community
@@ -118,7 +118,7 @@ paths:
         500:
           $ref: '#/responses/Error'
 
-  /community/groups/{id}/quarantines:
+  /community/profiles/{id}/quarantines:
     get:
       tags:
         - Community
