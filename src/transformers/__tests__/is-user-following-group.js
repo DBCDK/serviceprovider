@@ -1,5 +1,5 @@
 /* eslint-disable max-len, quotes, comma-spacing, key-spacing, quote-props, indent */
-// Request: getSingleProperty {"profile_id":"436","group_id":"32","selector":{"owner_id":"436","entity_ref":"32"},"_meta":{"type":"action","elvisType":"action","schemaMap":{"id":"id","reference":"attributes.reference","profile_id":"owner_id"},"schema":{"properties":{"id":{"type":"integer"}}}}}
+// Request: getSingleProperty {"profile_id":"436","group_id":"31","selector":{"owner_id":"436","entity_ref":"31"},"_meta":{"type":"action","elvisType":"action","schemaMap":{"id":"id","reference":"attributes.reference","profile_id":"owner_id"},"schema":{"properties":{"id":{"type":"integer"}}}}}
 
 import Provider from '../../provider/Provider.js';
 import {assert, fail} from 'chai';
@@ -51,97 +51,36 @@ const context = {
 };
 const provider = Provider();
 const mockData = {
-  "[\"http://localhost:4010/v1/community/1/query\",{\"method\":\"post\",\"json\":{\"Action\":{\"owner_id\":\"436\",\"entity_ref\":\"32\"},\"Include\":{\"id\":\"id\",\"reference\":\"attributes.reference\",\"profile_id\":\"owner_id\"}}}]": {
-    "errors": [
-      {
-        "code": "400",
-        "title": "Error during execution of query",
-        "detail": "No result from singleton selector",
-        "meta": {
-          "query": {
-            "Action": {
-              "owner_id": "436",
-              "entity_ref": "32"
-            },
-            "Include": {
-              "id": "id",
-              "reference": "attributes.reference",
-              "profile_id": "owner_id"
-            }
-          },
-          "subquery": {
-            "owner_id": "436",
-            "entity_ref": "32"
-          },
-          "context": {}
-        }
-      }
-    ]
+  "[\"http://localhost:4010/v1/community/1/query\",{\"method\":\"post\",\"json\":{\"Action\":{\"owner_id\":\"436\",\"entity_ref\":\"31\"},\"Include\":{\"id\":\"id\",\"reference\":\"attributes.reference\",\"profile_id\":\"owner_id\"}}}]": {
+    "data": {
+      "id": 70,
+      "profile_id": 436
+    }
   }
 };
 
 describe('Automated test: is-user-following-group', () => {
-  it('expected response. ID:fw7nnw, for {"profile_id":"436","group_id":"32","selector":{"owner_id":"436","entity_ref":"32"},"_meta":{"type":"action","elvisType":"action","schemaMap":{"id":"id","reference":"attributes.reference","profile_id":"owner_id"},"schema":{"properties":{"id":{"type":"integer"}}}}}', (done) => {
+  it('expected response. ID:qfapnx, for {"profile_id":"436","group_id":"31","selector":{"owner_id":"436","entity_ref":"31"},"_meta":{"type":"action","elvisType":"action","schemaMap":{"id":"id","reference":"attributes.reference","profile_id":"owner_id"},"schema":{"properties":{"id":{"type":"integer"}}}}}', (done) => {
     context.mockData = mockData;
-    provider.execute('getSingleProperty', {"profile_id":"436","group_id":"32","selector":{"owner_id":"436","entity_ref":"32"},"_meta":{"type":"action","elvisType":"action","schemaMap":{"id":"id","reference":"attributes.reference","profile_id":"owner_id"},"schema":{"properties":{"id":{"type":"integer"}}}}}, context)
+    provider.execute('getSingleProperty', {"profile_id":"436","group_id":"31","selector":{"owner_id":"436","entity_ref":"31"},"_meta":{"type":"action","elvisType":"action","schemaMap":{"id":"id","reference":"attributes.reference","profile_id":"owner_id"},"schema":{"properties":{"id":{"type":"integer"}}}}}, context)
       .then(result => {
         assert.deepEqual(result,
             {
-  "status": 400,
-  "error": {
-    "code": "400",
-    "title": "Error during execution of query",
-    "detail": "No result from singleton selector",
-    "meta": {
-      "query": {
-        "Action": {
-          "owner_id": "436",
-          "entity_ref": "32"
-        },
-        "Include": {
-          "id": "id",
-          "reference": "attributes.reference",
-          "profile_id": "owner_id"
-        }
-      },
-      "subquery": {
-        "owner_id": "436",
-        "entity_ref": "32"
-      },
-      "context": {}
-    }
+  "status": 200,
+  "data": {
+    "id": 70
   },
-  "data": []
+  "errors": []
 });
         done();
       })
       .catch(result => {
         fail({throw: result}, {
-  "status": 400,
-  "error": {
-    "code": "400",
-    "title": "Error during execution of query",
-    "detail": "No result from singleton selector",
-    "meta": {
-      "query": {
-        "Action": {
-          "owner_id": "436",
-          "entity_ref": "32"
-        },
-        "Include": {
-          "id": "id",
-          "reference": "attributes.reference",
-          "profile_id": "owner_id"
-        }
-      },
-      "subquery": {
-        "owner_id": "436",
-        "entity_ref": "32"
-      },
-      "context": {}
-    }
+  "status": 200,
+  "data": {
+    "id": 70
   },
-  "data": []
+  "errors": []
 });
         done();
       });
