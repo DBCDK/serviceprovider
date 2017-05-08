@@ -1,6 +1,5 @@
 import {createMap} from './createMap';
 
-
 const typeMapping = {
   profile: 'Profile',
   quarantine: 'Action',
@@ -46,7 +45,7 @@ export function getSelector(relatedType, type, id) {
  * @param schema Object schema
  * @returns {Function}
  */
-export default function getRelatedList(relatedType, type, map, schema) {
+export function getRelatedList(relatedType, type, map, schema) {
   return (req, res) => {
     const provider = req.app.get('serviceProvider');
     const context = req.context;
@@ -69,5 +68,56 @@ export default function getRelatedList(relatedType, type, map, schema) {
     );
 
     provider.execute('listEntities', query, context).then(result => res.json(result));
+  };
+}
+
+export function getFullGroupView(map, schema) {
+  return (req, res) => {
+    const provider = req.app.get('serviceProvider');
+    const context = req.context;
+    context.crud = true;
+
+    const counts = ['posts', 'likes', 'flags', 'follows'];
+    const include = [
+      'owner',
+      {
+        counts: ['likes', 'flags', 'comments'],
+        name: 'posts',
+        limit: req.query.postLimit || 10,
+        offset: req.query.postOffset || 0,
+        include: [
+          'owner',
+          {
+            counts: ['likes', 'flags'],
+            name: 'comments',
+            limit: req.query.commentLimit || 2,
+            offset: req.query.commentOffset || 0,
+            include: [
+              'owner'
+            ]
+          }
+        ]
+      }
+    ];
+
+    const query = Object.assign(
+      {},
+      req.params,
+      req.body,
+      req.query,
+      {include},
+      {counts},
+      {selector: {type: 'group', id: req.params.id}},
+      {
+        _meta: {
+          type: 'group',
+          elvisType: 'entity',
+          schemaMap: createMap(schema, map),
+          schema: schema
+        }
+      }
+    );
+
+    provider.execute('getEntity', query, context).then(result => res.json(result));
   };
 }
