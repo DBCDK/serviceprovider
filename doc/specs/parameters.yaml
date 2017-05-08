@@ -35,6 +35,12 @@ parameters:
     description: Id of object
     required: true
     type: integer
+  group_id:
+    name: group_id
+    in: path
+    description: Id of group
+    required: true
+    type: integer
   profile:
     name: person
     in: body
