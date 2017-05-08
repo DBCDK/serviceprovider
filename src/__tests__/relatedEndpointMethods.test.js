@@ -1,5 +1,5 @@
 import {assert} from 'chai';
-import {getSelector} from '../transformers/community/utils/getRelatedList';
+import {getSelector} from '../transformers/community/utils/relatedEndpointMethods';
 
 describe('getRelatedList functions', () => {
   describe('getSelector', () => {

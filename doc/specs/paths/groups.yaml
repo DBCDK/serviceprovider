@@ -135,3 +135,20 @@ paths:
           $ref: '#/responses/Flag'
         500:
           $ref: '#/responses/Error'
+  /community/groups/{id}/fullview:
+    get:
+      tags:
+        - Community
+      summary: Group view including posts and comments.
+      parameters:
+        - $ref: '#/parameters/accessToken'
+        - $ref: '#/parameters/id'
+        - $ref: '#/parameters/postLimit'
+        - $ref: '#/parameters/postOffset'
+        - $ref: '#/parameters/commentLimit'
+        - $ref: '#/parameters/commentOffset'
+      responses:
+        200:
+          $ref: '#/responses/Group'
+        500:
+          $ref: '#/responses/Error'
