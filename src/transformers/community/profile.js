@@ -35,7 +35,9 @@ export function profile() {
   router.get('/:id/follows', getRelatedList('profile', 'follow', followMap, getSchemaDefinition(swagger, 'Follow')));
   router.get('/:id/flags', getRelatedList('profile', 'flag', flagMap, getSchemaDefinition(swagger, 'Flag')));
   router.get('/:id/quarantines', getRelatedList('profile', 'quarantine', quarantineMap, getSchemaDefinition(swagger, 'Quarantine')));
-  router.get('/usernameExists/:username', getSingleProperty('name', 'profile', usernameMap, getSchemaDefinition(swagger, 'UsernameExists')));
+
+  router.get('/usernameExists/:username', getSingleProperty(['name'], 'profile', usernameMap, getSchemaDefinition(swagger, 'UsernameExists')));
+  router.get('/:profile_id/isFollowingGroup/:group_id', getSingleProperty(['owner_id', 'entity_ref'], 'action', followMap, getSchemaDefinition(swagger, 'UserIsFollowingGroup')));
 
   return router;
 }

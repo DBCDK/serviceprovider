@@ -38,6 +38,10 @@ definitions:
     type: array
     items:
       $ref: "#/definitions/Profile"
+  UserIsFollowingGroup:
+    properties:
+      id:
+        type: integer
   UsernameExists:
     properties:
       id:
@@ -102,9 +106,9 @@ definitions:
         items:
           type: integer
   Quarantines:
-      type: array
-      items:
-        $ref: "#/definitions/Quarantine"
+    type: array
+    items:
+      $ref: "#/definitions/Quarantine"
   Like:
     allOf:
       - $ref: "#/definitions/Action"

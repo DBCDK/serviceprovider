@@ -115,7 +115,7 @@ paths:
         - $ref: '#/parameters/accessToken'
       responses:
         200:
-          $ref: '#/responses/Follow'
+          $ref: '#/responses/UserIsFollowingGroup'
         500:
           $ref: '#/responses/Error'
 

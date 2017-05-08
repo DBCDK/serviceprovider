@@ -1,9 +1,10 @@
 import {createMap} from './createMap';
-
+import {log} from '../../../utils';
 
 const typeMapping = {
-  profile: 'Profile',
-  group: 'Entity'
+  action: 'Action',
+  group: 'Entity',
+  profile: 'Profile'
 };
 
 /**
@@ -13,25 +14,33 @@ const typeMapping = {
  */
 const selectorMapping = {
   name: 'username',
-  title: 'groupname'
+  title: 'groupname',
+  owner_id: 'profile_id',
+  entity_ref: 'group_id'
 };
 
 /**
  * Constructs request to get a single property on an specific item.
  *
- * @param {string} parameter
+ * @param {string[]} parameters
  * @param type (profile|group|post|comment|quarantine|like|flag|follow) The serviceprovider type of object that is requested
  * @param map Mapping between Elvis objects and serviceprovider objects
  * @param schema Object schema
  * @returns {Function}
  */
-export default function getSingleProperty(parameter, type, map, schema) {
+export default function getSingleProperty(parameters, type, map, schema) {
   return (req, res) => {
+    if (!Array.isArray(parameters)) {
+      log.error(`Expected an array of parameters got ${typeof parameters}`, {parameters: parameters});
+    }
+
     const provider = req.app.get('serviceProvider');
     const context = req.context;
     context.crud = true;
     const selector = {};
-    selector[parameter] = req.params[selectorMapping[parameter]];
+    parameters.forEach((parameter) => {
+      selector[parameter] = req.params[selectorMapping[parameter]];
+    });
 
     const query = Object.assign(
       {},
