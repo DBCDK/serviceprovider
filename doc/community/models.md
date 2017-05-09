@@ -91,9 +91,8 @@ The following models are defined in the community. For full implementation detai
 * end_date `(datetime) Quarantine end time`
 * flags `(list) list of flag ids causing the quarantine`
 
-## Complex properties
-
-This is a description of the the complex properties used in the models described above. 
+## Submodels 
+Models that are used by the main models.
 
 ### Media
 Specifies both a type and value of media. The value is an object containing reference to the different sizes of the media element 
@@ -103,12 +102,11 @@ Formatted as a json object
 {
     "type": "image",
     "value": {
-        "full": "http://image.it/my_profile_image.jpg"
+        "full": "http://image.it/my_profile_image.jpg",
         "thumb": "http://image.it/my_profile_image_thumb.jpg"
     }
 }
 ``` 
-
 
 ### Attributes
 The attributes property contains custom values specific to the community. Formatted as a json object

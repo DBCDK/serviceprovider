@@ -1,5 +1,28 @@
 # Community Guide
 
+Community service contains endpoints for handling user profiles and user generated content. The community service contains the following types of data:
+
+#### Profile
+Profiles contains information about a user, and creates a reference to all the users actions. 
+
+#### Community Content
+Community content creates a hierarchy of data with three levels. This kan be be used to create a discussion forum around a specified topic. 
+    Group: A top level community element 
+        Post: Content element inside a Group 
+            Comment: Content element inside a Post 
+
+#### Community Actions
+Actions a actions made by a user on a certain element, which will bind the user and element together.
+    Likes: Like content and profiles in the community
+    Follows: follow content and profiles in the community
+    Flags: Flag content that is found inapropriate.
+    Quarantine: Quarantine users, bases on inproper behavoir
+
+#### Review
+Reviews kan e.g. be reviews about a library material, such as a book or movie.
+
+For a description of the models see [models] (models.md)
+
 The examples on this page is written in javascript, and uses the request library (https://github.com/request/request) to make requests.
 
 [TODO] Write about the data model, maybe just a link?
