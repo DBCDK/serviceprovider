@@ -773,11 +773,11 @@ It is possible to get a count of a list of related objects, by using the count p
 ```
 
 
-# Special views
-The community has three special endpoints, that can be used to. 
+# Special endpoints 
+These special endpoints are helpers that should make it easier to create a community site using this API. 
 
 ## Generate a full group view, 
-    /groups/{id}/fullView
+    `GET` /groups/{id}/fullView
 
 ### Parameters
 The fullview endpoint has the same parameters as other `GET` endpoints. In addition to those you can use:
@@ -786,25 +786,20 @@ The fullview endpoint has the same parameters as other `GET` endpoints. In addit
 * commentsLimit: _limit of comments to include_
 * commentsOffset _start position for comments_
 
+## Check if profile is following group
+This is a helper for checking if a profile is following a specific group
+    `GET` /community/profiles/{id}/isFollowingGroup/{group_id}:
+*Response body*
+```javascript
 
-#### Check if profile is following group
-    /groups/{id}/isFollowing/{profileId}
+```
     
-#### Check if group name is unique    
-    /groups/groupNameExists?name=
+## Check if group name is unique  
+    `GET` /community/groups/groupnameExists/{groupname}
 
-#### This is a special endpoint that will return an activity stream
-    /profiles/{id}/activity (Special view with custom parameters)
+## This is a special endpoint that will return an activity stream
+    `GET` /profiles/{id}/activity (Special view with custom parameters)
 
-#### Check if username is unique    
-    /profiles/usernameExists?name=
-
-### Generate group view
-@todo create example of how to create a group view
-
-### Get activity feed
-@todo create example of how to create an activity feed
-
-### Get all quarantined profiles
-@todo create example of how to create quarantined profiles
+## Check if username is unique    
+    `GET` /community/profiles/usernameExists/{username}
 
