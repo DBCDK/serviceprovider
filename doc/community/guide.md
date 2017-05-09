@@ -25,8 +25,6 @@ For a description of the models see [models] (models.md)
 
 The examples on this page is written in javascript, and uses the request library (https://github.com/request/request) to make requests.
 
-[TODO] Write about the data model, maybe just a link?
-
 # Getting startet
 To get started with building a community, you will need a valid client and clientID, and the client needs to be configured with a valid community ID. 
 To apply for access, contact [https://kundeservice.dbc.dk/](https://kundeservice.dbc.dk/). A valid token is required for all requests. 
