@@ -45,6 +45,48 @@ export function getRelatedModel(ownerName, mappingName, limit = 2, offset = 0, f
     Include: schemas.actions.like
   };
 
+  const defaultMapping = {
+    Limit: limit,
+    Offset: offset,
+    SortBy: 'created_epoch',
+    Order: 'ascending'
+  };
+
+  const activityLikes = {
+    Actions: {type: 'like', owner_id: '^id'},
+    Include: schemas.actions.like
+  };
+
+  const activityFollows = {
+    Actions: {type: 'follow', owner_id: '^id'},
+    Include: schemas.actions.follow
+  };
+
+  const activityFlags = {
+    Actions: {type: 'flag', owner_id: '^id'},
+    Include: schemas.actions.flag
+  };
+
+  const activityGroups = {
+    Entities: {type: 'group', owner_id: '^id'},
+    Include: schemas.entities.group
+  };
+
+  const activityPosts = {
+    Entities: {type: 'post', owner_id: '^id'},
+    Include: schemas.entities.post
+  };
+
+  const activityComments = {
+    Entities: {type: 'comment', owner_id: '^id'},
+    Include: schemas.entities.comment
+  };
+
+  const activityReviews = {
+    Entities: {type: 'review', owner_id: '^id'},
+    Include: schemas.entities.review
+  };
+
   const models = {
     like: {
       owner: ownerMapping,
@@ -68,9 +110,15 @@ export function getRelatedModel(ownerName, mappingName, limit = 2, offset = 0, f
     },
     profile: {
       modified_by: modifiedByMapping,
-      likes: {
-        Actions: {}
-      }
+      likes: likeMapping,
+      flags: flagMapping,
+      activity_likes: Object.assign(activityLikes, defaultMapping),
+      activity_follows: Object.assign(activityFollows, defaultMapping),
+      activity_flags: Object.assign(activityFlags, defaultMapping),
+      activity_groups: Object.assign(activityGroups, defaultMapping),
+      activity_posts: Object.assign(activityPosts, defaultMapping),
+      activity_comments: Object.assign(activityComments, defaultMapping),
+      activity_reviews: Object.assign(activityReviews, defaultMapping)
     },
     group: {
       owner: ownerMapping,

@@ -76,6 +76,22 @@ paths:
         default:
           $ref: '#/responses/Error'
 
+  /community/profiles/{id}/activity:
+    get:
+      summary: Activityfeed for a secific profile
+      tags:
+        - Community
+      parameters:
+        - $ref: '#/parameters/accessToken'
+        - $ref: '#/parameters/profile_id'
+        - $ref: '#/parameters/limit'
+        - $ref: '#/parameters/offset'
+      responses:
+        200:
+          $ref: '#/responses/UsernameExists'
+        500:
+          $ref: '#/responses/Error'
+
   /community/profiles/usernameExists/{username}:
     get:
       summary: Checks if a given username exists
