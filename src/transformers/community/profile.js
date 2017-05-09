@@ -1,6 +1,6 @@
 import {Router} from 'express';
 import createCRUD from './utils/createCRUD';
-import getRelatedList from './utils/getRelatedList';
+import {getRelatedList} from './utils/relatedEndpointMethods';
 import {likeMap, followMap, flagMap, quarantineMap} from './maps';
 import {getSpecification, getSchemaDefinition} from '../../swaggerFromSpec';
 const swagger = getSpecification();

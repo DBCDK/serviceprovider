@@ -78,7 +78,7 @@ export function getRelatedModel(ownerName, mappingName, limit = 2, offset = 0, f
       likes: likeMapping,
       flags: flagMapping,
       quarantines: quarantineMapping,
-      followers: {
+      follows: {
         Actions: {type: 'member', entity_ref: '^id'},
         Limit: limit,
         Offset: offset,
@@ -115,7 +115,7 @@ export function getRelatedModel(ownerName, mappingName, limit = 2, offset = 0, f
   models.posts = models.post;
   models.comments = models.comment;
   models.likes = models.like;
-  models.followers = models.follow;
+  models.follows = models.follow;
   models.flags = models.flag;
   models.quarantines = models.quarantine;
 

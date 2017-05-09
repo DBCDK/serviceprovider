@@ -1,6 +1,6 @@
 import {Router} from 'express';
 import createCRUD from './utils/createCRUD';
-import getRelatedList from './utils/getRelatedList';
+import {getRelatedList, getFullGroupView} from './utils/relatedEndpointMethods';
 import {createMap} from './utils/createMap';
 import {groupMap, postMap, commentMap, reviewMap, likeMap, followMap, flagMap, quarantineMap} from './maps';
 import {getSpecification, getSchemaDefinition} from '../../swaggerFromSpec';
@@ -30,6 +30,7 @@ export function group() {
   router.get('/:id/follows', getRelatedList('group', 'follow', followMap, getSchemaDefinition(swagger, 'Follow')));
   router.get('/:id/flags', getRelatedList('group', 'flag', flagMap, getSchemaDefinition(swagger, 'Flag')));
 
+  router.get('/:id/fullView', getFullGroupView(groupMap, getSchemaDefinition(swagger, 'Group')));
   return router;
 }
 
