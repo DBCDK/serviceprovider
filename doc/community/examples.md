@@ -2,7 +2,9 @@
 
 The examples on this page is written in javascript, and uses the request library (https://github.com/request/request) to make requests.
 
-## Getting startet
+[TODO] Write about the data model, maybe just a link?
+
+# Getting startet
 To get started with building a community, you will need a valid client and clientID, and the client needs to be configured with a valid community ID. 
 To apply for access, contact [https://kundeservice.dbc.dk/](https://kundeservice.dbc.dk/). A valid token is required for all requests. 
 
@@ -25,6 +27,9 @@ request.post(smaug_uri + 'oauth/token', req, (err, response, body) => {
   console.log(body);
 });
 ```
+
+## Requests
+[TODO] Describe CRUD in general terms
 
 ## Responses
 Responses are returned within an envelope, as a JSON object with the following properties:
@@ -65,12 +70,37 @@ If you request a list of objects the data property will contain a `List` propert
 
 If the request have no results, and `List`is an empty array
 
-## Handling profiles
+### Error responses
+There are basically two types of errors. Validation errors that is caused by an invalid request, and unexpected error, that is caused by unknown causes 
+
+#### Validation Error
+If post and put request does not validate, An error object is returned, with a message of which fields does not validate:
+
+```javascript
+{
+  "status": 400,
+  "errors": " requires property \"body\"",
+  "data": []
+}
+```
+
+#### Unexpected Error
+An unexpected error has the following format
+```javascript
+{
+  "code": 500,
+  "message": "Some errormessage",
+}
+```
+
+# Bulding a community
+
+
+# Profiles
 All users of the communityservice needs a profile, to be able to create and update content. 
   
 ### Create Profile
-All Create and Update requests needs to be done with a valid profile. Except for Create profile.
-To Create a profile, make a post request to the /profiles endpoint:
+To Create a profile, make a `POST` request to the /profiles endpoint, with a profile object in the body:
 
 ```javascript
 const profile = {
@@ -93,10 +123,21 @@ request.post(openplatform_uri + 'community/profiles', {json: profile, qs:{access
    errors: [] }
 ```
 
-Username is a required property.
+A profile can contain the following information:
+
+* username `(string) unique username`
+* display_name `(string) display username`
+* description `(string) profile description`
+* email `(string) user email`
+* phone `(string) user phone number`
+* birthday `(date) user birthday`
+* media `(object) user profile image`
+* attributes `(object) custom attributes`
+
+username is a required property.
 
 ### Get Profile
-To Get a profile, make a get request to `community/profiles/{id}` where id is the id of the profile.
+To Get a profile, make a `GET` request to `community/profiles/{id}` where id is the id of the profile.
 
 **node request**
 ```javascript
@@ -120,7 +161,6 @@ request.get(openplatform_uri + 'community/profiles', {qs:{access_token: 'qwerty'
   errors: [] }
 
 ```
-
 
 ### Update profile
 
@@ -187,11 +227,11 @@ request.delete(openplatform_uri + 'community/profiles/' + id, {json: profile, qs
 
 If delete is successful, response body includes the full profile, with the `deleted_epoch` value set. 
 
-## Setting up a community
+# Setting up a community
 A community is organised around three types of content. Groups, Posts and Comments. These types creates a hierarchy 
 A Group is the top level. Inside a group users can create Posts, and users can comment on posts. This enables threaded discussions on two levels. 
 
-### Creating a group  
+## Creating a group  
 Start by creating a group. A group only requires an owner_id that points to a community profile. A group also have a title, body, media and attributes field. 
   
 ```javascript
@@ -220,7 +260,7 @@ request.post(openplatform_uri + 'community/groups', {json: group, qs:{access_tok
 ```
 
 
-### Add Post to Group
+## Add Post to Group
   
 ```javascript
 const post = {
@@ -249,7 +289,7 @@ request.post(openplatform_uri + 'community/posts', {json: post, qs:{access_token
   errors: [] }
 ```
 
-### Add Comment to Post
+## Add Comment to Post
   
 ```javascript
 const comment = {
@@ -278,7 +318,7 @@ request.post(openplatform_uri + 'community/comments', {json: comment, qs:{access
   errors: [] }
 ```
 
-### Get, Update and Delete
+## Get, Update and Delete
 Get, Update and Delete operations on Groups, Posts, and Comments, are similar to the corresponding operations on a profile.  
 
 **GET: Group with ID 2**
@@ -311,11 +351,11 @@ request.delete(openplatform_uri + 'community/groups/2', {json: deleteGroup, qs:{
 });
 ```
 
-## Actions
+# Actions
 
 Actions are events that can be applied to content as Groups, Posts, Comments, Reviews and Profiles. There are two types of actions Likes and Follow. Actions can be created and deleted. 
 
-### Like post
+## Like post
 
 ```javascript
 const like = {
@@ -347,7 +387,7 @@ request.post(openplatform_uri + 'community/likes', {json: like, qs:{access_token
   errors: [] }
 ```
 
-### unlike post
+## Unlike post
 
 To remove a like from a post, make a delete request with modified_by set:
 
@@ -379,14 +419,14 @@ request.delete(openplatform_uri + 'community/likes/', {json: like, qs:{access_to
 ```
 
 
-### Follow Content
+## Follow Content
 
 Follow is done in the same way as likes. by using the endpoint: `community/follows` 
 
-## Moderation
+# Moderation
 Moderation is done by flagging content created by a user and adding a Quarantine to a Profile.
 
-### Flag profile
+## Flag profile
 
 ```javascript
 // Flag profile with id 5 
@@ -420,7 +460,7 @@ request.post(openplatform_uri + 'community/flags', {json: like, qs:{access_token
   errors: [] }
 ```
 
-### Qarantine profile
+## Qarantine profile
 
 A quarantine should have a reason for giving the quarantine, a start timestamp and an end timestamp. Optionally an array of flag ids as documentation for the reason.   
   
@@ -455,8 +495,9 @@ request.post(openplatform_uri + 'community/quarantine', {json: quarantine, qs:{a
   errors: [] }
 ```
 
-## Reviews
- ### Create review
+# Reviews
+
+### Create review
  A review contains a title, body, rating, and a reference to the object being reviewed. 
    
 ```javascript
@@ -495,46 +536,122 @@ request.post(openplatform_uri + 'community/reviews', {json: quarantine, qs:{acce
   errors: [] }
 ```
  
-A review can be edited and deleted in the same way as a Profile
+A review can be edited and deleted in the same way as a Profile/Group
 
-## Querying thing 
-The examples are querying groups, but can be applied to all types of content. 
+## Nested Endpoints 
+There are shortcut endpoints on profiles, reviews, groups, posts, comments to get related objects to a specific object.
+E.g. if you want to get all posts related to group with ID 2, you can use `/groups/2/posts`. This will return a list posts with profile_id=2.
 
-### limit
-the maximum number of items to return
+The following nested endpoints exists:
 
-### offset
-offset. The first item to return.
+### On a profile you can do the following get commands. 
+    /profiles/{id}/likes
+    /profiles/{id}/follows
+    /profiles/{id}/flags
+    /profiles/{id}/quarantines
 
-### sort
-the key to sort items by. The key can be any key in the model. 
+### On a group the following get commands can be applied
+    /group/{id}/posts
+    /group/{id}/likes
+    /group/{id}/follows
+    /group/{id}/flags
 
-### order
-The order of items (descending or ascending)
+### On a post the following get commands can be applied. 
+    /post/{id}/likes
+    /post/{id}/flags
+    /post/{id}/comments
 
-### Example
+### On review the following get commands can be applied
+    /reviews/{id}/likes
+    /reviews/{id}/flags
+
+
+# Making complex queries 
+
+In order to be able to The examples are querying groups, but can be applied to all types of content. 
+
+## Parameters
+
+The following parameters can be used on get list requests e.g. `/profiles` or `/groups`:
+* limit: _Maximum number of items to return_ (`limit=10`)
+
+* offset: _First item to return._ (`offset=0`)
+
+* sort: _Sort key. The key can be any key in the model._ (`created_epoch`) 
+
+* order: _The order of items (descending or ascending)_ (`order=descending`) 
+
+* filter: [TODO] Write examples
+
+* include: _Include related objects and lists of objects_ [Se examples](#include)
+
+### Example: Get 10 latest posts for group with ID 2
+By using the nested endpoints, you can get a list of related objects. E.g. you can get the latest posts for a group calling `community/groups/{id}/posts`
 
 ```javascript
 const query = {
     access_token: 'qwerty'
-    limit: 2,
+    limit: 10,
     offset: 0,
     sort: 'created_epoc',
     order: 'descending'
 }
 
-request.get(openplatform_uri + 'community/groups', {qs:query}, (err, response, body) => {
+request.post(openplatform_uri + 'community/groups/2/posts', {qs:query}, (err, response, body) => {
   console.log(body);
 });
 ```
 
-**url request**
-`https://openplatform.dbc.dk/v1/community/groups/?access_token=qwerty&limit=10&offset=0&sort=created_epoch&order=descending`
+This request will return a list of posts written in group with ID 2.
 
-### include
-The include parameter enables a set of complex queries for nested data structures. Include has to be a json formatted array of types of objects that should be included e.g. `include=["owner", "posts", "likes"]`
+**Response body:**
+```javascript
+{ status: 200,
+  data:{
+   List: [
+    { /*post*/ },
+    { /*post*/ },
+    { /*post*/ },
+    ...
+    ]
+  errors: [] }
+```
 
-It is also possible to add nested parameters e.g. for limitting, filtering, ordering. As well as creating nested includes. This is done by turning an include into an json object.
+### Include
+The include parameter enables a set of complex queries for nested data structures. Include has to be a json formatted array of the elements that should be included e.g. `include=["owner", "posts", "likes"]`. 
+  
+```javascript
+
+// This request will return a list of posts to group with id 1, and include max 2. comments with included owner for each post 
+const qs = {
+ access_token: 'qwerty',
+  include: `["owner", "posts", "likes"]`
+} 
+
+request.get(openplatform_uri + 'community/groups/1/', {qs: qs}, (err, response, body) => {
+  console.log(body);
+});
+```  
+
+This request will add the owner of an object; a list of posts and a list of likes to the requested object.
+
+```javascript
+{ status: 200,
+  data: 
+   { title: '',
+     body: 'This is a post in Group with id 2',
+     group_id: 2,
+     id: 5,
+     modified_epoch: 1493123760,
+     created_epoch: 1493123760,
+     owner_id: 1 },
+     owner: {/*Profile*/},
+     posts: {/*List of posts*/},
+     likes: {/*List of likes*/}
+  errors: [] }
+```
+
+It is possible to add nested parameters such as limit, offset, sort and order, As well as creating nested includes. This is done by turning an include into an json object.
 
 `include=[{"name": "posts", "limit": 10, offset: 0}]`
 
@@ -563,7 +680,7 @@ request.get(openplatform_uri + 'community/groups/1/posts', {qs: qs}, (err, respo
 });
 ```
 
-**Response body:**
+A full response could look like this:
 ```javascript
 {
     "status": 200,
@@ -638,40 +755,49 @@ request.get(openplatform_uri + 'community/groups/1/posts', {qs: qs}, (err, respo
 
 ```
 
-### Get 10 latest posts for a group
-By using the nested endpoints, you can get a list of related objects. E.g. you can get the latest posts for a group calling `community/groups/{id}/posts`
-
-```javascript
-const query = {
-    access_token: 'qwerty'
-    limit: 10,
-    offset: 0,
-    sort: 'created_epoc',
-    order: 'descending'
-}
-
-request.post(openplatform_uri + 'community/groups/2/posts', {qs:query}, (err, response, body) => {
-  console.log(body);
-});
-```
-
-This request will return a list of posts written in group with ID 2.
-
-**Response body:**
+## counts
+It is possible to get a count of a list of related objects, by using the count parameter `counts=["likes","posts"]`. A counts property for each element (postsCount, LikesCount) is included:
 ```javascript
 { status: 200,
-  data:{
-   List: [
-    { /*post*/ },
-    { /*post*/ },
-    { /*post*/ },
-    ...
-    ]
+  data: 
+   { title: '',
+     body: 'This is a post in Group with id 2',
+     group_id: 2,
+     id: 5,
+     modified_epoch: 1493123760,
+     created_epoch: 1493123760,
+     owner_id: 1 },
+     postsCount: 5,
+     likesCount: 2
   errors: [] }
 ```
 
-## Special views
+
+# Special views
 The community has three special endpoints, that can be used to. 
+
+## Generate a full group view, 
+    /groups/{id}/fullView
+
+### Parameters
+The fullview endpoint has the same parameters as other `GET` endpoints. In addition to those you can use:
+* postsLimit: _limit of posts to include_
+* postsOffset _start position for posts_
+* commentsLimit: _limit of comments to include_
+* commentsOffset _start position for comments_
+
+
+#### Check if profile is following group
+    /groups/{id}/isFollowing/{profileId}
+    
+#### Check if group name is unique    
+    /groups/groupNameExists?name=
+
+#### This is a special endpoint that will return an activity stream
+    /profiles/{id}/activity (Special view with custom parameters)
+
+#### Check if username is unique    
+    /profiles/usernameExists?name=
 
 ### Generate group view
 @todo create example of how to create a group view
@@ -682,25 +808,3 @@ The community has three special endpoints, that can be used to.
 ### Get all quarantined profiles
 @todo create example of how to create quarantined profiles
 
-## Errors
-There are basically two types of errors. Validation errors that is caused by an invalid request, and unexpected error, that is caused by unknown causes 
-
-### Validation Error
-If post and put request does not validate, An error object is returned, with a message of which fields does not validate:
-
-```javascript
-{
-  "status": 400,
-  "errors": " requires property \"body\"",
-  "data": []
-}
-```
-
-### Unexpected Error
-An unexpected error has the following format
-```javascript
-{
-  "code": 500,
-  "message": "Some errormessage",
-}
-```
