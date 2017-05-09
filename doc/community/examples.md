@@ -786,16 +786,143 @@ The fullview endpoint has the same parameters as other `GET` endpoints. In addit
 * commentsLimit: _limit of comments to include_
 * commentsOffset _start position for comments_
 
-## Check if profile is following group
-This is a helper for checking if a profile is following a specific group
-    `GET` /community/profiles/{id}/isFollowingGroup/{group_id}:
-*Response body*
-```javascript
+    `GET /groups/1/fullview?access_token=qwerty&postLimit=1&commentLimit=2&commentOffset=0&createTest=fullGroupView`
+    
+*Response example*
 
+```javascript
+{
+  "status": 200,
+  "data": {
+    "title": "Repellat corrupti laudantium",
+    "body": "Aspernatur ea ea veritatis aut consequatur dicta doloribus illo.",
+    "profile_id": 505,
+    "created_epoch": 1490363188,
+    "deleted_epoch": null,
+    "modified_epoch": 1490363188,
+    "modified_by": null,
+    "id": 1,
+    "owner": {
+      "id": 505,
+      "modified_epoch": 1490363169,
+      "created_epoch": 1490363169,
+      "deleted_epoch": null,
+      "username": "Tyra",
+      "modified_by": null,
+      "email": "Theo_Collier78@yahoo.com"
+    },
+    "posts": {
+      "Total": 2,
+      "NextOffset": 1,
+      "List": [`
+        {
+          "title": "Ab consectetur nisi",
+          "body": "Sint quos at reiciendis dolorem beatae.",
+          "group_id": 1,
+          "profile_id": 469,
+          "created_epoch": 1490363218,
+          "deleted_epoch": null,
+          "modified_epoch": 1490363218,
+          "modified_by": null,
+          "id": 419,
+          "owner": {
+            "id": 469,
+            "modified_epoch": 1490363167,
+            "created_epoch": 1490363167,
+            "deleted_epoch": null,
+            "username": "Austin",
+            "modified_by": null,
+            "email": "Adell.Ward99@yahoo.com"
+          },
+          "comments": {
+            "Total": 5,
+            "NextOffset": 2,
+            "List": [
+              {
+                "title": "some tiel",
+                "body": "sdsfsdf",
+                "post_id": 419,
+                "media": {
+                  "type": "image",
+                  "value": {
+                    "full": "http://lorempixel.com/1600/800/",
+                    "thumb": "http://lorempixel.com/400/200/"
+                  }
+                },
+                "profile_id": 1,
+                "created_epoch": 1493897689,
+                "deleted_epoch": null,
+                "modified_epoch": 1493897689,
+                "modified_by": null,
+                "id": 6496,
+                "owner": {
+                  "id": 1,
+                  "modified_epoch": 1490363149,
+                  "created_epoch": 1490363149,
+                  "deleted_epoch": null,
+                  "username": "Marjolaine",
+                  "modified_by": null,
+                  "email": "Jazmyn_Gleason@gmail.com"
+                },
+                "likesCount": 0,
+                "flagsCount": 0
+              },
+              {
+                "title": "some tiel",
+                "body": "sdsfsdf",
+                "post_id": 419,
+                "media": {
+                  "type": "image",
+                  "value": {
+                    "full": "http://lorempixel.com/1600/800/",
+                    "thumb": "http://lorempixel.com/400/200/"
+                  }
+                },
+                "profile_id": 1,
+                "created_epoch": 1493897631,
+                "deleted_epoch": null,
+                "modified_epoch": 1493897631,
+                "modified_by": null,
+                "id": 6495,
+                "owner": {
+                  "id": 1,
+                  "modified_epoch": 1490363149,
+                  "created_epoch": 1490363149,
+                  "deleted_epoch": null,
+                  "username": "Marjolaine",
+                  "modified_by": null,
+                  "email": "Jazmyn_Gleason@gmail.com"
+                },
+                "likesCount": 0,
+                "flagsCount": 0
+              }
+            ]
+          },
+          "likesCount": 1,
+          "flagsCount": 0,
+          "commentsCount": 5
+        }
+      ]
+    },
+    "postsCount": 2,
+    "likesCount": 2,
+    "flagsCount": 2,
+    "followsCount": 2
+  },
+  "errors": [],}
 ```
+
+Properties like owner, postsCount, likesCount, flagsCount and followsCount are automatically added to the view.  
+
+## Check if profile is following group
+   
+    `GET` /community/profiles/{id}/isFollowingGroup/{group_id}:
     
 ## Check if group name is unique  
+
     `GET` /community/groups/groupnameExists/{groupname}
+
+Returns an id of the group if groupname exists
 
 ## This is a special endpoint that will return an activity stream
     `GET` /profiles/{id}/activity (Special view with custom parameters)
@@ -803,3 +930,4 @@ This is a helper for checking if a profile is following a specific group
 ## Check if username is unique    
     `GET` /community/profiles/usernameExists/{username}
 
+Returns an id of the profile if username exists
