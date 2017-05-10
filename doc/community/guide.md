@@ -50,7 +50,44 @@ request.post(smaug_uri + 'oauth/token', req, (err, response, body) => {
 ```
 
 ## Requests
-[TODO] Describe CRUD in general terms
+On all content objects CRUD request can be made. 
+  
+### GET
+To fetch a single object, make a `GET` request `/{type}/{id}`
+
+    curl -X GET --header 'Accept: application/json' 'https://openplatform.dbc.dk/v1/community/comments/6497?access_token=qwerty'
+
+### POST
+To create an object make a `POST` request with a body JSON object containing required the properties.
+
+    curl -X POST --header 'Content-Type: application/json' --header 'Accept: application/json' -d '{
+      "title": "string",
+      "body": "string",
+      "post_id": 1,
+      "profile_id": 1
+    }' 'https://openplatform.dbc.dk/v1/community/comments/?access_token=qwerty'
+
+### PUT
+To update an object, make a `PUT` request with a body JSON object containing the properties that should be updated. A modified_by property is required
+
+    curl -X PUT --header 'Content-Type: application/json' --header 'Accept: application/json' -d '{
+       "title": "some new title",
+       "modified_by": 1
+    }' 'https://openplatform.dbc.dk/v1/community/comments/6497?access_token=qwerty'
+    
+### DELETE
+An object can be deleted, using the delete method on endpoint `/{type}/{id}`. A body JSON object with property modified_by is required
+
+    curl -X DELETE --header 'Content-Type: application/json' --header 'Accept: application/json' -d '{
+      "modified_by": 1
+    }' 'https://openplatform.dbc.dk/v1/community/comments/10?access_token=qwerty'
+    
+### GET LIST
+To fetch a list of objects, make a `GET` request `/{type}/`
+
+    curl -X GET --header 'Accept: application/json' 'https://openplatform.dbc.dk/v1/community/comments/?access_token=qwerty&limit=10&offset=0'  
+
+[See a description of possible parameters to use](#Parameters)
 
 ## Responses
 Responses are returned within an envelope, as a JSON object with the following properties:
@@ -598,11 +635,9 @@ The following parameters can be used on get list requests e.g. `/profiles` or `/
 
 * offset: _First item to return._ (`offset=0`)
 
-* sort: _Sort key. The key can be any key in the model._ (`created_epoch`) 
+* sort: _Sort key. The key can be any key in the model._ (`sort=created_epoch`) 
 
 * order: _The order of items (descending or ascending)_ (`order=descending`) 
-
-* filter: [TODO] Write examples
 
 * include: _Include related objects and lists of objects_ [Se examples](#include)
 
