@@ -56,13 +56,13 @@ parameters:
     required: true
     type: integer
   group_id:
-    name: id
+    name: group_id
     in: path
     description: Id of group
     required: true
     type: integer
   profile_id:
-    name: id
+    name: profile_id
     in: path
     description: Id of profile
     required: true
@@ -123,8 +123,6 @@ parameters:
       properties:
         modified_by:
           type: integer
-    required:
-      - modified_by
 
 parameterGroups:
   entityParams:

@@ -34,7 +34,7 @@ paths:
         500:
           $ref: '#/responses/Error'
 
-  /community/profiles/{id}:
+  /community/profiles/{profile_id}:
     get:
       tags:
         - Community
@@ -77,7 +77,7 @@ paths:
         default:
           $ref: '#/responses/Error'
 
-  /community/profiles/{id}/activity:
+  /community/profiles/{profile_id}/activity:
     get:
       summary: Activityfeed for a specific profile
       tags:
@@ -107,21 +107,21 @@ paths:
         500:
           $ref: '#/responses/Error'
 
-  /community/profiles/{id}/likes:
+  /community/profiles/{profile_id}/likes:
     get:
       tags:
         - Community
       summary: List of Likes related to a specific Profile
       parameterGroup: entityParams
       parameters:
-        - $ref: '#/parameters/id'
+        - $ref: '#/parameters/profile_id'
       responses:
         200:
           $ref: '#/responses/Likes'
         500:
           $ref: '#/responses/Error'
 
-  /community/profiles/{id}/isFollowingGroup/{group_id}:
+  /community/profiles/{profile_id}/isFollowingGroup/{group_id}:
     get:
       tags:
         - Community
@@ -136,7 +136,7 @@ paths:
         500:
           $ref: '#/responses/Error'
 
-  /community/profiles/{id}/follows:
+  /community/profiles/{profile_id}/follows:
     get:
       tags:
         - Community
@@ -150,7 +150,7 @@ paths:
         500:
           $ref: '#/responses/Error'
 
-  /community/profiles/{id}/flags:
+  /community/profiles/{profile_id}/flags:
     get:
       tags:
         - Community
@@ -164,7 +164,7 @@ paths:
         500:
           $ref: '#/responses/Error'
 
-  /community/profiles/{id}/quarantines:
+  /community/profiles/{profile_id}/quarantines:
     get:
       tags:
         - Community
