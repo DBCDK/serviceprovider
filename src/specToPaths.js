@@ -157,10 +157,7 @@ export function parameterGroupToParameters(paths, parameterGroups) {
  * @returns {Object}
  */
 export function specToPaths(specs) {
-  let paths = {};
-  if (process.env.NODE_ENV !== 'production') {
-    paths = specs.paths || {};
-  }
+  let paths = specs.paths || {};
   const defaultProperties = specs.defaultProperties;
 
   for (const key in defaultProperties) {
