@@ -91,6 +91,16 @@ parameters:
     description: a quarantine definition
     schema:
       $ref: '#/definitions/Quarantine'
+  modified_by:
+    name: Deleted By
+    in: body
+    description: Id of profile modifiying the object.
+    schema:
+      properties:
+        modified_by:
+          type: integer
+    required:
+      - modified_by
 
 parameterGroups:
   entityParams:
@@ -98,6 +108,6 @@ parameterGroups:
     - $ref: '#/parameters/include'
     - $ref: '#/parameters/limit'
     - $ref: '#/parameters/offset'
-    - $ref: '#/parameters/count'
+    - $ref: '#/parameters/counts'
 
 
