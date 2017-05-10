@@ -1,6 +1,5 @@
-
-
 import {workToJSON} from '../requestTypeIdentifier.js';
+import {log} from '../utils';
 
 function getSoap(agency, profile, q, filterAgency, sort, offset, limit, allObject) {
   return `<?xml version="1.0" encoding="UTF-8"?>
@@ -12,7 +11,7 @@ function getSoap(agency, profile, q, filterAgency, sort, offset, limit, allObjec
       <ns1:profile>${profile}</ns1:profile>
       <ns1:start>${offset}</ns1:start>
       <ns1:stepValue>${limit}</ns1:stepValue>
-      ${sort? `<ns1:sort>${sort}</ns1:sort>` : ''}
+      ${sort ? `<ns1:sort>${sort}</ns1:sort>` : ''}
       <ns1:collectionType>work-1</ns1:collectionType>
       <ns1:allObjects>${allObject}</ns1:allObjects>
       <ns1:objectFormat>briefDisplay</ns1:objectFormat>
@@ -57,15 +56,28 @@ export default (params, context) => {
       // let more = body.more.$; // this could be used for paging info later
       let searchResult = body.searchResult || [];
       let result = [];
+      const parseErrors = [];
       searchResult.forEach(o => { // eslint-disable-line no-loop-func
         let collection = o.collection.object.map(obj => obj.identifier.$);
         let dkabm = o.collection.object[0].record;
         dkabm = workToJSON(dkabm);
-        let briefDisplays =
-          o.formattedCollection.briefDisplay.manifestation.map(briefDisplay => {
+
+        let briefDisplays = [];
+        if (o.formattedCollection.briefDisplay) {
+          briefDisplays = o.formattedCollection.briefDisplay.manifestation.map(briefDisplay => {
             delete briefDisplay.fedoraPid;
             return workToJSON(briefDisplay, 'bd');
           });
+        }
+        else {
+          parseErrors.push(`No data found on object(s): ${collection}`);
+          log.error('Parse error: briefDisplay could not be found on object', {
+            collection: collection[0],
+            context: context.data,
+            OpenSearch: {trackingId: body.statInfo.trackingId.$}
+          });
+        }
+
         // here we would call getObject or moreInfo if needed...
         result.push(Object.assign({
           collection: collection,
@@ -73,7 +85,13 @@ export default (params, context) => {
         }, dkabm, briefDisplays[0]));
       });
 
-      return {statusCode: 200, data: result};
+      const response = {statusCode: 200, data: result};
+
+      if (parseErrors.length) {
+        response.error = parseErrors;
+      }
+
+      return response;
     });
 
     // Check if either object has failed.
@@ -101,7 +119,6 @@ export default (params, context) => {
         return responseDetails;
       });
     }
-
     return responses[0];
   });
 };
