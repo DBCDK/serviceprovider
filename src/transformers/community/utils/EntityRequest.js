@@ -32,8 +32,19 @@ const orderPossibilities = [
 ];
 
 export function communityRequest(context, params) {
-  const baseurl = context.get('services.communityservice') || 'http://localhost:3000/v1';
-  const id = context.get('communityservice.id') || 1;
+  const id = context.get('communityservice.id');
+  const baseurl = context.get('services.communityservice');
+
+  if (!id) {
+    throw 'Community-API is not available for the current client. ' +
+    'Client needs to be configured with a valid community ID';
+  }
+
+  if (!baseurl) {
+    throw 'Community-API is not available for the current client. ' +
+    'Client needs to be configured with a valid community service url';
+  }
+
   const name = `${baseurl}/community/${id}/${params.path}`;
   delete params.path;
 
