@@ -111,8 +111,12 @@ export default class EntityRequest {
    * @returns {Object|null} Returns response object if validation errors exists. Otherwise null.
    * @private
    */
-  _validate(data) {
-    const validateErrors = validate(data, this._schema).errors;
+  _validate(data, ignore_required = false) {
+    const schema = Object.assign({}, this._schema);
+    if (ignore_required && schema.required) {
+      delete schema.required;
+    }
+    const validateErrors = validate(data, schema).errors;
     if (validateErrors.length) {
       return {
         status: 400,
@@ -278,7 +282,7 @@ export default class EntityRequest {
   }
 
   async put(id, object) {
-    const validationError = this._validate(object);
+    const validationError = this._validate(object, true);
     if (validationError) {
       return validationError;
     }

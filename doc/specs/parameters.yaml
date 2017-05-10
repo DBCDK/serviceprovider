@@ -22,10 +22,10 @@ parameters:
     in: query
     description: 'Include related objects. Json formatted object with type, limit, offset and count (Total number of elements) e.g. {type: post, limit: 10, offset: 0, count: 1}'
     type: string
-  count:
+  counts:
     name: 'count'
     in: query
-    description: 'Include count of named related objects e.g. count=flags&count=likes'
+    description: 'Include count of named related objects e.g. count=["flags", "likes"]'
     type: array
     items:
       type: string
@@ -91,6 +91,16 @@ parameters:
     description: a quarantine definition
     schema:
       $ref: '#/definitions/Quarantine'
+  modified_by:
+    name: Deleted By
+    in: body
+    description: Id of profile modifiying the object.
+    schema:
+      properties:
+        modified_by:
+          type: integer
+    required:
+      - modified_by
 
 parameterGroups:
   entityParams:
@@ -98,6 +108,6 @@ parameterGroups:
     - $ref: '#/parameters/include'
     - $ref: '#/parameters/limit'
     - $ref: '#/parameters/offset'
-    - $ref: '#/parameters/count'
+    - $ref: '#/parameters/counts'
 
 
