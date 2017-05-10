@@ -41,7 +41,7 @@ paths:
       summary: Profile in community
       description: Get A profile by ID
       parameters:
-        - $ref: '#/parameters/id'
+        - $ref: '#/parameters/profile_id'
         - $ref: '#/parameters/accessToken'
       responses:
         200:
@@ -54,7 +54,7 @@ paths:
       tags:
         - Community
       parameters:
-        - $ref: '#/parameters/id'
+        - $ref: '#/parameters/profile_id'
         - $ref: '#/parameters/accessToken'
         - $ref: '#/parameters/profile'
       responses:
@@ -68,7 +68,7 @@ paths:
       tags:
         - Community
       parameters:
-        - $ref: '#/parameters/id'
+        - $ref: '#/parameters/profile_id'
         - $ref: '#/parameters/accessToken'
       responses:
         200:
@@ -126,7 +126,7 @@ paths:
         - Community
       summary: Checks if the profile given by the profile_id is following the group given by group_id
       parameters:
-        - $ref: '#/parameters/id'
+        - $ref: '#/parameters/profile_id'
         - $ref: '#/parameters/group_id'
         - $ref: '#/parameters/accessToken'
       responses:
@@ -142,7 +142,7 @@ paths:
       summary: List of Followers related to a specific Profile
       parameterGroup: entityParams
       parameters:
-        - $ref: '#/parameters/id'
+        - $ref: '#/parameters/profile_id'
       responses:
         200:
           $ref: '#/responses/Follows'
@@ -156,7 +156,7 @@ paths:
       summary: List of Flags related to a specific Profile
       parameterGroup: entityParams
       parameters:
-        - $ref: '#/parameters/id'
+        - $ref: '#/parameters/profile_id'
       responses:
         200:
           $ref: '#/responses/Flags'
@@ -170,7 +170,7 @@ paths:
       summary: List of Quarantines related to a specific Profile
       parameterGroup: entityParams
       parameters:
-        - $ref: '#/parameters/id'
+        - $ref: '#/parameters/profile_id'
       responses:
         200:
           $ref: '#/responses/Quarantines'
