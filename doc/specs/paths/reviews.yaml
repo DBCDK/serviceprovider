@@ -70,6 +70,7 @@ paths:
       parameters:
         - $ref: '#/parameters/id'
         - $ref: '#/parameters/accessToken'
+        - $ref: '#/parameters/modified_by'
       responses:
         200:
           $ref: '#/responses/Review'

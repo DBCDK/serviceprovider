@@ -1,5 +1,5 @@
 /* eslint-disable max-len, quotes, comma-spacing, key-spacing, quote-props, indent */
-// Request: listEntities {"id":"1","selector":{"type":"follow","profile_ref":"1","attributes.reference":{"type":"profile"}},"_meta":{"type":"follow","elvisType":"action","schemaMap":{"reference":"attributes.reference","profile_id":"owner_id","created_epoch":"created_epoch","deleted_epoch":"deleted_epoch","modified_epoch":"modified_epoch","modified_by":"modified_by","id":"id"},"schema":{"properties":{"reference":{"type":"object","required":["type","id"],"properties":{"type":{"type":"string"},"id":{"type":"integer"}}},"profile_id":{"type":"number","format":"integer"},"created_epoch":{"type":"integer"},"deleted_epoch":{"type":"integer"},"modified_epoch":{"type":"integer"},"modified_by":{"type":"integer"},"id":{"type":"integer"}}}}}
+// Request: createEntity {"post_fid":419,"media":{"type":"image","value":{"thumb":"http://lorempixel.com/400/200/","full":"http://lorempixel.com/1600/800/"}},"fisk":"sdfsdsdf","profile_id":1,"_meta":{"type":"comment","elvisType":"entity","schemaMap":{"title":"title","body":"contents","post_id":"entity_ref","media":"attributes.media","profile_id":"owner_id","created_epoch":"created_epoch","deleted_epoch":"deleted_epoch","modified_epoch":"modified_epoch","modified_by":"modified_by","id":"id"},"schema":{"properties":{"title":{"type":"string"},"body":{"type":"string"},"post_id":{"type":"integer"},"media":{"properties":{"type":{"type":"string"},"value":{"type":"object"}}},"profile_id":{"type":"number","format":"integer"},"created_epoch":{"type":"integer"},"deleted_epoch":{"type":"integer"},"modified_epoch":{"type":"integer"},"modified_by":{"type":"integer"},"id":{"type":"integer"}},"required":["body","post_id"]}}}
 
 import Provider from '../../provider/Provider.js';
 import {assert, fail} from 'chai';
@@ -50,117 +50,26 @@ const context = {
   "crud": {}
 };
 const provider = Provider();
-const mockData = {
-  "[\"http://localhost:4010/v1/community/1/query\",{\"method\":\"post\",\"json\":{\"Actions\":{\"type\":\"follow\",\"profile_ref\":\"1\",\"attributes.reference\":{\"type\":\"profile\"}},\"SortBy\":\"id\",\"Order\":\"descending\",\"Limit\":2,\"Offset\":0,\"Include\":{\"reference\":\"attributes.reference\",\"profile_id\":\"owner_id\",\"created_epoch\":\"created_epoch\",\"deleted_epoch\":\"deleted_epoch\",\"modified_epoch\":\"modified_epoch\",\"modified_by\":\"modified_by\",\"id\":\"id\"}}}]": {
-    "data": {
-      "Total": 2,
-      "NextOffset": null,
-      "List": [
-        {
-          "reference": {
-            "id": 1,
-            "type": "profile"
-          },
-          "profile_id": 2,
-          "created_epoch": 1493888250,
-          "deleted_epoch": null,
-          "modified_epoch": 1493888250,
-          "modified_by": null,
-          "id": 3893
-        },
-        {
-          "reference": {
-            "id": 1,
-            "type": "profile"
-          },
-          "profile_id": 2,
-          "created_epoch": 1493888205,
-          "deleted_epoch": null,
-          "modified_epoch": 1493888205,
-          "modified_by": null,
-          "id": 3892
-        }
-      ]
-    }
-  }
-};
+const mockData = {};
 
 describe('Automated test: getProfileFollows', () => {
-  it('expected response. ID:x0dj2i, for {"id":"1","selector":{"type":"follow","profile_ref":"1","attributes.reference":{"type":"profile"}},"_meta":{"type":"follow","elvisType":"action","schemaMap":{"reference":"attributes.reference","profile_id":"owner_id","created_epoch":"created_epoch","deleted_epoch":"deleted_epoch","modified_epoch":"modified_epoch","modified_by":"modified_by","id":"id"},"schema":{"properties":{"reference":{"type":"object","required":["type","id"],"properties":{"type":{"type":"string"},"id":{"type":"integer"}}},"profile_id":{"type":"number","format":"integer"},"created_epoch":{"type":"integer"},"deleted_epoch":{"type":"integer"},"modified_epoch":{"type":"integer"},"modified_by":{"type":"integer"},"id":{"type":"integer"}}}}}', (done) => {
+  it('expected response. ID:scl2ii, for {"post_fid":419,"media":{"type":"image","value":{"thumb":"http://lorempixel.com/400/200/","full":"http://lorempixel.com/1600/800/"}},"fisk":"sdfsdsdf","profile_id":1,"_meta":{"type":"comment","elvisType":"entity","schemaMap":{"title":"title","body":"contents","post_id":"entity_ref","media":"attributes.media","profile_id":"owner_id","created_epoch":"created_epoch","deleted_epoch":"deleted_epoch","modified_epoch":"modified_epoch","modified_by":"modified_by","id":"id"},"schema":{"properties":{"title":{"type":"string"},"body":{"type":"string"},"post_id":{"type":"integer"},"media":{"properties":{"type":{"type":"string"},"value":{"type":"object"}}},"profile_id":{"type":"number","format":"integer"},"created_epoch":{"type":"integer"},"deleted_epoch":{"type":"integer"},"modified_epoch":{"type":"integer"},"modified_by":{"type":"integer"},"id":{"type":"integer"}},"required":["body","post_id"]}}}', (done) => {
     context.mockData = mockData;
-    provider.execute('listEntities', {"id":"1","selector":{"type":"follow","profile_ref":"1","attributes.reference":{"type":"profile"}},"_meta":{"type":"follow","elvisType":"action","schemaMap":{"reference":"attributes.reference","profile_id":"owner_id","created_epoch":"created_epoch","deleted_epoch":"deleted_epoch","modified_epoch":"modified_epoch","modified_by":"modified_by","id":"id"},"schema":{"properties":{"reference":{"type":"object","required":["type","id"],"properties":{"type":{"type":"string"},"id":{"type":"integer"}}},"profile_id":{"type":"number","format":"integer"},"created_epoch":{"type":"integer"},"deleted_epoch":{"type":"integer"},"modified_epoch":{"type":"integer"},"modified_by":{"type":"integer"},"id":{"type":"integer"}}}}}, context)
+    provider.execute('createEntity', {"post_fid":419,"media":{"type":"image","value":{"thumb":"http://lorempixel.com/400/200/","full":"http://lorempixel.com/1600/800/"}},"fisk":"sdfsdsdf","profile_id":1,"_meta":{"type":"comment","elvisType":"entity","schemaMap":{"title":"title","body":"contents","post_id":"entity_ref","media":"attributes.media","profile_id":"owner_id","created_epoch":"created_epoch","deleted_epoch":"deleted_epoch","modified_epoch":"modified_epoch","modified_by":"modified_by","id":"id"},"schema":{"properties":{"title":{"type":"string"},"body":{"type":"string"},"post_id":{"type":"integer"},"media":{"properties":{"type":{"type":"string"},"value":{"type":"object"}}},"profile_id":{"type":"number","format":"integer"},"created_epoch":{"type":"integer"},"deleted_epoch":{"type":"integer"},"modified_epoch":{"type":"integer"},"modified_by":{"type":"integer"},"id":{"type":"integer"}},"required":["body","post_id"]}}}, context)
       .then(result => {
         assert.deepEqual(result,
             {
-  "status": 200,
-  "data": {
-    "Total": 2,
-    "NextOffset": null,
-    "List": [
-      {
-        "reference": {
-          "id": 1,
-          "type": "profile"
-        },
-        "profile_id": 2,
-        "created_epoch": 1493888250,
-        "deleted_epoch": null,
-        "modified_epoch": 1493888250,
-        "modified_by": null,
-        "id": 3893
-      },
-      {
-        "reference": {
-          "id": 1,
-          "type": "profile"
-        },
-        "profile_id": 2,
-        "created_epoch": 1493888205,
-        "deleted_epoch": null,
-        "modified_epoch": 1493888205,
-        "modified_by": null,
-        "id": 3892
-      }
-    ]
-  },
-  "errors": []
+  "status": 400,
+  "errors": " requires property \"body\"\n requires property \"post_id\"",
+  "data": []
 });
         done();
       })
       .catch(result => {
         fail({throw: result}, {
-  "status": 200,
-  "data": {
-    "Total": 2,
-    "NextOffset": null,
-    "List": [
-      {
-        "reference": {
-          "id": 1,
-          "type": "profile"
-        },
-        "profile_id": 2,
-        "created_epoch": 1493888250,
-        "deleted_epoch": null,
-        "modified_epoch": 1493888250,
-        "modified_by": null,
-        "id": 3893
-      },
-      {
-        "reference": {
-          "id": 1,
-          "type": "profile"
-        },
-        "profile_id": 2,
-        "created_epoch": 1493888205,
-        "deleted_epoch": null,
-        "modified_epoch": 1493888205,
-        "modified_by": null,
-        "id": 3892
-      }
-    ]
-  },
-  "errors": []
+  "status": 400,
+  "errors": " requires property \"body\"\n requires property \"post_id\"",
+  "data": []
 });
         done();
       });

@@ -170,8 +170,13 @@ definitions:
       body:
         type: string
       post_id:
-        type: number
-        format: integer
+        type: integer
+    additionalProperties: true
+    required:
+      - body
+      - title
+      - post_id
+
   Quarantine:
     allOf:
       - $ref: "#/definitions/Base"
@@ -247,6 +252,7 @@ definitions:
       profile_id:
         type: number
         format: integer
+    additionalProperties: true
   Action:
     allOf:
       - $ref: "#/definitions/Base"
@@ -288,4 +294,4 @@ definitions:
         type: integer
       id:
         type: integer
-    additionalProperties: false
+    additionalProperties: true
