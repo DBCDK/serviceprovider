@@ -9,7 +9,7 @@ paths:
         - $ref: '#/parameters/include'
         - $ref: '#/parameters/limit'
         - $ref: '#/parameters/offset'
-        - $ref: '#/parameters/count'
+        - $ref: '#/parameters/counts'
       responses:
         200:
           $ref: '#/definitions/Comments'
@@ -65,6 +65,7 @@ paths:
       parameters:
         - $ref: '#/parameters/id'
         - $ref: '#/parameters/accessToken'
+        - $ref: '#/parameters/modified_by'
       responses:
         200:
           $ref: '#/responses/Comment'
