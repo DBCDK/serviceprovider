@@ -172,5 +172,5 @@ export function specToPaths(specs) {
     }
   }
 
-  return parameterGroupToParameters(paths, specs.parameterGroups);
+  return paths;
 }

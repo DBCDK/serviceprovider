@@ -82,9 +82,13 @@ paths:
       tags:
         - Community
       summary: List of Likes related to a specific Review
-      parameterGroup: entityParams
       parameters:
         - $ref: '#/parameters/id'
+        - $ref: '#/parameters/accessToken'
+        - $ref: '#/parameters/include'
+        - $ref: '#/parameters/limit'
+        - $ref: '#/parameters/offset'
+        - $ref: '#/parameters/counts'
       responses:
         200:
           $ref: '#/responses/Likes'
@@ -96,9 +100,13 @@ paths:
       tags:
         - Community
       summary: List of Flags related to a specific Review
-      parameterGroup: entityParams
       parameters:
         - $ref: '#/parameters/id'
+        - $ref: '#/parameters/accessToken'
+        - $ref: '#/parameters/include'
+        - $ref: '#/parameters/limit'
+        - $ref: '#/parameters/offset'
+        - $ref: '#/parameters/counts'
       responses:
         200:
           $ref: '#/responses/Flags'
