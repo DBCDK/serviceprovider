@@ -78,7 +78,7 @@ paths:
 
   /community/profiles/{id}/activity:
     get:
-      summary: Activityfeed for a secific profile
+      summary: Activityfeed for a specific profile
       tags:
         - Community
       parameters:
@@ -88,7 +88,7 @@ paths:
         - $ref: '#/parameters/offset'
       responses:
         200:
-          $ref: '#/responses/UsernameExists'
+          $ref: '#/responses/Activity'
         500:
           $ref: '#/responses/Error'
 

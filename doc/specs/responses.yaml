@@ -7,6 +7,10 @@ responses:
     description: A list of profiles.
     schema:
       $ref: "#/definitions/Profiles"
+  Activity:
+    description: All activity made by user
+    schema:
+      $ref: "#/definitions/Activity"
   UserIsFollowingGroup:
     description: Returns the ID of the follow action
     schema:
