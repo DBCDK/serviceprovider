@@ -25,6 +25,9 @@ const context = {
     },
     "communityservice": "http://communitybe-s01:8000/v1"
   },
+  "communityservice": {
+    "id": 1
+  },
   "search": {
     "agency": "775100",
     "profile": "opac",
