@@ -123,7 +123,6 @@ export function getFullGroupView(map, schema) {
 }
 
 export function getProfileActivity(map, schema) {
-  console.log('getProfileActivity');
   return (req, res) => {
     const provider = req.app.get('serviceProvider');
     const context = req.context;
@@ -132,27 +131,13 @@ export function getProfileActivity(map, schema) {
     context.crud = true;
 
     const _include = [
-      {
-        name: 'activity_likes'
-      },
-      {
-        name: 'activity_follows'
-      },
-      {
-        name: 'activity_flags'
-      },
-      {
-        name: 'activity_groups'
-      },
-      {
-        name: 'activity_posts'
-      },
-      {
-        name: 'activity_comments'
-      },
-      {
-        name: 'activity_reviews'
-      }
+      {name: 'activity_likes'},
+      {name: 'activity_follows'},
+      {name: 'activity_flags'},
+      {name: 'activity_groups'},
+      {name: 'activity_posts'},
+      {name: 'activity_comments'},
+      {name: 'activity_reviews'}
     ];
 
     const include = [];
