@@ -1,10 +1,8 @@
 import {Router} from 'express';
-import request from 'request';
 import {profile} from './profile';
 import {group, post, comment, review} from './entities';
 import {like, follow, flag, quarantine} from './actions';
-import caller from '../../provider/caller';
-import {accessLogMiddleware, getContextMiddleware, requireAuthorized} from '../../app.middlewares';
+import {getContextMiddleware, requireAuthorized} from '../../app.middlewares';
 
 /**
  * Router for all community/profile endpoints.

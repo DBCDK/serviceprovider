@@ -121,3 +121,46 @@ export function getFullGroupView(map, schema) {
     provider.execute('getEntity', query, context).then(result => res.json(result));
   };
 }
+
+export function getProfileActivity(map, schema) {
+  return (req, res) => {
+    const provider = req.app.get('serviceProvider');
+    const context = req.context;
+    const limit = req.query.limit || 10;
+    const offset = req.query.offset || 0;
+    context.crud = true;
+
+    const _include = [
+      {name: 'activity_likes'},
+      {name: 'activity_follows'},
+      {name: 'activity_flags'},
+      {name: 'activity_groups'},
+      {name: 'activity_posts'},
+      {name: 'activity_comments'},
+      {name: 'activity_reviews'}
+    ];
+
+    const include = [];
+    _include.forEach((inc) => {
+      include.push(Object.assign(inc, {limit: limit, offset: offset}));
+    });
+
+    const query = Object.assign(
+      {},
+      req.params,
+      req.body,
+      req.query,
+      {include},
+      {selector: {id: req.params.id}},
+      {
+        _meta: {
+          elvisType: 'profile',
+          schemaMap: createMap(schema, map),
+          schema: schema
+        }
+      }
+    );
+
+    provider.execute('getEntity', query, context).then(result => res.json(result));
+  };
+}

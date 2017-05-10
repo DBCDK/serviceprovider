@@ -260,6 +260,24 @@ export default class EntityRequest {
     return this._createResponse(data && data.List[0], errors);
   }
 
+  async getSingleProperty(_selector) {
+    const selectorKey = QueryTypeMap[this._elvisType].single;
+    const selector = _selector;
+    const include = this._map;
+
+    if (this._elvisType === 'entity') {
+      selector.type = this._type;
+    }
+
+    const json = {
+      [selectorKey]: selector,
+      Include: include
+    };
+
+    const {data, errors} = await this._request('query', 'post', {json});
+    return this._createResponse(this._mapperFromElvis(data), errors);
+  }
+
   async post(object) {
     const validationError = this._validate(object);
     if (validationError) {

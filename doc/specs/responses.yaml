@@ -7,6 +7,14 @@ responses:
     description: A list of profiles.
     schema:
       $ref: "#/definitions/Profiles"
+  Activity:
+    description: All activity made by user
+    schema:
+      $ref: "#/definitions/Activity"
+  UserIsFollowingGroup:
+    description: Returns the ID of the follow action
+    schema:
+      $ref: "#/definitions/UserIsFollowingGroup"
   Group:
     description: A group object.
     schema:
@@ -15,6 +23,10 @@ responses:
     description: A list of groups
     schema:
       $ref: "#/definitions/Groups"
+  GroupnameExists:
+    description: The group ID is returned if the groupname is found otherwise 400 is returned and the data object will be present but empty
+    schema:
+      $ref: "#/definitions/GroupnameExists"
   Like:
     description: A like.
     schema:
@@ -23,6 +35,10 @@ responses:
     description: A list of likes
     schema:
       $ref: "#/definitions/Likes"
+  UsernameExists:
+    description: The profile ID is returned if the username is found otherwise 400 is returned and the data object will be present but empty
+    schema:
+      $ref: "#/definitions/UsernameExists"
   Follow:
     description: A follow object.
     schema:

@@ -55,18 +55,42 @@ parameters:
     description: Id of object
     required: true
     type: integer
+  group_id:
+    name: id
+    in: path
+    description: Id of group
+    required: true
+    type: integer
+  profile_id:
+    name: id
+    in: path
+    description: Id of profile
+    required: true
+    type: integer
   profile:
     name: person
     in: body
     description: The person to create.
     schema:
       $ref: '#/definitions/Profile'
+  username:
+    name: username
+    in: path
+    description: Username
+    required: true
+    type: string
   group:
     name: group
     in: body
     description: The group to create.
     schema:
       $ref: '#/definitions/Group'
+  groupname:
+    name: groupname
+    in: path
+    description: Groupname
+    required: true
+    type: string
   post:
     name: post
     in: body
