@@ -25,7 +25,7 @@ const context = {
     },
     "communityservice": "http://communitybe-s01:8000/v1"
   },
-  "search": {
+  "communityservice": {     "id": 1,   },   "search": {
     "agency": "775100",
     "profile": "opac",
     "collectionidentifiers": "rec.collectionIdentifier:150013-palle OR rec.collectionIdentifier:758000-katalog"
