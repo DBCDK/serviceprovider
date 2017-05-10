@@ -145,8 +145,6 @@ export function getProfileActivity(map, schema) {
       include.push(Object.assign(inc, {limit: limit, offset: offset}));
     });
 
-    console.log(include);
-
     const query = Object.assign(
       {},
       req.params,
