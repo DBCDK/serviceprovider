@@ -278,6 +278,36 @@ definitions:
       reference:
         $ref: "#/definitions/Reference"
 
+  ReviewPost:
+    properties:
+      profile_id:
+        type: integer
+      title:
+        type: string
+      body:
+        type: string
+      rating:
+        type: integer
+      reference:
+        $ref: "#/definitions/Reference"
+    required:
+      - profile_id
+
+  ReviewPut:
+    properties:
+      modified_by:
+        type: integer
+      title:
+        type: string
+      body:
+        type: string
+      rating:
+        type: integer
+      reference:
+        $ref: "#/definitions/Reference"
+    required:
+      - modified_by
+
   Reviews:
       type: array
       items:

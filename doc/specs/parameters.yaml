@@ -100,6 +100,13 @@ parameters:
     required: true
     type: integer
 
+  review_id:
+    name: id
+    in: path
+    description: Id of review
+    required: true
+    type: integer
+
   profile_id:
     name: profile_id
     in: path
@@ -170,12 +177,12 @@ parameters:
     schema:
       $ref: '#/definitions/CommentPut'
 
-  review:
+  reviewPut:
     name: review
     in: body
     description: a review definition
     schema:
-      $ref: '#/definitions/Review'
+      $ref: '#/definitions/ReviewPut'
 
   quarantinePut:
     name: quarantine
