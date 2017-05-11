@@ -139,6 +139,44 @@ definitions:
       body:
         type: string
 
+  GroupPost:
+    properties:
+      title:
+        type: string
+      body:
+        type: string
+      profile_id:
+        $ref: '#/parameters/profile_id'
+      media:
+        $ref: "#/definitions/Media"
+    required:
+      - title
+      - body
+      - profile_id
+
+  GroupPut:
+    properties:
+      modified_by:
+        type: integer
+      title:
+        type: string
+      body:
+        type: string
+      media:
+        $ref: "#/definitions/Media"
+    required:
+      - modified_by
+
+  Groups:
+    type: array
+    items:
+      $ref: "#/definitions/Group"
+
+  GroupnameExists:
+    properties:
+      id:
+        type: integer
+
   Post:
     allOf:
       - $ref: "#/definitions/Entity"
@@ -262,16 +300,6 @@ definitions:
     items:
       $ref: "#/definitions/Flags"
 
-  Groups:
-    type: array
-    items:
-      $ref: "#/definitions/Group"
-
-  GroupnameExists:
-    properties:
-      id:
-        type: integer
-
   Posts:
     type: array
     items:
@@ -337,6 +365,9 @@ definitions:
         type: string
       value:
         type: object
+    required:
+      - type
+      - value
 
   Base:
     discriminator: "base"

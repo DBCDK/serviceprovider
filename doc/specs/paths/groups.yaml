@@ -26,7 +26,7 @@ paths:
           in: body
           description: The group content.
           schema:
-            $ref: '#/definitions/Group'
+            $ref: '#/definitions/GroupPost'
       responses:
         200:
           $ref: '#/responses/Group'
@@ -39,7 +39,7 @@ paths:
         - Community
       summary: Group in community
       parameters:
-        - $ref: '#/parameters/id'
+        - $ref: '#/parameters/group_id'
         - $ref: '#/parameters/accessToken'
       responses:
         200:
@@ -52,9 +52,9 @@ paths:
       tags:
         - Community
       parameters:
-        - $ref: '#/parameters/id'
+        - $ref: '#/parameters/group_id'
         - $ref: '#/parameters/accessToken'
-        - $ref: '#/parameters/group'
+        - $ref: '#/parameters/groupPut'
       responses:
         200:
           $ref: '#/responses/Group'
@@ -66,7 +66,7 @@ paths:
       tags:
         - Community
       parameters:
-        - $ref: '#/parameters/id'
+        - $ref: '#/parameters/group_id'
         - $ref: '#/parameters/accessToken'
         - $ref: '#/parameters/modified_by'
       responses:
@@ -101,12 +101,12 @@ paths:
         - $ref: '#/parameters/limit'
         - $ref: '#/parameters/offset'
         - $ref: '#/parameters/counts'
-
       responses:
         200:
           $ref: '#/responses/Posts'
         500:
           $ref: '#/responses/Error'
+
   /community/groups/{id}/likes:
     get:
       tags:
@@ -119,12 +119,12 @@ paths:
         - $ref: '#/parameters/limit'
         - $ref: '#/parameters/offset'
         - $ref: '#/parameters/counts'
-
       responses:
         200:
           $ref: '#/responses/Likes'
         500:
           $ref: '#/responses/Error'
+
   /community/groups/{id}/follows:
     get:
       tags:
@@ -142,6 +142,7 @@ paths:
           $ref: '#/responses/Follow'
         500:
           $ref: '#/responses/Error'
+
   /community/groups/{id}/flags:
     get:
       tags:
@@ -159,6 +160,7 @@ paths:
           $ref: '#/responses/Flag'
         500:
           $ref: '#/responses/Error'
+
   /community/groups/{id}/fullview:
     get:
       tags:

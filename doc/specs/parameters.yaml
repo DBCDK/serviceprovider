@@ -87,7 +87,7 @@ parameters:
     type: integer
 
   group_id:
-    name: group_id
+    name: id
     in: path
     description: Id of group
     required: true
@@ -114,12 +114,12 @@ parameters:
     required: true
     type: string
 
-  group:
+  groupPut:
     name: group
     in: body
-    description: The group to create.
+    description: The group to update
     schema:
-      $ref: '#/definitions/Group'
+      $ref: '#/definitions/GroupPut'
 
   groupname:
     name: groupname
@@ -143,11 +143,11 @@ parameters:
       $ref: '#/definitions/CommentPost'
 
   commentPut:
-      name: comment
-      in: body
-      description: The object representing the updates that should made to the comment
-      schema:
-        $ref: '#/definitions/CommentPut'
+    name: comment
+    in: body
+    description: The object representing the updates that should made to the comment
+    schema:
+      $ref: '#/definitions/CommentPut'
 
   review:
     name: review

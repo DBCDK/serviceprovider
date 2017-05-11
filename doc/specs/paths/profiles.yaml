@@ -125,7 +125,7 @@ paths:
         500:
           $ref: '#/responses/Error'
 
-  /community/profiles/{profile_id}/isFollowingGroup/{group_id}:
+  /community/profiles/{profile_id}/isFollowingGroup/{id}:
     get:
       tags:
         - Community
