@@ -48,6 +48,7 @@ paths:
          $ref: '#/responses/Flag'
        500:
          $ref: '#/responses/Error'
+
    delete:
      summary: Delete flag
      tags:

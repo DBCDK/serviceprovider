@@ -72,6 +72,13 @@ parameters:
     required: true
     type: integer
 
+  follow_id:
+    name: id
+    in: path
+    description: Id of follow
+    required: true
+    type: integer
+
   comment_id:
     name: id
     in: path
