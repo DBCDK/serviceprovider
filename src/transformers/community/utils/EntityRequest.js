@@ -110,7 +110,7 @@ export default class EntityRequest {
     delete error.status;
     return {
       status,
-      error,
+      error: error.error || error,
       data: []
     };
   }
@@ -136,6 +136,21 @@ export default class EntityRequest {
       };
     }
     return null;
+  }
+
+  async actionExists(json) {
+    const validateJson = {
+      Actions: {
+        type: this._type,
+        profile_ref: json.profile_ref || null,
+        entity_ref: json.entity_ref || null,
+        owner_id: json.owner_id
+      },
+      Include: {id: 'id'},
+      Limit: 1
+    };
+    const {data} = await this._request('query', 'post', {json: validateJson});
+    return (Number(data.Total) > 0);
   }
 
   _getCounts(name, count) {
@@ -306,6 +321,12 @@ export default class EntityRequest {
     if (this._type) {
       json.type = this._type;
     }
+    if (this._type === 'follow' || this._type === 'like') {
+      if (await this.actionExists(json)) {
+        return this._createResponse({}, [{error: `${this._type} allready exists`, status: 400}]);
+      }
+    }
+
     const {data, errors} = await this._request(this._elvisType, 'post', {json});
     return this._createResponse(this._mapperFromElvis(data), errors);
   }
