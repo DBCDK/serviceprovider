@@ -78,7 +78,7 @@ paths:
         - Community
       summary: List of Likes related to a specific Comment
       parameters:
-        - $ref: '#/parameters/id'
+        - $ref: '#/parameters/comment_id'
         - $ref: '#/parameters/accessToken'
         - $ref: '#/parameters/include'
         - $ref: '#/parameters/limit'
@@ -96,7 +96,7 @@ paths:
         - Community
       summary: List of Followers related to a specific Comment
       parameters:
-        - $ref: '#/parameters/id'
+        - $ref: '#/parameters/comment_id'
         - $ref: '#/parameters/accessToken'
         - $ref: '#/parameters/include'
         - $ref: '#/parameters/limit'
@@ -114,7 +114,7 @@ paths:
         - Community
       summary: List of Flags related to a specific Comment
       parameters:
-        - $ref: '#/parameters/id'
+        - $ref: '#/parameters/comment_id'
         - $ref: '#/parameters/accessToken'
         - $ref: '#/parameters/include'
         - $ref: '#/parameters/limit'
