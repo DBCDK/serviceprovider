@@ -95,7 +95,7 @@ Formatted as a json object
 {
     "type": "image",
     "value": {
-        "full": "http://image.it/my_profile_image.jpg"
+        "full": "http://image.it/my_profile_image.jpg",
         "thumb": "http://image.it/my_profile_image_thumb.jpg"
     }
 }
