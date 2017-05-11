@@ -48,12 +48,13 @@ paths:
          $ref: '#/responses/Follow'
        500:
          $ref: '#/responses/Error'
+
    delete:
      summary: Delete follow
      tags:
        - Community
      parameters:
-       - $ref: '#/parameters/id'
+       - $ref: '#/parameters/follow_id'
        - $ref: '#/parameters/accessToken'
        - $ref: '#/parameters/modified_by'
      responses:
