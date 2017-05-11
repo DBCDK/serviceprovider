@@ -72,6 +72,13 @@ parameters:
     required: true
     type: integer
 
+  like_id:
+    name: id
+    in: path
+    description: Id of like
+    required: true
+    type: integer
+
   follow_id:
     name: id
     in: path
