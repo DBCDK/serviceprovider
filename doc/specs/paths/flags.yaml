@@ -27,7 +27,7 @@ paths:
            in: body
            description: a flag object
            schema:
-             $ref: '#/definitions/Flag'
+             $ref: '#/definitions/ActionPost'
        responses:
          200:
            $ref: '#/responses/Follow'
@@ -41,7 +41,7 @@ paths:
      summary: Get flag
      description: Get a flag by ID
      parameters:
-       - $ref: '#/parameters/id'
+       - $ref: '#/parameters/flag_id'
        - $ref: '#/parameters/accessToken'
      responses:
        200:
@@ -53,7 +53,7 @@ paths:
      tags:
        - Community
      parameters:
-       - $ref: '#/parameters/id'
+       - $ref: '#/parameters/flag_id'
        - $ref: '#/parameters/accessToken'
        - $ref: '#/parameters/modified_by'
      responses:

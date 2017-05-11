@@ -283,6 +283,7 @@ definitions:
         format: int32
       message:
         type: string
+
   Entity:
     allOf:
       - $ref: "#/definitions/Base"
@@ -293,9 +294,18 @@ definitions:
         type: number
         format: integer
     additionalProperties: true
+
   Action:
     allOf:
       - $ref: "#/definitions/Base"
+    properties:
+      reference:
+        $ref: "#/definitions/Reference"
+      profile_id:
+        type: number
+        format: integer
+
+  ActionPost:
     properties:
       reference:
         $ref: "#/definitions/Reference"
@@ -313,6 +323,7 @@ definitions:
         type: string
       id:
         type: integer
+
   Media:
     properties:
       type:
