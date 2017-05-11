@@ -138,6 +138,12 @@ export default class EntityRequest {
     return null;
   }
 
+  /**
+   * Check if an action already exists.
+   *
+   * @param json
+   * @returns {boolean}
+   */
   async actionExists(json) {
     const validateJson = {
       Actions: {
