@@ -41,8 +41,8 @@ paths:
      summary: Get like
      description: Get a like by ID
      parameters:
-       - $ref: '#/parameters/like_id'
        - $ref: '#/parameters/accessToken'
+       - $ref: '#/parameters/like_id'
      responses:
        200:
          $ref: '#/responses/Like'
@@ -54,8 +54,8 @@ paths:
      tags:
        - Community
      parameters:
-       - $ref: '#/parameters/like_id'
        - $ref: '#/parameters/accessToken'
+       - $ref: '#/parameters/like_id'
        - $ref: '#/parameters/modified_by'
      responses:
        200:

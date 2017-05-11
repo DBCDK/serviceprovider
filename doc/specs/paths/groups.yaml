@@ -39,8 +39,8 @@ paths:
         - Community
       summary: Group in community
       parameters:
-        - $ref: '#/parameters/group_id'
         - $ref: '#/parameters/accessToken'
+        - $ref: '#/parameters/group_id'
       responses:
         200:
           $ref: '#/responses/Group'
@@ -52,8 +52,8 @@ paths:
       tags:
         - Community
       parameters:
-        - $ref: '#/parameters/group_id'
         - $ref: '#/parameters/accessToken'
+        - $ref: '#/parameters/group_id'
         - $ref: '#/parameters/groupPut'
       responses:
         200:
@@ -66,8 +66,8 @@ paths:
       tags:
         - Community
       parameters:
-        - $ref: '#/parameters/group_id'
         - $ref: '#/parameters/accessToken'
+        - $ref: '#/parameters/group_id'
         - $ref: '#/parameters/modified_by'
       responses:
         200:
@@ -81,8 +81,8 @@ paths:
       tags:
         - Community
       parameters:
-        - $ref: '#/parameters/groupname'
         - $ref: '#/parameters/accessToken'
+        - $ref: '#/parameters/groupname'
       responses:
         200:
           $ref: '#/responses/GroupnameExists'
@@ -95,8 +95,8 @@ paths:
         - Community
       summary: List of Posts related to a specific Group
       parameters:
-        - $ref: '#/parameters/id'
         - $ref: '#/parameters/accessToken'
+        - $ref: '#/parameters/id'
         - $ref: '#/parameters/include'
         - $ref: '#/parameters/limit'
         - $ref: '#/parameters/offset'
@@ -113,8 +113,8 @@ paths:
         - Community
       summary: List of Likes related to a specific Group
       parameters:
-        - $ref: '#/parameters/id'
         - $ref: '#/parameters/accessToken'
+        - $ref: '#/parameters/id'
         - $ref: '#/parameters/include'
         - $ref: '#/parameters/limit'
         - $ref: '#/parameters/offset'
@@ -131,8 +131,8 @@ paths:
         - Community
       summary: List of Followers related to a specific Group
       parameters:
-        - $ref: '#/parameters/id'
         - $ref: '#/parameters/accessToken'
+        - $ref: '#/parameters/id'
         - $ref: '#/parameters/include'
         - $ref: '#/parameters/limit'
         - $ref: '#/parameters/offset'
@@ -149,8 +149,8 @@ paths:
         - Community
       summary: List of Flags related to a specific Group
       parameters:
-        - $ref: '#/parameters/id'
         - $ref: '#/parameters/accessToken'
+        - $ref: '#/parameters/id'
         - $ref: '#/parameters/include'
         - $ref: '#/parameters/limit'
         - $ref: '#/parameters/offset'

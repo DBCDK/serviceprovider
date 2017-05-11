@@ -41,8 +41,8 @@ paths:
      summary: Get follow
      description: Get a follow by ID
      parameters:
-       - $ref: '#/parameters/id'
        - $ref: '#/parameters/accessToken'
+       - $ref: '#/parameters/id'
      responses:
        200:
          $ref: '#/responses/Follow'
@@ -54,8 +54,8 @@ paths:
      tags:
        - Community
      parameters:
-       - $ref: '#/parameters/follow_id'
        - $ref: '#/parameters/accessToken'
+       - $ref: '#/parameters/follow_id'
        - $ref: '#/parameters/modified_by'
      responses:
        200:

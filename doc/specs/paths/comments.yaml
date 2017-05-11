@@ -49,8 +49,8 @@ paths:
       tags:
         - Community
       parameters:
-        - $ref: '#/parameters/comment_id'
         - $ref: '#/parameters/accessToken'
+        - $ref: '#/parameters/comment_id'
         - $ref: '#/parameters/commentPut'
       responses:
         200:
@@ -63,8 +63,8 @@ paths:
       tags:
         - Community
       parameters:
-        - $ref: '#/parameters/comment_id'
         - $ref: '#/parameters/accessToken'
+        - $ref: '#/parameters/comment_id'
         - $ref: '#/parameters/modified_by'
       responses:
         200:
@@ -78,8 +78,8 @@ paths:
         - Community
       summary: List of Likes related to a specific Comment
       parameters:
-        - $ref: '#/parameters/comment_id'
         - $ref: '#/parameters/accessToken'
+        - $ref: '#/parameters/comment_id'
         - $ref: '#/parameters/include'
         - $ref: '#/parameters/limit'
         - $ref: '#/parameters/offset'
@@ -96,8 +96,8 @@ paths:
         - Community
       summary: List of Followers related to a specific Comment
       parameters:
-        - $ref: '#/parameters/comment_id'
         - $ref: '#/parameters/accessToken'
+        - $ref: '#/parameters/comment_id'
         - $ref: '#/parameters/include'
         - $ref: '#/parameters/limit'
         - $ref: '#/parameters/offset'
@@ -114,8 +114,8 @@ paths:
         - Community
       summary: List of Flags related to a specific Comment
       parameters:
-        - $ref: '#/parameters/comment_id'
         - $ref: '#/parameters/accessToken'
+        - $ref: '#/parameters/comment_id'
         - $ref: '#/parameters/include'
         - $ref: '#/parameters/limit'
         - $ref: '#/parameters/offset'

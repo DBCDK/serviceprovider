@@ -188,6 +188,40 @@ definitions:
       group_id:
         type: integer
 
+  PostPost:
+    properties:
+      title:
+        type: string
+      body:
+        type: string
+      group_id:
+        type: integer
+      profile_id:
+        $ref: '#/parameters/profile_id'
+      media:
+        $ref: '#/definitions/Media'
+    required:
+      - title
+      - body
+      - group_id
+      - profile_id
+
+  PostPut:
+    properties:
+      title:
+        type: string
+      body:
+        type: string
+      modified_by:
+        type: integer
+      media:
+        $ref: '#/definitions/Media'
+    required:
+      - title
+      - body
+      - group_id
+      - modified_by
+
   Review:
     allOf:
       - $ref: "#/definitions/Entity"

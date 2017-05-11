@@ -33,8 +33,8 @@ paths:
       summary: Quarantine in community
       description: Get a Quarantine by ID
       parameters:
-        - $ref: '#/parameters/id'
         - $ref: '#/parameters/accessToken'
+        - $ref: '#/parameters/id'
       responses:
         200:
           $ref: '#/responses/Quarantine'
@@ -44,8 +44,8 @@ paths:
       tags:
         - Community
       parameters:
-        - $ref: '#/parameters/id'
         - $ref: '#/parameters/accessToken'
+        - $ref: '#/parameters/id'
         - $ref: '#/parameters/quarantine'
       responses:
         200:
@@ -56,8 +56,8 @@ paths:
       tags:
         - Community
       parameters:
-        - $ref: '#/parameters/id'
         - $ref: '#/parameters/accessToken'
+        - $ref: '#/parameters/id'
         - $ref: '#/parameters/modified_by'
       responses:
         200:

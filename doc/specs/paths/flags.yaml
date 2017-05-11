@@ -41,8 +41,8 @@ paths:
      summary: Get flag
      description: Get a flag by ID
      parameters:
-       - $ref: '#/parameters/flag_id'
        - $ref: '#/parameters/accessToken'
+       - $ref: '#/parameters/flag_id'
      responses:
        200:
          $ref: '#/responses/Flag'
@@ -54,8 +54,8 @@ paths:
      tags:
        - Community
      parameters:
-       - $ref: '#/parameters/flag_id'
        - $ref: '#/parameters/accessToken'
+       - $ref: '#/parameters/flag_id'
        - $ref: '#/parameters/modified_by'
      responses:
        200:

@@ -142,6 +142,20 @@ parameters:
     schema:
       $ref: '#/definitions/Post'
 
+  postPost:
+    name: post
+    in: body
+    description: The post to create.
+    schema:
+      $ref: '#/definitions/PostPost'
+
+  postPut:
+    name: post
+    in: body
+    description: The post to create.
+    schema:
+      $ref: '#/definitions/PostPut'
+
   commentPost:
     name: comment
     in: body
