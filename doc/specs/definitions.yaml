@@ -119,14 +119,17 @@ definitions:
             type: array
             items:
               $ref: "#/definitions/Review"
+
   UserIsFollowingGroup:
     properties:
       id:
         type: integer
+
   UsernameExists:
     properties:
       id:
         type: integer
+
   Group:
     allOf:
       - $ref: "#/definitions/Entity"
@@ -135,6 +138,7 @@ definitions:
         type: string
       body:
         type: string
+
   Post:
     allOf:
       - $ref: "#/definitions/Entity"
@@ -145,6 +149,7 @@ definitions:
         type: string
       group_id:
         type: integer
+
   Review:
     allOf:
       - $ref: "#/definitions/Entity"
@@ -157,10 +162,12 @@ definitions:
         type: integer
       reference:
         $ref: "#/definitions/Reference"
+
   Reviews:
       type: array
       items:
         $ref: "#/definitions/Review"
+
   Comment:
     allOf:
       - $ref: "#/definitions/Entity"
@@ -177,6 +184,34 @@ definitions:
       - title
       - post_id
 
+  CommentPost:
+    properties:
+      title:
+        type: string
+      body:
+        type: string
+      post_id:
+        type: integer
+      profile_id:
+        $ref: '#/parameters/profile_id'
+    required:
+      - body
+      - title
+      - post_id
+
+  CommentPut:
+    properties:
+      title:
+        type: string
+      body:
+        type: string
+      modifed_by:
+        type: integer
+    required:
+      - body
+      - title
+      - modifed_by
+
   Quarantine:
     allOf:
       - $ref: "#/definitions/Base"
@@ -191,20 +226,25 @@ definitions:
         type: array
         items:
           type: integer
+
   Quarantines:
     type: array
     items:
       $ref: "#/definitions/Quarantine"
+
   Like:
     allOf:
       - $ref: "#/definitions/Action"
+
   Likes:
     type: array
     items:
       $ref: "#/definitions/Like"
+
   Follow:
     allOf:
       - $ref: "#/definitions/Action"
+
   Follows:
     type: array
     items:

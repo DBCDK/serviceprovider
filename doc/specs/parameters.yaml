@@ -55,6 +55,12 @@ parameters:
     description: Id of object
     required: true
     type: integer
+  comment_id:
+    name: id
+    in: path
+    description: Id of comment
+    required: true
+    type: integer
   group_id:
     name: group_id
     in: path
@@ -97,12 +103,18 @@ parameters:
     description: The post to create.
     schema:
       $ref: '#/definitions/Post'
-  comment:
+  commentPost:
     name: comment
     in: body
-    description: The comment to create.
+    description: The object representing the comment to create
     schema:
-      $ref: '#/definitions/Comment'
+      $ref: '#/definitions/CommentPost'
+  commentPut:
+      name: comment
+      in: body
+      description: The object representing the updates that should made to the comment
+      schema:
+        $ref: '#/definitions/CommentPut'
   review:
     name: review
     in: body
