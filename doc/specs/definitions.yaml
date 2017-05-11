@@ -34,10 +34,56 @@ definitions:
     required:
       - username
     additionalProperties: false
+
+  ProfilePost:
+    type: object
+    properties:
+      username:
+        type: string
+      displayName:
+        type: string
+      description:
+        type: string
+      email:
+        type: string
+      phone:
+        type: string
+      birthday:
+        type: string
+        format: date
+      fullName:
+        type: string
+    required:
+      - username
+
+  ProfilePut:
+    type: object
+    properties:
+      modified_by:
+        type: integer
+      username:
+        type: string
+      displayName:
+        type: string
+      description:
+        type: string
+      email:
+        type: string
+      phone:
+        type: string
+      birthday:
+        type: string
+        format: date
+      fullName:
+        type: string
+    required:
+      - modified_by
+
   Profiles:
     type: array
     items:
       $ref: "#/definitions/Profile"
+
   Activity:
     allOf:
       - $ref: "#/definitions/Profile"
@@ -217,9 +263,6 @@ definitions:
       media:
         $ref: '#/definitions/Media'
     required:
-      - title
-      - body
-      - group_id
       - modified_by
 
   Review:

@@ -108,11 +108,18 @@ parameters:
     type: integer
 
   profile:
-    name: person
+    name: profile
     in: body
-    description: The person to create.
+    description: The profile to create.
     schema:
       $ref: '#/definitions/Profile'
+
+  profilePost:
+    name: profile
+    in: body
+    description: The profile to create.
+    schema:
+      $ref: '#/definitions/ProfilePut'
 
   username:
     name: username
@@ -134,13 +141,6 @@ parameters:
     description: Groupname
     required: true
     type: string
-
-  post:
-    name: post
-    in: body
-    description: The post to create.
-    schema:
-      $ref: '#/definitions/Post'
 
   postPost:
     name: post
