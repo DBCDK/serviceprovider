@@ -342,6 +342,40 @@ definitions:
         items:
           type: integer
 
+  QuarantinePost:
+    properties:
+      profile_id:
+        type: integer
+      profile_ref:
+        type: integer
+      reason:
+        type: string
+      flags:
+        type: array
+        items:
+          type: integer
+    required:
+      - profile_id
+      - profile_ref
+      - reason
+
+  QuarantinePut:
+    properties:
+      modified_by:
+       type: integer
+      profile_id:
+        type: integer
+      profile_ref:
+        type: integer
+      reason:
+        type: string
+      flags:
+        type: array
+        items:
+          type: integer
+    required:
+      - modified_by
+
   Quarantines:
     type: array
     items:

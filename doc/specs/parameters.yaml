@@ -107,12 +107,12 @@ parameters:
     required: true
     type: integer
 
-  profile:
-    name: profile
-    in: body
-    description: The profile to create.
-    schema:
-      $ref: '#/definitions/Profile'
+  quarantine_id:
+    name: id
+    in: path
+    description: Id of quarantine
+    required: true
+    type: integer
 
   profilePost:
     name: profile
@@ -177,12 +177,12 @@ parameters:
     schema:
       $ref: '#/definitions/Review'
 
-  quarantine:
+  quarantinePut:
     name: quarantine
     in: body
     description: a quarantine definition
     schema:
-      $ref: '#/definitions/Quarantine'
+      $ref: '#/definitions/QuarantinePut'
 
   modified_by:
     name: Deleted By
