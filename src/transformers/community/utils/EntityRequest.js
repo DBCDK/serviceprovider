@@ -91,6 +91,20 @@ export default class EntityRequest {
     if (errors && errors.length) {
       return this._parseErrors(errors);
     }
+
+    // Map activities to an object
+    // Triggers on activity-feed call
+    Object.keys(data).forEach(dataKey => {
+      if (dataKey.indexOf('activity_') === 0) {
+        if (!data.activity) {
+          data.activity = {};
+        }
+
+        data.activity[dataKey.replace('activity_', '')] = data[dataKey];
+        delete data[dataKey];
+      }
+    });
+
     return {
       status: 200,
       data: data,
@@ -158,6 +172,18 @@ export default class EntityRequest {
     return countQuery;
   }
 
+  _filterInclude(Include = {}, filter = []) {
+    if (Array.isArray(filter)) {
+      filter.forEach(filterKey => {
+        if (Include[filterKey]) {
+          delete Include[filterKey];
+        }
+      });
+    }
+
+    return Include;
+  }
+
   /**
    * Generates an Include object for the JSON sent to the community service.
    * Can take nested objects and different input types.
@@ -192,7 +218,7 @@ export default class EntityRequest {
           }
         }
         else if (typeof item === 'object' && item.name) {
-          const related = getRelatedModel(name, item.name, item.limit, item.offset, item.filter);
+          const related = getRelatedModel(name, item.name, item.limit, item.offset);
           if (related) {
             if (item.include) {
               if (typeof item.include === 'string') {
@@ -201,6 +227,7 @@ export default class EntityRequest {
 
               related.Include = Object.assign({}, related.Include, this._getInclude(item.include, item.filter, item.name));
             }
+            related.Include = this._filterInclude(related.Include, item.filter);
 
             Include[item.name] = related;
             if (item.counts) {
@@ -216,15 +243,7 @@ export default class EntityRequest {
       });
     }
 
-    if (Array.isArray(filter)) {
-      filter.forEach(filterKey => {
-        if (Include[filterKey]) {
-          delete Include[filterKey];
-        }
-      });
-    }
-
-    return Include;
+    return this._filterInclude(Include, filter);
   }
 
   /**
