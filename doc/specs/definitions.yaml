@@ -38,6 +38,95 @@ definitions:
     type: array
     items:
       $ref: "#/definitions/Profile"
+  Activity:
+    allOf:
+      - $ref: "#/definitions/Profile"
+    properties:
+      activity_likes:
+        type: object
+        properties:
+          Total:
+            type: integer
+          NextOffset:
+            type: integer
+          List:
+            type: array
+            items:
+              - $ref: "#/definitions/Like"
+      activity_follows:
+        type: object
+        properties:
+          Total:
+            type: integer
+          NextOffset:
+            type: integer
+          List:
+            type: array
+            items:
+              $ref: "#/definitions/Follow"
+      activity_flags:
+        type: object
+        properties:
+          Total:
+            type: integer
+          NextOffset:
+            type: integer
+          List:
+            type: array
+            items:
+              $ref: "#/definitions/Flag"
+      activity_groups:
+        type: object
+        properties:
+          Total:
+            type: integer
+          NextOffset:
+            type: integer
+          List:
+            type: array
+            items:
+              $ref: "#/definitions/Group"
+      activity_posts:
+        type: object
+        properties:
+          Total:
+            type: integer
+          NextOffset:
+            type: integer
+          List:
+            type: array
+            items:
+              $ref: "#/definitions/Post"
+      activity_comments:
+        type: object
+        properties:
+          Total:
+            type: integer
+          NextOffset:
+            type: integer
+          List:
+            type: array
+            items:
+              $ref: "#/definitions/Comment"
+      activity_reviews:
+        type: object
+        properties:
+          Total:
+            type: integer
+          NextOffset:
+            type: integer
+          List:
+            type: array
+            items:
+              $ref: "#/definitions/Review"
+  UserIsFollowingGroup:
+    properties:
+      id:
+        type: integer
+  UsernameExists:
+    properties:
+      id:
+        type: integer
   Group:
     allOf:
       - $ref: "#/definitions/Entity"
@@ -81,18 +170,31 @@ definitions:
       body:
         type: string
       post_id:
-        type: number
-        format: integer
+        type: integer
+    additionalProperties: true
+    required:
+      - body
+      - title
+      - post_id
+
   Quarantine:
     allOf:
-      - $ref: "#/definitions/Entity"
+      - $ref: "#/definitions/Base"
     properties:
+      profile_id:
+        type: integer
+      profile_ref:
+        type: integer
       reason:
         type: string
       flags:
         type: array
         items:
-          type: object
+          type: integer
+  Quarantines:
+    type: array
+    items:
+      $ref: "#/definitions/Quarantine"
   Like:
     allOf:
       - $ref: "#/definitions/Action"
@@ -121,6 +223,10 @@ definitions:
     type: array
     items:
       $ref: "#/definitions/Group"
+  GroupnameExists:
+    properties:
+      id:
+        type: integer
   Posts:
     type: array
     items:
@@ -146,6 +252,7 @@ definitions:
       profile_id:
         type: number
         format: integer
+    additionalProperties: true
   Action:
     allOf:
       - $ref: "#/definitions/Base"
@@ -158,13 +265,14 @@ definitions:
 
   Reference:
     type: object
+    required:
+      - type
+      - id
     properties:
       type:
         type: string
-        required: true
       id:
         type: integer
-        required: true
   Media:
     properties:
       type:
@@ -186,4 +294,4 @@ definitions:
         type: integer
       id:
         type: integer
-    additionalProperties: false
+    additionalProperties: true

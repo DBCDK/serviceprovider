@@ -22,17 +22,49 @@ parameters:
     in: query
     description: 'Include related objects. Json formatted object with type, limit, offset and count (Total number of elements) e.g. {type: post, limit: 10, offset: 0, count: 1}'
     type: string
-  count:
-    name: 'count'
+  counts:
+    name: 'counts'
     in: query
-    description: 'Include count of named related objects e.g. count=flags&count=likes'
+    description: 'Include count of named related objects e.g. counts=["flags", "likes"]'
     type: array
     items:
       type: string
+  postLimit:
+    name: 'postLimit'
+    in: query
+    description: 'limit of posts to include'
+    type: integer
+  postOffset:
+    name: 'postOffset'
+    in: query
+    description: 'Offset of included posts'
+    type: integer
+  commentLimit:
+    name: 'commentLimit'
+    in: query
+    description: 'limit of comments to include'
+    type: integer
+  commentOffset:
+    name: 'commentOffset'
+    in: query
+    description: 'Offset of included comments'
+    type: integer
   id:
     name: id
     in: path
     description: Id of object
+    required: true
+    type: integer
+  group_id:
+    name: group_id
+    in: path
+    description: Id of group
+    required: true
+    type: integer
+  profile_id:
+    name: profile_id
+    in: path
+    description: Id of profile
     required: true
     type: integer
   profile:
@@ -41,12 +73,24 @@ parameters:
     description: The person to create.
     schema:
       $ref: '#/definitions/Profile'
+  username:
+    name: username
+    in: path
+    description: Username
+    required: true
+    type: string
   group:
     name: group
     in: body
     description: The group to create.
     schema:
       $ref: '#/definitions/Group'
+  groupname:
+    name: groupname
+    in: path
+    description: Groupname
+    required: true
+    type: string
   post:
     name: post
     in: body
@@ -59,3 +103,24 @@ parameters:
     description: The comment to create.
     schema:
       $ref: '#/definitions/Comment'
+  review:
+    name: review
+    in: body
+    description: a review definition
+    schema:
+      $ref: '#/definitions/Review'
+  quarantine:
+    name: quarantine
+    in: body
+    description: a quarantine definition
+    schema:
+      $ref: '#/definitions/Quarantine'
+  modified_by:
+    name: Deleted By
+    in: body
+    description: Id of profile modifiying the object.
+    schema:
+      properties:
+        modified_by:
+          type: integer
+

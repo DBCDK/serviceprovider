@@ -1,0 +1,63 @@
+paths:
+  /community/likes/:
+     get:
+       tags:
+         - Community
+       summary: List Likes
+       parameters:
+         - $ref: '#/parameters/accessToken'
+         - $ref: '#/parameters/include'
+         - $ref: '#/parameters/limit'
+         - $ref: '#/parameters/offset'
+       responses:
+         500:
+           $ref: '#/responses/Error'
+         200:
+           $ref: '#/responses/Likes'
+         default:
+           $ref: '#/responses/Likes'
+
+     post:
+       summary: Create Likes
+       tags:
+         - Community
+       parameters:
+         - $ref: '#/parameters/accessToken'
+         - name: like
+           in: body
+           description: The Like objekt
+           schema:
+             $ref: '#/definitions/Like'
+       responses:
+         200:
+           $ref: '#/responses/Like'
+         500:
+           $ref: '#/responses/Error'
+
+  /community/likes/{id}:
+   get:
+     tags:
+       - Community
+     summary: Get like
+     description: Get a like by ID
+     parameters:
+       - $ref: '#/parameters/id'
+       - $ref: '#/parameters/accessToken'
+     responses:
+       200:
+         $ref: '#/responses/Like'
+       500:
+         $ref: '#/responses/Error'
+   delete:
+     summary: Delete like
+     tags:
+       - Community
+     parameters:
+       - $ref: '#/parameters/id'
+       - $ref: '#/parameters/accessToken'
+       - $ref: '#/parameters/modified_by'
+     responses:
+       200:
+         $ref: '#/responses/Like'
+       default:
+         $ref: '#/responses/Error'

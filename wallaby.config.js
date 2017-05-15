@@ -5,7 +5,7 @@ module.exports = function(wallaby) {
     files: [
       'package.json',
       'doc/work-context.jsonld',
-      'doc/spec.yaml',
+      'doc/**/*.yaml',
       'src/**/*.js',
       '!src/**/*.test.js',
       '!src/**/__tests__/*.js'
@@ -19,7 +19,7 @@ module.exports = function(wallaby) {
     compilers: {
       '**/*.js': wallaby.compilers.babel({
         babel: babel,
-        plugins: ['transform-es2015-modules-commonjs']
+        plugins: ['transform-es2015-modules-commonjs', 'transform-async-to-generator']
       })
     },
 

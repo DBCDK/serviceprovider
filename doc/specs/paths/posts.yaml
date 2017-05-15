@@ -1,70 +1,59 @@
 paths:
-  /community/reviews/:
+  /community/posts/:
     get:
       tags:
         - Community
-      summary: List of Reviews
+      summary: List of Posts
       parameters:
         - $ref: '#/parameters/accessToken'
         - $ref: '#/parameters/include'
         - $ref: '#/parameters/limit'
         - $ref: '#/parameters/offset'
+        - $ref: '#/parameters/counts'
+
       responses:
-        500:
-          $ref: '#/responses/Error'
         200:
-          $ref: '#/responses/Reviews'
-        default:
-          $ref: '#/responses/Reviews'
+          $ref: '#/responses/Posts'
 
     post:
-      summary: Create review
+      summary: Create Post
       tags:
         - Community
       parameters:
         - $ref: '#/parameters/accessToken'
-        - name: review
-          in: body
-          description: The review
-          schema:
-            $ref: '#/definitions/Review'
+        - $ref: '#/parameters/post'
       responses:
         200:
-          $ref: '#/responses/Review'
-        500:
+          $ref: '#/responses/Post'
+        default:
           $ref: '#/responses/Error'
 
-  /community/reviews/{id}:
+  /community/posts/{id}:
     get:
       tags:
         - Community
-      summary: Review in community
-      description: Get a review by ID
+      summary: Post in community
       parameters:
         - $ref: '#/parameters/id'
         - $ref: '#/parameters/accessToken'
       responses:
         200:
-          $ref: '#/responses/Review'
-        500:
-          $ref: '#/responses/Error'
+          $ref: '#/responses/Post'
 
     put:
-      summary: Update a review
+      summary: Update post
       tags:
         - Community
       parameters:
         - $ref: '#/parameters/id'
         - $ref: '#/parameters/accessToken'
-        - $ref: '#/parameters/review'
+        - $ref: '#/parameters/post'
       responses:
         200:
-          $ref: '#/responses/Review'
-        500:
-          $ref: '#/responses/Error'
+          $ref: '#/responses/Post'
 
     delete:
-      summary: Delete a review
+      summary: Delete post
       tags:
         - Community
       parameters:
@@ -73,15 +62,27 @@ paths:
         - $ref: '#/parameters/modified_by'
       responses:
         200:
-          $ref: '#/responses/Review'
-        default:
-          $ref: '#/responses/Error'
-
-  /community/reviews/{id}/likes:
+          $ref: '#/responses/Post'
+  /community/posts/{id}/comments:
     get:
       tags:
         - Community
-      summary: List of Likes related to a specific Review
+      summary: List of Comments related to a specific Post
+      parameters:
+        - $ref: '#/parameters/id'
+        - $ref: '#/parameters/accessToken'
+        - $ref: '#/parameters/include'
+        - $ref: '#/parameters/limit'
+        - $ref: '#/parameters/offset'
+        - $ref: '#/parameters/counts'
+      responses:
+        200:
+          $ref: '#/responses/Comments'
+  /community/posts/{id}/likes:
+    get:
+      tags:
+        - Community
+      summary: List of Likes related to a specific Post
       parameters:
         - $ref: '#/parameters/id'
         - $ref: '#/parameters/accessToken'
@@ -94,12 +95,11 @@ paths:
           $ref: '#/responses/Likes'
         500:
           $ref: '#/responses/Error'
-
-  /community/reviews/{id}/flags:
+  /community/posts/{id}/follows:
     get:
       tags:
         - Community
-      summary: List of Flags related to a specific Review
+      summary: List of Followers related to a specific Post
       parameters:
         - $ref: '#/parameters/id'
         - $ref: '#/parameters/accessToken'
@@ -109,6 +109,23 @@ paths:
         - $ref: '#/parameters/counts'
       responses:
         200:
-          $ref: '#/responses/Flags'
+          $ref: '#/responses/Follow'
+        500:
+          $ref: '#/responses/Error'
+  /community/posts/{id}/flags:
+    get:
+      tags:
+        - Community
+      summary: List of Flags related to a specific Post
+      parameters:
+        - $ref: '#/parameters/id'
+        - $ref: '#/parameters/accessToken'
+        - $ref: '#/parameters/include'
+        - $ref: '#/parameters/limit'
+        - $ref: '#/parameters/offset'
+        - $ref: '#/parameters/counts'
+      responses:
+        200:
+          $ref: '#/responses/Flag'
         500:
           $ref: '#/responses/Error'
