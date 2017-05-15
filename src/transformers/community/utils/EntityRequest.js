@@ -189,7 +189,6 @@ export default class EntityRequest {
           }
         }
         else if (typeof item === 'object' && item.name) {
-          console.log(item);
           const related = getRelatedModel(name, item.name, item.limit, item.offset);
           if (related) {
             if (item.include) {
