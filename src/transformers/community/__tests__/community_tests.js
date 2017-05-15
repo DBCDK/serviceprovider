@@ -3,6 +3,7 @@ const request = require('superagent');
 
 const token = 'qwerty';
 const singleGroupId = 100;
+const singleProfileId = 91;
 const parameters = {
   groups: {
     name: 'title'
@@ -176,6 +177,42 @@ Object.keys(parameters).forEach(entityType => {
           });
       });
     });
+  });
+});
+
+describe('Test include on profile', function () {
+  it('should remap activities to an object', function(done) {
+    request
+      .get(`http://localhost:8080/v1/community/profiles/${singleProfileId}/activity`)
+      .query({access_token: token})
+      .end((err, res) => {
+        assert.ifError(err);
+
+        const item = res.body.data;
+        assert.equal(item.id, singleProfileId);
+        assert.equal(typeof item.activity, 'object');
+        assert.equal(typeof item.activity.likes, 'object');
+        assert.equal(typeof item.activity.follows, 'object');
+        assert.equal(typeof item.activity.flags, 'object');
+        assert.equal(typeof item.activity.groups, 'object');
+        assert.equal(typeof item.activity.posts, 'object');
+        assert.equal(typeof item.activity.comments, 'object');
+        assert.equal(typeof item.activity.reviews, 'object');
+
+        assert(Array.isArray(item.activity.reviews.List));
+        assert(Array.isArray(item.activity.comments.List));
+        assert(Array.isArray(item.activity.posts.List));
+        assert(Array.isArray(item.activity.groups.List));
+        assert(Array.isArray(item.activity.flags.List));
+        assert(Array.isArray(item.activity.follows.List));
+        assert(Array.isArray(item.activity.likes.List));
+
+        Object.keys(item).forEach(itemKey => {
+          assert(itemKey.indexOf('activity_') < 0);
+        });
+
+        done();
+      });
   });
 });
 

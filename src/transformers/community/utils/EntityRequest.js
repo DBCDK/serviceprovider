@@ -91,6 +91,20 @@ export default class EntityRequest {
     if (errors && errors.length) {
       return this._parseErrors(errors);
     }
+
+    // Map activities to an object
+    // Triggers on activity-feed call
+    Object.keys(data).forEach(dataKey => {
+      if (dataKey.indexOf('activity_') === 0) {
+        if (!data.activity) {
+          data.activity = {};
+        }
+
+        data.activity[dataKey.replace('activity_', '')] = data[dataKey];
+        delete data[dataKey];
+      }
+    });
+
     return {
       status: 200,
       data: data,
