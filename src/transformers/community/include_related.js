@@ -8,7 +8,7 @@ import {schemas as entities} from './entities';
 
 const schemas = {actions, profile, entities};
 
-export function getRelatedModel(ownerName, mappingName, limit = 2, offset = 0, filter = []) {
+export function getRelatedModel(ownerName, mappingName, limit = 2, offset = 0) {
   const ownerMapping = {
     Profile: {id: '^owner_id'},
     Include: schemas.profile.profile

@@ -566,4 +566,26 @@ describe('Test include on group/{id}', function() {
         done();
       });
   });
+
+  it('filters should work on nested objects', function(done) {
+    request
+      .get(`http://localhost:8080/v1/community/groups/${singleGroupId}`)
+      .query({
+        access_token: token,
+        include: '[{"name": "posts", "limit": 1, "counts": ["comments"], "filter": ["modified_epoch"]}]'
+      })
+      .end((err, res) => {
+        assert.ifError(err);
+        const item = res.body.data;
+        assert(item.posts);
+        item.posts.List.forEach(post => {
+          assert(post.id);
+          assert(post.title);
+          assert(post.commentsCount);
+          assert(Object.keys(post).indexOf('modified_epoch') < 0);
+        });
+
+        done();
+      });
+  });
 });
