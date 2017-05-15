@@ -27,7 +27,7 @@ paths:
           in: body
           description: The profile
           schema:
-            $ref: '#/definitions/Profile'
+            $ref: '#/definitions/ProfilePost'
       responses:
         200:
           $ref: '#/responses/Profile'
@@ -41,8 +41,8 @@ paths:
       summary: Profile in community
       description: Get A profile by ID
       parameters:
-        - $ref: '#/parameters/profile_id'
         - $ref: '#/parameters/accessToken'
+        - $ref: '#/parameters/profile_id'
       responses:
         200:
           $ref: '#/responses/Profile'
@@ -54,9 +54,9 @@ paths:
       tags:
         - Community
       parameters:
-        - $ref: '#/parameters/profile_id'
         - $ref: '#/parameters/accessToken'
-        - $ref: '#/parameters/profile'
+        - $ref: '#/parameters/profile_id'
+        - $ref: '#/parameters/profilePost'
       responses:
         200:
           $ref: '#/responses/Profile'
@@ -68,8 +68,8 @@ paths:
       tags:
         - Community
       parameters:
-        - $ref: '#/parameters/profile_id'
         - $ref: '#/parameters/accessToken'
+        - $ref: '#/parameters/profile_id'
         - $ref: '#/parameters/modified_by'
       responses:
         200:
@@ -99,8 +99,8 @@ paths:
       tags:
         - Community
       parameters:
-        - $ref: '#/parameters/username'
         - $ref: '#/parameters/accessToken'
+        - $ref: '#/parameters/username'
       responses:
         200:
           $ref: '#/responses/UsernameExists'
@@ -113,8 +113,8 @@ paths:
         - Community
       summary: List of Likes related to a specific Profile
       parameters:
-        - $ref: '#/parameters/profile_id'
         - $ref: '#/parameters/accessToken'
+        - $ref: '#/parameters/profile_id'
         - $ref: '#/parameters/include'
         - $ref: '#/parameters/limit'
         - $ref: '#/parameters/offset'
@@ -125,15 +125,15 @@ paths:
         500:
           $ref: '#/responses/Error'
 
-  /community/profiles/{profile_id}/isFollowingGroup/{group_id}:
+  /community/profiles/{profile_id}/isFollowingGroup/{id}:
     get:
       tags:
         - Community
       summary: Checks if the profile given by the profile_id is following the group given by group_id
       parameters:
+        - $ref: '#/parameters/accessToken'
         - $ref: '#/parameters/profile_id'
         - $ref: '#/parameters/group_id'
-        - $ref: '#/parameters/accessToken'
       responses:
         200:
           $ref: '#/responses/UserIsFollowingGroup'
@@ -146,8 +146,8 @@ paths:
         - Community
       summary: List of Followers related to a specific Profile
       parameters:
-        - $ref: '#/parameters/profile_id'
         - $ref: '#/parameters/accessToken'
+        - $ref: '#/parameters/profile_id'
         - $ref: '#/parameters/include'
         - $ref: '#/parameters/limit'
         - $ref: '#/parameters/offset'
@@ -164,8 +164,8 @@ paths:
         - Community
       summary: List of Flags related to a specific Profile
       parameters:
-        - $ref: '#/parameters/profile_id'
         - $ref: '#/parameters/accessToken'
+        - $ref: '#/parameters/profile_id'
         - $ref: '#/parameters/include'
         - $ref: '#/parameters/limit'
         - $ref: '#/parameters/offset'
@@ -182,8 +182,8 @@ paths:
         - Community
       summary: List of Quarantines related to a specific Profile
       parameters:
-        - $ref: '#/parameters/profile_id'
         - $ref: '#/parameters/accessToken'
+        - $ref: '#/parameters/profile_id'
         - $ref: '#/parameters/include'
         - $ref: '#/parameters/limit'
         - $ref: '#/parameters/offset'

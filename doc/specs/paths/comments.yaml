@@ -22,7 +22,7 @@ paths:
         - Community
       parameters:
         - $ref: '#/parameters/accessToken'
-        - $ref: '#/parameters/comment'
+        - $ref: '#/parameters/commentPost'
       responses:
         200:
           $ref: '#/definitions/Comment'
@@ -35,7 +35,7 @@ paths:
         - Community
       summary: Comment in community
       parameters:
-        - $ref: '#/parameters/id'
+        - $ref: '#/parameters/comment_id'
         - $ref: '#/parameters/accessToken'
         - $ref: '#/parameters/include'
       responses:
@@ -49,9 +49,9 @@ paths:
       tags:
         - Community
       parameters:
-        - $ref: '#/parameters/id'
         - $ref: '#/parameters/accessToken'
-        - $ref: '#/parameters/comment'
+        - $ref: '#/parameters/comment_id'
+        - $ref: '#/parameters/commentPut'
       responses:
         200:
           $ref: '#/definitions/Comment'
@@ -63,22 +63,23 @@ paths:
       tags:
         - Community
       parameters:
-        - $ref: '#/parameters/id'
         - $ref: '#/parameters/accessToken'
+        - $ref: '#/parameters/comment_id'
         - $ref: '#/parameters/modified_by'
       responses:
         200:
           $ref: '#/responses/Comment'
         default:
           $ref: '#/responses/Error'
+
   /community/comments/{id}/likes:
     get:
       tags:
         - Community
       summary: List of Likes related to a specific Comment
       parameters:
-        - $ref: '#/parameters/id'
         - $ref: '#/parameters/accessToken'
+        - $ref: '#/parameters/comment_id'
         - $ref: '#/parameters/include'
         - $ref: '#/parameters/limit'
         - $ref: '#/parameters/offset'
@@ -88,14 +89,15 @@ paths:
           $ref: '#/responses/Likes'
         500:
           $ref: '#/responses/Error'
+
   /community/comments/{id}/follows:
     get:
       tags:
         - Community
       summary: List of Followers related to a specific Comment
       parameters:
-        - $ref: '#/parameters/id'
         - $ref: '#/parameters/accessToken'
+        - $ref: '#/parameters/comment_id'
         - $ref: '#/parameters/include'
         - $ref: '#/parameters/limit'
         - $ref: '#/parameters/offset'
@@ -105,14 +107,15 @@ paths:
           $ref: '#/responses/Follow'
         500:
           $ref: '#/responses/Error'
+
   /community/comments/{id}/flags:
     get:
       tags:
         - Community
       summary: List of Flags related to a specific Comment
       parameters:
-        - $ref: '#/parameters/id'
         - $ref: '#/parameters/accessToken'
+        - $ref: '#/parameters/comment_id'
         - $ref: '#/parameters/include'
         - $ref: '#/parameters/limit'
         - $ref: '#/parameters/offset'
