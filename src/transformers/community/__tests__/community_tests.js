@@ -362,7 +362,6 @@ describe('Test include on groups', function() {
         include: JSON.stringify([
           {name: 'flags'},
           {name: 'likes', include: ['owner']},
-          {name: 'followers'},
           'quarantines'
         ])
       })
@@ -386,15 +385,6 @@ describe('Test include on groups', function() {
           item.flags.List.forEach(flag => {
             assert(flag.id);
             assert(flag.reason);
-          });
-
-          assert(item.followers);
-          assert(item.followers.Total);
-
-          item.followers.List.forEach(follower => {
-            assert(follower.id);
-            assert(follower.profile_id);
-            assert(follower.created_epoch);
           });
         });
         done();
@@ -459,7 +449,6 @@ describe('Test include on group/{id}', function() {
         include: JSON.stringify([
           {name: 'flags'},
           {name: 'likes', include: ['owner']},
-          {name: 'followers'},
           'quarantines'
         ])
       })
@@ -481,15 +470,6 @@ describe('Test include on group/{id}', function() {
         item.flags.List.forEach(flag => {
           assert(flag.id);
           assert(flag.reason);
-        });
-
-        assert(item.followers);
-        assert(item.followers.Total);
-
-        item.followers.List.forEach(follower => {
-          assert(follower.id);
-          assert(follower.profile_id);
-          assert(follower.created_epoch);
         });
 
         done();
