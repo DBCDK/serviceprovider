@@ -34,10 +34,56 @@ definitions:
     required:
       - username
     additionalProperties: false
+
+  ProfilePost:
+    type: object
+    properties:
+      username:
+        type: string
+      displayName:
+        type: string
+      description:
+        type: string
+      email:
+        type: string
+      phone:
+        type: string
+      birthday:
+        type: string
+        format: date
+      fullName:
+        type: string
+    required:
+      - username
+
+  ProfilePut:
+    type: object
+    properties:
+      modified_by:
+        type: integer
+      username:
+        type: string
+      displayName:
+        type: string
+      description:
+        type: string
+      email:
+        type: string
+      phone:
+        type: string
+      birthday:
+        type: string
+        format: date
+      fullName:
+        type: string
+    required:
+      - modified_by
+
   Profiles:
     type: array
     items:
       $ref: "#/definitions/Profile"
+
   Activity:
     allOf:
       - $ref: "#/definitions/Profile"
@@ -119,14 +165,17 @@ definitions:
             type: array
             items:
               $ref: "#/definitions/Review"
+
   UserIsFollowingGroup:
     properties:
       id:
         type: integer
+
   UsernameExists:
     properties:
       id:
         type: integer
+
   Group:
     allOf:
       - $ref: "#/definitions/Entity"
@@ -135,6 +184,45 @@ definitions:
         type: string
       body:
         type: string
+
+  GroupPost:
+    properties:
+      title:
+        type: string
+      body:
+        type: string
+      profile_id:
+        $ref: '#/parameters/profile_id'
+      media:
+        $ref: "#/definitions/Media"
+    required:
+      - title
+      - body
+      - profile_id
+
+  GroupPut:
+    properties:
+      modified_by:
+        type: integer
+      title:
+        type: string
+      body:
+        type: string
+      media:
+        $ref: "#/definitions/Media"
+    required:
+      - modified_by
+
+  Groups:
+    type: array
+    items:
+      $ref: "#/definitions/Group"
+
+  GroupnameExists:
+    properties:
+      id:
+        type: integer
+
   Post:
     allOf:
       - $ref: "#/definitions/Entity"
@@ -145,6 +233,38 @@ definitions:
         type: string
       group_id:
         type: integer
+
+  PostPost:
+    properties:
+      title:
+        type: string
+      body:
+        type: string
+      group_id:
+        type: integer
+      profile_id:
+        $ref: '#/parameters/profile_id'
+      media:
+        $ref: '#/definitions/Media'
+    required:
+      - title
+      - body
+      - group_id
+      - profile_id
+
+  PostPut:
+    properties:
+      title:
+        type: string
+      body:
+        type: string
+      modified_by:
+        type: integer
+      media:
+        $ref: '#/definitions/Media'
+    required:
+      - modified_by
+
   Review:
     allOf:
       - $ref: "#/definitions/Entity"
@@ -157,10 +277,42 @@ definitions:
         type: integer
       reference:
         $ref: "#/definitions/Reference"
+
+  ReviewPost:
+    properties:
+      profile_id:
+        type: integer
+      title:
+        type: string
+      body:
+        type: string
+      rating:
+        type: integer
+      reference:
+        $ref: "#/definitions/Reference"
+    required:
+      - profile_id
+
+  ReviewPut:
+    properties:
+      modified_by:
+        type: integer
+      title:
+        type: string
+      body:
+        type: string
+      rating:
+        type: integer
+      reference:
+        $ref: "#/definitions/Reference"
+    required:
+      - modified_by
+
   Reviews:
       type: array
       items:
         $ref: "#/definitions/Review"
+
   Comment:
     allOf:
       - $ref: "#/definitions/Entity"
@@ -177,6 +329,34 @@ definitions:
       - title
       - post_id
 
+  CommentPost:
+    properties:
+      title:
+        type: string
+      body:
+        type: string
+      post_id:
+        type: integer
+      profile_id:
+        $ref: '#/parameters/profile_id'
+    required:
+      - body
+      - title
+      - post_id
+
+  CommentPut:
+    properties:
+      title:
+        type: string
+      body:
+        type: string
+      modifed_by:
+        type: integer
+    required:
+      - body
+      - title
+      - modifed_by
+
   Quarantine:
     allOf:
       - $ref: "#/definitions/Base"
@@ -191,50 +371,86 @@ definitions:
         type: array
         items:
           type: integer
+
+  QuarantinePost:
+    properties:
+      profile_id:
+        type: integer
+      profile_ref:
+        type: integer
+      reason:
+        type: string
+      flags:
+        type: array
+        items:
+          type: integer
+    required:
+      - profile_id
+      - profile_ref
+      - reason
+
+  QuarantinePut:
+    properties:
+      modified_by:
+       type: integer
+      profile_id:
+        type: integer
+      profile_ref:
+        type: integer
+      reason:
+        type: string
+      flags:
+        type: array
+        items:
+          type: integer
+    required:
+      - modified_by
+
   Quarantines:
     type: array
     items:
       $ref: "#/definitions/Quarantine"
+
   Like:
     allOf:
       - $ref: "#/definitions/Action"
+
   Likes:
     type: array
     items:
       $ref: "#/definitions/Like"
+
   Follow:
     allOf:
-      - $ref: "#/definitions/Action"
+      - $ref: "#/definitions/ActionPost"
+
   Follows:
     type: array
     items:
       $ref: "#/definitions/Follow"
+
   Flag:
     allOf:
       - $ref: "#/definitions/Action"
     properties:
       reason:
         type: string
+
   Flags:
     type: array
     items:
       $ref: "#/definitions/Flags"
-  Groups:
-    type: array
-    items:
-      $ref: "#/definitions/Group"
-  GroupnameExists:
-    properties:
-      id:
-        type: integer
+
   Posts:
     type: array
     items:
       $ref: "#/definitions/Post"
+
   Comments:
     type: array
     items:
       $ref: "#/definitions/Comment"
+
   Error:
     type: object
     properties:
@@ -243,6 +459,7 @@ definitions:
         format: int32
       message:
         type: string
+
   Entity:
     allOf:
       - $ref: "#/definitions/Base"
@@ -253,9 +470,18 @@ definitions:
         type: number
         format: integer
     additionalProperties: true
+
   Action:
     allOf:
       - $ref: "#/definitions/Base"
+    properties:
+      reference:
+        $ref: "#/definitions/Reference"
+      profile_id:
+        type: number
+        format: integer
+
+  ActionPost:
     properties:
       reference:
         $ref: "#/definitions/Reference"
@@ -273,12 +499,16 @@ definitions:
         type: string
       id:
         type: integer
+
   Media:
     properties:
       type:
         type: string
       value:
         type: object
+    required:
+      - type
+      - value
 
   Base:
     discriminator: "base"

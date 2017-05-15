@@ -21,7 +21,7 @@ paths:
         - Community
       parameters:
         - $ref: '#/parameters/accessToken'
-        - $ref: '#/parameters/post'
+        - $ref: '#/parameters/postPost'
       responses:
         200:
           $ref: '#/responses/Post'
@@ -34,8 +34,8 @@ paths:
         - Community
       summary: Post in community
       parameters:
-        - $ref: '#/parameters/id'
         - $ref: '#/parameters/accessToken'
+        - $ref: '#/parameters/id'
       responses:
         200:
           $ref: '#/responses/Post'
@@ -45,9 +45,9 @@ paths:
       tags:
         - Community
       parameters:
-        - $ref: '#/parameters/id'
         - $ref: '#/parameters/accessToken'
-        - $ref: '#/parameters/post'
+        - $ref: '#/parameters/id'
+        - $ref: '#/parameters/postPut'
       responses:
         200:
           $ref: '#/responses/Post'
@@ -57,20 +57,21 @@ paths:
       tags:
         - Community
       parameters:
-        - $ref: '#/parameters/id'
         - $ref: '#/parameters/accessToken'
+        - $ref: '#/parameters/id'
         - $ref: '#/parameters/modified_by'
       responses:
         200:
           $ref: '#/responses/Post'
+
   /community/posts/{id}/comments:
     get:
       tags:
         - Community
       summary: List of Comments related to a specific Post
       parameters:
-        - $ref: '#/parameters/id'
         - $ref: '#/parameters/accessToken'
+        - $ref: '#/parameters/id'
         - $ref: '#/parameters/include'
         - $ref: '#/parameters/limit'
         - $ref: '#/parameters/offset'
@@ -78,14 +79,15 @@ paths:
       responses:
         200:
           $ref: '#/responses/Comments'
+
   /community/posts/{id}/likes:
     get:
       tags:
         - Community
       summary: List of Likes related to a specific Post
       parameters:
-        - $ref: '#/parameters/id'
         - $ref: '#/parameters/accessToken'
+        - $ref: '#/parameters/id'
         - $ref: '#/parameters/include'
         - $ref: '#/parameters/limit'
         - $ref: '#/parameters/offset'
@@ -95,14 +97,15 @@ paths:
           $ref: '#/responses/Likes'
         500:
           $ref: '#/responses/Error'
+
   /community/posts/{id}/follows:
     get:
       tags:
         - Community
       summary: List of Followers related to a specific Post
       parameters:
-        - $ref: '#/parameters/id'
         - $ref: '#/parameters/accessToken'
+        - $ref: '#/parameters/id'
         - $ref: '#/parameters/include'
         - $ref: '#/parameters/limit'
         - $ref: '#/parameters/offset'
@@ -112,14 +115,15 @@ paths:
           $ref: '#/responses/Follow'
         500:
           $ref: '#/responses/Error'
+
   /community/posts/{id}/flags:
     get:
       tags:
         - Community
       summary: List of Flags related to a specific Post
       parameters:
-        - $ref: '#/parameters/id'
         - $ref: '#/parameters/accessToken'
+        - $ref: '#/parameters/id'
         - $ref: '#/parameters/include'
         - $ref: '#/parameters/limit'
         - $ref: '#/parameters/offset'

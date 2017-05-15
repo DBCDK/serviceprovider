@@ -27,7 +27,7 @@ paths:
           in: body
           description: The review
           schema:
-            $ref: '#/definitions/Review'
+            $ref: '#/definitions/ReviewPost'
       responses:
         200:
           $ref: '#/responses/Review'
@@ -41,8 +41,8 @@ paths:
       summary: Review in community
       description: Get a review by ID
       parameters:
-        - $ref: '#/parameters/id'
         - $ref: '#/parameters/accessToken'
+        - $ref: '#/parameters/review_id'
       responses:
         200:
           $ref: '#/responses/Review'
@@ -54,9 +54,9 @@ paths:
       tags:
         - Community
       parameters:
-        - $ref: '#/parameters/id'
         - $ref: '#/parameters/accessToken'
-        - $ref: '#/parameters/review'
+        - $ref: '#/parameters/review_id'
+        - $ref: '#/parameters/reviewPut'
       responses:
         200:
           $ref: '#/responses/Review'
@@ -68,8 +68,8 @@ paths:
       tags:
         - Community
       parameters:
-        - $ref: '#/parameters/id'
         - $ref: '#/parameters/accessToken'
+        - $ref: '#/parameters/review_id'
         - $ref: '#/parameters/modified_by'
       responses:
         200:
@@ -83,8 +83,8 @@ paths:
         - Community
       summary: List of Likes related to a specific Review
       parameters:
-        - $ref: '#/parameters/id'
         - $ref: '#/parameters/accessToken'
+        - $ref: '#/parameters/review_id'
         - $ref: '#/parameters/include'
         - $ref: '#/parameters/limit'
         - $ref: '#/parameters/offset'
@@ -101,8 +101,8 @@ paths:
         - Community
       summary: List of Flags related to a specific Review
       parameters:
-        - $ref: '#/parameters/id'
         - $ref: '#/parameters/accessToken'
+        - $ref: '#/parameters/review_id'
         - $ref: '#/parameters/include'
         - $ref: '#/parameters/limit'
         - $ref: '#/parameters/offset'

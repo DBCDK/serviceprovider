@@ -5,23 +5,27 @@ parameters:
     description: 'Access token from the OAuth2 server'
     type: 'string'
     required: true
+
   limit:
     name: limit
     in: query
     description: Number of elements to return
     default: 10
     type: integer
+
   offset:
     name: offset
     in: query
     description: Offset value
     default: 0
     type: integer
+
   include:
     name: 'include'
     in: query
     description: 'Include related objects. Json formatted object with type, limit, offset and count (Total number of elements) e.g. {type: post, limit: 10, offset: 0, count: 1}'
     type: string
+
   counts:
     name: 'counts'
     in: query
@@ -29,92 +33,164 @@ parameters:
     type: array
     items:
       type: string
+
   postLimit:
     name: 'postLimit'
     in: query
     description: 'limit of posts to include'
     type: integer
+
   postOffset:
     name: 'postOffset'
     in: query
     description: 'Offset of included posts'
     type: integer
+
   commentLimit:
     name: 'commentLimit'
     in: query
     description: 'limit of comments to include'
     type: integer
+
   commentOffset:
     name: 'commentOffset'
     in: query
     description: 'Offset of included comments'
     type: integer
+
   id:
     name: id
     in: path
     description: Id of object
     required: true
     type: integer
+
+  flag_id:
+    name: id
+    in: path
+    description: Id of flag
+    required: true
+    type: integer
+
+  like_id:
+    name: id
+    in: path
+    description: Id of like
+    required: true
+    type: integer
+
+  follow_id:
+    name: id
+    in: path
+    description: Id of follow
+    required: true
+    type: integer
+
+  comment_id:
+    name: id
+    in: path
+    description: Id of comment
+    required: true
+    type: integer
+
   group_id:
-    name: group_id
+    name: id
     in: path
     description: Id of group
     required: true
     type: integer
+
+  review_id:
+    name: id
+    in: path
+    description: Id of review
+    required: true
+    type: integer
+
   profile_id:
     name: profile_id
     in: path
     description: Id of profile
     required: true
     type: integer
-  profile:
-    name: person
+
+  quarantine_id:
+    name: id
+    in: path
+    description: Id of quarantine
+    required: true
+    type: integer
+
+  profilePost:
+    name: profile
     in: body
-    description: The person to create.
+    description: The profile to create.
     schema:
-      $ref: '#/definitions/Profile'
+      $ref: '#/definitions/ProfilePut'
+
   username:
     name: username
     in: path
     description: Username
     required: true
     type: string
-  group:
+
+  groupPut:
     name: group
     in: body
-    description: The group to create.
+    description: The group to update
     schema:
-      $ref: '#/definitions/Group'
+      $ref: '#/definitions/GroupPut'
+
   groupname:
     name: groupname
     in: path
     description: Groupname
     required: true
     type: string
-  post:
+
+  postPost:
     name: post
     in: body
     description: The post to create.
     schema:
-      $ref: '#/definitions/Post'
-  comment:
+      $ref: '#/definitions/PostPost'
+
+  postPut:
+    name: post
+    in: body
+    description: The post to create.
+    schema:
+      $ref: '#/definitions/PostPut'
+
+  commentPost:
     name: comment
     in: body
-    description: The comment to create.
+    description: The object representing the comment to create
     schema:
-      $ref: '#/definitions/Comment'
-  review:
+      $ref: '#/definitions/CommentPost'
+
+  commentPut:
+    name: comment
+    in: body
+    description: The object representing the updates that should made to the comment
+    schema:
+      $ref: '#/definitions/CommentPut'
+
+  reviewPut:
     name: review
     in: body
     description: a review definition
     schema:
-      $ref: '#/definitions/Review'
-  quarantine:
+      $ref: '#/definitions/ReviewPut'
+
+  quarantinePut:
     name: quarantine
     in: body
     description: a quarantine definition
     schema:
-      $ref: '#/definitions/Quarantine'
+      $ref: '#/definitions/QuarantinePut'
+
   modified_by:
     name: Deleted By
     in: body
