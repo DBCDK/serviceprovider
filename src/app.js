@@ -67,8 +67,8 @@ function validateAndExecuteTransform(event, query, context) {
 function validateResponseAndStatusCode(response){
   return (typeof response !== 'object') ||
     typeof response.statusCode !== 'number' ||
-    (response.statusCode === 200 && !response.data) ||
-    (response.statusCode !== 200 && !response.error);
+    (response.statusCode >= 200 && response.statusCode < 400 && !response.data) ||
+    (response.statusCode >= 400 && !response.error);
 }
 
 /**
