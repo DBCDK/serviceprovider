@@ -62,7 +62,6 @@ describe('Automated test: search_wrong_profile', () => {
     context.mockData = mockData;
     provider.execute('search', {"q":"'jens martin knudsen'","profile":"hans"}, context)
       .then(result => {
-        console.log('wutuwutuwuwtuwutwutuw', result);
         assert.deepEqual(result,
           {
             "statusCode": 500,
@@ -71,7 +70,6 @@ describe('Automated test: search_wrong_profile', () => {
         done();
       })
       .catch(result => {
-        console.log('wutuwutuwuwtuwutwutuw')
         fail({throw: result}, {
           "statusCode": 500,
           "error": "Error: Cannot fetch profile: hans for 775100"
