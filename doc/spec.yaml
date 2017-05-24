@@ -330,6 +330,10 @@ api:
         example: "rank_title"
         description: Order/ranking of results. This correspond to the `sort` parameter of opensearch, which, at the time of writing, can take values such as  `rank_title`, `rank_general`, `rank_main_title`, `rank_subject`, `rank_verification` (title and creator), `rank_creator`, `rank_none`, `date_descending`, `article_date_descending`, `acquisitionDate_descending`, and `random`.
         type: string
+      profile:
+        example: "opac"
+        description: Optional search profile, it's passed directly to OpenSearch. In OpenSearch it's used to determine which works should be returned. The profile needs to be defined in VIP in order to use it.
+        type: string
     response:
       type: array
       example: [{"identifier": ["300185-katalog:100562332"], "dcTitle": ["Harry Potter og Fønixordenen DVD"], "coverUrlFull": ["https://moreinfo.addi.dk/2.1/more_info_get.php?id=36565894&type=forside_500&key=55d553c259c9e46291a4"]}, {"identifier": ["870970-basis:51989252"], "dcTitle": ["Harry Potter og de vises sten"], "collection": ["300185-katalog:100562332", "870970-basis:51989252", "870971-forfweb:86203219", "870970-basis:24284514", "870970-basis:24284565", "..."], "dcSubjectDBCF": ["fantasy", "magi", "troldmænd"], "hasAdaption": ["870970-basis:27123279", "870970-basis:27963390"], "coverUrlFull": ["https://moreinfo.addi.dk/2.1/more_info_get.php?id=36565894&type=forside_500&key=55d553c259c9e46291a4"]}]
