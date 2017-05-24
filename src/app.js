@@ -163,6 +163,10 @@ function enableHTTPTransport(event) {
 
     callApi(event, query, req.context)
       .then(response => {
+        if (response.statusCode) {
+          res.status(response.statusCode);
+        }
+
         app.set('json spaces', query.pretty ? 2 : null);
         res.jsonp(response);
       });
