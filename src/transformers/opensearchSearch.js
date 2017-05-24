@@ -29,7 +29,7 @@ export default (params, context) => {
   }
 
   const agency = context.get('search.agency');
-  const profile = context.get('search.profile');
+  const profile = (typeof params.profile === 'string' && params.profile.length > 0) ? params.profile : context.get('search.profile');
   const filterAgency = context.get('search.holdingsitemagencyid') || null;
   const q = params.q.replace(/</g, '&lt;');
   const sort = (params.sort || '').replace(/</g, '&lt;');
