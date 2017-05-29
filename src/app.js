@@ -21,7 +21,6 @@ import community from './transformers/community/community';
 
 // Middleware
 import bodyParser from 'body-parser';
-import compression from 'compression';
 import {log} from './utils';
 import {accessLogMiddleware, getContextMiddleware, requireAuthorized} from './app.middlewares';
 import {healthCheck, getContext, fieldsFilter} from './app.utils';
@@ -264,9 +263,6 @@ module.exports.run = function(worker) {
 
   // Configure app variables
   app.set('serviceProvider', serviceProvider);
-
-  // Adding gzip'ing
-  app.use(compression());
 
   // Setting paths
   app.all('/', (req, res) => res.redirect(apiPath));
