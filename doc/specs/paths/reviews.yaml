@@ -18,7 +18,7 @@ paths:
           $ref: '#/responses/Reviews'
 
     post:
-      summary: Create review
+      summary: Create Review
       tags:
         - Community
       parameters:
@@ -50,7 +50,7 @@ paths:
           $ref: '#/responses/Error'
 
     put:
-      summary: Update a review
+      summary: Update a Review
       tags:
         - Community
       parameters:
@@ -64,7 +64,7 @@ paths:
           $ref: '#/responses/Error'
 
     delete:
-      summary: Delete a review
+      summary: Delete a Review
       tags:
         - Community
       parameters:

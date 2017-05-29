@@ -38,7 +38,7 @@ paths:
    get:
      tags:
        - Community
-     summary: Get like
+     summary: Get Like
      description: Get a like by ID
      parameters:
        - $ref: '#/parameters/accessToken'
@@ -50,7 +50,7 @@ paths:
          $ref: '#/responses/Error'
 
    delete:
-     summary: Delete like
+     summary: Delete Like
      tags:
        - Community
      parameters:
