@@ -52,7 +52,7 @@ paths:
           $ref: '#/responses/Quarantine'
 
     delete:
-      summary: Delete a review
+      summary: Delete a Quarantine
       tags:
         - Community
       parameters:

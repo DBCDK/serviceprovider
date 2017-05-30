@@ -18,7 +18,7 @@ paths:
           $ref: '#/responses/Profiles'
 
     post:
-      summary: Create profile
+      summary: Create Profile
       tags:
         - Community
       parameters:
@@ -50,7 +50,7 @@ paths:
           $ref: '#/responses/Error'
 
     put:
-      summary: Update profile
+      summary: Update Profile
       tags:
         - Community
       parameters:
@@ -64,7 +64,7 @@ paths:
           $ref: '#/responses/Error'
 
     delete:
-      summary: Delete profile
+      summary: Delete Profile
       tags:
         - Community
       parameters:
@@ -79,7 +79,7 @@ paths:
 
   /community/profiles/{profile_id}/activity:
     get:
-      summary: Activityfeed for a specific profile
+      summary: Activityfeed for a specific Profile
       tags:
         - Community
       parameters:
