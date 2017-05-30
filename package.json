@@ -60,7 +60,6 @@
     "path": "^0.12.7",
     "request": "^2.81.0",
     "socketcluster": "^5.0.16",
-    "supervisor": "^0.12.0",
     "swagger": "^0.7.5",
     "walk": "^2.3.9"
   },
