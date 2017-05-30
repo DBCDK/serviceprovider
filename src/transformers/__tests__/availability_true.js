@@ -62,8 +62,11 @@ describe('Automated test: availability_true', () => {
             {
   "statusCode": 200,
   "data": {
+    "holdingStatus": {
     "willLend": true,
     "expectedDelivery": "2016-05-31"
+    },
+    "orderPossible": true
   }
 });
         done();

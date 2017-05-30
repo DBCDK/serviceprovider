@@ -62,7 +62,10 @@ describe('Automated test: availability_false', () => {
             {
   "statusCode": 200,
   "data": {
-    "willLend": false
+    "holdingStatus": {
+      "willLend": false
+    },
+    "orderPossible": true
   }
 });
         done();
