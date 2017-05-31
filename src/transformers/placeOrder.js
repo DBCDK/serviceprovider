@@ -51,7 +51,7 @@ function createNeedBeforeDate() {
  * in soap request
  *
  * @param {object} params parameter map from user
- * @returns xml snippet with found user data
+ * @returns {object} xml snippet with found user data
  */
 function getUserParams(params) {
 
@@ -62,17 +62,19 @@ function getUserParams(params) {
    ['name', 'userName'],
    ['phone', 'userTelephone']].forEach((names) => {
      result[names[0]] = '';
+
      if (params[names[0]]) {
-       result[names[0]] = `<${names[1]}>${names[0]}</${names[1]}>`;
+       result[names[0]] = `<${names[1]}>${params[names[0]]}</${names[1]}>`;
      }
    });
+
   return result;
 }
 
 /**
 * Constructs soap request to perform placeOrder request
-* @param {object} param Parameters to substitute into soap request
-* @returns soap request string
+* @param {object} params Parameters to substitute into soap request
+* @returns {string} soap request string
 */
 function constructSoap(pidList, expireDate, params, orderSystem) {
   let userParams = getUserParams(params);

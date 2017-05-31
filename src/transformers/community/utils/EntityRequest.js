@@ -124,7 +124,7 @@ export default class EntityRequest {
     delete error.status;
     return {
       status,
-      error,
+      error: error.error || error,
       data: []
     };
   }
@@ -150,6 +150,70 @@ export default class EntityRequest {
       };
     }
     return null;
+  }
+
+  /**
+   * Check if an action already exists.
+   *
+   * @param json
+   * @returns {boolean}
+   */
+  async actionExists(json) {
+    const validateJson = {
+      Actions: {
+        type: this._type,
+        profile_ref: json.profile_ref || null,
+        entity_ref: json.entity_ref || null,
+        owner_id: json.owner_id
+      },
+      Include: {id: 'id'},
+      Limit: 1
+    };
+    const {data} = await this._request('query', 'post', {json: validateJson});
+    return (Number(data.Total) > 0);
+  }
+
+  async objectExists(elvisType, id, type = null) {
+    const relationQuery = {
+      [elvisType]: {id},
+      Include: {id: 'id'}
+    };
+
+    if (type) {
+      relationQuery[elvisType].type = type;
+    }
+    const {data} = await this._request('query', 'post', {json: relationQuery});
+
+    return data && data.id === id;
+  }
+
+  /**
+   * Check if relations exists and are of right type.
+   *
+   * @param json
+   * @returns {object}
+   * @private
+   */
+  async _validateRelations(json) {
+    if (this._type === 'follow' || this._type === 'like') {
+      if (await this.actionExists(json)) {
+        return this._createResponse({}, [{error: `${this._type} already exists`, status: 400}]);
+      }
+    }
+    if (this._type === 'comment' && !await this.objectExists('Entity', json.entity_ref, 'post')) {
+      return this._createResponse({}, [{error: `post with id ${json.entity_ref} does not exist`, status: 400}]);
+    }
+    else if (this._type === 'post' && !await this.objectExists('Entity', json.entity_ref, 'group')) {
+      return this._createResponse({}, [{error: `group with id ${json.entity_ref} does not exist`, status: 400}]);
+    }
+    else if (json.profile_ref && !await this.objectExists('Profile', json.profile_ref)) {
+      return this._createResponse({}, [{error: `profile with id ${json.profile_ref} does not exist`, status: 400}]);
+    }
+    else if (json.entity_ref && !await this.objectExists('Entity', json.entity_ref, json.attributes.reference.type)) {
+      return this._createResponse({}, [{error: `${json.attributes.reference.type} with id ${json.entity_ref} does not exist`, status: 400}]);
+    }
+
+    return {};
   }
 
   _getCounts(name, count) {
@@ -259,6 +323,9 @@ export default class EntityRequest {
     const options = Object.assign({path, method}, params);
     try {
       const response = await this._call(options);
+      if (response.errors) {
+        return response;
+      }
       return this._parseResponse(response);
     }
     catch (error) {
@@ -314,7 +381,7 @@ export default class EntityRequest {
       return validationError;
     }
     const json = this._mapperToElvis(object);
-    if (this._elvisType === 'action') {
+    if (this._elvisType === 'action' && json.attributes.reference) {
       if (json.attributes.reference.type === 'profile') {
         json.profile_ref = json.attributes.reference.id;
       }
@@ -325,6 +392,12 @@ export default class EntityRequest {
     if (this._type) {
       json.type = this._type;
     }
+
+    const relationExists = await this._validateRelations(json);
+    if (relationExists.error) {
+      return relationExists;
+    }
+
     const {data, errors} = await this._request(this._elvisType, 'post', {json});
     return this._createResponse(this._mapperFromElvis(data), errors);
   }
