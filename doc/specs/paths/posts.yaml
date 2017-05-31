@@ -41,7 +41,7 @@ paths:
           $ref: '#/responses/Post'
 
     put:
-      summary: Update post
+      summary: Update Post
       tags:
         - Community
       parameters:
@@ -53,7 +53,7 @@ paths:
           $ref: '#/responses/Post'
 
     delete:
-      summary: Delete post
+      summary: Delete Post
       tags:
         - Community
       parameters:

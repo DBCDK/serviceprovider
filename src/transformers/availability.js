@@ -1,5 +1,3 @@
-
-
 import openHoldingStatus from './openHoldingStatus';
 import getOrderPolicy from './getOrderPolicy';
 import {log} from '../utils.js';
@@ -17,15 +15,21 @@ export default (request, context) => {
     const openHoldingStatusRes = body[0];
     const getOrderPolicyRes = body[1];
 
-    if (!_.has(openHoldingStatusRes, 'data.willLend')) {
-      return {statusCode: 200, data: {willLend: false}};
+    const data = {
+      holdingStatus: {
+        willLend: false,
+        expectedDelivery: null
+      },
+      orderPossible: true
+    };
+    if (_.has(openHoldingStatusRes, 'data.willLend')) {
+      data.holdingStatus = openHoldingStatusRes.data;
     }
 
     if (getOrderPolicyRes.data.orderPossible === 'false') {
-      openHoldingStatusRes.data.willLend = false;
-      delete (openHoldingStatusRes.data.expectedDelivery);
+      data.orderPossible = false;
     }
 
-    return openHoldingStatusRes;
+    return {statusCode: 200, data};
   });
 };

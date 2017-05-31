@@ -25,7 +25,7 @@ paths:
          - $ref: '#/parameters/accessToken'
          - name: follow
            in: body
-           description: a follow object
+           description: a Follow object
            schema:
              $ref: '#/definitions/Follow'
        responses:
@@ -38,8 +38,8 @@ paths:
    get:
      tags:
        - Community
-     summary: Get follow
-     description: Get a follow by ID
+     summary: Get Follow
+     description: Get a Follow by ID
      parameters:
        - $ref: '#/parameters/accessToken'
        - $ref: '#/parameters/id'
@@ -50,7 +50,7 @@ paths:
          $ref: '#/responses/Error'
 
    delete:
-     summary: Delete follow
+     summary: Delete Follow
      tags:
        - Community
      parameters:
