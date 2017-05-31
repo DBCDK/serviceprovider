@@ -41,7 +41,7 @@ class Context {
         }
       }
       // Parsing failed
-      catch (err) {}
+      catch (err) {} // eslint-disable-line
     }
 
     return dataObj;

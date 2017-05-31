@@ -8,9 +8,8 @@ script:
   - ./start-service-provider.sh
   # mocktest is disabled for now
   # ./mocktest.sh
-  - npm test
+  - TZ='Europe/Copenhagen' npm test
   - npm run lint
-  - npm run lint:checkstyle
   - npm run swagger:validate # NOTE: expects a running SP!
 notifications:
   slack:
