@@ -155,7 +155,6 @@ describe('Automated test: user-pickup', () => {
     context.mockData = mockData;
     provider.execute('user', {"pretty": true}, context)
       .then(result => {
-        console.log(result.data);
         assert.deepEqual(result, expected);
         done();
       })
