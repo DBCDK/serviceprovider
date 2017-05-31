@@ -393,7 +393,7 @@ api:
         loans:
           - loanId: "4940377131"
             title: håndbog over håndbøger
-            author: La, Chris
+            creator: La, Chris
             dueDate: "2016-04-16"
         orders:
           - orderId: "24181913"
@@ -404,7 +404,7 @@ api:
           - amount: "20"
             currency: DKK
             date: 2015-11-21
-            author: Kristín Marja Baldursdóttir
+            creator: Kristín Marja Baldursdóttir
             title: Kantate
   work:
     tags:
