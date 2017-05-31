@@ -7,6 +7,7 @@
 import * as BaseSoapClient from 'dbc-node-basesoap-client';
 import {log} from '../utils';
 import {testDev, mockFile, mockFileName, randomId, saveTest, promiseRequest} from './caller.utils';
+import moment from 'moment';
 
 class Context {
   constructor(transformerMap, data) {
@@ -20,6 +21,33 @@ class Context {
     this.requestId = randomId();
   }
 
+  _rectifyDateFormats(dataObj, fieldname = '') {
+    // Iterate through object or array to fix dates.
+    if (typeof dataObj === 'object' && Array.isArray(dataObj)) {
+      dataObj = dataObj.map(item => this._rectifyDateFormats(item), fieldname);
+    }
+    else if (typeof dataObj === 'object' && dataObj) {
+      Object.keys(dataObj).forEach(key => {
+        dataObj[key] = this._rectifyDateFormats(dataObj[key], key);
+      });
+    }
+    // We could include additional date/datetime formats here.
+    else if (typeof dataObj === 'string') {
+      try {
+        // moment(dataObj, true).isValid();
+        const date = moment(dataObj, ['YYYY-MM-DD', 'YYYY-MM-DD HH:MM:SS'], true);
+        if (date.isValid()) {
+          console.log(dataObj, date.format(), fieldname);
+          dataObj = date.format();
+        }
+      }
+      // Parsing failed
+      catch (err) {}
+    }
+
+    return dataObj;
+  }
+
   _callToPromise(type, name, params, mockId) {
     if (type !== 'transformer' && this.mockData[mockId]) {
       return Promise.resolve(this.mockData[mockId]);
@@ -29,7 +57,8 @@ class Context {
     const url = this.data.services[name] || name;
     switch (type) {
       case 'transformer': {
-        promise = this.transformerMap[name](params, this);
+        promise = this.transformerMap[name](params, this)
+          .then(response => this._rectifyDateFormats(response));
         break;
       }
 
