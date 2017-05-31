@@ -37,7 +37,6 @@ class Context {
         // moment(dataObj, true).isValid();
         const date = moment(dataObj, ['YYYY-MM-DD', 'YYYY-MM-DD HH:MM:SS'], true);
         if (date.isValid()) {
-          console.log(dataObj, date.format(), fieldname);
           dataObj = date.format();
         }
       }

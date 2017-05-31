@@ -1,6 +1,10 @@
 language: node_js
 sudo: required
 dist: trusty
+before_script:
+  - echo 'Europe/Copenhagen' | sudo tee /etc/timezone
+  - sudo dpkg-reconfigure --frontend noninteractive tzdata
+  - sudo ntpdate ntp.ubuntu.com
 script:
   - ./start-service-provider.sh
   # mocktest is disabled for now
