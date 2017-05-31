@@ -1,0 +1,516 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <title>Code coverage report for src/transformers/work.js</title>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="../../prettify.css">
+    <link rel="stylesheet" href="../../base.css">
+    <style type='text/css'>
+        div.coverage-summary .sorter {
+            background-image: url(../../sort-arrow-sprite.png);
+        }
+    </style>
+</head>
+<body>
+<div class="header high">
+    <h1>Code coverage report for <span class="entity">src/transformers/work.js</span></h1>
+    <h2>
+        Statements: <span class="metric">95.59% <small>(65 / 68)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
+        Branches: <span class="metric">90.91% <small>(30 / 33)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
+        Functions: <span class="metric">100% <small>(3 / 3)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
+        Lines: <span class="metric">95.31% <small>(61 / 64)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
+        Ignored: <span class="metric"><span class="ignore-none">none</span></span> &nbsp;&nbsp;&nbsp;&nbsp;
+    </h2>
+    <div class="path"><a href="../../index.html">All files</a> &#187; <a href="index.html">src/transformers/</a> &#187; work.js</div>
+</div>
+<div class="body">
+<pre><table class="coverage">
+<tr><td class="line-count">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67
+68
+69
+70
+71
+72
+73
+74
+75
+76
+77
+78
+79
+80
+81
+82
+83
+84
+85
+86
+87
+88
+89
+90
+91
+92
+93
+94
+95
+96
+97
+98
+99
+100
+101
+102
+103
+104
+105
+106
+107
+108
+109
+110
+111
+112
+113
+114
+115
+116
+117
+118
+119
+120
+121
+122
+123
+124
+125
+126
+127
+128
+129
+130
+131
+132
+133
+134
+135
+136
+137
+138
+139
+140
+141
+142
+143
+144
+145
+146
+147
+148
+149
+150
+151
+152
+153
+154
+155
+156
+157
+158</td><td class="line-coverage"><span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2</span>
+<span class="cline-any cline-yes">2</span>
+<span class="cline-any cline-yes">2</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2</span>
+<span class="cline-any cline-yes">13</span>
+<span class="cline-any cline-yes">13</span>
+<span class="cline-any cline-yes">13</span>
+<span class="cline-any cline-yes">13</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">13</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">13</span>
+<span class="cline-any cline-yes">11</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">13</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2</span>
+<span class="cline-any cline-yes">13</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">13</span>
+<span class="cline-any cline-yes">22</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">22</span>
+<span class="cline-any cline-yes">22</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">22</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">13</span>
+<span class="cline-any cline-yes">13</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">22</span>
+<span class="cline-any cline-yes">22</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">13</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-yes">3</span>
+<span class="cline-any cline-yes">3</span>
+<span class="cline-any cline-yes">2</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-yes">2</span>
+<span class="cline-any cline-yes">2</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2</span>
+<span class="cline-any cline-yes">16</span>
+<span class="cline-any cline-yes">3</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">3</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">13</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">13</span>
+<span class="cline-any cline-yes">13</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">13</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">8</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">8</span>
+<span class="cline-any cline-yes">8</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">13</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">9</span>
+<span class="cline-any cline-yes">9</span>
+<span class="cline-any cline-yes">9</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">13</span>
+<span class="cline-any cline-yes">5</span>
+<span class="cline-any cline-yes">5</span>
+<span class="cline-any cline-yes">5</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">13</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">13</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">13</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">24</span>
+<span class="cline-any cline-yes">13</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">&nbsp;
+&nbsp;
+import openSearchWorkTransformer from './opensearchGetObject';
+import {checkResponseForErrorCodes, collectDataFromServices, handleFieldsRequest, populateEnvelopeData, handleMoreInfoVersion, getSearchPromises} from './utils/work.utils';
+import _ from 'lodash';
+&nbsp;
+const requestMethod = {
+  MOREINFO: 'moreinfo',
+  SEARCH: 'search',
+  GETOBJECT: 'getobject'
+};
+&nbsp;
+export function workRequest(request) {
+  const state = {};
+  if (<span class="missing-if-branch" title="else path not taken" >E</span>_.has(request, 'pids') &amp;&amp; request.pids.length &gt; 0) {
+    state.pid = request.pids[0]; // saves pid for use in responder.
+    state.pids = request.pids;
+  }
+&nbsp;
+  let transformedRequests = {};
+&nbsp;
+  if (_.has(request, 'fields')) {
+    transformedRequests = handleFieldsRequest(request, transformedRequests);
+  }
+  else {
+    // Default:
+    // Return dkabm, briefdisplay and relations from getObject
+    // This should be default behaviour for getObject with no fields!
+    transformedRequests.getobject = request;
+  }
+  return {
+    transformedRequest: transformedRequests,
+    state: state
+  };
+}
+&nbsp;
+export function workResponse(response, context, state) { // eslint-disable-line no-unused-vars
+  let envelope = {
+    statusCode: 200
+  };
+&nbsp;
+  // loop over at most three promises (getObject, search and moreInfo):
+  for (let i = 0; i &lt; response.length; i++) {
+    const resp = response[i];
+&nbsp;
+    // evaluate the statusCode for getObject and moreInfo
+    const errornous = checkResponseForErrorCodes(resp);
+    if (<span class="missing-if-branch" title="if path not taken" >I</span>errornous) {
+      // Setting error envelope if found!
+      envelope = <span class="cstat-no" title="statement not covered" >errornous;</span>
+      break;
+    }
+&nbsp;
+    // Set number of data elements if not done in previous iteration
+    if (!envelope.data) {
+      // Damn, this feel hacked.
+      // But if you just do 'let x = Array(3).fill({})', you will get an array with the same
+      // object three times. So if you add to x[0], you will also add to x[1] and x[2].
+      // Not exactly what I expected.
+      if (<span class="missing-if-branch" title="else path not taken" >E</span>resp.data || (resp.length &gt; 0 &amp;&amp; resp[0].data)) {
+        envelope = populateEnvelopeData(resp, envelope);
+      }
+      else {
+        // Here be dragons!
+        // The response does not contain any data - I don't think this is a good thing,
+        // but i cant be certain. It might be that the call just returned no data - ie nothing was found.
+        // To be sure, i'll return 'ok', and empty data.
+        envelope.<span class="cstat-no" title="statement not covered" >data = [];</span>
+        return <span class="cstat-no" title="statement not covered" >envelope;</span>
+      }
+    }
+&nbsp;
+    const service = state.services[i];
+    envelope = collectDataFromServices(service, resp, envelope);
+  }
+&nbsp;
+  return envelope;
+}
+&nbsp;
+/**
+ * Handling possible requests for coverimages.
+ *
+ * @param {Array} dataUrls
+ * @param {object} result
+ * @param {object} context
+ * @return {Promise}
+ */
+function handleCoverUrlRequests(dataUrls, result, context) {
+  const requests = [];
+  for (const field of dataUrls) {
+    for (let i = 0; i &lt; result.data.length; ++i) {
+      const url = (result.data[i][field.replace('coverDataUrl', 'coverUrl')] || [])[0];
+      if (url) {
+        requests.push({
+          url,
+          field,
+          i
+        });
+      }
+    }
+  }
+&nbsp;
+  const promises = requests.map(req =&gt;
+    context.request('http:' + req.url, {encoding: null}).then(o =&gt; {
+      result.data[req.i][req.field] = `data:image/jpeg;base64,${new Buffer(o, 'binary').toString('base64')}`;
+    })
+  );
+&nbsp;
+  return Promise.all(promises).then(() =&gt; result);
+}
+&nbsp;
+export default (request, context) =&gt; {
+  if (!request.pids || request.pids.length === 0) {
+    const error = {
+      statusCode: 400,
+      error: '\'pids\' not present in request'
+    };
+&nbsp;
+    return Promise.resolve(error);
+  }
+&nbsp;
+  const {transformedRequest: params, state: state} = workRequest(request);
+&nbsp;
+  const services = []; // state-data for knowing which servies is called and in which order.
+  const promises = [];
+&nbsp;
+  if (_.has(params, requestMethod.MOREINFO)) {
+    // query moreinfo through its transformer.
+    const moreInfoPromise = handleMoreInfoVersion(context, params);
+&nbsp;
+    promises.push(moreInfoPromise);
+    services.push(requestMethod.MOREINFO);
+  }
+&nbsp;
+  if (_.has(params, requestMethod.GETOBJECT)) {
+    // query opensearch through getObject method
+    const getObjectPromise = openSearchWorkTransformer(params.getobject, context);
+    promises.push(getObjectPromise);
+    services.push(requestMethod.GETOBJECT);
+  }
+&nbsp;
+  if (_.has(params, requestMethod.SEARCH)) {
+    const searchPromises = getSearchPromises(context, params);
+    promises.push(Promise.all(searchPromises));
+    services.push(requestMethod.SEARCH);
+  }
+&nbsp;
+  state.services = services;
+&nbsp;
+  return Promise.all(promises)
+    .then(body =&gt; {
+      return workResponse(body, context, state);
+    }).then(result =&gt; {
+      const dataUrls = (request.fields || []).filter(key =&gt; key.startsWith('coverDataUrl'));
+      return dataUrls.length === 0 ? result : handleCoverUrlRequests(dataUrls, result, context);
+    });
+};
+&nbsp;</pre></td></tr>
+</table></pre>
+
+</div>
+<div class="footer">
+    <div class="meta">Generated by <a href="http://istanbul-js.org/" target="_blank">istanbul</a> at Fri Jul 15 2016 13:22:49 GMT+0200 (CEST)</div>
+</div>
+<script src="../../prettify.js"></script>
+<script>
+window.onload = function () {
+        if (typeof prettyPrint === 'function') {
+            prettyPrint();
+        }
+};
+</script>
+<script src="../../sorter.js"></script>
+</body>
+</html>

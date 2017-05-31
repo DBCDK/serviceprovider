@@ -1,0 +1,291 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <title>Code coverage report for src/transformers/facets.js</title>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="../../prettify.css">
+    <link rel="stylesheet" href="../../base.css">
+    <style type='text/css'>
+        div.coverage-summary .sorter {
+            background-image: url(../../sort-arrow-sprite.png);
+        }
+    </style>
+</head>
+<body>
+<div class="header high">
+    <h1>Code coverage report for <span class="entity">src/transformers/facets.js</span></h1>
+    <h2>
+        Statements: <span class="metric">85.19% <small>(23 / 27)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
+        Branches: <span class="metric">73.33% <small>(11 / 15)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
+        Functions: <span class="metric">100% <small>(1 / 1)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
+        Lines: <span class="metric">84% <small>(21 / 25)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
+        Ignored: <span class="metric"><span class="ignore-none">none</span></span> &nbsp;&nbsp;&nbsp;&nbsp;
+    </h2>
+    <div class="path"><a href="../../index.html">All files</a> &#187; <a href="index.html">src/transformers/</a> &#187; facets.js</div>
+</div>
+<div class="body">
+<pre><table class="coverage">
+<tr><td class="line-count">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67
+68
+69
+70
+71
+72
+73
+74
+75
+76
+77
+78
+79
+80
+81
+82
+83</td><td class="line-coverage"><span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2</span>
+<span class="cline-any cline-yes">4</span>
+<span class="cline-any cline-yes">4</span>
+<span class="cline-any cline-yes">4</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">4</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">44</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">4</span>
+<span class="cline-any cline-yes">4</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">4</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">4</span>
+<span class="cline-any cline-yes">4</span>
+<span class="cline-any cline-yes">4</span>
+<span class="cline-any cline-yes">4</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">4</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">4</span>
+<span class="cline-any cline-yes">4</span>
+<span class="cline-any cline-yes">44</span>
+<span class="cline-any cline-yes">44</span>
+<span class="cline-any cline-yes">126</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">4</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">&nbsp;
+&nbsp;
+import {log} from '../utils.js';
+&nbsp;
+function generateSoap(params, context) {
+  const facets = (Array.isArray(params.fields) &amp;&amp; params.fields) || ['creator', 'subject', 'language', 'date', 'form'];
+  const agency = context.get('search.agency');
+  const profile = context.get('search.profile');
+&nbsp;
+  return `&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;SOAP-ENV:Envelope xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/"
+    xmlns:open="http://oss.dbc.dk/ns/opensearch"&gt;
+  &lt;SOAP-ENV:Body&gt;
+    &lt;open:searchRequest&gt;
+      &lt;open:query&gt;${String(params.q).replace(/&lt;/g, '&amp;lt;')}&lt;/open:query&gt;
+      &lt;open:agency&gt;${agency}&lt;/open:agency&gt;
+      &lt;open:profile&gt;${profile}&lt;/open:profile&gt;
+      &lt;open:facets&gt;
+        &lt;open:numberOfTerms&gt;${parseInt(params.limit, 10) || 10}&lt;/open:numberOfTerms&gt;
+        &lt;open:facetSort&gt;count&lt;/open:facetSort&gt;
+        &lt;open:facetMinCount&gt;1&lt;/open:facetMinCount&gt;
+        ${facets.map(s =&gt;
+  '&lt;open:facetName&gt;facet.' + String(s).replace(/&lt;/g, '&amp;lt;') + '&lt;/open:facetName&gt;').join('\n        ')
+    }
+      &lt;/open:facets&gt;
+      &lt;open:start&gt;1&lt;/open:start&gt;
+      &lt;open:stepValue&gt;0&lt;/open:stepValue&gt;
+      &lt;open:outputType&gt;json&lt;/open:outputType&gt;
+    &lt;/open:searchRequest&gt;
+  &lt;/SOAP-ENV:Body&gt;
+&lt;/SOAP-ENV:Envelope&gt;`;
+}
+&nbsp;
+export default (params, context) =&gt; new Promise((resolve) =&gt; {
+  if (<span class="missing-if-branch" title="if path not taken" >I</span>!params.q) {
+    return <span class="cstat-no" title="statement not covered" >resolve({</span>
+      statusCode: 400,
+      error: 'missing q parameter'
+    });
+  }
+&nbsp;
+  const soap = generateSoap(params, context);
+&nbsp;
+  return context.call('opensearch', soap).then(body =&gt; {
+    try {
+      const result = {};
+      body = JSON.parse(body).searchResponse;
+&nbsp;
+      if (<span class="missing-if-branch" title="if path not taken" >I</span>body.error) {
+        return <span class="cstat-no" title="statement not covered" >resolve({</span>
+          statusCode: 500,
+          error: body.error.$
+        });
+      }
+&nbsp;
+      c</span>onst facets = ((</span>body.result.facetResult || <span class="branch-1 cbranch-no" title="branch not covered" >{}).facet || <span class="branch-1 cbranch-no" title="branch not covered" >[]);
+      facets.forEach(facet =&gt; {
+        const name = facet.facetName.$.replace('facet.', '');
+        if (Array.isArray(facet.facetTerm)) {
+          result[name] = facet.facetTerm.map(o =&gt; ({
+            term: o.term.$,
+            frequency: parseInt(o.frequence.$, 10)
+          }));
+        }
+      });
+      return resolve({
+        statusCode: 200,
+        data: result
+      });
+    }
+    catch (e) {
+      log.<span class="cstat-no" title="statement not covered" >error('response from facet-request', {</span>
+        error: e,
+        errorString: String(e)
+      });
+      return <span class="cstat-no" title="statement not covered" >resolve({</span>
+        statusCode: 400,
+        error: 'error fulfilling the request'
+      });
+    }
+  });
+});
+&nbsp;</pre></td></tr>
+</table></pre>
+
+</div>
+<div class="footer">
+    <div class="meta">Generated by <a href="http://istanbul-js.org/" target="_blank">istanbul</a> at Fri Jul 15 2016 13:22:49 GMT+0200 (CEST)</div>
+</div>
+<script src="../../prettify.js"></script>
+<script>
+window.onload = function () {
+        if (typeof prettyPrint === 'function') {
+            prettyPrint();
+        }
+};
+</script>
+<script src="../../sorter.js"></script>
+</body>
+</html>

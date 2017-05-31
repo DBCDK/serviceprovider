@@ -1,0 +1,426 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <title>Code coverage report for src/utils.js</title>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="../prettify.css">
+    <link rel="stylesheet" href="../base.css">
+    <style type='text/css'>
+        div.coverage-summary .sorter {
+            background-image: url(../sort-arrow-sprite.png);
+        }
+    </style>
+</head>
+<body>
+<div class="header medium">
+    <h1>Code coverage report for <span class="entity">src/utils.js</span></h1>
+    <h2>
+        Statements: <span class="metric">52% <small>(26 / 50)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
+        Branches: <span class="metric">20% <small>(2 / 10)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
+        Functions: <span class="metric">37.5% <small>(3 / 8)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
+        Lines: <span class="metric">47.83% <small>(22 / 46)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
+        Ignored: <span class="metric"><span class="ignore-none">none</span></span> &nbsp;&nbsp;&nbsp;&nbsp;
+    </h2>
+    <div class="path"><a href="../index.html">All files</a> &#187; <a href="index.html">src/</a> &#187; utils.js</div>
+</div>
+<div class="body">
+<pre><table class="coverage">
+<tr><td class="line-count">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67
+68
+69
+70
+71
+72
+73
+74
+75
+76
+77
+78
+79
+80
+81
+82
+83
+84
+85
+86
+87
+88
+89
+90
+91
+92
+93
+94
+95
+96
+97
+98
+99
+100
+101
+102
+103
+104
+105
+106
+107
+108
+109
+110
+111
+112
+113
+114
+115
+116
+117
+118
+119
+120
+121
+122
+123
+124
+125
+126
+127
+128</td><td class="line-coverage"><span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2</span>
+<span class="cline-any cline-yes">2</span>
+<span class="cline-any cline-yes">2</span>
+<span class="cline-any cline-yes">2</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2</span>
+<span class="cline-any cline-yes">2431</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2</span>
+<span class="cline-any cline-yes">4862</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">4862</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2</span>
+<span class="cline-any cline-yes">2431</span>
+<span class="cline-any cline-yes">2431</span>
+<span class="cline-any cline-yes">2431</span>
+<span class="cline-any cline-yes">2431</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">35</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">1206</span>
+<span class="cline-any cline-yes">1190</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">&nbsp;
+&nbsp;
+import fs from 'fs';
+import {hostname} from 'os';
+import process from 'process';
+import {version} from '../package.json';
+&nbsp;
+/**
+* Die function. Writes to console and throws error
+*/
+export <span class="fstat-no" title="function not covered" >function die(str) {</span>
+  console.<span class="cstat-no" title="statement not covered" >trace('ERROR: ' + str); /</span>/ eslint-disable-line
+  throw (<span class="cstat-no" title="statement not covered" >str);</span>
+}
+&nbsp;
+/**
+* Returns the name of the given function
+*/
+export <span class="fstat-no" title="function not covered" >function functionName(fun) {</span>
+  let <span class="cstat-no" title="statement not covered" >ret = fun.toString();</span>
+  ret = <span class="cstat-no" title="statement not covered" >ret.substr('function '.length);</span>
+  ret = <span class="cstat-no" title="statement not covered" >ret.substr(0, ret.indexOf('('));</span>
+  return <span class="cstat-no" title="statement not covered" >ret;</span>
+}
+&nbsp;
+&nbsp;
+/**
+ * @returns current log level
+ */
+&nbsp;
+function getCurrentLogLevel() {
+  r</span>eturn process.env.LOG_LEVEL || <span class="branch-1 cbranch-no" title="branch not covered" >'INFO'; // eslint-disable-line no-process-env
+}
+&nbsp;
+/**
+ * Convert a log level name to a corresponding numerical value
+ *
+ * @param logLevel log level to convert
+ * @returns numerical log level
+ */
+&nbsp;
+function getNumericalLogLevel(logLevel) {
+  var logLevels = {
+    OFF: 0,
+    ERROR: 1,
+    WARN: 2,
+    WARNING: 2,
+    INFO: 3,
+    DEBUG: 4,
+    TRACE: 5
+  };
+&nbsp;
+  return logLevels[logLevel.toUpperCase()];
+}
+&nbsp;
+/**
+ * Log as JSON to stdout
+ *
+ * @param level log level
+ * @param msg message to log
+ * @param args map of additional key/values to log
+ */
+function doLog(level, msg, args) {
+  const currentNumericalLogLevel = getNumericalLogLevel(getCurrentLogLevel());
+  const targetNumericalLogLevel = getNumericalLogLevel(level);
+  if (<span class="missing-if-branch" title="else path not taken" >E</span>currentNumericalLogLevel &lt; targetNumericalLogLevel) {
+    return; // level low, do nothing
+  }
+&nbsp;
+  var <span class="cstat-no" title="statement not covered" >blob = {</span>
+    '@timestamp': (new Date()).toISOString(),
+    '@version': 1,
+    app: 'serviceprovider',
+    version: version,
+    level: level.toUpperCase(),
+    host: hostname(),
+    pid: process.pid
+  };
+&nbsp;
+  if (<span class="cstat-no" title="statement not covered" >msg) {</span>
+    blob.<span class="cstat-no" title="statement not covered" >msg = msg;</span>
+  }
+&nbsp;
+  if (<span class="cstat-no" title="statement not covered" >process.env.NODE_ENV !== 'cucumber-junit') {</span>
+    console.<span class="cstat-no" title="statement not covered" >log(JSON.stringify(Object.assign(blob, args))); /</span>/NOSONAR
+  }
+}
+&nbsp;
+/**
+ * return true if the given path is an existing directory, false
+ * otherwise.
+ */
+export <span class="fstat-no" title="function not covered" >function isDir(path) {</span>
+  try <span class="cstat-no" title="statement not covered" >{</span>
+    const <span class="cstat-no" title="statement not covered" >stats = fs.lstatSync(path);</span>
+    if (<span class="cstat-no" title="statement not covered" >stats.isDirectory()) {</span>
+      return <span class="cstat-no" title="statement not covered" >true;</span>
+    }
+  }
+  catch (e) {
+    doLog(<span class="cstat-no" title="statement not covered" >'warn', 'Failed checking for directory');</span>
+  }
+  return <span class="cstat-no" title="statement not covered" >false;</span>
+}
+&nbsp;
+export const log = {
+  log: doLog,
+  info: (msg, args) =&gt; doLog('info', msg, args),
+  warn: (msg, args) =&gt; <span class="cstat-no" title="statement not covered" >doLog('warn', msg, args),</span>
+  error: (msg, args) =&gt; <span class="cstat-no" title="statement not covered" >doLog('error', msg, args),</span>
+  debug: (msg, args) =&gt; doLog('debug', msg, args),
+  trace: (msg, args) =&gt; doLog('trace', msg, args)
+};
+&nbsp;
+/**
+ * Timingdecorator.
+ * returns new function that logs time usage of function.
+ *
+ */
+export <span class="fstat-no" title="function not covered" >function timingDecorator(f) {</span>
+  return <span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" >function() {</span></span>
+    const <span class="cstat-no" title="statement not covered" >start = Date.now();</span>
+    const <span class="cstat-no" title="statement not covered" >r = f.apply(this, arguments);</span>
+    log.<span class="cstat-no" title="statement not covered" >debug('timing', {timing: {function: functionName(f), time: (Date.now() - start)}});</span>
+    return <span class="cstat-no" title="statement not covered" >r;</span>
+  };
+}
+&nbsp;</pre></td></tr>
+</table></pre>
+
+</div>
+<div class="footer">
+    <div class="meta">Generated by <a href="http://istanbul-js.org/" target="_blank">istanbul</a> at Fri Jul 15 2016 13:22:49 GMT+0200 (CEST)</div>
+</div>
+<script src="../prettify.js"></script>
+<script>
+window.onload = function () {
+        if (typeof prettyPrint === 'function') {
+            prettyPrint();
+        }
+};
+</script>
+<script src="../sorter.js"></script>
+</body>
+</html>

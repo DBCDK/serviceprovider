@@ -1,0 +1,498 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <title>Code coverage report for src/transformers/libraries.js</title>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="../../prettify.css">
+    <link rel="stylesheet" href="../../base.css">
+    <style type='text/css'>
+        div.coverage-summary .sorter {
+            background-image: url(../../sort-arrow-sprite.png);
+        }
+    </style>
+</head>
+<body>
+<div class="header high">
+    <h1>Code coverage report for <span class="entity">src/transformers/libraries.js</span></h1>
+    <h2>
+        Statements: <span class="metric">97.44% <small>(76 / 78)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
+        Branches: <span class="metric">95.83% <small>(23 / 24)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
+        Functions: <span class="metric">100% <small>(7 / 7)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
+        Lines: <span class="metric">97.26% <small>(71 / 73)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
+        Ignored: <span class="metric"><span class="ignore-none">none</span></span> &nbsp;&nbsp;&nbsp;&nbsp;
+    </h2>
+    <div class="path"><a href="../../index.html">All files</a> &#187; <a href="index.html">src/transformers/</a> &#187; libraries.js</div>
+</div>
+<div class="body">
+<pre><table class="coverage">
+<tr><td class="line-count">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67
+68
+69
+70
+71
+72
+73
+74
+75
+76
+77
+78
+79
+80
+81
+82
+83
+84
+85
+86
+87
+88
+89
+90
+91
+92
+93
+94
+95
+96
+97
+98
+99
+100
+101
+102
+103
+104
+105
+106
+107
+108
+109
+110
+111
+112
+113
+114
+115
+116
+117
+118
+119
+120
+121
+122
+123
+124
+125
+126
+127
+128
+129
+130
+131
+132
+133
+134
+135
+136
+137
+138
+139
+140
+141
+142
+143
+144
+145
+146
+147
+148
+149
+150
+151
+152</td><td class="line-coverage"><span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2</span>
+<span class="cline-any cline-yes">2</span>
+<span class="cline-any cline-yes">2</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2</span>
+<span class="cline-any cline-yes">1054</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1054</span>
+<span class="cline-any cline-yes">1054</span>
+<span class="cline-any cline-yes">1054</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1054</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1054</span>
+<span class="cline-any cline-yes">542</span>
+<span class="cline-any cline-yes">2706</span>
+<span class="cline-any cline-yes">1556</span>
+<span class="cline-any cline-yes">1556</span>
+<span class="cline-any cline-yes">1556</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1054</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2</span>
+<span class="cline-any cline-yes">69521</span>
+<span class="cline-any cline-yes">60428</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">9093</span>
+<span class="cline-any cline-yes">13474</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2243</span>
+<span class="cline-any cline-yes">2243</span>
+<span class="cline-any cline-yes">4721</span>
+<span class="cline-any cline-yes">2478</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2243</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2</span>
+<span class="cline-any cline-yes">2</span>
+<span class="cline-any cline-yes">2</span>
+<span class="cline-any cline-yes">1054</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2</span>
+<span class="cline-any cline-yes">2207</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2</span>
+<span class="cline-any cline-yes">2</span>
+<span class="cline-any cline-yes">2</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2</span>
+<span class="cline-any cline-yes">2</span>
+<span class="cline-any cline-yes">2207</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2207</span>
+<span class="cline-any cline-yes">81581</span>
+<span class="cline-any cline-yes">69521</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2207</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2</span>
+<span class="cline-any cline-yes">2</span>
+<span class="cline-any cline-yes">2207</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2</span>
+<span class="cline-any cline-yes">2</span>
+<span class="cline-any cline-yes">2</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2</span>
+<span class="cline-any cline-yes">2</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2</span>
+<span class="cline-any cline-yes">5</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">5</span>
+<span class="cline-any cline-yes">2</span>
+<span class="cline-any cline-yes">2</span>
+<span class="cline-any cline-yes">3</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2207</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">5</span>
+<span class="cline-any cline-yes">2</span>
+<span class="cline-any cline-yes">2</span>
+<span class="cline-any cline-yes">6</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2207</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">5</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2</span>
+<span class="cline-any cline-yes">5</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">5</span>
+<span class="cline-any cline-yes">3</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">5</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">&nbsp;
+&nbsp;
+const timeout = 60 * 60 * 1000;
+let cache;
+let timestamp;
+&nbsp;
+function getOrderParameters(context, agencyId) {
+  const soap = `
+    &lt;?xml version="1.0" encoding="UTF-8"?&gt;
+    &lt;SOAP-ENV:Envelope xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ns1="http://oss.dbc.dk/ns/openagency"&gt;&lt;SOAP-ENV:Body&gt;
+    &lt;ns1:serviceRequest&gt;
+    &lt;ns1:agencyId&gt;${agencyId}&lt;/ns1:agencyId&gt;
+    &lt;ns1:service&gt;userOrderParameters&lt;/ns1:service&gt;
+    &lt;ns1:outputType&gt;json&lt;/ns1:outputType&gt;
+    &lt;/ns1:serviceRequest&gt;
+    &lt;/SOAP-ENV:Body&gt;&lt;/SOAP-ENV:Envelope&gt;
+    `;
+&nbsp;
+  return context.call('openagency', soap).then(body =&gt; {
+    const result = [];
+    const parameters = JSON.parse(body).serviceResponse.userOrderParameters.userParameter;
+&nbsp;
+    const parameterMap = {
+      userName: 'name',
+      userAddress: 'address',
+      userMail: 'email',
+      userTelephone: 'phone'
+    };
+&nbsp;
+    if (parameters) {
+      for (let i = 0; i &lt; parameters.length; ++i) {
+        if (parameters[i].parameterRequired.$ === '1') {
+          let parameter = parameters[i].userParameterType.$;
+          parameter = parameterMap[parameter] || parameter;
+          result.push(parameter);
+        }
+      }
+    }
+&nbsp;
+    return Promise.resolve(result);
+  });
+}
+&nbsp;
+function libraryIterator(val) {
+  if (val.$) {
+    return val.$;
+  }
+  else if (Array.isArray(val)) {
+    return val.filter(i =&gt; !!i.$).map(j =&gt; j.$);
+  }
+&nbsp;
+  const res = {};
+  for (const key2 in val) {
+    if (key2 !== '@' &amp;&amp; val[key2].$) {
+      res[key2] = val[key2].$;
+    }
+  }
+&nbsp;
+  return res;
+}
+&nbsp;
+function orderParameterPromiseHandler(results, agencyKeys, orderParameters) {
+  const agencyOrderParameters = {};
+  for (let i = 0; i &lt; agencyKeys.length; ++i) {
+    agencyOrderParameters[agencyKeys[i]] = orderParameters[i];
+  }
+  for (let i = 0; i &lt; results.length; ++i) {
+    results[i].orderParameters =
+      agencyOrderParameters[results[i].agencyId];
+  }
+  cache = results;
+  timestamp = Date.now();
+  return results;
+}
+&nbsp;
+function openAgencyPromiseHandler(context, badgerfish) {
+  const results = badgerfish.map(library =&gt; {
+    const result = {};
+&nbsp;
+    Object.keys(library)
+      .filter(libraryKey =&gt; libraryKey !== '@' &amp;&amp; libraryKey.indexOf('ncip') !== 0)
+      .forEach(key =&gt; (result[key] = libraryIterator(library[key])));
+&nbsp;
+    return result;
+  });
+&nbsp;
+  const agencies = {};
+  for (let i = 0; i &lt; results.length; ++i) {
+    agencies[results[i].agencyId] = true;
+  }
+&nbsp;
+  const agencyKeys = Object.keys(agencies);
+  const agencyPromises = agencyKeys.map(getOrderParameters.bind(null, context));
+  return Promise.all(agencyPromises).then(orderParameterPromiseHandler.bind(null, results, agencyKeys));
+}
+&nbsp;
+function getLibraries(context) {
+  const soap = `&lt;soapenv:Envelope
+    xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/"
+    xmlns:open="http://oss.dbc.dk/ns/openagency"&gt;
+    &lt;soapenv:Header/&gt;
+    &lt;soapenv:Body&gt;
+    &lt;open:findLibraryRequest&gt;
+    &lt;open:outputType&gt;json&lt;/open:outputType&gt;
+    &lt;/open:findLibraryRequest&gt;
+    &lt;/soapenv:Body&gt;
+    &lt;/soapenv:Envelope&gt;`;
+&nbsp;
+  return context
+    .call('openagency', soap)
+    .then(body =&gt; openAgencyPromiseHandler(context, JSON.parse(body).findLibraryResponse.pickupAgency));
+}
+&nbsp;
+function getLibrariesTransformPromiseHandler(params, context, libraries) {
+  if (<span class="missing-if-branch" title="if path not taken" >I</span>Date.now() - timestamp &gt; timeout) {
+    getLibraries(<span class="cstat-no" title="statement not covered" >context);</span>
+    timestamp = <span class="cstat-no" title="statement not covered" >Date.now();</span>
+  }
+&nbsp;
+  if (Array.isArray(params.agencyIds)) {
+    const agencies = {};
+    for (let i = 0; i &lt; params.agencyIds.length; ++i) {
+      agencies[params.agencyIds[i]] = true;
+    }
+&nbsp;
+    libraries = libraries.filter(o =&gt; agencies[o.agencyId]);
+  }
+&nbsp;
+  if (Array.isArray(params.branchIds)) {
+    const branches = {};
+    for (let i = 0; i &lt; params.branchIds.length; ++i) {
+      branches[params.branchIds[i]] = true;
+    }
+    libraries = libraries.filter(o =&gt; branches[o.branchId]);
+  }
+&nbsp;
+  return {statusCode: 200, data: libraries};
+}
+&nbsp;
+export default function getLibrariesTransform(params, context) {
+  let promise;
+&nbsp;
+  if (cache) {
+    promise = Promise.resolve(cache);
+  }
+  else {
+    promise = getLibraries(context);
+  }
+&nbsp;
+  return promise.then(getLibrariesTransformPromiseHandler.bind(null, params, context));
+}
+&nbsp;</pre></td></tr>
+</table></pre>
+
+</div>
+<div class="footer">
+    <div class="meta">Generated by <a href="http://istanbul-js.org/" target="_blank">istanbul</a> at Fri Jul 15 2016 13:22:49 GMT+0200 (CEST)</div>
+</div>
+<script src="../../prettify.js"></script>
+<script>
+window.onload = function () {
+        if (typeof prettyPrint === 'function') {
+            prettyPrint();
+        }
+};
+</script>
+<script src="../../sorter.js"></script>
+</body>
+</html>

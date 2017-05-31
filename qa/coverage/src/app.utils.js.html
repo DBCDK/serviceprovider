@@ -1,0 +1,414 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <title>Code coverage report for src/app.utils.js</title>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="../prettify.css">
+    <link rel="stylesheet" href="../base.css">
+    <style type='text/css'>
+        div.coverage-summary .sorter {
+            background-image: url(../sort-arrow-sprite.png);
+        }
+    </style>
+</head>
+<body>
+<div class="header low">
+    <h1>Code coverage report for <span class="entity">src/app.utils.js</span></h1>
+    <h2>
+        Statements: <span class="metric">49.02% <small>(25 / 51)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
+        Branches: <span class="metric">43.48% <small>(10 / 23)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
+        Functions: <span class="metric">66.67% <small>(2 / 3)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
+        Lines: <span class="metric">45.65% <small>(21 / 46)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
+        Ignored: <span class="metric">1 branch</span> &nbsp;&nbsp;&nbsp;&nbsp;
+    </h2>
+    <div class="path"><a href="../index.html">All files</a> &#187; <a href="index.html">src/</a> &#187; app.utils.js</div>
+</div>
+<div class="body">
+<pre><table class="coverage">
+<tr><td class="line-count">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67
+68
+69
+70
+71
+72
+73
+74
+75
+76
+77
+78
+79
+80
+81
+82
+83
+84
+85
+86
+87
+88
+89
+90
+91
+92
+93
+94
+95
+96
+97
+98
+99
+100
+101
+102
+103
+104
+105
+106
+107
+108
+109
+110
+111
+112
+113
+114
+115
+116
+117
+118
+119
+120
+121
+122
+123
+124</td><td class="line-coverage"><span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2</span>
+<span class="cline-any cline-yes">2</span>
+<span class="cline-any cline-yes">2</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2</span>
+<span class="cline-any cline-yes">13</span>
+<span class="cline-any cline-yes">13</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">13</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">13</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2</span>
+<span class="cline-any cline-yes">24</span>
+<span class="cline-any cline-yes">11</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">13</span>
+<span class="cline-any cline-yes">11</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">11</span>
+<span class="cline-any cline-yes">11</span>
+<span class="cline-any cline-yes">14</span>
+<span class="cline-any cline-yes">10</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">11</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">&nbsp;
+import request from 'request';
+import moment from 'moment';
+import _ from 'lodash';
+&nbsp;
+import {TokenExpiredError} from './smaug/errors';
+&nbsp;
+const SMAUG_LOCATION = process.env.SMAUG; // eslint-disable-line no-process-env
+&nbsp;
+/**
+ * Retreives context based on given token
+ *
+ * @param {string} token
+ * @return {Promise}
+ */
+export function getContext(token) {
+  return new Promise((resolve, reject) =&gt; {
+    request.get({
+      uri: SMAUG_LOCATION + '/configuration',
+      qs: {token: token}
+    }, (err, response, body) =&gt; {
+      switch (response.statusCode) {
+        case 200:
+          return resolve(JSON.parse(body));
+        case <span class="branch-1 cbranch-no" title="branch not covered" >404:</span>
+          return <span class="cstat-no" title="statement not covered" >reject(new TokenExpiredError());</span>
+        default:
+          return <span class="cstat-no" title="statement not covered" >reject(err);</span>
+      }
+    });
+  });
+}
+&nbsp;
+/**
+ * Callback for /healthcheck
+ *
+ * @param {Object} req
+ * @param {Object} res
+ */
+export <span class="fstat-no" title="function not covered" >function healthCheck(req, res) {</span>
+  const <span class="cstat-no" title="statement not covered" >result = {ok: {}};</span>
+  const <span class="cstat-no" title="statement not covered" >tests = {};</span>
+&nbsp;
+  tests.<span class="cstat-no" title="statement not covered" >smaug = new Promise((resolve) =&gt; {</span>
+    const <span class="cstat-no" title="statement not covered" >tStart = moment();</span>
+    request.<span class="cstat-no" title="statement not covered" >get({</span>
+      uri: SMAUG_LOCATION + '/health'
+    }, (err, response) =&gt; {
+      if (<span class="cstat-no" title="statement not covered" >err) {</span>
+        return <span class="cstat-no" title="statement not covered" >resolve({</span>
+          responseTime: moment().diff(tStart),
+          result: err
+        });
+      }
+&nbsp;
+      if (<span class="cstat-no" title="statement not covered" >response.statusCode !== 200) {</span>
+        return <span class="cstat-no" title="statement not covered" >resolve({</span>
+          responseTime: moment().diff(tStart),
+          result: new Error('Smaug returned http status code ' + response.statusCode)
+        });
+      }
+&nbsp;
+      return <span class="cstat-no" title="statement not covered" >resolve({</span>
+        responseTime: moment().diff(tStart),
+        result: 'ok'
+      });
+    });
+  });
+&nbsp;
+  const <span class="cstat-no" title="statement not covered" >testsPromises = O</span>bject.keys(tests).map((testId) =&gt; <span class="cstat-no" title="statement not covered" >tests[testId]);</span>
+&nbsp;
+  Promise.<span class="cstat-no" title="statement not covered" >all(testsPromises).then((results) =&gt; {</span>
+    _.<span class="cstat-no" title="statement not covered" >zip(Object.keys(tests), results).forEach((zipElem) =&gt; {</span>
+      const <span class="cstat-no" title="statement not covered" >[testId, status] = zipElem;</span>
+&nbsp;
+      if (<span class="cstat-no" title="statement not covered" >status.result instanceof Error) {</span>
+        if (<span class="cstat-no" title="statement not covered" >typeof result.errors === 'undefined') {</span>
+          result.<span class="cstat-no" title="statement not covered" >errors = {};</span>
+        }
+        result.<span class="cstat-no" title="statement not covered" >errors[testId] = {</span>
+          name: status.result.name,
+          msg: status.result.message,
+          stacktrace: status.result.stack,
+          responseTime: status.responseTime
+        };
+      }
+      else {
+        result.<span class="cstat-no" title="statement not covered" >ok[testId] = {responseTime: status.responseTime};</span>
+      }
+    });
+    if (<span class="cstat-no" title="statement not covered" >Object.keys(result.errors || {}).length &gt; 0) {</span>
+      res.<span class="cstat-no" title="statement not covered" >status(500);</span>
+    }
+    req.<span class="cstat-no" title="statement not covered" >app.set('json spaces', 2);</span>
+    res.<span class="cstat-no" title="statement not covered" >json(result);</span>
+  });
+}
+&nbsp;
+/**
+ * Fields filter, - filter the result based on the `fields` parameter.
+ *
+ * @param obj
+ * @param query
+ * @return {*}
+ */
+export function fieldsFilter(obj, query) {
+  if ((typeof obj !== 'object') || !Array.isArray(query.fields)) {
+    return obj;
+  }
+&nbsp;
+  if (Array.isArray(obj)) {
+    return obj.map((item) =&gt; fieldsFilter(item, query));
+  }
+&nbsp;
+  const result = {};
+  query.fields.forEach(key =&gt; {
+    if (typeof obj[key] !== 'undefined') {
+      result[key] = obj[key];
+    }
+  });
+&nbsp;
+  return result;
+}
+&nbsp;</pre></td></tr>
+</table></pre>
+
+</div>
+<div class="footer">
+    <div class="meta">Generated by <a href="http://istanbul-js.org/" target="_blank">istanbul</a> at Fri Jul 15 2016 13:22:49 GMT+0200 (CEST)</div>
+</div>
+<script src="../prettify.js"></script>
+<script>
+window.onload = function () {
+        if (typeof prettyPrint === 'function') {
+            prettyPrint();
+        }
+};
+</script>
+<script src="../sorter.js"></script>
+</body>
+</html>

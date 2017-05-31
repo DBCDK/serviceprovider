@@ -1,0 +1,1824 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <title>Code coverage report for src/transformers/__tests__/search_sort.js</title>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="../../../prettify.css">
+    <link rel="stylesheet" href="../../../base.css">
+    <style type='text/css'>
+        div.coverage-summary .sorter {
+            background-image: url(../../../sort-arrow-sprite.png);
+        }
+    </style>
+</head>
+<body>
+<div class="header high">
+    <h1>Code coverage report for <span class="entity">src/transformers/__tests__/search_sort.js</span></h1>
+    <h2>
+        Statements: <span class="metric">100% <small>(12 / 12)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
+        Branches: <span class="metric">75% <small>(3 / 4)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
+        Functions: <span class="metric">100% <small>(0 / 0)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
+        Lines: <span class="metric">100% <small>(12 / 12)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
+        Ignored: <span class="metric"><span class="ignore-none">none</span></span> &nbsp;&nbsp;&nbsp;&nbsp;
+    </h2>
+    <div class="path"><a href="../../../index.html">All files</a> &#187; <a href="index.html">src/transformers/__tests__/</a> &#187; search_sort.js</div>
+</div>
+<div class="body">
+<pre><table class="coverage">
+<tr><td class="line-count">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67
+68
+69
+70
+71
+72
+73
+74
+75
+76
+77
+78
+79
+80
+81
+82
+83
+84
+85
+86
+87
+88
+89
+90
+91
+92
+93
+94
+95
+96
+97
+98
+99
+100
+101
+102
+103
+104
+105
+106
+107
+108
+109
+110
+111
+112
+113
+114
+115
+116
+117
+118
+119
+120
+121
+122
+123
+124
+125
+126
+127
+128
+129
+130
+131
+132
+133
+134
+135
+136
+137
+138
+139
+140
+141
+142
+143
+144
+145
+146
+147
+148
+149
+150
+151
+152
+153
+154
+155
+156
+157
+158
+159
+160
+161
+162
+163
+164
+165
+166
+167
+168
+169
+170
+171
+172
+173
+174
+175
+176
+177
+178
+179
+180
+181
+182
+183
+184
+185
+186
+187
+188
+189
+190
+191
+192
+193
+194
+195
+196
+197
+198
+199
+200
+201
+202
+203
+204
+205
+206
+207
+208
+209
+210
+211
+212
+213
+214
+215
+216
+217
+218
+219
+220
+221
+222
+223
+224
+225
+226
+227
+228
+229
+230
+231
+232
+233
+234
+235
+236
+237
+238
+239
+240
+241
+242
+243
+244
+245
+246
+247
+248
+249
+250
+251
+252
+253
+254
+255
+256
+257
+258
+259
+260
+261
+262
+263
+264
+265
+266
+267
+268
+269
+270
+271
+272
+273
+274
+275
+276
+277
+278
+279
+280
+281
+282
+283
+284
+285
+286
+287
+288
+289
+290
+291
+292
+293
+294
+295
+296
+297
+298
+299
+300
+301
+302
+303
+304
+305
+306
+307
+308
+309
+310
+311
+312
+313
+314
+315
+316
+317
+318
+319
+320
+321
+322
+323
+324
+325
+326
+327
+328
+329
+330
+331
+332
+333
+334
+335
+336
+337
+338
+339
+340
+341
+342
+343
+344
+345
+346
+347
+348
+349
+350
+351
+352
+353
+354
+355
+356
+357
+358
+359
+360
+361
+362
+363
+364
+365
+366
+367
+368
+369
+370
+371
+372
+373
+374
+375
+376
+377
+378
+379
+380
+381
+382
+383
+384
+385
+386
+387
+388
+389
+390
+391
+392
+393
+394
+395
+396
+397
+398
+399
+400
+401
+402
+403
+404
+405
+406
+407
+408
+409
+410
+411
+412
+413
+414
+415
+416
+417
+418
+419
+420
+421
+422
+423
+424
+425
+426
+427
+428
+429
+430
+431
+432
+433
+434
+435
+436
+437
+438
+439
+440
+441
+442
+443
+444
+445
+446
+447
+448
+449
+450
+451
+452
+453
+454
+455
+456
+457
+458
+459
+460
+461
+462
+463
+464
+465
+466
+467
+468
+469
+470
+471
+472
+473
+474
+475
+476
+477
+478
+479
+480
+481
+482
+483
+484
+485
+486
+487
+488
+489
+490
+491
+492
+493
+494
+495
+496
+497
+498
+499
+500
+501
+502
+503
+504
+505
+506
+507
+508
+509
+510
+511
+512
+513
+514
+515
+516
+517
+518
+519
+520
+521
+522
+523
+524
+525
+526
+527
+528
+529
+530
+531
+532
+533
+534
+535
+536
+537
+538
+539
+540
+541
+542
+543
+544
+545
+546
+547
+548
+549
+550
+551
+552
+553
+554
+555
+556
+557
+558
+559
+560
+561
+562
+563
+564
+565
+566
+567
+568
+569
+570
+571
+572
+573
+574
+575
+576
+577
+578
+579
+580
+581
+582
+583
+584
+585
+586
+587
+588
+589
+590
+591
+592
+593
+594</td><td class="line-coverage"><span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js"><span class="branch-1 cbranch-no" title="branch not covered" >/</span>* eslint-disable max-len, quotes, comma-spacing, key-spacing, quote-props */
+// Request: search {"q":"harry ","fields":["identifier","title","collection","subjectDBCF","hasAdaptation","coverUrlFull"],"sort":"rank_title"}
+&nbsp;
+import Provider from '../../provider/Provider.js';
+import {assert, fail} from 'chai';
+&nbsp;
+let context = {
+  "services": {
+    "ddbcmsapi": "http://rest.filmstriben.dbc.inlead.dk/web/",
+    "moreinfo": "http://moreinfo.addi.dk/2.6/",
+    "openagency": "http://openagency.addi.dk/2.24/",
+    "openholdingstatus": "https://openholdingstatus.addi.dk/2.2/",
+    "openorder": "https://openorder.addi.dk/2.7.1/",
+    "TESTopenorder": "https://openorder.addi.dk/test_2.7.1/",
+    "opensearch": "http://opensearch.addi.dk/b3.0_4.2/",
+    "openuserstatus": "https://openuserstatus.addi.dk/1.4.1/",
+    "rank": "https://xptest.dbc.dk/ms/rank/v1",
+    "suggestpopular": "http://xptest.dbc.dk/ms/entity-pop/v1",
+    "suggestcreator": "http://xptest.dbc.dk/ms/entity-suggest/v1/creator",
+    "suggestlibrary": "http://xptest.dbc.dk/ms/entity-suggest/v1/library",
+    "suggestsubject": "http://xptest.dbc.dk/ms/entity-suggest/v1/subject",
+    "recommendurls": {
+      "default": "https://xptest.dbc.dk/ms/recommend-cosim/v1",
+      "popular": "https://xptest.dbc.dk/ms/recommend-pop/v1"
+    }
+  },
+  "search": {
+    "agency": "775100",
+    "profile": "opac",
+    "collectionidentifiers": "rec.collectionIdentifier:150013-palle OR rec.collectionIdentifier:758000-katalog"
+  },
+  "netpunkt": {"user": "XXXXX", "group": "XXXXX", "password": "XXXXX"},
+  "user": {"agency": "100451", "id": "XXXXX", "pin": "XXXXX", "salt": "XXXXX"},
+  "app": {"clientid": "XXXXX", "ddbcmsapipassword": "XXXXX", "orderpolicyrequester": "190101"}
+};
+let provider = Provider();
+let mockData = {
+  "[\"opensearch\",\"&lt;?xml version=\\\"1.0\\\" encoding=\\\"UTF-8\\\"?&gt;\\n&lt;SOAP-ENV:Envelope xmlns:SOAP-ENV=\\\"http://schemas.xmlsoap.org/soap/envelope/\\\" xmlns:ns1=\\\"http://oss.dbc.dk/ns/opensearch\\\"&gt;\\n  &lt;SOAP-ENV:Body&gt;\\n    &lt;ns1:searchRequest&gt;\\n      &lt;ns1:query&gt;harry &lt;/ns1:query&gt;\\n      &lt;ns1:agency&gt;775100&lt;/ns1:agency&gt;\\n      &lt;ns1:profile&gt;opac&lt;/ns1:profile&gt;\\n      &lt;ns1:start&gt;1&lt;/ns1:start&gt;\\n      &lt;ns1:stepValue&gt;10&lt;/ns1:stepValue&gt;\\n      &lt;ns1:sort&gt;rank_title&lt;/ns1:sort&gt;\\n      &lt;ns1:collectionType&gt;work-1&lt;/ns1:collectionType&gt;\\n      &lt;ns1:allObjects&gt;1&lt;/ns1:allObjects&gt;\\n      &lt;ns1:objectFormat&gt;briefDisplay&lt;/ns1:objectFormat&gt;\\n      &lt;ns1:objectFormat&gt;dkabm&lt;/ns1:objectFormat&gt;\\n      &lt;ns1:outputType&gt;json&lt;/ns1:outputType&gt;\\n    &lt;/ns1:searchRequest&gt;\\n  &lt;/SOAP-ENV:Body&gt;\\n&lt;/SOAP-ENV:Envelope&gt;\\n\"]": "{\"searchResponse\":{\"result\":{\"hitCount\":{\"$\":\"1732\"},\"collectionCount\":{\"$\":\"10\"},\"more\":{\"$\":\"true\"},\"sortUsed\":{\"$\":\"rank_title\"},\"searchResult\":[{\"collection\":{\"resultPosition\":{\"$\":\"1\"},\"numberOfObjects\":{\"$\":\"2\"},\"object\":[{\"record\":{\"identifier\":[{\"$\":\"28277229|870970\",\"@\":\"ac\"}],\"source\":[{\"$\":\"Bibliotekskatalog\",\"@\":\"ac\"}],\"title\":[{\"$\":\"Harry Brown\",\"@\":\"dc\"},{\"$\":\"Harry Brown\",\"@type\":{\"$\":\"dkdcplus:full\",\"@\":\"xsi\"},\"@\":\"dc\"}],\"creator\":[{\"$\":\"Daniel Barber\",\"@type\":{\"$\":\"dkdcplus:drt\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"Barber, Daniel\",\"@type\":{\"$\":\"oss:sort\",\"@\":\"xsi\"},\"@\":\"dc\"}],\"subject\":[{\"$\":\"77.7\",\"@type\":{\"$\":\"dkdcplus:DK5\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"Spillefilm\",\"@type\":{\"$\":\"dkdcplus:DK5-Text\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"actionfilm\",\"@type\":{\"$\":\"dkdcplus:DBCS\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"actionfilm\",\"@type\":{\"$\":\"dkdcplus:genre\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"krimi\",\"@type\":{\"$\":\"dkdcplus:DBCS\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"krimi\",\"@type\":{\"$\":\"dkdcplus:genre\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"narkokriminalitet\",\"@type\":{\"$\":\"dkdcplus:DBCS\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"selvt\\u00e6gt\",\"@type\":{\"$\":\"dkdcplus:DBCS\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"vold\",\"@type\":{\"$\":\"dkdcplus:DBCS\",\"@\":\"xsi\"},\"@\":\"dc\"}],\"abstract\":[{\"$\":\"Da pensionisten Harry Browns gamle ven myrdes af nogle unge b\\u00f8ller, st\\u00e5r politiet magtesl\\u00f8se. Harry, der har en milit\\u00e6r baggrund, tirres derfor til at tage sagen i egen h\\u00e5nd\",\"@\":\"dcterms\"}],\"description\":[{\"$\":\"Originalfilmen: Storbritannien : Marv Partners : UK Film Council : in association with HanWay Films : Prescience : Framestone Features, 2009\",\"@\":\"dc\"}],\"audience\":[{\"$\":\"M\\u00e6rkning: Tilladt for b\\u00f8rn over 15 \\u00e5r\",\"@type\":{\"$\":\"dkdcplus:medieraad\",\"@\":\"xsi\"},\"@\":\"dcterms\"},{\"$\":\"voksenmaterialer\",\"@\":\"dcterms\"}],\"publisher\":[{\"$\":\"Nordisk Film\",\"@\":\"dc\"}],\"contributor\":[{\"$\":\"Daniel Barber\",\"@\":\"dc\"},{\"$\":\"Gary Young (manuskriptforfatter)\",\"@\":\"dc\"},{\"$\":\"Martin Ruhe\",\"@\":\"dc\"},{\"$\":\"Michael Caine\",\"@type\":{\"$\":\"dkdcplus:act\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"Emily Mortimer\",\"@type\":{\"$\":\"dkdcplus:act\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"Charlie Creed Miles\",\"@type\":{\"$\":\"dkdcplus:act\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"David Bradley\",\"@type\":{\"$\":\"dkdcplus:act\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"Iain Glen\",\"@type\":{\"$\":\"dkdcplus:act\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"Sean Harris\",\"@type\":{\"$\":\"dkdcplus:act\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"Ben Drew\",\"@type\":{\"$\":\"dkdcplus:act\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"Jack O'Connell\",\"@type\":{\"$\":\"dkdcplus:act\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"Jamie Downey\",\"@type\":{\"$\":\"dkdcplus:act\",\"@\":\"xsi\"},\"@\":\"dc\"}],\"date\":[{\"$\":\"2010\",\"@\":\"dc\"}],\"type\":[{\"$\":\"Dvd\",\"@type\":{\"$\":\"dkdcplus:BibDK-Type\",\"@\":\"xsi\"},\"@\":\"dc\"}],\"format\":[{\"$\":\"1 dvd-video\",\"@\":\"dc\"}],\"extent\":[{\"$\":\"99 min.\",\"@\":\"dcterms\"}],\"language\":[{\"$\":\"eng\",\"@type\":{\"$\":\"dcterms:ISO639-2\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"Engelsk\",\"@\":\"dc\"},{\"$\":\"Dansk\",\"@type\":{\"$\":\"dkdcplus:subtitles\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"Norsk\",\"@type\":{\"$\":\"dkdcplus:subtitles\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"Svensk\",\"@type\":{\"$\":\"dkdcplus:subtitles\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"Finsk\",\"@type\":{\"$\":\"dkdcplus:subtitles\",\"@\":\"xsi\"},\"@\":\"dc\"}],\"@\":\"dkabm\"},\"identifier\":{\"$\":\"775100-katalog:28277229\"},\"primaryObjectIdentifier\":{\"$\":\"870970-basis:28277229\"},\"recordStatus\":{\"$\":\"active\"},\"formatsAvailable\":{\"format\":[{\"$\":\"dkabm\"},{\"$\":\"marcxchange\"}]},\"objectsAvailable\":{\"identifier\":[{\"$\":\"775100-katalog:28277229\"},{\"$\":\"870970-basis:28277229\"}]}},{\"identifier\":{\"$\":\"775100-katalog:28447698\"},\"formatsAvailable\":{\"format\":[{\"$\":\"dkabm\"},{\"$\":\"marcxchange\"}]}}]},\"formattedCollection\":{\"briefDisplay\":{\"manifestation\":[{\"accessType\":{\"$\":\"physical\"},\"creator\":{\"$\":\"Martin Ruhe\"},\"fedoraPid\":{\"$\":\"820010-katalog:5522001\"},\"identifier\":{\"$\":\"775100-katalog:28277229\"},\"title\":{\"$\":\"Harry Brown\"},\"titleFull\":{\"$\":\"Harry Brown\"},\"type\":{\"$\":\"Dvd\"},\"workType\":{\"$\":\"movie\"}},{\"accessType\":{\"$\":\"physical\"},\"creator\":{\"$\":\"Martin Ruhe\"},\"fedoraPid\":{\"$\":\"820010-katalog:5476924\"},\"identifier\":{\"$\":\"775100-katalog:28447698\"},\"title\":{\"$\":\"Harry Brown\"},\"titleFull\":{\"$\":\"Harry Brown\"},\"type\":{\"$\":\"Blu-ray\"},\"workType\":{\"$\":\"movie\"}}]}}},{\"collection\":{\"resultPosition\":{\"$\":\"2\"},\"numberOfObjects\":{\"$\":\"1\"},\"object\":[{\"record\":{\"identifier\":[{\"$\":\"27447406|870970\",\"@\":\"ac\"}],\"source\":[{\"$\":\"Bibliotekskatalog\",\"@\":\"ac\"}],\"title\":[{\"$\":\"Dirty Harry\",\"@\":\"dc\"},{\"$\":\"Dirty Harry\",\"@type\":{\"$\":\"dkdcplus:full\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"The Dirty Harry collection\",\"@type\":{\"$\":\"dkdcplus:series\",\"@\":\"xsi\"},\"@\":\"dc\"}],\"alternative\":[{\"$\":\"Dirty Harry vender tilbage\",\"@\":\"dcterms\"}],\"creator\":[{\"$\":\"Don Siegel\",\"@type\":{\"$\":\"dkdcplus:drt\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"Siegel, Don\",\"@type\":{\"$\":\"oss:sort\",\"@\":\"xsi\"},\"@\":\"dc\"}],\"subject\":[{\"$\":\"77.7\",\"@type\":{\"$\":\"dkdcplus:DK5\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"Spillefilm\",\"@type\":{\"$\":\"dkdcplus:DK5-Text\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"actionfilm\",\"@type\":{\"$\":\"dkdcplus:DBCS\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"actionfilm\",\"@type\":{\"$\":\"dkdcplus:genre\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"politidetektiver\",\"@type\":{\"$\":\"dkdcplus:DBCS\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"seriemordere\",\"@type\":{\"$\":\"dkdcplus:DBCS\",\"@\":\"xsi\"},\"@\":\"dc\"}],\"abstract\":[{\"$\":\"Kriminalassistent Harry Callahan m\\u00e5 sande, at regler og paragraffer er til for at brydes. Ellers slipper en psykopatisk morder godt fra endnu flere forbrydelser. Og \\\"Dirty Harry\\\" f\\u00e5r altid sin mand og det sidste ord!\",\"@\":\"dcterms\"}],\"description\":[{\"$\":\"Originalfilmen: USA : Warner Bros. : Malpaso Company, 1971\",\"@\":\"dc\"},{\"$\":\"Renewed edition: 1999\",\"@\":\"dc\"},{\"$\":\"Af indholdet: Special features (Commentary by Richard Schickel ; Dirty Harry : the original ; Interview gallery ; Dirty Harry's way ; Dirty Harry trailer gallery) ; Bonus disc: Indhold: The long shadow of Dirty Harry ; Clint Eastwood : the man from Malpaso\",\"@\":\"dc\"}],\"audience\":[{\"$\":\"M\\u00e6rkning: Tilladt for b\\u00f8rn over 15 \\u00e5r\",\"@type\":{\"$\":\"dkdcplus:medieraad\",\"@\":\"xsi\"},\"@\":\"dcterms\"},{\"$\":\"voksenmaterialer\",\"@\":\"dcterms\"}],\"version\":[{\"$\":\"Renewed edition (2 disc special edition)\",\"@\":\"dkdcplus\"}],\"publisher\":[{\"$\":\"Warner Bros. Entertainment Danmark\",\"@\":\"dc\"}],\"contributor\":[{\"$\":\"Bruce Surtees\",\"@\":\"dc\"},{\"$\":\"Harry Julian Fink\",\"@\":\"dc\"},{\"$\":\"R. M. Fink\",\"@\":\"dc\"},{\"$\":\"Dean Riesner\",\"@\":\"dc\"},{\"$\":\"Don Siegel\",\"@\":\"dc\"},{\"$\":\"Clint Eastwood\",\"@type\":{\"$\":\"dkdcplus:act\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"Harry Guardino\",\"@type\":{\"$\":\"dkdcplus:act\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"Reni Santoni\",\"@type\":{\"$\":\"dkdcplus:act\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"Andy Robinson\",\"@type\":{\"$\":\"dkdcplus:act\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"John Larch\",\"@type\":{\"$\":\"dkdcplus:act\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"John Vernon\",\"@type\":{\"$\":\"dkdcplus:act\",\"@\":\"xsi\"},\"@\":\"dc\"}],\"date\":[{\"$\":\"2008\",\"@\":\"dc\"}],\"type\":[{\"$\":\"Dvd\",\"@type\":{\"$\":\"dkdcplus:BibDK-Type\",\"@\":\"xsi\"},\"@\":\"dc\"}],\"format\":[{\"$\":\"1 dvd-video, 1 bonus disc\",\"@\":\"dc\"}],\"extent\":[{\"$\":\"ca. 98 min.\",\"@\":\"dcterms\"}],\"language\":[{\"$\":\"mul\",\"@type\":{\"$\":\"dcterms:ISO639-2\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"Flere sprog\",\"@\":\"dc\"},{\"$\":\"eng\",\"@type\":{\"$\":\"dcterms:ISO639-2\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"Engelsk\",\"@\":\"dc\"},{\"$\":\"Engelsk\",\"@type\":{\"$\":\"dkdcplus:subtitles\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"Tysk\",\"@type\":{\"$\":\"dkdcplus:subtitles\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"Spansk\",\"@type\":{\"$\":\"dkdcplus:subtitles\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"Tjekkisk\",\"@type\":{\"$\":\"dkdcplus:subtitles\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"Dansk\",\"@type\":{\"$\":\"dkdcplus:subtitles\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"Estisk\",\"@type\":{\"$\":\"dkdcplus:subtitles\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"Finsk\",\"@type\":{\"$\":\"dkdcplus:subtitles\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"Gr\\u00e6sk\",\"@type\":{\"$\":\"dkdcplus:subtitles\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"Norsk\",\"@type\":{\"$\":\"dkdcplus:subtitles\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"Portugisisk\",\"@type\":{\"$\":\"dkdcplus:subtitles\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"Polsk\",\"@type\":{\"$\":\"dkdcplus:subtitles\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"Svensk\",\"@type\":{\"$\":\"dkdcplus:subtitles\",\"@\":\"xsi\"},\"@\":\"dc\"}],\"spatial\":[{\"$\":\"USA\",\"@type\":{\"$\":\"dkdcplus:DBCS\",\"@\":\"xsi\"},\"@\":\"dcterms\"}],\"@\":\"dkabm\"},\"identifier\":{\"$\":\"775100-katalog:27447406\"},\"primaryObjectIdentifier\":{\"$\":\"870970-basis:27447406\"},\"recordStatus\":{\"$\":\"active\"},\"formatsAvailable\":{\"format\":[{\"$\":\"dkabm\"},{\"$\":\"marcxchange\"}]},\"objectsAvailable\":{\"identifier\":[{\"$\":\"775100-katalog:27447406\"},{\"$\":\"870970-basis:27447406\"}]}}]},\"formattedCollection\":{\"briefDisplay\":{\"manifestation\":[{\"accessType\":{\"$\":\"physical\"},\"fedoraPid\":{\"$\":\"870970-basis:27447406\"},\"identifier\":{\"$\":\"775100-katalog:27447406\"},\"title\":{\"$\":\"Dirty Harry\"},\"titleFull\":{\"$\":\"Dirty Harry\"},\"type\":{\"$\":\"Dvd\"},\"workType\":{\"$\":\"movie\"}}]}}},{\"collection\":{\"resultPosition\":{\"$\":\"3\"},\"numberOfObjects\":{\"$\":\"1\"},\"object\":[{\"record\":{\"identifier\":[{\"$\":\"24039978|870970\",\"@\":\"ac\"}],\"source\":[{\"$\":\"Bibliotekskatalog\",\"@\":\"ac\"}],\"title\":[{\"$\":\"Lego creator - Harry Potter\",\"@\":\"dc\"},{\"$\":\"Lego creator - Harry Potter\",\"@type\":{\"$\":\"dkdcplus:full\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"Constructive\",\"@type\":{\"$\":\"dkdcplus:series\",\"@\":\"xsi\"},\"@\":\"dc\"}],\"alternative\":[{\"$\":\"Creator - Harry Potter\",\"@\":\"dcterms\"},{\"$\":\"Harry Potter\",\"@\":\"dcterms\"}],\"subject\":[{\"$\":\"79.41\",\"@type\":{\"$\":\"dkdcplus:DK5\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"Computerspil\",\"@type\":{\"$\":\"dkdcplus:DK5-Text\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"computerspil\",\"@type\":{\"$\":\"dkdcplus:DBCO\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"legoklodser\",\"@type\":{\"$\":\"dkdcplus:DBCF\",\"@\":\"xsi\"},\"@\":\"dc\"}],\"abstract\":[{\"$\":\"Leg og l\\u00e6r. Du kender Harry Potter og Hogwarts? Her kan du lege med alle de kendte figurer fra b\\u00f8gerne og samtidig bygge din helt egen magiske Legoverden!\",\"@\":\"dcterms\"}],\"description\":[{\"$\":\"Titlen hentet fra cd-rometiket\",\"@\":\"dc\"}],\"audience\":[{\"$\":\"Fra 6 \\u00e5r\",\"@type\":{\"$\":\"dkdcplus:age\",\"@\":\"xsi\"},\"@\":\"dcterms\"},{\"$\":\"b\\u00f8rnematerialer\",\"@\":\"dcterms\"}],\"publisher\":[{\"$\":\"LEGO Software\",\"@\":\"dc\"}],\"contributor\":[{\"$\":\"Joanne K. Rowling\",\"@\":\"dc\"},{\"$\":\"Paul Grimster\",\"@\":\"dc\"},{\"$\":\"Sonja Kristensen\",\"@\":\"dc\"}],\"date\":[{\"$\":\"2001\",\"@\":\"dc\"}],\"type\":[{\"$\":\"Pc-spil\",\"@type\":{\"$\":\"dkdcplus:BibDK-Type\",\"@\":\"xsi\"},\"@\":\"dc\"}],\"format\":[{\"$\":\"1 cd-rom, lyd, farver, 1 brugermanuel\",\"@\":\"dc\"},{\"$\":\"Pc, Pentium II\\/266 MHz\\/MMX; 64 MB ram; Windows 98, Me eller 2000; 4\\u00d7 cd-rom\\/dvddrev; farvesk\\u00e6rm (800\\u00d7600 billedopl\\u00f8sning, 16 bit farver); DirectSound-kompatibelt lydkort\",\"@\":\"dc\"}],\"language\":[{\"$\":\"dan\",\"@type\":{\"$\":\"dcterms:ISO639-2\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"Dansk\",\"@\":\"dc\"}],\"@\":\"dkabm\"},\"identifier\":{\"$\":\"775100-katalog:24039978\"},\"primaryObjectIdentifier\":{\"$\":\"870970-basis:24039978\"},\"recordStatus\":{\"$\":\"active\"},\"formatsAvailable\":{\"format\":[{\"$\":\"dkabm\"},{\"$\":\"marcxchange\"}]},\"objectsAvailable\":{\"identifier\":[{\"$\":\"775100-katalog:24039978\"},{\"$\":\"870970-basis:24039978\"}]}}]},\"formattedCollection\":{\"briefDisplay\":{\"manifestation\":[{\"accessType\":{\"$\":\"physical\"},\"fedoraPid\":{\"$\":\"870970-basis:24039978\"},\"identifier\":{\"$\":\"775100-katalog:24039978\"},\"title\":{\"$\":\"Lego creator - Harry Potter\"},\"titleFull\":{\"$\":\"Lego creator - Harry Potter\"},\"type\":{\"$\":\"Pc-spil\"},\"workType\":{\"$\":\"game\"}}]}}},{\"collection\":{\"resultPosition\":{\"$\":\"4\"},\"numberOfObjects\":{\"$\":\"2\"},\"object\":[{\"record\":{\"identifier\":[{\"$\":\"50536661|870970\",\"@\":\"ac\"},{\"$\":\"9788771480290\",\"@type\":{\"$\":\"dkdcplus:ISBN\",\"@\":\"xsi\"},\"@\":\"dc\"}],\"source\":[{\"$\":\"Bibliotekskatalog\",\"@\":\"ac\"},{\"$\":\"Harry Styles\",\"@\":\"dc\"}],\"title\":[{\"$\":\"Harry Styles\",\"@\":\"dc\"},{\"$\":\"Harry Styles : superstjerne A-Z\",\"@type\":{\"$\":\"dkdcplus:full\",\"@\":\"xsi\"},\"@\":\"dc\"}],\"creator\":[{\"$\":\"Sarah Oliver\",\"@type\":{\"$\":\"dkdcplus:aut\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"Oliver, Sarah\",\"@type\":{\"$\":\"oss:sort\",\"@\":\"xsi\"},\"@\":\"dc\"}],\"subject\":[{\"$\":\"99.4 Styles, Harry\",\"@type\":{\"$\":\"dkdcplus:DK5\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"Biografier af enkelte personer\",\"@type\":{\"$\":\"dkdcplus:DK5-Text\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"Harry Styles\",\"@type\":{\"$\":\"dkdcplus:DBCF\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"Styles, Harry\",\"@type\":{\"$\":\"oss:sort\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"One Direction\",\"@type\":{\"$\":\"dkdcplus:DBCF\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"biografier\",\"@type\":{\"$\":\"dkdcplus:DBCO\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"for 12 \\u00e5r\",\"@type\":{\"$\":\"dkdcplus:DBCN\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"for 13 \\u00e5r\",\"@type\":{\"$\":\"dkdcplus:DBCN\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"for 14 \\u00e5r\",\"@type\":{\"$\":\"dkdcplus:DBCN\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"for 15 \\u00e5r\",\"@type\":{\"$\":\"dkdcplus:DBCN\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"for 16 \\u00e5r\",\"@type\":{\"$\":\"dkdcplus:DBCN\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"pop\",\"@type\":{\"$\":\"dkdcplus:DBCF\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"sangere\",\"@type\":{\"$\":\"dkdcplus:DBCF\",\"@\":\"xsi\"},\"@\":\"dc\"}],\"abstract\":[{\"$\":\"Om Harry Styles (f. 1994) liv og forel\\u00f8bige karriere i boybandet One Direction\",\"@\":\"dcterms\"}],\"audience\":[{\"$\":\"b\\u00f8rnematerialer\",\"@\":\"dcterms\"}],\"version\":[{\"$\":\"1. udgave, 1. oplag (2013)\",\"@\":\"dkdcplus\"}],\"publisher\":[{\"$\":\"Turbulenz\",\"@\":\"dc\"}],\"contributor\":[{\"$\":\"Brian Christensen\",\"@type\":{\"$\":\"dkdcplus:trl\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"Sarah N\\u00f8rgaard Jensen\",\"@type\":{\"$\":\"dkdcplus:edt\",\"@\":\"xsi\"},\"@\":\"dc\"}],\"date\":[{\"$\":\"2013\",\"@\":\"dc\"}],\"type\":[{\"$\":\"Bog\",\"@type\":{\"$\":\"dkdcplus:BibDK-Type\",\"@\":\"xsi\"},\"@\":\"dc\"}],\"format\":[{\"$\":\"illustreret i farver\",\"@\":\"dc\"}],\"extent\":[{\"$\":\"256 sider\",\"@\":\"dcterms\"}],\"language\":[{\"$\":\"dan\",\"@type\":{\"$\":\"dcterms:ISO639-2\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"Dansk\",\"@\":\"dc\"}],\"spatial\":[{\"$\":\"England\",\"@type\":{\"$\":\"dkdcplus:DBCF\",\"@\":\"xsi\"},\"@\":\"dcterms\"}],\"temporal\":[{\"$\":\"2010-2019\",\"@type\":{\"$\":\"dkdcplus:DBCP\",\"@\":\"xsi\"},\"@\":\"dcterms\"}],\"@\":\"dkabm\"},\"identifier\":{\"$\":\"775100-katalog:50536661\"},\"primaryObjectIdentifier\":{\"$\":\"870970-basis:50536661\"},\"recordStatus\":{\"$\":\"active\"},\"formatsAvailable\":{\"format\":[{\"$\":\"dkabm\"},{\"$\":\"marcxchange\"}]},\"objectsAvailable\":{\"identifier\":[{\"$\":\"775100-katalog:50536661\"},{\"$\":\"870970-basis:50536661\"}]}},{\"identifier\":{\"$\":\"870970-basis:51182200\"},\"creationDate\":{\"$\":\"2014-10-02\"},\"formatsAvailable\":{\"format\":[{\"$\":\"dkabm\"},{\"$\":\"marcxchange\"}]}}]},\"formattedCollection\":{\"briefDisplay\":{\"manifestation\":[{\"accessType\":{\"$\":\"physical\"},\"creator\":{\"$\":\"Sarah Oliver\"},\"fedoraPid\":{\"$\":\"125610-katalog:50536661\"},\"identifier\":{\"$\":\"775100-katalog:50536661\"},\"language\":{\"$\":\"Dansk\"},\"title\":{\"$\":\"Harry Styles\"},\"titleFull\":{\"$\":\"Harry Styles : superstjerne A-Z\"},\"type\":{\"$\":\"Bog\"},\"workType\":{\"$\":\"book\"}},{\"accessType\":{\"$\":\"online\"},\"creator\":{\"$\":\"Sarah Oliver\"},\"fedoraPid\":{\"$\":\"870970-basis:51182200\"},\"identifier\":{\"$\":\"870970-basis:51182200\"},\"language\":{\"$\":\"Dansk\"},\"title\":{\"$\":\"Harry Styles\"},\"titleFull\":{\"$\":\"Harry Styles : superstjerne A-Z\"},\"type\":{\"$\":\"Ebog\"},\"workType\":{\"$\":\"book\"}}]}}},{\"collection\":{\"resultPosition\":{\"$\":\"5\"},\"numberOfObjects\":{\"$\":\"1\"},\"object\":[{\"record\":{\"identifier\":[{\"$\":\"ebr10440572|150008\",\"@\":\"ac\"},{\"$\":\"9789814346078\",\"@type\":{\"$\":\"dkdcplus:ISBN\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"http:\\/\\/site.ebrary.com\\/lib\\/librarytitles\\/docDetail.action?docID=10440572\",\"@type\":{\"$\":\"dcterms:URI\",\"@\":\"xsi\"},\"@\":\"dc\"}],\"source\":[{\"$\":\"Ebrary\",\"@\":\"ac\"}],\"title\":[{\"$\":\"The story of Harry's\",\"@\":\"dc\"},{\"$\":\"The story of Harry's\",\"@type\":{\"$\":\"dkdcplus:full\",\"@\":\"xsi\"},\"@\":\"dc\"}],\"alternative\":[{\"$\":\"Portion of title Harry's\",\"@\":\"dcterms\"}],\"creator\":[{\"$\":\"Mohan Mulani\",\"@type\":{\"$\":\"dkdcplus:aut\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"Mulani, Mohan\",\"@type\":{\"$\":\"oss:sort\",\"@\":\"xsi\"},\"@\":\"dc\"}],\"subject\":[{\"$\":\"Bars (Drinking establishments) -- History\",\"@type\":{\"$\":\"dcterms:LCSH\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"Electronic books\",\"@type\":{\"$\":\"dcterms:LCSH\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"Harry's (Bar : Singapore)\",\"@\":\"dc\"}],\"description\":[{\"$\":\"Electronic reproduction. Palo Alto, Calif. : ebrary, 2013. Available via World Wide Web. Access may be limited to ebrary affiliated libraries\",\"@\":\"dc\"}],\"audience\":[{\"$\":\"voksenmaterialer\",\"@\":\"dcterms\"}],\"publisher\":[{\"$\":\"Marshall Cavendish Business\",\"@\":\"dc\"},{\"$\":\"Marshall Cavendish Corp\",\"@\":\"dc\"}],\"date\":[{\"$\":\"2010\",\"@\":\"dc\"}],\"type\":[{\"$\":\"Ebog\",\"@type\":{\"$\":\"dkdcplus:BibDK-Type\",\"@\":\"xsi\"},\"@\":\"dc\"}],\"format\":[{\"$\":\"illustreret\",\"@\":\"dc\"}],\"extent\":[{\"$\":\"162 s.\",\"@\":\"dcterms\"}],\"language\":[{\"$\":\"eng\",\"@type\":{\"$\":\"dcterms:ISO639-2\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"Engelsk\",\"@\":\"dc\"}],\"@\":\"dkabm\"},\"identifier\":{\"$\":\"150008-public:ebr10440572\"},\"primaryObjectIdentifier\":{\"$\":\"150008-public:ebr10440572\"},\"recordStatus\":{\"$\":\"active\"},\"creationDate\":{\"$\":\"2010-06-09\"},\"formatsAvailable\":{\"format\":[{\"$\":\"dkabm\"},{\"$\":\"marcxchange\"}]},\"objectsAvailable\":{\"identifier\":[{\"$\":\"150008-public:ebr10440572\"}]}}]},\"formattedCollection\":{\"briefDisplay\":{\"manifestation\":[{\"accessType\":{\"$\":\"online\"},\"creator\":{\"$\":\"Mohan Mulani\"},\"fedoraPid\":{\"$\":\"150008-public:ebr10440572\"},\"identifier\":{\"$\":\"150008-public:ebr10440572\"},\"language\":{\"$\":\"Engelsk\"},\"title\":{\"$\":\"The story of Harry's\"},\"titleFull\":{\"$\":\"The story of Harry's\"},\"type\":{\"$\":\"Ebog\"},\"workType\":{\"$\":\"book\"}}]}}},{\"collection\":{\"resultPosition\":{\"$\":\"6\"},\"numberOfObjects\":{\"$\":\"1\"},\"object\":[{\"record\":{\"identifier\":[{\"$\":\"50691446|870970\",\"@\":\"ac\"},{\"$\":\"http:\\/\\/www.filmstriben.dk\\/fjernleje\\/film\\/details.aspx?id=2744740600\",\"@type\":{\"$\":\"dcterms:URI\",\"@\":\"xsi\"},\"@\":\"dc\"}],\"source\":[{\"$\":\"Filmstriben\",\"@\":\"ac\"}],\"title\":[{\"$\":\"Dirty Harry\",\"@\":\"dc\"},{\"$\":\"Dirty Harry\",\"@type\":{\"$\":\"dkdcplus:full\",\"@\":\"xsi\"},\"@\":\"dc\"}],\"alternative\":[{\"$\":\"Dirty Harry vender tilbage\",\"@\":\"dcterms\"}],\"creator\":[{\"$\":\"Don Siegel\",\"@type\":{\"$\":\"dkdcplus:drt\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"Siegel, Don\",\"@type\":{\"$\":\"oss:sort\",\"@\":\"xsi\"},\"@\":\"dc\"}],\"subject\":[{\"$\":\"77.7\",\"@type\":{\"$\":\"dkdcplus:DK5\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"Spillefilm\",\"@type\":{\"$\":\"dkdcplus:DK5-Text\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"actionfilm\",\"@type\":{\"$\":\"dkdcplus:DBCS\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"actionfilm\",\"@type\":{\"$\":\"dkdcplus:genre\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"amerikanske film\",\"@type\":{\"$\":\"dkdcplus:DBCO\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"politidetektiver\",\"@type\":{\"$\":\"dkdcplus:DBCS\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"seriemordere\",\"@type\":{\"$\":\"dkdcplus:DBCS\",\"@\":\"xsi\"},\"@\":\"dc\"}],\"abstract\":[{\"$\":\"Kriminalassistent Harry Callahan m\\u00e5 sande, at regler og paragraffer er til for at brydes. Ellers slipper en psykopatisk morder godt fra endnu flere forbrydelser. Og \\\"Dirty Harry\\\" f\\u00e5r altid sin mand og det sidste ord!\",\"@\":\"dcterms\"}],\"description\":[{\"$\":\"Produktion: Warner Bros. (USA), Malpaso Company (USA), 1971\",\"@\":\"dc\"}],\"audience\":[{\"$\":\"M\\u00e6rkning: Tilladt for b\\u00f8rn over 15 \\u00e5r\",\"@type\":{\"$\":\"dkdcplus:medieraad\",\"@\":\"xsi\"},\"@\":\"dcterms\"},{\"$\":\"voksenmaterialer\",\"@\":\"dcterms\"}],\"publisher\":[{\"$\":\"Warner Bros.\",\"@\":\"dc\"}],\"contributor\":[{\"$\":\"Bruce Surtees\",\"@type\":{\"$\":\"dkdcplus:cng\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"Harry Julian Fink\",\"@type\":{\"$\":\"dkdcplus:aus\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"R. M. Fink\",\"@type\":{\"$\":\"dkdcplus:aus\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"Dean Riesner\",\"@type\":{\"$\":\"dkdcplus:aus\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"Clint Eastwood\",\"@type\":{\"$\":\"dkdcplus:act\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"Harry Guardino\",\"@type\":{\"$\":\"dkdcplus:act\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"Reni Santoni\",\"@type\":{\"$\":\"dkdcplus:act\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"Andy Robinson\",\"@type\":{\"$\":\"dkdcplus:act\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"John Larch\",\"@type\":{\"$\":\"dkdcplus:act\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"John Vernon\",\"@type\":{\"$\":\"dkdcplus:act\",\"@\":\"xsi\"},\"@\":\"dc\"}],\"date\":[{\"$\":\"2013\",\"@\":\"dc\"}],\"type\":[{\"$\":\"Film (net)\",\"@type\":{\"$\":\"dkdcplus:BibDK-Type\",\"@\":\"xsi\"},\"@\":\"dc\"}],\"extent\":[{\"$\":\"98 min.\",\"@\":\"dcterms\"}],\"language\":[{\"$\":\"eng\",\"@type\":{\"$\":\"dcterms:ISO639-2\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"Engelsk\",\"@\":\"dc\"},{\"$\":\"Dansk\",\"@type\":{\"$\":\"dkdcplus:subtitles\",\"@\":\"xsi\"},\"@\":\"dc\"}],\"spatial\":[{\"$\":\"USA\",\"@type\":{\"$\":\"dkdcplus:DBCS\",\"@\":\"xsi\"},\"@\":\"dcterms\"}],\"@\":\"dkabm\"},\"identifier\":{\"$\":\"870970-basis:50691446\"},\"primaryObjectIdentifier\":{\"$\":\"870970-basis:50691446\"},\"recordStatus\":{\"$\":\"active\"},\"creationDate\":{\"$\":\"2013-09-21\"},\"formatsAvailable\":{\"format\":[{\"$\":\"dkabm\"},{\"$\":\"marcxchange\"}]},\"objectsAvailable\":{\"identifier\":[{\"$\":\"870970-basis:50691446\"}]}}]},\"formattedCollection\":{\"briefDisplay\":{\"manifestation\":[{\"accessType\":{\"$\":\"online\"},\"fedoraPid\":{\"$\":\"870970-basis:50691446\"},\"identifier\":{\"$\":\"870970-basis:50691446\"},\"title\":{\"$\":\"Dirty Harry\"},\"titleFull\":{\"$\":\"Dirty Harry\"},\"type\":{\"$\":\"Film (net)\"},\"workType\":{\"$\":\"movie\"}}]}}},{\"collection\":{\"resultPosition\":{\"$\":\"7\"},\"numberOfObjects\":{\"$\":\"1\"},\"object\":[{\"record\":{\"identifier\":[{\"$\":\"29395306|870970\",\"@\":\"ac\"}],\"source\":[{\"$\":\"Bibliotekskatalog\",\"@\":\"ac\"}],\"title\":[{\"$\":\"Harry - stykke for stykke\",\"@\":\"dc\"},{\"$\":\"Harry - stykke for stykke\",\"@type\":{\"$\":\"dkdcplus:full\",\"@\":\"xsi\"},\"@\":\"dc\"}],\"alternative\":[{\"$\":\"Deconstructing Harry\",\"@\":\"dcterms\"}],\"creator\":[{\"$\":\"Woody Allen\",\"@type\":{\"$\":\"dkdcplus:drt\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"Allen, Woody\",\"@type\":{\"$\":\"oss:sort\",\"@\":\"xsi\"},\"@\":\"dc\"}],\"subject\":[{\"$\":\"77.7\",\"@type\":{\"$\":\"dkdcplus:DK5\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"Spillefilm\",\"@type\":{\"$\":\"dkdcplus:DK5-Text\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"forfattere\",\"@type\":{\"$\":\"dkdcplus:DBCS\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"komedier\",\"@type\":{\"$\":\"dkdcplus:DBCS\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"komedier\",\"@type\":{\"$\":\"dkdcplus:genre\",\"@\":\"xsi\"},\"@\":\"dc\"}],\"abstract\":[{\"$\":\"Den sexfikserede, neurotiske new yorker-forfatter Harry Block f\\u00e5r vennekredsen p\\u00e5 nakken med sin selvudleverende roman. Hans fiktive romanfigurer blander sig i hans liv, hvor problemerne t\\u00e5rner sig op\",\"@\":\"dcterms\"}],\"description\":[{\"$\":\"Originalfilmen: USA : Magnolia Productions ; S.l. : Sweetland Films, 1997\",\"@\":\"dc\"}],\"audience\":[{\"$\":\"M\\u00e6rkning: Tilladt for b\\u00f8rn over 15 \\u00e5r\",\"@type\":{\"$\":\"dkdcplus:medieraad\",\"@\":\"xsi\"},\"@\":\"dcterms\"},{\"$\":\"voksenmaterialer\",\"@\":\"dcterms\"}],\"publisher\":[{\"$\":\"Atlantic Film\",\"@\":\"dc\"}],\"contributor\":[{\"$\":\"Carlo Di Palma\",\"@\":\"dc\"},{\"$\":\"Woody Allen\",\"@\":\"dc\"},{\"$\":\"Caroline Aaron\",\"@type\":{\"$\":\"dkdcplus:act\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"Woody Allen\",\"@type\":{\"$\":\"dkdcplus:act\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"Kirstie Alley\",\"@type\":{\"$\":\"dkdcplus:act\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"Bob Balaban\",\"@type\":{\"$\":\"dkdcplus:act\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"Richard Benjamin\",\"@type\":{\"$\":\"dkdcplus:act\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"Eric Bogosian\",\"@type\":{\"$\":\"dkdcplus:act\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"Billy Crystal\",\"@type\":{\"$\":\"dkdcplus:act\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"Judy Davis\",\"@type\":{\"$\":\"dkdcplus:act\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"Hazelle Goodman\",\"@type\":{\"$\":\"dkdcplus:act\",\"@\":\"xsi\"},\"@\":\"dc\"}],\"date\":[{\"$\":\"2012\",\"@\":\"dc\"}],\"type\":[{\"$\":\"Dvd\",\"@type\":{\"$\":\"dkdcplus:BibDK-Type\",\"@\":\"xsi\"},\"@\":\"dc\"}],\"format\":[{\"$\":\"1 dvd-video\",\"@\":\"dc\"}],\"extent\":[{\"$\":\"91 min.\",\"@\":\"dcterms\"}],\"language\":[{\"$\":\"eng\",\"@type\":{\"$\":\"dcterms:ISO639-2\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"Engelsk\",\"@\":\"dc\"},{\"$\":\"Svensk\",\"@type\":{\"$\":\"dkdcplus:subtitles\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"Norsk\",\"@type\":{\"$\":\"dkdcplus:subtitles\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"Dansk\",\"@type\":{\"$\":\"dkdcplus:subtitles\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"Finsk\",\"@type\":{\"$\":\"dkdcplus:subtitles\",\"@\":\"xsi\"},\"@\":\"dc\"}],\"spatial\":[{\"$\":\"USA\",\"@type\":{\"$\":\"dkdcplus:DBCS\",\"@\":\"xsi\"},\"@\":\"dcterms\"},{\"$\":\"New York\",\"@type\":{\"$\":\"dkdcplus:DBCS\",\"@\":\"xsi\"},\"@\":\"dcterms\"}],\"@\":\"dkabm\"},\"identifier\":{\"$\":\"775100-katalog:29395306\"},\"primaryObjectIdentifier\":{\"$\":\"870970-basis:29395306\"},\"recordStatus\":{\"$\":\"active\"},\"formatsAvailable\":{\"format\":[{\"$\":\"dkabm\"},{\"$\":\"marcxchange\"}]},\"objectsAvailable\":{\"identifier\":[{\"$\":\"775100-katalog:29395306\"},{\"$\":\"870970-basis:29395306\"}]}}]},\"formattedCollection\":{\"briefDisplay\":{\"manifestation\":[{\"accessType\":{\"$\":\"physical\"},\"creator\":{\"$\":\"Woody Allen\"},\"fedoraPid\":{\"$\":\"820010-katalog:5530897\"},\"identifier\":{\"$\":\"775100-katalog:29395306\"},\"title\":{\"$\":\"Harry - stykke for stykke\"},\"titleFull\":{\"$\":\"Harry - stykke for stykke\"},\"type\":{\"$\":\"Dvd\"},\"workType\":{\"$\":\"movie\"}}]}}},{\"collection\":{\"resultPosition\":{\"$\":\"8\"},\"numberOfObjects\":{\"$\":\"1\"},\"object\":[{\"record\":{\"identifier\":[{\"$\":\"51088883|870970\",\"@\":\"ac\"},{\"$\":\"http:\\/\\/www.filmstriben.dk\\/fjernleje\\/film\\/details.aspx?id=5080550600\",\"@type\":{\"$\":\"dcterms:URI\",\"@\":\"xsi\"},\"@\":\"dc\"}],\"source\":[{\"$\":\"Filmstriben\",\"@\":\"ac\"}],\"title\":[{\"$\":\"Harry - stykke for stykke\",\"@\":\"dc\"},{\"$\":\"Harry - stykke for stykke\",\"@type\":{\"$\":\"dkdcplus:full\",\"@\":\"xsi\"},\"@\":\"dc\"}],\"alternative\":[{\"$\":\"Deconstructing Harry\",\"@\":\"dcterms\"}],\"creator\":[{\"$\":\"Woody Allen\",\"@type\":{\"$\":\"dkdcplus:drt\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"Allen, Woody\",\"@type\":{\"$\":\"oss:sort\",\"@\":\"xsi\"},\"@\":\"dc\"}],\"subject\":[{\"$\":\"77.7\",\"@type\":{\"$\":\"dkdcplus:DK5\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"Spillefilm\",\"@type\":{\"$\":\"dkdcplus:DK5-Text\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"amerikanske film\",\"@type\":{\"$\":\"dkdcplus:DBCO\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"forfattere\",\"@type\":{\"$\":\"dkdcplus:DBCS\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"komedier\",\"@type\":{\"$\":\"dkdcplus:DBCS\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"komedier\",\"@type\":{\"$\":\"dkdcplus:genre\",\"@\":\"xsi\"},\"@\":\"dc\"}],\"abstract\":[{\"$\":\"Den sexfikserede, neurotiske new yorker-forfatter Harry Block f\\u00e5r vennekredsen p\\u00e5 nakken med sin selvudleverende roman. Hans fiktive romanfigurer blander sig i hans liv, hvor problemerne t\\u00e5rner sig op\",\"@\":\"dcterms\"}],\"description\":[{\"$\":\"Produktion: Magnolia Productions (USA), Sweetland Films, 1997\",\"@\":\"dc\"}],\"audience\":[{\"$\":\"M\\u00e6rkning: Tilladt for b\\u00f8rn over 15 \\u00e5r\",\"@type\":{\"$\":\"dkdcplus:medieraad\",\"@\":\"xsi\"},\"@\":\"dcterms\"},{\"$\":\"voksenmaterialer\",\"@\":\"dcterms\"}],\"publisher\":[{\"$\":\"Atlantic Film\",\"@\":\"dc\"}],\"contributor\":[{\"$\":\"Carlo Di Palma\",\"@type\":{\"$\":\"dkdcplus:cng\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"Woody Allen\",\"@type\":{\"$\":\"dkdcplus:aus\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"Caroline Aaron\",\"@type\":{\"$\":\"dkdcplus:act\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"Woody Allen\",\"@type\":{\"$\":\"dkdcplus:act\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"Kirstie Alley\",\"@type\":{\"$\":\"dkdcplus:act\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"Bob Balaban\",\"@type\":{\"$\":\"dkdcplus:act\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"Richard Benjamin\",\"@type\":{\"$\":\"dkdcplus:act\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"Eric Bogosian\",\"@type\":{\"$\":\"dkdcplus:act\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"Billy Crystal\",\"@type\":{\"$\":\"dkdcplus:act\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"Judy Davis\",\"@type\":{\"$\":\"dkdcplus:act\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"Hazelle Goodman\",\"@type\":{\"$\":\"dkdcplus:act\",\"@\":\"xsi\"},\"@\":\"dc\"}],\"date\":[{\"$\":\"2014\",\"@\":\"dc\"}],\"type\":[{\"$\":\"Film (net)\",\"@type\":{\"$\":\"dkdcplus:BibDK-Type\",\"@\":\"xsi\"},\"@\":\"dc\"}],\"extent\":[{\"$\":\"91 min.\",\"@\":\"dcterms\"}],\"language\":[{\"$\":\"eng\",\"@type\":{\"$\":\"dcterms:ISO639-2\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"Engelsk\",\"@\":\"dc\"},{\"$\":\"Dansk\",\"@type\":{\"$\":\"dkdcplus:subtitles\",\"@\":\"xsi\"},\"@\":\"dc\"}],\"spatial\":[{\"$\":\"USA\",\"@type\":{\"$\":\"dkdcplus:DBCS\",\"@\":\"xsi\"},\"@\":\"dcterms\"},{\"$\":\"New York\",\"@type\":{\"$\":\"dkdcplus:DBCS\",\"@\":\"xsi\"},\"@\":\"dcterms\"}],\"@\":\"dkabm\"},\"identifier\":{\"$\":\"870970-basis:51088883\"},\"primaryObjectIdentifier\":{\"$\":\"870970-basis:51088883\"},\"recordStatus\":{\"$\":\"active\"},\"creationDate\":{\"$\":\"2014-05-05\"},\"formatsAvailable\":{\"format\":[{\"$\":\"dkabm\"},{\"$\":\"marcxchange\"}]},\"objectsAvailable\":{\"identifier\":[{\"$\":\"870970-basis:51088883\"}]}}]},\"formattedCollection\":{\"briefDisplay\":{\"manifestation\":[{\"accessType\":{\"$\":\"online\"},\"fedoraPid\":{\"$\":\"870970-basis:51088883\"},\"identifier\":{\"$\":\"870970-basis:51088883\"},\"title\":{\"$\":\"Harry - stykke for stykke\"},\"titleFull\":{\"$\":\"Deconstructing Harry\"},\"type\":{\"$\":\"Film (net)\"},\"workType\":{\"$\":\"movie\"}}]}}},{\"collection\":{\"resultPosition\":{\"$\":\"9\"},\"numberOfObjects\":{\"$\":\"1\"},\"object\":[{\"record\":{\"identifier\":[{\"$\":\"ebr10593006|150008\",\"@\":\"ac\"},{\"$\":\"http:\\/\\/site.ebrary.com\\/lib\\/librarytitles\\/docDetail.action?docID=10593006\",\"@type\":{\"$\":\"dcterms:URI\",\"@\":\"xsi\"},\"@\":\"dc\"}],\"source\":[{\"$\":\"Ebrary\",\"@\":\"ac\"}],\"title\":[{\"$\":\"Harry Redknapp\",\"@\":\"dc\"},{\"$\":\"Harry Redknapp : the biography\",\"@type\":{\"$\":\"dkdcplus:full\",\"@\":\"xsi\"},\"@\":\"dc\"}],\"creator\":[{\"$\":\"Les Roopanarine\",\"@type\":{\"$\":\"dkdcplus:aut\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"Roopanarine, Les\",\"@type\":{\"$\":\"oss:sort\",\"@\":\"xsi\"},\"@\":\"dc\"}],\"subject\":[{\"$\":\"Electronic books\",\"@type\":{\"$\":\"dcterms:LCSH\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"Harry Redknapp (1947-)\",\"@\":\"dc\"},{\"$\":\"Redknapp, Harry (1947-)\",\"@type\":{\"$\":\"oss:sort\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"Soccer managers\",\"@type\":{\"$\":\"dcterms:LCSH\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"West Ham United (Soccer team)\",\"@\":\"dc\"}],\"description\":[{\"$\":\"Electronic reproduction. Palo Alto, Calif. : ebrary, 2011. Available via World Wide Web. Access may be limited to ebrary affiliated libraries\",\"@\":\"dc\"}],\"audience\":[{\"$\":\"voksenmaterialer\",\"@\":\"dcterms\"}],\"publisher\":[{\"$\":\"John Blake\",\"@\":\"dc\"}],\"date\":[{\"$\":\"2010\",\"@\":\"dc\"}],\"type\":[{\"$\":\"Ebog\",\"@type\":{\"$\":\"dkdcplus:BibDK-Type\",\"@\":\"xsi\"},\"@\":\"dc\"}],\"extent\":[{\"$\":\"xviii, 269 s.\",\"@\":\"dcterms\"}],\"language\":[{\"$\":\"eng\",\"@type\":{\"$\":\"dcterms:ISO639-2\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"Engelsk\",\"@\":\"dc\"}],\"@\":\"dkabm\"},\"identifier\":{\"$\":\"150008-public:ebr10593006\"},\"primaryObjectIdentifier\":{\"$\":\"150008-public:ebr10593006\"},\"recordStatus\":{\"$\":\"active\"},\"creationDate\":{\"$\":\"2012-09-25\"},\"formatsAvailable\":{\"format\":[{\"$\":\"dkabm\"},{\"$\":\"marcxchange\"}]},\"objectsAvailable\":{\"identifier\":[{\"$\":\"150008-public:ebr10593006\"}]}}]},\"formattedCollection\":{\"briefDisplay\":{\"manifestation\":[{\"accessType\":{\"$\":\"online\"},\"creator\":{\"$\":\"Les Roopanarine\"},\"fedoraPid\":{\"$\":\"150008-public:ebr10593006\"},\"identifier\":{\"$\":\"150008-public:ebr10593006\"},\"language\":{\"$\":\"Engelsk\"},\"title\":{\"$\":\"Harry Redknapp\"},\"titleFull\":{\"$\":\"Harry Redknapp : the biography\"},\"type\":{\"$\":\"Ebog\"},\"workType\":{\"$\":\"book\"}}]}}},{\"collection\":{\"resultPosition\":{\"$\":\"10\"},\"numberOfObjects\":{\"$\":\"7\"},\"object\":[{\"record\":{\"identifier\":[{\"$\":\"28721420|870970\",\"@\":\"ac\"},{\"$\":\"9788770535984\",\"@type\":{\"$\":\"dkdcplus:ISBN\",\"@\":\"xsi\"},\"@\":\"dc\"}],\"source\":[{\"$\":\"Bibliotekskatalog\",\"@\":\"ac\"},{\"$\":\"Panserhjerte\",\"@\":\"dc\"}],\"title\":[{\"$\":\"Panserhjerte\",\"@\":\"dc\"},{\"$\":\"Panserhjerte\",\"@type\":{\"$\":\"dkdcplus:full\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"Krimiserien med Harry Hole ; 8\",\"@type\":{\"$\":\"dkdcplus:series\",\"@\":\"xsi\"},\"@\":\"dc\"}],\"creator\":[{\"$\":\"Jo Nesb\\u00f8\",\"@type\":{\"$\":\"dkdcplus:aut\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"Nesb\\u00f8, Jo\",\"@type\":{\"$\":\"oss:sort\",\"@\":\"xsi\"},\"@\":\"dc\"}],\"subject\":[{\"$\":\"Sk\\u00f8nlitteratur\",\"@type\":{\"$\":\"dkdcplus:DK5-Text\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"krimi\",\"@type\":{\"$\":\"dkdcplus:DBCS\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"krimi\",\"@type\":{\"$\":\"dkdcplus:genre\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"seriemordere\",\"@type\":{\"$\":\"dkdcplus:DBCS\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"sk\",\"@type\":{\"$\":\"dkdcplus:DK5\",\"@\":\"xsi\"},\"@\":\"dc\"}],\"abstract\":[{\"$\":\"Krimi. Den alkoholiserede og asociale Harry Hole fra drabsafdelingen i Oslo har egentlig sagt op, men bliver hentet tilbage til en makaber sag, hvor en seriemorder er p\\u00e5 spil. Sagen viser sig at v\\u00e6re vidtforgrenet, og den udvikler sig dramatisk og f\\u00f8rer Harry Hole rundt i Norge og Congo\",\"@\":\"dcterms\"}],\"audience\":[{\"$\":\"voksenmaterialer\",\"@\":\"dcterms\"}],\"version\":[{\"$\":\"3. udgave, 7. oplag (2016)\",\"@\":\"dkdcplus\"}],\"publisher\":[{\"$\":\"Modtryk\",\"@\":\"dc\"}],\"contributor\":[{\"$\":\"Allan Hilton Andersen\",\"@type\":{\"$\":\"dkdcplus:trl\",\"@\":\"xsi\"},\"@\":\"dc\"}],\"date\":[{\"$\":\"2011\",\"@\":\"dc\"}],\"type\":[{\"$\":\"Bog\",\"@type\":{\"$\":\"dkdcplus:BibDK-Type\",\"@\":\"xsi\"},\"@\":\"dc\"}],\"extent\":[{\"$\":\"634 sider\",\"@\":\"dcterms\"}],\"language\":[{\"$\":\"dan\",\"@type\":{\"$\":\"dcterms:ISO639-2\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"Dansk\",\"@\":\"dc\"}],\"spatial\":[{\"$\":\"Norge\",\"@type\":{\"$\":\"dkdcplus:DBCS\",\"@\":\"xsi\"},\"@\":\"dcterms\"},{\"$\":\"Oslo\",\"@type\":{\"$\":\"dkdcplus:DBCS\",\"@\":\"xsi\"},\"@\":\"dcterms\"}],\"temporal\":[{\"$\":\"2000-2009\",\"@type\":{\"$\":\"dkdcplus:DBCP\",\"@\":\"xsi\"},\"@\":\"dcterms\"}],\"@\":\"dkabm\"},\"identifier\":{\"$\":\"775100-katalog:28721420\"},\"primaryObjectIdentifier\":{\"$\":\"870970-basis:28721420\"},\"recordStatus\":{\"$\":\"active\"},\"formatsAvailable\":{\"format\":[{\"$\":\"dkabm\"},{\"$\":\"marcxchange\"}]},\"objectsAvailable\":{\"identifier\":[{\"$\":\"775100-katalog:28721420\"},{\"$\":\"870970-basis:28721420\"}]}},{\"identifier\":{\"$\":\"775100-katalog:27948022\"},\"formatsAvailable\":{\"format\":[{\"$\":\"dkabm\"},{\"$\":\"marcxchange\"}]}},{\"identifier\":{\"$\":\"775100-katalog:28037880\"},\"formatsAvailable\":{\"format\":[{\"$\":\"dkabm\"},{\"$\":\"marcxchange\"}]}},{\"identifier\":{\"$\":\"775100-katalog:28037929\"},\"formatsAvailable\":{\"format\":[{\"$\":\"dkabm\"},{\"$\":\"marcxchange\"}]}},{\"identifier\":{\"$\":\"775100-katalog:28037937\"},\"formatsAvailable\":{\"format\":[{\"$\":\"dkabm\"},{\"$\":\"marcxchange\"}]}},{\"identifier\":{\"$\":\"775100-katalog:28002769\"},\"formatsAvailable\":{\"format\":[{\"$\":\"dkabm\"},{\"$\":\"marcxchange\"}]}},{\"identifier\":{\"$\":\"775100-katalog:44739194\"},\"formatsAvailable\":{\"format\":[{\"$\":\"dkabm\"},{\"$\":\"marcxchange\"}]}}]},\"formattedCollection\":{\"briefDisplay\":{\"manifestation\":[{\"accessType\":{\"$\":\"physical\"},\"creator\":{\"$\":\"Jo Nesb\\u00f8\"},\"fedoraPid\":{\"$\":\"860980-katalog:28721420\"},\"identifier\":{\"$\":\"775100-katalog:28721420\"},\"language\":{\"$\":\"Dansk\"},\"title\":{\"$\":\"Panserhjerte\"},\"titleFull\":{\"$\":\"Panserhjerte\"},\"type\":{\"$\":\"Bog\"},\"workType\":{\"$\":\"book\"}},{\"accessType\":{\"$\":\"physical\"},\"creator\":{\"$\":\"Jo Nesb\\u00f8\"},\"fedoraPid\":{\"$\":\"860980-katalog:27948022\"},\"identifier\":{\"$\":\"775100-katalog:27948022\"},\"language\":{\"$\":\"Dansk\"},\"title\":{\"$\":\"Panserhjerte\"},\"titleFull\":{\"$\":\"Panserhjerte\"},\"type\":{\"$\":\"Bog\"},\"workType\":{\"$\":\"book\"}},{\"accessType\":{\"$\":\"physical\"},\"creator\":{\"$\":\"Jo Nesb\\u00f8\"},\"fedoraPid\":{\"$\":\"870970-basis:28037880\"},\"identifier\":{\"$\":\"775100-katalog:28037880\"},\"language\":{\"$\":\"Dansk\"},\"title\":{\"$\":\"Panserhjerte\"},\"titleFull\":{\"$\":\"Panserhjerte\"},\"type\":{\"$\":\"Bog stor skrift (bind 1)\"},\"workType\":{\"$\":\"book\"}},{\"accessType\":{\"$\":\"physical\"},\"creator\":{\"$\":\"Jo Nesb\\u00f8\"},\"fedoraPid\":{\"$\":\"810015-katalog:007976833__1\"},\"identifier\":{\"$\":\"775100-katalog:28037929\"},\"language\":{\"$\":\"Dansk\"},\"title\":{\"$\":\"Panserhjerte\"},\"titleFull\":{\"$\":\"Panserhjerte\"},\"type\":{\"$\":\"Bog stor skrift (bind 1)\"},\"workType\":{\"$\":\"book\"}},{\"accessType\":{\"$\":\"physical\"},\"creator\":{\"$\":\"Jo Nesb\\u00f8\"},\"fedoraPid\":{\"$\":\"870970-basis:28037937\"},\"identifier\":{\"$\":\"775100-katalog:28037937\"},\"language\":{\"$\":\"Dansk\"},\"title\":{\"$\":\"Panserhjerte\"},\"titleFull\":{\"$\":\"Panserhjerte\"},\"type\":{\"$\":\"Bog stor skrift (bind 3)\"},\"workType\":{\"$\":\"book\"}},{\"accessType\":{\"$\":\"physical\"},\"creator\":{\"$\":\"Jo Nesb\\u00f8\"},\"fedoraPid\":{\"$\":\"870970-basis:28002769\"},\"identifier\":{\"$\":\"775100-katalog:28002769\"},\"language\":{\"$\":\"Dansk\"},\"title\":{\"$\":\"Panserhjerte\"},\"titleFull\":{\"$\":\"Panserhjerte\"},\"type\":{\"$\":\"Lydbog (cd)\"},\"workType\":{\"$\":\"audiobook\"}},{\"accessType\":{\"$\":\"physical\"},\"creator\":{\"$\":\"Jo Nesb\\u00f8\"},\"fedoraPid\":{\"$\":\"125610-katalog:44739194\"},\"identifier\":{\"$\":\"775100-katalog:44739194\"},\"language\":{\"$\":\"Dansk\"},\"title\":{\"$\":\"Panserhjerte\"},\"titleFull\":{\"$\":\"Panserhjerte\"},\"type\":{\"$\":\"Lydbog (cd-mp3)\"},\"workType\":{\"$\":\"audiobook\"}}]}}}],\"facetResult\":null,\"statInfo\":{\"fedoraRecordsCached\":{\"$\":\"97\"},\"fedoraRecordsRead\":{\"$\":\"7\"},\"time\":{\"$\":\"0.750248\"},\"trackingId\":{\"$\":\"2016-05-30T21:03:21:661160:18846\"}}}},\"@namespaces\":{\"ac\":\"http:\\/\\/biblstandard.dk\\/ac\\/namespace\\/\",\"dbcaddi\":\"http:\\/\\/oss.dbc.dk\\/rdf\\/dbcaddi#\",\"dbcbib\":\"http:\\/\\/oss.dbc.dk\\/rdf\\/dbcbib#\",\"dc\":\"http:\\/\\/purl.org\\/dc\\/elements\\/1.1\\/\",\"dcmitype\":\"http:\\/\\/purl.org\\/dc\\/dcmitype\\/\",\"dcterms\":\"http:\\/\\/purl.org\\/dc\\/terms\\/\",\"dkabm\":\"http:\\/\\/biblstandard.dk\\/abm\\/namespace\\/dkabm\\/\",\"dkdcplus\":\"http:\\/\\/biblstandard.dk\\/abm\\/namespace\\/dkdcplus\\/\",\"docbook\":\"http:\\/\\/docbook.org\\/ns\\/docbook\",\"kml\":\"http:\\/\\/www.opengis.net\\/kml\\/2.2\",\"marcx\":\"info:lc\\/xmlns\\/marcxchange-v1\",\"mx\":\"http:\\/\\/www.loc.gov\\/MARC21\\/slim\",\"of\":\"http:\\/\\/oss.dbc.dk\\/ns\\/openformat\",\"ofo\":\"http:\\/\\/oss.dbc.dk\\/ns\\/openformatoutput\",\"os\":\"http:\\/\\/oss.dbc.dk\\/ns\\/opensearch\",\"oso\":\"http:\\/\\/oss.dbc.dk\\/ns\\/opensearchobjects\",\"oss\":\"http:\\/\\/oss.dbc.dk\\/ns\\/osstypes\",\"xs\":\"http:\\/\\/www.w3.org\\/2001\\/XMLSchema\",\"xsi\":\"http:\\/\\/www.w3.org\\/2001\\/XMLSchema-instance\"}}",
+  "[\"moreinfo\",{\"qs\":{\"action\":\"moreInfo\",\"authenticationUser\":\"XXXXX\",\"authenticationGroup\":\"XXXXX\",\"authenticationPassword\":\"XXXXX\",\"pidList\":\"775100-katalog:28277229|775100-katalog:27447406|775100-katalog:24039978|775100-katalog:50536661|150008-public:ebr10440572|870970-basis:50691446|775100-katalog:29395306|870970-basis:51088883|150008-public:ebr10593006|775100-katalog:28721420\",\"outputType\":\"json\"}}]": "{\"moreInfoResponse\":{\"requestStatus\":{\"statusEnum\":{\"$\":\"ok\",\"@\":\"mi\"},\"errorText\":{\"$\":\"\",\"@\":\"mi\"},\"@\":\"mi\"},\"identifierInformation\":[{\"identifierKnown\":{\"$\":\"true\",\"@\":\"mi\"},\"identifier\":{\"pid\":{\"$\":\"775100-katalog:28277229\",\"@\":\"mi\"},\"@\":\"mi\"},\"coverImage\":[{\"$\":\"http:\\/\\/moreinfo.addi.dk\\/2.6\\/more_info_get.php?lokalid=28277229&amp;attachment_type=forside_117&amp;bibliotek=870970&amp;source_id=870970&amp;key=1c1e93fc2a0bf0159930\",\"@imageSize\":{\"$\":\"detail_117\",\"@\":\"mi\"},\"@imageFormat\":{\"$\":\"jpeg\",\"@\":\"mi\"},\"@\":\"mi\"},{\"$\":\"http:\\/\\/moreinfo.addi.dk\\/2.6\\/more_info_get.php?lokalid=28277229&amp;attachment_type=forside_207&amp;bibliotek=870970&amp;source_id=870970&amp;key=eb18326b43f545fbe029\",\"@imageSize\":{\"$\":\"detail_207\",\"@\":\"mi\"},\"@imageFormat\":{\"$\":\"jpeg\",\"@\":\"mi\"},\"@\":\"mi\"},{\"$\":\"http:\\/\\/moreinfo.addi.dk\\/2.6\\/more_info_get.php?lokalid=28277229&amp;attachment_type=forside_42&amp;bibliotek=870970&amp;source_id=870970&amp;key=6a97fff61136f33be1ac\",\"@imageSize\":{\"$\":\"detail_42\",\"@\":\"mi\"},\"@imageFormat\":{\"$\":\"jpeg\",\"@\":\"mi\"},\"@\":\"mi\"},{\"$\":\"http:\\/\\/moreinfo.addi.dk\\/2.6\\/more_info_get.php?lokalid=28277229&amp;attachment_type=forside_500&amp;bibliotek=870970&amp;source_id=870970&amp;key=097686172773cbbb5ff9\",\"@imageSize\":{\"$\":\"detail_500\",\"@\":\"mi\"},\"@imageFormat\":{\"$\":\"jpeg\",\"@\":\"mi\"},\"@\":\"mi\"},{\"$\":\"http:\\/\\/moreinfo.addi.dk\\/2.6\\/more_info_get.php?lokalid=28277229&amp;attachment_type=forside_lille&amp;bibliotek=870970&amp;source_id=870970&amp;key=f41384dea909809d9d6d\",\"@imageSize\":{\"$\":\"thumbnail\",\"@\":\"mi\"},\"@imageFormat\":{\"$\":\"jpeg\",\"@\":\"mi\"},\"@\":\"mi\"},{\"$\":\"http:\\/\\/moreinfo.addi.dk\\/2.6\\/more_info_get.php?lokalid=28277229&amp;attachment_type=forside_stor&amp;bibliotek=870970&amp;source_id=870970&amp;key=b773fd3131c2dac33849\",\"@imageSize\":{\"$\":\"detail\",\"@\":\"mi\"},\"@imageFormat\":{\"$\":\"jpeg\",\"@\":\"mi\"},\"@\":\"mi\"}],\"@\":\"mi\"},{\"identifierKnown\":{\"$\":\"true\",\"@\":\"mi\"},\"identifier\":{\"pid\":{\"$\":\"775100-katalog:27447406\",\"@\":\"mi\"},\"@\":\"mi\"},\"@\":\"mi\"},{\"identifierKnown\":{\"$\":\"true\",\"@\":\"mi\"},\"identifier\":{\"pid\":{\"$\":\"775100-katalog:24039978\",\"@\":\"mi\"},\"@\":\"mi\"},\"@\":\"mi\"},{\"identifierKnown\":{\"$\":\"true\",\"@\":\"mi\"},\"identifier\":{\"pid\":{\"$\":\"775100-katalog:50536661\",\"@\":\"mi\"},\"@\":\"mi\"},\"backImage\":[{\"$\":\"http:\\/\\/moreinfo.addi.dk\\/2.6\\/more_info_get.php?lokalid=50536661&amp;attachment_type=bagside_117&amp;bibliotek=870970&amp;source_id=870970&amp;key=6b11e91d654fe2f6003e\",\"@imageSize\":{\"$\":\"detail_117\",\"@\":\"mi\"},\"@imageFormat\":{\"$\":\"jpeg\",\"@\":\"mi\"},\"@\":\"mi\"},{\"$\":\"http:\\/\\/moreinfo.addi.dk\\/2.6\\/more_info_get.php?lokalid=50536661&amp;attachment_type=bagside_207&amp;bibliotek=870970&amp;source_id=870970&amp;key=86436a071399317a50c8\",\"@imageSize\":{\"$\":\"detail_207\",\"@\":\"mi\"},\"@imageFormat\":{\"$\":\"jpeg\",\"@\":\"mi\"},\"@\":\"mi\"},{\"$\":\"http:\\/\\/moreinfo.addi.dk\\/2.6\\/more_info_get.php?lokalid=50536661&amp;attachment_type=bagside_42&amp;bibliotek=870970&amp;source_id=870970&amp;key=ef946b02b71977601b29\",\"@imageSize\":{\"$\":\"detail_42\",\"@\":\"mi\"},\"@imageFormat\":{\"$\":\"jpeg\",\"@\":\"mi\"},\"@\":\"mi\"},{\"$\":\"http:\\/\\/moreinfo.addi.dk\\/2.6\\/more_info_get.php?lokalid=50536661&amp;attachment_type=bagside_500&amp;bibliotek=870970&amp;source_id=870970&amp;key=25221893362969715282\",\"@imageSize\":{\"$\":\"detail_500\",\"@\":\"mi\"},\"@imageFormat\":{\"$\":\"jpeg\",\"@\":\"mi\"},\"@\":\"mi\"},{\"$\":\"http:\\/\\/moreinfo.addi.dk\\/2.6\\/more_info_get.php?lokalid=50536661&amp;attachment_type=bagside_lille&amp;bibliotek=870970&amp;source_id=870970&amp;key=f59584404bab7bae245d\",\"@imageSize\":{\"$\":\"thumbnail\",\"@\":\"mi\"},\"@imageFormat\":{\"$\":\"jpeg\",\"@\":\"mi\"},\"@\":\"mi\"},{\"$\":\"http:\\/\\/moreinfo.addi.dk\\/2.6\\/more_info_get.php?lokalid=50536661&amp;attachment_type=bagside_stor&amp;bibliotek=870970&amp;source_id=870970&amp;key=41ce09fdf20d1763c9c9\",\"@imageSize\":{\"$\":\"detail\",\"@\":\"mi\"},\"@imageFormat\":{\"$\":\"jpeg\",\"@\":\"mi\"},\"@\":\"mi\"}],\"backPage\":[{\"$\":\"http:\\/\\/moreinfo.addi.dk\\/2.6\\/more_info_get.php?lokalid=50536661&amp;attachment_type=bagside_pdf&amp;bibliotek=870970&amp;source_id=870970&amp;key=f34d24b5b632528cd45f\",\"@\":\"mi\"}],\"coverImage\":[{\"$\":\"http:\\/\\/moreinfo.addi.dk\\/2.6\\/more_info_get.php?lokalid=50536661&amp;attachment_type=forside_117&amp;bibliotek=870970&amp;source_id=870970&amp;key=3c45f1abe3f76fbee17f\",\"@imageSize\":{\"$\":\"detail_117\",\"@\":\"mi\"},\"@imageFormat\":{\"$\":\"jpeg\",\"@\":\"mi\"},\"@\":\"mi\"},{\"$\":\"http:\\/\\/moreinfo.addi.dk\\/2.6\\/more_info_get.php?lokalid=50536661&amp;attachment_type=forside_207&amp;bibliotek=870970&amp;source_id=870970&amp;key=769bc090401f9291ae7a\",\"@imageSize\":{\"$\":\"detail_207\",\"@\":\"mi\"},\"@imageFormat\":{\"$\":\"jpeg\",\"@\":\"mi\"},\"@\":\"mi\"},{\"$\":\"http:\\/\\/moreinfo.addi.dk\\/2.6\\/more_info_get.php?lokalid=50536661&amp;attachment_type=forside_42&amp;bibliotek=870970&amp;source_id=870970&amp;key=bca17d29880b818e23b9\",\"@imageSize\":{\"$\":\"detail_42\",\"@\":\"mi\"},\"@imageFormat\":{\"$\":\"jpeg\",\"@\":\"mi\"},\"@\":\"mi\"},{\"$\":\"http:\\/\\/moreinfo.addi.dk\\/2.6\\/more_info_get.php?lokalid=50536661&amp;attachment_type=forside_500&amp;bibliotek=870970&amp;source_id=870970&amp;key=a6351a52e0811d16e65f\",\"@imageSize\":{\"$\":\"detail_500\",\"@\":\"mi\"},\"@imageFormat\":{\"$\":\"jpeg\",\"@\":\"mi\"},\"@\":\"mi\"},{\"$\":\"http:\\/\\/moreinfo.addi.dk\\/2.6\\/more_info_get.php?lokalid=50536661&amp;attachment_type=forside_lille&amp;bibliotek=870970&amp;source_id=870970&amp;key=81a0f92ab75609218da3\",\"@imageSize\":{\"$\":\"thumbnail\",\"@\":\"mi\"},\"@imageFormat\":{\"$\":\"jpeg\",\"@\":\"mi\"},\"@\":\"mi\"},{\"$\":\"http:\\/\\/moreinfo.addi.dk\\/2.6\\/more_info_get.php?lokalid=50536661&amp;attachment_type=forside_stor&amp;bibliotek=870970&amp;source_id=870970&amp;key=734d34e6925c51213eb3\",\"@imageSize\":{\"$\":\"detail\",\"@\":\"mi\"},\"@imageFormat\":{\"$\":\"jpeg\",\"@\":\"mi\"},\"@\":\"mi\"}],\"@\":\"mi\"},{\"identifierKnown\":{\"$\":\"false\",\"@\":\"mi\"},\"identifier\":{\"pid\":{\"$\":\"150008-public:ebr10440572\",\"@\":\"mi\"},\"@\":\"mi\"},\"@\":\"mi\"},{\"identifierKnown\":{\"$\":\"true\",\"@\":\"mi\"},\"identifier\":{\"pid\":{\"$\":\"870970-basis:50691446\",\"@\":\"mi\"},\"@\":\"mi\"},\"@\":\"mi\"},{\"identifierKnown\":{\"$\":\"true\",\"@\":\"mi\"},\"identifier\":{\"pid\":{\"$\":\"775100-katalog:29395306\",\"@\":\"mi\"},\"@\":\"mi\"},\"coverImage\":[{\"$\":\"http:\\/\\/moreinfo.addi.dk\\/2.6\\/more_info_get.php?lokalid=29395306&amp;attachment_type=forside_117&amp;bibliotek=870970&amp;source_id=870970&amp;key=bdc54984ba9be6afbae1\",\"@imageSize\":{\"$\":\"detail_117\",\"@\":\"mi\"},\"@imageFormat\":{\"$\":\"jpeg\",\"@\":\"mi\"},\"@\":\"mi\"},{\"$\":\"http:\\/\\/moreinfo.addi.dk\\/2.6\\/more_info_get.php?lokalid=29395306&amp;attachment_type=forside_207&amp;bibliotek=870970&amp;source_id=870970&amp;key=09008a29e4bef0e31070\",\"@imageSize\":{\"$\":\"detail_207\",\"@\":\"mi\"},\"@imageFormat\":{\"$\":\"jpeg\",\"@\":\"mi\"},\"@\":\"mi\"},{\"$\":\"http:\\/\\/moreinfo.addi.dk\\/2.6\\/more_info_get.php?lokalid=29395306&amp;attachment_type=forside_42&amp;bibliotek=870970&amp;source_id=870970&amp;key=0818b9623f746f149d9c\",\"@imageSize\":{\"$\":\"detail_42\",\"@\":\"mi\"},\"@imageFormat\":{\"$\":\"jpeg\",\"@\":\"mi\"},\"@\":\"mi\"},{\"$\":\"http:\\/\\/moreinfo.addi.dk\\/2.6\\/more_info_get.php?lokalid=29395306&amp;attachment_type=forside_500&amp;bibliotek=870970&amp;source_id=870970&amp;key=6bad7a31edd673f1d239\",\"@imageSize\":{\"$\":\"detail_500\",\"@\":\"mi\"},\"@imageFormat\":{\"$\":\"jpeg\",\"@\":\"mi\"},\"@\":\"mi\"},{\"$\":\"http:\\/\\/moreinfo.addi.dk\\/2.6\\/more_info_get.php?lokalid=29395306&amp;attachment_type=forside_lille&amp;bibliotek=870970&amp;source_id=870970&amp;key=10fdbf7c81eb8829658a\",\"@imageSize\":{\"$\":\"thumbnail\",\"@\":\"mi\"},\"@imageFormat\":{\"$\":\"jpeg\",\"@\":\"mi\"},\"@\":\"mi\"},{\"$\":\"http:\\/\\/moreinfo.addi.dk\\/2.6\\/more_info_get.php?lokalid=29395306&amp;attachment_type=forside_stor&amp;bibliotek=870970&amp;source_id=870970&amp;key=8b9400015298a073c8bd\",\"@imageSize\":{\"$\":\"detail\",\"@\":\"mi\"},\"@imageFormat\":{\"$\":\"jpeg\",\"@\":\"mi\"},\"@\":\"mi\"}],\"@\":\"mi\"},{\"identifierKnown\":{\"$\":\"true\",\"@\":\"mi\"},\"identifier\":{\"pid\":{\"$\":\"870970-basis:51088883\",\"@\":\"mi\"},\"@\":\"mi\"},\"@\":\"mi\"},{\"identifierKnown\":{\"$\":\"false\",\"@\":\"mi\"},\"identifier\":{\"pid\":{\"$\":\"150008-public:ebr10593006\",\"@\":\"mi\"},\"@\":\"mi\"},\"@\":\"mi\"},{\"identifierKnown\":{\"$\":\"true\",\"@\":\"mi\"},\"identifier\":{\"pid\":{\"$\":\"775100-katalog:28721420\",\"@\":\"mi\"},\"@\":\"mi\"},\"backImage\":[{\"$\":\"http:\\/\\/moreinfo.addi.dk\\/2.6\\/more_info_get.php?lokalid=28721420&amp;attachment_type=bagside_117&amp;bibliotek=870970&amp;source_id=870970&amp;key=a59e759f35d1abc0b4f3\",\"@imageSize\":{\"$\":\"detail_117\",\"@\":\"mi\"},\"@imageFormat\":{\"$\":\"jpeg\",\"@\":\"mi\"},\"@\":\"mi\"},{\"$\":\"http:\\/\\/moreinfo.addi.dk\\/2.6\\/more_info_get.php?lokalid=28721420&amp;attachment_type=bagside_207&amp;bibliotek=870970&amp;source_id=870970&amp;key=09720f8cd9d5bd8465f3\",\"@imageSize\":{\"$\":\"detail_207\",\"@\":\"mi\"},\"@imageFormat\":{\"$\":\"jpeg\",\"@\":\"mi\"},\"@\":\"mi\"},{\"$\":\"http:\\/\\/moreinfo.addi.dk\\/2.6\\/more_info_get.php?lokalid=28721420&amp;attachment_type=bagside_42&amp;bibliotek=870970&amp;source_id=870970&amp;key=1d7e824c004d1e3f293f\",\"@imageSize\":{\"$\":\"detail_42\",\"@\":\"mi\"},\"@imageFormat\":{\"$\":\"jpeg\",\"@\":\"mi\"},\"@\":\"mi\"},{\"$\":\"http:\\/\\/moreinfo.addi.dk\\/2.6\\/more_info_get.php?lokalid=28721420&amp;attachment_type=bagside_500&amp;bibliotek=870970&amp;source_id=870970&amp;key=29ca15a6b7f49ffc9b0f\",\"@imageSize\":{\"$\":\"detail_500\",\"@\":\"mi\"},\"@imageFormat\":{\"$\":\"jpeg\",\"@\":\"mi\"},\"@\":\"mi\"},{\"$\":\"http:\\/\\/moreinfo.addi.dk\\/2.6\\/more_info_get.php?lokalid=28721420&amp;attachment_type=bagside_lille&amp;bibliotek=870970&amp;source_id=870970&amp;key=f4b789e6a5e0c3abf5b1\",\"@imageSize\":{\"$\":\"thumbnail\",\"@\":\"mi\"},\"@imageFormat\":{\"$\":\"jpeg\",\"@\":\"mi\"},\"@\":\"mi\"},{\"$\":\"http:\\/\\/moreinfo.addi.dk\\/2.6\\/more_info_get.php?lokalid=28721420&amp;attachment_type=bagside_stor&amp;bibliotek=870970&amp;source_id=870970&amp;key=df94ac791b91de96edb9\",\"@imageSize\":{\"$\":\"detail\",\"@\":\"mi\"},\"@imageFormat\":{\"$\":\"jpeg\",\"@\":\"mi\"},\"@\":\"mi\"}],\"backPage\":[{\"$\":\"http:\\/\\/moreinfo.addi.dk\\/2.6\\/more_info_get.php?lokalid=28721420&amp;attachment_type=bagside_pdf&amp;bibliotek=870970&amp;source_id=870970&amp;key=4ba3622c4c94c154a0a9\",\"@\":\"mi\"}],\"coverImage\":[{\"$\":\"http:\\/\\/moreinfo.addi.dk\\/2.6\\/more_info_get.php?lokalid=28721420&amp;attachment_type=forside_117&amp;bibliotek=870970&amp;source_id=870970&amp;key=81e14acfc7f81d46058c\",\"@imageSize\":{\"$\":\"detail_117\",\"@\":\"mi\"},\"@imageFormat\":{\"$\":\"jpeg\",\"@\":\"mi\"},\"@\":\"mi\"},{\"$\":\"http:\\/\\/moreinfo.addi.dk\\/2.6\\/more_info_get.php?lokalid=28721420&amp;attachment_type=forside_207&amp;bibliotek=870970&amp;source_id=870970&amp;key=7daa515db53cfc5a258f\",\"@imageSize\":{\"$\":\"detail_207\",\"@\":\"mi\"},\"@imageFormat\":{\"$\":\"jpeg\",\"@\":\"mi\"},\"@\":\"mi\"},{\"$\":\"http:\\/\\/moreinfo.addi.dk\\/2.6\\/more_info_get.php?lokalid=28721420&amp;attachment_type=forside_42&amp;bibliotek=870970&amp;source_id=870970&amp;key=96da116f98976760cb52\",\"@imageSize\":{\"$\":\"detail_42\",\"@\":\"mi\"},\"@imageFormat\":{\"$\":\"jpeg\",\"@\":\"mi\"},\"@\":\"mi\"},{\"$\":\"http:\\/\\/moreinfo.addi.dk\\/2.6\\/more_info_get.php?lokalid=28721420&amp;attachment_type=forside_500&amp;bibliotek=870970&amp;source_id=870970&amp;key=a1cf92282141b587324f\",\"@imageSize\":{\"$\":\"detail_500\",\"@\":\"mi\"},\"@imageFormat\":{\"$\":\"jpeg\",\"@\":\"mi\"},\"@\":\"mi\"},{\"$\":\"http:\\/\\/moreinfo.addi.dk\\/2.6\\/more_info_get.php?lokalid=28721420&amp;attachment_type=forside_lille&amp;bibliotek=870970&amp;source_id=870970&amp;key=db1f992e76c0cf878a5a\",\"@imageSize\":{\"$\":\"thumbnail\",\"@\":\"mi\"},\"@imageFormat\":{\"$\":\"jpeg\",\"@\":\"mi\"},\"@\":\"mi\"},{\"$\":\"http:\\/\\/moreinfo.addi.dk\\/2.6\\/more_info_get.php?lokalid=28721420&amp;attachment_type=forside_stor&amp;bibliotek=870970&amp;source_id=870970&amp;key=70e9d1c18dae1f37a59b\",\"@imageSize\":{\"$\":\"detail\",\"@\":\"mi\"},\"@imageFormat\":{\"$\":\"jpeg\",\"@\":\"mi\"},\"@\":\"mi\"}],\"@\":\"mi\"}],\"@\":\"mi\"},\"@namespaces\":{\"mi\":\"http:\\/\\/oss.dbc.dk\\/ns\\/moreinfo\"}}\n",
+  "[\"opensearch\",{\"qs\":{\"action\":\"getObject\",\"identifier\":[\"775100-katalog:28277229\",\"775100-katalog:27447406\",\"775100-katalog:24039978\",\"775100-katalog:50536661\",\"150008-public:ebr10440572\",\"870970-basis:50691446\",\"775100-katalog:29395306\",\"870970-basis:51088883\",\"150008-public:ebr10593006\",\"775100-katalog:28721420\"],\"agency\":\"775100\",\"profile\":\"opac\",\"outputType\":\"json\",\"objectFormat\":[],\"relationData\":\"uri\"}}]": "{\"searchResponse\":{\"result\":{\"hitCount\":{\"$\":\"10\"},\"collectionCount\":{\"$\":\"10\"},\"more\":{\"$\":\"false\"},\"searchResult\":[{\"collection\":{\"resultPosition\":{\"$\":\"1\"},\"numberOfObjects\":{\"$\":\"1\"},\"object\":[{\"record\":{\"identifier\":[{\"$\":\"28277229|870970\",\"@\":\"ac\"}],\"source\":[{\"$\":\"Bibliotekskatalog\",\"@\":\"ac\"}],\"title\":[{\"$\":\"Harry Brown\",\"@\":\"dc\"},{\"$\":\"Harry Brown\",\"@type\":{\"$\":\"dkdcplus:full\",\"@\":\"xsi\"},\"@\":\"dc\"}],\"creator\":[{\"$\":\"Daniel Barber\",\"@type\":{\"$\":\"dkdcplus:drt\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"Barber, Daniel\",\"@type\":{\"$\":\"oss:sort\",\"@\":\"xsi\"},\"@\":\"dc\"}],\"subject\":[{\"$\":\"77.7\",\"@type\":{\"$\":\"dkdcplus:DK5\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"Spillefilm\",\"@type\":{\"$\":\"dkdcplus:DK5-Text\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"actionfilm\",\"@type\":{\"$\":\"dkdcplus:DBCS\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"actionfilm\",\"@type\":{\"$\":\"dkdcplus:genre\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"krimi\",\"@type\":{\"$\":\"dkdcplus:DBCS\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"krimi\",\"@type\":{\"$\":\"dkdcplus:genre\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"narkokriminalitet\",\"@type\":{\"$\":\"dkdcplus:DBCS\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"selvt\\u00e6gt\",\"@type\":{\"$\":\"dkdcplus:DBCS\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"vold\",\"@type\":{\"$\":\"dkdcplus:DBCS\",\"@\":\"xsi\"},\"@\":\"dc\"}],\"abstract\":[{\"$\":\"Da pensionisten Harry Browns gamle ven myrdes af nogle unge b\\u00f8ller, st\\u00e5r politiet magtesl\\u00f8se. Harry, der har en milit\\u00e6r baggrund, tirres derfor til at tage sagen i egen h\\u00e5nd\",\"@\":\"dcterms\"}],\"description\":[{\"$\":\"Originalfilmen: Storbritannien : Marv Partners : UK Film Council : in association with HanWay Films : Prescience : Framestone Features, 2009\",\"@\":\"dc\"}],\"audience\":[{\"$\":\"M\\u00e6rkning: Tilladt for b\\u00f8rn over 15 \\u00e5r\",\"@type\":{\"$\":\"dkdcplus:medieraad\",\"@\":\"xsi\"},\"@\":\"dcterms\"},{\"$\":\"voksenmaterialer\",\"@\":\"dcterms\"}],\"publisher\":[{\"$\":\"Nordisk Film\",\"@\":\"dc\"}],\"contributor\":[{\"$\":\"Daniel Barber\",\"@\":\"dc\"},{\"$\":\"Gary Young (manuskriptforfatter)\",\"@\":\"dc\"},{\"$\":\"Martin Ruhe\",\"@\":\"dc\"},{\"$\":\"Michael Caine\",\"@type\":{\"$\":\"dkdcplus:act\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"Emily Mortimer\",\"@type\":{\"$\":\"dkdcplus:act\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"Charlie Creed Miles\",\"@type\":{\"$\":\"dkdcplus:act\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"David Bradley\",\"@type\":{\"$\":\"dkdcplus:act\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"Iain Glen\",\"@type\":{\"$\":\"dkdcplus:act\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"Sean Harris\",\"@type\":{\"$\":\"dkdcplus:act\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"Ben Drew\",\"@type\":{\"$\":\"dkdcplus:act\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"Jack O'Connell\",\"@type\":{\"$\":\"dkdcplus:act\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"Jamie Downey\",\"@type\":{\"$\":\"dkdcplus:act\",\"@\":\"xsi\"},\"@\":\"dc\"}],\"date\":[{\"$\":\"2010\",\"@\":\"dc\"}],\"type\":[{\"$\":\"Dvd\",\"@type\":{\"$\":\"dkdcplus:BibDK-Type\",\"@\":\"xsi\"},\"@\":\"dc\"}],\"format\":[{\"$\":\"1 dvd-video\",\"@\":\"dc\"}],\"extent\":[{\"$\":\"99 min.\",\"@\":\"dcterms\"}],\"language\":[{\"$\":\"eng\",\"@type\":{\"$\":\"dcterms:ISO639-2\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"Engelsk\",\"@\":\"dc\"},{\"$\":\"Dansk\",\"@type\":{\"$\":\"dkdcplus:subtitles\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"Norsk\",\"@type\":{\"$\":\"dkdcplus:subtitles\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"Svensk\",\"@type\":{\"$\":\"dkdcplus:subtitles\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"Finsk\",\"@type\":{\"$\":\"dkdcplus:subtitles\",\"@\":\"xsi\"},\"@\":\"dc\"}],\"@\":\"dkabm\"},\"identifier\":{\"$\":\"775100-katalog:28277229\"},\"primaryObjectIdentifier\":{\"$\":\"870970-basis:28277229\"},\"recordStatus\":{\"$\":\"active\"},\"relations\":{\"relation\":[{\"relationType\":{\"$\":\"dbcaddi:hasReview\"},\"relationUri\":{\"$\":\"870971-anmeld:34132593\"}},{\"relationType\":{\"$\":\"dbcaddi:hasReview\"},\"relationUri\":{\"$\":\"870971-anmeld:34141851\"}},{\"relationType\":{\"$\":\"dbcaddi:hasReview\"},\"relationUri\":{\"$\":\"870971-anmeld:34167109\"}},{\"relationType\":{\"$\":\"dbcaddi:hasReview\"},\"relationUri\":{\"$\":\"870971-anmeld:34132623\"}},{\"relationType\":{\"$\":\"dbcaddi:hasReview\"},\"relationUri\":{\"$\":\"870971-anmeld:34132585\"}},{\"relationType\":{\"$\":\"dbcaddi:hasReview\"},\"relationUri\":{\"$\":\"870971-anmeld:34132577\"}},{\"relationType\":{\"$\":\"dbcaddi:hasReview\"},\"relationUri\":{\"$\":\"870971-anmeld:34132569\"}},{\"relationType\":{\"$\":\"dbcaddi:hasReview\"},\"relationUri\":{\"$\":\"870971-anmeld:34132240\"}},{\"relationType\":{\"$\":\"dbcaddi:hasReview\"},\"relationUri\":{\"$\":\"870971-anmeld:34410178\"}},{\"relationType\":{\"$\":\"dbcaddi:hasReview\"},\"relationUri\":{\"$\":\"870976-anmeld:30897048\"}}]},\"formatsAvailable\":{\"format\":[{\"$\":\"dkabm\"},{\"$\":\"marcxchange\"}]},\"objectsAvailable\":{\"identifier\":[{\"$\":\"775100-katalog:28277229\"},{\"$\":\"870970-basis:28277229\"}]}}]}},{\"collection\":{\"resultPosition\":{\"$\":\"2\"},\"numberOfObjects\":{\"$\":\"1\"},\"object\":[{\"record\":{\"identifier\":[{\"$\":\"27447406|870970\",\"@\":\"ac\"}],\"source\":[{\"$\":\"Bibliotekskatalog\",\"@\":\"ac\"}],\"title\":[{\"$\":\"Dirty Harry\",\"@\":\"dc\"},{\"$\":\"Dirty Harry\",\"@type\":{\"$\":\"dkdcplus:full\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"The Dirty Harry collection\",\"@type\":{\"$\":\"dkdcplus:series\",\"@\":\"xsi\"},\"@\":\"dc\"}],\"alternative\":[{\"$\":\"Dirty Harry vender tilbage\",\"@\":\"dcterms\"}],\"creator\":[{\"$\":\"Don Siegel\",\"@type\":{\"$\":\"dkdcplus:drt\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"Siegel, Don\",\"@type\":{\"$\":\"oss:sort\",\"@\":\"xsi\"},\"@\":\"dc\"}],\"subject\":[{\"$\":\"77.7\",\"@type\":{\"$\":\"dkdcplus:DK5\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"Spillefilm\",\"@type\":{\"$\":\"dkdcplus:DK5-Text\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"actionfilm\",\"@type\":{\"$\":\"dkdcplus:DBCS\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"actionfilm\",\"@type\":{\"$\":\"dkdcplus:genre\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"politidetektiver\",\"@type\":{\"$\":\"dkdcplus:DBCS\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"seriemordere\",\"@type\":{\"$\":\"dkdcplus:DBCS\",\"@\":\"xsi\"},\"@\":\"dc\"}],\"abstract\":[{\"$\":\"Kriminalassistent Harry Callahan m\\u00e5 sande, at regler og paragraffer er til for at brydes. Ellers slipper en psykopatisk morder godt fra endnu flere forbrydelser. Og \\\"Dirty Harry\\\" f\\u00e5r altid sin mand og det sidste ord!\",\"@\":\"dcterms\"}],\"description\":[{\"$\":\"Originalfilmen: USA : Warner Bros. : Malpaso Company, 1971\",\"@\":\"dc\"},{\"$\":\"Renewed edition: 1999\",\"@\":\"dc\"},{\"$\":\"Af indholdet: Special features (Commentary by Richard Schickel ; Dirty Harry : the original ; Interview gallery ; Dirty Harry's way ; Dirty Harry trailer gallery) ; Bonus disc: Indhold: The long shadow of Dirty Harry ; Clint Eastwood : the man from Malpaso\",\"@\":\"dc\"}],\"audience\":[{\"$\":\"M\\u00e6rkning: Tilladt for b\\u00f8rn over 15 \\u00e5r\",\"@type\":{\"$\":\"dkdcplus:medieraad\",\"@\":\"xsi\"},\"@\":\"dcterms\"},{\"$\":\"voksenmaterialer\",\"@\":\"dcterms\"}],\"version\":[{\"$\":\"Renewed edition (2 disc special edition)\",\"@\":\"dkdcplus\"}],\"publisher\":[{\"$\":\"Warner Bros. Entertainment Danmark\",\"@\":\"dc\"}],\"contributor\":[{\"$\":\"Bruce Surtees\",\"@\":\"dc\"},{\"$\":\"Harry Julian Fink\",\"@\":\"dc\"},{\"$\":\"R. M. Fink\",\"@\":\"dc\"},{\"$\":\"Dean Riesner\",\"@\":\"dc\"},{\"$\":\"Don Siegel\",\"@\":\"dc\"},{\"$\":\"Clint Eastwood\",\"@type\":{\"$\":\"dkdcplus:act\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"Harry Guardino\",\"@type\":{\"$\":\"dkdcplus:act\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"Reni Santoni\",\"@type\":{\"$\":\"dkdcplus:act\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"Andy Robinson\",\"@type\":{\"$\":\"dkdcplus:act\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"John Larch\",\"@type\":{\"$\":\"dkdcplus:act\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"John Vernon\",\"@type\":{\"$\":\"dkdcplus:act\",\"@\":\"xsi\"},\"@\":\"dc\"}],\"date\":[{\"$\":\"2008\",\"@\":\"dc\"}],\"type\":[{\"$\":\"Dvd\",\"@type\":{\"$\":\"dkdcplus:BibDK-Type\",\"@\":\"xsi\"},\"@\":\"dc\"}],\"format\":[{\"$\":\"1 dvd-video, 1 bonus disc\",\"@\":\"dc\"}],\"extent\":[{\"$\":\"ca. 98 min.\",\"@\":\"dcterms\"}],\"language\":[{\"$\":\"mul\",\"@type\":{\"$\":\"dcterms:ISO639-2\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"Flere sprog\",\"@\":\"dc\"},{\"$\":\"eng\",\"@type\":{\"$\":\"dcterms:ISO639-2\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"Engelsk\",\"@\":\"dc\"},{\"$\":\"Engelsk\",\"@type\":{\"$\":\"dkdcplus:subtitles\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"Tysk\",\"@type\":{\"$\":\"dkdcplus:subtitles\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"Spansk\",\"@type\":{\"$\":\"dkdcplus:subtitles\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"Tjekkisk\",\"@type\":{\"$\":\"dkdcplus:subtitles\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"Dansk\",\"@type\":{\"$\":\"dkdcplus:subtitles\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"Estisk\",\"@type\":{\"$\":\"dkdcplus:subtitles\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"Finsk\",\"@type\":{\"$\":\"dkdcplus:subtitles\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"Gr\\u00e6sk\",\"@type\":{\"$\":\"dkdcplus:subtitles\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"Norsk\",\"@type\":{\"$\":\"dkdcplus:subtitles\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"Portugisisk\",\"@type\":{\"$\":\"dkdcplus:subtitles\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"Polsk\",\"@type\":{\"$\":\"dkdcplus:subtitles\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"Svensk\",\"@type\":{\"$\":\"dkdcplus:subtitles\",\"@\":\"xsi\"},\"@\":\"dc\"}],\"spatial\":[{\"$\":\"USA\",\"@type\":{\"$\":\"dkdcplus:DBCS\",\"@\":\"xsi\"},\"@\":\"dcterms\"}],\"@\":\"dkabm\"},\"identifier\":{\"$\":\"775100-katalog:27447406\"},\"primaryObjectIdentifier\":{\"$\":\"870970-basis:27447406\"},\"recordStatus\":{\"$\":\"active\"},\"relations\":{\"relation\":[{\"relationType\":{\"$\":\"dbcaddi:hasReview\"},\"relationUri\":{\"$\":\"870976-anmeld:30734572\"}}]},\"formatsAvailable\":{\"format\":[{\"$\":\"dkabm\"},{\"$\":\"marcxchange\"}]},\"objectsAvailable\":{\"identifier\":[{\"$\":\"775100-katalog:27447406\"},{\"$\":\"870970-basis:27447406\"}]}}]}},{\"collection\":{\"resultPosition\":{\"$\":\"3\"},\"numberOfObjects\":{\"$\":\"1\"},\"object\":[{\"record\":{\"identifier\":[{\"$\":\"24039978|870970\",\"@\":\"ac\"}],\"source\":[{\"$\":\"Bibliotekskatalog\",\"@\":\"ac\"}],\"title\":[{\"$\":\"Lego creator - Harry Potter\",\"@\":\"dc\"},{\"$\":\"Lego creator - Harry Potter\",\"@type\":{\"$\":\"dkdcplus:full\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"Constructive\",\"@type\":{\"$\":\"dkdcplus:series\",\"@\":\"xsi\"},\"@\":\"dc\"}],\"alternative\":[{\"$\":\"Creator - Harry Potter\",\"@\":\"dcterms\"},{\"$\":\"Harry Potter\",\"@\":\"dcterms\"}],\"subject\":[{\"$\":\"79.41\",\"@type\":{\"$\":\"dkdcplus:DK5\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"Computerspil\",\"@type\":{\"$\":\"dkdcplus:DK5-Text\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"computerspil\",\"@type\":{\"$\":\"dkdcplus:DBCO\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"legoklodser\",\"@type\":{\"$\":\"dkdcplus:DBCF\",\"@\":\"xsi\"},\"@\":\"dc\"}],\"abstract\":[{\"$\":\"Leg og l\\u00e6r. Du kender Harry Potter og Hogwarts? Her kan du lege med alle de kendte figurer fra b\\u00f8gerne og samtidig bygge din helt egen magiske Legoverden!\",\"@\":\"dcterms\"}],\"description\":[{\"$\":\"Titlen hentet fra cd-rometiket\",\"@\":\"dc\"}],\"audience\":[{\"$\":\"Fra 6 \\u00e5r\",\"@type\":{\"$\":\"dkdcplus:age\",\"@\":\"xsi\"},\"@\":\"dcterms\"},{\"$\":\"b\\u00f8rnematerialer\",\"@\":\"dcterms\"}],\"publisher\":[{\"$\":\"LEGO Software\",\"@\":\"dc\"}],\"contributor\":[{\"$\":\"Joanne K. Rowling\",\"@\":\"dc\"},{\"$\":\"Paul Grimster\",\"@\":\"dc\"},{\"$\":\"Sonja Kristensen\",\"@\":\"dc\"}],\"date\":[{\"$\":\"2001\",\"@\":\"dc\"}],\"type\":[{\"$\":\"Pc-spil\",\"@type\":{\"$\":\"dkdcplus:BibDK-Type\",\"@\":\"xsi\"},\"@\":\"dc\"}],\"format\":[{\"$\":\"1 cd-rom, lyd, farver, 1 brugermanuel\",\"@\":\"dc\"},{\"$\":\"Pc, Pentium II\\/266 MHz\\/MMX; 64 MB ram; Windows 98, Me eller 2000; 4\\u00d7 cd-rom\\/dvddrev; farvesk\\u00e6rm (800\\u00d7600 billedopl\\u00f8sning, 16 bit farver); DirectSound-kompatibelt lydkort\",\"@\":\"dc\"}],\"language\":[{\"$\":\"dan\",\"@type\":{\"$\":\"dcterms:ISO639-2\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"Dansk\",\"@\":\"dc\"}],\"@\":\"dkabm\"},\"identifier\":{\"$\":\"775100-katalog:24039978\"},\"primaryObjectIdentifier\":{\"$\":\"870970-basis:24039978\"},\"recordStatus\":{\"$\":\"active\"},\"relations\":{\"relation\":[{\"relationType\":{\"$\":\"dbcaddi:hasReview\"},\"relationUri\":{\"$\":\"870976-anmeld:3036564X\"}}]},\"formatsAvailable\":{\"format\":[{\"$\":\"dkabm\"},{\"$\":\"marcxchange\"}]},\"objectsAvailable\":{\"identifier\":[{\"$\":\"775100-katalog:24039978\"},{\"$\":\"870970-basis:24039978\"}]}}]}},{\"collection\":{\"resultPosition\":{\"$\":\"4\"},\"numberOfObjects\":{\"$\":\"1\"},\"object\":[{\"record\":{\"identifier\":[{\"$\":\"50536661|870970\",\"@\":\"ac\"},{\"$\":\"9788771480290\",\"@type\":{\"$\":\"dkdcplus:ISBN\",\"@\":\"xsi\"},\"@\":\"dc\"}],\"source\":[{\"$\":\"Bibliotekskatalog\",\"@\":\"ac\"},{\"$\":\"Harry Styles\",\"@\":\"dc\"}],\"title\":[{\"$\":\"Harry Styles\",\"@\":\"dc\"},{\"$\":\"Harry Styles : superstjerne A-Z\",\"@type\":{\"$\":\"dkdcplus:full\",\"@\":\"xsi\"},\"@\":\"dc\"}],\"creator\":[{\"$\":\"Sarah Oliver\",\"@type\":{\"$\":\"dkdcplus:aut\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"Oliver, Sarah\",\"@type\":{\"$\":\"oss:sort\",\"@\":\"xsi\"},\"@\":\"dc\"}],\"subject\":[{\"$\":\"99.4 Styles, Harry\",\"@type\":{\"$\":\"dkdcplus:DK5\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"Biografier af enkelte personer\",\"@type\":{\"$\":\"dkdcplus:DK5-Text\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"Harry Styles\",\"@type\":{\"$\":\"dkdcplus:DBCF\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"Styles, Harry\",\"@type\":{\"$\":\"oss:sort\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"One Direction\",\"@type\":{\"$\":\"dkdcplus:DBCF\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"biografier\",\"@type\":{\"$\":\"dkdcplus:DBCO\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"for 12 \\u00e5r\",\"@type\":{\"$\":\"dkdcplus:DBCN\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"for 13 \\u00e5r\",\"@type\":{\"$\":\"dkdcplus:DBCN\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"for 14 \\u00e5r\",\"@type\":{\"$\":\"dkdcplus:DBCN\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"for 15 \\u00e5r\",\"@type\":{\"$\":\"dkdcplus:DBCN\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"for 16 \\u00e5r\",\"@type\":{\"$\":\"dkdcplus:DBCN\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"pop\",\"@type\":{\"$\":\"dkdcplus:DBCF\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"sangere\",\"@type\":{\"$\":\"dkdcplus:DBCF\",\"@\":\"xsi\"},\"@\":\"dc\"}],\"abstract\":[{\"$\":\"Om Harry Styles (f. 1994) liv og forel\\u00f8bige karriere i boybandet One Direction\",\"@\":\"dcterms\"}],\"audience\":[{\"$\":\"b\\u00f8rnematerialer\",\"@\":\"dcterms\"}],\"version\":[{\"$\":\"1. udgave, 1. oplag (2013)\",\"@\":\"dkdcplus\"}],\"publisher\":[{\"$\":\"Turbulenz\",\"@\":\"dc\"}],\"contributor\":[{\"$\":\"Brian Christensen\",\"@type\":{\"$\":\"dkdcplus:trl\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"Sarah N\\u00f8rgaard Jensen\",\"@type\":{\"$\":\"dkdcplus:edt\",\"@\":\"xsi\"},\"@\":\"dc\"}],\"date\":[{\"$\":\"2013\",\"@\":\"dc\"}],\"type\":[{\"$\":\"Bog\",\"@type\":{\"$\":\"dkdcplus:BibDK-Type\",\"@\":\"xsi\"},\"@\":\"dc\"}],\"format\":[{\"$\":\"illustreret i farver\",\"@\":\"dc\"}],\"extent\":[{\"$\":\"256 sider\",\"@\":\"dcterms\"}],\"language\":[{\"$\":\"dan\",\"@type\":{\"$\":\"dcterms:ISO639-2\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"Dansk\",\"@\":\"dc\"}],\"spatial\":[{\"$\":\"England\",\"@type\":{\"$\":\"dkdcplus:DBCF\",\"@\":\"xsi\"},\"@\":\"dcterms\"}],\"temporal\":[{\"$\":\"2010-2019\",\"@type\":{\"$\":\"dkdcplus:DBCP\",\"@\":\"xsi\"},\"@\":\"dcterms\"}],\"@\":\"dkabm\"},\"identifier\":{\"$\":\"775100-katalog:50536661\"},\"primaryObjectIdentifier\":{\"$\":\"870970-basis:50536661\"},\"recordStatus\":{\"$\":\"active\"},\"relations\":{\"relation\":[{\"relationType\":{\"$\":\"dbcaddi:hasReview\"},\"relationUri\":{\"$\":\"870976-anmeld:31081017\"}},{\"relationType\":{\"$\":\"dbcaddi:hasDescriptionFromPublisher\"},\"relationUri\":{\"$\":\"150015-forlag:9788792861917\"}}]},\"formatsAvailable\":{\"format\":[{\"$\":\"dkabm\"},{\"$\":\"marcxchange\"}]},\"objectsAvailable\":{\"identifier\":[{\"$\":\"775100-katalog:50536661\"},{\"$\":\"870970-basis:50536661\"}]}}]}},{\"collection\":{\"resultPosition\":{\"$\":\"5\"},\"numberOfObjects\":{\"$\":\"1\"},\"object\":[{\"record\":{\"identifier\":[{\"$\":\"ebr10440572|150008\",\"@\":\"ac\"},{\"$\":\"9789814346078\",\"@type\":{\"$\":\"dkdcplus:ISBN\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"http:\\/\\/site.ebrary.com\\/lib\\/librarytitles\\/docDetail.action?docID=10440572\",\"@type\":{\"$\":\"dcterms:URI\",\"@\":\"xsi\"},\"@\":\"dc\"}],\"source\":[{\"$\":\"Ebrary\",\"@\":\"ac\"}],\"title\":[{\"$\":\"The story of Harry's\",\"@\":\"dc\"},{\"$\":\"The story of Harry's\",\"@type\":{\"$\":\"dkdcplus:full\",\"@\":\"xsi\"},\"@\":\"dc\"}],\"alternative\":[{\"$\":\"Portion of title Harry's\",\"@\":\"dcterms\"}],\"creator\":[{\"$\":\"Mohan Mulani\",\"@type\":{\"$\":\"dkdcplus:aut\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"Mulani, Mohan\",\"@type\":{\"$\":\"oss:sort\",\"@\":\"xsi\"},\"@\":\"dc\"}],\"subject\":[{\"$\":\"Bars (Drinking establishments) -- History\",\"@type\":{\"$\":\"dcterms:LCSH\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"Electronic books\",\"@type\":{\"$\":\"dcterms:LCSH\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"Harry's (Bar : Singapore)\",\"@\":\"dc\"}],\"description\":[{\"$\":\"Electronic reproduction. Palo Alto, Calif. : ebrary, 2013. Available via World Wide Web. Access may be limited to ebrary affiliated libraries\",\"@\":\"dc\"}],\"audience\":[{\"$\":\"voksenmaterialer\",\"@\":\"dcterms\"}],\"publisher\":[{\"$\":\"Marshall Cavendish Business\",\"@\":\"dc\"},{\"$\":\"Marshall Cavendish Corp\",\"@\":\"dc\"}],\"date\":[{\"$\":\"2010\",\"@\":\"dc\"}],\"type\":[{\"$\":\"Ebog\",\"@type\":{\"$\":\"dkdcplus:BibDK-Type\",\"@\":\"xsi\"},\"@\":\"dc\"}],\"format\":[{\"$\":\"illustreret\",\"@\":\"dc\"}],\"extent\":[{\"$\":\"162 s.\",\"@\":\"dcterms\"}],\"language\":[{\"$\":\"eng\",\"@type\":{\"$\":\"dcterms:ISO639-2\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"Engelsk\",\"@\":\"dc\"}],\"@\":\"dkabm\"},\"identifier\":{\"$\":\"150008-public:ebr10440572\"},\"primaryObjectIdentifier\":{\"$\":\"150008-public:ebr10440572\"},\"recordStatus\":{\"$\":\"active\"},\"creationDate\":{\"$\":\"2010-06-09\"},\"relations\":{\"relation\":[{\"relationType\":{\"$\":\"dbcaddi:hasOnlineAccess\"},\"relationUri\":{\"$\":\"http:\\/\\/site.ebrary.com\\/lib\\/librarytitles\\/docDetail.action?docID=10440572\"},\"linkObject\":{\"access\":{\"$\":\"free\"},\"linkTo\":{\"$\":\"website\"},\"linkCollectionIdentifier\":[{\"$\":\"150008-public\"}]}},{\"relationType\":{\"$\":\"dbcaddi:hasOnlineAccess\"},\"relationUri\":{\"$\":\"http:\\/\\/site.ebrary.com\\/lib\\/[PROVIDERSLIBRARYID]\\/docDetail.action?docID=10440572\"},\"linkObject\":{\"access\":{\"$\":\"remote\"},\"linkTo\":{\"$\":\"proxy\"},\"linkCollectionIdentifier\":[{\"$\":\"150008-public\"}]}}]},\"formatsAvailable\":{\"format\":[{\"$\":\"dkabm\"},{\"$\":\"marcxchange\"}]},\"objectsAvailable\":{\"identifier\":[{\"$\":\"150008-public:ebr10440572\"}]}}]}},{\"collection\":{\"resultPosition\":{\"$\":\"6\"},\"numberOfObjects\":{\"$\":\"1\"},\"object\":[{\"record\":{\"identifier\":[{\"$\":\"50691446|870970\",\"@\":\"ac\"},{\"$\":\"http:\\/\\/www.filmstriben.dk\\/fjernleje\\/film\\/details.aspx?id=2744740600\",\"@type\":{\"$\":\"dcterms:URI\",\"@\":\"xsi\"},\"@\":\"dc\"}],\"source\":[{\"$\":\"Filmstriben\",\"@\":\"ac\"}],\"title\":[{\"$\":\"Dirty Harry\",\"@\":\"dc\"},{\"$\":\"Dirty Harry\",\"@type\":{\"$\":\"dkdcplus:full\",\"@\":\"xsi\"},\"@\":\"dc\"}],\"alternative\":[{\"$\":\"Dirty Harry vender tilbage\",\"@\":\"dcterms\"}],\"creator\":[{\"$\":\"Don Siegel\",\"@type\":{\"$\":\"dkdcplus:drt\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"Siegel, Don\",\"@type\":{\"$\":\"oss:sort\",\"@\":\"xsi\"},\"@\":\"dc\"}],\"subject\":[{\"$\":\"77.7\",\"@type\":{\"$\":\"dkdcplus:DK5\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"Spillefilm\",\"@type\":{\"$\":\"dkdcplus:DK5-Text\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"actionfilm\",\"@type\":{\"$\":\"dkdcplus:DBCS\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"actionfilm\",\"@type\":{\"$\":\"dkdcplus:genre\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"amerikanske film\",\"@type\":{\"$\":\"dkdcplus:DBCO\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"politidetektiver\",\"@type\":{\"$\":\"dkdcplus:DBCS\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"seriemordere\",\"@type\":{\"$\":\"dkdcplus:DBCS\",\"@\":\"xsi\"},\"@\":\"dc\"}],\"abstract\":[{\"$\":\"Kriminalassistent Harry Callahan m\\u00e5 sande, at regler og paragraffer er til for at brydes. Ellers slipper en psykopatisk morder godt fra endnu flere forbrydelser. Og \\\"Dirty Harry\\\" f\\u00e5r altid sin mand og det sidste ord!\",\"@\":\"dcterms\"}],\"description\":[{\"$\":\"Produktion: Warner Bros. (USA), Malpaso Company (USA), 1971\",\"@\":\"dc\"}],\"audience\":[{\"$\":\"M\\u00e6rkning: Tilladt for b\\u00f8rn over 15 \\u00e5r\",\"@type\":{\"$\":\"dkdcplus:medieraad\",\"@\":\"xsi\"},\"@\":\"dcterms\"},{\"$\":\"voksenmaterialer\",\"@\":\"dcterms\"}],\"publisher\":[{\"$\":\"Warner Bros.\",\"@\":\"dc\"}],\"contributor\":[{\"$\":\"Bruce Surtees\",\"@type\":{\"$\":\"dkdcplus:cng\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"Harry Julian Fink\",\"@type\":{\"$\":\"dkdcplus:aus\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"R. M. Fink\",\"@type\":{\"$\":\"dkdcplus:aus\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"Dean Riesner\",\"@type\":{\"$\":\"dkdcplus:aus\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"Clint Eastwood\",\"@type\":{\"$\":\"dkdcplus:act\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"Harry Guardino\",\"@type\":{\"$\":\"dkdcplus:act\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"Reni Santoni\",\"@type\":{\"$\":\"dkdcplus:act\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"Andy Robinson\",\"@type\":{\"$\":\"dkdcplus:act\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"John Larch\",\"@type\":{\"$\":\"dkdcplus:act\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"John Vernon\",\"@type\":{\"$\":\"dkdcplus:act\",\"@\":\"xsi\"},\"@\":\"dc\"}],\"date\":[{\"$\":\"2013\",\"@\":\"dc\"}],\"type\":[{\"$\":\"Film (net)\",\"@type\":{\"$\":\"dkdcplus:BibDK-Type\",\"@\":\"xsi\"},\"@\":\"dc\"}],\"extent\":[{\"$\":\"98 min.\",\"@\":\"dcterms\"}],\"language\":[{\"$\":\"eng\",\"@type\":{\"$\":\"dcterms:ISO639-2\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"Engelsk\",\"@\":\"dc\"},{\"$\":\"Dansk\",\"@type\":{\"$\":\"dkdcplus:subtitles\",\"@\":\"xsi\"},\"@\":\"dc\"}],\"spatial\":[{\"$\":\"USA\",\"@type\":{\"$\":\"dkdcplus:DBCS\",\"@\":\"xsi\"},\"@\":\"dcterms\"}],\"@\":\"dkabm\"},\"identifier\":{\"$\":\"870970-basis:50691446\"},\"primaryObjectIdentifier\":{\"$\":\"870970-basis:50691446\"},\"recordStatus\":{\"$\":\"active\"},\"creationDate\":{\"$\":\"2013-09-21\"},\"relations\":{\"relation\":[{\"relationType\":{\"$\":\"dbcaddi:hasOnlineAccess\"},\"relationUri\":{\"$\":\"http:\\/\\/www.filmstriben.dk\\/fjernleje\\/film\\/details.aspx?id=2744740600\"},\"linkObject\":{\"accessType\":{\"$\":\"streaming\"},\"access\":{\"$\":\"remote\"},\"linkTo\":{\"$\":\"website\"},\"linkCollectionIdentifier\":[{\"$\":\"150021-fjern\"},{\"$\":\"870970-basis\"},{\"$\":\"870970-bibdk\"},{\"$\":\"150021-sofa\"}]}}]},\"formatsAvailable\":{\"format\":[{\"$\":\"dkabm\"},{\"$\":\"marcxchange\"}]},\"objectsAvailable\":{\"identifier\":[{\"$\":\"870970-basis:50691446\"}]}}]}},{\"collection\":{\"resultPosition\":{\"$\":\"7\"},\"numberOfObjects\":{\"$\":\"1\"},\"object\":[{\"record\":{\"identifier\":[{\"$\":\"29395306|870970\",\"@\":\"ac\"}],\"source\":[{\"$\":\"Bibliotekskatalog\",\"@\":\"ac\"}],\"title\":[{\"$\":\"Harry - stykke for stykke\",\"@\":\"dc\"},{\"$\":\"Harry - stykke for stykke\",\"@type\":{\"$\":\"dkdcplus:full\",\"@\":\"xsi\"},\"@\":\"dc\"}],\"alternative\":[{\"$\":\"Deconstructing Harry\",\"@\":\"dcterms\"}],\"creator\":[{\"$\":\"Woody Allen\",\"@type\":{\"$\":\"dkdcplus:drt\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"Allen, Woody\",\"@type\":{\"$\":\"oss:sort\",\"@\":\"xsi\"},\"@\":\"dc\"}],\"subject\":[{\"$\":\"77.7\",\"@type\":{\"$\":\"dkdcplus:DK5\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"Spillefilm\",\"@type\":{\"$\":\"dkdcplus:DK5-Text\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"forfattere\",\"@type\":{\"$\":\"dkdcplus:DBCS\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"komedier\",\"@type\":{\"$\":\"dkdcplus:DBCS\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"komedier\",\"@type\":{\"$\":\"dkdcplus:genre\",\"@\":\"xsi\"},\"@\":\"dc\"}],\"abstract\":[{\"$\":\"Den sexfikserede, neurotiske new yorker-forfatter Harry Block f\\u00e5r vennekredsen p\\u00e5 nakken med sin selvudleverende roman. Hans fiktive romanfigurer blander sig i hans liv, hvor problemerne t\\u00e5rner sig op\",\"@\":\"dcterms\"}],\"description\":[{\"$\":\"Originalfilmen: USA : Magnolia Productions ; S.l. : Sweetland Films, 1997\",\"@\":\"dc\"}],\"audience\":[{\"$\":\"M\\u00e6rkning: Tilladt for b\\u00f8rn over 15 \\u00e5r\",\"@type\":{\"$\":\"dkdcplus:medieraad\",\"@\":\"xsi\"},\"@\":\"dcterms\"},{\"$\":\"voksenmaterialer\",\"@\":\"dcterms\"}],\"publisher\":[{\"$\":\"Atlantic Film\",\"@\":\"dc\"}],\"contributor\":[{\"$\":\"Carlo Di Palma\",\"@\":\"dc\"},{\"$\":\"Woody Allen\",\"@\":\"dc\"},{\"$\":\"Caroline Aaron\",\"@type\":{\"$\":\"dkdcplus:act\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"Woody Allen\",\"@type\":{\"$\":\"dkdcplus:act\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"Kirstie Alley\",\"@type\":{\"$\":\"dkdcplus:act\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"Bob Balaban\",\"@type\":{\"$\":\"dkdcplus:act\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"Richard Benjamin\",\"@type\":{\"$\":\"dkdcplus:act\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"Eric Bogosian\",\"@type\":{\"$\":\"dkdcplus:act\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"Billy Crystal\",\"@type\":{\"$\":\"dkdcplus:act\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"Judy Davis\",\"@type\":{\"$\":\"dkdcplus:act\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"Hazelle Goodman\",\"@type\":{\"$\":\"dkdcplus:act\",\"@\":\"xsi\"},\"@\":\"dc\"}],\"date\":[{\"$\":\"2012\",\"@\":\"dc\"}],\"type\":[{\"$\":\"Dvd\",\"@type\":{\"$\":\"dkdcplus:BibDK-Type\",\"@\":\"xsi\"},\"@\":\"dc\"}],\"format\":[{\"$\":\"1 dvd-video\",\"@\":\"dc\"}],\"extent\":[{\"$\":\"91 min.\",\"@\":\"dcterms\"}],\"language\":[{\"$\":\"eng\",\"@type\":{\"$\":\"dcterms:ISO639-2\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"Engelsk\",\"@\":\"dc\"},{\"$\":\"Svensk\",\"@type\":{\"$\":\"dkdcplus:subtitles\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"Norsk\",\"@type\":{\"$\":\"dkdcplus:subtitles\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"Dansk\",\"@type\":{\"$\":\"dkdcplus:subtitles\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"Finsk\",\"@type\":{\"$\":\"dkdcplus:subtitles\",\"@\":\"xsi\"},\"@\":\"dc\"}],\"spatial\":[{\"$\":\"USA\",\"@type\":{\"$\":\"dkdcplus:DBCS\",\"@\":\"xsi\"},\"@\":\"dcterms\"},{\"$\":\"New York\",\"@type\":{\"$\":\"dkdcplus:DBCS\",\"@\":\"xsi\"},\"@\":\"dcterms\"}],\"@\":\"dkabm\"},\"identifier\":{\"$\":\"775100-katalog:29395306\"},\"primaryObjectIdentifier\":{\"$\":\"870970-basis:29395306\"},\"recordStatus\":{\"$\":\"active\"},\"relations\":{\"relation\":[{\"relationType\":{\"$\":\"dbcaddi:hasReview\"},\"relationUri\":{\"$\":\"870971-anmeld:35193839\"}},{\"relationType\":{\"$\":\"dbcaddi:hasReview\"},\"relationUri\":{\"$\":\"870976-anmeld:31007712\"}}]},\"formatsAvailable\":{\"format\":[{\"$\":\"dkabm\"},{\"$\":\"marcxchange\"}]},\"objectsAvailable\":{\"identifier\":[{\"$\":\"775100-katalog:29395306\"},{\"$\":\"870970-basis:29395306\"}]}}]}},{\"collection\":{\"resultPosition\":{\"$\":\"8\"},\"numberOfObjects\":{\"$\":\"1\"},\"object\":[{\"record\":{\"identifier\":[{\"$\":\"51088883|870970\",\"@\":\"ac\"},{\"$\":\"http:\\/\\/www.filmstriben.dk\\/fjernleje\\/film\\/details.aspx?id=5080550600\",\"@type\":{\"$\":\"dcterms:URI\",\"@\":\"xsi\"},\"@\":\"dc\"}],\"source\":[{\"$\":\"Filmstriben\",\"@\":\"ac\"}],\"title\":[{\"$\":\"Harry - stykke for stykke\",\"@\":\"dc\"},{\"$\":\"Harry - stykke for stykke\",\"@type\":{\"$\":\"dkdcplus:full\",\"@\":\"xsi\"},\"@\":\"dc\"}],\"alternative\":[{\"$\":\"Deconstructing Harry\",\"@\":\"dcterms\"}],\"creator\":[{\"$\":\"Woody Allen\",\"@type\":{\"$\":\"dkdcplus:drt\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"Allen, Woody\",\"@type\":{\"$\":\"oss:sort\",\"@\":\"xsi\"},\"@\":\"dc\"}],\"subject\":[{\"$\":\"77.7\",\"@type\":{\"$\":\"dkdcplus:DK5\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"Spillefilm\",\"@type\":{\"$\":\"dkdcplus:DK5-Text\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"amerikanske film\",\"@type\":{\"$\":\"dkdcplus:DBCO\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"forfattere\",\"@type\":{\"$\":\"dkdcplus:DBCS\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"komedier\",\"@type\":{\"$\":\"dkdcplus:DBCS\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"komedier\",\"@type\":{\"$\":\"dkdcplus:genre\",\"@\":\"xsi\"},\"@\":\"dc\"}],\"abstract\":[{\"$\":\"Den sexfikserede, neurotiske new yorker-forfatter Harry Block f\\u00e5r vennekredsen p\\u00e5 nakken med sin selvudleverende roman. Hans fiktive romanfigurer blander sig i hans liv, hvor problemerne t\\u00e5rner sig op\",\"@\":\"dcterms\"}],\"description\":[{\"$\":\"Produktion: Magnolia Productions (USA), Sweetland Films, 1997\",\"@\":\"dc\"}],\"audience\":[{\"$\":\"M\\u00e6rkning: Tilladt for b\\u00f8rn over 15 \\u00e5r\",\"@type\":{\"$\":\"dkdcplus:medieraad\",\"@\":\"xsi\"},\"@\":\"dcterms\"},{\"$\":\"voksenmaterialer\",\"@\":\"dcterms\"}],\"publisher\":[{\"$\":\"Atlantic Film\",\"@\":\"dc\"}],\"contributor\":[{\"$\":\"Carlo Di Palma\",\"@type\":{\"$\":\"dkdcplus:cng\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"Woody Allen\",\"@type\":{\"$\":\"dkdcplus:aus\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"Caroline Aaron\",\"@type\":{\"$\":\"dkdcplus:act\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"Woody Allen\",\"@type\":{\"$\":\"dkdcplus:act\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"Kirstie Alley\",\"@type\":{\"$\":\"dkdcplus:act\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"Bob Balaban\",\"@type\":{\"$\":\"dkdcplus:act\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"Richard Benjamin\",\"@type\":{\"$\":\"dkdcplus:act\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"Eric Bogosian\",\"@type\":{\"$\":\"dkdcplus:act\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"Billy Crystal\",\"@type\":{\"$\":\"dkdcplus:act\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"Judy Davis\",\"@type\":{\"$\":\"dkdcplus:act\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"Hazelle Goodman\",\"@type\":{\"$\":\"dkdcplus:act\",\"@\":\"xsi\"},\"@\":\"dc\"}],\"date\":[{\"$\":\"2014\",\"@\":\"dc\"}],\"type\":[{\"$\":\"Film (net)\",\"@type\":{\"$\":\"dkdcplus:BibDK-Type\",\"@\":\"xsi\"},\"@\":\"dc\"}],\"extent\":[{\"$\":\"91 min.\",\"@\":\"dcterms\"}],\"language\":[{\"$\":\"eng\",\"@type\":{\"$\":\"dcterms:ISO639-2\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"Engelsk\",\"@\":\"dc\"},{\"$\":\"Dansk\",\"@type\":{\"$\":\"dkdcplus:subtitles\",\"@\":\"xsi\"},\"@\":\"dc\"}],\"spatial\":[{\"$\":\"USA\",\"@type\":{\"$\":\"dkdcplus:DBCS\",\"@\":\"xsi\"},\"@\":\"dcterms\"},{\"$\":\"New York\",\"@type\":{\"$\":\"dkdcplus:DBCS\",\"@\":\"xsi\"},\"@\":\"dcterms\"}],\"@\":\"dkabm\"},\"identifier\":{\"$\":\"870970-basis:51088883\"},\"primaryObjectIdentifier\":{\"$\":\"870970-basis:51088883\"},\"recordStatus\":{\"$\":\"active\"},\"creationDate\":{\"$\":\"2014-05-05\"},\"relations\":{\"relation\":[{\"relationType\":{\"$\":\"dbcaddi:hasOnlineAccess\"},\"relationUri\":{\"$\":\"http:\\/\\/www.filmstriben.dk\\/fjernleje\\/film\\/details.aspx?id=5080550600\"},\"linkObject\":{\"accessType\":{\"$\":\"streaming\"},\"access\":{\"$\":\"remote\"},\"linkTo\":{\"$\":\"website\"},\"linkCollectionIdentifier\":[{\"$\":\"150021-fjern\"},{\"$\":\"870970-basis\"},{\"$\":\"870970-bibdk\"},{\"$\":\"150021-sofa\"}]}}]},\"formatsAvailable\":{\"format\":[{\"$\":\"dkabm\"},{\"$\":\"marcxchange\"}]},\"objectsAvailable\":{\"identifier\":[{\"$\":\"870970-basis:51088883\"}]}}]}},{\"collection\":{\"resultPosition\":{\"$\":\"9\"},\"numberOfObjects\":{\"$\":\"1\"},\"object\":[{\"record\":{\"identifier\":[{\"$\":\"ebr10593006|150008\",\"@\":\"ac\"},{\"$\":\"http:\\/\\/site.ebrary.com\\/lib\\/librarytitles\\/docDetail.action?docID=10593006\",\"@type\":{\"$\":\"dcterms:URI\",\"@\":\"xsi\"},\"@\":\"dc\"}],\"source\":[{\"$\":\"Ebrary\",\"@\":\"ac\"}],\"title\":[{\"$\":\"Harry Redknapp\",\"@\":\"dc\"},{\"$\":\"Harry Redknapp : the biography\",\"@type\":{\"$\":\"dkdcplus:full\",\"@\":\"xsi\"},\"@\":\"dc\"}],\"creator\":[{\"$\":\"Les Roopanarine\",\"@type\":{\"$\":\"dkdcplus:aut\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"Roopanarine, Les\",\"@type\":{\"$\":\"oss:sort\",\"@\":\"xsi\"},\"@\":\"dc\"}],\"subject\":[{\"$\":\"Electronic books\",\"@type\":{\"$\":\"dcterms:LCSH\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"Harry Redknapp (1947-)\",\"@\":\"dc\"},{\"$\":\"Redknapp, Harry (1947-)\",\"@type\":{\"$\":\"oss:sort\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"Soccer managers\",\"@type\":{\"$\":\"dcterms:LCSH\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"West Ham United (Soccer team)\",\"@\":\"dc\"}],\"description\":[{\"$\":\"Electronic reproduction. Palo Alto, Calif. : ebrary, 2011. Available via World Wide Web. Access may be limited to ebrary affiliated libraries\",\"@\":\"dc\"}],\"audience\":[{\"$\":\"voksenmaterialer\",\"@\":\"dcterms\"}],\"publisher\":[{\"$\":\"John Blake\",\"@\":\"dc\"}],\"date\":[{\"$\":\"2010\",\"@\":\"dc\"}],\"type\":[{\"$\":\"Ebog\",\"@type\":{\"$\":\"dkdcplus:BibDK-Type\",\"@\":\"xsi\"},\"@\":\"dc\"}],\"extent\":[{\"$\":\"xviii, 269 s.\",\"@\":\"dcterms\"}],\"language\":[{\"$\":\"eng\",\"@type\":{\"$\":\"dcterms:ISO639-2\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"Engelsk\",\"@\":\"dc\"}],\"@\":\"dkabm\"},\"identifier\":{\"$\":\"150008-public:ebr10593006\"},\"primaryObjectIdentifier\":{\"$\":\"150008-public:ebr10593006\"},\"recordStatus\":{\"$\":\"active\"},\"creationDate\":{\"$\":\"2012-09-25\"},\"relations\":{\"relation\":[{\"relationType\":{\"$\":\"dbcaddi:hasOnlineAccess\"},\"relationUri\":{\"$\":\"http:\\/\\/site.ebrary.com\\/lib\\/librarytitles\\/docDetail.action?docID=10593006\"},\"linkObject\":{\"access\":{\"$\":\"free\"},\"linkTo\":{\"$\":\"website\"},\"linkCollectionIdentifier\":[{\"$\":\"150008-public\"}]}},{\"relationType\":{\"$\":\"dbcaddi:hasOnlineAccess\"},\"relationUri\":{\"$\":\"http:\\/\\/site.ebrary.com\\/lib\\/[PROVIDERSLIBRARYID]\\/docDetail.action?docID=10593006\"},\"linkObject\":{\"access\":{\"$\":\"remote\"},\"linkTo\":{\"$\":\"proxy\"},\"linkCollectionIdentifier\":[{\"$\":\"150008-public\"}]}}]},\"formatsAvailable\":{\"format\":[{\"$\":\"dkabm\"},{\"$\":\"marcxchange\"}]},\"objectsAvailable\":{\"identifier\":[{\"$\":\"150008-public:ebr10593006\"}]}}]}},{\"collection\":{\"resultPosition\":{\"$\":\"10\"},\"numberOfObjects\":{\"$\":\"1\"},\"object\":[{\"record\":{\"identifier\":[{\"$\":\"28721420|870970\",\"@\":\"ac\"},{\"$\":\"9788770535984\",\"@type\":{\"$\":\"dkdcplus:ISBN\",\"@\":\"xsi\"},\"@\":\"dc\"}],\"source\":[{\"$\":\"Bibliotekskatalog\",\"@\":\"ac\"},{\"$\":\"Panserhjerte\",\"@\":\"dc\"}],\"title\":[{\"$\":\"Panserhjerte\",\"@\":\"dc\"},{\"$\":\"Panserhjerte\",\"@type\":{\"$\":\"dkdcplus:full\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"Krimiserien med Harry Hole ; 8\",\"@type\":{\"$\":\"dkdcplus:series\",\"@\":\"xsi\"},\"@\":\"dc\"}],\"creator\":[{\"$\":\"Jo Nesb\\u00f8\",\"@type\":{\"$\":\"dkdcplus:aut\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"Nesb\\u00f8, Jo\",\"@type\":{\"$\":\"oss:sort\",\"@\":\"xsi\"},\"@\":\"dc\"}],\"subject\":[{\"$\":\"Sk\\u00f8nlitteratur\",\"@type\":{\"$\":\"dkdcplus:DK5-Text\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"krimi\",\"@type\":{\"$\":\"dkdcplus:DBCS\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"krimi\",\"@type\":{\"$\":\"dkdcplus:genre\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"seriemordere\",\"@type\":{\"$\":\"dkdcplus:DBCS\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"sk\",\"@type\":{\"$\":\"dkdcplus:DK5\",\"@\":\"xsi\"},\"@\":\"dc\"}],\"abstract\":[{\"$\":\"Krimi. Den alkoholiserede og asociale Harry Hole fra drabsafdelingen i Oslo har egentlig sagt op, men bliver hentet tilbage til en makaber sag, hvor en seriemorder er p\\u00e5 spil. Sagen viser sig at v\\u00e6re vidtforgrenet, og den udvikler sig dramatisk og f\\u00f8rer Harry Hole rundt i Norge og Congo\",\"@\":\"dcterms\"}],\"audience\":[{\"$\":\"voksenmaterialer\",\"@\":\"dcterms\"}],\"version\":[{\"$\":\"3. udgave, 7. oplag (2016)\",\"@\":\"dkdcplus\"}],\"publisher\":[{\"$\":\"Modtryk\",\"@\":\"dc\"}],\"contributor\":[{\"$\":\"Allan Hilton Andersen\",\"@type\":{\"$\":\"dkdcplus:trl\",\"@\":\"xsi\"},\"@\":\"dc\"}],\"date\":[{\"$\":\"2011\",\"@\":\"dc\"}],\"type\":[{\"$\":\"Bog\",\"@type\":{\"$\":\"dkdcplus:BibDK-Type\",\"@\":\"xsi\"},\"@\":\"dc\"}],\"extent\":[{\"$\":\"634 sider\",\"@\":\"dcterms\"}],\"language\":[{\"$\":\"dan\",\"@type\":{\"$\":\"dcterms:ISO639-2\",\"@\":\"xsi\"},\"@\":\"dc\"},{\"$\":\"Dansk\",\"@\":\"dc\"}],\"spatial\":[{\"$\":\"Norge\",\"@type\":{\"$\":\"dkdcplus:DBCS\",\"@\":\"xsi\"},\"@\":\"dcterms\"},{\"$\":\"Oslo\",\"@type\":{\"$\":\"dkdcplus:DBCS\",\"@\":\"xsi\"},\"@\":\"dcterms\"}],\"temporal\":[{\"$\":\"2000-2009\",\"@type\":{\"$\":\"dkdcplus:DBCP\",\"@\":\"xsi\"},\"@\":\"dcterms\"}],\"@\":\"dkabm\"},\"identifier\":{\"$\":\"775100-katalog:28721420\"},\"primaryObjectIdentifier\":{\"$\":\"870970-basis:28721420\"},\"recordStatus\":{\"$\":\"active\"},\"relations\":{\"relation\":[{\"relationType\":{\"$\":\"dbcaddi:hasReview\"},\"relationUri\":{\"$\":\"870971-anmeld:33929366\"}},{\"relationType\":{\"$\":\"dbcaddi:hasReview\"},\"relationUri\":{\"$\":\"870971-anmeld:33833601\"}},{\"relationType\":{\"$\":\"dbcaddi:hasReview\"},\"relationUri\":{\"$\":\"870971-anmeld:33820372\"}},{\"relationType\":{\"$\":\"dbcaddi:hasReview\"},\"relationUri\":{\"$\":\"870971-anmeld:33819935\"}},{\"relationType\":{\"$\":\"dbcaddi:hasReview\"},\"relationUri\":{\"$\":\"870971-anmeld:33864469\"}},{\"relationType\":{\"$\":\"dbcaddi:hasReview\"},\"relationUri\":{\"$\":\"870971-anmeld:33836643\"}},{\"relationType\":{\"$\":\"dbcaddi:hasReview\"},\"relationUri\":{\"$\":\"870976-anmeld:30833325\"}},{\"relationType\":{\"$\":\"dbcaddi:hasCreatorDescription\"},\"relationUri\":{\"$\":\"870971-forfweb:89234298\"}},{\"relationType\":{\"$\":\"dbcaddi:hasReview\"},\"relationUri\":{\"$\":\"150005-anmeld:81219\"}}]},\"formatsAvailable\":{\"format\":[{\"$\":\"dkabm\"},{\"$\":\"marcxchange\"}]},\"objectsAvailable\":{\"identifier\":[{\"$\":\"775100-katalog:28721420\"},{\"$\":\"870970-basis:28721420\"}]}}]}}],\"facetResult\":{\"$\":\"\"},\"statInfo\":{\"fedoraRecordsCached\":{\"$\":\"54\"},\"fedoraRecordsRead\":{\"$\":\"146\"},\"time\":{\"$\":\"0.66115\"},\"trackingId\":{\"$\":\"2016-05-30T21:03:22:553245:32312\"}}}},\"@namespaces\":{\"ac\":\"http:\\/\\/biblstandard.dk\\/ac\\/namespace\\/\",\"dbcaddi\":\"http:\\/\\/oss.dbc.dk\\/rdf\\/dbcaddi#\",\"dbcbib\":\"http:\\/\\/oss.dbc.dk\\/rdf\\/dbcbib#\",\"dc\":\"http:\\/\\/purl.org\\/dc\\/elements\\/1.1\\/\",\"dcmitype\":\"http:\\/\\/purl.org\\/dc\\/dcmitype\\/\",\"dcterms\":\"http:\\/\\/purl.org\\/dc\\/terms\\/\",\"dkabm\":\"http:\\/\\/biblstandard.dk\\/abm\\/namespace\\/dkabm\\/\",\"dkdcplus\":\"http:\\/\\/biblstandard.dk\\/abm\\/namespace\\/dkdcplus\\/\",\"docbook\":\"http:\\/\\/docbook.org\\/ns\\/docbook\",\"kml\":\"http:\\/\\/www.opengis.net\\/kml\\/2.2\",\"marcx\":\"info:lc\\/xmlns\\/marcxchange-v1\",\"mx\":\"http:\\/\\/www.loc.gov\\/MARC21\\/slim\",\"of\":\"http:\\/\\/oss.dbc.dk\\/ns\\/openformat\",\"ofo\":\"http:\\/\\/oss.dbc.dk\\/ns\\/openformatoutput\",\"os\":\"http:\\/\\/oss.dbc.dk\\/ns\\/opensearch\",\"oso\":\"http:\\/\\/oss.dbc.dk\\/ns\\/opensearchobjects\",\"oss\":\"http:\\/\\/oss.dbc.dk\\/ns\\/osstypes\",\"xs\":\"http:\\/\\/www.w3.org\\/2001\\/XMLSchema\",\"xsi\":\"http:\\/\\/www.w3.org\\/2001\\/XMLSchema-instance\"}}"
+};
+&nbsp;
+describe('Automated test: search_sort', () =&gt; {
+  it('expected response. ID:sokrna, for {"q":"harry ","fields":["identifier","title","collection","subjectDBCF","hasAdaptation","coverUrlFull"],"sort":"rank_title"}', (done) =&gt; {
+    context.mockData = mockData;
+    provider.execute('search', {
+      "q": "harry ",
+      "fields": ["identifier", "title", "collection", "subjectDBCF", "hasAdaptation", "coverUrlFull"],
+      "sort": "rank_title"
+    }, context)
+      .then(result =&gt; {
+        assert.deepEqual(result,
+          {
+            "statusCode": 200,
+            "data": [{
+              "collection": ["775100-katalog:28277229", "775100-katalog:28447698"],
+              "collectionDetails": [{
+                "accessType": ["physical"],
+                "creator": ["Martin Ruhe"],
+                "pid": ["775100-katalog:28277229"],
+                "title": ["Harry Brown"],
+                "titleFull": ["Harry Brown"],
+                "type": ["Dvd"],
+                "workType": ["movie"]
+              }, {
+                "accessType": ["physical"],
+                "creator": ["Martin Ruhe"],
+                "pid": ["775100-katalog:28447698"],
+                "title": ["Harry Brown"],
+                "titleFull": ["Harry Brown"],
+                "type": ["Blu-ray"],
+                "workType": ["movie"]
+              }],
+              "acIdentifier": ["28277229|870970"],
+              "acSource": ["Bibliotekskatalog"],
+              "dcTitle": ["Harry Brown"],
+              "dcTitleFull": ["Harry Brown"],
+              "creatorDrt": ["Daniel Barber"],
+              "creatorSort": ["Barber, Daniel"],
+              "subjectDK5": ["77.7"],
+              "subjectDK5Text": ["Spillefilm"],
+              "subjectDBCS": ["actionfilm", "krimi", "narkokriminalitet", "selvtægt", "vold"],
+              "subjectGenre": ["actionfilm", "krimi"],
+              "abstract": ["Da pensionisten Harry Browns gamle ven myrdes af nogle unge bøller, står politiet magtesløse. Harry, der har en militær baggrund, tirres derfor til at tage sagen i egen hånd"],
+              "description": ["Originalfilmen: Storbritannien : Marv Partners : UK Film Council : in association with HanWay Films : Prescience : Framestone Features, 2009"],
+              "audienceMedieraad": ["Mærkning: Tilladt for børn over 15 år"],
+              "audience": ["voksenmaterialer"],
+              "publisher": ["Nordisk Film"],
+              "contributor": ["Daniel Barber", "Gary Young (manuskriptforfatter)", "Martin Ruhe"],
+              "contributorAct": ["Michael Caine", "Emily Mortimer", "Charlie Creed Miles", "David Bradley", "Iain Glen", "Sean Harris", "Ben Drew", "Jack O'Connell", "Jamie Downey"],
+              "date": ["2010"],
+              "typeBibDKType": ["Dvd"],
+              "format": ["1 dvd-video"],
+              "extent": ["99 min."],
+              "languageISO6392": ["eng"],
+              "dcLanguage": ["Engelsk"],
+              "languageSubtitles": ["Dansk", "Norsk", "Svensk", "Finsk"],
+              "accessType": ["physical"],
+              "creator": ["Martin Ruhe"],
+              "pid": ["775100-katalog:28277229"],
+              "title": ["Harry Brown"],
+              "titleFull": ["Harry Brown"],
+              "type": ["Dvd"],
+              "workType": ["movie"],
+              "coverUrl117": ["//moreinfo.addi.dk/2.6/more_info_get.php?lokalid=28277229&amp;attachment_type=forside_117&amp;bibliotek=870970&amp;source_id=870970&amp;key=1c1e93fc2a0bf0159930"],
+              "coverUrl207": ["//moreinfo.addi.dk/2.6/more_info_get.php?lokalid=28277229&amp;attachment_type=forside_207&amp;bibliotek=870970&amp;source_id=870970&amp;key=eb18326b43f545fbe029"],
+              "coverUrl42": ["//moreinfo.addi.dk/2.6/more_info_get.php?lokalid=28277229&amp;attachment_type=forside_42&amp;bibliotek=870970&amp;source_id=870970&amp;key=6a97fff61136f33be1ac"],
+              "coverUrl500": ["//moreinfo.addi.dk/2.6/more_info_get.php?lokalid=28277229&amp;attachment_type=forside_500&amp;bibliotek=870970&amp;source_id=870970&amp;key=097686172773cbbb5ff9"],
+              "coverUrlThumbnail": ["//moreinfo.addi.dk/2.6/more_info_get.php?lokalid=28277229&amp;attachment_type=forside_lille&amp;bibliotek=870970&amp;source_id=870970&amp;key=f41384dea909809d9d6d"],
+              "coverUrlFull": ["//moreinfo.addi.dk/2.6/more_info_get.php?lokalid=28277229&amp;attachment_type=forside_stor&amp;bibliotek=870970&amp;source_id=870970&amp;key=b773fd3131c2dac33849"],
+              "hasReview": ["870971-anmeld:34132593", "870971-anmeld:34141851", "870971-anmeld:34167109", "870971-anmeld:34132623", "870971-anmeld:34132585", "870971-anmeld:34132577", "870971-anmeld:34132569", "870971-anmeld:34132240", "870971-anmeld:34410178", "870976-anmeld:30897048"]
+            }, {
+              "collection": ["775100-katalog:27447406"],
+              "collectionDetails": [{
+                "accessType": ["physical"],
+                "pid": ["775100-katalog:27447406"],
+                "title": ["Dirty Harry"],
+                "titleFull": ["Dirty Harry"],
+                "type": ["Dvd"],
+                "workType": ["movie"]
+              }],
+              "acIdentifier": ["27447406|870970"],
+              "acSource": ["Bibliotekskatalog"],
+              "dcTitle": ["Dirty Harry"],
+              "dcTitleFull": ["Dirty Harry"],
+              "titleSeries": ["The Dirty Harry collection"],
+              "alternative": ["Dirty Harry vender tilbage"],
+              "creatorDrt": ["Don Siegel"],
+              "creatorSort": ["Siegel, Don"],
+              "subjectDK5": ["77.7"],
+              "subjectDK5Text": ["Spillefilm"],
+              "subjectDBCS": ["actionfilm", "politidetektiver", "seriemordere"],
+              "subjectGenre": ["actionfilm"],
+              "abstract": ["Kriminalassistent Harry Callahan må sande, at regler og paragraffer er til for at brydes. Ellers slipper en psykopatisk morder godt fra endnu flere forbrydelser. Og \"Dirty Harry\" får altid sin mand og det sidste ord!"],
+              "description": ["Originalfilmen: USA : Warner Bros. : Malpaso Company, 1971", "Renewed edition: 1999", "Af indholdet: Special features (Commentary by Richard Schickel ; Dirty Harry : the original ; Interview gallery ; Dirty Harry's way ; Dirty Harry trailer gallery) ; Bonus disc: Indhold: The long shadow of Dirty Harry ; Clint Eastwood : the man from Malpaso"],
+              "audienceMedieraad": ["Mærkning: Tilladt for børn over 15 år"],
+              "audience": ["voksenmaterialer"],
+              "version": ["Renewed edition (2 disc special edition)"],
+              "publisher": ["Warner Bros. Entertainment Danmark"],
+              "contributor": ["Bruce Surtees", "Harry Julian Fink", "R. M. Fink", "Dean Riesner", "Don Siegel"],
+              "contributorAct": ["Clint Eastwood", "Harry Guardino", "Reni Santoni", "Andy Robinson", "John Larch", "John Vernon"],
+              "date": ["2008"],
+              "typeBibDKType": ["Dvd"],
+              "format": ["1 dvd-video, 1 bonus disc"],
+              "extent": ["ca. 98 min."],
+              "languageISO6392": ["mul", "eng"],
+              "dcLanguage": ["Flere sprog", "Engelsk"],
+              "languageSubtitles": ["Engelsk", "Tysk", "Spansk", "Tjekkisk", "Dansk", "Estisk", "Finsk", "Græsk", "Norsk", "Portugisisk", "Polsk", "Svensk"],
+              "spatialDBCS": ["USA"],
+              "accessType": ["physical"],
+              "pid": ["775100-katalog:27447406"],
+              "title": ["Dirty Harry"],
+              "titleFull": ["Dirty Harry"],
+              "type": ["Dvd"],
+              "workType": ["movie"],
+              "hasReview": ["870976-anmeld:30734572"]
+            }, {
+              "collection": ["775100-katalog:24039978"],
+              "collectionDetails": [{
+                "accessType": ["physical"],
+                "pid": ["775100-katalog:24039978"],
+                "title": ["Lego creator - Harry Potter"],
+                "titleFull": ["Lego creator - Harry Potter"],
+                "type": ["Pc-spil"],
+                "workType": ["game"]
+              }],
+              "acIdentifier": ["24039978|870970"],
+              "acSource": ["Bibliotekskatalog"],
+              "dcTitle": ["Lego creator - Harry Potter"],
+              "dcTitleFull": ["Lego creator - Harry Potter"],
+              "titleSeries": ["Constructive"],
+              "alternative": ["Creator - Harry Potter", "Harry Potter"],
+              "subjectDK5": ["79.41"],
+              "subjectDK5Text": ["Computerspil"],
+              "subjectDBCO": ["computerspil"],
+              "subjectDBCF": ["legoklodser"],
+              "abstract": ["Leg og lær. Du kender Harry Potter og Hogwarts? Her kan du lege med alle de kendte figurer fra bøgerne og samtidig bygge din helt egen magiske Legoverden!"],
+              "description": ["Titlen hentet fra cd-rometiket"],
+              "audienceAge": ["Fra 6 år"],
+              "audience": ["børnematerialer"],
+              "publisher": ["LEGO Software"],
+              "contributor": ["Joanne K. Rowling", "Paul Grimster", "Sonja Kristensen"],
+              "date": ["2001"],
+              "typeBibDKType": ["Pc-spil"],
+              "format": ["1 cd-rom, lyd, farver, 1 brugermanuel", "Pc, Pentium II/266 MHz/MMX; 64 MB ram; Windows 98, Me eller 2000; 4× cd-rom/dvddrev; farveskærm (800×600 billedopløsning, 16 bit farver); DirectSound-kompatibelt lydkort"],
+              "languageISO6392": ["dan"],
+              "dcLanguage": ["Dansk"],
+              "accessType": ["physical"],
+              "pid": ["775100-katalog:24039978"],
+              "title": ["Lego creator - Harry Potter"],
+              "titleFull": ["Lego creator - Harry Potter"],
+              "type": ["Pc-spil"],
+              "workType": ["game"],
+              "hasReview": ["870976-anmeld:3036564X"]
+            }, {
+              "collection": ["775100-katalog:50536661", "870970-basis:51182200"],
+              "collectionDetails": [{
+                "accessType": ["physical"],
+                "creator": ["Sarah Oliver"],
+                "pid": ["775100-katalog:50536661"],
+                "language": ["Dansk"],
+                "title": ["Harry Styles"],
+                "titleFull": ["Harry Styles : superstjerne A-Z"],
+                "type": ["Bog"],
+                "workType": ["book"]
+              }, {
+                "accessType": ["online"],
+                "creator": ["Sarah Oliver"],
+                "pid": ["870970-basis:51182200"],
+                "language": ["Dansk"],
+                "title": ["Harry Styles"],
+                "titleFull": ["Harry Styles : superstjerne A-Z"],
+                "type": ["Ebog"],
+                "workType": ["book"]
+              }],
+              "acIdentifier": ["50536661|870970"],
+              "identifierISBN": ["9788771480290"],
+              "acSource": ["Bibliotekskatalog"],
+              "source": ["Harry Styles"],
+              "dcTitle": ["Harry Styles"],
+              "dcTitleFull": ["Harry Styles : superstjerne A-Z"],
+              "creatorAut": ["Sarah Oliver"],
+              "creatorSort": ["Oliver, Sarah"],
+              "subjectDK5": ["99.4 Styles, Harry"],
+              "subjectDK5Text": ["Biografier af enkelte personer"],
+              "subjectDBCF": ["Harry Styles", "One Direction", "pop", "sangere"],
+              "subjectSort": ["Styles, Harry"],
+              "subjectDBCO": ["biografier"],
+              "subjectDBCN": ["for 12 år", "for 13 år", "for 14 år", "for 15 år", "for 16 år"],
+              "abstract": ["Om Harry Styles (f. 1994) liv og foreløbige karriere i boybandet One Direction"],
+              "audience": ["børnematerialer"],
+              "version": ["1. udgave, 1. oplag (2013)"],
+              "publisher": ["Turbulenz"],
+              "contributorTrl": ["Brian Christensen"],
+              "contributorEdt": ["Sarah Nørgaard Jensen"],
+              "date": ["2013"],
+              "typeBibDKType": ["Bog"],
+              "format": ["illustreret i farver"],
+              "extent": ["256 sider"],
+              "languageISO6392": ["dan"],
+              "dcLanguage": ["Dansk"],
+              "spatialDBCF": ["England"],
+              "temporalDBCP": ["2010-2019"],
+              "accessType": ["physical"],
+              "creator": ["Sarah Oliver"],
+              "pid": ["775100-katalog:50536661"],
+              "language": ["Dansk"],
+              "title": ["Harry Styles"],
+              "titleFull": ["Harry Styles : superstjerne A-Z"],
+              "type": ["Bog"],
+              "workType": ["book"],
+              "coverUrl117": ["//moreinfo.addi.dk/2.6/more_info_get.php?lokalid=50536661&amp;attachment_type=forside_117&amp;bibliotek=870970&amp;source_id=870970&amp;key=3c45f1abe3f76fbee17f"],
+              "coverUrl207": ["//moreinfo.addi.dk/2.6/more_info_get.php?lokalid=50536661&amp;attachment_type=forside_207&amp;bibliotek=870970&amp;source_id=870970&amp;key=769bc090401f9291ae7a"],
+              "coverUrl42": ["//moreinfo.addi.dk/2.6/more_info_get.php?lokalid=50536661&amp;attachment_type=forside_42&amp;bibliotek=870970&amp;source_id=870970&amp;key=bca17d29880b818e23b9"],
+              "coverUrl500": ["//moreinfo.addi.dk/2.6/more_info_get.php?lokalid=50536661&amp;attachment_type=forside_500&amp;bibliotek=870970&amp;source_id=870970&amp;key=a6351a52e0811d16e65f"],
+              "coverUrlThumbnail": ["//moreinfo.addi.dk/2.6/more_info_get.php?lokalid=50536661&amp;attachment_type=forside_lille&amp;bibliotek=870970&amp;source_id=870970&amp;key=81a0f92ab75609218da3"],
+              "coverUrlFull": ["//moreinfo.addi.dk/2.6/more_info_get.php?lokalid=50536661&amp;attachment_type=forside_stor&amp;bibliotek=870970&amp;source_id=870970&amp;key=734d34e6925c51213eb3"],
+              "hasReview": ["870976-anmeld:31081017"],
+              "hasDescriptionFromPublisher": ["150015-forlag:9788792861917"]
+            }, {
+              "collection": ["150008-public:ebr10440572"],
+              "collectionDetails": [{
+                "accessType": ["online"],
+                "creator": ["Mohan Mulani"],
+                "pid": ["150008-public:ebr10440572"],
+                "language": ["Engelsk"],
+                "title": ["The story of Harry's"],
+                "titleFull": ["The story of Harry's"],
+                "type": ["Ebog"],
+                "workType": ["book"]
+              }],
+              "acIdentifier": ["ebr10440572|150008"],
+              "identifierISBN": ["9789814346078"],
+              "identifierURI": ["http://site.ebrary.com/lib/librarytitles/docDetail.action?docID=10440572"],
+              "acSource": ["Ebrary"],
+              "dcTitle": ["The story of Harry's"],
+              "dcTitleFull": ["The story of Harry's"],
+              "alternative": ["Portion of title Harry's"],
+              "creatorAut": ["Mohan Mulani"],
+              "creatorSort": ["Mulani, Mohan"],
+              "subjectLCSH": ["Bars (Drinking establishments) -- History", "Electronic books"],
+              "subject": ["Harry's (Bar : Singapore)"],
+              "description": ["Electronic reproduction. Palo Alto, Calif. : ebrary, 2013. Available via World Wide Web. Access may be limited to ebrary affiliated libraries"],
+              "audience": ["voksenmaterialer"],
+              "publisher": ["Marshall Cavendish Business", "Marshall Cavendish Corp"],
+              "date": ["2010"],
+              "typeBibDKType": ["Ebog"],
+              "format": ["illustreret"],
+              "extent": ["162 s."],
+              "languageISO6392": ["eng"],
+              "dcLanguage": ["Engelsk"],
+              "accessType": ["online"],
+              "creator": ["Mohan Mulani"],
+              "pid": ["150008-public:ebr10440572"],
+              "language": ["Engelsk"],
+              "title": ["The story of Harry's"],
+              "titleFull": ["The story of Harry's"],
+              "type": ["Ebog"],
+              "workType": ["book"],
+              "hasOnlineAccess": ["http://site.ebrary.com/lib/librarytitles/docDetail.action?docID=10440572", "http://site.ebrary.com/lib/[PROVIDERSLIBRARYID]/docDetail.action?docID=10440572"]
+            }, {
+              "collection": ["870970-basis:50691446"],
+              "collectionDetails": [{
+                "accessType": ["online"],
+                "pid": ["870970-basis:50691446"],
+                "title": ["Dirty Harry"],
+                "titleFull": ["Dirty Harry"],
+                "type": ["Film (net)"],
+                "workType": ["movie"]
+              }],
+              "acIdentifier": ["50691446|870970"],
+              "identifierURI": ["http://www.filmstriben.dk/fjernleje/film/details.aspx?id=2744740600"],
+              "acSource": ["Filmstriben"],
+              "dcTitle": ["Dirty Harry"],
+              "dcTitleFull": ["Dirty Harry"],
+              "alternative": ["Dirty Harry vender tilbage"],
+              "creatorDrt": ["Don Siegel"],
+              "creatorSort": ["Siegel, Don"],
+              "subjectDK5": ["77.7"],
+              "subjectDK5Text": ["Spillefilm"],
+              "subjectDBCS": ["actionfilm", "politidetektiver", "seriemordere"],
+              "subjectGenre": ["actionfilm"],
+              "subjectDBCO": ["amerikanske film"],
+              "abstract": ["Kriminalassistent Harry Callahan må sande, at regler og paragraffer er til for at brydes. Ellers slipper en psykopatisk morder godt fra endnu flere forbrydelser. Og \"Dirty Harry\" får altid sin mand og det sidste ord!"],
+              "description": ["Produktion: Warner Bros. (USA), Malpaso Company (USA), 1971"],
+              "audienceMedieraad": ["Mærkning: Tilladt for børn over 15 år"],
+              "audience": ["voksenmaterialer"],
+              "publisher": ["Warner Bros."],
+              "contributorCng": ["Bruce Surtees"],
+              "contributorAus": ["Harry Julian Fink", "R. M. Fink", "Dean Riesner"],
+              "contributorAct": ["Clint Eastwood", "Harry Guardino", "Reni Santoni", "Andy Robinson", "John Larch", "John Vernon"],
+              "date": ["2013"],
+              "typeBibDKType": ["Film (net)"],
+              "extent": ["98 min."],
+              "languageISO6392": ["eng"],
+              "dcLanguage": ["Engelsk"],
+              "languageSubtitles": ["Dansk"],
+              "spatialDBCS": ["USA"],
+              "accessType": ["online"],
+              "pid": ["870970-basis:50691446"],
+              "title": ["Dirty Harry"],
+              "titleFull": ["Dirty Harry"],
+              "type": ["Film (net)"],
+              "workType": ["movie"],
+              "hasOnlineAccess": ["http://www.filmstriben.dk/fjernleje/film/details.aspx?id=2744740600"]
+            }, {
+              "collection": ["775100-katalog:29395306"],
+              "collectionDetails": [{
+                "accessType": ["physical"],
+                "creator": ["Woody Allen"],
+                "pid": ["775100-katalog:29395306"],
+                "title": ["Harry - stykke for stykke"],
+                "titleFull": ["Harry - stykke for stykke"],
+                "type": ["Dvd"],
+                "workType": ["movie"]
+              }],
+              "acIdentifier": ["29395306|870970"],
+              "acSource": ["Bibliotekskatalog"],
+              "dcTitle": ["Harry - stykke for stykke"],
+              "dcTitleFull": ["Harry - stykke for stykke"],
+              "alternative": ["Deconstructing Harry"],
+              "creatorDrt": ["Woody Allen"],
+              "creatorSort": ["Allen, Woody"],
+              "subjectDK5": ["77.7"],
+              "subjectDK5Text": ["Spillefilm"],
+              "subjectDBCS": ["forfattere", "komedier"],
+              "subjectGenre": ["komedier"],
+              "abstract": ["Den sexfikserede, neurotiske new yorker-forfatter Harry Block får vennekredsen på nakken med sin selvudleverende roman. Hans fiktive romanfigurer blander sig i hans liv, hvor problemerne tårner sig op"],
+              "description": ["Originalfilmen: USA : Magnolia Productions ; S.l. : Sweetland Films, 1997"],
+              "audienceMedieraad": ["Mærkning: Tilladt for børn over 15 år"],
+              "audience": ["voksenmaterialer"],
+              "publisher": ["Atlantic Film"],
+              "contributor": ["Carlo Di Palma", "Woody Allen"],
+              "contributorAct": ["Caroline Aaron", "Woody Allen", "Kirstie Alley", "Bob Balaban", "Richard Benjamin", "Eric Bogosian", "Billy Crystal", "Judy Davis", "Hazelle Goodman"],
+              "date": ["2012"],
+              "typeBibDKType": ["Dvd"],
+              "format": ["1 dvd-video"],
+              "extent": ["91 min."],
+              "languageISO6392": ["eng"],
+              "dcLanguage": ["Engelsk"],
+              "languageSubtitles": ["Svensk", "Norsk", "Dansk", "Finsk"],
+              "spatialDBCS": ["USA", "New York"],
+              "accessType": ["physical"],
+              "creator": ["Woody Allen"],
+              "pid": ["775100-katalog:29395306"],
+              "title": ["Harry - stykke for stykke"],
+              "titleFull": ["Harry - stykke for stykke"],
+              "type": ["Dvd"],
+              "workType": ["movie"],
+              "coverUrl117": ["//moreinfo.addi.dk/2.6/more_info_get.php?lokalid=29395306&amp;attachment_type=forside_117&amp;bibliotek=870970&amp;source_id=870970&amp;key=bdc54984ba9be6afbae1"],
+              "coverUrl207": ["//moreinfo.addi.dk/2.6/more_info_get.php?lokalid=29395306&amp;attachment_type=forside_207&amp;bibliotek=870970&amp;source_id=870970&amp;key=09008a29e4bef0e31070"],
+              "coverUrl42": ["//moreinfo.addi.dk/2.6/more_info_get.php?lokalid=29395306&amp;attachment_type=forside_42&amp;bibliotek=870970&amp;source_id=870970&amp;key=0818b9623f746f149d9c"],
+              "coverUrl500": ["//moreinfo.addi.dk/2.6/more_info_get.php?lokalid=29395306&amp;attachment_type=forside_500&amp;bibliotek=870970&amp;source_id=870970&amp;key=6bad7a31edd673f1d239"],
+              "coverUrlThumbnail": ["//moreinfo.addi.dk/2.6/more_info_get.php?lokalid=29395306&amp;attachment_type=forside_lille&amp;bibliotek=870970&amp;source_id=870970&amp;key=10fdbf7c81eb8829658a"],
+              "coverUrlFull": ["//moreinfo.addi.dk/2.6/more_info_get.php?lokalid=29395306&amp;attachment_type=forside_stor&amp;bibliotek=870970&amp;source_id=870970&amp;key=8b9400015298a073c8bd"],
+              "hasReview": ["870971-anmeld:35193839", "870976-anmeld:31007712"]
+            }, {
+              "collection": ["870970-basis:51088883"],
+              "collectionDetails": [{
+                "accessType": ["online"],
+                "pid": ["870970-basis:51088883"],
+                "title": ["Harry - stykke for stykke"],
+                "titleFull": ["Deconstructing Harry"],
+                "type": ["Film (net)"],
+                "workType": ["movie"]
+              }],
+              "acIdentifier": ["51088883|870970"],
+              "identifierURI": ["http://www.filmstriben.dk/fjernleje/film/details.aspx?id=5080550600"],
+              "acSource": ["Filmstriben"],
+              "dcTitle": ["Harry - stykke for stykke"],
+              "dcTitleFull": ["Harry - stykke for stykke"],
+              "alternative": ["Deconstructing Harry"],
+              "creatorDrt": ["Woody Allen"],
+              "creatorSort": ["Allen, Woody"],
+              "subjectDK5": ["77.7"],
+              "subjectDK5Text": ["Spillefilm"],
+              "subjectDBCO": ["amerikanske film"],
+              "subjectDBCS": ["forfattere", "komedier"],
+              "subjectGenre": ["komedier"],
+              "abstract": ["Den sexfikserede, neurotiske new yorker-forfatter Harry Block får vennekredsen på nakken med sin selvudleverende roman. Hans fiktive romanfigurer blander sig i hans liv, hvor problemerne tårner sig op"],
+              "description": ["Produktion: Magnolia Productions (USA), Sweetland Films, 1997"],
+              "audienceMedieraad": ["Mærkning: Tilladt for børn over 15 år"],
+              "audience": ["voksenmaterialer"],
+              "publisher": ["Atlantic Film"],
+              "contributorCng": ["Carlo Di Palma"],
+              "contributorAus": ["Woody Allen"],
+              "contributorAct": ["Caroline Aaron", "Woody Allen", "Kirstie Alley", "Bob Balaban", "Richard Benjamin", "Eric Bogosian", "Billy Crystal", "Judy Davis", "Hazelle Goodman"],
+              "date": ["2014"],
+              "typeBibDKType": ["Film (net)"],
+              "extent": ["91 min."],
+              "languageISO6392": ["eng"],
+              "dcLanguage": ["Engelsk"],
+              "languageSubtitles": ["Dansk"],
+              "spatialDBCS": ["USA", "New York"],
+              "accessType": ["online"],
+              "pid": ["870970-basis:51088883"],
+              "title": ["Harry - stykke for stykke"],
+              "titleFull": ["Deconstructing Harry"],
+              "type": ["Film (net)"],
+              "workType": ["movie"],
+              "hasOnlineAccess": ["http://www.filmstriben.dk/fjernleje/film/details.aspx?id=5080550600"]
+            }, {
+              "collection": ["150008-public:ebr10593006"],
+              "collectionDetails": [{
+                "accessType": ["online"],
+                "creator": ["Les Roopanarine"],
+                "pid": ["150008-public:ebr10593006"],
+                "language": ["Engelsk"],
+                "title": ["Harry Redknapp"],
+                "titleFull": ["Harry Redknapp : the biography"],
+                "type": ["Ebog"],
+                "workType": ["book"]
+              }],
+              "acIdentifier": ["ebr10593006|150008"],
+              "identifierURI": ["http://site.ebrary.com/lib/librarytitles/docDetail.action?docID=10593006"],
+              "acSource": ["Ebrary"],
+              "dcTitle": ["Harry Redknapp"],
+              "dcTitleFull": ["Harry Redknapp : the biography"],
+              "creatorAut": ["Les Roopanarine"],
+              "creatorSort": ["Roopanarine, Les"],
+              "subjectLCSH": ["Electronic books", "Soccer managers"],
+              "subject": ["Harry Redknapp (1947-)", "West Ham United (Soccer team)"],
+              "subjectSort": ["Redknapp, Harry (1947-)"],
+              "description": ["Electronic reproduction. Palo Alto, Calif. : ebrary, 2011. Available via World Wide Web. Access may be limited to ebrary affiliated libraries"],
+              "audience": ["voksenmaterialer"],
+              "publisher": ["John Blake"],
+              "date": ["2010"],
+              "typeBibDKType": ["Ebog"],
+              "extent": ["xviii, 269 s."],
+              "languageISO6392": ["eng"],
+              "dcLanguage": ["Engelsk"],
+              "accessType": ["online"],
+              "creator": ["Les Roopanarine"],
+              "pid": ["150008-public:ebr10593006"],
+              "language": ["Engelsk"],
+              "title": ["Harry Redknapp"],
+              "titleFull": ["Harry Redknapp : the biography"],
+              "type": ["Ebog"],
+              "workType": ["book"],
+              "hasOnlineAccess": ["http://site.ebrary.com/lib/librarytitles/docDetail.action?docID=10593006", "http://site.ebrary.com/lib/[PROVIDERSLIBRARYID]/docDetail.action?docID=10593006"]
+            }, {
+              "collection": ["775100-katalog:28721420", "775100-katalog:27948022", "775100-katalog:28037880", "775100-katalog:28037929", "775100-katalog:28037937", "775100-katalog:28002769", "775100-katalog:44739194"],
+              "collectionDetails": [{
+                "accessType": ["physical"],
+                "creator": ["Jo Nesbø"],
+                "pid": ["775100-katalog:28721420"],
+                "language": ["Dansk"],
+                "title": ["Panserhjerte"],
+                "titleFull": ["Panserhjerte"],
+                "type": ["Bog"],
+                "workType": ["book"]
+              }, {
+                "accessType": ["physical"],
+                "creator": ["Jo Nesbø"],
+                "pid": ["775100-katalog:27948022"],
+                "language": ["Dansk"],
+                "title": ["Panserhjerte"],
+                "titleFull": ["Panserhjerte"],
+                "type": ["Bog"],
+                "workType": ["book"]
+              }, {
+                "accessType": ["physical"],
+                "creator": ["Jo Nesbø"],
+                "pid": ["775100-katalog:28037880"],
+                "language": ["Dansk"],
+                "title": ["Panserhjerte"],
+                "titleFull": ["Panserhjerte"],
+                "type": ["Bog stor skrift (bind 1)"],
+                "workType": ["book"]
+              }, {
+                "accessType": ["physical"],
+                "creator": ["Jo Nesbø"],
+                "pid": ["775100-katalog:28037929"],
+                "language": ["Dansk"],
+                "title": ["Panserhjerte"],
+                "titleFull": ["Panserhjerte"],
+                "type": ["Bog stor skrift (bind 1)"],
+                "workType": ["book"]
+              }, {
+                "accessType": ["physical"],
+                "creator": ["Jo Nesbø"],
+                "pid": ["775100-katalog:28037937"],
+                "language": ["Dansk"],
+                "title": ["Panserhjerte"],
+                "titleFull": ["Panserhjerte"],
+                "type": ["Bog stor skrift (bind 3)"],
+                "workType": ["book"]
+              }, {
+                "accessType": ["physical"],
+                "creator": ["Jo Nesbø"],
+                "pid": ["775100-katalog:28002769"],
+                "language": ["Dansk"],
+                "title": ["Panserhjerte"],
+                "titleFull": ["Panserhjerte"],
+                "type": ["Lydbog (cd)"],
+                "workType": ["audiobook"]
+              }, {
+                "accessType": ["physical"],
+                "creator": ["Jo Nesbø"],
+                "pid": ["775100-katalog:44739194"],
+                "language": ["Dansk"],
+                "title": ["Panserhjerte"],
+                "titleFull": ["Panserhjerte"],
+                "type": ["Lydbog (cd-mp3)"],
+                "workType": ["audiobook"]
+              }],
+              "acIdentifier": ["28721420|870970"],
+              "identifierISBN": ["9788770535984"],
+              "acSource": ["Bibliotekskatalog"],
+              "source": ["Panserhjerte"],
+              "dcTitle": ["Panserhjerte"],
+              "dcTitleFull": ["Panserhjerte"],
+              "titleSeries": ["Krimiserien med Harry Hole ; 8"],
+              "creatorAut": ["Jo Nesbø"],
+              "creatorSort": ["Nesbø, Jo"],
+              "subjectDK5Text": ["Skønlitteratur"],
+              "subjectDBCS": ["krimi", "seriemordere"],
+              "subjectGenre": ["krimi"],
+              "subjectDK5": ["sk"],
+              "abstract": ["Krimi. Den alkoholiserede og asociale Harry Hole fra drabsafdelingen i Oslo har egentlig sagt op, men bliver hentet tilbage til en makaber sag, hvor en seriemorder er på spil. Sagen viser sig at være vidtforgrenet, og den udvikler sig dramatisk og fører Harry Hole rundt i Norge og Congo"],
+              "audience": ["voksenmaterialer"],
+              "version": ["3. udgave, 7. oplag (2016)"],
+              "publisher": ["Modtryk"],
+              "contributorTrl": ["Allan Hilton Andersen"],
+              "date": ["2011"],
+              "typeBibDKType": ["Bog"],
+              "extent": ["634 sider"],
+              "languageISO6392": ["dan"],
+              "dcLanguage": ["Dansk"],
+              "spatialDBCS": ["Norge", "Oslo"],
+              "temporalDBCP": ["2000-2009"],
+              "accessType": ["physical"],
+              "creator": ["Jo Nesbø"],
+              "pid": ["775100-katalog:28721420"],
+              "language": ["Dansk"],
+              "title": ["Panserhjerte"],
+              "titleFull": ["Panserhjerte"],
+              "type": ["Bog"],
+              "workType": ["book"],
+              "coverUrl117": ["//moreinfo.addi.dk/2.6/more_info_get.php?lokalid=28721420&amp;attachment_type=forside_117&amp;bibliotek=870970&amp;source_id=870970&amp;key=81e14acfc7f81d46058c"],
+              "coverUrl207": ["//moreinfo.addi.dk/2.6/more_info_get.php?lokalid=28721420&amp;attachment_type=forside_207&amp;bibliotek=870970&amp;source_id=870970&amp;key=7daa515db53cfc5a258f"],
+              "coverUrl42": ["//moreinfo.addi.dk/2.6/more_info_get.php?lokalid=28721420&amp;attachment_type=forside_42&amp;bibliotek=870970&amp;source_id=870970&amp;key=96da116f98976760cb52"],
+              "coverUrl500": ["//moreinfo.addi.dk/2.6/more_info_get.php?lokalid=28721420&amp;attachment_type=forside_500&amp;bibliotek=870970&amp;source_id=870970&amp;key=a1cf92282141b587324f"],
+              "coverUrlThumbnail": ["//moreinfo.addi.dk/2.6/more_info_get.php?lokalid=28721420&amp;attachment_type=forside_lille&amp;bibliotek=870970&amp;source_id=870970&amp;key=db1f992e76c0cf878a5a"],
+              "coverUrlFull": ["//moreinfo.addi.dk/2.6/more_info_get.php?lokalid=28721420&amp;attachment_type=forside_stor&amp;bibliotek=870970&amp;source_id=870970&amp;key=70e9d1c18dae1f37a59b"],
+              "hasReview": ["870971-anmeld:33929366", "870971-anmeld:33833601", "870971-anmeld:33820372", "870971-anmeld:33819935", "870971-anmeld:33864469", "870971-anmeld:33836643", "870976-anmeld:30833325", "150005-anmeld:81219"],
+              "hasCreatorDescription": ["870971-forfweb:89234298"]
+            }]
+          });
+        done();
+      });
+  });
+});
+&nbsp;</pre></td></tr>
+</table></pre>
+
+</div>
+<div class="footer">
+    <div class="meta">Generated by <a href="http://istanbul-js.org/" target="_blank">istanbul</a> at Fri Jul 15 2016 13:22:49 GMT+0200 (CEST)</div>
+</div>
+<script src="../../../prettify.js"></script>
+<script>
+window.onload = function () {
+        if (typeof prettyPrint === 'function') {
+            prettyPrint();
+        }
+};
+</script>
+<script src="../../../sorter.js"></script>
+</body>
+</html>
