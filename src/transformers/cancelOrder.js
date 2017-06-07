@@ -76,7 +76,7 @@ export default (request, context) => {
   let params = {
     'cancelOrder.orderId': orderId,
     'cancelOrder.orderType': orderType,
-    agencyId: context.get('user.agency'),
+    agencyId: context.get('user.isil'),
     userId: context.get('user.id'),
     userPincode: context.get('user.pin'),
     'authentication.groupIdAut': context.get('netpunkt.group'),

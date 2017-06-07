@@ -34,10 +34,11 @@
       "password": "XXXXX"
     },
     "user": {
-      "agency": "100451",
-      "id": "XXXXX",
+      "salt": "XXXXX",
       "pin": "XXXXX",
-      "salt": "XXXXX"
+      "libraryId": "710100",
+      "agency": "710100",
+      "isil": "DK-710100"
     },
     "app": {
       "clientid": "XXXXX",
