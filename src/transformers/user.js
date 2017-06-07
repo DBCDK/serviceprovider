@@ -84,7 +84,7 @@ export default (request, context) => {
 
   if (!(context.get('user.id') && context.get('user.pin'))) {
     return Promise.resolve({
-      statusCode: 300,
+      statusCode: 403,
       error: 'not logged in'
     });
   }

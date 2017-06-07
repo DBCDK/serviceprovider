@@ -293,7 +293,7 @@ api:
     response:
       example: {"loanId": "7890", "returnDate": "2016-09-12"}
     responses:
-      300:
+      403:
         $ref: '#/responses/InvalidUser'
 
   search:
@@ -411,7 +411,7 @@ api:
             creator: Kristín Marja Baldursdóttir
             title: Kantate
     responses:
-      300:
+      403:
         $ref: '#/responses/InvalidUser'
   work:
     tags:
