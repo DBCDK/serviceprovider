@@ -90,18 +90,18 @@ export default (request, context) => {
   }
 
   const params = {
-    agencyId: context.get('user.agency'),
+    agencyId: context.get('user.agency', true),
     userId: context.get('user.id'),
     userPincode: context.get('user.pin'),
-    'authentication.groupIdAut': context.get('netpunkt.group'),
-    'authentication.passwordAut': context.get('netpunkt.password'),
-    'authentication.userIdAut': context.get('netpunkt.user'),
+    'authentication.groupIdAut': context.get('netpunkt.group', true),
+    'authentication.passwordAut': context.get('netpunkt.password', true),
+    'authentication.userIdAut': context.get('netpunkt.user', true),
     action: 'getUserStatus',
     outputType: 'json'
   };
 
   const idPromise = new Promise((resolve, reject) =>
-    pbkdf2(context.get('user.agency').replace(/^DK-/, '') + ' ' + context.get('user.id'),
+    pbkdf2(context.get('user.agency', true).replace(/^DK-/, '') + ' ' + context.get('user.id'),
       context.get('user.salt'), 100000, 24, 'sha512', (err, key) => err ? reject(err) : resolve(key)));
 
   return context.call('openuserstatus', params).then(body => idPromise.then(id => {

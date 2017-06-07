@@ -141,9 +141,9 @@ function createResponse(response) {
 export default (request, context) => {
   const params = {
     action: 'moreInfo',
-    authenticationUser: context.get('netpunkt.user'),
-    authenticationGroup: context.get('netpunkt.group'),
-    authenticationPassword: context.get('netpunkt.password'),
+    authenticationUser: context.get('netpunkt.user', true),
+    authenticationGroup: context.get('netpunkt.group', true),
+    authenticationPassword: context.get('netpunkt.password', true),
     pidList: request.pids.join('|'),
     // pidList: '775100-katalog:42946400', // javabogen
     // pidList: '870970-basis:28448716', // kadavermarch

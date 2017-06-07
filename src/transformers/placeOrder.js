@@ -125,7 +125,7 @@ function placeOrder(request, context) { // eslint-disable-line no-unused-vars
   }
 
   // Make orderSystem configurable by smaug.
-  const orderSystem = context.get('app.orderSystem');
+  const orderSystem = context.get('app.orderSystem', true);
   let soap = constructSoap(request.pids, expireDate, request, orderSystem);
 
   return context.call('openorder', soap).then(body => {
@@ -171,14 +171,14 @@ export default (request, context) => {
   }
 
   const params = {
-    agencyId: context.get('user.isil'),
+    agencyId: context.get('user.isil', true),
     userId: context.get('user.id'),
     userPincode: context.get('user.pin'),
-    'authentication.groupIdAut': context.get('netpunkt.group'),
-    'authentication.passwordAut': context.get('netpunkt.password'),
-    'authentication.userIdAut': context.get('netpunkt.user'),
+    'authentication.groupIdAut': context.get('netpunkt.group', true),
+    'authentication.passwordAut': context.get('netpunkt.password', true),
+    'authentication.userIdAut': context.get('netpunkt.user', true),
     outputType: 'json',
-    serviceRequester: context.get('app.orderpolicyrequester')
+    serviceRequester: context.get('app.orderpolicyrequester', true)
   };
 
   request = extend(params, request);

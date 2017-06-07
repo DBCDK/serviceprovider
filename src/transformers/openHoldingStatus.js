@@ -4,11 +4,11 @@ import _ from 'lodash';
 
 export default (request, context) => {
   let params = {
-    authgroupid: context.get('netpunkt.group'),
-    authpassword: context.get('netpunkt.password'),
-    authid: context.get('netpunkt.user'),
+    authgroupid: context.get('netpunkt.group', true),
+    authpassword: context.get('netpunkt.password', true),
+    authid: context.get('netpunkt.user', true),
     pid: request.pid,
-    agency: context.get('user.agency')
+    agency: context.get('user.agency', true)
   };
 
   let soap = `

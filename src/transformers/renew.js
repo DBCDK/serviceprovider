@@ -44,12 +44,12 @@ export default (request, context) => {
 
   const params = {
     loanId: request.loanId,
-    agencyId: context.get('user.agency'),
+    agencyId: context.get('user.agency', true),
     userId: context.get('user.id'),
     userPincode: context.get('user.pin'),
-    'authentication.groupIdAut': context.get('netpunkt.group'),
-    'authentication.passwordAut': context.get('netpunkt.password'),
-    'authentication.userIdAut': context.get('netpunkt.user')
+    'authentication.groupIdAut': context.get('netpunkt.group', true),
+    'authentication.passwordAut': context.get('netpunkt.password', true),
+    'authentication.userIdAut': context.get('netpunkt.user', true)
   };
 
   const soap = constructSoap(params);
