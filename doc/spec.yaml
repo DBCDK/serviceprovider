@@ -365,6 +365,10 @@ api:
         description: The desired type of suggestions, possible values are `library`, `title`, `subject`, `creator`
         type: string
         example: "title"
+      librarytype:
+        description: Optional field only used when querying the library suggestor. It specifies which type of library is wanted, by default it's the public library.
+        type: string
+        example: "folkebibliotek"
       fields:
         description: "Fields to return, defaults to `term`. The `subject`- and `creator`-suggest only has `term`, while `title`-suggest also has `pid`, `creator`, and `type`, and the `library`-suggest has `agencyName`, `postalAddress`, `branchId`, `postalCode`, `geolocation`, `agencyType`, and `city`"
         type: array
