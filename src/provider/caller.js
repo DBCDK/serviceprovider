@@ -228,9 +228,14 @@ class Context {
    *
    * @param {object} context the context object to wrap
    */
-  get(key) {
+  get(key, strict = false) {
     const keys = key.split('.');
     const value = keys.reduce((o, name) => o && o[name], this.data);
+
+    if (strict && typeof value === 'undefined') {
+      throw new Error(`Context error: Attempt to query "${key}" failed.`);
+    }
+
     return value;
   }
 }

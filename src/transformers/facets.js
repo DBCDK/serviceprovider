@@ -4,8 +4,8 @@ import {log} from '../utils.js';
 
 function generateSoap(params, context) {
   const facets = (Array.isArray(params.fields) && params.fields) || ['creator', 'subject', 'language', 'date', 'form'];
-  const agency = context.get('search.agency');
-  const profile = context.get('search.profile');
+  const agency = context.get('search.agency', true);
+  const profile = context.get('search.profile', true);
 
   return `<?xml version="1.0" encoding="UTF-8"?>
 <SOAP-ENV:Envelope xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/"
