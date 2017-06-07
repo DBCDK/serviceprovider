@@ -62,8 +62,11 @@ describe('Automated test: availability_true', () => {
             {
   "statusCode": 200,
   "data": {
-    "willLend": true,
-    "expectedDelivery": "2016-05-31"
+    "holdingStatus": {
+      "willLend": true,
+      "expectedDelivery": "2016-05-31T00:00:00+02:00"
+    },
+    "orderPossible": true
   }
 });
         done();
@@ -73,7 +76,7 @@ describe('Automated test: availability_true', () => {
   "statusCode": 200,
   "data": {
     "willLend": true,
-    "expectedDelivery": "2016-05-31"
+    "expectedDelivery": "2016-05-31T00:00:00+02:00"
   }
 });
         done();

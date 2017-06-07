@@ -381,7 +381,7 @@ export default class EntityRequest {
       return validationError;
     }
     const json = this._mapperToElvis(object);
-    if (this._elvisType === 'action') {
+    if (this._elvisType === 'action' && json.attributes.reference) {
       if (json.attributes.reference.type === 'profile') {
         json.profile_ref = json.attributes.reference.id;
       }

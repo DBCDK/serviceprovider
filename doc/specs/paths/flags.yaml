@@ -38,7 +38,7 @@ paths:
    get:
      tags:
        - Community
-     summary: Get flag
+     summary: Get Flag
      description: Get a flag by ID
      parameters:
        - $ref: '#/parameters/accessToken'
@@ -50,7 +50,7 @@ paths:
          $ref: '#/responses/Error'
 
    delete:
-     summary: Delete flag
+     summary: Delete Flag
      tags:
        - Community
      parameters:

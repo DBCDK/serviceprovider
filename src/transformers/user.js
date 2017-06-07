@@ -20,7 +20,7 @@ function loan(loanItem) {
   };
 
   if (loanItem.author) {
-    result.author = loanItem.author.$;
+    result.creator = loanItem.author.$;
   }
   return result;
 }
@@ -40,7 +40,7 @@ function debt(debtItem) {
   };
 
   if (debtItem.author) {
-    result.author = debtItem.author.$;
+    result.creator = debtItem.author.$;
   }
   return result;
 }
@@ -57,10 +57,13 @@ function order(orderItem) {
     library: orderItem.pickUpAgency.$
   };
 
-  const orderFields = ['holdQueuePosition', 'author', 'title', 'orderDate', 'pickUpExpiryDate', 'pickUpId'];
+  const orderFields = ['holdQueuePosition', 'creator', 'title', 'orderDate', 'pickUpExpiryDate', 'pickUpId'];
 
   orderFields.forEach(key => {
-    if (orderItem[key] && orderItem[key].$) {
+    if (key === 'creator' && orderItem.author && orderItem.author.$) {
+      result[key] = orderItem.author.$;
+    }
+    else if (orderItem[key] && orderItem[key].$) {
       result[key] = orderItem[key].$;
     }
   });

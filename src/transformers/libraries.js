@@ -1,4 +1,6 @@
-
+/**
+ * @file: Libraries transformer, delivers from an internally cached map.
+ */
 
 const timeout = 60 * 60 * 1000;
 let cache;
