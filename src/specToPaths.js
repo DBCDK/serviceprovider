@@ -28,13 +28,13 @@ function createRequest(spec) {
  */
 function createResponse(spec) {
   return {
-    default: {
+    200: {
       description: 'Response envelope',
       schema: {
         type: 'object',
         required: ['statusCode'],
         properties: {
-          statusCode: {type: 'integer'},
+          statusCode: {type: 'integer', default: 200},
           data: Object.assign({
             type: 'object',
             properties: {}
@@ -48,6 +48,12 @@ function createResponse(spec) {
           }
         }
       }
+    },
+    500: {
+      $ref: '#/responses/Error'
+    },
+    401: {
+      $ref: '#/responses/InvalidToken'
     }
   };
 }
@@ -87,7 +93,7 @@ function apiMethodIterator(method, specs) {
 
   // Document request/response objects
   const request = createRequest(spec);
-  const responses = createResponse(spec);
+  const responses = Object.assign({}, spec.responses || {}, createResponse(spec));
 
   // Create parameter list for GET-requests
   const params = Object.keys(request.schema.properties).map((name) => {

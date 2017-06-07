@@ -456,12 +456,40 @@ definitions:
   Error:
     type: object
     properties:
-      code:
+      statusCode:
         type: integer
-        format: int32
-      message:
+      error:
         type: string
+    example: {
+               "statusCode": 500,
+               "error": "some unexpected error occured",
+             }
 
+  InvalidToken:
+    type: object
+    properties:
+      statusCode:
+        type: integer
+      error:
+        type: string
+      error_description:
+        type: string
+    example: {
+               "statusCode": 401,
+               "error": "invalid_token",
+               "error_description": "The access token expired"
+             }
+  InvalidUser:
+    type: object
+    properties:
+      statusCode:
+        type: integer
+      error:
+        type: string
+    example: {
+               "statusCode": 300,
+               "error": "not logged in"
+             }
   Entity:
     allOf:
       - $ref: "#/definitions/Base"
