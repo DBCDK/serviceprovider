@@ -171,7 +171,7 @@ export default (request, context) => {
   }
 
   const params = {
-    agencyId: context.get('user.agency'),
+    agencyId: context.get('user.isil'),
     userId: context.get('user.id'),
     userPincode: context.get('user.pin'),
     'authentication.groupIdAut': context.get('netpunkt.group'),
