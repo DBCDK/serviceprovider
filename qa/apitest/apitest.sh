@@ -1,11 +1,11 @@
 #!/bin/bash
 
-TESTNAME=${1:-test}    
+TESTNAME=${1:-test}
 
 
 rm -f $TESTNAME.result*
 
-export API_VERSION=`node -e "console.log(parseInt(require('../package.json').version, 10))"`
+export API_VERSION=`node -e "console.log(parseInt(require('../../package.json').version, 10))"`
 IFS=$'\n$'
 for line in `cat $TESTNAME.requests.lst | grep -v "^#"`
 do

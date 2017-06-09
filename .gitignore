@@ -6,7 +6,7 @@
 report.xml
 output
 test-results.xml
-coverage/*
+/qa/coverage/*
 dump.rdb
 complexity
 complexity-report*

@@ -85,7 +85,7 @@ Overview of files and directories:
     - `app.js` - the main code entrypoint
     - `transformers/` - the code that transforms requests/data to/from the different services, and exposes them in the api.
     - `smaug/` - simple authentification server used during test and development
-- `apitest/`, `ave-test/`, `performancetest/`, `add_imports_to_tests.py`, `mocktest.sh`, `siegetestendpoints.txt` - various testing
+- `qa/apitest/`, `ave-test/`, `performancetest/`, `add_imports_to_tests.py`, `mocktest.sh`, `siegetestendpoints.txt` - various testing
 - `static/` contains a swagger-ui, symlinks to guide, client-api, etc. This is served staticly. We are using a recent snapshot of `github:swagger-api:swagger-ui:dist/` as the stable swagger-ui release (as of May 2016) has a bug, with regard to `boolean` thet breaks the documentation.
 - `client/` - implementation and build script for the browser JavaScript client library.
 
@@ -260,14 +260,14 @@ You can run it with mock data using `./mocktest.sh`. This starts the ServiceProv
 To update the mock data, first remove the original mockdata file, and start the ServiceProvider with MOCK_FILE set:
 
 ```bash
-rm apitest/mockdata.json
+rm qa/apitest/mockdata.json
 SMAUG=http://localhost:3000 MOCK_FILE=apitest/mockdata.json SWAGGER_HTTP=true TEST_DEV=true node src/main.js
 ```
 
 To generate the mock data, first run the apitest to record the data, and then call somen endpoint with `createTest=mockfile` to write the mock data to disk, ie:
 
 ```bash
-cd apitest
+cd qa/apitest
 ./apitest.sh
 curl 'http://localhost:8080/v1/user?access_token=qwerty&createTest=mockfile'
 ```
@@ -275,7 +275,7 @@ curl 'http://localhost:8080/v1/user?access_token=qwerty&createTest=mockfile'
 To update the expected result, make sure that the ServiceProvider is running, and then:
 
 ```bash
-cd apitest
+cd qa/apitest
 ./reset-expected.sh
 ```
 (Remember to check that new expected result is as expected, before committing. `git diff` will list the changes).
