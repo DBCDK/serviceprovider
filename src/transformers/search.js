@@ -32,7 +32,7 @@ export default (params, context) => {
 
     // call work-endpoint with pids from search result, and desired fields
     let workRequest = {pids: results.data.map(o => o.pid[0]), fields: workFields};
-    return context.call('work', workRequest) .then(workResult => {
+    return context.call('work', workRequest).then(workResult => {
       // combine the objects from search and work endpoints.
       let result = [];
       for (let i = 0; i < results.data.length; ++i) {
