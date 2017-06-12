@@ -319,7 +319,7 @@ api:
         example: 10
         description: maximum number of results returned
         minimum: 1
-        maximum: 20
+        maximum: 50
         type: integer
       fields:
         example: ["title", "creator", "pid"]
