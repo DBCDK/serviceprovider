@@ -22,6 +22,15 @@ function loan(loanItem) {
   if (loanItem.author) {
     result.creator = loanItem.author.$;
   }
+
+  if (loanItem.bibliographicItemId) {
+    result.materialId = loanItem.bibliographicItemId.$;
+  }
+
+  if (loanItem.bibliographicRecordId) {
+    result.titleId = loanItem.bibliographicRecordId.$;
+  }
+
   return result;
 }
 
