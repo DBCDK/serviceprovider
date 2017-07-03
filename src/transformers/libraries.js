@@ -2,7 +2,8 @@
  * @file: Libraries transformer, delivers from an internally cached map.
  */
 
-import * as IsilUtils from "./utils/isil.utils";
+import * as IsilUtils from './utils/isil.utils';
+
 const timeout = 60 * 60 * 1000;
 let cache;
 let timestamp;
