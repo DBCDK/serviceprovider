@@ -403,11 +403,14 @@ api:
             title: håndbog over håndbøger
             creator: La, Chris
             dueDate: "2016-04-16"
+            materialId: "9782361951085"
+            titleId: "51680057"
         orders:
           - orderId: "24181913"
             title: Morder-Anders og hans venner
             creator: Jonasson, Jonas
             status: In process
+            titleId: "28565526"
         debt:
           - amount: "20"
             currency: DKK
