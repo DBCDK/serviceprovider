@@ -133,7 +133,6 @@ export default (request, context) => {
     }
 
     let debts = [];
-    console.log(body.data.getUserStatusResponse.userStatus);
     if (body.data.getUserStatusResponse.userStatus.fiscalAccount) {
       debts = body.data.getUserStatusResponse.userStatus.fiscalAccount.fiscalTransaction || [];
     }
