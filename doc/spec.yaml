@@ -116,11 +116,11 @@ api:
       The field that tells which information is required when ordering the book is `orderParameters`.
     properties:
       agencyIds:
-        description: ids of agencies of libraries to fetch, - an agency is a collection of libraries, - return all libraries if neither `branchIds` nor `agencyIds` are supplied
+        description: ids (or isil) of agencies of libraries to fetch, - an agency is a collection of libraries, - return all libraries if neither `branchIds` nor `agencyIds` are supplied
         type: array
         items: {type: "string"}
       branchIds:
-        description: ids of libraries to fetch - return all libraries if neither `branchIds` nor `agencyIds` are supplied
+        description: ids (or isil) of libraries to fetch - return all libraries if neither `branchIds` nor `agencyIds` are supplied
         type: array
         items: {type: "string"}
       fields:
