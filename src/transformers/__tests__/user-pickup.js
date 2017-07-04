@@ -83,7 +83,7 @@ let expected = {
     "orders": [{
       "orderId": "Hold:24395923",
       "status": "In process",
-      "library": "DK-710111",
+      "pickUpAgency": "DK-710111",
       "holdQueuePosition": "1",
       "creator": "Madsen, Peter, f. 1958",
       "title": "Eventyrbogen",
@@ -91,7 +91,7 @@ let expected = {
     }, {
       "orderId": "Hold:24400305",
       "status": "In process",
-      "library": "DK-710111",
+      "pickUpAgency": "DK-710111",
       "holdQueuePosition": "1",
       "creator": "Hall, Patrick",
       "title": "How to solve it in LISP",
@@ -99,7 +99,7 @@ let expected = {
     }, {
       "orderId": "Hold:24400287",
       "status": "In process",
-      "library": "DK-710111",
+      "pickUpAgency": "DK-710111",
       "holdQueuePosition": "1",
       "creator": "Franklin, Benjamin",
       "title": "Selvbiografi. - N.N.",
@@ -107,7 +107,7 @@ let expected = {
     }, {
       "orderId": "Hold:24404786",
       "status": "In process",
-      "library": "DK-710100",
+      "pickUpAgency": "DK-710100",
       "holdQueuePosition": "265",
       "creator": "Riebnitzsky, Anne-Cathrine",
       "title": "Orkansæsonen og stilheden",
@@ -115,14 +115,14 @@ let expected = {
     }, {
       "orderId": "Hold:24401745",
       "status": "In process",
-      "library": "DK-710100",
+      "pickUpAgency": "DK-710100",
       "holdQueuePosition": "1",
       "title": "Hello Kitty julehistorier",
       "orderDate": "2016-05-30T00:00:00+02:00"
     }, {
       "orderId": "Hold:24404796",
       "status": "In process",
-      "library": "DK-710100",
+      "pickUpAgency": "DK-710100",
       "holdQueuePosition": "1",
       "creator": "Murakami, Haruki",
       "title": "1Q84",
@@ -130,7 +130,7 @@ let expected = {
     }, {
       "orderId": "Hold:24400337",
       "status": "In process",
-      "library": "DK-710111",
+      "pickUpAgency": "DK-710111",
       "holdQueuePosition": "1",
       "creator": "Lindgren, Astrid",
       "title": "Nissen",
@@ -138,7 +138,7 @@ let expected = {
     }, {
       "orderId": "Hold:24400334",
       "status": "Available for pickup",
-      "library": "DK-710111",
+      "pickUpAgency": "DK-710111",
       "holdQueuePosition": "1",
       "creator": "Lindgren, Astrid",
       "title": "Emils skarnsstreg nr. 325",

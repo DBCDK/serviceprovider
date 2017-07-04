@@ -61,7 +61,7 @@ describe('Automated test: user-get-user-info', () => {
                 "orderId": "Hold:NCIPMDAxOXwyNy0wNS0yMDE2IDEwOjA3OjU4fExvdW1hbm4sIE9sZXxUdXJlbiBnJmFyaW5nO3IgdGlsIEdyYW4gQ2FuYXJpYSwgRnVlcnRldmVudHVyYSBvZyBMYW56YXJvdGV8fHwx",
                 "orderDate": "2016-05-27T00:00:00+02:00",
                 "status": "In process",
-                "library": "DK-100451",
+                "pickUpAgency": "DK-100451",
                 "holdQueuePosition": "1",
                 "creator": "Loumann, Ole"
               }],
@@ -91,7 +91,7 @@ describe('Automated test: user-get-user-info', () => {
               "orderId": "Hold:NCIPMDAxOXwyNy0wNS0yMDE2IDEwOjA3OjU4fExvdW1hbm4sIE9sZXxUdXJlbiBnJmFyaW5nO3IgdGlsIEdyYW4gQ2FuYXJpYSwgRnVlcnRldmVudHVyYSBvZyBMYW56YXJvdGV8fHwx",
               "orderDate": "2016-05-27T00:00:00+02:00",
               "status": "In process",
-              "library": "DK-100451",
+              "pickUpAgency": "DK-100451",
               "holdQueuePosition": "1",
               "creator": "Loumann, Ole"
             }],

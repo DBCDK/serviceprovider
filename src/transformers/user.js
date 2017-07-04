@@ -62,7 +62,7 @@ function order(orderItem) {
   const result = {
     orderId: `${orderItem.orderType.$}:${orderItem.orderId.$}`,
     status: orderItem.orderStatus.$,
-    library: orderItem.pickUpAgency.$
+    pickUpAgency: orderItem.pickUpAgency.$
   };
 
   const orderFields = ['holdQueuePosition', 'creator', 'title', 'orderDate', 'pickUpExpiryDate', 'pickUpId', 'titleId'];

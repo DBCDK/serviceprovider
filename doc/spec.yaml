@@ -406,11 +406,22 @@ api:
             materialId: "9782361951085"
             titleId: "51680057"
         orders:
-          - orderId: "24181913"
-            title: Morder-Anders og hans venner
-            creator: Jonasson, Jonas
-            status: In process
-            titleId: "28565526"
+          - orderId: "Hold:24395923"
+            status: "In process"
+            pickUpAgency: "DK-710111"
+            holdQueuePosition: "1"
+            creator: "Madsen, Peter, f. 1958"
+            title: "Eventyrbogen"
+            orderDate: "2016-05-27T00:00:00+02:00"
+          - orderId: "Hold:24400334"
+            status: "Available for pickup"
+            pickUpAgency: "DK-710111"
+            holdQueuePosition: "1"
+            creator: "Lindgren, Astrid"
+            title: "Emils skarnsstreg nr. 325"
+            orderDate: "2016-05-30T00:00:00+02:00"
+            pickUpExpiryDate: "2016-06-04T00:00:00+02:00"
+            pickUpId: "Nummer 16"
         debt:
           - amount: "20"
             currency: DKK
