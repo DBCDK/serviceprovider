@@ -22,6 +22,15 @@ function loan(loanItem) {
   if (loanItem.author) {
     result.creator = loanItem.author.$;
   }
+
+  if (loanItem.bibliographicItemId) {
+    result.materialId = loanItem.bibliographicItemId.$;
+  }
+
+  if (loanItem.bibliographicRecordId) {
+    result.titleId = loanItem.bibliographicRecordId.$;
+  }
+
   return result;
 }
 
@@ -31,7 +40,6 @@ function loan(loanItem) {
  * @returns {Object} response with mapped keys
  */
 function debt(debtItem) {
-
   const result = {
     amount: debtItem.fiscalTransactionAmount.$,
     currency: debtItem.fiscalTransactionCurrency.$,
@@ -57,11 +65,14 @@ function order(orderItem) {
     library: orderItem.pickUpAgency.$
   };
 
-  const orderFields = ['holdQueuePosition', 'creator', 'title', 'orderDate', 'pickUpExpiryDate', 'pickUpId'];
+  const orderFields = ['holdQueuePosition', 'creator', 'title', 'orderDate', 'pickUpExpiryDate', 'pickUpId', 'titleId'];
 
   orderFields.forEach(key => {
     if (key === 'creator' && orderItem.author && orderItem.author.$) {
       result[key] = orderItem.author.$;
+    }
+    else if (key === 'titleId' && orderItem.bibliographicRecordId && orderItem.bibliographicRecordId.$) {
+      result[key] = orderItem.bibliographicRecordId.$;
     }
     else if (orderItem[key] && orderItem[key].$) {
       result[key] = orderItem[key].$;
