@@ -10,6 +10,7 @@ test-results.xml
 dump.rdb
 complexity
 complexity-report*
+npm-debug.log.*
 swagger.json
 .sonar/
 

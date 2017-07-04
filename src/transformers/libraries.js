@@ -2,6 +2,8 @@
  * @file: Libraries transformer, delivers from an internally cached map.
  */
 
+import * as IsilUtils from './utils/isil.utils';
+
 const timeout = 60 * 60 * 1000;
 let cache;
 let timestamp;
@@ -122,7 +124,7 @@ function getLibrariesTransformPromiseHandler(params, context, libraries) {
   if (Array.isArray(params.agencyIds)) {
     const agencies = {};
     for (let i = 0; i < params.agencyIds.length; ++i) {
-      agencies[params.agencyIds[i]] = true;
+      agencies[IsilUtils.getIdFromIsil(params.agencyIds[i])] = true;
     }
 
     libraries = libraries.filter(o => agencies[o.agencyId]);
@@ -131,8 +133,9 @@ function getLibrariesTransformPromiseHandler(params, context, libraries) {
   if (Array.isArray(params.branchIds)) {
     const branches = {};
     for (let i = 0; i < params.branchIds.length; ++i) {
-      branches[params.branchIds[i]] = true;
+      branches[IsilUtils.getIdFromIsil(params.branchIds[i])] = true;
     }
+
     libraries = libraries.filter(o => branches[o.branchId]);
   }
 
