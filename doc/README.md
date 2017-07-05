@@ -281,7 +281,7 @@ cd qa/apitest
 (Remember to check that new expected result is as expected, before committing. `git diff` will list the changes).
 
 
-There are also various utility scripts for using the apitest during development in the `apitest/` folder.
+There are also various utility scripts for using the apitest during development in the `qa/apitest/` folder.
 
 ## Automatic Unit Test Creation
 
@@ -293,5 +293,5 @@ The created unit test, has removed passwords etc. from the mocked data, which ma
 
 The details about the automatic test creation can be seen in `saveTest(..)` within `src/provider/caller.js`.
 
-We also list the automatically created unit-tests in `apitest/createTest.requests.lst`, with those requiring manual intevention commented out. This can be used to regenerate many of the unit tests, when major changes to the code occur.
+We also list the automatically created unit-tests in `qa/apitest/createTest.requests.lst`, with those requiring manual intevention commented out. This can be used to regenerate many of the unit tests, when major changes to the code occur.
 
