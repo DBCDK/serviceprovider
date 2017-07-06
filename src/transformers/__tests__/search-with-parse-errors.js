@@ -2389,8 +2389,8 @@ describe('Automated test: search-with-parse-errors', () => {
     }
   ],
   "error": [
-    "No data found on object(s): 775100-katalog:26111129",
-    "No data found on object(s): 775100-katalog:50686221"
+    "Parse error: briefDisplay could not be found on object 775100-katalog:26111129",
+    "Parse error: briefDisplay could not be found on object 775100-katalog:50686221"
   ]
 });
         done();
