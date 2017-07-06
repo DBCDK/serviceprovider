@@ -70,7 +70,7 @@ export default (params, context) => {
           });
         }
         else {
-          parseErrors.push(`No data found on object(s): ${collection}`);
+          parseErrors.push(`Parse error: briefDisplay could not be found on object ${collection}`);
           log.error('Parse error: briefDisplay could not be found on object', {
             collection: collection[0],
             context: context.data,
