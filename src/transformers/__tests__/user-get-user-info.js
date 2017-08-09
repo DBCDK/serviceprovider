@@ -35,78 +35,48 @@ let context = {
 };
 let provider = Provider();
 let mockData = {"[\"openuserstatus\",{\"qs\":{\"agencyId\":\"100451\",\"userId\":\"XXXXX\",\"userPincode\":\"XXXXX\",\"authentication.groupIdAut\":\"XXXXX\",\"authentication.passwordAut\":\"XXXXX\",\"authentication.userIdAut\":\"XXXXX\",\"action\":\"getUserStatus\",\"outputType\":\"json\"}}]": "{\"getUserStatusResponse\":{\"userId\":{\"$\":\"XXXXX\",\"@\":\"ous\"},\"userName\":{\"$\":\"X-name\",\"@\":\"ous\"},\"userAddress\":{\"$\":\"X-address\",\"@\":\"ous\"},\"userPostalCode\":{\"$\":\"X-postalcode\",\"@\":\"ous\"},\"userMail\":{\"$\":\"X-mail\",\"@\":\"ous\"},\"userStatus\":{\"loanedItems\":{\"loan\":[{\"title\":{\"$\":\"9900.\",\"@\":\"ous\"},\"dateDue\":{\"$\":\"2016-06-20T00:00:00+02:00\",\"@\":\"ous\"},\"loanId\":{\"$\":\"NCIPMDAxOXw5OTAwfHw5OTAwLnx8\",\"@\":\"ous\"},\"@\":\"ous\"},{\"author\":{\"$\":\"Rosen, Michael\",\"@\":\"ous\"},\"title\":{\"$\":\"Smut\",\"@\":\"ous\"},\"dateDue\":{\"$\":\"2016-06-29T00:00:00+02:00\",\"@\":\"ous\"},\"loanId\":{\"$\":\"NCIPMDAxOXwwMDAwMDMyNDg0fFJvc2VuLCBNaWNoYWVsfFNtdXR8fHw=\",\"@\":\"ous\"},\"@\":\"ous\"}],\"loansCount\":{\"$\":\"2\",\"@\":\"ous\"},\"@\":\"ous\"},\"orderedItems\":{\"order\":[{\"author\":{\"$\":\"Loumann, Ole\",\"@\":\"ous\"},\"title\":{\"$\":\"Turen g\\u00e5r til Gran Canaria, Fuerteventura og Lanzarote\",\"@\":\"ous\"},\"orderDate\":{\"$\":\"2016-05-27T00:00:00+02:00\",\"@\":\"ous\"},\"orderId\":{\"$\":\"NCIPMDAxOXwyNy0wNS0yMDE2IDEwOjA3OjU4fExvdW1hbm4sIE9sZXxUdXJlbiBnJmFyaW5nO3IgdGlsIEdyYW4gQ2FuYXJpYSwgRnVlcnRldmVudHVyYSBvZyBMYW56YXJvdGV8fHwx\",\"@\":\"ous\"},\"orderStatus\":{\"$\":\"In process\",\"@\":\"ous\"},\"orderType\":{\"$\":\"Hold\",\"@\":\"ous\"},\"holdQueuePosition\":{\"$\":\"1\",\"@\":\"ous\"},\"pickUpAgency\":{\"$\":\"DK-100451\",\"@\":\"ous\"},\"@\":\"ous\"}],\"ordersCount\":{\"$\":\"1\",\"@\":\"ous\"},\"@\":\"ous\"},\"@\":\"ous\"},\"@\":\"ous\"},\"@namespaces\":{\"ous\":\"http:\\/\\/oss.dbc.dk\\/ns\\/openuserstatus\"}}"};
+let expected = {
+  "statusCode": 200,
+  "data": {
+    "id": "KbZ0UoBGys8QMLzieTQ5mHZ39ivzulP4",
+    "name": "X-name",
+    "address": "X-address",
+    "postalCode": "X-postalcode",
+    "mail": "X-mail",
+    "loans": [{
+      "loanId": "NCIPMDAxOXw5OTAwfHw5OTAwLnx8",
+      "dueDate": "2016-06-20T00:00:00+02:00",
+      "title": "9900."
+    }, {
+      "loanId": "NCIPMDAxOXwwMDAwMDMyNDg0fFJvc2VuLCBNaWNoYWVsfFNtdXR8fHw=",
+      "dueDate": "2016-06-29T00:00:00+02:00",
+      "title": "Smut",
+      "creator": "Rosen, Michael"
+    }],
+    "orders": [{
+      "title": "Turen går til Gran Canaria, Fuerteventura og Lanzarote",
+      "orderId": "Hold:NCIPMDAxOXwyNy0wNS0yMDE2IDEwOjA3OjU4fExvdW1hbm4sIE9sZXxUdXJlbiBnJmFyaW5nO3IgdGlsIEdyYW4gQ2FuYXJpYSwgRnVlcnRldmVudHVyYSBvZyBMYW56YXJvdGV8fHwx",
+      "orderDate": "2016-05-27T00:00:00+02:00",
+      "status": "In process",
+      "pickUpAgency": "DK-100451",
+      "holdQueuePosition": "1",
+      "creator": "Loumann, Ole"
+    }],
+    "debt": [],
+    "ddbcmsapi": "http://rest.filmstriben.dbc.inlead.dk/web/"
+  }
+};
 
 describe('Automated test: user-get-user-info', () => {
   it('expected response. ID:7j9nzx, for {}', (done) => {
     context.mockData = mockData;
     provider.execute('user', {}, context)
       .then(result => {
-        assert.deepEqual(result,
-          {
-            "statusCode": 200,
-            "data": {
-              "id": "KbZ0UoBGys8QMLzieTQ5mHZ39ivzulP4",
-              "name": "X-name",
-              "address": "X-address",
-              "postalCode": "X-postalcode",
-              "mail": "X-mail",
-              "loans": [{
-                "loanId": "NCIPMDAxOXw5OTAwfHw5OTAwLnx8",
-                "dueDate": "2016-06-20T00:00:00+02:00",
-                "title": "9900."
-              }, {
-                "loanId": "NCIPMDAxOXwwMDAwMDMyNDg0fFJvc2VuLCBNaWNoYWVsfFNtdXR8fHw=",
-                "dueDate": "2016-06-29T00:00:00+02:00",
-                "title": "Smut",
-                "creator": "Rosen, Michael"
-              }],
-              "orders": [{
-                "title": "Turen går til Gran Canaria, Fuerteventura og Lanzarote",
-                "orderId": "Hold:NCIPMDAxOXwyNy0wNS0yMDE2IDEwOjA3OjU4fExvdW1hbm4sIE9sZXxUdXJlbiBnJmFyaW5nO3IgdGlsIEdyYW4gQ2FuYXJpYSwgRnVlcnRldmVudHVyYSBvZyBMYW56YXJvdGV8fHwx",
-                "orderDate": "2016-05-27T00:00:00+02:00",
-                "status": "In process",
-                "pickUpAgency": "DK-100451",
-                "holdQueuePosition": "1",
-                "creator": "Loumann, Ole"
-              }],
-              "debt": [],
-              "ddbcmsapi": "http://rest.filmstriben.dbc.inlead.dk/web/"
-            }
-          });
+        assert.deepEqual(result, expected);
         done();
       })
       .catch(result => {
-        fail({throw: result}, {
-          "statusCode": 200,
-          "data": {
-            "id": "KbZ0UoBGys8QMLzieTQ5mHZ39ivzulP4",
-            "name": "X-name",
-            "address": "X-address",
-            "postalCode": "X-postalcode",
-            "mail": "X-mail",
-            "loans": [{
-              "loanId": "NCIPMDAxOXw5OTAwfHw5OTAwLnx8",
-              "dueDate": "2016-06-20T00:00:00+02:00",
-              "title": "9900."
-            }, {
-              "loanId": "NCIPMDAxOXwwMDAwMDMyNDg0fFJvc2VuLCBNaWNoYWVsfFNtdXR8fHw=",
-              "dueDate": "2016-06-29T00:00:00+02:00",
-              "title": "Smut",
-              "creator": "Rosen, Michael"
-            }],
-            "orders": [{
-              "title": "Turen går til Gran Canaria, Fuerteventura og Lanzarote",
-              "orderId": "Hold:NCIPMDAxOXwyNy0wNS0yMDE2IDEwOjA3OjU4fExvdW1hbm4sIE9sZXxUdXJlbiBnJmFyaW5nO3IgdGlsIEdyYW4gQ2FuYXJpYSwgRnVlcnRldmVudHVyYSBvZyBMYW56YXJvdGV8fHwx",
-              "orderDate": "2016-05-27T00:00:00+02:00",
-              "status": "In process",
-              "pickUpAgency": "DK-100451",
-              "holdQueuePosition": "1",
-              "creator": "Loumann, Ole"
-            }],
-            "debt": [],
-            "ddbcmsapi": "http://rest.filmstriben.dbc.inlead.dk/web/"
-          }
-        });
+        fail({throw: result}, expected);
         done();
       });
   });
