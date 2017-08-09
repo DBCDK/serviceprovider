@@ -13,7 +13,7 @@ const context = {
     "PRODopenorder": "https://openorder.addi.dk/2.7.1/",
     "openorder": "https://openorder.addi.dk/test_2.7.1/",
     "opensearch": "http://opensearch.addi.dk/b3.0_4.2/",
-    "openuserstatus": "https://openuserstatus.addi.dk/1.4.1/",
+    "openuserstatus": "https://openuserstatus.addi.dk/1.5/",
     "rank": "https://xptest.dbc.dk/ms/rank/v1",
     "suggestpopular": "http://xptest.dbc.dk/ms/entity-pop/v1",
     "suggestcreator": "http://xptest.dbc.dk/ms/entity-suggest/v1/creator",

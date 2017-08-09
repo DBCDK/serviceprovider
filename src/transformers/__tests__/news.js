@@ -12,7 +12,7 @@ let context = {
     "openholdingstatus": "https://openholdingstatus.addi.dk/2.2/",
     "openorder": "https://openorder.addi.dk/test_2.7.1/",
     "opensearch": "http://opensearch.addi.dk/b3.0_4.2/",
-    "openuserstatus": "https://openuserstatus.addi.dk/1.4.1/",
+    "openuserstatus": "https://openuserstatus.addi.dk/1.5/",
     "rank": "https://xptest.dbc.dk/ms/rank/v1",
     "recommenddefault": "https://xptest.dbc.dk/ms/recommend-cosim/v1",
     "recommendpopular": "https://xptest.dbc.dk/ms/recommend-pop/v1",
@@ -41,7 +41,7 @@ let context = {
   "orderpolicy": {"url": "https://openorder.addi.dk/test_2.7.1/", "servicerequester": "190101"},
   "userstatus": {
     "salt": "XXXXX",
-    "url": "https://openuserstatus.addi.dk/1.4.1/",
+    "url": "https://openuserstatus.addi.dk/1.5/",
     "userid": "XXXXX",
     "userpin": "XXXXX",
     "useragency": "DK-100451",
