@@ -123,26 +123,40 @@ export default (request, context) => {
       });
     }
 
+    const data = {
+      id: id.toString('base64')
+    };
+
+    if (body.data.getUserStatusResponse.userName) {
+      data.name = body.data.getUserStatusResponse.userName.$;
+    }
+    if (body.data.getUserStatusResponse.userAddress) {
+      data.address = body.data.getUserStatusResponse.userAddress.$;
+    }
+    if (body.data.getUserStatusResponse.userPostalCode) {
+      data.postalCode = body.data.getUserStatusResponse.userPostalCode.$;
+    }
+    if (body.data.getUserStatusResponse.userMail) {
+      data.mail = body.data.getUserStatusResponse.userMail.$;
+    }
+
     let loans = [];
     if (body.data.getUserStatusResponse.userStatus.loanedItems.loan) {
       loans = body.data.getUserStatusResponse.userStatus.loanedItems.loan;
     }
+    data.loans = loans.map(loan);
+
     let orders = [];
     if (body.data.getUserStatusResponse.userStatus.orderedItems.order) {
       orders = body.data.getUserStatusResponse.userStatus.orderedItems.order;
     }
+    data.orders = orders.map(order);
 
     let debts = [];
     if (body.data.getUserStatusResponse.userStatus.fiscalAccount) {
       debts = body.data.getUserStatusResponse.userStatus.fiscalAccount.fiscalTransaction || [];
     }
-
-    const data = {
-      id: id.toString('base64'),
-      loans: loans.map(loan),
-      orders: orders.map(order),
-      debt: debts.map(debt)
-    };
+    data.debt = debts.map(debt);
 
     if (context.get('services.ddbcmsapi')) {
       data.ddbcmsapi = context.get('services.ddbcmsapi');
