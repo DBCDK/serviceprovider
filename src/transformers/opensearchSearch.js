@@ -1,5 +1,6 @@
 import {workToJSON} from '../requestTypeIdentifier.js';
 import {log} from '../utils';
+import _ from 'lodash';
 
 function getSoap(agency, profile, q, filterAgency, sort, offset, limit, allObject) {
   return `<?xml version="1.0" encoding="UTF-8"?>
@@ -58,31 +59,42 @@ export default (params, context) => {
       let result = [];
       const parseErrors = [];
       searchResult.forEach(o => { // eslint-disable-line no-loop-func
-        let collection = o.collection.object.map(obj => obj.identifier.$);
-        let dkabm = o.collection.object[0].record;
-        dkabm = workToJSON(dkabm);
 
-        let briefDisplays = [];
-        if (o.formattedCollection.briefDisplay) {
+        try {
+          if(!_.get(o, 'collection.object[0].record')) {
+            throw 'Parse error: record could not be found on object';
+          }
+          if(!_.get(o, 'collection.object[0].identifier')) {
+            throw 'Parse error: identifier could not be found on object';
+          }
+          if(!_.get(o, 'formattedCollection.briefDisplay')) {
+            throw 'Parse error: briefDisplay could not be found on object';
+          }
+
+          let collection = o.collection.object.map(obj => obj.identifier.$);
+          let dkabm = o.collection.object[0].record;
+          dkabm = workToJSON(dkabm);
+          let briefDisplays = [];
           briefDisplays = o.formattedCollection.briefDisplay.manifestation.map(briefDisplay => {
             delete briefDisplay.fedoraPid;
             return workToJSON(briefDisplay, 'bd');
           });
+
+          // here we would call getObject or moreInfo if needed...
+          result.push(Object.assign({
+            collection: collection,
+            collectionDetails: briefDisplays
+          }, dkabm, briefDisplays[0]));
+
         }
-        else {
-          parseErrors.push(`No data found on object(s): ${collection}`);
-          log.error('Parse error: briefDisplay could not be found on object', {
-            collection: collection[0],
+        catch (e) {
+          parseErrors.push(e);
+          log.error(e, {
+            collection: o.collection,
             context: context.data,
             OpenSearch: {trackingId: body.statInfo.trackingId.$}
           });
         }
-
-        // here we would call getObject or moreInfo if needed...
-        result.push(Object.assign({
-          collection: collection,
-          collectionDetails: briefDisplays
-        }, dkabm, briefDisplays[0]));
       });
 
       const response = {statusCode: 200, data: result};
@@ -103,17 +115,31 @@ export default (params, context) => {
       return responses[1];
     }
 
+    // For second response, create mapping from all identifiers
+    // to corresponding collections
+    const identifierToCollection = {};
+    responses[1].data.forEach(r => {
+      r.collection.forEach(id => {
+        identifierToCollection[id] = r;
+      });
+    });
+
     // Merge the responses of the two arrays.
     if (responses[0].data && responses[1].data) {
       responses[0].data = responses[0].data.map((responseDetails, idx) => {
-        const collectionDetails = responses[1].data[idx];
 
-        if (collectionDetails.collection) {
-          responseDetails.collection = collectionDetails.collection;
-        }
+        // fetch matching collection from second response
+        const id = responseDetails.collection[0];
+        const collectionDetails = identifierToCollection[id];
 
-        if (collectionDetails.collectionDetails) {
-          responseDetails.collectionDetails = collectionDetails.collectionDetails;
+        if(collectionDetails) {
+          if (collectionDetails.collection) {
+            responseDetails.collection = collectionDetails.collection;
+          }
+
+          if (collectionDetails.collectionDetails) {
+            responseDetails.collectionDetails = collectionDetails.collectionDetails;
+          }
         }
 
         return responseDetails;
