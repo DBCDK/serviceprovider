@@ -61,13 +61,13 @@ export default (params, context) => {
       searchResult.forEach(o => { // eslint-disable-line no-loop-func
 
         try {
-          if(!_.get(o, 'collection.object[0].record')) {
+          if (!_.get(o, 'collection.object[0].record')) {
             throw 'Parse error: record could not be found on object';
           }
-          if(!_.get(o, 'collection.object[0].identifier')) {
+          if (!_.get(o, 'collection.object[0].identifier')) {
             throw 'Parse error: identifier could not be found on object';
           }
-          if(!_.get(o, 'formattedCollection.briefDisplay')) {
+          if (!_.get(o, 'formattedCollection.briefDisplay')) {
             throw 'Parse error: briefDisplay could not be found on object';
           }
 
@@ -132,7 +132,7 @@ export default (params, context) => {
         const id = responseDetails.collection[0];
         const collectionDetails = identifierToCollection[id];
 
-        if(collectionDetails) {
+        if (collectionDetails) {
           if (collectionDetails.collection) {
             responseDetails.collection = collectionDetails.collection;
           }
