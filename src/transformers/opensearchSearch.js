@@ -1,5 +1,6 @@
 import {workToJSON} from '../requestTypeIdentifier.js';
 import {log} from '../utils';
+import _ from 'lodash';
 
 function getSoap(agency, profile, q, filterAgency, sort, offset, limit, allObject) {
   return `<?xml version="1.0" encoding="UTF-8"?>
@@ -23,6 +24,34 @@ function getSoap(agency, profile, q, filterAgency, sort, offset, limit, allObjec
 `;
 }
 
+function parseResultElement(e, trackingId) {
+
+  if (!_.get(e, 'collection.object[0].record')) {
+    throw ['Parse error: record could not be found on object', e, trackingId];
+  }
+  if (!_.get(e, 'collection.object[0].identifier')) {
+    throw ['Parse error: identifier could not be found on object', e, trackingId];
+  }
+
+  const collection = e.collection.object.map(obj => obj.identifier.$);
+  if (!_.get(e, 'formattedCollection.briefDisplay')) {
+    throw [`Parse error: briefDisplay could not be found on object: ${collection}`, e, trackingId];
+  }
+
+  const dkabm = workToJSON(e.collection.object[0].record);
+  const briefDisplays = e.formattedCollection.briefDisplay.manifestation.map(briefDisplay => {
+    delete briefDisplay.fedoraPid;
+    return workToJSON(briefDisplay, 'bd');
+  });
+
+  // here we would call getObject or moreInfo if needed...
+  return Object.assign({
+    collection: collection,
+    collectionDetails: briefDisplays
+  }, dkabm, briefDisplays[0]);
+
+}
+
 export default (params, context) => {
   if (!params.q) {
     return Promise.resolve({statusCode: 400, error: 'missing q parameter'});
@@ -43,82 +72,59 @@ export default (params, context) => {
     context.call('opensearch', getSoap(agency, profile, q, filterAgency, sort, offset, limit, 0)),
     context.call('opensearch', getSoap(agency, profile, q, filterAgency, sort, offset, limit, 1))
   ]).then(bodies => {
-    const responses = bodies.map(body => {
-      body = JSON.parse(body).searchResponse;
-      if (body.error) {
-        return {
-          statusCode: 500,
-          error: body.error.$
-        };
+
+    const osResponse = JSON.parse(bodies[0]).searchResponse;
+    const osResponseAllObjects = JSON.parse(bodies[1]).searchResponse;
+    const osSearchResult = _.get(osResponse, 'result.searchResult', []);
+    const osSearchResultAllObjects = _.get(osResponseAllObjects, 'result.searchResult', []);
+    const transformerResult = [];
+    const parseErrors = [];
+
+    if (osResponse.error) {
+      return {
+        statusCode: 500,
+        error: osResponse.error.$
+      };
+    }
+
+    if (osResponseAllObjects.error) {
+      return {
+        statusCode: 500,
+        error: osResponseAllObjects.error.$
+      };
+    }
+
+    for (let i = 0; i < osSearchResult.length; i++) {
+      try {
+        const element = parseResultElement(osSearchResult[i], osResponse.result.statInfo.trackingId.$);
+        const elementAllObjects = parseResultElement(osSearchResultAllObjects[i], osResponseAllObjects.result.statInfo.trackingId.$);
+
+        if (elementAllObjects) {
+          if (elementAllObjects.collection) {
+            element.collection = elementAllObjects.collection;
+          }
+          if (elementAllObjects.collectionDetails) {
+            element.collectionDetails = elementAllObjects.collectionDetails;
+          }
+        }
+
+        transformerResult.push(element);
+      } catch (e) {
+        parseErrors.push(e[0]);
+        log.error(e[0], {
+          collection: e[1].collection,
+          context: context.data,
+          OpenSearch: {trackingId: e[2]}
+        });
       }
-      body = body.result;
-
-      // let more = body.more.$; // this could be used for paging info later
-      let searchResult = body.searchResult || [];
-      let result = [];
-      const parseErrors = [];
-      searchResult.forEach(o => { // eslint-disable-line no-loop-func
-        let collection = o.collection.object.map(obj => obj.identifier.$);
-        let dkabm = o.collection.object[0].record;
-        dkabm = workToJSON(dkabm);
-
-        let briefDisplays = [];
-        if (o.formattedCollection.briefDisplay) {
-          briefDisplays = o.formattedCollection.briefDisplay.manifestation.map(briefDisplay => {
-            delete briefDisplay.fedoraPid;
-            return workToJSON(briefDisplay, 'bd');
-          });
-        }
-        else {
-          parseErrors.push(`No data found on object(s): ${collection}`);
-          log.error('Parse error: briefDisplay could not be found on object', {
-            collection: collection[0],
-            context: context.data,
-            OpenSearch: {trackingId: body.statInfo.trackingId.$}
-          });
-        }
-
-        // here we would call getObject or moreInfo if needed...
-        result.push(Object.assign({
-          collection: collection,
-          collectionDetails: briefDisplays
-        }, dkabm, briefDisplays[0]));
-      });
-
-      const response = {statusCode: 200, data: result};
-
-      if (parseErrors.length) {
-        response.error = parseErrors;
-      }
-
-      return response;
-    });
-
-    // Check if either object has failed.
-    if (responses[0].statusCode !== 200) {
-      return responses[0];
     }
 
-    if (responses[1].statusCode !== 200) {
-      return responses[1];
+    const transformerResponse = {statusCode: 200, data: transformerResult};
+    if (parseErrors.length) {
+      transformerResponse.error = parseErrors;
     }
 
-    // Merge the responses of the two arrays.
-    if (responses[0].data && responses[1].data) {
-      responses[0].data = responses[0].data.map((responseDetails, idx) => {
-        const collectionDetails = responses[1].data[idx];
+    return transformerResponse;
 
-        if (collectionDetails.collection) {
-          responseDetails.collection = collectionDetails.collection;
-        }
-
-        if (collectionDetails.collectionDetails) {
-          responseDetails.collectionDetails = collectionDetails.collectionDetails;
-        }
-
-        return responseDetails;
-      });
-    }
-    return responses[0];
   });
 };
