@@ -25,7 +25,7 @@ api:
     properties:
       agency:
         description: Agency ID to fetch content for
-        type: integer
+        type: string
         example: 761500
       nids:
         description: to fetch events specified by ids
@@ -88,7 +88,7 @@ api:
     properties:
       agency:
         description: Agency ID to fetch content for
-        type: integer
+        type: string
         example: 761500
       nids:
         description: to fetch events specified by ids
@@ -141,7 +141,7 @@ api:
     properties:
       agency:
         description: Agency ID to fetch content for
-        type: integer
+        type: string
         example: 761500
       nids:
         description: to fetch news specified by ids
