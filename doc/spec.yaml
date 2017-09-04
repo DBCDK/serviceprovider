@@ -78,7 +78,7 @@ api:
         minimum: 1
         example: 2
     response:
-      example: { "creator": [{ "term": "nordisk ministerråd", "frequency": 2708}, { "term": "nordisk råd", "frequency": 2463}], "subject": [{ "term": "danmark", "frequency": 188792}, { "term": "historie", "frequency": 19867}], "type": [{ "term": "avisartikel", "frequency": 83786}, { "term": "tidsskriftsartikel", "frequency": 77618}]}
+      example: { "creator": [{ "term": "nordisk ministerråd", "frequency": 2708}, { "term": "nordisk råd", "frequency": 2463}], "subject": [{ "term": "danmark", "frequency": 188792}, { "term": "historie", "frequency": 19867}], "type": "tidsskriftsartikel"}
   library:
     tags:
       - CMS
