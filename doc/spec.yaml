@@ -25,7 +25,7 @@ api:
     properties:
       agency:
         description: Agency ID to fetch content for
-        type: integer
+        type: string
         example: 761500
       nids:
         description: to fetch events specified by ids
@@ -79,7 +79,7 @@ api:
         minimum: 1
         example: 2
     response:
-      example: { "creator": [{ "term": "nordisk ministerråd", "frequency": 2708}, { "term": "nordisk råd", "frequency": 2463}], "subject": [{ "term": "danmark", "frequency": 188792}, { "term": "historie", "frequency": 19867}], "type": [{ "term": "avisartikel", "frequency": 83786}, { "term": "tidsskriftsartikel", "frequency": 77618}]}
+      example: { "creator": [{ "term": "nordisk ministerråd", "frequency": 2708}, { "term": "nordisk råd", "frequency": 2463}], "subject": [{ "term": "danmark", "frequency": 188792}, { "term": "historie", "frequency": 19867}], "type": "tidsskriftsartikel"}
   library:
     tags:
       - CMS
@@ -88,7 +88,7 @@ api:
     properties:
       agency:
         description: Agency ID to fetch content for
-        type: integer
+        type: string
         example: 761500
       nids:
         description: to fetch events specified by ids
@@ -141,7 +141,7 @@ api:
     properties:
       agency:
         description: Agency ID to fetch content for
-        type: integer
+        type: string
         example: 761500
       nids:
         description: to fetch news specified by ids

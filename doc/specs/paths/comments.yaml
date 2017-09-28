@@ -12,9 +12,9 @@ paths:
         - $ref: '#/parameters/counts'
       responses:
         200:
-          $ref: '#/definitions/Comments'
+          $ref: '#/responses/Comments'
         default:
-          $ref: '#/definitions/Error'
+          $ref: '#/responses/Error'
 
     post:
       summary: Create Comment
@@ -25,9 +25,9 @@ paths:
         - $ref: '#/parameters/commentPost'
       responses:
         200:
-          $ref: '#/definitions/Comment'
+          $ref: '#/responses/Comment'
         default:
-          $ref: '#/definitions/Error'
+          $ref: '#/responses/Error'
 
   /community/comments/{id}:
     get:
@@ -40,9 +40,9 @@ paths:
         - $ref: '#/parameters/include'
       responses:
         200:
-          $ref: '#/definitions/Comment'
+          $ref: '#/responses/Comment'
         default:
-          $ref: '#/definitions/Error'
+          $ref: '#/responses/Error'
 
     put:
       summary: Update Comment
@@ -54,9 +54,9 @@ paths:
         - $ref: '#/parameters/commentPut'
       responses:
         200:
-          $ref: '#/definitions/Comment'
+          $ref: '#/responses/Comment'
         default:
-          $ref: '#/definitions/Error'
+          $ref: '#/responses/Error'
 
     delete:
       summary: Delete Comment
