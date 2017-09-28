@@ -64,7 +64,7 @@ function getImageSizeAndUrl(x) {
   const res = {};
   if (_.has(x, '@imageSize.$') && _.has(x, '$')) {
     const is = IMAGE_SIZES[x['@imageSize'].$];
-    res[is] = [x.$.replace('http:', '')];
+    res[is] = [x.$.replace('http:', '').replace('https:', '')];
   }
   return res;
 }
