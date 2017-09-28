@@ -32,6 +32,8 @@ const IMAGE_SIZES = {
   detail: 'coverUrlFull'
 };
 
+let requestPids = [];
+
 /**
  * Tests whether the identifierInformation contains any cover-images.
  * Returns true if any cover-images are contained. False otherwise.
@@ -131,14 +133,22 @@ function createResponse(response) {
     log.error('no identifierInformation');
     return createErrorResponse();
   }
-  const data = response.identifierInformation.map(idInfo => {
-    return getCoverUrlsFromIdentifierInformation(idInfo);
+  const data = [];
+  requestPids.forEach(function (pid){
+    let coverInfo = {};
+    response.identifierInformation.forEach(function (idInfo) {
+      if (idInfo.identifier.pid && idInfo.identifier.pid.$ === pid) {
+        coverInfo = getCoverUrlsFromIdentifierInformation(idInfo);
+      }
+    });
+    data.push(coverInfo);
   });
 
   return {statusCode: 200, data: data};
 }
 
 export default (request, context) => {
+  requestPids = request.pids;
   const params = {
     action: 'moreInfo',
     authenticationUser: context.get('netpunkt.user', true),
