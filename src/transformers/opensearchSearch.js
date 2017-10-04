@@ -31,7 +31,7 @@ export default (params, context) => {
   const agency = context.get('search.agency', true);
   const profile = (typeof params.profile === 'string' && params.profile.length > 0) ? params.profile : context.get('search.profile', true);
   const filterAgency = context.get('search.holdingsitemagencyid') || null;
-  const q = params.q.replace(/</g, '&lt;');
+  const q = params.q.replace(/&/g, '&amp;').replace(/</g, '&lt;');
   const sort = (params.sort || '').replace(/</g, '&lt;');
   const offset = 1 + (parseInt(params.offset, 10) || 0);
   const limit = parseInt(params.limit, 10) || 10;
