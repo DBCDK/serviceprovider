@@ -41,7 +41,7 @@ function createNeedBeforeDate() {
   let offsetInDays = 90;
   let offsetInMilliseconds = offsetInDays * 24 * 60 * 60 * 1000;
   let date = new Date(Date.now() + offsetInMilliseconds);
-  let dateStr = `${date.getFullYear()}-${('0' + date.getMonth()).slice(-2)}-${('0' + date.getDate()).slice(-2)}T00:00:00`;
+  let dateStr = `${date.getFullYear()}-${('0' + (date.getMonth() + 1)).slice(-2)}-${('0' + date.getDate()).slice(-2)}T00:00:00`;
   return dateStr;
 }
 
@@ -73,7 +73,10 @@ function getUserParams(params) {
 
 /**
 * Constructs soap request to perform placeOrder request
+* @param {array} pidList
+* @param {string} expireDate
 * @param {object} params Parameters to substitute into soap request
+* @param {string} orderSystem
 * @returns {string} soap request string
 */
 function constructSoap(pidList, expireDate, params, orderSystem) {
