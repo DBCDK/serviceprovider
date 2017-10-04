@@ -12,7 +12,7 @@ const context = {
     "openholdingstatus": "https://openholdingstatus.addi.dk/2.2/",
     "PRODopenorder": "https://openorder.addi.dk/2.7.1/",
     "openorder": "https://openorder.addi.dk/test_2.7.1/",
-    "opensearch": "http://opensearch.addi.dk/b3.0_4.2/",
+    "opensearch": "https://opensearch.addi.dk/b3.0_4.5/",
     "openuserstatus": "https://openuserstatus.addi.dk/1.5/",
     "rank": "https://xptest.dbc.dk/ms/rank/v1",
     "suggestpopular": "http://xptest.dbc.dk/ms/entity-pop/v1",
