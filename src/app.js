@@ -27,7 +27,7 @@ import {healthCheck, getContext, fieldsFilter} from './app.utils';
 
 // Generation of swagger specification
 import swaggerFromSpec from './swaggerFromSpec.js';
-import validateRequest from './validate.js';
+import {validateRequest, validateResponse} from './validate.js';
 
 // Setup
 const app = express();
@@ -52,18 +52,17 @@ function validateAndExecuteTransform(event, query, context) {
   }
 
   const validateErrors = validateRequest(event, query);
-
   if (validateErrors.length) {
     return Promise.resolve({
       statusCode: 400,
       error: validateErrors.map(o => String(o.stack).replace(/^instance\.?/, '')).join('\n')
-    });
+    }); 
   }
 
   return serviceProvider.execute(event, query, context);
 }
 
-function validateResponseAndStatusCode(response){
+function validateResponseAndStatusCode(event, response){
   return (typeof response !== 'object') ||
     typeof response.statusCode !== 'number' ||
     (response.statusCode >= 200 && response.statusCode < 400 && !response.data) ||
@@ -80,7 +79,14 @@ function validateResponseAndStatusCode(response){
  */
 function callApi(event, query, context) {
   return validateAndExecuteTransform(event, query, context).then(response => {
-    if (validateResponseAndStatusCode(response)) {
+    const validateErrors = validateResponse(event, response.data);
+    if (validateErrors.length) {
+      return {
+        statusCode: 400,
+        error: validateErrors.map(o => String(o.stack).replace(/^instance\.?/, '')).join('\n')
+      };
+    }
+    if (validateResponseAndStatusCode(event, response)) {
       log.error('response is not wrapped in an envelope', {response: response});
       response = {
         statusCode: 500,
@@ -287,11 +293,8 @@ module.exports.run = function(worker) {
   // The swagger specification is generated from `spec.yml`
   // and returned as this separate endpoint.
   app.all(apiPath + 'swagger.json', (req, res) => {
-    return swaggerFromSpec().then((response) => {
-      res.jsonp(response);
-    }, (error) => {
-      res.jsonp(error);
-    });
+    const spec = swaggerFromSpec();
+    res.jsonp(spec);
   });
 
   // handle token-related errors
