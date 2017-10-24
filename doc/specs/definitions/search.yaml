@@ -1,0 +1,941 @@
+definitions:
+  SearchResponse:
+    type: array
+    items:
+      type: object
+      properties:
+        abstract:
+          type: array
+          items:
+            type: string
+        accessType:
+          type: array
+          items:
+            type: string
+        activity:
+          type: array
+          items:
+            type: string
+        alternative:
+          type: array
+          items:
+            type: string
+        audienceAge:
+          type: array
+          items:
+            type: string
+        audience:
+          type: array
+          items:
+            type: string
+        audienceMedieraad:
+          type: array
+          items:
+            type: string
+        audiencePegi:
+          type: array
+          items:
+            type: string
+        collection:
+          type: array
+          items:
+            type: string
+        collectionDetails:
+          $ref: "#/definitions/CollectionDetails"
+        continuedIn:
+          type: array
+          items:
+            type: string
+        continues:
+          type: array
+          items:
+            type: string
+        contributorAct:
+          type: array
+          items:
+            type: string
+        contributorAft:
+          type: array
+          items:
+            type: string
+        contributorAnm:
+          type: array
+          items:
+            type: string
+        contributorAnt:
+          type: array
+          items:
+            type: string
+        contributorArc:
+          type: array
+          items:
+            type: string
+        contributorArr:
+          type: array
+          items:
+            type: string
+        contributorArt:
+          type: array
+          items:
+            type: string
+        contributorAud:
+          type: array
+          items:
+            type: string
+        contributorAui:
+          type: array
+          items:
+            type: string
+        contributorAus:
+          type: array
+          items:
+            type: string
+        contributorAut:
+          type: array
+          items:
+            type: string
+        contributorCcp:
+          type: array
+          items:
+            type: string
+        contributorChr:
+          type: array
+          items:
+            type: string
+        contributorClb:
+          type: array
+          items:
+            type: string
+        contributorCli:
+          type: array
+          items:
+            type: string
+        contributorCll:
+          type: array
+          items:
+            type: string
+        contributorCmm:
+          type: array
+          items:
+            type: string
+        contributorCmp:
+          type: array
+          items:
+            type: string
+        contributorCnd:
+          type: array
+          items:
+            type: string
+        contributorCng:
+          type: array
+          items:
+            type: string
+        contributorCom:
+          type: array
+          items:
+            type: string
+        contributorCre:
+          type: array
+          items:
+            type: string
+        contributorCtb:
+          type: array
+          items:
+            type: string
+        contributorCtg:
+          type: array
+          items:
+            type: string
+        contributorCur:
+          type: array
+          items:
+            type: string
+        contributorCwt:
+          type: array
+          items:
+            type: string
+        contributorDkani:
+          type: array
+          items:
+            type: string
+        contributorDkbea:
+          type: array
+          items:
+            type: string
+        contributorDkdes:
+          type: array
+          items:
+            type: string
+        contributorDkfig:
+          type: array
+          items:
+            type: string
+        contributorDkfvl:
+          type: array
+          items:
+            type: string
+        contributorDkind:
+          type: array
+          items:
+            type: string
+        contributorDkmdt:
+          type: array
+          items:
+            type: string
+        contributorDkmed:
+          type: array
+          items:
+            type: string
+        contributorDkmon:
+          type: array
+          items:
+            type: string
+        contributorDkops:
+          type: array
+          items:
+            type: string
+        contributorDkref:
+          type: array
+          items:
+            type: string
+        contributorDkste:
+          type: array
+          items:
+            type: string
+        contributorDktek:
+          type: array
+          items:
+            type: string
+        contributorDktil:
+          type: array
+          items:
+            type: string
+        contributorDkved:
+          type: array
+          items:
+            type: string
+        contributorDrm:
+          type: array
+          items:
+            type: string
+        contributorDte:
+          type: array
+          items:
+            type: string
+        contributorEdt:
+          type: array
+          items:
+            type: string
+        contributorFmo:
+          type: array
+          items:
+            type: string
+        contributorHnr:
+          type: array
+          items:
+            type: string
+        contributor:
+          type: array
+          items:
+            type: string
+        contributorIll:
+          type: array
+          items:
+            type: string
+        contributorInv:
+          type: array
+          items:
+            type: string
+        contributorIsb:
+          type: array
+          items:
+            type: string
+        contributorItr:
+          type: array
+          items:
+            type: string
+        contributorIve:
+          type: array
+          items:
+            type: string
+        contributorIvr:
+          type: array
+          items:
+            type: string
+        contributorLbt:
+          type: array
+          items:
+            type: string
+        contributorLtg:
+          type: array
+          items:
+            type: string
+        contributorLyr:
+          type: array
+          items:
+            type: string
+        contributorMus:
+          type: array
+          items:
+            type: string
+        contributorNrt:
+          type: array
+          items:
+            type: string
+        contributorOrm:
+          type: array
+          items:
+            type: string
+        contributorOth:
+          type: array
+          items:
+            type: string
+        contributorPbl:
+          type: array
+          items:
+            type: string
+        contributorPht:
+          type: array
+          items:
+            type: string
+        contributorPrd:
+          type: array
+          items:
+            type: string
+        contributorPrf:
+          type: array
+          items:
+            type: string
+        contributorPro:
+          type: array
+          items:
+            type: string
+        contributorPROVIDERID:
+          type: array
+          items:
+            type: string
+        contributorPrt:
+          type: array
+          items:
+            type: string
+        contributorRce:
+          type: array
+          items:
+            type: string
+        contributorRes:
+          type: array
+          items:
+            type: string
+        contributorRev:
+          type: array
+          items:
+            type: string
+        contributorScl:
+          type: array
+          items:
+            type: string
+        contributorSds:
+          type: array
+          items:
+            type: string
+        contributorSng:
+          type: array
+          items:
+            type: string
+        contributorSpk:
+          type: array
+          items:
+            type: string
+        contributorStl:
+          type: array
+          items:
+            type: string
+        contributorTrl:
+          type: array
+          items:
+            type: string
+        contributorWdc:
+          type: array
+          items:
+            type: string
+        coverDataUrl117:
+          type: string
+          format: byte
+        coverDataUrl207:
+          type: string
+          format: byte
+        coverDataUrl42:
+          type: string
+          format: byte
+        coverDataUrl500:
+          type: string
+          format: byte
+        coverDataUrlBack:
+          type: string
+          format: byte
+        coverDataUrlFull:
+          type: string
+          format: byte
+        coverDataUrlThumbnail:
+          type: string
+          format: byte
+        coverUrl117:
+          type: array
+          items:
+            type: string
+          minItems: 1
+          maxItems: 1
+        coverUrl207:
+          type: array
+          items:
+            type: string
+          minItems: 1
+          maxItems: 1
+        coverUrl42:
+          type: array
+          items:
+            type: string
+          minItems: 1
+          maxItems: 1
+        coverUrl500:
+          type: array
+          items:
+            type: string
+          minItems: 1
+          maxItems: 1
+        coverUrlBack:
+          type: array
+          items:
+            type: string
+          minItems: 1
+          maxItems: 1
+        coverUrlFull:
+          type: array
+          items:
+            type: string
+          minItems: 1
+          maxItems: 1
+        coverUrlThumbnail:
+          type: array
+          items:
+            type: string
+        creatorActPeriod:
+          type: array
+          items:
+            type: string
+        creatorAnt:
+          type: array
+          items:
+            type: string
+        creatorArr:
+          type: array
+          items:
+            type: string
+        creatorArt:
+          type: array
+          items:
+            type: string
+        creatorAus:
+          type: array
+          items:
+            type: string
+        creatorAut:
+          type: array
+          items:
+            type: string
+        creatorCcp:
+          type: array
+          items:
+            type: string
+        creatorCmp:
+          type: array
+          items:
+            type: string
+        creatorCom:
+          type: array
+          items:
+            type: string
+        creatorCre:
+          type: array
+          items:
+            type: string
+        creatorDkbea:
+          type: array
+          items:
+            type: string
+        creatorDkbra:
+          type: array
+          items:
+            type: string
+        creatorDkbrm:
+          type: array
+          items:
+            type: string
+        creatorDkdes:
+          type: array
+          items:
+            type: string
+        creatorDkmed:
+          type: array
+          items:
+            type: string
+        creatorDkmon:
+          type: array
+          items:
+            type: string
+        creatorDkops:
+          type: array
+          items:
+            type: string
+        creatorDkved:
+          type: array
+          items:
+            type: string
+        creatorDrm:
+          type: array
+          items:
+            type: string
+        creatorDrt:
+          type: array
+          items:
+            type: string
+        creatorEdt:
+          type: array
+          items:
+            type: string
+        creator:
+          type: array
+          items:
+            type: string
+        dcCreator:
+          type: array
+          items:
+            type: string
+        creatorIll:
+          type: array
+          items:
+            type: string
+        creatorIve:
+          type: array
+          items:
+            type: string
+        creatorIvr:
+          type: array
+          items:
+            type: string
+        creatorLyr:
+          type: array
+          items:
+            type: string
+        creatorMus:
+          type: array
+          items:
+            type: string
+        creatorOth:
+          type: array
+          items:
+            type: string
+        creatorPht:
+          type: array
+          items:
+            type: string
+        creatorPROVIDERID:
+          type: array
+          items:
+            type: string
+        creatorScl:
+          type: array
+          items:
+            type: string
+        creatorSng:
+          type: array
+          items:
+            type: string
+        creatorSort:
+          type: array
+          items:
+            type: string
+        creatorTrl:
+          type: array
+          items:
+            type: string
+        creatorWdc:
+          type: array
+          items:
+            type: string
+        date:
+          type: array
+          items:
+            type: string
+            pattern: "^[0-9]{4}$"
+            example: 2017
+        description:
+          type: array
+          items:
+            type: string
+        descriptionSeries:
+          type: array
+          items:
+            type: string
+        discussedIn:
+          type: array
+          items:
+            type: string
+        discusses:
+          type: array
+          items:
+            type: string
+        extent:
+          type: array
+          items:
+            type: string
+        fedoraPid:
+          type: array
+          items:
+            type: string
+        format:
+          type: array
+          items:
+            type: string
+        hasAdaptation:
+          type: array
+          items:
+            type: string
+        hasAnalysis:
+          type: array
+          items:
+            type: string
+        hasCreatorDescription:
+          type: array
+          items:
+            type: string
+        hasDescriptionFromPublisher:
+          type: array
+          items:
+            type: string
+        hasManuscript:
+          type: array
+          items:
+            type: string
+        hasOnlineAccess:
+          type: array
+          items:
+            type: string
+        hasPart:
+          type: array
+          items:
+            type: string
+        hasPartTrack:
+          type: array
+          items:
+            type: string
+        hasReview:
+          type: array
+          items:
+            type: string
+        hasSoundtrack:
+          type: array
+          items:
+            type: string
+        acIdentifier:
+          type: array
+          items:
+            type: string
+        pid:
+          type: array
+          items:
+            type: string
+        identifier:
+          type: array
+          items:
+            type: string
+        identifierISBN:
+          type: array
+          items:
+            type: string
+        identifierISMN:
+          type: array
+          items:
+            type: string
+        identifierISRC:
+          type: array
+          items:
+            type: string
+        identifierISSN:
+          type: array
+          items:
+            type: string
+        identifierPROVIDERID:
+          type: array
+          items:
+            type: string
+        identifierPROVIDERMID:
+          type: array
+          items:
+            type: string
+        identifierUPC:
+          type: array
+          items:
+            type: string
+        identifierURI:
+          type: array
+          items:
+            type: string
+        isAdaptationOf:
+          type: array
+          items:
+            type: string
+        isAnalysisOf:
+          type: array
+          items:
+            type: string
+        isDescriptionFromPublisherOf:
+          type: array
+          items:
+            type: string
+        isManuscriptOf:
+          type: array
+          items:
+            type: string
+        isPartOfAlbumId:
+          type: array
+          items:
+            type: string
+        isPartOfAlbumTitle:
+          type: array
+          items:
+            type: string
+        isPartOf:
+          type: array
+          items:
+            type: string
+        isPartOfISBN:
+          type: array
+          items:
+            type: string
+        isPartOfISSN:
+          type: array
+          items:
+            type: string
+        isPartOfManifestation:
+          type: array
+          items:
+            type: string
+        isReplacedBy:
+          type: array
+          items:
+            type: string
+        isReviewOf:
+          type: array
+          items:
+            type: string
+        isSoundtrackOfGame:
+          type: array
+          items:
+            type: string
+        isSoundtrackOfMovie:
+          type: array
+          items:
+            type: string
+        language:
+          type: array
+          items:
+            type: string
+        dcLanguage:
+          type: array
+          items:
+            type: string
+        languageISO6392:
+          type: array
+          items:
+            type: string
+        languageSpoken:
+          type: array
+          items:
+            type: string
+        languageSubtitles:
+          type: array
+          items:
+            type: string
+        multiVolumeType:
+          type: array
+          items:
+            type: string
+        partOf:
+          type: array
+          items:
+            type: string
+        publisher:
+          type: array
+          items:
+            type: string
+        referencesISBN:
+          type: array
+          items:
+            type: string
+        replaces:
+          type: array
+          items:
+            type: string
+        rights:
+          type: array
+          items:
+            type: string
+        shelfMusicshelf:
+          type: array
+          items:
+            type: string
+        acSource:
+          type: array
+          items:
+            type: string
+        source:
+          type: array
+          items:
+            type: string
+        spatialCoordinates:
+          type: array
+          items:
+            type: string
+        spatialDBCF:
+          type: array
+          items:
+            type: string
+        spatialDBCM:
+          type: array
+          items:
+            type: string
+        spatialDBCS:
+          type: array
+          items:
+            type: string
+        spatial:
+          type: array
+          items:
+            type: string
+        subjectDBCF:
+          type: array
+          items:
+            type: string
+        subjectDBCM:
+          type: array
+          items:
+            type: string
+        subjectDBCN:
+          type: array
+          items:
+            type: string
+        subjectDBCO:
+          type: array
+          items:
+            type: string
+        subjectDBCS:
+          type: array
+          items:
+            type: string
+        subjectDK5:
+          type: array
+          items:
+            type: string
+        subjectDK5Text:
+          type: array
+          items:
+            type: string
+        subjectGenre:
+          type: array
+          items:
+            type: string
+        subject:
+          type: array
+          items:
+            type: string
+        subjectLCSH:
+          type: array
+          items:
+            type: string
+        subjectSort:
+          type: array
+          items:
+            type: string
+        temporalDBCM:
+          type: array
+          items:
+            type: string
+        temporalDBCP:
+          type: array
+          items:
+            type: string
+        temporal:
+          type: array
+          items:
+            type: string
+        titleFull:
+          type: array
+          items:
+            type: string
+        dcTitleFull:
+          type: array
+          items:
+            type: string
+        title:
+          type: array
+          items:
+            type: string
+        dcTitle:
+          type: array
+          items:
+            type: string
+        titleSeries:
+          type: array
+          items:
+            type: string
+        typeBibDKType:
+          type: array
+          items:
+            type: string
+        type:
+          type: array
+          items:
+            type: string
+        version:
+          type: array
+          items:
+            type: string
+        workType:
+          type: array
+          items:
+            type: string
+      additionalProperties: false
+  CollectionDetails: 
+    type: array
+    items: 
+      $ref: '#/definitions/CollectionDetail'
+  CollectionDetail:
+    type: object
+    properties: 
+      accessType:
+        type: array
+        items:
+          type: string
+      pid:
+        type: array
+        minItems: 1
+        maxItems: 1
+        items:
+          type: string
+      title:
+        type: array
+        items:
+          type: string
+      titleFull:
+        type: array
+        items:
+          type: string
+      type:
+        type: array
+        items:
+          type: string
+      workType:
+        type: array
+        items:
+          type: string
