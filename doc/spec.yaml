@@ -403,6 +403,7 @@ api:
     properties: {}
     example: {}
     response:
+      $ref: "#/definitions/UserResponse"
       example:
         id: "U2VydmljZVByb3ZpZGVy"
         library: "710100"

@@ -1,0 +1,65 @@
+definitions:
+  UserResponse:
+    type: object
+    properties:
+      id:
+        type: string
+      library:
+        type: string
+      debt:
+        $ref: "#/definitions/Debt"
+      loans:
+        $ref: "#/definitions/Loans"
+      orders:
+        $ref: "#/definitions/Orders"
+  Debt:
+    type: array
+    items:
+      type: object
+      properties:
+        amount:
+          type: string
+        creator:
+          type: string
+        currency:
+          type: string
+        date:
+          type: string
+        title:
+          type: string   
+  Loans:
+    type: array
+    items:
+      type: object
+      properties:
+        creator:
+          type: string
+        dueDate:
+          type: string
+        loanId:
+          type: string
+        materialId:
+          type: string
+        title:
+          type: string
+        titleId:
+          type: string
+  Orders:
+    type: array
+    items:
+      type: object
+      properties:
+        creator:
+          type: string
+        holdQueuePosition:
+          type: string
+        orderDate:
+          type: string
+        orderId:
+          type: string
+        pickUpAgency:
+          type: string
+        status:
+          type: string
+        title:
+          type: string
