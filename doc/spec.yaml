@@ -14,6 +14,7 @@ api:
         type: string
         example: "870970-basis:24284565"
     response:
+      $ref: "#/definitions/AvailabilityResponse"
       example: {"holdingstatus": {"willLend": true, "expectedDelivery": "2016-04-15"}, orderPossible: true}
   events:
     tags:
