@@ -132,6 +132,8 @@ api:
     examples:
       - request: { "fields": ["branchId", "city", "longitude", "latitude", "geolocation"]}
       - request: { "branchIds": ["700401", "710104"], "fields": ["branchId", "city", "geolocation"]}
+    response:
+      $ref: "#/definitions/LibrariesResponse"
   news:
     tags:
       - CMS
