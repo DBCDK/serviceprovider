@@ -1,0 +1,10 @@
+definitions:
+  OrderResponse:
+    type: object
+    properties:
+      status:
+        type: string
+      orderId:
+        type: string
+      deleted:
+        type: boolean
