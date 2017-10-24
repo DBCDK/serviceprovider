@@ -79,6 +79,7 @@ api:
         minimum: 1
         example: 2
     response:
+      $ref: "#/definitions/FacetsResults"
       example: { "creator": [{ "term": "nordisk ministerråd", "frequency": 2708}, { "term": "nordisk råd", "frequency": 2463}], "subject": [{ "term": "danmark", "frequency": 188792}, { "term": "historie", "frequency": 19867}], "type": "tidsskriftsartikel"}
   library:
     tags:
@@ -454,6 +455,7 @@ api:
         items: {type: "string"}
         example: ["title", "collection", "dcSubjectDBCF", "hasAdaptation", "coverUrlFull"]
     response:
+      $ref: '#/definitions/SearchResponse'
       example: [{ "dcTitle": ["Harry Potter og de vises sten"], "collection": ["300185-katalog:100562332", "870970-basis:51989252", "870971-forfweb:86203219", "870970-basis:24284514", "870970-basis:24284565", "..."], "dcSubjectDBCF": ["fantasy", "magi", "troldmænd"], "hasAdaption": ["870970-basis:27123279", "870970-basis:27963390"], "coverUrlFull": ["https://moreinfo.addi.dk/2.1/more_info_get.php?id=36565894&type=forside_500&key=55d553c259c9e46291a4"]}]
     examples:
       - request: { "pids": ["870970-basis:51989252",], "fields": ["title", "collection", "subjectDBCF", "hasAdaptation", "coverUrlFull"]}
