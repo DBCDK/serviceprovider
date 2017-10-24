@@ -16,18 +16,18 @@ export function getSpecification(specName = 'definitions') {
  * Extract Schema definition from swagger documentation. This is used to validate input objects.
  **/
 export function getSchemaDefinition(swagger, name) {
-  const definition = swagger.definitions[name];
+  const definition = swagger.definitions[name] || {};
   if (definition.allOf && Array.isArray(definition.allOf)) {
     const definitionName = definition.allOf[0].$ref.replace('#/definitions/', '');
     const subDefinition = getSchemaDefinition(swagger, definitionName);
     definition.properties = Object.assign({}, definition.properties, subDefinition.properties);
     delete definition.allOf;
-  }
-  Object.keys(definition.properties).forEach(key => {
+  } 
+  Object.keys(definition.properties || {}).forEach(key => {
     if (definition.properties[key].$ref) {
       definition.properties[key] = getSchemaDefinition(swagger, definition.properties[key].$ref.replace('#/definitions/', ''));
     }
-  });
+  }); 
 
   return definition;
 }
@@ -57,23 +57,18 @@ function generateSwagger(spec) {
 }
 
 function loadYamlFiles() {
-  return new Promise(function(resolve) {
-    const path = __dirname + '/../doc';
-    glob(path + '/**/*.yaml', function(er, files) {
-      const contents = files.map(f => {
-        return yaml.safeLoad(fs.readFileSync(f).toString('utf-8'));
-      });
-      const extend = extendify({
-        inPlace: false,
-        isDeep: true
-      });
-      resolve(contents.reduce(extend));
-    });
+  const path = __dirname + '/../doc';
+  const files = glob.sync(path + '/**/*.yaml');
+  const contents = files.map(f => {
+    return yaml.safeLoad(fs.readFileSync(f).toString('utf-8'));
   });
+  const extend = extendify({
+    inPlace: false,
+    isDeep: true
+  });
+  return contents.reduce(extend);
 }
 
 export default function() {
-  return loadYamlFiles().then(function(spec) {
-    return generateSwagger(spec);
-  });
+  return generateSwagger(loadYamlFiles());
 }
