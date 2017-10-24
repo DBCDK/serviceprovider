@@ -207,6 +207,7 @@ api:
         type: 'boolean'
         example: true
     response:
+      $ref: "#/definitions/OrderResponse"
       example: { "status": "ok" }
     examples:
       - request: { "orderId": "1234", "delete": true }
