@@ -1,0 +1,48 @@
+definitions: 
+  SuggestResponse:
+    additionalProperties: false
+    oneOf:
+      - $ref: "#/definitions/SuggestTitleResponse"
+      - $ref: "#/definitions/SuggestLibraryResponse"
+  SuggestTitleResponse:
+    type: array
+    items:
+      type: object
+      properties:
+        term: 
+          type: string
+        pid: 
+          type: string
+        type: 
+          type: string  
+        creator: 
+          type: string
+      additionalProperties: false
+  SuggestLibraryResponse:
+    type: array
+    items:
+      type: object
+      properties:
+        agencyName: 
+          type: string
+        postalAddress: 
+          type: string
+        branchId: 
+          type: string
+        postalCode: 
+          type: string
+        geolocation: 
+          $ref: '#/definitions/Geolocation'
+        agencyType: 
+          type: string
+        city: 
+          type: string
+      additionalProperties: false
+  Geolocation:
+    type: object
+    properties:
+      lat: 
+        type: string
+      lng: 
+        type: string
+    additionalProperties: false
