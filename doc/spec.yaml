@@ -379,6 +379,7 @@ api:
         items: {type: "string"}
         example: ["term", "pid", "creator", "type"]
     response:
+      $ref: '#/definitions/SuggestResponse'
       example: [ { "term": "Harry Potter og Hemmelighedernes Kammer", "pid": "870970-basis:22375733", "creator": "Joanne K. Rowling", "type": "book"}, { "term": "Harry Potter og fangen fra Azkaban", "pid": "870970-basis:22639862", "creator": "Joanne K. Rowling", "type": "book" }]
     examples:
       - request: { "q": "harry", "type": "creator", "limit": 2 }

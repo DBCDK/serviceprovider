@@ -1,0 +1,83 @@
+definitions:
+  FacetsResults:
+    type: object
+    properties:
+      access:
+        $ref: "#/definitions/FacetsResultsWrapper"
+      acSource:
+        $ref: "#/definitions/FacetsResultsWrapper"
+      audience:
+        $ref: "#/definitions/FacetsResultsWrapper"
+      audienceCategory:
+        $ref: "#/definitions/FacetsResultsWrapper"
+      branch:
+        $ref: "#/definitions/FacetsResultsWrapper"
+      category:
+        $ref: "#/definitions/FacetsResultsWrapper"
+      creator:
+        $ref: "#/definitions/FacetsResultsWrapper"
+      creatorFunction:
+        $ref: "#/definitions/FacetsResultsWrapper"
+      date:
+        $ref: "#/definitions/FacetsResultsWrapper"
+      department:
+        $ref: "#/definitions/FacetsResultsWrapper"
+      dk5:
+        $ref: "#/definitions/FacetsResultsWrapper"
+      extraTitles:
+        $ref: "#/definitions/FacetsResultsWrapper"
+      fictionSubject:
+        $ref: "#/definitions/FacetsResultsWrapper"
+      form:
+        $ref: "#/definitions/FacetsResultsWrapper"
+      gamePlatform:
+        $ref: "#/definitions/FacetsResultsWrapper"
+      genre:
+        $ref: "#/definitions/FacetsResultsWrapper"
+      genreCategory:
+        $ref: "#/definitions/FacetsResultsWrapper"
+      geographic:
+        $ref: "#/definitions/FacetsResultsWrapper"
+      language:
+        $ref: "#/definitions/FacetsResultsWrapper"
+      level:
+        $ref: "#/definitions/FacetsResultsWrapper"
+      let:
+        $ref: "#/definitions/FacetsResultsWrapper"
+      literaryForm:
+        $ref: "#/definitions/FacetsResultsWrapper"
+      lix:
+        $ref: "#/definitions/FacetsResultsWrapper"
+      musicSubject:
+        $ref: "#/definitions/FacetsResultsWrapper"
+      nationality:
+        $ref: "#/definitions/FacetsResultsWrapper"
+      nonFictionSubject:
+        $ref: "#/definitions/FacetsResultsWrapper"
+      partOf:
+        $ref: "#/definitions/FacetsResultsWrapper"
+      period:
+        $ref: "#/definitions/FacetsResultsWrapper"
+      primaryCreator:
+        $ref: "#/definitions/FacetsResultsWrapper"
+      sheetMusic:
+        $ref: "#/definitions/FacetsResultsWrapper"
+      subject:
+        $ref: "#/definitions/FacetsResultsWrapper"
+      titleSeries:
+        $ref: "#/definitions/FacetsResultsWrapper"
+      type:
+        $ref: "#/definitions/FacetsResultsWrapper"
+  FacetsResultsWrapper:
+    type: array
+    items:
+      - $ref: "#/definitions/FacetsResult"  
+  FacetsResult:
+    type: object
+    properties:
+      term:
+        type: string
+      frequency:
+        type: number
+        format: integer
+    
