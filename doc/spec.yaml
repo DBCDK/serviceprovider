@@ -249,6 +249,7 @@ api:
         type: integer
         minimum: 1
     response:
+      $ref: "#/definitions/RecommendationResponse"
       example: [ { "title": "Harry Potter og Fønixordenen", "creator": "...", "weight": 123, "pid": "300185-katalog:100562332", "fromPid": "870970-basis:51989252"}, "..."]
   recommend:
     tags:
@@ -285,6 +286,7 @@ api:
         description: maximum number of results returned
         type: integer
     response:
+      $ref: "#/definitions/RecommendationResponse"
       example: [ { "title": "Harry Potter og Fønixordenen", "creator": "...", "weight": 123, "pid": "300185-katalog:100562332", "fromPid": "870970-basis:51989252"}, "..."]
   renew:
     tags:

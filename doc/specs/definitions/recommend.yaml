@@ -1,0 +1,19 @@
+definitions:
+  RecommendationResponse:
+    type: array
+    items:
+      - $ref: "#/definitions/Recommendation"
+  Recommendation:
+    type: object
+    properties:
+      creator:
+        type: string
+      fromPid:
+        type: string
+      pid:
+        type: string
+      title:
+        type: string
+      weight:
+        type: integer
+    
