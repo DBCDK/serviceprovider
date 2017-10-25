@@ -49,6 +49,7 @@ api:
         items: {type: "string"}
         example: ["nid", "title"]
     response:
+      $ref: "#/definitions/EventsResponse"
       example: [{"nid": "15", "title": {"name": "Titel", "value": "Mød forfatteren: Tim Buk-Swienty", "attr": []}, "...": "..."}, "..."]
     examples:
       - request: {"offset": 0, "limit": 2, "fields": ["nid", "title"]}
