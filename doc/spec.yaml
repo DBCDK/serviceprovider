@@ -107,6 +107,8 @@ api:
         minimum: 0
         type: integer
         example: 10
+    response:
+      $ref: "#/definitions/LibraryResponse"
   libraries:
     tags:
       - Libraries
