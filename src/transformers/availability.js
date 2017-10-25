@@ -14,6 +14,7 @@ export default (request, context) => {
     // We now know there are two returned promises in body!
     const openHoldingStatusRes = body[0];
     const getOrderPolicyRes = body[1];
+    let statusCode = 200;
 
     const data = {
       holdingStatus: {
@@ -22,6 +23,12 @@ export default (request, context) => {
       },
       orderPossible: true
     };
+    if (statusCode === 200 && openHoldingStatusRes.statusCode) {
+      statusCode = openHoldingStatusRes.statusCode;
+    }
+    if (statusCode === 200 && getOrderPolicyRes.statusCode) {
+      statusCode = getOrderPolicyRes.statusCode;
+    }
     if (_.has(openHoldingStatusRes, 'data.willLend')) {
       data.holdingStatus = openHoldingStatusRes.data;
     }
@@ -30,6 +37,6 @@ export default (request, context) => {
       data.orderPossible = false;
     }
 
-    return {statusCode: 200, data};
+    return {statusCode: statusCode, data};
   });
 };
