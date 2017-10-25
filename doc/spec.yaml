@@ -163,6 +163,7 @@ api:
         minimum: 0
         type: integer
     response:
+      $ref: "#/definitions/NewsResponse"
       example: [{"nid": "19", "title": {"name": "Titel", "value": "Sportsstjerner - bag facaden", "attr": []}, "...": "..."}, "..."]
     examples:
       - request: {"offset": 0, "limit": 2, "fields": ["nid", "title"]}
