@@ -58,8 +58,8 @@ definitions:
     type: object
     properties:
       attr:
-        type: array    
+        type: array  
+        items: {}
       name:
         type: string
-      value:
-        type: any
+      value: {}

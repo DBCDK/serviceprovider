@@ -1,5 +1,6 @@
 responses:
   SuggestResponse:
+    description: Suggestions response
     schema:
       $ref: "#/definitions/SuggestResponse"
   Profile:
