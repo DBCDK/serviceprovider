@@ -89,6 +89,7 @@ export default (request, context) => {
   let soap = constructSoap(params);
 
   return context.call('openuserstatus', soap).then(body => {
+    console.log('body', body);
     body = JSON.parse(body).cancelOrderResponse;
 
     if (body.cancelOrderStatus[0].cancelOrderError) {
