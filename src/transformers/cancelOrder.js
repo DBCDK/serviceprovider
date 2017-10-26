@@ -5,6 +5,7 @@
  * Wraps cancelOrder functionality of openorder backend.
  */
 import {log} from '../utils';
+import * as IsilUtils from './utils/isil.utils';
 
 /**
  * Validate parameters
@@ -20,7 +21,7 @@ function validateParams(params) {
 
 /**
  * Constructs soap request to perform cancelOrder request
- * @param {object} param Parameters to substitute into soap request
+ * @param {object} params Parameters to substitute into soap request
  * @returns soap request string
  */
 function constructSoap(params) {
@@ -54,7 +55,7 @@ function constructSoap(params) {
  * Wraps the cancelOrder functionality of openorder backend and
  * returns result of call
  *
- * @param {Object} params parameters from the user (no entries from this object is used)
+ * @param {Object} request parameters from the user (no entries from this object is used)
  * @param {Object} context The context object fetched from smaug
  * @returns {Promise} with result
  * @api public
@@ -76,7 +77,7 @@ export default (request, context) => {
   let params = {
     'cancelOrder.orderId': orderId,
     'cancelOrder.orderType': orderType,
-    agencyId: context.get('user.isil', true),
+    agencyId: IsilUtils.getIdFromIsil(context.get('user.isil', true)),
     userId: context.get('user.id'),
     userPincode: context.get('user.pin'),
     'authentication.groupIdAut': context.get('netpunkt.group', true),
