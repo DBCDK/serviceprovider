@@ -74,10 +74,11 @@ export default (request, context) => {
   let orderType = request.orderId.substring(0, i);
   let orderId = request.orderId.substring(i + 1);
 
+  console.log('user', context.get('user'));
   let params = {
     'cancelOrder.orderId': orderId,
     'cancelOrder.orderType': orderType,
-    agencyId: IsilUtils.getIdFromIsil(context.get('user.isil', true)),
+    agencyId: context.get('user.isil', true),
     userId: context.get('user.id'),
     userPincode: context.get('user.pin'),
     'authentication.groupIdAut': context.get('netpunkt.group', true),
