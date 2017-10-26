@@ -1,60 +1,60 @@
 definitions:
   LibrariesResponse:
-    $ref: '#/definitions/Libraries'
-  Libraries:
     type: array
     items:
-      type: object
-      properties:
-        agencyId:
+      - $ref: '#/definitions/Libraries'
+  Libraries:
+    type: object
+    properties:
+      agencyId:
+        type: string
+      agencyName:
+        type: string
+      agencyType:
+        type: string
+      branchEmail:
+        type: string
+      branchId:
+        type: string
+      branchIsAgency:
+        type: string
+      branchName:
+        items:
           type: string
-        agencyName:
+        type: array
+      branchPhone:
+        type: string
+      branchShortName:
+        items:
           type: string
-        agencyType:
+        type: array
+      branchType:
+        type: string
+      city:
+        type: string
+      illOrderReceiptText:
+        items:
           type: string
-        branchEmail:
-          id: branchEmail
-        branchId:
+        type: array
+      isOclcRsLibrary:
+        type: string
+      lastUpdated:
+        type: string
+      openingHours:
+        items:
           type: string
-        branchIsAgency:
+        type: array
+      orderParameters:
+        items:
           type: string
-        branchName:
-          items:
-            type: string
-          type: array
-        branchPhone:
-          id: branchPhone
-        branchShortName:
-          items:
-            type: string
-          type: array
-        branchType:
-          type: string
-        city:
-          type: string
-        illOrderReceiptText:
-          items:
-            type: string
-          type: array
-        isOclcRsLibrary:
-          type: string
-        lastUpdated:
-          type: string
-        openingHours:
-          items:
-            type: string
-          type: array
-        orderParameters:
-          items:
-            type: string
-          type: array
-        pickupAllowed:
-          type: string
-        postalAddress:
-          type: string
-        postalCode:
-          type: string
-        stateAndUniversityLibraryCopyService:
-          type: string
-        temporarilyClosed:
-          type: string
+        type: array
+      pickupAllowed:
+        type: string
+      postalAddress:
+        type: string
+      postalCode:
+        type: string
+      stateAndUniversityLibraryCopyService:
+        type: string
+      temporarilyClosed:
+        type: string

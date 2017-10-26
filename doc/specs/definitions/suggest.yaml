@@ -1,7 +1,7 @@
 definitions: 
   SuggestResponse:
     additionalProperties: false
-    oneOf:
+    allOf:
       - $ref: "#/definitions/SuggestTitleResponse"
       - $ref: "#/definitions/SuggestLibraryResponse"
   SuggestTitleResponse:
