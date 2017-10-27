@@ -5,7 +5,7 @@
  * Wraps cancelOrder functionality of openorder backend.
  */
 import {log} from '../utils';
-import * as IsilUtils from './utils/isil.utils';
+import {getIdFromIsil} from './utils/isil.utils';
 
 /**
  * Validate parameters
@@ -78,7 +78,7 @@ export default (request, context) => {
   let params = {
     'cancelOrder.orderId': orderId,
     'cancelOrder.orderType': orderType,
-    agencyId: context.get('user.isil', true),
+    agencyId: getIdFromIsil(context.get('user.agency', true)),
     userId: context.get('user.id'),
     userPincode: context.get('user.pin'),
     'authentication.groupIdAut': context.get('netpunkt.group', true),
