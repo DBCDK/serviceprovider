@@ -12,7 +12,9 @@ export default (request, context) => {
 
   return Promise.all(promises).then(body => {
     // We now know there are two returned promises in body!
+    console.log('req', request);
     console.log('body', body);
+    console.log('context', context);
     const openHoldingStatusRes = body[0];
     const getOrderPolicyRes = body[1];
 
