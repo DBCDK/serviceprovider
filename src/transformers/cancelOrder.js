@@ -74,7 +74,6 @@ export default (request, context) => {
   let orderType = request.orderId.substring(0, i);
   let orderId = request.orderId.substring(i + 1);
 
-  console.log('user', context.get('user'));
   let params = {
     'cancelOrder.orderId': orderId,
     'cancelOrder.orderType': orderType,
@@ -89,7 +88,6 @@ export default (request, context) => {
   let soap = constructSoap(params);
 
   return context.call('openuserstatus', soap).then(body => {
-    console.log('body', body);
     body = JSON.parse(body).cancelOrderResponse;
 
     if (body.cancelOrderStatus[0].cancelOrderError) {
