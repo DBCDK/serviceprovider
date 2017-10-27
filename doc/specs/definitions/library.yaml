@@ -61,13 +61,13 @@ definitions:
       type: object
       properties:
         category_tid:
-          type: 
-            - string
-            - 'null'
+          allOf: 
+            - type: string
+            - type: 'null'
         customised:
-          type: 
-            - string
-            - 'null'
+          allOf: 
+            - type: string
+            - type: 'null'
         date:
           type: string
         end_time:
@@ -77,20 +77,20 @@ definitions:
         nid:
           type: string
         notice:
-          type: 
-            - string
-            - 'null'
+          allOf: 
+            - type: string
+            - type: 'null'
         original_instance_id:
-          type: 
-            - string
-            - 'null'
+          allOf: 
+            - type: string
+            - type: 'null'
         repeat_end_date:
-          type: 
-            - string
-            - 'null'
+          allOf: 
+            - type: string
+            - type: 'null'
         repeat_rule:
-          type: 
-            - string
-            - 'null'
+          allOf: 
+            - type: string
+            - type: 'null'
         start_time:
           type: string
