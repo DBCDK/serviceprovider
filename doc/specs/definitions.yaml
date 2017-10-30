@@ -87,87 +87,87 @@ definitions:
   Activity:
     allOf:
       - $ref: "#/definitions/Profile"
-    properties:
-      activity:
-        type: object
-        properties:
-          likes:
+      - properties:
+          activity:
             type: object
             properties:
-              Total:
-                type: integer
-              NextOffset:
-                type: integer
-              List:
-                type: array
-                items:
-                  - $ref: "#/definitions/Like"
-          follows:
-            type: object
-            properties:
-              Total:
-                type: integer
-              NextOffset:
-                type: integer
-              List:
-                type: array
-                items:
-                  $ref: "#/definitions/Follow"
-          flags:
-            type: object
-            properties:
-              Total:
-                type: integer
-              NextOffset:
-                type: integer
-              List:
-                type: array
-                items:
-                  $ref: "#/definitions/Flag"
-          groups:
-            type: object
-            properties:
-              Total:
-                type: integer
-              NextOffset:
-                type: integer
-              List:
-                type: array
-                items:
-                  $ref: "#/definitions/Group"
-          posts:
-            type: object
-            properties:
-              Total:
-                type: integer
-              NextOffset:
-                type: integer
-              List:
-                type: array
-                items:
-                  $ref: "#/definitions/Post"
-          comments:
-            type: object
-            properties:
-              Total:
-                type: integer
-              NextOffset:
-                type: integer
-              List:
-                type: array
-                items:
-                  $ref: "#/definitions/Comment"
-          reviews:
-            type: object
-            properties:
-              Total:
-                type: integer
-              NextOffset:
-                type: integer
-              List:
-                type: array
-                items:
-                  $ref: "#/definitions/Review"
+              likes:
+                type: object
+                properties:
+                  Total:
+                    type: integer
+                  NextOffset:
+                    type: integer
+                  List:
+                    type: array
+                    items:
+                      - $ref: "#/definitions/Like"
+              follows:
+                type: object
+                properties:
+                  Total:
+                    type: integer
+                  NextOffset:
+                    type: integer
+                  List:
+                    type: array
+                    items:
+                      $ref: "#/definitions/Follow"
+              flags:
+                type: object
+                properties:
+                  Total:
+                    type: integer
+                  NextOffset:
+                    type: integer
+                  List:
+                    type: array
+                    items:
+                      $ref: "#/definitions/Flag"
+              groups:
+                type: object
+                properties:
+                  Total:
+                    type: integer
+                  NextOffset:
+                    type: integer
+                  List:
+                    type: array
+                    items:
+                      $ref: "#/definitions/Group"
+              posts:
+                type: object
+                properties:
+                  Total:
+                    type: integer
+                  NextOffset:
+                    type: integer
+                  List:
+                    type: array
+                    items:
+                      $ref: "#/definitions/Post"
+              comments:
+                type: object
+                properties:
+                  Total:
+                    type: integer
+                  NextOffset:
+                    type: integer
+                  List:
+                    type: array
+                    items:
+                      $ref: "#/definitions/Comment"
+              reviews:
+                type: object
+                properties:
+                  Total:
+                    type: integer
+                  NextOffset:
+                    type: integer
+                  List:
+                    type: array
+                    items:
+                      $ref: "#/definitions/Review"
   UserIsFollowingGroup:
     properties:
       id:
