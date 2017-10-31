@@ -7,7 +7,7 @@
 
 /**
  * Constructs soap request to perform renew request
- * @param {object} param Parameters to substitute into soap request
+ * @param {object} params Parameters to substitute into soap request
  * @returns soap request string
  */
 function constructSoap(params) {
@@ -66,7 +66,7 @@ export default (request, context) => {
     if (body.loanId) {
       return Promise.resolve({
         statusCode: 200,
-        data: {loanId: body.loanId.$}
+        data: {loanId: body.loanId.$, returnDate: body.dateDue.$}
       });
     }
     return Promise.resolve({
