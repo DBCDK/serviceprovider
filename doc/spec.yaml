@@ -291,7 +291,7 @@ api:
         type: string
         example: "7890"
     response:
-      example: {"loanId": "7890", "returnDate": "2016-09-12"}
+      example: {"loanId": "7890", "returnDate": "2016-09-12T00:00:00+01:00"}
     responses:
       403:
         $ref: '#/responses/InvalidUser'
