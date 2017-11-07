@@ -24,7 +24,7 @@ paths:
         - $ref: '#/parameters/accessToken'
         - name: group
           in: body
-          description: The group content.
+          description: The Group content
           schema:
             $ref: '#/definitions/GroupPost'
       responses:
@@ -48,7 +48,7 @@ paths:
           $ref: '#/responses/Error'
 
     put:
-      summary: Update group
+      summary: Update Group
       tags:
         - Community
       parameters:
@@ -62,7 +62,7 @@ paths:
           $ref: '#/responses/Error'
 
     delete:
-      summary: Delete group
+      summary: Delete Group
       tags:
         - Community
       parameters:
@@ -165,7 +165,7 @@ paths:
     get:
       tags:
         - Community
-      summary: Group view including posts and comments.
+      summary: Group view including Posts and Comments
       parameters:
         - $ref: '#/parameters/accessToken'
         - $ref: '#/parameters/id'

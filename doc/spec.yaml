@@ -4,7 +4,8 @@ api:
       - Order
     description: |
       Get information about whether a material can be ordered /
-      are available for the currently logged in user.
+      are available for the currently logged in user. Holdingstatus holds information about holdings on specified library.
+      OrderPossible indicates if a book can be ordered at current library.
     required:
       - pid
     properties:
@@ -13,7 +14,7 @@ api:
         type: string
         example: "870970-basis:24284565"
     response:
-      example: {"willLend": true, "expectedDelivery": "2016-04-15"}
+      example: {"holdingstatus": {"willLend": true, "expectedDelivery": "2016-04-15"}, orderPossible: true}
   events:
     tags:
       - CMS
@@ -24,7 +25,7 @@ api:
     properties:
       agency:
         description: Agency ID to fetch content for
-        type: integer
+        type: string
         example: 761500
       nids:
         description: to fetch events specified by ids
@@ -87,7 +88,7 @@ api:
     properties:
       agency:
         description: Agency ID to fetch content for
-        type: integer
+        type: string
         example: 761500
       nids:
         description: to fetch events specified by ids
@@ -115,11 +116,11 @@ api:
       The field that tells which information is required when ordering the book is `orderParameters`.
     properties:
       agencyIds:
-        description: ids of agencies of libraries to fetch, - an agency is a collection of libraries, - return all libraries if neither `branchIds` nor `agencyIds` are supplied
+        description: ids (or isil) of agencies of libraries to fetch, - an agency is a collection of libraries, - return all libraries if neither `branchIds` nor `agencyIds` are supplied
         type: array
         items: {type: "string"}
       branchIds:
-        description: ids of libraries to fetch - return all libraries if neither `branchIds` nor `agencyIds` are supplied
+        description: ids (or isil) of libraries to fetch - return all libraries if neither `branchIds` nor `agencyIds` are supplied
         type: array
         items: {type: "string"}
       fields:
@@ -140,7 +141,7 @@ api:
     properties:
       agency:
         description: Agency ID to fetch content for
-        type: integer
+        type: string
         example: 761500
       nids:
         description: to fetch news specified by ids
@@ -290,7 +291,11 @@ api:
         type: string
         example: "7890"
     response:
-      example: {"loanId": "7890", "returnDate": "2016-09-12"}
+      example: {"loanId": "7890", "returnDate": "2016-09-12T00:00:00+01:00"}
+    responses:
+      403:
+        $ref: '#/responses/InvalidUser'
+
   search:
     tags:
       - Search
@@ -314,7 +319,7 @@ api:
         example: 10
         description: maximum number of results returned
         minimum: 1
-        maximum: 20
+        maximum: 50
         type: integer
       fields:
         example: ["title", "creator", "pid"]
@@ -329,6 +334,10 @@ api:
       sort:
         example: "rank_title"
         description: Order/ranking of results. This correspond to the `sort` parameter of opensearch, which, at the time of writing, can take values such as  `rank_title`, `rank_general`, `rank_main_title`, `rank_subject`, `rank_verification` (title and creator), `rank_creator`, `rank_none`, `date_descending`, `article_date_descending`, `acquisitionDate_descending`, and `random`.
+        type: string
+      profile:
+        example: "opac"
+        description: Optional search profile, it's passed directly to OpenSearch. In OpenSearch it's used to determine which works should be returned. The profile needs to be defined in VIP in order to use it.
         type: string
     response:
       type: array
@@ -360,6 +369,10 @@ api:
         description: The desired type of suggestions, possible values are `library`, `title`, `subject`, `creator`
         type: string
         example: "title"
+      librarytype:
+        description: Optional field only used when querying the library suggestor. It specifies which type of library is wanted, by default it's the public library.
+        type: string
+        example: "folkebibliotek"
       fields:
         description: "Fields to return, defaults to `term`. The `subject`- and `creator`-suggest only has `term`, while `title`-suggest also has `pid`, `creator`, and `type`, and the `library`-suggest has `agencyName`, `postalAddress`, `branchId`, `postalCode`, `geolocation`, `agencyType`, and `city`"
         type: array
@@ -388,19 +401,36 @@ api:
         loans:
           - loanId: "4940377131"
             title: håndbog over håndbøger
-            author: La, Chris
+            creator: La, Chris
             dueDate: "2016-04-16"
+            materialId: "9782361951085"
+            titleId: "51680057"
         orders:
-          - orderId: "24181913"
-            title: Morder-Anders og hans venner
-            creator: Jonasson, Jonas
-            status: In process
+          - orderId: "Hold:24395923"
+            status: "In process"
+            pickUpAgency: "DK-710111"
+            holdQueuePosition: "1"
+            creator: "Madsen, Peter, f. 1958"
+            title: "Eventyrbogen"
+            orderDate: "2016-05-27T00:00:00+02:00"
+          - orderId: "Hold:24400334"
+            status: "Available for pickup"
+            pickUpAgency: "DK-710111"
+            holdQueuePosition: "1"
+            creator: "Lindgren, Astrid"
+            title: "Emils skarnsstreg nr. 325"
+            orderDate: "2016-05-30T00:00:00+02:00"
+            pickUpExpiryDate: "2016-06-04T00:00:00+02:00"
+            pickUpId: "Nummer 16"
         debt:
           - amount: "20"
             currency: DKK
             date: 2015-11-21
-            author: Kristín Marja Baldursdóttir
+            creator: Kristín Marja Baldursdóttir
             title: Kantate
+    responses:
+      403:
+        $ref: '#/responses/InvalidUser'
   work:
     tags:
       - Search

@@ -5,10 +5,8 @@
     "**/thirdparty/**",
     "**/third_party/**",
     "**/doc/**",
-    "**/apitest/**",
-    "**/ave-test/**",
+    "**/qa/**",
     "**/client/**",
-    "**/performancetest/**",
     "**/static/**"
   ],
   "test": [

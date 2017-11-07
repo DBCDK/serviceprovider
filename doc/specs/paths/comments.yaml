@@ -45,7 +45,7 @@ paths:
           $ref: '#/responses/Error'
 
     put:
-      summary: Update comment
+      summary: Update Comment
       tags:
         - Community
       parameters:
@@ -59,7 +59,7 @@ paths:
           $ref: '#/responses/Error'
 
     delete:
-      summary: Delete comment
+      summary: Delete Comment
       tags:
         - Community
       parameters:

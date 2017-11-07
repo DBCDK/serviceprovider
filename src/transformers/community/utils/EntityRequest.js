@@ -32,8 +32,8 @@ const orderPossibilities = [
 ];
 
 export function communityRequest(context, params) {
-  const id = context.get('communityservice.id');
-  const baseurl = context.get('services.communityservice');
+  const id = context.get('communityservice.id', true);
+  const baseurl = context.get('services.communityservice', true);
 
   if (!id) {
     throw 'Community-API is not available for the current client. ' +
@@ -381,7 +381,7 @@ export default class EntityRequest {
       return validationError;
     }
     const json = this._mapperToElvis(object);
-    if (this._elvisType === 'action') {
+    if (this._elvisType === 'action' && json.attributes.reference) {
       if (json.attributes.reference.type === 'profile') {
         json.profile_ref = json.attributes.reference.id;
       }

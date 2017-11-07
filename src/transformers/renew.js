@@ -7,7 +7,7 @@
 
 /**
  * Constructs soap request to perform renew request
- * @param {object} param Parameters to substitute into soap request
+ * @param {object} params Parameters to substitute into soap request
  * @returns soap request string
  */
 function constructSoap(params) {
@@ -44,12 +44,12 @@ export default (request, context) => {
 
   const params = {
     loanId: request.loanId,
-    agencyId: context.get('user.agency'),
+    agencyId: context.get('user.agency', true),
     userId: context.get('user.id'),
     userPincode: context.get('user.pin'),
-    'authentication.groupIdAut': context.get('netpunkt.group'),
-    'authentication.passwordAut': context.get('netpunkt.password'),
-    'authentication.userIdAut': context.get('netpunkt.user')
+    'authentication.groupIdAut': context.get('netpunkt.group', true),
+    'authentication.passwordAut': context.get('netpunkt.password', true),
+    'authentication.userIdAut': context.get('netpunkt.user', true)
   };
 
   const soap = constructSoap(params);
@@ -66,7 +66,7 @@ export default (request, context) => {
     if (body.loanId) {
       return Promise.resolve({
         statusCode: 200,
-        data: {loanId: body.loanId.$}
+        data: {loanId: body.loanId.$, returnDate: body.dateDue.$}
       });
     }
     return Promise.resolve({

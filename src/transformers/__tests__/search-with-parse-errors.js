@@ -13,7 +13,7 @@ const context = {
     "PRODopenorder": "https://openorder.addi.dk/2.7.1/",
     "openorder": "https://openorder.addi.dk/test_2.7.1/",
     "opensearch": "http://opensearch.addi.dk/b3.0_4.3/",
-    "openuserstatus": "https://openuserstatus.addi.dk/1.4.1/",
+    "openuserstatus": "https://openuserstatus.addi.dk/1.5/",
     "rank": "https://xptest.dbc.dk/ms/rank/v1",
     "suggestpopular": "http://xptest.dbc.dk/ms/entity-pop/v1",
     "suggestcreator": "http://xptest.dbc.dk/ms/entity-suggest/v1/creator",
@@ -199,6 +199,83 @@ describe('Automated test: search-with-parse-errors', () => {
     },
     {
       "collection": [
+        "775100-katalog:26111129"
+      ],
+      "collectionDetails": [],
+      "acIdentifier": [
+        "26111129|870970"
+      ],
+      "identifierISBN": [
+        "87-02-02636-8"
+      ],
+      "acSource": [
+        "Bibliotekskatalog"
+      ],
+      "dcTitle": [
+        "Fisk"
+      ],
+      "dcTitleFull": [
+        "Fisk"
+      ],
+      "titleSeries": [
+        "De små fagbøger"
+      ],
+      "creatorAut": [
+        "Anders Uldal"
+      ],
+      "creatorSort": [
+        "Uldal, Anders"
+      ],
+      "subjectDK5": [
+        "58.6"
+      ],
+      "subjectDK5Text": [
+        "Fisk"
+      ],
+      "subjectDBCF": [
+        "fisk"
+      ],
+      "subjectDBCN": [
+        "for 10 år",
+        "for 8 år",
+        "for 9 år"
+      ],
+      "description": [
+        "Indhold: Hvad er fisk? ; Den blå fisk ; Føde ; Æg og yngel ; Danske fisk ; Bruskfisk ; Giftige fisk ; Fladfisk ; Ål ; Elektrisk ål ; Piratfisk ; Mærkelige fisk ; Dybhavsfisk ; Søheste ; Fiskeri"
+      ],
+      "audienceAge": [
+        "fra 8 år"
+      ],
+      "audience": [
+        "børnematerialer"
+      ],
+      "version": [
+        "1. udgave, 1. oplag (2006)"
+      ],
+      "publisher": [
+        "Gyldendal"
+      ],
+      "date": [
+        "2006"
+      ],
+      "typeBibDKType": [
+        "Bog"
+      ],
+      "format": [
+        "illustreret i farver"
+      ],
+      "extent": [
+        "36 sider"
+      ],
+      "languageISO6392": [
+        "dan"
+      ],
+      "dcLanguage": [
+        "Dansk"
+      ]
+    },
+    {
+      "collection": [
         "870971-tsart:80309988"
       ],
       "collectionDetails": [
@@ -1760,6 +1837,96 @@ describe('Automated test: search-with-parse-errors', () => {
     },
     {
       "collection": [
+        "775100-katalog:50686221"
+      ],
+      "collectionDetails": [],
+      "acIdentifier": [
+        "50686221|870970"
+      ],
+      "identifierISBN": [
+        "9788717043442"
+      ],
+      "acSource": [
+        "Bibliotekskatalog"
+      ],
+      "source": [
+        "Fish"
+      ],
+      "dcTitle": [
+        "Fisk og skaldyr"
+      ],
+      "dcTitleFull": [
+        "Fisk og skaldyr"
+      ],
+      "titleSeries": [
+        "Hurtig i køkkenet"
+      ],
+      "alternative": [
+        "Fisk & skaldyr",
+        "Hurtig i køkkenet - fisk og skaldyr"
+      ],
+      "creatorDkops": [
+        "Emma Lewis"
+      ],
+      "creatorSort": [
+        "Lewis, Emma"
+      ],
+      "subjectDK5": [
+        "64.17"
+      ],
+      "subjectDK5Text": [
+        "Særlige retter"
+      ],
+      "subjectDBCF": [
+        "fisk",
+        "fiskeretter",
+        "skaldyr",
+        "skaldyrsretter"
+      ],
+      "subjectDBCO": [
+        "kogebøger",
+        "opskrifter"
+      ],
+      "description": [
+        "På omslaget: 360 opskrifter på 10, 20, 30 minutter",
+        "Indhold: Snacks ; Hverdagsretter ; Weekendretter ; Sunde retter ; Gæsteretter"
+      ],
+      "audience": [
+        "voksenmaterialer"
+      ],
+      "version": [
+        "1. oplag (2013)"
+      ],
+      "publisher": [
+        "Nyt Nordisk Forlag Arnold Busck"
+      ],
+      "contributorDkops": [
+        "Emma Lewis"
+      ],
+      "contributorTrl": [
+        "Lars Thomas"
+      ],
+      "date": [
+        "2013"
+      ],
+      "typeBibDKType": [
+        "Bog"
+      ],
+      "format": [
+        "illustreret i farver"
+      ],
+      "extent": [
+        "288 sider"
+      ],
+      "languageISO6392": [
+        "dan"
+      ],
+      "dcLanguage": [
+        "Dansk"
+      ]
+    },
+    {
+      "collection": [
         "870971-tsart:74013864"
       ],
       "collectionDetails": [
@@ -2222,8 +2389,8 @@ describe('Automated test: search-with-parse-errors', () => {
     }
   ],
   "error": [
-    "Parse error: briefDisplay could not be found on object: 775100-katalog:26111129",
-    "Parse error: briefDisplay could not be found on object: 775100-katalog:50686221"
+    "Parse error: briefDisplay could not be found on object 775100-katalog:26111129",
+    "Parse error: briefDisplay could not be found on object 775100-katalog:50686221"
   ]
 });
         done();
@@ -2368,6 +2535,83 @@ describe('Automated test: search-with-parse-errors', () => {
     },
     {
       "collection": [
+        "775100-katalog:26111129"
+      ],
+      "collectionDetails": [],
+      "acIdentifier": [
+        "26111129|870970"
+      ],
+      "identifierISBN": [
+        "87-02-02636-8"
+      ],
+      "acSource": [
+        "Bibliotekskatalog"
+      ],
+      "dcTitle": [
+        "Fisk"
+      ],
+      "dcTitleFull": [
+        "Fisk"
+      ],
+      "titleSeries": [
+        "De små fagbøger"
+      ],
+      "creatorAut": [
+        "Anders Uldal"
+      ],
+      "creatorSort": [
+        "Uldal, Anders"
+      ],
+      "subjectDK5": [
+        "58.6"
+      ],
+      "subjectDK5Text": [
+        "Fisk"
+      ],
+      "subjectDBCF": [
+        "fisk"
+      ],
+      "subjectDBCN": [
+        "for 10 år",
+        "for 8 år",
+        "for 9 år"
+      ],
+      "description": [
+        "Indhold: Hvad er fisk? ; Den blå fisk ; Føde ; Æg og yngel ; Danske fisk ; Bruskfisk ; Giftige fisk ; Fladfisk ; Ål ; Elektrisk ål ; Piratfisk ; Mærkelige fisk ; Dybhavsfisk ; Søheste ; Fiskeri"
+      ],
+      "audienceAge": [
+        "fra 8 år"
+      ],
+      "audience": [
+        "børnematerialer"
+      ],
+      "version": [
+        "1. udgave, 1. oplag (2006)"
+      ],
+      "publisher": [
+        "Gyldendal"
+      ],
+      "date": [
+        "2006"
+      ],
+      "typeBibDKType": [
+        "Bog"
+      ],
+      "format": [
+        "illustreret i farver"
+      ],
+      "extent": [
+        "36 sider"
+      ],
+      "languageISO6392": [
+        "dan"
+      ],
+      "dcLanguage": [
+        "Dansk"
+      ]
+    },
+    {
+      "collection": [
         "870971-tsart:80309988"
       ],
       "collectionDetails": [
@@ -3929,6 +4173,96 @@ describe('Automated test: search-with-parse-errors', () => {
     },
     {
       "collection": [
+        "775100-katalog:50686221"
+      ],
+      "collectionDetails": [],
+      "acIdentifier": [
+        "50686221|870970"
+      ],
+      "identifierISBN": [
+        "9788717043442"
+      ],
+      "acSource": [
+        "Bibliotekskatalog"
+      ],
+      "source": [
+        "Fish"
+      ],
+      "dcTitle": [
+        "Fisk og skaldyr"
+      ],
+      "dcTitleFull": [
+        "Fisk og skaldyr"
+      ],
+      "titleSeries": [
+        "Hurtig i køkkenet"
+      ],
+      "alternative": [
+        "Fisk & skaldyr",
+        "Hurtig i køkkenet - fisk og skaldyr"
+      ],
+      "creatorDkops": [
+        "Emma Lewis"
+      ],
+      "creatorSort": [
+        "Lewis, Emma"
+      ],
+      "subjectDK5": [
+        "64.17"
+      ],
+      "subjectDK5Text": [
+        "Særlige retter"
+      ],
+      "subjectDBCF": [
+        "fisk",
+        "fiskeretter",
+        "skaldyr",
+        "skaldyrsretter"
+      ],
+      "subjectDBCO": [
+        "kogebøger",
+        "opskrifter"
+      ],
+      "description": [
+        "På omslaget: 360 opskrifter på 10, 20, 30 minutter",
+        "Indhold: Snacks ; Hverdagsretter ; Weekendretter ; Sunde retter ; Gæsteretter"
+      ],
+      "audience": [
+        "voksenmaterialer"
+      ],
+      "version": [
+        "1. oplag (2013)"
+      ],
+      "publisher": [
+        "Nyt Nordisk Forlag Arnold Busck"
+      ],
+      "contributorDkops": [
+        "Emma Lewis"
+      ],
+      "contributorTrl": [
+        "Lars Thomas"
+      ],
+      "date": [
+        "2013"
+      ],
+      "typeBibDKType": [
+        "Bog"
+      ],
+      "format": [
+        "illustreret i farver"
+      ],
+      "extent": [
+        "288 sider"
+      ],
+      "languageISO6392": [
+        "dan"
+      ],
+      "dcLanguage": [
+        "Dansk"
+      ]
+    },
+    {
+      "collection": [
         "870971-tsart:74013864"
       ],
       "collectionDetails": [
@@ -4391,8 +4725,8 @@ describe('Automated test: search-with-parse-errors', () => {
     }
   ],
   "error": [
-    "Parse error: briefDisplay could not be found on object: 775100-katalog:26111129",
-    "Parse error: briefDisplay could not be found on object: 775100-katalog:50686221"
+    "No data found on object(s): 775100-katalog:26111129",
+    "No data found on object(s): 775100-katalog:50686221"
   ]
 });
         done();

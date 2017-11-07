@@ -119,7 +119,7 @@ function handleSearch(resp, envelope) {
  * @return {Promise}
  */
 export function handleMoreInfoVersion(context, params) {
-  const moreinfoUrl = context.get('services.moreinfo');
+  const moreinfoUrl = context.get('services.moreinfo', true);
   log.info('moreinfoUrl: ' + moreinfoUrl);
   return moreinfo26(params.moreinfo, context);
 }

@@ -91,4 +91,12 @@ responses:
     description: An unexpected error occured.
     schema:
       $ref: "#/definitions/Error"
+  InvalidToken:
+    description: Invalid token is used
+    schema:
+      $ref: "#/definitions/InvalidToken"
+  InvalidUser:
+    description: Invalid user token
+    schema:
+      $ref: "#/definitions/InvalidUser"
 

@@ -6,7 +6,7 @@
  * @throws {PlainObject}
  */
 function getRecommenderUrl(request, context) {
-  const urls = context.get('services.recommendurls');
+  const urls = context.get('services.recommendurls', true);
   const defaultType = 'default';
   let uri = urls[defaultType];
 

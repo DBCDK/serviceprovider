@@ -5,6 +5,7 @@
  * Wraps userstatus backend.
  */
 import {pbkdf2} from 'crypto';
+import {getIdFromIsil} from './utils/isil.utils';
 
 /**
  * Maps loan item from backend response to serviceprovider api
@@ -20,8 +21,17 @@ function loan(loanItem) {
   };
 
   if (loanItem.author) {
-    result.author = loanItem.author.$;
+    result.creator = loanItem.author.$;
   }
+
+  if (loanItem.bibliographicItemId) {
+    result.materialId = loanItem.bibliographicItemId.$;
+  }
+
+  if (loanItem.bibliographicRecordId) {
+    result.titleId = loanItem.bibliographicRecordId.$;
+  }
+
   return result;
 }
 
@@ -31,7 +41,6 @@ function loan(loanItem) {
  * @returns {Object} response with mapped keys
  */
 function debt(debtItem) {
-
   const result = {
     amount: debtItem.fiscalTransactionAmount.$,
     currency: debtItem.fiscalTransactionCurrency.$,
@@ -40,7 +49,7 @@ function debt(debtItem) {
   };
 
   if (debtItem.author) {
-    result.author = debtItem.author.$;
+    result.creator = debtItem.author.$;
   }
   return result;
 }
@@ -54,13 +63,19 @@ function order(orderItem) {
   const result = {
     orderId: `${orderItem.orderType.$}:${orderItem.orderId.$}`,
     status: orderItem.orderStatus.$,
-    library: orderItem.pickUpAgency.$
+    pickUpAgency: orderItem.pickUpAgency.$
   };
 
-  const orderFields = ['holdQueuePosition', 'author', 'title', 'orderDate', 'pickUpExpiryDate', 'pickUpId'];
+  const orderFields = ['holdQueuePosition', 'creator', 'title', 'orderDate', 'pickUpExpiryDate', 'pickUpId', 'titleId'];
 
   orderFields.forEach(key => {
-    if (orderItem[key] && orderItem[key].$) {
+    if (key === 'creator' && orderItem.author && orderItem.author.$) {
+      result[key] = orderItem.author.$;
+    }
+    else if (key === 'titleId' && orderItem.bibliographicRecordId && orderItem.bibliographicRecordId.$) {
+      result[key] = orderItem.bibliographicRecordId.$;
+    }
+    else if (orderItem[key] && orderItem[key].$) {
       result[key] = orderItem[key].$;
     }
   });
@@ -81,24 +96,25 @@ export default (request, context) => {
 
   if (!(context.get('user.id') && context.get('user.pin'))) {
     return Promise.resolve({
-      statusCode: 300,
+      statusCode: 403,
       error: 'not logged in'
     });
   }
 
+  const userAgencyId = getIdFromIsil(context.get('user.agency', true));
   const params = {
-    agencyId: context.get('user.agency'),
+    agencyId: userAgencyId,
     userId: context.get('user.id'),
     userPincode: context.get('user.pin'),
-    'authentication.groupIdAut': context.get('netpunkt.group'),
-    'authentication.passwordAut': context.get('netpunkt.password'),
-    'authentication.userIdAut': context.get('netpunkt.user'),
+    'authentication.groupIdAut': context.get('netpunkt.group', true),
+    'authentication.passwordAut': context.get('netpunkt.password', true),
+    'authentication.userIdAut': context.get('netpunkt.user', true),
     action: 'getUserStatus',
     outputType: 'json'
   };
 
   const idPromise = new Promise((resolve, reject) =>
-    pbkdf2(context.get('user.agency').replace(/^DK-/, '') + ' ' + context.get('user.id'),
+    pbkdf2(userAgencyId + ' ' + context.get('user.id'),
       context.get('user.salt'), 100000, 24, 'sha512', (err, key) => err ? reject(err) : resolve(key)));
 
   return context.call('openuserstatus', params).then(body => idPromise.then(id => {
@@ -109,26 +125,40 @@ export default (request, context) => {
       });
     }
 
+    const data = {
+      id: id.toString('base64')
+    };
+
+    if (body.data.getUserStatusResponse.userName) {
+      data.name = body.data.getUserStatusResponse.userName.$;
+    }
+    if (body.data.getUserStatusResponse.userAddress) {
+      data.address = body.data.getUserStatusResponse.userAddress.$;
+    }
+    if (body.data.getUserStatusResponse.userPostalCode) {
+      data.postalCode = body.data.getUserStatusResponse.userPostalCode.$;
+    }
+    if (body.data.getUserStatusResponse.userMail) {
+      data.mail = body.data.getUserStatusResponse.userMail.$;
+    }
+
     let loans = [];
     if (body.data.getUserStatusResponse.userStatus.loanedItems.loan) {
       loans = body.data.getUserStatusResponse.userStatus.loanedItems.loan;
     }
+    data.loans = loans.map(loan);
+
     let orders = [];
     if (body.data.getUserStatusResponse.userStatus.orderedItems.order) {
       orders = body.data.getUserStatusResponse.userStatus.orderedItems.order;
     }
+    data.orders = orders.map(order);
 
     let debts = [];
     if (body.data.getUserStatusResponse.userStatus.fiscalAccount) {
       debts = body.data.getUserStatusResponse.userStatus.fiscalAccount.fiscalTransaction || [];
     }
-
-    const data = {
-      id: id.toString('base64'),
-      loans: loans.map(loan),
-      orders: orders.map(order),
-      debt: debts.map(debt)
-    };
+    data.debt = debts.map(debt);
 
     if (context.get('services.ddbcmsapi')) {
       data.ddbcmsapi = context.get('services.ddbcmsapi');

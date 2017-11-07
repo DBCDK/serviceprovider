@@ -3,7 +3,7 @@ console.log(); // extra newline in output, to make behaviour match http-test-scr
 function identity(x) { return x; }
 function filterComments(x) { return !x.startsWith('#'); }
 
-var majorVersion = parseInt(require('../package.json').version, 10);
+var majorVersion = parseInt(require('../../package.json').version, 10);
 
 var reqs = require('fs')
   .readFileSync(process.argv[2] + '.requests.lst', 'utf-8')

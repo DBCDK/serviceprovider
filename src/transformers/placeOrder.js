@@ -41,7 +41,7 @@ function createNeedBeforeDate() {
   let offsetInDays = 90;
   let offsetInMilliseconds = offsetInDays * 24 * 60 * 60 * 1000;
   let date = new Date(Date.now() + offsetInMilliseconds);
-  let dateStr = `${date.getFullYear()}-${('0' + date.getMonth()).slice(-2)}-${('0' + date.getDate()).slice(-2)}T00:00:00`;
+  let dateStr = `${date.getFullYear()}-${('0' + (date.getMonth() + 1)).slice(-2)}-${('0' + date.getDate()).slice(-2)}T00:00:00`;
   return dateStr;
 }
 
@@ -51,7 +51,7 @@ function createNeedBeforeDate() {
  * in soap request
  *
  * @param {object} params parameter map from user
- * @returns xml snippet with found user data
+ * @returns {object} xml snippet with found user data
  */
 function getUserParams(params) {
 
@@ -62,17 +62,22 @@ function getUserParams(params) {
    ['name', 'userName'],
    ['phone', 'userTelephone']].forEach((names) => {
      result[names[0]] = '';
+
      if (params[names[0]]) {
-       result[names[0]] = `<${names[1]}>${names[0]}</${names[1]}>`;
+       result[names[0]] = `<${names[1]}>${params[names[0]]}</${names[1]}>`;
      }
    });
+
   return result;
 }
 
 /**
 * Constructs soap request to perform placeOrder request
-* @param {object} param Parameters to substitute into soap request
-* @returns soap request string
+* @param {array} pidList
+* @param {string} expireDate
+* @param {object} params Parameters to substitute into soap request
+* @param {string} orderSystem
+* @returns {string} soap request string
 */
 function constructSoap(pidList, expireDate, params, orderSystem) {
   let userParams = getUserParams(params);
@@ -123,7 +128,7 @@ function placeOrder(request, context) { // eslint-disable-line no-unused-vars
   }
 
   // Make orderSystem configurable by smaug.
-  const orderSystem = context.get('app.orderSystem');
+  const orderSystem = context.get('app.orderSystem', true);
   let soap = constructSoap(request.pids, expireDate, request, orderSystem);
 
   return context.call('openorder', soap).then(body => {
@@ -169,14 +174,14 @@ export default (request, context) => {
   }
 
   const params = {
-    agencyId: context.get('user.agency'),
+    agencyId: context.get('user.isil', true),
     userId: context.get('user.id'),
     userPincode: context.get('user.pin'),
-    'authentication.groupIdAut': context.get('netpunkt.group'),
-    'authentication.passwordAut': context.get('netpunkt.password'),
-    'authentication.userIdAut': context.get('netpunkt.user'),
+    'authentication.groupIdAut': context.get('netpunkt.group', true),
+    'authentication.passwordAut': context.get('netpunkt.password', true),
+    'authentication.userIdAut': context.get('netpunkt.user', true),
     outputType: 'json',
-    serviceRequester: context.get('app.orderpolicyrequester')
+    serviceRequester: context.get('app.orderpolicyrequester', true)
   };
 
   request = extend(params, request);
