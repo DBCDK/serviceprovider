@@ -5,6 +5,7 @@
  * Wraps userstatus backend.
  */
 import {pbkdf2} from 'crypto';
+import {getIdFromIsil} from './utils/isil.utils';
 
 /**
  * Maps loan item from backend response to serviceprovider api
@@ -100,8 +101,9 @@ export default (request, context) => {
     });
   }
 
+  const userAgencyId = getIdFromIsil(context.get('user.agency', true));
   const params = {
-    agencyId: context.get('user.agency', true),
+    agencyId: userAgencyId,
     userId: context.get('user.id'),
     userPincode: context.get('user.pin'),
     'authentication.groupIdAut': context.get('netpunkt.group', true),
@@ -112,7 +114,7 @@ export default (request, context) => {
   };
 
   const idPromise = new Promise((resolve, reject) =>
-    pbkdf2(context.get('user.agency', true).replace(/^DK-/, '') + ' ' + context.get('user.id'),
+    pbkdf2(userAgencyId + ' ' + context.get('user.id'),
       context.get('user.salt'), 100000, 24, 'sha512', (err, key) => err ? reject(err) : resolve(key)));
 
   return context.call('openuserstatus', params).then(body => idPromise.then(id => {

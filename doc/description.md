@@ -14,6 +14,8 @@ Herefter vil biblioteket modtage et eller flere `CLIENT_ID` / `CLIENT_SECRET`, d
 ###Tokens
 Alle kald til API'et kræver en gyldig token. Der findes tre forskellige typer tokens. 
 
+Tokens til driftmiljø'et hentes fra https://auth.dbc.dk som beskrevet i eksemplerne herunder. Tokens til stagingmiljø'et hentes fra https://auth-stg.dbc.dk.
+
 ####Anonym
 Kan benyttes til alle forespørgsler som ikke indeholder biblioteks- eller brugerspecifikke data: 
 

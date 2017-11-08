@@ -22,6 +22,10 @@ export default (request, context) => {
       },
       orderPossible: true
     };
+    let statusCode = openHoldingStatusRes.statusCode ? openHoldingStatusRes.statusCode : 500;
+    if ((statusCode === 200 || statusCode === 500) && getOrderPolicyRes.statusCode) {
+      statusCode = getOrderPolicyRes.statusCode;
+    }
     if (_.has(openHoldingStatusRes, 'data.willLend')) {
       data.holdingStatus = openHoldingStatusRes.data;
     }
@@ -30,6 +34,6 @@ export default (request, context) => {
       data.orderPossible = false;
     }
 
-    return {statusCode: 200, data};
+    return {statusCode: statusCode, data};
   });
 };
