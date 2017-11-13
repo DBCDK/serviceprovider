@@ -285,6 +285,8 @@ api:
     tags:
       - Status
     description: Renew a material
+    required:
+      - loanId
     properties:
       loanId:
         description: id of the loan to renew
