@@ -85,6 +85,13 @@ class Context {
       }
     }
 
+    if (type !== 'transformer') {
+      promise.catch(e => {
+        log.error('Error calling underlying service', {type, name, params});
+        throw e;
+      });
+    }
+
     return promise;
   }
 
