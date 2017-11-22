@@ -13,7 +13,7 @@
     "lint": "eslint ./src",
     "lint:checkstyle": "eslint ./src  -o report.xml -f checkstyle",
     "start": "node src/main.js",
-    "start:minismaug": "PORT=3000 forever -w --watchDirectory src/smaug src/smaug/minismaug.js --killSignal=SIGTERM -f context-sample.json",
+    "start:minismaug": "PORT=3000 forever -w --watchDirectory src/smaug src/smaug/minismaug.js --killSignal=SIGTERM -f context.json",
     "start:sp": "SMAUG=http://localhost:3000 SWAGGER_HTTP=true TEST_DEV=true forever -w --watchDirectory src/ --killSignal=SIGTERM src/main.js",
     "swagger:validate": "curl localhost:8080/v1/swagger.json > swagger.json ; swagger validate swagger.json",
     "test": "SMAUG=http://localhost:3000 LOG_LEVEL=off node --max-old-space-size=8192 node_modules/mocha/bin/mocha --compilers js:babel-register --recursive src/**/__tests__/* src/__tests__/* src/transformers/utils/**/__tests__/*",

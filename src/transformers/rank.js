@@ -36,6 +36,13 @@ export default (request, context) => { // eslint-disable-line no-unused-vars
       let result = [];
       if (Array.isArray(body.result)) {
         result = body.result.map(o => Object.assign(o[1], {pid: o[0]}));
+        result.forEach(o => {
+          for (const key in o) {
+            if (key !== 'val' && !Array.isArray(o[key])) {
+              o[key] = [o[key]];
+            }
+          }
+        });
       }
 
       return {statusCode: 200, data: result};
