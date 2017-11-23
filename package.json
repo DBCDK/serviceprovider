@@ -4,6 +4,7 @@
   "description": "The ServiceProvider or DBC Open Platform is the API for the danish public libraries.\n\nThe ServiceProvider provides access to DBCs services. The purpose is to make a unified, easy-to-use way to access the different bibliographic APIs. The serviceprovider works as a gateway to other services, and does not include the actual search/database/etc. logic.",
   "main": "src/main.js",
   "scripts": {
+    "prettier": "prettier --no-bracket-spacing --single-quote --write src/*.js src/*/*.js src/*/*/*.js src/*/*/*/*.js",
     "complexity": "cr -c .complexrc ./src",
     "preinstall": "cp -n context-sample.json context.json || true",
     "apitest": "cd qa/apitest; ./apitest.sh",
@@ -25,6 +26,7 @@
     "before:commit": "npm run lint && npm run coverage && npm run cukes:cover && npm run collect:coverage && npm run sonar",
     "sonar": "sonar-runner -Dsonar.projectKey=sp:local -Dsonar.projectName=ServiceProviderLocal -Dsonar.projectVersion=1.0 -Dsonar.sources=./src"
   },
+  "DISABLED UNTIL WE HAVE RUN PRETTIER ON EXISTING CODE pre-commit": ["prettier"],
   "repository": {
     "type": "git",
     "url": "git+https://github.com/DBCDK/serviceprovider.git"
@@ -73,13 +75,16 @@
     "cucumber": "^2.1.0",
     "cucumberjs-junitxml": "1.0.0",
     "eslint": "^3.0.1",
+    "eslint-config-prettier": "^2.8.0",
     "eslint-loader": "^1.0.0",
-    "istanbul-instrumenter-loader": "^3.0.0",
     "istanbul": "^0.4.4",
     "istanbul-combine": "^0.3.0",
+    "istanbul-instrumenter-loader": "^3.0.0",
     "mocha": "^3.1.0",
     "nock": "^9.0.2",
     "npm-run-all": "^4.0.2",
+    "pre-commit": "^1.2.2",
+    "prettier": "^1.8.2",
     "sinon": "^2.2.0",
     "socketcluster-client": "^5.0.13",
     "superagent": "^3.5.2",

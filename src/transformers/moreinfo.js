@@ -106,16 +106,16 @@ function containsError(response) {
     const status = miResponse.requestStatus;
     if (status.statusEnum.$ === 'ok') {
       return false;
-    } else { // eslint-disable-line no-else-return
-      if (_.has(status, 'errorText.$')) {
-        log.error('Error in response: ErrorCode: '
-          + status.statusEnum.$ + ' ErrorText: '
-          + status.errorText.$);
-      } else {
-        log.error('Error in response: ErrorCode: ' + status.statusEnum.$);
-      }
-      return true;
     }
+
+    if (_.has(status, 'errorText.$')) {
+      log.error('Error in response: ErrorCode: '
+        + status.statusEnum.$ + ' ErrorText: '
+        + status.errorText.$);
+    } else {
+      log.error('Error in response: ErrorCode: ' + status.statusEnum.$);
+    }
+    return true;
   }
 
   log.error('No statusEnum in response!');
