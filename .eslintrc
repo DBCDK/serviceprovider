@@ -109,7 +109,6 @@
     // XP "no-unused-vars": 2,
     "no-use-before-define": 2,
     // Stylistic Issues
-    "indent": [2, 2, {"SwitchCase": 1}],
     // XP
     // "brace-style": [
     //   2,
@@ -156,18 +155,6 @@
       "always"
     ],
     "padded-blocks": 0,
-    "quotes": [
-      2,
-      "single"
-    ],
-    "quote-props": [
-      2,
-      "as-needed"
-    ],
-    "semi": [
-      2,
-      "always"
-    ],
     "sort-vars": [
       0,
       {
@@ -186,12 +173,11 @@
     "wrap-regex": 0,
     // Legacy
     "max-depth": 0,
-    "max-len": [
-      2,
-      180
-    ],
     "max-params": 0,
     "max-statements": 0,
     "no-plusplus": 0
-  }
+  },
+  "extends": [
+    "prettier"
+  ]
 }
