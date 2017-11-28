@@ -158,11 +158,11 @@ xhr_promise(xhr).then(function(result) {
 // Requests to the API can be sent by POSTing a JSON object
 // to the API endpoint:
 
-HTTP_POST('https://openplatform.dbc.dk/v1/suggest',
+HTTP_POST('https://openplatform.dbc.dk/v2/suggest',
     {q: 'Steppe', type: 'title',
      access_token: access_token});
 
-HTTP_POST('https://openplatform.dbc.dk/v1/search',
+HTTP_POST('https://openplatform.dbc.dk/v2/search',
     {q: 'hello', access_token: access_token});
 
 // All of the other APIs also have the same structure
@@ -198,7 +198,7 @@ function HTTP_POST(url, parameters) {
 
 var link = document.getElementById('sample_url');
 link.href = link.innerHTML =
-  'https://openplatform.dbc.dk/v1/search?' +
+  'https://openplatform.dbc.dk/v2/search?' +
   'q=hej&pretty=true&access_token=' + access_token;
 
 // Close open code blocks. They contain scope for logins / tokens.
