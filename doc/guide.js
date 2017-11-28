@@ -1,19 +1,19 @@
 // # Quick start guide to the open platform
 //
 // This introduction to getting started with the open platform is online on:
-// [https://openplatform.dbc.dk/v1/guide.html#client\_id:client\_secret](https://openplatform.dbc.dk/v2/guide.html#client_id:client_secret). Supply your `client_id` and `client_secret` in the url hash, to make the examples work.
+// [https://openplatform.dbc.dk/v2/guide.html#client\_id:client\_secret](https://openplatform.dbc.dk/v2/guide.html#client_id:client_secret). Supply your `client_id` and `client_secret` in the url hash, to make the examples work.
 //
 // The api-documentation is [https://openplatform.dbc.dk/v2/](https://openplatform.dbc.dk/v2/).
 //
 // The guide is written as a literate JavaScript
-// [source file](https://openplatform.dbc.dk/v1/guide.js),
+// [source file](https://openplatform.dbc.dk/v2/guide.js),
 // that can be executed directly in the browser.
 // Open the browser console to see the result of the examples.
 //
 // # JavaScript API
 //
 // To use the open platform from a browser, load
-// `https://openplatform.dbc.dk/v1/dbc_openplatform.min.js`,
+// `https://openplatform.dbc.dk/v2/dbc_openplatform.min.js`,
 // with a `<script>`-tag, or in a similar way.
 // Then the `dbcOpenPlatform` object will be available.
 // Do not cache this JavaScript library indefinitely,
