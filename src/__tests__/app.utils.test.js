@@ -1,5 +1,10 @@
 import {assert, fail} from 'chai';
-import {fieldsFilter, getContext, SMAUG_LOCATION, healthCheck} from '../app.utils';
+import {
+  fieldsFilter,
+  getContext,
+  SMAUG_LOCATION,
+  healthCheck
+} from '../app.utils';
 import {fieldsFilterMock} from './mocks/mocks';
 
 import nock from 'nock';
@@ -52,15 +57,14 @@ describe('Unittesting the methods in app.middlewares.utils.js', () => {
       });
     });
 
-    it('should throw an error on invalid request', (cb) => {
+    it('should throw an error on invalid request', cb => {
       nock(SMAUG_LOCATION)
         .get('/configuration?token=hep')
         .reply(403, {});
 
-      getContext('hep')
-        .catch(() => {
-          cb();
-        });
+      getContext('hep').catch(() => {
+        cb();
+      });
     });
   });
 
@@ -109,7 +113,7 @@ describe('Unittesting the methods in app.middlewares.utils.js', () => {
       healthCheck(mockReq, mockRes);
     });
 
-    it('should handle all errors', (cb) => {
+    it('should handle all errors', cb => {
       const mockReq = {
         app: {
           set: a => a
