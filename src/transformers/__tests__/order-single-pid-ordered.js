@@ -52,7 +52,7 @@ let mockData = {
 };
 
 describe('Automated test: order-single-pid-ordered', () => {
-  it('expected response. ID:87ccg1, for {"pids":["870970-basis:28126727"],"expires":"2216-08-01","library":"DK-100451","phone":"123454","address":"ADDRESS","email":"EMAIL"}', done => {
+  it('expected response. ID:87ccg1, for {"pids":["870970-basis:28126727"],"expires":"2216-08-01","pickUpBranch":"DK-100451","phone":"123454","address":"ADDRESS","email":"EMAIL"}', done => {
     context.mockData = mockData;
     provider
       .execute(
@@ -60,7 +60,7 @@ describe('Automated test: order-single-pid-ordered', () => {
         {
           pids: ['870970-basis:28126727'],
           expires: '2216-08-01',
-          library: 'DK-100451',
+          pickUpBranch: 'DK-100451',
           phone: '123454',
           address: 'ADDRESS',
           email: 'EMAIL'

@@ -42,7 +42,7 @@ let provider = Provider();
 let mockData = {};
 
 describe('Automated test: order-no-pids-in-pidlist', () => {
-  it('expected response. ID:x6sfsn, for {"pretty":true,"pids":[],"expires":"2016-08-01","library":"DK-100451","phone":"123454","address":"ADDRESS","email":"EMAIL"}', done => {
+  it('expected response. ID:x6sfsn, for {"pretty":true,"pids":[],"expires":"2016-08-01","pickUpBranch":"DK-100451","phone":"123454","address":"ADDRESS","email":"EMAIL"}', done => {
     context.mockData = mockData;
     provider
       .execute(
@@ -51,7 +51,7 @@ describe('Automated test: order-no-pids-in-pidlist', () => {
           pretty: true,
           pids: [],
           expires: '2016-08-01',
-          library: 'DK-100451',
+          pickUpBranch: 'DK-100451',
           phone: '123454',
           address: 'ADDRESS',
           email: 'EMAIL'

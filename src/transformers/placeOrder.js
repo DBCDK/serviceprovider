@@ -29,8 +29,8 @@ function validateParams(params) {
   if (params.expires && dateOffset < 0) {
     throw ('The expire argument must be a future date');
   }
-  if (!params.library) {
-    throw ('library must be provided (used for pickup)');
+  if (!params.pickUpBranch) {
+    throw ('pickUpBranch must be provided');
   }
 }
 
@@ -94,7 +94,7 @@ function constructSoap(pidList, expireDate, params, orderSystem) {
            <exactEdition>false</exactEdition>
            <needBeforeDate>${expireDate}</needBeforeDate>
            <orderSystem>${orderSystem}</orderSystem>
-           <pickUpAgencyId>${params.library}</pickUpAgencyId>
+           <pickUpAgencyId>${params.pickUpBranch}</pickUpAgencyId>
 ${pidList.map(pid => {
   return `           <pid>${pid}</pid>`;
 }).join('\n')}
