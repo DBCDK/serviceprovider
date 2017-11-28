@@ -42,7 +42,7 @@ let provider = Provider();
 let mockData = {};
 
 describe('Automated test: order-invalid-date', () => {
-  it('expected response. ID:cj37ju, for {"pids":["870970-basis:28126727"],"expires":"2016-018-01","library":"DK-100451","phone":"123454","address":"ADDRESS","email":"EMAIL"}', done => {
+  it('expected response. ID:cj37ju, for {"pids":["870970-basis:28126727"],"expires":"2016-018-01","pickUpBranch":"DK-100451","phone":"123454","address":"ADDRESS","email":"EMAIL"}', done => {
     context.mockData = mockData;
     provider
       .execute(
@@ -50,7 +50,7 @@ describe('Automated test: order-invalid-date', () => {
         {
           pids: ['870970-basis:28126727'],
           expires: '2016-018-01',
-          library: 'DK-100451',
+          pickUpBranch: 'DK-100451',
           phone: '123454',
           address: 'ADDRESS',
           email: 'EMAIL'
