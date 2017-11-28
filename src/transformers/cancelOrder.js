@@ -13,9 +13,13 @@ import {getIdFromIsil} from './utils/isil.utils';
  * @param {object} params parameters to validate
  * @throws if validation fails
  */
-function validateParams(params) {
+export function validateParams(params) {
   if (!params.orderId) {
     throw ('missing orderId. Needed to cancel order');
+  }
+
+  if (typeof params.orderId !== 'string') {
+    throw ('orderId must be a string');
   }
 }
 

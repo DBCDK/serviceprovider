@@ -61,7 +61,7 @@ describe('Automated test: order-no-pids-in-pidlist', () => {
       .then(result => {
         assert.deepEqual(result, {
           statusCode: 400,
-          error: 'At least one pid must be provided to place order'
+          error: 'missing pids parameter'
         });
         done();
       })
@@ -70,7 +70,7 @@ describe('Automated test: order-no-pids-in-pidlist', () => {
           {throw: result},
           {
             statusCode: 400,
-            error: 'At least one pid must be provided to place order'
+            error: 'missing pids parameter'
           }
         );
         done();

@@ -3,7 +3,9 @@
  * Unittesting methods in order.utils.js
  */
 import {assert} from 'chai';
-import {validateDeleteOrder, validateOrder} from '../utils/order.utils';
+
+const validateDeleteOrder = require('../cancelOrder.js').validateParams;
+const validateOrder = require('../placeOrder.js').validateParams;
 
 describe('Unittesting methods in order.utils.js - validateDeleteOrder', () => {
   it('Should throw when orderId is missing', () => {
