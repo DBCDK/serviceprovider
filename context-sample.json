@@ -34,6 +34,7 @@
       "password": "XXXXX"
     },
     "user": {
+      "id": "XXXXX",
       "salt": "XXXXX",
       "pin": "XXXXX",
       "libraryId": "710100",

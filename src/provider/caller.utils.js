@@ -32,8 +32,45 @@ export const randomId = () => Math.random().toString(36).slice(2, 8);
 // function for escaping special regex characters
 const regexEscape = s => s.replace(/[\\[\](\|)*?+.^$]/g, c => '\\' + c);
 
-// these keys in entries in config contains information that needs to be removed from the test
-const blacklist = ['id', 'pin', 'ddbcmsapipassword', 'salt', 'authid', 'authpassword', 'authgroupid', 'userpin', 'userid', 'password', 'group', 'user'];
+// these keys in entries in config contains information that are not secret
+const whitelist = {
+    "services": {
+      "ddbcmsapi": true,
+      "moreinfo": true,
+      "openagency": true,
+      "openholdingstatus": true,
+      "PRODopenorder": true,
+      "openorder": true,
+      "opensearch": true,
+      "openuserstatus": true,
+      "rank": true,
+      "suggestpopular": true,
+      "suggestcreator": true,
+      "suggestlibrary": true,
+      "suggestsubject": true,
+      "recommendurls": true,
+      "communityservice": true
+    },
+    "communityservice": {
+      "id": true
+    },
+    "search": {
+      "agency": true,
+      "profile": true,
+      "collectionidentifiers": true
+    },
+    "netpunkt": {
+    },
+    "user": {
+      "libraryId": true,
+      "agency": true,
+      "isil": true
+    },
+    "app": {
+      "orderpolicyrequester": true,
+      "orderSystem": true
+    }
+};
 
 /**
  * remove sensitive data from a string.
@@ -42,15 +79,11 @@ const blacklist = ['id', 'pin', 'ddbcmsapipassword', 'salt', 'authid', 'authpass
 function censor(str, context) {
   // Identify strings that needs to be redacted
   const forbidden = {};
-  function blackListIterator(key, subkey) {
-    if (context[key][subkey]) {
-      forbidden[context[key][subkey]] = true;
-    }
-  }
-
-  for (const key in context) { // eslint-disable-line guard-for-in
-    if (context.hasOwnProperty(key)) {
-      blacklist.forEach(blackListIterator.bind(null, key));
+  for (const key in context) {
+    for (const subkey in context[key]) {
+      if (!whitelist[key] || !whitelist[key][subkey]) {
+        forbidden[context[key][subkey]] = true;
+      }
     }
   }
 
@@ -78,7 +111,7 @@ export function saveTest(test) {
   for (const key1 in test.context) {
     cleanedContext[key1] = Object.assign({}, test.context[key1]);
     for (const key2 in cleanedContext[key1]) {
-      if (blacklist.indexOf(key2) !== -1) {
+      if (!whitelist[key1] || !whitelist[key1][key2]) {
         cleanedContext[key1][key2] = 'XXXXX';
       }
     }
