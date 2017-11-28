@@ -1,4 +1,3 @@
-
 /**
  * @file
  * Unittesting the methods in app.middlewares.utils.js

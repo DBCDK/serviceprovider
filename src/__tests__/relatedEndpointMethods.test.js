@@ -3,7 +3,6 @@ import {getSelector} from '../transformers/community/utils/relatedEndpointMethod
 
 describe('getRelatedList functions', () => {
   describe('getSelector', () => {
-
     it('should return profile selector', () => {
       const result = getSelector('profile', 'test', 1);
       assert.deepEqual(result, {
@@ -30,6 +29,5 @@ describe('getRelatedList functions', () => {
         }
       });
     });
-
   });
 });
