@@ -1,0 +1,10 @@
+definitions:
+  RenewResponse:
+    $ref: "#/definitions/Renew"
+  Renew:
+    type: object
+    properties:
+      loanId: 
+        type: string
+      returnDate: 
+        type: string
