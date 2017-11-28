@@ -147,7 +147,7 @@ xhr_promise(xhr).then(function(result) {
 // You can also express the entire query in an url,
 // which is useful for interactive testing.
 // An example search url is:
-// <a id=sample_url>https://openplatform.dbc.dk/v1/search?q=hej&pretty=true&access_token=...</a>
+// <a id=sample_url>https://openplatform.dbc.dk/v2/search?q=hej&pretty=true&access_token=...</a>
 //
 // The serviceprovider tries to parse each individual url parameter
 // as JSON, and if that fails just use it as a string. This
