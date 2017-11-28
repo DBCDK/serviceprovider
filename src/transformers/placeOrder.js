@@ -14,7 +14,7 @@ import {extend} from 'lodash';
 * @param {object} params parameters to validate
 * @throws if validation fails
 */
-function validateParams(params) {
+export function validateParams(params) {
   if (!params.pids || params.pids.length === 0) {
     throw ('missing pids parameter');
   }
