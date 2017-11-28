@@ -174,7 +174,7 @@ api:
         example: ["870970-basis:51989252"]
         type: array
         items: {type: "string"}
-      library:
+      pickUpBranch:
         description: The library branch id to deliver to. Required when making a new order. The branch id must belong the the agency where the user is logged in. (relationships between agencies and branches can be looked up in the `/libraries` endpoint)
         type: string
         example: "700401"
