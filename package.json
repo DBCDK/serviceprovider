@@ -28,7 +28,9 @@
     "before:commit": "npm run lint && npm run coverage && npm run cukes:cover && npm run collect:coverage && npm run sonar",
     "sonar": "sonar-runner -Dsonar.projectKey=sp:local -Dsonar.projectName=ServiceProviderLocal -Dsonar.projectVersion=1.0 -Dsonar.sources=./src"
   },
-  "pre-commit": ["prettier"],
+  "pre-commit": [
+    "prettier"
+  ],
   "repository": {
     "type": "git",
     "url": "git+https://github.com/DBCDK/serviceprovider.git"
@@ -58,7 +60,7 @@
     "jsonschema": "^1.1.0",
     "lodash": "^4.13.1",
     "minimist": "^1.2.0",
-    "moment": "^2.18.1",
+    "moment": "^2.19.2",
     "object-mapper": "^3.0.1",
     "path": "^0.12.7",
     "request": "^2.81.0",
