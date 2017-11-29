@@ -15,11 +15,11 @@ import {getIdFromIsil} from './utils/isil.utils';
  */
 export function validateParams(params) {
   if (!params.orderId) {
-    throw ('missing orderId. Needed to cancel order');
+    throw 'missing orderId. Needed to cancel order';
   }
 
   if (typeof params.orderId !== 'string') {
-    throw ('orderId must be a string');
+    throw 'orderId must be a string';
   }
 }
 
@@ -29,16 +29,21 @@ export function validateParams(params) {
  * @returns soap request string
  */
 function constructSoap(params) {
-
   let soap = `<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:open="http://oss.dbc.dk/ns/openuserstatus">
    <soapenv:Header/>
    <soapenv:Body>
       <open:cancelOrderRequest>
          <open:agencyId>${params.agencyId}</open:agencyId>
          <open:authentication>
-            <open:groupIdAut>${params['authentication.groupIdAut']}</open:groupIdAut>
-            <open:passwordAut>${params['authentication.passwordAut']}</open:passwordAut>
-            <open:userIdAut>${params['authentication.userIdAut']}</open:userIdAut>
+            <open:groupIdAut>${
+              params['authentication.groupIdAut']
+            }</open:groupIdAut>
+            <open:passwordAut>${
+              params['authentication.passwordAut']
+            }</open:passwordAut>
+            <open:userIdAut>${
+              params['authentication.userIdAut']
+            }</open:userIdAut>
          </open:authentication>
          <open:cancelOrder>
             <open:orderId>${params['cancelOrder.orderId']}</open:orderId>
@@ -68,7 +73,8 @@ export default (request, context) => {
   try {
     log.debug('Validating request');
     validateParams(request);
-  } catch (err) { // eslint-disable-line brace-style
+  } catch (err) {
+    // eslint-disable-line brace-style
     return new Promise(resolve => {
       return resolve({statusCode: 400, error: err});
     });
@@ -95,10 +101,16 @@ export default (request, context) => {
     body = JSON.parse(body).cancelOrderResponse;
 
     if (body.cancelOrderStatus[0].cancelOrderError) {
-      return {statusCode: 500, error: body.cancelOrderStatus[0].cancelOrderError.$};
+      return {
+        statusCode: 500,
+        error: body.cancelOrderStatus[0].cancelOrderError.$
+      };
     }
     if (body.cancelOrderStatus[0].orderCancelled) {
-      return {statusCode: 200, data: {deleted: true, orderId: body.cancelOrderStatus[0].orderId.$}};
+      return {
+        statusCode: 200,
+        data: {deleted: true, orderId: body.cancelOrderStatus[0].orderId.$}
+      };
     }
     return {statusCode: 500, error: 'Unknown error occured'};
   });

@@ -13,7 +13,6 @@ import {getIdFromIsil} from './utils/isil.utils';
  * @returns {Object} response with mapped keys
  */
 function loan(loanItem) {
-
   const result = {
     loanId: loanItem.loanId.$,
     dueDate: loanItem.dateDue.$,
@@ -66,16 +65,26 @@ function order(orderItem) {
     pickUpAgency: orderItem.pickUpAgency.$
   };
 
-  const orderFields = ['holdQueuePosition', 'creator', 'title', 'orderDate', 'pickUpExpiryDate', 'pickUpId', 'titleId'];
+  const orderFields = [
+    'holdQueuePosition',
+    'creator',
+    'title',
+    'orderDate',
+    'pickUpExpiryDate',
+    'pickUpId',
+    'titleId'
+  ];
 
   orderFields.forEach(key => {
     if (key === 'creator' && orderItem.author && orderItem.author.$) {
       result[key] = orderItem.author.$;
-    }
-    else if (key === 'titleId' && orderItem.bibliographicRecordId && orderItem.bibliographicRecordId.$) {
+    } else if (
+      key === 'titleId' &&
+      orderItem.bibliographicRecordId &&
+      orderItem.bibliographicRecordId.$
+    ) {
       result[key] = orderItem.bibliographicRecordId.$;
-    }
-    else if (orderItem[key] && orderItem[key].$) {
+    } else if (orderItem[key] && orderItem[key].$) {
       result[key] = orderItem[key].$;
     }
   });
@@ -93,7 +102,6 @@ function order(orderItem) {
  * @api public
  */
 export default (request, context) => {
-
   if (!(context.get('user.id') && context.get('user.pin'))) {
     return Promise.resolve({
       statusCode: 403,
@@ -114,59 +122,70 @@ export default (request, context) => {
   };
 
   const idPromise = new Promise((resolve, reject) =>
-    pbkdf2(userAgencyId + ' ' + context.get('user.id'),
-      context.get('user.salt'), 100000, 24, 'sha512', (err, key) => err ? reject(err) : resolve(key)));
+    pbkdf2(
+      userAgencyId + ' ' + context.get('user.id'),
+      context.get('user.salt'),
+      100000,
+      24,
+      'sha512',
+      (err, key) => (err ? reject(err) : resolve(key))
+    )
+  );
 
-  return context.call('openuserstatus', params).then(body => idPromise.then(id => {
-    if (body.data.getUserStatusResponse.getUserStatusError) {
+  return context.call('openuserstatus', params).then(body =>
+    idPromise.then(id => {
+      if (body.data.getUserStatusResponse.getUserStatusError) {
+        return Promise.resolve({
+          statusCode: 500,
+          error: body.data.getUserStatusResponse.getUserStatusError.$
+        });
+      }
+
+      const data = {
+        id: id.toString('base64')
+      };
+
+      if (body.data.getUserStatusResponse.userName) {
+        data.name = body.data.getUserStatusResponse.userName.$;
+      }
+      if (body.data.getUserStatusResponse.userAddress) {
+        data.address = body.data.getUserStatusResponse.userAddress.$;
+      }
+      if (body.data.getUserStatusResponse.userPostalCode) {
+        data.postalCode = body.data.getUserStatusResponse.userPostalCode.$;
+      }
+      if (body.data.getUserStatusResponse.userMail) {
+        data.mail = body.data.getUserStatusResponse.userMail.$;
+      }
+
+      let loans = [];
+      if (body.data.getUserStatusResponse.userStatus.loanedItems.loan) {
+        loans = body.data.getUserStatusResponse.userStatus.loanedItems.loan;
+      }
+      data.loans = loans.map(loan);
+
+      let orders = [];
+      if (body.data.getUserStatusResponse.userStatus.orderedItems.order) {
+        orders = body.data.getUserStatusResponse.userStatus.orderedItems.order;
+      }
+      data.orders = orders.map(order);
+
+      let debts = [];
+      if (body.data.getUserStatusResponse.userStatus.fiscalAccount) {
+        debts =
+          body.data.getUserStatusResponse.userStatus.fiscalAccount
+            .fiscalTransaction || [];
+      }
+      data.debt = debts.map(debt);
+
+      if (context.get('services.ddbcmsapi')) {
+        data.ddbcmsapi = context.get('services.ddbcmsapi');
+      }
+
       return Promise.resolve({
-        statusCode: 500,
-        error: body.data.getUserStatusResponse.getUserStatusError.$
+        statusCode: 200,
+        data: data
       });
-    }
-
-    const data = {
-      id: id.toString('base64')
-    };
-
-    if (body.data.getUserStatusResponse.userName) {
-      data.name = body.data.getUserStatusResponse.userName.$;
-    }
-    if (body.data.getUserStatusResponse.userAddress) {
-      data.address = body.data.getUserStatusResponse.userAddress.$;
-    }
-    if (body.data.getUserStatusResponse.userPostalCode) {
-      data.postalCode = body.data.getUserStatusResponse.userPostalCode.$;
-    }
-    if (body.data.getUserStatusResponse.userMail) {
-      data.mail = body.data.getUserStatusResponse.userMail.$;
-    }
-
-    let loans = [];
-    if (body.data.getUserStatusResponse.userStatus.loanedItems.loan) {
-      loans = body.data.getUserStatusResponse.userStatus.loanedItems.loan;
-    }
-    data.loans = loans.map(loan);
-
-    let orders = [];
-    if (body.data.getUserStatusResponse.userStatus.orderedItems.order) {
-      orders = body.data.getUserStatusResponse.userStatus.orderedItems.order;
-    }
-    data.orders = orders.map(order);
-
-    let debts = [];
-    if (body.data.getUserStatusResponse.userStatus.fiscalAccount) {
-      debts = body.data.getUserStatusResponse.userStatus.fiscalAccount.fiscalTransaction || [];
-    }
-    data.debt = debts.map(debt);
-
-    if (context.get('services.ddbcmsapi')) {
-      data.ddbcmsapi = context.get('services.ddbcmsapi');
-    }
-
-    return Promise.resolve({
-      statusCode: 200,
-      data: data
-    });
-  }));
+    })
+  );
 };
