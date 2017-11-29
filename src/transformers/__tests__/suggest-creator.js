@@ -1,18 +1,18 @@
-/* eslint-disable max-len, quotes, comma-spacing, key-spacing, quote-props */
+/* eslint-disable max-len, quotes, comma-spacing, key-spacing, quote-props, indent */
 // Request: suggest {"q":"rowling","type":"creator","limit":3,"fields":["term"]}
 
 import Provider from '../../provider/Provider.js';
 import {assert, fail} from 'chai';
 
-let context = {
+const context = {
   services: {
-    ddbcmsapi: 'http://rest.filmstriben.dbc.inlead.dk/web/',
-    moreinfo: 'http://moreinfo.addi.dk/2.6/',
+    ddbcmsapi: 'https://cmscontent.dbc.dk/',
+    moreinfo: 'https://moreinfo.addi.dk/2.10/',
     openagency: 'http://openagency.addi.dk/2.24/',
     openholdingstatus: 'https://openholdingstatus.addi.dk/2.2/',
-    openorder: 'https://openorder.addi.dk/2.7.1/',
-    TESTopenorder: 'https://openorder.addi.dk/test_2.7.1/',
-    opensearch: 'http://opensearch.addi.dk/b3.0_4.2/',
+    PRODopenorder: 'https://openorder.addi.dk/2.8/',
+    openorder: 'https://openorder.addi.dk/test_2.8/',
+    opensearch: 'https://opensearch.addi.dk/b3.0_4.5/',
     openuserstatus: 'https://openuserstatus.addi.dk/1.5/',
     rank: 'https://xptest.dbc.dk/ms/rank/v1',
     suggestpopular: 'http://xptest.dbc.dk/ms/entity-pop/v1',
@@ -22,7 +22,11 @@ let context = {
     recommendurls: {
       default: 'https://xptest.dbc.dk/ms/recommend-cosim/v1',
       popular: 'https://xptest.dbc.dk/ms/recommend-pop/v1'
-    }
+    },
+    communityservice: 'http://localhost:4010/v1'
+  },
+  communityservice: {
+    id: 1
   },
   search: {
     agency: '775100',
@@ -30,22 +34,34 @@ let context = {
     collectionidentifiers:
       'rec.collectionIdentifier:150013-palle OR rec.collectionIdentifier:758000-katalog'
   },
-  netpunkt: {user: 'XXXXX', group: 'XXXXX', password: 'XXXXX'},
-  user: {agency: '100451', id: 'XXXXX', pin: 'XXXXX', salt: 'XXXXX'},
+  netpunkt: {
+    user: 'XXXXX',
+    group: 'XXXXX',
+    password: 'XXXXX'
+  },
+  user: {
+    id: 'XXXXX',
+    salt: 'XXXXX',
+    pin: 'XXXXX',
+    libraryId: '710100',
+    agency: '710100',
+    isil: 'DK-710100'
+  },
   app: {
     clientid: 'XXXXX',
     ddbcmsapipassword: 'XXXXX',
-    orderpolicyrequester: '190101'
+    orderpolicyrequester: '190101',
+    orderSystem: 'bibliotekdk'
   }
 };
-let provider = Provider();
-let mockData = {
+const provider = Provider();
+const mockData = {
   '["suggestcreator",{"qs":{"query":"rowling","n":3}}]':
-    '{"responseHeader": {"q": "rowling", "version": "0.1.0", "build": "263", "time": 1, "ab-id": "1", "args": {"hr": "None", "hl": "None"}, "svn-revision": "97895"}, "response": {"suggestions": [{"frequency": 144507, "suggestion": "Joanne K. Rowling"}, {"frequency": 451, "suggestion": "Phelps Sarah aus"}, {"frequency": 62, "suggestion": "Newt Scamander"}], "numFound": 8}}'
+    '{"responseHeader": {"q": "rowling", "version": "0.2.0", "build": "549", "time": 0, "ab-id": "1", "args": {"hr": "None", "hl": "None"}, "svn-revision": "106527"}, "response": {"suggestions": [{"frequency": 146002, "suggestion": "Joanne K. Rowling"}, {"frequency": 7648, "suggestion": "Joanne K Rowling"}, {"frequency": 2903, "suggestion": "J.K. Rowling"}], "numFound": 8}}'
 };
 
 describe('Automated test: suggest-creator', () => {
-  it('expected response. ID:mgd585, for {"q":"rowling","type":"creator","limit":3,"fields":["term"]}', done => {
+  it('expected response. ID:544nkp, for {"q":"rowling","type":"creator","limit":3,"fields":["term"]}', done => {
     context.mockData = mockData;
     provider
       .execute(
@@ -57,9 +73,15 @@ describe('Automated test: suggest-creator', () => {
         assert.deepEqual(result, {
           statusCode: 200,
           data: [
-            {term: 'Joanne K. Rowling'},
-            {term: 'Phelps Sarah aus'},
-            {term: 'Newt Scamander'}
+            {
+              term: 'Joanne K. Rowling'
+            },
+            {
+              term: 'Joanne K Rowling'
+            },
+            {
+              term: 'J.K. Rowling'
+            }
           ]
         });
         done();
@@ -70,9 +92,15 @@ describe('Automated test: suggest-creator', () => {
           {
             statusCode: 200,
             data: [
-              {term: 'Joanne K. Rowling'},
-              {term: 'Phelps Sarah aus'},
-              {term: 'Newt Scamander'}
+              {
+                term: 'Joanne K. Rowling'
+              },
+              {
+                term: 'Joanne K Rowling'
+              },
+              {
+                term: 'J.K. Rowling'
+              }
             ]
           }
         );
