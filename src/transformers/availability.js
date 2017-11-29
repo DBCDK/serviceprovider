@@ -4,7 +4,6 @@ import {log} from '../utils.js';
 import _ from 'lodash';
 
 export default (request, context) => {
-
   const promises = [
     openHoldingStatus(request, context),
     getOrderPolicy({pids: [request.pid]}, context)
@@ -22,8 +21,13 @@ export default (request, context) => {
       },
       orderPossible: true
     };
-    let statusCode = openHoldingStatusRes.statusCode ? openHoldingStatusRes.statusCode : 500;
-    if ((statusCode === 200 || statusCode === 500) && getOrderPolicyRes.statusCode) {
+    let statusCode = openHoldingStatusRes.statusCode
+      ? openHoldingStatusRes.statusCode
+      : 500;
+    if (
+      (statusCode === 200 || statusCode === 500) &&
+      getOrderPolicyRes.statusCode
+    ) {
       statusCode = getOrderPolicyRes.statusCode;
     }
     if (_.has(openHoldingStatusRes, 'data.willLend')) {
