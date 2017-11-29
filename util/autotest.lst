@@ -14,9 +14,9 @@
 # libraries (which needs to be run individually on a newly started serviceprovider, to get mock-data that are otherwise cached).
 #
 ###########
-availability {"pid":"","createTest":"availability-empty-pid"}
-availability {"pid":"870970-basis:28448716","createTest":"availability_true"}
-availability {"pid":"870970-basis:28448717","createTest":"availability_false"}
+availability {"pids":[],"createTest":"availability-empty-pid"}
+availability {"pids":["870970-basis:28448716"],"createTest":"availability_one"}
+availability {"pids":["870970-basis:28448717","870970-basis:28949847"],"createTest":"availability_multi"}
 facets {"q":"aQueryMatchingNothing","createTest":"facets_noresult"}
 facets {"q":"harry AND potter","fields":["creator"],"limit":0,"createTest":"facets_zero_limit"}
 facets {"q":"harry AND potter","fields":["creator"],"limit":-1,"createTest":"facets_negative_limit"}

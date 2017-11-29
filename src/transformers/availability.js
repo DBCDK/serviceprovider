@@ -3,41 +3,49 @@ import getOrderPolicy from './getOrderPolicy';
 import {log} from '../utils.js';
 import _ from 'lodash';
 
-export default (request, context) => {
-  const promises = [
+async function availability(request, context) {
+  const [openHoldingStatusRes, getOrderPolicyRes] = await Promise.all([
     openHoldingStatus(request, context),
     getOrderPolicy({pids: [request.pid]}, context)
-  ];
+  ]);
 
-  return Promise.all(promises).then(body => {
-    // We now know there are two returned promises in body!
-    const openHoldingStatusRes = body[0];
-    const getOrderPolicyRes = body[1];
+  if (openHoldingStatusRes.statusCode !== 200) {
+    throw new Error(
+      `openHolding response ${JSON.stringify} for ${request.pid}`
+    );
+  }
+  if (getOrderPolicyRes.statusCode !== 200) {
+    throw new Error(
+      `getOrderPolicyRes response ${JSON.stringify} for ${request.pid}`
+    );
+  }
 
-    const data = {
-      holdingStatus: {
-        willLend: false,
-        expectedDelivery: null
-      },
-      orderPossible: true
-    };
-    let statusCode = openHoldingStatusRes.statusCode
-      ? openHoldingStatusRes.statusCode
-      : 500;
-    if (
-      (statusCode === 200 || statusCode === 500) &&
-      getOrderPolicyRes.statusCode
-    ) {
-      statusCode = getOrderPolicyRes.statusCode;
-    }
-    if (_.has(openHoldingStatusRes, 'data.willLend')) {
-      data.holdingStatus = openHoldingStatusRes.data;
-    }
+  const data = {
+    holdingStatus: {
+      willLend: false,
+      expectedDelivery: null
+    },
+    orderPossible: true
+  };
 
-    if (getOrderPolicyRes.data.orderPossible === 'false') {
-      data.orderPossible = false;
-    }
+  if (_.has(openHoldingStatusRes, 'data.willLend')) {
+    data.holdingStatus = openHoldingStatusRes.data;
+  }
 
-    return {statusCode: statusCode, data};
-  });
+  if (getOrderPolicyRes.data.orderPossible === 'false') {
+    data.orderPossible = false;
+  }
+
+  return data;
+}
+
+export default async (request, context) => {
+  try {
+    const data = await Promise.all(
+      request.pids.map(pid => availability({pid}, context))
+    );
+    return {statusCode: 200, data: data};
+  } catch (e) {
+    return {statusCode: 500, error: e.message};
+  }
 };
