@@ -12,8 +12,7 @@ definitions:
         type: string
       agencyType:
         type: string
-      branchEmail:
-        type: string
+      branchEmail: {}
       branchId:
         type: string
       branchIsAgency:
@@ -22,8 +21,7 @@ definitions:
         items:
           type: string
         type: array
-      branchPhone:
-        type: string
+      branchPhone: {}
       branchShortName:
         items:
           type: string
