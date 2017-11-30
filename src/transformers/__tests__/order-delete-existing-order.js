@@ -46,19 +46,20 @@ let context = {
 };
 let provider = Provider();
 let mockData = {
-  '["openuserstatus","<soapenv:Envelope xmlns:soapenv=\\"http://schemas.xmlsoap.org/soap/envelope/\\" xmlns:open=\\"http://oss.dbc.dk/ns/openuserstatus\\">\\n   <soapenv:Header/>\\n   <soapenv:Body>\\n      <open:cancelOrderRequest>\\n         <open:agencyId>100451</open:agencyId>\\n         <open:authentication>\\n            <open:groupIdAut>XXXXX</open:groupIdAut>\\n            <open:passwordAut>XXXXX</open:passwordAut>\\n            <open:userIdAut>XXXXX</open:userIdAut>\\n         </open:authentication>\\n         <open:cancelOrder>\\n            <open:orderId>NCIPMDAxOXwyNy0wNS0yMDE2IDEwOjA0OjAyfEdlcmxvdywgSmVhbmV0dGUgJk9zbGFzaDticm98RGV0ICZtaWRkb3Q7bm9yc2tlIGpvYnx8fA==</open:orderId>\\n            <open:orderType>{params[\'cancelOrder.orderType\']}</open:orderType>\\n         </open:cancelOrder>\\n         <open:outputType>json</open:outputType>\\n         <open:userId>XXXXX</open:userId>\\n         <open:userPincode>XXXXX</open:userPincode>\\n      </open:cancelOrderRequest>\\n   </soapenv:Body>\\n</soapenv:Envelope>"]':
+  '["openuserstatus","<soapenv:Envelope xmlns:soapenv=\\"http://schemas.xmlsoap.org/soap/envelope/\\" xmlns:open=\\"http://oss.dbc.dk/ns/openuserstatus\\">\\n   <soapenv:Header/>\\n   <soapenv:Body>\\n      <open:cancelOrderRequest>\\n         <open:agencyId>100451</open:agencyId>\\n         <open:authentication>\\n            <open:groupIdAut>XXXXX</open:groupIdAut>\\n            <open:passwordAut>XXXXX</open:passwordAut>\\n            <open:userIdAut>XXXXX</open:userIdAut>\\n         </open:authentication>\\n         <open:cancelOrder>\\n            <open:orderId>NCIPMDAxOXwyNy0wNS0yMDE2IDEwOjA0OjAyfEdlcmxvdywgSmVhbmV0dGUgJk9zbGFzaDticm98RGV0ICZtaWRkb3Q7bm9yc2tlIGpvYnx8fA==</open:orderId>\\n            <open:orderType>Hold</open:orderType>\\n         </open:cancelOrder>\\n         <open:outputType>json</open:outputType>\\n         <open:userId>XXXXX</open:userId>\\n         <open:userPincode>XXXXX</open:userPincode>\\n      </open:cancelOrderRequest>\\n   </soapenv:Body>\\n</soapenv:Envelope>"]':
     '{"cancelOrderResponse":{"cancelOrderStatus":[{"orderId":{"$":"NCIPMDAxOXwyNy0wNS0yMDE2IDEwOjA0OjAyfEdlcmxvdywgSmVhbmV0dGUgJk9zbGFzaDticm98RGV0ICZtaWRkb3Q7bm9yc2tlIGpvYnx8fA==","@":"ous"},"orderCancelled":{"$":"","@":"ous"},"@":"ous"}],"@":"ous"},"@namespaces":{"ous":"http:\\/\\/oss.dbc.dk\\/ns\\/openuserstatus"}}'
 };
 
 describe('Automated test: order-delete-existing-order', () => {
-  it('expected response. ID:9vgcu5, for {"orderId":"Hold:NCIPMDAxOXwyNy0wNS0yMDE2IDEwOjA0OjAyfEdlcmxvdywgSmVhbmV0dGUgJk9zbGFzaDticm98RGV0ICZtaWRkb3Q7bm9yc2tlIGpvYnx8fA==","delete":true}', done => {
+  it('expected response. ID:9vgcu5, for {"orderId":"NCIPMDAxOXwyNy0wNS0yMDE2IDEwOjA0OjAyfEdlcmxvdywgSmVhbmV0dGUgJk9zbGFzaDticm98RGV0ICZtaWRkb3Q7bm9yc2tlIGpvYnx8fA==","orderType":"Hold","delete":true}', done => {
     context.mockData = mockData;
     provider
       .execute(
         'order',
         {
           orderId:
-            'Hold:NCIPMDAxOXwyNy0wNS0yMDE2IDEwOjA0OjAyfEdlcmxvdywgSmVhbmV0dGUgJk9zbGFzaDticm98RGV0ICZtaWRkb3Q7bm9yc2tlIGpvYnx8fA==',
+            'NCIPMDAxOXwyNy0wNS0yMDE2IDEwOjA0OjAyfEdlcmxvdywgSmVhbmV0dGUgJk9zbGFzaDticm98RGV0ICZtaWRkb3Q7bm9yc2tlIGpvYnx8fA==',
+          orderType: 'Hold',
           delete: true
         },
         context

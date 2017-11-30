@@ -110,7 +110,8 @@ describe('Automated test: user-get-user-info', () => {
             ],
             orders: [
               {
-                orderId: 'normal:17836938',
+                orderId: '17836938',
+                orderType: 'normal',
                 status: '',
                 pickUpAgency: 'DK-710100',
                 holdQueuePosition: '1',
@@ -120,7 +121,8 @@ describe('Automated test: user-get-user-info', () => {
                 titleId: '50758125'
               },
               {
-                orderId: 'normal:17836969',
+                orderId: '17836969',
+                orderType: 'normal',
                 status: '',
                 pickUpAgency: 'DK-710100',
                 holdQueuePosition: '1',
@@ -130,7 +132,8 @@ describe('Automated test: user-get-user-info', () => {
                 titleId: '24733165'
               },
               {
-                orderId: 'normal:17836977',
+                orderId: '17836977',
+                orderType: 'normal',
                 status: '',
                 pickUpAgency: 'DK-710100',
                 holdQueuePosition: '1',
@@ -140,7 +143,8 @@ describe('Automated test: user-get-user-info', () => {
                 titleId: '02004461'
               },
               {
-                orderId: 'normal:18180802',
+                orderId: '18180802',
+                orderType: 'normal',
                 status: 'Active',
                 pickUpAgency: 'DK-710100',
                 holdQueuePosition: '1',
@@ -204,7 +208,8 @@ describe('Automated test: user-get-user-info', () => {
               ],
               orders: [
                 {
-                  orderId: 'normal:17836938',
+                  orderId: '17836938',
+                  orderType: 'normal',
                   status: '',
                   pickUpAgency: 'DK-710100',
                   holdQueuePosition: '1',
@@ -214,7 +219,8 @@ describe('Automated test: user-get-user-info', () => {
                   titleId: '50758125'
                 },
                 {
-                  orderId: 'normal:17836969',
+                  orderId: '17836969',
+                  orderType: 'normal',
                   status: '',
                   pickUpAgency: 'DK-710100',
                   holdQueuePosition: '1',
@@ -224,7 +230,8 @@ describe('Automated test: user-get-user-info', () => {
                   titleId: '24733165'
                 },
                 {
-                  orderId: 'normal:17836977',
+                  orderId: '17836977',
+                  orderType: 'normal',
                   status: '',
                   pickUpAgency: 'DK-710100',
                   holdQueuePosition: '1',
@@ -234,7 +241,8 @@ describe('Automated test: user-get-user-info', () => {
                   titleId: '02004461'
                 },
                 {
-                  orderId: 'normal:18180802',
+                  orderId: '18180802',
+                  orderType: 'normal',
                   status: 'Active',
                   pickUpAgency: 'DK-710100',
                   holdQueuePosition: '1',

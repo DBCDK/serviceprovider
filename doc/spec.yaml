@@ -167,9 +167,13 @@ api:
     description: Order a library material, or remove an existing order.
     properties:
       orderId:
-        description: The identifier for the order, deleting an order. You get this from `/user`-status. Depending on the kind of order, it can take a long time from ordering, until the material with the orderId appears in the user status.
+        description: The identifier for the order consist of orderId and orderType. Required for deleting an order. You get this from `/user`-status. Depending on the kind of order, it can take a long time from ordering, until the material with the orderId/orderType appears in the user status.
         type: string
         example: "1234"
+      orderType:
+        description: The identifier for the order consist of orderId and orderType. Required for deleting an order. You get this from `/user`-status. Depending on the kind of order, it can take a long time from ordering, until the material with the orderId/orderType appears in the user status. Possible values for orderType are `Estimate`, `Hold`, `Loan`, `Non-returnable Copy`, `normal`, and `Stack Retrieval`
+        type: string
+        example: "normal"
       pids:
         description: The pids of the material to order. Several pids can be given, for example if you want to order a book, but does not care which of the editions. Required, and only applicable to new orders when making a new order.
         example: ["870970-basis:51989252"]
@@ -206,7 +210,7 @@ api:
     response:
       example: { "status": "ok" }
     examples:
-      - request: { "orderId": "1234", "delete": true }
+      - request: { "orderId": "1234", "orderType": "normal", "delete": true }
         response: { "orderId": "1234", "deleted": true }
   rank:
     tags:
@@ -409,14 +413,16 @@ api:
             materialId: "9782361951085"
             titleId: "51680057"
         orders:
-          - orderId: "Hold:24395923"
+          - orderId: "24395923"
+            orderType: "Hold"
             status: "In process"
             pickUpAgency: "DK-710111"
             holdQueuePosition: "1"
             creator: "Madsen, Peter, f. 1958"
             title: "Eventyrbogen"
             orderDate: "2016-05-27T00:00:00+02:00"
-          - orderId: "Hold:24400334"
+          - orderId: "24400334"
+            orderType: "normal"
             status: "Available for pickup"
             pickUpAgency: "DK-710111"
             holdQueuePosition: "1"

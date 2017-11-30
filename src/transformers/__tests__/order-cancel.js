@@ -55,15 +55,19 @@ const context = {
 };
 const provider = Provider();
 const mockData = {
-  '["openuserstatus","<soapenv:Envelope xmlns:soapenv=\\"http://schemas.xmlsoap.org/soap/envelope/\\" xmlns:open=\\"http://oss.dbc.dk/ns/openuserstatus\\">\\n   <soapenv:Header/>\\n   <soapenv:Body>\\n      <open:cancelOrderRequest>\\n         <open:agencyId>710100</open:agencyId>\\n         <open:authentication>\\n            <open:groupIdAut>XXXXX</open:groupIdAut>\\n            <open:passwordAut>XXXXX</open:passwordAut>\\n            <open:userIdAut>XXXXX</open:userIdAut>\\n         </open:authentication>\\n         <open:cancelOrder>\\n            <open:orderId>18180802</open:orderId>\\n            <open:orderType>{params[\'cancelOrder.orderType\']}</open:orderType>\\n         </open:cancelOrder>\\n         <open:outputType>json</open:outputType>\\n         <open:userId>XXXXX</open:userId>\\n         <open:userPincode>XXXXX</open:userPincode>\\n      </open:cancelOrderRequest>\\n   </soapenv:Body>\\n</soapenv:Envelope>"]':
+  '["openuserstatus","<soapenv:Envelope xmlns:soapenv=\\"http://schemas.xmlsoap.org/soap/envelope/\\" xmlns:open=\\"http://oss.dbc.dk/ns/openuserstatus\\">\\n   <soapenv:Header/>\\n   <soapenv:Body>\\n      <open:cancelOrderRequest>\\n         <open:agencyId>710100</open:agencyId>\\n         <open:authentication>\\n            <open:groupIdAut>XXXXX</open:groupIdAut>\\n            <open:passwordAut>XXXXX</open:passwordAut>\\n            <open:userIdAut>XXXXX</open:userIdAut>\\n         </open:authentication>\\n         <open:cancelOrder>\\n            <open:orderId>18180802</open:orderId>\\n            <open:orderType>normal</open:orderType>\\n         </open:cancelOrder>\\n         <open:outputType>json</open:outputType>\\n         <open:userId>XXXXX</open:userId>\\n         <open:userPincode>XXXXX</open:userPincode>\\n      </open:cancelOrderRequest>\\n   </soapenv:Body>\\n</soapenv:Envelope>"]':
     '{"cancelOrderResponse":{"cancelOrderStatus":[{"orderId":{"$":"18180802","@":"ous"},"orderCancelled":{"$":"","@":"ous"},"@":"ous"}],"@":"ous"},"@namespaces":{"ous":"http:\\/\\/oss.dbc.dk\\/ns\\/openuserstatus"}}'
 };
 
 describe('Automated test: order-cancel', () => {
-  it('expected response. ID:wuskx7, for {"orderId":"normal:18180802","delete":true}', done => {
+  it('expected response. ID:wuskx7, for {"orderId":"18180802", "orderType":"normal","delete":true}', done => {
     context.mockData = mockData;
     provider
-      .execute('order', {orderId: 'normal:18180802', delete: true}, context)
+      .execute(
+        'order',
+        {orderId: '18180802', orderType: 'normal', delete: true},
+        context
+      )
       .then(result => {
         assert.deepEqual(result, {
           statusCode: 200,

@@ -60,7 +60,8 @@ function debt(debtItem) {
  */
 function order(orderItem) {
   const result = {
-    orderId: `${orderItem.orderType.$}:${orderItem.orderId.$}`,
+    orderId: orderItem.orderId.$,
+    orderType: orderItem.orderType.$,
     status: orderItem.orderStatus.$,
     pickUpAgency: orderItem.pickUpAgency.$
   };

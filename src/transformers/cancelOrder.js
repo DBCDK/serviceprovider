@@ -17,9 +17,15 @@ export function validateParams(params) {
   if (!params.orderId) {
     throw 'missing orderId. Needed to cancel order';
   }
-
   if (typeof params.orderId !== 'string') {
     throw 'orderId must be a string';
+  }
+
+  if (!params.orderType) {
+    throw 'missing orderType. Needed to cancel order';
+  }
+  if (typeof params.orderType !== 'string') {
+    throw 'orderType must be a string';
   }
 }
 
@@ -47,7 +53,7 @@ function constructSoap(params) {
          </open:authentication>
          <open:cancelOrder>
             <open:orderId>${params['cancelOrder.orderId']}</open:orderId>
-            <open:orderType>{params['cancelOrder.orderType']}</open:orderType>
+            <open:orderType>${params['cancelOrder.orderType']}</open:orderType>
          </open:cancelOrder>
          <open:outputType>json</open:outputType>
          <open:userId>${params.userId}</open:userId>
@@ -81,8 +87,8 @@ export default (request, context) => {
   }
 
   let i = request.orderId.indexOf(':');
-  let orderType = request.orderId.substring(0, i);
-  let orderId = request.orderId.substring(i + 1);
+  let orderType = request.orderType;
+  let orderId = request.orderId;
 
   let params = {
     'cancelOrder.orderId': orderId,
