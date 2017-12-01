@@ -17,6 +17,7 @@
     "start:sp": "SMAUG=http://localhost:3000 SWAGGER_HTTP=true TEST_DEV=true forever -w --watchDirectory src/ --killSignal=SIGTERM src/main.js",
     "swagger:validate": "curl localhost:8080/v1/swagger.json > swagger.json ; swagger validate swagger.json",
     "test": "SMAUG=http://localhost:3000 LOG_LEVEL=off node --max-old-space-size=8192 node_modules/mocha/bin/mocha --compilers js:babel-register --recursive src/**/__tests__/* src/__tests__/* src/transformers/utils/**/__tests__/*",
+    "watch-test": "SMAUG=http://localhost:3000 LOG_LEVEL=off npx mocha --watch --timeout 5000 --compilers js:babel-register --recursive src/**/__tests__/* src/__tests__/* src/transformers/utils/**/__tests__/*",
     "test:single": "SMAUG=http://localhost:3000 LOG_LEVEL=off mocha --compilers js:babel-register",
     "test:community": "mocha ./src/transformers/community/__tests__/community_tests.js",
     "coverage": "SMAUG=http://localhost:3000 LOG_LEVEL=off babel-istanbul cover _mocha --report json --report lcov --dir ./qa/coverage/units -- --recursive src/**/__tests__/* src/__tests__/*",

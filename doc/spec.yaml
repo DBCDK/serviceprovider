@@ -5,16 +5,17 @@ api:
     description: |
       Get information about whether a material can be ordered /
       are available for the currently logged in user. Holdingstatus holds information about holdings on specified library.
-      OrderPossible indicates if a book can be ordered at current library.
+      orderPossible indicates if a book can be ordered at current library.
     required:
-      - pid
+      - pids
     properties:
-      pid:
-        description: pid of the work to order
-        type: string
-        example: "870970-basis:24284565"
+      pids:
+        description: pids of the works to check availability for
+        type: array
+        items: {type: "string"}
+        example: ["870970-basis:24284565"]
     response:
-      example: {"holdingstatus": {"willLend": true, "expectedDelivery": "2016-04-15"}, orderPossible: true}
+      example: [{"holdingstatus": {"willLend": true, "expectedDelivery": "2016-04-15"}, "orderPossible": true}]
   events:
     tags:
       - CMS

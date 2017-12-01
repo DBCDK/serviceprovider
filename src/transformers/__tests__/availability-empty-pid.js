@@ -1,5 +1,5 @@
 /* eslint-disable max-len, quotes, comma-spacing, key-spacing, quote-props, indent */
-// Request: availability {"pid":""}
+// Request: availability {"pids":[]}
 
 import Provider from '../../provider/Provider.js';
 import {assert, fail} from 'chai';
@@ -55,27 +55,17 @@ const context = {
   }
 };
 const provider = Provider();
-const mockData = {
-  '["openholdingstatus","\\n <soapenv:Envelope xmlns:soapenv=\\"http://schemas.xmlsoap.org/soap/envelope/\\" xmlns:open=\\"http://oss.dbc.dk/ns/openholdingstatus\\">\\n   <soapenv:Header/>\\n   <soapenv:Body>\\n      <open:holdingsRequest>\\n         <open:authentication>\\n            <open:groupIdAut>XXXXX</open:groupIdAut>\\n            <open:passwordAut>XXXXX</open:passwordAut>\\n            <open:userIdAut>XXXXX</open:userIdAut>\\n         </open:authentication>\\n         <open:lookupRecord>\\n            <open:responderId>710100</open:responderId>\\n            <open:pid></open:pid>\\n         </open:lookupRecord>\\n         <open:outputType>json</open:outputType>\\n      </open:holdingsRequest>\\n   </soapenv:Body>\\n</soapenv:Envelope>"]':
-    '{"holdingsResponse":{"error":[{"pid":null,"responderId":{"$":"710100"},"errorMessage":{"$":"error_searching_library"}}]},"@namespaces":null}',
-  '["openorder","<SOAP-ENV:Envelope xmlns=\\"http://oss.dbc.dk/ns/openorder\\" xmlns:SOAP-ENV=\\"http://schemas.xmlsoap.org/soap/envelope/\\">\\n     <SOAP-ENV:Body>\\n\\n        <checkOrderPolicyRequest>\\n           <authentication>\\n              <groupIdAut>XXXXX</groupIdAut>\\n              <passwordAut>XXXXX</passwordAut>\\n              <userIdAut>XXXXX</userIdAut>\\n           </authentication>\\n           <pickUpAgencyId>710100</pickUpAgencyId>\\n           <pid></pid>\\n           <serviceRequester>190101</serviceRequester>\\n           <outputType>json</outputType>\\n        </checkOrderPolicyRequest>\\n     </SOAP-ENV:Body>\\n  </SOAP-ENV:Envelope>"]':
-    '{"checkOrderPolicyResponse":{"checkOrderPolicyError":{"$":"service_unavailable"}},"@namespaces":{"oo":"http:\\/\\/oss.dbc.dk\\/ns\\/openorder"}}'
-};
+const mockData = {};
 
 describe('Automated test: availability-empty-pid', () => {
-  it('expected response. ID:5e26i0, for {"pid":""}', done => {
+  it('expected response. ID:280pyl, for {"pids":[]}', done => {
     context.mockData = mockData;
     provider
-      .execute('availability', {pid: ''}, context)
+      .execute('availability', {pids: []}, context)
       .then(result => {
         assert.deepEqual(result, {
           statusCode: 200,
-          data: {
-            holdingStatus: {
-              willLend: false
-            },
-            orderPossible: true
-          }
+          data: []
         });
         done();
       })
@@ -84,12 +74,7 @@ describe('Automated test: availability-empty-pid', () => {
           {throw: result},
           {
             statusCode: 200,
-            data: {
-              holdingStatus: {
-                willLend: false
-              },
-              orderPossible: true
-            }
+            data: []
           }
         );
         done();

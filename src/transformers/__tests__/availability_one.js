@@ -1,5 +1,5 @@
 /* eslint-disable max-len, quotes, comma-spacing, key-spacing, quote-props, indent */
-// Request: availability {"pid":"870970-basis:28448716"}
+// Request: availability {"pids":["870970-basis:28448716"]}
 
 import Provider from '../../provider/Provider.js';
 import {assert, fail} from 'chai';
@@ -63,20 +63,22 @@ const mockData = {
 };
 
 describe('Automated test: availability_true', () => {
-  it('expected response. ID:jsu21p, for {"pid":"870970-basis:28448716"}', done => {
+  it('expected response. ID:ufzep3, for {"pids":["870970-basis:28448716"]}', done => {
     context.mockData = mockData;
     provider
-      .execute('availability', {pid: '870970-basis:28448716'}, context)
+      .execute('availability', {pids: ['870970-basis:28448716']}, context)
       .then(result => {
         assert.deepEqual(result, {
           statusCode: 200,
-          data: {
-            holdingStatus: {
-              willLend: true,
-              expectedDelivery: '2017-11-29T00:00:00+01:00'
-            },
-            orderPossible: true
-          }
+          data: [
+            {
+              holdingStatus: {
+                willLend: true,
+                expectedDelivery: '2017-11-29T00:00:00+01:00'
+              },
+              orderPossible: true
+            }
+          ]
         });
         done();
       })
@@ -85,13 +87,15 @@ describe('Automated test: availability_true', () => {
           {throw: result},
           {
             statusCode: 200,
-            data: {
-              holdingStatus: {
-                willLend: true,
-                expectedDelivery: '2017-11-29T00:00:00+01:00'
-              },
-              orderPossible: true
-            }
+            data: [
+              {
+                holdingStatus: {
+                  willLend: true,
+                  expectedDelivery: '2017-11-29T00:00:00+01:00'
+                },
+                orderPossible: true
+              }
+            ]
           }
         );
         done();
