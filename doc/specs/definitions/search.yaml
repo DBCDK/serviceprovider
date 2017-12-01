@@ -363,25 +363,18 @@ definitions:
           type: string
       coverDataUrl117:
         type: string
-        format: byte
       coverDataUrl207:
         type: string
-        format: byte
       coverDataUrl42:
         type: string
-        format: byte
       coverDataUrl500:
         type: string
-        format: byte
       coverDataUrlBack:
         type: string
-        format: byte
       coverDataUrlFull:
         type: string
-        format: byte
       coverDataUrlThumbnail:
         type: string
-        format: byte
       coverUrl117:
         type: array
         items:
