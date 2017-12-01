@@ -6,53 +6,108 @@ definitions:
   Libraries:
     type: object
     properties:
-      agencyId:
+      agencyName: 
         type: string
-      agencyName:
+      agencyId: 
         type: string
-      agencyType:
+      agencyType: 
         type: string
-      branchEmail: {}
-      branchId:
+      branchId: 
         type: string
-      branchIsAgency:
+      branchType: 
         type: string
-      branchName:
-        items:
-          type: string
+      branchName: 
         type: array
+        items: 
+          type: string
+      branchShortName: 
+        type: array
+        items: 
+          type: string
       branchPhone: {}
-      branchShortName:
-        items:
-          type: string
+      branchEmail: {}
+      branchIsAgency: 
+        type: string
+      postalAddress: 
+        type: string
+      postalCode: 
+        type: string
+      city: 
+        type: string
+      openingHours: 
         type: array
-      branchType:
-        type: string
-      city:
-        type: string
-      illOrderReceiptText:
-        items:
+        items: 
           type: string
+      temporarilyClosed: 
+        type: string
+      illOrderReceiptText: 
         type: array
-      isOclcRsLibrary:
-        type: string
-      lastUpdated:
-        type: string
-      openingHours:
-        items:
+        items: 
           type: string
+      pickupAllowed: 
+        type: string
+      lastUpdated: 
+        type: string
+      isOclcRsLibrary: 
+        type: string
+      stateAndUniversityLibraryCopyService: 
+        type: string
+      orderParameters: 
         type: array
-      orderParameters:
-        items:
+        items: 
           type: string
+      agencyEmail: 
+        type: string
+      lookupUrl: 
+        type: string
+      branchWebsiteUrl: 
+        type: string
+      librarydkSupportEmail: 
+        type: string
+      librarydkSupportPhone: 
+        type: string
+      temporarilyClosedReason: 
         type: array
-      pickupAllowed:
+        items: 
+          type: string
+      branchCatalogueUrl: 
         type: string
-      postalAddress:
+      userStatusUrl: 
         type: string
-      postalCode:
+      agencyPhone: 
         type: string
-      stateAndUniversityLibraryCopyService:
+      agencyCvrNumber: 
         type: string
-      temporarilyClosed:
+      agencyPNumber: 
         type: string
+      isil: 
+        type: string
+      registrationFormUrl: 
+        type: string
+      registrationFormUrlText: 
+        type: string
+      dropOffBranch: 
+        type: string
+      dropOffName: 
+        type: string
+      geolocation: 
+        properties:
+          latitude: 
+            type: string
+          longitude: 
+            type: string
+        type: object
+      agencyFax: 
+        type: string
+      agencyEanNumber: 
+        type: string
+      branchPNumber: 
+        type: string
+      serviceDeclarationUrl: 
+        type: string
+      paymentUrl: 
+        type: string
+      agencySubdivision: 
+        type: array
+        items: 
+          type: string
