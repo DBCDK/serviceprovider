@@ -5,17 +5,18 @@ api:
     description: |
       Get information about whether a material can be ordered /
       are available for the currently logged in user. Holdingstatus holds information about holdings on specified library.
-      OrderPossible indicates if a book can be ordered at current library.
+      orderPossible indicates if a book can be ordered at current library.
     required:
-      - pid
+      - pids
     properties:
-      pid:
-        description: pid of the work to order
-        type: string
-        example: "870970-basis:24284565"
+      pids:
+        description: pids of the works to check availability for
+        type: array
+        items: {type: "string"}
+        example: ["870970-basis:24284565"]
     response:
       $ref: "#/definitions/AvailabilityResponse"
-      example: {"holdingstatus": {"willLend": true, "expectedDelivery": "2016-04-15"}, orderPossible: true}
+      example: [{"holdingstatus": {"willLend": true, "expectedDelivery": "2016-04-15"}, "orderPossible": true}]
   events:
     tags:
       - CMS
@@ -182,7 +183,7 @@ api:
         example: ["870970-basis:51989252"]
         type: array
         items: {type: "string"}
-      library:
+      pickUpBranch:
         description: The library branch id to deliver to. Required when making a new order. The branch id must belong the the agency where the user is logged in. (relationships between agencies and branches can be looked up in the `/libraries` endpoint)
         type: string
         example: "700401"
@@ -219,7 +220,7 @@ api:
   rank:
     tags:
       - Recommend
-    description: Similar to recommend, but sorts a list of ids in order of relevance, given a recommender with likes, dislikes and so on.
+    description: Similar to recommend, but sorts a list of ids in order of relevance, given a recommender with likes, dislikes and so on. **Notice:** the response meta data is the internal recommender data, and is simplified/outdated. Use the search/work endpoint to get actual meta data.
     required:
       - pids
     properties:
@@ -254,11 +255,11 @@ api:
         minimum: 1
     response:
       $ref: "#/definitions/RecommendationResponse"
-      example: [ { "title": "Harry Potter og Fønixordenen", "creator": "...", "weight": 123, "pid": "300185-katalog:100562332", "fromPid": "870970-basis:51989252"}, "..."]
+      example: [ { "title": ["Harry Potter og Fønixordenen"], "creator": ["..."], "weight": 123, "pid": ["300185-katalog:100562332"]}, "..."]
   recommend:
     tags:
       - Recommend
-    description: Get recommendations based on a list of likes
+    description: Get recommendations based on a list of likes etc. **Notice:** the response meta data is the internal recommender data, and is simplified/outdated. Use the search/work endpoint to get actual meta data.
     properties:
       recommender:
         description: the type of recommender, such as default or popular
@@ -291,7 +292,7 @@ api:
         type: integer
     response:
       $ref: "#/definitions/RecommendationResponse"
-      example: [ { "title": "Harry Potter og Fønixordenen", "creator": "...", "weight": 123, "pid": "300185-katalog:100562332", "fromPid": "870970-basis:51989252"}, "..."]
+      example: [ { "title": ["Harry Potter og Fønixordenen"], "creator": ["..."], "weight": 123, "pid": ["300185-katalog:100562332"]}, "..."]
   renew:
     tags:
       - Status

@@ -1,4 +1,3 @@
-
 /**
  * @file
  * orderPolicy transformer.
@@ -9,24 +8,23 @@
 import _ from 'lodash';
 
 /**
-* Validate parameters
-*
-* @param {object} params parameters to validate
-* @throws if validation fails
-*/
+ * Validate parameters
+ *
+ * @param {object} params parameters to validate
+ * @throws if validation fails
+ */
 function validateParams(params) {
   if (!params.pids || params.pids.length === 0) {
-    throw ('missing pids parameter');
+    throw 'missing pids parameter';
   }
 }
 
 /**
-* Constructs soap request to perform renew request
-* @param {object} param Parameters to substitute into soap request
-* @returns soap request string
-*/
+ * Constructs soap request to perform renew request
+ * @param {object} param Parameters to substitute into soap request
+ * @returns soap request string
+ */
 function getOrderPolicy(pid, params, context) {
-
   let soap = `<SOAP-ENV:Envelope xmlns="http://oss.dbc.dk/ns/openorder" xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/">
      <SOAP-ENV:Body>
 
@@ -47,8 +45,14 @@ function getOrderPolicy(pid, params, context) {
   return context.call('openorder', soap).then(body => {
     body = JSON.parse(body).checkOrderPolicyResponse;
     let data = {};
-    if (_.has(body, 'orderPossible.$') && _.has(body, 'orderPossibleReason.$')) {
-      data = {orderPossible: body.orderPossible.$, orderPossibleReason: body.orderPossibleReason.$};
+    if (
+      _.has(body, 'orderPossible.$') &&
+      _.has(body, 'orderPossibleReason.$')
+    ) {
+      data = {
+        orderPossible: body.orderPossible.$,
+        orderPossibleReason: body.orderPossibleReason.$
+      };
     }
     return {statusCode: 200, data: data};
   });
@@ -64,10 +68,10 @@ function getOrderPolicy(pid, params, context) {
  * @api public
  */
 export default (request, context) => {
-
   try {
     validateParams(request);
-  } catch (err) { // eslint-disable-line brace-style
+  } catch (err) {
+    // eslint-disable-line brace-style
     return new Promise(resolve => {
       return resolve({statusCode: 400, error: err});
     });

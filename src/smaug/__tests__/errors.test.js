@@ -1,11 +1,14 @@
-
-
 import {assert} from 'chai';
 import * as errors from '../errors';
 
 describe('Testing SMAUG errors', () => {
   it('should be constructable with new', () => {
-    Object.keys(errors).forEach(error => assert.doesNotThrow(() => new errors[error](), 'Missing token error can be constructed.'));
+    Object.keys(errors).forEach(error =>
+      assert.doesNotThrow(
+        () => new errors[error](),
+        'Missing token error can be constructed.'
+      )
+    );
   });
 
   it('Should contain name, message, stack, httpStatusCode, httpError', () => {
@@ -27,4 +30,3 @@ describe('Testing SMAUG errors', () => {
     });
   });
 });
-

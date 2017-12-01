@@ -5,7 +5,6 @@
 import {assert} from 'chai';
 import * as IsilUtils from './../isil.utils';
 
-
 describe('Testing the methods in isil.utils.js', () => {
   it('ISIL from ID', () => {
     const id = '726500';

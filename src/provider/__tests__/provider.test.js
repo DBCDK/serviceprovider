@@ -1,5 +1,3 @@
-
-
 /**
  * @file Testing the provider
  */

@@ -1,24 +1,255 @@
-/* eslint-disable max-len, quotes, comma-spacing, key-spacing, quote-props */
-// Request: facets {"q":"harry AND potter","fields":["creator"],"limit":20,"pretty":true}
+/* eslint-disable max-len, quotes, comma-spacing, key-spacing, quote-props, indent */
+// Request: facets {"q":"harry AND potter","fields":["creator"],"limit":20}
 
 import Provider from '../../provider/Provider.js';
 import {assert, fail} from 'chai';
 
-let context = {"services":{"ddbcmsapi":"http://rest.filmstriben.dbc.inlead.dk/web/","moreinfo":"http://moreinfo.addi.dk/2.6/","openagency":"http://openagency.addi.dk/2.24/","openholdingstatus":"https://openholdingstatus.addi.dk/2.2/","openorder":"https://openorder.addi.dk/2.7.1/","TESTopenorder":"https://openorder.addi.dk/test_2.7.1/","opensearch":"http://opensearch.addi.dk/b3.0_4.2/","openuserstatus":"https://openuserstatus.addi.dk/1.5/","rank":"https://xptest.dbc.dk/ms/rank/v1","suggestpopular":"http://xptest.dbc.dk/ms/entity-pop/v1","suggestcreator":"http://xptest.dbc.dk/ms/entity-suggest/v1/creator","suggestlibrary":"http://xptest.dbc.dk/ms/entity-suggest/v1/library","suggestsubject":"http://xptest.dbc.dk/ms/entity-suggest/v1/subject","recommendurls":{"default":"https://xptest.dbc.dk/ms/recommend-cosim/v1","popular":"https://xptest.dbc.dk/ms/recommend-pop/v1"}},"search":{"agency":"775100","profile":"opac","collectionidentifiers":"rec.collectionIdentifier:150013-palle OR rec.collectionIdentifier:758000-katalog"},"netpunkt":{"user":"XXXXX","group":"XXXXX","password":"XXXXX"},"user":{"agency":"775100","id":"XXXXX","pin":"XXXXX","salt":"XXXXX"},"app":{"clientid":"XXXXX","ddbcmsapipassword":"XXXXX","orderpolicyrequester":"190101"}};
-let provider = Provider();
-let mockData = {"[\"opensearch\",\"<?xml version=\\\"1.0\\\" encoding=\\\"UTF-8\\\"?>\\n<SOAP-ENV:Envelope xmlns:SOAP-ENV=\\\"http://schemas.xmlsoap.org/soap/envelope/\\\"\\n    xmlns:open=\\\"http://oss.dbc.dk/ns/opensearch\\\">\\n  <SOAP-ENV:Body>\\n    <open:searchRequest>\\n      <open:query>harry AND potter</open:query>\\n      <open:agency>775100</open:agency>\\n      <open:profile>opac</open:profile>\\n      <open:facets>\\n        <open:numberOfTerms>20</open:numberOfTerms>\\n        <open:facetSort>count</open:facetSort>\\n        <open:facetMinCount>1</open:facetMinCount>\\n        <open:facetName>facet.creator</open:facetName>\\n      </open:facets>\\n      <open:start>1</open:start>\\n      <open:stepValue>0</open:stepValue>\\n      <open:outputType>json</open:outputType>\\n    </open:searchRequest>\\n  </SOAP-ENV:Body>\\n</SOAP-ENV:Envelope>\"]":"{\"searchResponse\":{\"result\":{\"hitCount\":{\"$\":\"220\"},\"collectionCount\":{\"$\":\"0\"},\"more\":{\"$\":\"true\"},\"facetResult\":{\"facet\":[{\"facetName\":{\"$\":\"facet.creator\"},\"facetTerm\":[{\"frequence\":{\"$\":\"112\"},\"term\":{\"$\":\"joanne k. rowling\"}},{\"frequence\":{\"$\":\"21\"},\"term\":{\"$\":\"daniel radcliffe\"}},{\"frequence\":{\"$\":\"21\"},\"term\":{\"$\":\"emma watson\"}},{\"frequence\":{\"$\":\"21\"},\"term\":{\"$\":\"robbie coltrane\"}},{\"frequence\":{\"$\":\"21\"},\"term\":{\"$\":\"rupert grint\"}},{\"frequence\":{\"$\":\"19\"},\"term\":{\"$\":\"steve kloves\"}},{\"frequence\":{\"$\":\"16\"},\"term\":{\"$\":\"david yates\"}},{\"frequence\":{\"$\":\"16\"},\"term\":{\"$\":\"j.k. rowling\"}},{\"frequence\":{\"$\":\"15\"},\"term\":{\"$\":\"stephen fry\"}},{\"frequence\":{\"$\":\"14\"},\"term\":{\"$\":\"michael gambon\"}},{\"frequence\":{\"$\":\"13\"},\"term\":{\"$\":\"jesper christensen (f. 1948)\"}},{\"frequence\":{\"$\":\"12\"},\"term\":{\"$\":\"hanna l\\u00fctzen\"}},{\"frequence\":{\"$\":\"12\"},\"term\":{\"$\":\"john williams (f. 1932)\"}},{\"frequence\":{\"$\":\"10\"},\"term\":{\"$\":\"bill galliford\"}},{\"frequence\":{\"$\":\"10\"},\"term\":{\"$\":\"ethan neuburg\"}},{\"frequence\":{\"$\":\"10\"},\"term\":{\"$\":\"ralph fiennes\"}},{\"frequence\":{\"$\":\"10\"},\"term\":{\"$\":\"tod edmondson\"}},{\"frequence\":{\"$\":\"9\"},\"term\":{\"$\":\"helena bonham carter\"}},{\"frequence\":{\"$\":\"8\"},\"term\":{\"$\":\"chris columbus\"}},{\"frequence\":{\"$\":\"8\"},\"term\":{\"$\":\"richard griffiths\"}}]}]},\"statInfo\":{\"fedoraRecordsCached\":{\"$\":\"0\"},\"fedoraRecordsRead\":{\"$\":\"0\"},\"time\":{\"$\":\"0.707937\"},\"trackingId\":{\"$\":\"2016-05-30T20:46:55:321296:22138\"}}}},\"@namespaces\":{\"ac\":\"http:\\/\\/biblstandard.dk\\/ac\\/namespace\\/\",\"dbcaddi\":\"http:\\/\\/oss.dbc.dk\\/rdf\\/dbcaddi#\",\"dbcbib\":\"http:\\/\\/oss.dbc.dk\\/rdf\\/dbcbib#\",\"dc\":\"http:\\/\\/purl.org\\/dc\\/elements\\/1.1\\/\",\"dcmitype\":\"http:\\/\\/purl.org\\/dc\\/dcmitype\\/\",\"dcterms\":\"http:\\/\\/purl.org\\/dc\\/terms\\/\",\"dkabm\":\"http:\\/\\/biblstandard.dk\\/abm\\/namespace\\/dkabm\\/\",\"dkdcplus\":\"http:\\/\\/biblstandard.dk\\/abm\\/namespace\\/dkdcplus\\/\",\"docbook\":\"http:\\/\\/docbook.org\\/ns\\/docbook\",\"kml\":\"http:\\/\\/www.opengis.net\\/kml\\/2.2\",\"marcx\":\"info:lc\\/xmlns\\/marcxchange-v1\",\"mx\":\"http:\\/\\/www.loc.gov\\/MARC21\\/slim\",\"of\":\"http:\\/\\/oss.dbc.dk\\/ns\\/openformat\",\"ofo\":\"http:\\/\\/oss.dbc.dk\\/ns\\/openformatoutput\",\"os\":\"http:\\/\\/oss.dbc.dk\\/ns\\/opensearch\",\"oso\":\"http:\\/\\/oss.dbc.dk\\/ns\\/opensearchobjects\",\"oss\":\"http:\\/\\/oss.dbc.dk\\/ns\\/osstypes\",\"xs\":\"http:\\/\\/www.w3.org\\/2001\\/XMLSchema\",\"xsi\":\"http:\\/\\/www.w3.org\\/2001\\/XMLSchema-instance\"}}"};
+const context = {
+  services: {
+    ddbcmsapi: 'https://cmscontent.dbc.dk/',
+    moreinfo: 'https://moreinfo.addi.dk/2.10/',
+    openagency: 'http://openagency.addi.dk/2.24/',
+    openholdingstatus: 'https://openholdingstatus.addi.dk/2.2/',
+    PRODopenorder: 'https://openorder.addi.dk/2.8/',
+    openorder: 'https://openorder.addi.dk/test_2.8/',
+    opensearch: 'https://opensearch.addi.dk/b3.0_4.5/',
+    openuserstatus: 'https://openuserstatus.addi.dk/1.5/',
+    rank: 'https://xptest.dbc.dk/ms/rank/v1',
+    suggestpopular: 'http://xptest.dbc.dk/ms/entity-pop/v1',
+    suggestcreator: 'http://xptest.dbc.dk/ms/entity-suggest/v1/creator',
+    suggestlibrary: 'http://xptest.dbc.dk/ms/entity-suggest/v1/library',
+    suggestsubject: 'http://xptest.dbc.dk/ms/entity-suggest/v1/subject',
+    recommendurls: {
+      default: 'https://xptest.dbc.dk/ms/recommend-cosim/v1',
+      popular: 'https://xptest.dbc.dk/ms/recommend-pop/v1'
+    },
+    communityservice: 'http://localhost:4010/v1'
+  },
+  communityservice: {
+    id: 1
+  },
+  search: {
+    agency: '775100',
+    profile: 'opac',
+    collectionidentifiers:
+      'rec.collectionIdentifier:150013-palle OR rec.collectionIdentifier:758000-katalog'
+  },
+  netpunkt: {
+    user: 'XXXXX',
+    group: 'XXXXX',
+    password: 'XXXXX'
+  },
+  user: {
+    id: 'XXXXX',
+    salt: 'XXXXX',
+    pin: 'XXXXX',
+    libraryId: '710100',
+    agency: '710100',
+    isil: 'DK-710100'
+  },
+  app: {
+    clientid: 'XXXXX',
+    ddbcmsapipassword: 'XXXXX',
+    orderpolicyrequester: '190101',
+    orderSystem: 'bibliotekdk'
+  }
+};
+const provider = Provider();
+const mockData = {
+  '["opensearch","<?xml version=\\"1.0\\" encoding=\\"UTF-8\\"?>\\n<SOAP-ENV:Envelope xmlns:SOAP-ENV=\\"http://schemas.xmlsoap.org/soap/envelope/\\"\\n    xmlns:open=\\"http://oss.dbc.dk/ns/opensearch\\">\\n  <SOAP-ENV:Body>\\n    <open:searchRequest>\\n      <open:query>harry AND potter</open:query>\\n      <open:agency>775100</open:agency>\\n      <open:profile>opac</open:profile>\\n      <open:facets>\\n        <open:numberOfTerms>20</open:numberOfTerms>\\n        <open:facetSort>count</open:facetSort>\\n        <open:facetMinCount>1</open:facetMinCount>\\n        <open:facetName>facet.creator</open:facetName>\\n      </open:facets>\\n      <open:start>1</open:start>\\n      <open:stepValue>0</open:stepValue>\\n      <open:outputType>json</open:outputType>\\n    </open:searchRequest>\\n  </SOAP-ENV:Body>\\n</SOAP-ENV:Envelope>"]':
+    '{"searchResponse":{"result":{"hitCount":{"$":"1301"},"collectionCount":{"$":"0"},"more":{"$":"true"},"facetResult":{"facet":[{"facetName":{"$":"facet.creator"},"facetTerm":[{"frequence":{"$":"601"},"term":{"$":"joanne k. rowling"}},{"frequence":{"$":"116"},"term":{"$":"daniel radcliffe"}},{"frequence":{"$":"115"},"term":{"$":"emma watson"}},{"frequence":{"$":"115"},"term":{"$":"rupert grint"}},{"frequence":{"$":"114"},"term":{"$":"robbie coltrane"}},{"frequence":{"$":"101"},"term":{"$":"steve kloves"}},{"frequence":{"$":"73"},"term":{"$":"michael gambon"}},{"frequence":{"$":"64"},"term":{"$":"david yates"}},{"frequence":{"$":"54"},"term":{"$":"ralph fiennes"}},{"frequence":{"$":"48"},"term":{"$":"richard griffiths"}},{"frequence":{"$":"48"},"term":{"$":"stephen fry"}},{"frequence":{"$":"45"},"term":{"$":"hanna l\\u00fctzen"}},{"frequence":{"$":"40"},"term":{"$":"helena bonham carter"}},{"frequence":{"$":"35"},"term":{"$":"john cleese"}},{"frequence":{"$":"32"},"term":{"$":"jesper christensen (f. 1948)"}},{"frequence":{"$":"30"},"term":{"$":"john williams (f. 1932)"}},{"frequence":{"$":"29"},"term":{"$":"chris columbus (f. 1958)"}},{"frequence":{"$":"29"},"term":{"$":"roger pratt"}},{"frequence":{"$":"28"},"term":{"$":"bill galliford"}},{"frequence":{"$":"28"},"term":{"$":"eduardo serra"}}]}]},"statInfo":{"fedoraRecordsCached":{"$":"0"},"fedoraRecordsRead":{"$":"0"},"time":{"$":"0.246886"},"trackingId":{"$":"os:2017-11-29T11:38:05:773596:1912"}}}},"@namespaces":{"ac":"http:\\/\\/biblstandard.dk\\/ac\\/namespace\\/","dbcaddi":"http:\\/\\/oss.dbc.dk\\/rdf\\/dbcaddi#","dbcbib":"http:\\/\\/oss.dbc.dk\\/rdf\\/dbcbib#","dc":"http:\\/\\/purl.org\\/dc\\/elements\\/1.1\\/","dcmitype":"http:\\/\\/purl.org\\/dc\\/dcmitype\\/","dcterms":"http:\\/\\/purl.org\\/dc\\/terms\\/","dkabm":"http:\\/\\/biblstandard.dk\\/abm\\/namespace\\/dkabm\\/","dkdcplus":"http:\\/\\/biblstandard.dk\\/abm\\/namespace\\/dkdcplus\\/","docbook":"http:\\/\\/docbook.org\\/ns\\/docbook","kml":"http:\\/\\/www.opengis.net\\/kml\\/2.2","marcx":"info:lc\\/xmlns\\/marcxchange-v1","mx":"http:\\/\\/www.loc.gov\\/MARC21\\/slim","of":"http:\\/\\/oss.dbc.dk\\/ns\\/openformat","ofo":"http:\\/\\/oss.dbc.dk\\/ns\\/openformatoutput","os":"http:\\/\\/oss.dbc.dk\\/ns\\/opensearch","oso":"http:\\/\\/oss.dbc.dk\\/ns\\/opensearchobjects","oss":"http:\\/\\/oss.dbc.dk\\/ns\\/osstypes","xs":"http:\\/\\/www.w3.org\\/2001\\/XMLSchema","xsi":"http:\\/\\/www.w3.org\\/2001\\/XMLSchema-instance"}}'
+};
 
 describe('Automated test: facets_high_limit', () => {
-  it('expected response. ID:94654g, for {"q":"harry AND potter","fields":["creator"],"limit":20,"pretty":true}', (done) => {
+  it('expected response. ID:9a8huf, for {"q":"harry AND potter","fields":["creator"],"limit":20}', done => {
     context.mockData = mockData;
-    provider.execute('facets', {"q":"harry AND potter","fields":["creator"],"limit":20,"pretty":true}, context)
+    provider
+      .execute(
+        'facets',
+        {q: 'harry AND potter', fields: ['creator'], limit: 20},
+        context
+      )
       .then(result => {
-        assert.deepEqual(result,
-            {"statusCode":200,"data":{"creator":[{"term":"joanne k. rowling","frequency":112},{"term":"daniel radcliffe","frequency":21},{"term":"emma watson","frequency":21},{"term":"robbie coltrane","frequency":21},{"term":"rupert grint","frequency":21},{"term":"steve kloves","frequency":19},{"term":"david yates","frequency":16},{"term":"j.k. rowling","frequency":16},{"term":"stephen fry","frequency":15},{"term":"michael gambon","frequency":14},{"term":"jesper christensen (f. 1948)","frequency":13},{"term":"hanna lützen","frequency":12},{"term":"john williams (f. 1932)","frequency":12},{"term":"bill galliford","frequency":10},{"term":"ethan neuburg","frequency":10},{"term":"ralph fiennes","frequency":10},{"term":"tod edmondson","frequency":10},{"term":"helena bonham carter","frequency":9},{"term":"chris columbus","frequency":8},{"term":"richard griffiths","frequency":8}]}});
+        assert.deepEqual(result, {
+          statusCode: 200,
+          data: {
+            creator: [
+              {
+                term: 'joanne k. rowling',
+                frequency: 601
+              },
+              {
+                term: 'daniel radcliffe',
+                frequency: 116
+              },
+              {
+                term: 'emma watson',
+                frequency: 115
+              },
+              {
+                term: 'rupert grint',
+                frequency: 115
+              },
+              {
+                term: 'robbie coltrane',
+                frequency: 114
+              },
+              {
+                term: 'steve kloves',
+                frequency: 101
+              },
+              {
+                term: 'michael gambon',
+                frequency: 73
+              },
+              {
+                term: 'david yates',
+                frequency: 64
+              },
+              {
+                term: 'ralph fiennes',
+                frequency: 54
+              },
+              {
+                term: 'richard griffiths',
+                frequency: 48
+              },
+              {
+                term: 'stephen fry',
+                frequency: 48
+              },
+              {
+                term: 'hanna lützen',
+                frequency: 45
+              },
+              {
+                term: 'helena bonham carter',
+                frequency: 40
+              },
+              {
+                term: 'john cleese',
+                frequency: 35
+              },
+              {
+                term: 'jesper christensen (f. 1948)',
+                frequency: 32
+              },
+              {
+                term: 'john williams (f. 1932)',
+                frequency: 30
+              },
+              {
+                term: 'chris columbus (f. 1958)',
+                frequency: 29
+              },
+              {
+                term: 'roger pratt',
+                frequency: 29
+              },
+              {
+                term: 'bill galliford',
+                frequency: 28
+              },
+              {
+                term: 'eduardo serra',
+                frequency: 28
+              }
+            ]
+          }
+        });
         done();
       })
       .catch(result => {
-        fail({throw: result}, {"statusCode":200,"data":{"creator":[{"term":"joanne k. rowling","frequency":112},{"term":"daniel radcliffe","frequency":21},{"term":"emma watson","frequency":21},{"term":"robbie coltrane","frequency":21},{"term":"rupert grint","frequency":21},{"term":"steve kloves","frequency":19},{"term":"david yates","frequency":16},{"term":"j.k. rowling","frequency":16},{"term":"stephen fry","frequency":15},{"term":"michael gambon","frequency":14},{"term":"jesper christensen (f. 1948)","frequency":13},{"term":"hanna lützen","frequency":12},{"term":"john williams (f. 1932)","frequency":12},{"term":"bill galliford","frequency":10},{"term":"ethan neuburg","frequency":10},{"term":"ralph fiennes","frequency":10},{"term":"tod edmondson","frequency":10},{"term":"helena bonham carter","frequency":9},{"term":"chris columbus","frequency":8},{"term":"richard griffiths","frequency":8}]}});
+        fail(
+          {throw: result},
+          {
+            statusCode: 200,
+            data: {
+              creator: [
+                {
+                  term: 'joanne k. rowling',
+                  frequency: 601
+                },
+                {
+                  term: 'daniel radcliffe',
+                  frequency: 116
+                },
+                {
+                  term: 'emma watson',
+                  frequency: 115
+                },
+                {
+                  term: 'rupert grint',
+                  frequency: 115
+                },
+                {
+                  term: 'robbie coltrane',
+                  frequency: 114
+                },
+                {
+                  term: 'steve kloves',
+                  frequency: 101
+                },
+                {
+                  term: 'michael gambon',
+                  frequency: 73
+                },
+                {
+                  term: 'david yates',
+                  frequency: 64
+                },
+                {
+                  term: 'ralph fiennes',
+                  frequency: 54
+                },
+                {
+                  term: 'richard griffiths',
+                  frequency: 48
+                },
+                {
+                  term: 'stephen fry',
+                  frequency: 48
+                },
+                {
+                  term: 'hanna lützen',
+                  frequency: 45
+                },
+                {
+                  term: 'helena bonham carter',
+                  frequency: 40
+                },
+                {
+                  term: 'john cleese',
+                  frequency: 35
+                },
+                {
+                  term: 'jesper christensen (f. 1948)',
+                  frequency: 32
+                },
+                {
+                  term: 'john williams (f. 1932)',
+                  frequency: 30
+                },
+                {
+                  term: 'chris columbus (f. 1958)',
+                  frequency: 29
+                },
+                {
+                  term: 'roger pratt',
+                  frequency: 29
+                },
+                {
+                  term: 'bill galliford',
+                  frequency: 28
+                },
+                {
+                  term: 'eduardo serra',
+                  frequency: 28
+                }
+              ]
+            }
+          }
+        );
         done();
       });
   });

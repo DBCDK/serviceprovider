@@ -3,7 +3,9 @@
  * Unittesting methods in order.utils.js
  */
 import {assert} from 'chai';
-import {validateDeleteOrder, validateOrder} from '../utils/order.utils';
+
+const validateDeleteOrder = require('../cancelOrder.js').validateParams;
+const validateOrder = require('../placeOrder.js').validateParams;
 
 describe('Unittesting methods in order.utils.js - validateDeleteOrder', () => {
   it('Should throw when orderId is missing', () => {
@@ -38,14 +40,14 @@ describe('Unittesting methods in order.utils.js - validateOrder', () => {
     assert.throws(func);
   });
 
-  it('Should throw when pids is present and library is missing', () => {
+  it('Should throw when pids is present and pickUpBranch is missing', () => {
     const params = {pids: [1, 2]};
     const func = () => validateOrder(params);
     assert.throw(func);
   });
 
-  it('Should not throw when pids and library is present', () => {
-    const params = {pids: [1, 2], library: 'library'};
+  it('Should not throw when pids and pickUpBranch is present', () => {
+    const params = {pids: [1, 2], pickUpBranch: 'library'};
     const func = () => validateOrder(params);
     assert.doesNotThrow(func);
   });

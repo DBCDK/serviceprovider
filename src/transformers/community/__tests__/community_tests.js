@@ -141,7 +141,11 @@ Object.keys(parameters).forEach(entityType => {
       it('should sort by modified_epoch', function(done) {
         request
           .get(`http://localhost:8080/v1/community/${entityType}`)
-          .query({access_token: token, sort: 'modified_epoch', order: 'ascending'})
+          .query({
+            access_token: token,
+            sort: 'modified_epoch',
+            order: 'ascending'
+          })
           .end((err, res) => {
             assert.ifError(err);
             const items = res.body.data.List;
@@ -167,7 +171,10 @@ Object.keys(parameters).forEach(entityType => {
       it('should sort out created_epoch and modified_epoch', function(done) {
         request
           .get(`http://localhost:8080/v1/community/${entityType}`)
-          .query({access_token: token, filter: ['created_epoch', 'modified_epoch']})
+          .query({
+            access_token: token,
+            filter: ['created_epoch', 'modified_epoch']
+          })
           .end((err, res) => {
             assert.ifError(err);
             const items = res.body.data.List;
@@ -180,10 +187,14 @@ Object.keys(parameters).forEach(entityType => {
   });
 });
 
-describe('Test include on profile', function () {
+describe('Test include on profile', function() {
   it('should remap activities to an object', function(done) {
     request
-      .get(`http://localhost:8080/v1/community/profiles/${singleProfileId}/activity`)
+      .get(
+        `http://localhost:8080/v1/community/profiles/${
+          singleProfileId
+        }/activity`
+      )
       .query({access_token: token})
       .end((err, res) => {
         assert.ifError(err);
@@ -253,7 +264,10 @@ describe('Test include on groups', function() {
   it('should support objects in arrays for include', function(done) {
     request
       .get('http://localhost:8080/v1/community/groups')
-      .query({access_token: token, include: '[{"name": "posts"}, {"name": "owner"}]'})
+      .query({
+        access_token: token,
+        include: '[{"name": "posts"}, {"name": "owner"}]'
+      })
       .end((err, res) => {
         assert.ifError(err);
         const items = res.body.data.List;
@@ -272,7 +286,9 @@ describe('Test include on groups', function() {
       });
   });
 
-  it('should support mix of strings and objects in arrays for include', function(done) {
+  it('should support mix of strings and objects in arrays for include', function(
+    done
+  ) {
     request
       .get('http://localhost:8080/v1/community/groups')
       .query({access_token: token, include: '[{"name": "posts"}, "owner"]'})
@@ -335,7 +351,11 @@ describe('Test include on groups', function() {
   it('should support nested includes', function(done) {
     request
       .get('http://localhost:8080/v1/community/groups')
-      .query({access_token: token, limit: 1, include: '[{"name": "posts", "limit": 1, "include": ["comments"]}]'})
+      .query({
+        access_token: token,
+        limit: 1,
+        include: '[{"name": "posts", "limit": 1, "include": ["comments"]}]'
+      })
       .end((err, res) => {
         assert.ifError(err);
         const items = res.body.data.List;
@@ -364,7 +384,8 @@ describe('Test include on groups', function() {
       .query({
         access_token: token,
         limit: 1,
-        include: '[{"name": "posts", "limit": 1, "include": [{"name": "comments", "include": ["owner"]}]}]'
+        include:
+          '[{"name": "posts", "limit": 1, "include": [{"name": "comments", "include": ["owner"]}]}]'
       })
       .end((err, res) => {
         assert.ifError(err);
@@ -513,12 +534,15 @@ describe('Test include on group/{id}', function() {
       });
   });
 
-  it('should support nested includes with nested includes on a single group', function(done) {
+  it('should support nested includes with nested includes on a single group', function(
+    done
+  ) {
     request
       .get(`http://localhost:8080/v1/community/groups/${singleGroupId}`)
       .query({
         access_token: token,
-        include: '[{"name": "posts", "limit": 1, "include": [{"name": "comments", "include": ["owner"]}]}]'
+        include:
+          '[{"name": "posts", "limit": 1, "include": [{"name": "comments", "include": ["owner"]}]}]'
       })
       .end((err, res) => {
         assert.ifError(err);
@@ -589,7 +613,8 @@ describe('Test include on group/{id}', function() {
       .get(`http://localhost:8080/v1/community/groups/${singleGroupId}`)
       .query({
         access_token: token,
-        include: '[{"name": "posts", "limit": 1, "counts": ["comments"], "filter": ["modified_epoch"]}]'
+        include:
+          '[{"name": "posts", "limit": 1, "counts": ["comments"], "filter": ["modified_epoch"]}]'
       })
       .end((err, res) => {
         assert.ifError(err);

@@ -1,4 +1,3 @@
-
 import {assert} from 'chai';
 
 import * as utils from '../utils';
@@ -30,7 +29,9 @@ describe('Unit tests of utils', () => {
       const _logLevel = process.env.LOG_LEVEL;
       process.env.LOG_LEVEL = 'off';
 
-      assert.doesNotThrow(() => utils.log.warn('This is a log message that won\'t be logged'));
+      assert.doesNotThrow(() =>
+        utils.log.warn("This is a log message that won't be logged")
+      );
 
       console.log = _log;
       process.env.LOG_LEVEL = _logLevel;
@@ -65,7 +66,8 @@ describe('Unit tests of utils', () => {
 
   describe('isDir', () => {
     it('should return true on dir', () => assert.ok(utils.isDir(__dirname)));
-    it('should return false on file', () => assert.ok(!utils.isDir(__dirname + '/utils.test.js')));
+    it('should return false on file', () =>
+      assert.ok(!utils.isDir(__dirname + '/utils.test.js')));
     it('should log when dir does not exist', () => {
       const _log = console.log;
       console.log = () => {
@@ -92,7 +94,9 @@ describe('Unit tests of utils', () => {
       const _logLevel = process.env.LOG_LEVEL;
       process.env.LOG_LEVEL = 'debug';
 
-      const wrappedFunction = utils.timingDecorator(() => 2+2+3+4+5+6);
+      const wrappedFunction = utils.timingDecorator(
+        () => 2 + 2 + 3 + 4 + 5 + 6
+      );
       assert.throws(() => wrappedFunction());
 
       console.log = _log;
@@ -100,8 +104,10 @@ describe('Unit tests of utils', () => {
     });
 
     it('should return the result of original function when called', () => {
-      const wrappedFunction = utils.timingDecorator(() => 2+2+3+4+5+6);
-      assert.equal(wrappedFunction(), 2+2+3+4+5+6);
+      const wrappedFunction = utils.timingDecorator(
+        () => 2 + 2 + 3 + 4 + 5 + 6
+      );
+      assert.equal(wrappedFunction(), 2 + 2 + 3 + 4 + 5 + 6);
     });
   });
 });

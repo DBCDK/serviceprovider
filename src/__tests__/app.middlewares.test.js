@@ -1,5 +1,3 @@
-
-
 import {assert} from 'chai';
 import {MultipleTokensError, MissingTokenError} from '../smaug/errors';
 import {getContextMiddleware} from '../app.middlewares';
@@ -15,12 +13,9 @@ describe('Testing the app.middlewares.js', () => {
       body: {
         access_token: 'body_access_token'
       }
-
     };
     const res = {
-      logData: {
-
-      }
+      logData: {}
     };
     const next = arg => arg;
 
@@ -36,16 +31,11 @@ describe('Testing the app.middlewares.js', () => {
     const expectedError = new MissingTokenError();
     const req = {
       get: () => 'Bearerr testtoken',
-      query: {
-      },
-      body: {
-      }
-
+      query: {},
+      body: {}
     };
     const res = {
-      logData: {
-
-      }
+      logData: {}
     };
     const next = arg => arg;
 

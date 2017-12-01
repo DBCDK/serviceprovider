@@ -8,25 +8,6 @@
 import cancelOrder from './cancelOrder';
 import placeOrder from './placeOrder';
 import {log} from '../utils';
-import {validateDeleteOrder, validateOrder} from './utils/order.utils';
-
-/**
- * Validate parameters
- *
- * @param {object} params parameters to validate
- * @throws if validation fails
- */
-function validateParams(params) {
-  if (params.delete && params.delete === true) {
-    // Delete is set
-    validateDeleteOrder(params);
-  }
-
-  if (!params.delete || params.delete === 'false') {
-    // Order is set
-    validateOrder(params);
-  }
-}
 
 /**
  * Default transformer.
@@ -40,7 +21,6 @@ function validateParams(params) {
 export default (request, context) => {
   try {
     log.debug('Validating request');
-    validateParams(request);
   } catch (err) {
     return new Promise(resolve => {
       return resolve({
@@ -50,7 +30,7 @@ export default (request, context) => {
     });
   }
 
-  if (request.delete) {
+  if (request.delete && request.delete !== 'false') {
     return cancelOrder(request, context);
   }
   return placeOrder(request, context);
