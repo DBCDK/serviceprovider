@@ -1,5 +1,3 @@
-
-
 function createRequestParameters(request, context) {
   // create request parameters from request and context
   const uri = context.get('services.rank', true);
@@ -27,8 +25,8 @@ function createRequestParameters(request, context) {
   return [uri, paramsPost];
 }
 
-
-export default (request, context) => { // eslint-disable-line no-unused-vars
+export default (request, context) => {
+  // eslint-disable-line no-unused-vars
   try {
     const [uri, params] = createRequestParameters(request, context);
 
@@ -47,9 +45,8 @@ export default (request, context) => { // eslint-disable-line no-unused-vars
 
       return {statusCode: 200, data: result};
     });
-  }
-  catch (err){
-    if (err.hasOwnProperty('statusCode')){
+  } catch (err) {
+    if (err.hasOwnProperty('statusCode')) {
       return Promise.resolve(err);
     }
   }

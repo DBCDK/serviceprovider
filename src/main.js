@@ -1,10 +1,8 @@
-
 /**
  * @file
  * Create/start socketcluster.
  *
  */
-
 
 // initialize babel, so all JSX and ES6 is transpiled
 require('babel-register');
@@ -25,7 +23,8 @@ if (missingEnvVars.length > 0) {
   process.exit(1);
 }
 
-module.exports = new SocketCluster({ // eslint-disable-line no-new
+module.exports = new SocketCluster({
+  // eslint-disable-line no-new
   workers: Number(process.env.NODE_WEB_WORKERS) || 1, // eslint-disable-line no-process-env
   brokers: Number(process.env.NODE_WEB_BROKERS) || 1, // eslint-disable-line no-process-env
   port: Number(process.env.PORT) || 8080, // eslint-disable-line no-process-env

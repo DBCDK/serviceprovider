@@ -1,12 +1,23 @@
 import {workToJSON} from '../requestTypeIdentifier.js';
 import {log} from '../utils';
 
-function getSoap(agency, profile, q, filterAgency, sort, offset, limit, allObject) {
+function getSoap(
+  agency,
+  profile,
+  q,
+  filterAgency,
+  sort,
+  offset,
+  limit,
+  allObject
+) {
   return `<?xml version="1.0" encoding="UTF-8"?>
 <SOAP-ENV:Envelope xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ns1="http://oss.dbc.dk/ns/opensearch">
   <SOAP-ENV:Body>
     <ns1:searchRequest>
-      <ns1:query>${q}${filterAgency && ` AND holdingsitem.agencyId=${filterAgency}` || ''}</ns1:query>
+      <ns1:query>${q}${(filterAgency &&
+    ` AND holdingsitem.agencyId=${filterAgency}`) ||
+    ''}</ns1:query>
       <ns1:agency>${agency}</ns1:agency>
       <ns1:profile>${profile}</ns1:profile>
       <ns1:start>${offset}</ns1:start>
@@ -29,7 +40,10 @@ export default (params, context) => {
   }
 
   const agency = context.get('search.agency', true);
-  const profile = (typeof params.profile === 'string' && params.profile.length > 0) ? params.profile : context.get('search.profile', true);
+  const profile =
+    typeof params.profile === 'string' && params.profile.length > 0
+      ? params.profile
+      : context.get('search.profile', true);
   const filterAgency = context.get('search.holdingsitemagencyid') || null;
   const q = params.q.replace(/&/g, '&amp;').replace(/</g, '&lt;');
   const sort = (params.sort || '').replace(/</g, '&lt;');
@@ -40,8 +54,14 @@ export default (params, context) => {
   // The first call only gets the work we searched for, that way we can set the correct PID, title and coverUrl
   // The second call gets all related objects, so you can identify multiVolume works.
   return Promise.all([
-    context.call('opensearch', getSoap(agency, profile, q, filterAgency, sort, offset, limit, 0)),
-    context.call('opensearch', getSoap(agency, profile, q, filterAgency, sort, offset, limit, 1))
+    context.call(
+      'opensearch',
+      getSoap(agency, profile, q, filterAgency, sort, offset, limit, 0)
+    ),
+    context.call(
+      'opensearch',
+      getSoap(agency, profile, q, filterAgency, sort, offset, limit, 1)
+    )
   ]).then(bodies => {
     const responses = bodies.map(body => {
       body = JSON.parse(body).searchResponse;
@@ -57,20 +77,26 @@ export default (params, context) => {
       let searchResult = body.searchResult || [];
       let result = [];
       const parseErrors = [];
-      searchResult.forEach(o => { // eslint-disable-line no-loop-func
+      searchResult.forEach(o => {
+        // eslint-disable-line no-loop-func
         let collection = o.collection.object.map(obj => obj.identifier.$);
         let dkabm = o.collection.object[0].record;
         dkabm = workToJSON(dkabm);
 
         let briefDisplays = [];
         if (o.formattedCollection.briefDisplay) {
-          briefDisplays = o.formattedCollection.briefDisplay.manifestation.map(briefDisplay => {
-            delete briefDisplay.fedoraPid;
-            return workToJSON(briefDisplay, 'bd');
-          });
-        }
-        else {
-          parseErrors.push(`Parse error: briefDisplay could not be found on object ${collection}`);
+          briefDisplays = o.formattedCollection.briefDisplay.manifestation.map(
+            briefDisplay => {
+              delete briefDisplay.fedoraPid;
+              return workToJSON(briefDisplay, 'bd');
+            }
+          );
+        } else {
+          parseErrors.push(
+            `Parse error: briefDisplay could not be found on object ${
+              collection
+            }`
+          );
           log.error('Parse error: briefDisplay could not be found on object', {
             collection: collection[0],
             context: context.data,
@@ -79,10 +105,16 @@ export default (params, context) => {
         }
 
         // here we would call getObject or moreInfo if needed...
-        result.push(Object.assign({
-          collection: collection,
-          collectionDetails: briefDisplays
-        }, dkabm, briefDisplays[0]));
+        result.push(
+          Object.assign(
+            {
+              collection: collection,
+              collectionDetails: briefDisplays
+            },
+            dkabm,
+            briefDisplays[0]
+          )
+        );
       });
 
       const response = {statusCode: 200, data: result};
@@ -113,7 +145,8 @@ export default (params, context) => {
         }
 
         if (collectionDetails.collectionDetails) {
-          responseDetails.collectionDetails = collectionDetails.collectionDetails;
+          responseDetails.collectionDetails =
+            collectionDetails.collectionDetails;
         }
 
         return responseDetails;

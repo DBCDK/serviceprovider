@@ -1,5 +1,3 @@
-
-
 import _ from 'lodash';
 import {requestType, makeTypeID} from '../../requestTypeIdentifier';
 import {log} from '../../utils';
@@ -16,7 +14,11 @@ const requestMethod = {
 };
 
 export function isGetObject(field) {
-  return (typeId.isType(field, requestType.DKABM) || typeId.isType(field, requestType.BRIEFDISPLAY) || typeId.isType(field, requestType.RELATIONS));
+  return (
+    typeId.isType(field, requestType.DKABM) ||
+    typeId.isType(field, requestType.BRIEFDISPLAY) ||
+    typeId.isType(field, requestType.RELATIONS)
+  );
 }
 
 /**
@@ -27,7 +29,7 @@ export function isGetObject(field) {
  */
 function evaluateResponseCode(response) {
   let error = false;
-  response.forEach((resp) => {
+  response.forEach(resp => {
     if (resp.statusCode !== 200) {
       error = resp;
     }
@@ -39,8 +41,7 @@ export function checkResponseForErrorCodes(response) {
   let result = null;
   if (Array.isArray(response)) {
     result = evaluateResponseCode(response);
-  }
-  else if (response.statusCode && response.statusCode !== 200) {
+  } else if (response.statusCode && response.statusCode !== 200) {
     result = response;
   }
 
@@ -62,7 +63,7 @@ function handleMoreinfo(resp, envelope) {
   for (let x = 0; x < resp.data.length; x++) {
     const respData = resp.data[x];
     if (respData.pid) {
-      delete (respData.pid); // remove the pid.
+      delete respData.pid; // remove the pid.
     }
 
     _.extend(envelope.data[x], respData);
@@ -131,7 +132,7 @@ export function handleMoreInfoVersion(context, params) {
  * @param {object} params
  * @return {Promise[]}
  */
-export function getSearchPromises(context, params){
+export function getSearchPromises(context, params) {
   // query opensearch through search method
   const searchPromises = [];
   for (let i = 0; i < params.search.length; i++) {
@@ -221,9 +222,11 @@ export function populateEnvelopeData(resp, envelope) {
   // Length is dependent on which services were called.
   // If search were the first service, the an array is returned, else an object with arrays in data.
   const length = resp.data ? resp.data.length : resp.length;
-  envelope.data = Array(length).fill(1).map(() => {
-    return {};
-  });
+  envelope.data = Array(length)
+    .fill(1)
+    .map(() => {
+      return {};
+    });
 
   return envelope;
 }

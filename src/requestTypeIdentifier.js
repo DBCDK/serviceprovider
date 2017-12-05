@@ -1,23 +1,24 @@
-
 /**
-* @file
-* requestType indentifier
-*
-* This file contains functions designed to find out which endpoints
-* needs to be called, based on the provided filter fields.
-*
-* Example of usage:
-*
-*   let typeID = makeTypeID();
-*
-*   let retval = typeID.getType('isAnalysisOf');
-*   let isval = typeID.isType('isAnalysisOf', 'relations');
-*
-*/
+ * @file
+ * requestType indentifier
+ *
+ * This file contains functions designed to find out which endpoints
+ * needs to be called, based on the provided filter fields.
+ *
+ * Example of usage:
+ *
+ *   let typeID = makeTypeID();
+ *
+ *   let retval = typeID.getType('isAnalysisOf');
+ *   let isval = typeID.isType('isAnalysisOf', 'relations');
+ *
+ */
 import fs from 'fs';
 import {die, log} from './utils.js';
 
-const workContext = JSON.parse(fs.readFileSync(__dirname + '/../doc/work-context.jsonld', 'utf8'));
+const workContext = JSON.parse(
+  fs.readFileSync(__dirname + '/../doc/work-context.jsonld', 'utf8')
+);
 
 /**
  * Create a lookup table for finding the JSON-name of a tag/type.
@@ -26,7 +27,7 @@ export function makeReverseContext() {
   const result = {};
   const keys = Object.keys(workContext);
 
-  keys.forEach((key) => {
+  keys.forEach(key => {
     const elem = workContext[key];
     let id = elem['@id'];
     const type = elem['@type'];
@@ -68,8 +69,8 @@ function getField(tagName, type) {
 }
 
 /**
-* requestType enum. Only these request types are supported.
-*/
+ * requestType enum. Only these request types are supported.
+ */
 export const requestType = {
   RELATIONS: 'relations',
   MOREINFO: 'moreinfo',
@@ -79,8 +80,8 @@ export const requestType = {
 };
 
 /**
-* private function. validates type
-*/
+ * private function. validates type
+ */
 function isRequestType(type) {
   for (var key in requestType) {
     if (type === requestType[key]) {
@@ -92,13 +93,13 @@ function isRequestType(type) {
 }
 
 /**
-* TypeID class
-*
-* provides two functions:
-*   getType: returns type for input field
-*   isType: performs type test.
-*
-*/
+ * TypeID class
+ *
+ * provides two functions:
+ *   getType: returns type for input field
+ *   isType: performs type test.
+ *
+ */
 export function TypeID() {
   this.namespaceMap = {
     dc: requestType.DKABM,
@@ -120,16 +121,21 @@ export function TypeID() {
    * @api public
    */
   this.getType = function(field) {
-
     const val = workContext[field];
     if (typeof val === 'undefined' || typeof val === 'string') {
-      die('key \'' + field + '\' is unknown');
+      die("key '" + field + "' is unknown");
     }
 
     const namespace = val['@id'].split(':')[0];
 
     if (typeof this.namespaceMap[namespace] === 'undefined') {
-      die('unknown namespace \'' + namespace + '\'. Known namespaces are [' + Object.keys(this.namespaceMap) + ']');
+      die(
+        "unknown namespace '" +
+          namespace +
+          "'. Known namespaces are [" +
+          Object.keys(this.namespaceMap) +
+          ']'
+      );
     }
     return this.namespaceMap[namespace];
   };
@@ -144,9 +150,15 @@ export function TypeID() {
    */
   this.isType = function(field, type) {
     if (!isRequestType(type)) {
-      die('type \'' + type + '\' is not a valid requestType. valid requestTypes are: [' + Object.keys(requestType).map(function(k) {
-        return requestType[k];
-      }) + ']');
+      die(
+        "type '" +
+          type +
+          "' is not a valid requestType. valid requestTypes are: [" +
+          Object.keys(requestType).map(function(k) {
+            return requestType[k];
+          }) +
+          ']'
+      );
     }
 
     return this.getType(field) === type;
@@ -171,7 +183,8 @@ export function makeTypeID() {
  */
 export function workToJSON(o, defaultPrefix) {
   var result = {};
-  for (const key in o) {  // eslint-disable-line guard-for-in
+  for (const key in o) {
+    // eslint-disable-line guard-for-in
     if (key === '@') {
       continue;
     }
@@ -179,15 +192,15 @@ export function workToJSON(o, defaultPrefix) {
     if (!Array.isArray(entries)) {
       entries = [entries];
     }
-    entries.forEach(entry => { // eslint-disable-line no-loop-func
+    entries.forEach(entry => {
+      // eslint-disable-line no-loop-func
       const tagName = (entry['@'] || defaultPrefix) + ':' + key;
       const type = entry['@type'] ? entry['@type'].$ : undefined; // eslint-disable-line no-undefined
       const jsonName = getField(tagName, type);
 
       if (!jsonName) {
         log.error('invalid id/type', {object: entry});
-      }
-      else {
+      } else {
         result[jsonName] = result[jsonName] || [];
         result[jsonName].push(entry.$);
       }

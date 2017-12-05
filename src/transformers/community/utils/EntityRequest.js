@@ -26,10 +26,7 @@ const QueryTypeMap = {
   }
 };
 
-const orderPossibilities = [
-  'descending',
-  'ascending'
-];
+const orderPossibilities = ['descending', 'ascending'];
 
 export function communityRequest(context, params) {
   const id = context.get('communityservice.id', true);
@@ -37,12 +34,12 @@ export function communityRequest(context, params) {
 
   if (!id) {
     throw 'Community-API is not available for the current client. ' +
-    'Client needs to be configured with a valid community ID';
+      'Client needs to be configured with a valid community ID';
   }
 
   if (!baseurl) {
     throw 'Community-API is not available for the current client. ' +
-    'Client needs to be configured with a valid community service url';
+      'Client needs to be configured with a valid community service url';
   }
 
   const name = `${baseurl}/community/${id}/${params.path}`;
@@ -76,7 +73,7 @@ export default class EntityRequest {
    * @private
    */
   _parseResponse(response) {
-    return (typeof response === 'string') && JSON.parse(response) || response;
+    return (typeof response === 'string' && JSON.parse(response)) || response;
   }
 
   /**
@@ -119,7 +116,7 @@ export default class EntityRequest {
    * @private
    */
   _parseErrors(errors) {
-    const error = Array.isArray(errors) && errors[0] || errors;
+    const error = (Array.isArray(errors) && errors[0]) || errors;
     const status = error.status || 500;
     delete error.status;
     return {
@@ -145,7 +142,9 @@ export default class EntityRequest {
     if (validateErrors.length) {
       return {
         status: 400,
-        errors: validateErrors.map(o => String(o.stack).replace(/^instance\.?/, '')).join('\n'),
+        errors: validateErrors
+          .map(o => String(o.stack).replace(/^instance\.?/, ''))
+          .join('\n'),
         data: []
       };
     }
@@ -170,7 +169,7 @@ export default class EntityRequest {
       Limit: 1
     };
     const {data} = await this._request('query', 'post', {json: validateJson});
-    return (Number(data.Total) > 0);
+    return Number(data.Total) > 0;
   }
 
   async objectExists(elvisType, id, type = null) {
@@ -197,20 +196,51 @@ export default class EntityRequest {
   async _validateRelations(json) {
     if (this._type === 'follow' || this._type === 'like') {
       if (await this.actionExists(json)) {
-        return this._createResponse({}, [{error: `${this._type} already exists`, status: 400}]);
+        return this._createResponse({}, [
+          {error: `${this._type} already exists`, status: 400}
+        ]);
       }
     }
-    if (this._type === 'comment' && !await this.objectExists('Entity', json.entity_ref, 'post')) {
-      return this._createResponse({}, [{error: `post with id ${json.entity_ref} does not exist`, status: 400}]);
-    }
-    else if (this._type === 'post' && !await this.objectExists('Entity', json.entity_ref, 'group')) {
-      return this._createResponse({}, [{error: `group with id ${json.entity_ref} does not exist`, status: 400}]);
-    }
-    else if (json.profile_ref && !await this.objectExists('Profile', json.profile_ref)) {
-      return this._createResponse({}, [{error: `profile with id ${json.profile_ref} does not exist`, status: 400}]);
-    }
-    else if (json.entity_ref && !await this.objectExists('Entity', json.entity_ref, json.attributes.reference.type)) {
-      return this._createResponse({}, [{error: `${json.attributes.reference.type} with id ${json.entity_ref} does not exist`, status: 400}]);
+    if (
+      this._type === 'comment' &&
+      !await this.objectExists('Entity', json.entity_ref, 'post')
+    ) {
+      return this._createResponse({}, [
+        {error: `post with id ${json.entity_ref} does not exist`, status: 400}
+      ]);
+    } else if (
+      this._type === 'post' &&
+      !await this.objectExists('Entity', json.entity_ref, 'group')
+    ) {
+      return this._createResponse({}, [
+        {error: `group with id ${json.entity_ref} does not exist`, status: 400}
+      ]);
+    } else if (
+      json.profile_ref &&
+      !await this.objectExists('Profile', json.profile_ref)
+    ) {
+      return this._createResponse({}, [
+        {
+          error: `profile with id ${json.profile_ref} does not exist`,
+          status: 400
+        }
+      ]);
+    } else if (
+      json.entity_ref &&
+      !await this.objectExists(
+        'Entity',
+        json.entity_ref,
+        json.attributes.reference.type
+      )
+    ) {
+      return this._createResponse({}, [
+        {
+          error: `${json.attributes.reference.type} with id ${
+            json.entity_ref
+          } does not exist`,
+          status: 400
+        }
+      ]);
     }
 
     return {};
@@ -225,7 +255,8 @@ export default class EntityRequest {
       }
 
       if (relatedModel.Profiles || relatedModel.Profile) {
-        countQuery.CountProfiles = relatedModel.Profiles || relatedModel.Profile;
+        countQuery.CountProfiles =
+          relatedModel.Profiles || relatedModel.Profile;
       }
 
       if (relatedModel.Action || relatedModel.Actions) {
@@ -264,12 +295,10 @@ export default class EntityRequest {
       try {
         const reqInclude = JSON.parse(include);
         include = Array.isArray(reqInclude) ? reqInclude : [reqInclude];
-      }
-      catch (e) {
+      } catch (e) {
         include = [include];
       }
-    }
-    else if (Array.isArray(include)) {
+    } else if (Array.isArray(include)) {
       include = include;
     }
 
@@ -280,27 +309,44 @@ export default class EntityRequest {
           if (related) {
             Include[item] = related;
           }
-        }
-        else if (typeof item === 'object' && item.name) {
-          const related = getRelatedModel(name, item.name, item.limit, item.offset);
+        } else if (typeof item === 'object' && item.name) {
+          const related = getRelatedModel(
+            name,
+            item.name,
+            item.limit,
+            item.offset
+          );
           if (related) {
             if (item.include) {
               if (typeof item.include === 'string') {
                 item.include = [item.include];
               }
 
-              related.Include = Object.assign({}, related.Include, this._getInclude(item.include, item.filter, item.name));
+              related.Include = Object.assign(
+                {},
+                related.Include,
+                this._getInclude(item.include, item.filter, item.name)
+              );
             }
             related.Include = this._filterInclude(related.Include, item.filter);
 
             Include[item.name] = related;
             if (item.counts) {
-              item.counts = typeof item.counts === 'string' ? [item.counts] : item.counts;
-              Array.isArray(item.counts) && item.counts.forEach(count => {
-                const additional = {};
-                additional[`${count}Count`] = this._getCounts(item.name, count);
-                Include[item.name].Include = Object.assign({}, Include[item.name].Include, additional);
-              });
+              item.counts =
+                typeof item.counts === 'string' ? [item.counts] : item.counts;
+              Array.isArray(item.counts) &&
+                item.counts.forEach(count => {
+                  const additional = {};
+                  additional[`${count}Count`] = this._getCounts(
+                    item.name,
+                    count
+                  );
+                  Include[item.name].Include = Object.assign(
+                    {},
+                    Include[item.name].Include,
+                    additional
+                  );
+                });
             }
           }
         }
@@ -327,8 +373,7 @@ export default class EntityRequest {
         return response;
       }
       return this._parseResponse(response);
-    }
-    catch (error) {
+    } catch (error) {
       return {errors: error};
     }
   }
@@ -342,7 +387,12 @@ export default class EntityRequest {
     const json = {
       [selectorKey]: selector,
       Limit: 1,
-      Include: this._getInclude(include, [], this._type || this._elvisType, this._map)
+      Include: this._getInclude(
+        include,
+        [],
+        this._type || this._elvisType,
+        this._map
+      )
     };
 
     if (typeof counts === 'string') {
@@ -350,7 +400,10 @@ export default class EntityRequest {
     }
 
     counts.forEach(count => {
-      json.Include[`${count}Count`] = this._getCounts(this._type || this._elvisType, count);
+      json.Include[`${count}Count`] = this._getCounts(
+        this._type || this._elvisType,
+        count
+      );
     });
 
     const {data, errors} = await this._request('query', 'post', {json});
@@ -384,8 +437,7 @@ export default class EntityRequest {
     if (this._elvisType === 'action' && json.attributes.reference) {
       if (json.attributes.reference.type === 'profile') {
         json.profile_ref = json.attributes.reference.id;
-      }
-      else {
+      } else {
         json.entity_ref = json.attributes.reference.id;
       }
     }
@@ -409,13 +461,21 @@ export default class EntityRequest {
     }
 
     const json = this._mapperToElvis(object);
-    const {data, errors} = await this._request(`${this._elvisType}/${id}`, 'put', {json});
+    const {data, errors} = await this._request(
+      `${this._elvisType}/${id}`,
+      'put',
+      {json}
+    );
     return this._createResponse(this._mapperFromElvis(data), errors);
   }
 
   async delete(id, modified_by) {
     const json = {modified_by};
-    const {data, errors} = await this._request(`${this._elvisType}/${id}`, 'put', {json});
+    const {data, errors} = await this._request(
+      `${this._elvisType}/${id}`,
+      'put',
+      {json}
+    );
     return this._createResponse(this._mapperFromElvis(data), errors);
   }
 
@@ -446,7 +506,12 @@ export default class EntityRequest {
       Order: 'descending',
       Limit: 2,
       Offset: 0,
-      Include: this._getInclude(req.include, filter, this._type || this._elvisType, this._map)
+      Include: this._getInclude(
+        req.include,
+        filter,
+        this._type || this._elvisType,
+        this._map
+      )
     };
 
     if (req.offset && !isNaN(parseFloat(req.offset)) && isFinite(req.offset)) {
@@ -457,7 +522,11 @@ export default class EntityRequest {
       json.Order = req.order;
     }
 
-    if (typeof req.limit !== 'undefined' && !isNaN(parseFloat(req.limit)) && isFinite(req.limit)) {
+    if (
+      typeof req.limit !== 'undefined' &&
+      !isNaN(parseFloat(req.limit)) &&
+      isFinite(req.limit)
+    ) {
       json.Limit = req.limit;
     }
 
@@ -468,15 +537,17 @@ export default class EntityRequest {
     if (typeof req.counts === 'string') {
       try {
         req.counts = JSON.parse(req.counts);
-      }
-      catch (er) {
+      } catch (er) {
         req.counts = [req.counts];
       }
     }
 
     if (Array.isArray(req.counts)) {
       req.counts.forEach(count => {
-        json.Include[`${count}Count`] = this._getCounts(this._type || this._elvisType, count);
+        json.Include[`${count}Count`] = this._getCounts(
+          this._type || this._elvisType,
+          count
+        );
       });
     }
 

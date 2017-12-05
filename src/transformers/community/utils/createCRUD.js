@@ -9,27 +9,20 @@ import {createMap} from './createMap';
  * @returns {Object} Router.
  */
 export default function createCRUD(elvisType, type, router, remap, schema) {
-
-   // Setup CRUD transport
+  // Setup CRUD transport
   router.all('/:id?', (req, res) => {
     const provider = req.app.get('serviceProvider');
     const context = req.context;
     context.crud = true;
 
-    const query = Object.assign(
-      {},
-      req.params,
-      req.body,
-      req.query,
-      {
-        _meta: {
-          type,
-          elvisType,
-          schemaMap: createMap(schema, remap),
-          schema
-        }
+    const query = Object.assign({}, req.params, req.body, req.query, {
+      _meta: {
+        type,
+        elvisType,
+        schemaMap: createMap(schema, remap),
+        schema
       }
-    );
+    });
 
     let event;
     switch (req.method) {

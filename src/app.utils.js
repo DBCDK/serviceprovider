@@ -1,4 +1,3 @@
-
 import request from 'request';
 import moment from 'moment';
 import _ from 'lodash';
@@ -15,19 +14,22 @@ export const SMAUG_LOCATION = process.env.SMAUG; // eslint-disable-line no-proce
  */
 export function getContext(token) {
   return new Promise((resolve, reject) => {
-    request.get({
-      uri: SMAUG_LOCATION + '/configuration',
-      qs: {token: token}
-    }, (err, response, body) => {
-      switch (response.statusCode) {
-        case 200:
-          return resolve(JSON.parse(body));
-        case 404:
-          return reject(new TokenExpiredError());
-        default:
-          return reject(err);
+    request.get(
+      {
+        uri: SMAUG_LOCATION + '/configuration',
+        qs: {token: token}
+      },
+      (err, response, body) => {
+        switch (response.statusCode) {
+          case 200:
+            return resolve(JSON.parse(body));
+          case 404:
+            return reject(new TokenExpiredError());
+          default:
+            return reject(err);
+        }
       }
-    });
+    );
   });
 }
 
@@ -41,36 +43,41 @@ export function healthCheck(req, res) {
   const result = {ok: {}};
   const tests = {};
 
-  tests.smaug = new Promise((resolve) => {
+  tests.smaug = new Promise(resolve => {
     const tStart = moment();
-    request.get({
-      uri: SMAUG_LOCATION + '/health'
-    }, (err, response) => {
-      if (err) {
+    request.get(
+      {
+        uri: SMAUG_LOCATION + '/health'
+      },
+      (err, response) => {
+        if (err) {
+          return resolve({
+            responseTime: moment().diff(tStart),
+            result: err
+          });
+        }
+
+        if (response.statusCode !== 200) {
+          return resolve({
+            responseTime: moment().diff(tStart),
+            result: new Error(
+              'Smaug returned http status code ' + response.statusCode
+            )
+          });
+        }
+
         return resolve({
           responseTime: moment().diff(tStart),
-          result: err
+          result: 'ok'
         });
       }
-
-      if (response.statusCode !== 200) {
-        return resolve({
-          responseTime: moment().diff(tStart),
-          result: new Error('Smaug returned http status code ' + response.statusCode)
-        });
-      }
-
-      return resolve({
-        responseTime: moment().diff(tStart),
-        result: 'ok'
-      });
-    });
+    );
   });
 
-  const testsPromises = Object.keys(tests).map((testId) => tests[testId]);
+  const testsPromises = Object.keys(tests).map(testId => tests[testId]);
 
-  Promise.all(testsPromises).then((results) => {
-    _.zip(Object.keys(tests), results).forEach((zipElem) => {
+  Promise.all(testsPromises).then(results => {
+    _.zip(Object.keys(tests), results).forEach(zipElem => {
       const [testId, status] = zipElem;
 
       if (status.result instanceof Error) {
@@ -83,8 +90,7 @@ export function healthCheck(req, res) {
           stacktrace: status.result.stack,
           responseTime: status.responseTime
         };
-      }
-      else {
+      } else {
         result.ok[testId] = {responseTime: status.responseTime};
       }
     });
@@ -106,12 +112,12 @@ export function healthCheck(req, res) {
  * @return {*}
  */
 export function fieldsFilter(obj, query) {
-  if ((typeof obj !== 'object') || !Array.isArray(query.fields)) {
+  if (typeof obj !== 'object' || !Array.isArray(query.fields)) {
     return obj;
   }
 
   if (Array.isArray(obj)) {
-    return obj.map((item) => fieldsFilter(item, query));
+    return obj.map(item => fieldsFilter(item, query));
   }
 
   const result = {};

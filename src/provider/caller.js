@@ -1,4 +1,3 @@
-
 /**
  * Calls to transformers, as well as requests to external services
  * are called through this file, which can spy on the results,
@@ -6,7 +5,14 @@
  */
 import * as BaseSoapClient from 'dbc-node-basesoap-client';
 import {log} from '../utils';
-import {testDev, mockFile, mockFileName, randomId, saveTest, promiseRequest} from './caller.utils';
+import {
+  testDev,
+  mockFile,
+  mockFileName,
+  randomId,
+  saveTest,
+  promiseRequest
+} from './caller.utils';
 import moment from 'moment';
 
 class Context {
@@ -14,7 +20,8 @@ class Context {
     this.data = data;
     this.transformerMap = transformerMap;
     this.callsInProgress = 0;
-    this.mockData = mockFile || (data.mockData ? Object.assign({}, data.mockData) : {});
+    this.mockData =
+      mockFile || (data.mockData ? Object.assign({}, data.mockData) : {});
     this.externalCallsInProgress = 0;
     this.externalTiming = 0;
     this.startTime = Date.now();
@@ -25,23 +32,25 @@ class Context {
     // Iterate through object or array to fix dates.
     if (typeof dataObj === 'object' && Array.isArray(dataObj)) {
       dataObj = dataObj.map(item => this._rectifyDateFormats(item), fieldname);
-    }
-    else if (typeof dataObj === 'object' && dataObj) {
+    } else if (typeof dataObj === 'object' && dataObj) {
       Object.keys(dataObj).forEach(key => {
         dataObj[key] = this._rectifyDateFormats(dataObj[key], key);
       });
-    }
-    // We could include additional date/datetime formats here.
-    else if (typeof dataObj === 'string') {
+    } else if (typeof dataObj === 'string') {
+      // We could include additional date/datetime formats here.
       try {
         // moment(dataObj, true).isValid();
-        const date = moment(dataObj, ['YYYY-MM-DD', 'YYYY-MM-DD HH:MM:SS'], true);
+        const date = moment(
+          dataObj,
+          ['YYYY-MM-DD', 'YYYY-MM-DD HH:MM:SS'],
+          true
+        );
         if (date.isValid()) {
           dataObj = date.format();
         }
-      }
-      // Parsing failed
-      catch (err) {} // eslint-disable-line
+      } catch (err) {
+        // Parsing failed
+      } // eslint-disable-line
     }
 
     return dataObj;
@@ -56,13 +65,18 @@ class Context {
     const url = this.data.services[name] || name;
     switch (type) {
       case 'transformer': {
-        promise = this.transformerMap[name](params, this)
-          .then(response => this._rectifyDateFormats(response));
+        promise = this.transformerMap[name](params, this).then(response =>
+          this._rectifyDateFormats(response)
+        );
         break;
       }
 
       case 'soapstring': {
-        promise = promiseRequest({method: 'POST', url: url, form: {xml: params}});
+        promise = promiseRequest({
+          method: 'POST',
+          url: url,
+          form: {xml: params}
+        });
         break;
       }
 
@@ -100,7 +114,8 @@ class Context {
       this.mockData[mockId] = result;
     }
 
-    if (this.createTest && this.callsInProgress === 0) { // save mock-data / create text-code
+    if (this.createTest && this.callsInProgress === 0) {
+      // save mock-data / create text-code
       delete params.createTest;
       delete params.access_token;
 
@@ -179,8 +194,11 @@ class Context {
     }
 
     return this._callToPromise(type, name, params, mockId).then(
-      result => this._handleCallPromiseResult(type, name, params, mockId, result), // resolve
-      result => { throw this._handleCallPromiseResult(type, name, params, mockId, result); } // reject
+      result =>
+        this._handleCallPromiseResult(type, name, params, mockId, result), // resolve
+      result => {
+        throw this._handleCallPromiseResult(type, name, params, mockId, result);
+      } // reject
     );
   }
 
@@ -211,8 +229,9 @@ class Context {
   }
 
   query(name, params) {
-    return this._call('request', name, {qs: params})
-      .then(s => ({data: JSON.parse(s)}));
+    return this._call('request', name, {qs: params}).then(s => ({
+      data: JSON.parse(s)
+    }));
   }
 
   request(name, params) {

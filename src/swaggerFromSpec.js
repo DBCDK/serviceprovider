@@ -9,7 +9,9 @@ const majorVersion = parseInt(version, 10);
 
 export function getSpecification(specName = 'definitions') {
   const path = __dirname + '/../doc/specs/';
-  return yaml.safeLoad(fs.readFileSync(`${path}${specName}.yaml`).toString('utf-8'));
+  return yaml.safeLoad(
+    fs.readFileSync(`${path}${specName}.yaml`).toString('utf-8')
+  );
 }
 
 /**
@@ -18,16 +20,26 @@ export function getSpecification(specName = 'definitions') {
 export function getSchemaDefinition(swagger, name) {
   const definition = swagger.definitions[name] || {};
   if (definition.allOf && Array.isArray(definition.allOf)) {
-    const definitionName = definition.allOf[0].$ref.replace('#/definitions/', '');
+    const definitionName = definition.allOf[0].$ref.replace(
+      '#/definitions/',
+      ''
+    );
     const subDefinition = getSchemaDefinition(swagger, definitionName);
-    definition.properties = Object.assign({}, definition.properties, subDefinition.properties);
+    definition.properties = Object.assign(
+      {},
+      definition.properties,
+      subDefinition.properties
+    );
     delete definition.allOf;
-  } 
+  }
   Object.keys(definition.properties || {}).forEach(key => {
     if (definition.properties[key].$ref) {
-      definition.properties[key] = getSchemaDefinition(swagger, definition.properties[key].$ref.replace('#/definitions/', ''));
+      definition.properties[key] = getSchemaDefinition(
+        swagger,
+        definition.properties[key].$ref.replace('#/definitions/', '')
+      );
     }
-  }); 
+  });
 
   return definition;
 }
@@ -44,9 +56,9 @@ function generateSwagger(spec) {
       description: desc
     },
     basePath: '/v' + majorVersion,
-    schemes: (process.env.SWAGGER_HTTP // eslint-disable-line no-process-env
+    schemes: process.env.SWAGGER_HTTP // eslint-disable-line no-process-env
       ? ['http', 'https', 'wss']
-      : ['https', 'wss']),
+      : ['https', 'wss'],
     consumes: ['application/json'],
     produces: ['application/json'],
     paths: specToPaths(spec),

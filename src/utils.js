@@ -1,28 +1,25 @@
-
-
 import fs from 'fs';
 import {hostname} from 'os';
 import process from 'process';
 import {version} from '../package.json';
 
 /**
-* Die function. Writes to console and throws error
-*/
+ * Die function. Writes to console and throws error
+ */
 export function die(str) {
   console.trace('ERROR: ' + str); // eslint-disable-line
-  throw (str);
+  throw str;
 }
 
 /**
-* Returns the name of the given function
-*/
+ * Returns the name of the given function
+ */
 export function functionName(fun) {
   let ret = fun.toString();
   ret = ret.substr('function '.length);
   ret = ret.substr(0, ret.indexOf('('));
   return ret;
 }
-
 
 /**
  * @returns current log level
@@ -68,7 +65,7 @@ function doLog(level, msg, args) {
   }
 
   var blob = {
-    '@timestamp': (new Date()).toISOString(),
+    '@timestamp': new Date().toISOString(),
     '@version': 1,
     app: 'serviceprovider',
     version: version,
@@ -94,8 +91,7 @@ export function isDir(path) {
     if (stats.isDirectory()) {
       return true;
     }
-  }
-  catch (e) {
+  } catch (e) {
     doLog('warn', 'Failed checking for directory');
   }
   return false;
@@ -119,7 +115,9 @@ export function timingDecorator(f) {
   return function() {
     const start = Date.now();
     const r = f.apply(this, arguments);
-    log.debug('timing', {timing: {function: functionName(f), time: (Date.now() - start)}});
+    log.debug('timing', {
+      timing: {function: functionName(f), time: Date.now() - start}
+    });
     return r;
   };
 }

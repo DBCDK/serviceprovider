@@ -35,8 +35,7 @@ function createResponse(spec) {
         required: ['statusCode'],
         properties: {
           statusCode: {type: 'integer', default: 200},
-          data: Object.assign({
-          }, spec.response),
+          data: Object.assign({}, spec.response),
           errors: {
             type: 'array',
             items: {
@@ -85,16 +84,25 @@ function apiMethodIterator(method, specs) {
 
   const ref = createRefFromSpec(spec, definitions);
 
-  spec.properties = Object.assign({}, defaultProperties, spec.properties, ref.properties);
+  spec.properties = Object.assign(
+    {},
+    defaultProperties,
+    spec.properties,
+    ref.properties
+  );
   spec.required = spec.required || ref.required;
   spec.required.push('access_token');
 
   // Document request/response objects
   const request = createRequest(spec);
-  const responses = Object.assign({}, spec.responses || {}, createResponse(spec));
+  const responses = Object.assign(
+    {},
+    spec.responses || {},
+    createResponse(spec)
+  );
 
   // Create parameter list for GET-requests
-  const params = Object.keys(request.schema.properties).map((name) => {
+  const params = Object.keys(request.schema.properties).map(name => {
     const schema = request.schema.properties[name];
     const param = Object.assign({}, schema, {
       in: 'query',
@@ -108,7 +116,8 @@ function apiMethodIterator(method, specs) {
 
     if (param.type === 'object') {
       param.type = 'string';
-      param.description += '\n Parameter string contains a JSON encoded object. See POST-method for details';
+      param.description +=
+        '\n Parameter string contains a JSON encoded object. See POST-method for details';
     }
 
     return param;
@@ -147,7 +156,9 @@ export function parameterGroupToParameters(paths, parameterGroups) {
     for (const method in paths[path]) {
       const {parameterGroup, parameters = []} = paths[path][method];
       if (parameterGroup && parameterGroups[parameterGroup]) {
-        paths[path][method].parameters = parameters.concat(parameterGroups[parameterGroup]);
+        paths[path][method].parameters = parameters.concat(
+          parameterGroups[parameterGroup]
+        );
         delete paths[path][method].parameterGroup;
       }
     }

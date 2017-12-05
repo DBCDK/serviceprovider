@@ -1,5 +1,3 @@
-
-
 /**
  * A Transformer for retreiving cover-image-urls from
  * the DBC moreinfo service.
@@ -40,15 +38,21 @@ let requestPids = [];
  */
 function doIdentifierInformationContainsCoverImages(idInfo) {
   let res = true;
-  if (!_.has(idInfo, 'identifierKnown.$')
-    || !idInfo.identifierKnown === true
-    || !_.has(idInfo, 'coverImage')
-    || idInfo.coverImage.length === 0) {
+  if (
+    !_.has(idInfo, 'identifierKnown.$') ||
+    !idInfo.identifierKnown === true ||
+    !_.has(idInfo, 'coverImage') ||
+    idInfo.coverImage.length === 0
+  ) {
     if (_.has(idInfo, 'identifier.pid.$')) {
       const pid = idInfo.identifier.pid.$;
       log.info('Could not find covers for identifier: ' + pid);
-    } else { // eslint-disable-line brace-style
-      log.info('Could not find covers for unknown identifier: ' + JSON.stringify(idInfo, null, 4));
+    } else {
+      // eslint-disable-line brace-style
+      log.info(
+        'Could not find covers for unknown identifier: ' +
+          JSON.stringify(idInfo, null, 4)
+      );
     }
     res = false;
   }
@@ -109,9 +113,12 @@ function containsError(response) {
     }
 
     if (_.has(status, 'errorText.$')) {
-      log.error('Error in response: ErrorCode: '
-        + status.statusEnum.$ + ' ErrorText: '
-        + status.errorText.$);
+      log.error(
+        'Error in response: ErrorCode: ' +
+          status.statusEnum.$ +
+          ' ErrorText: ' +
+          status.errorText.$
+      );
     } else {
       log.error('Error in response: ErrorCode: ' + status.statusEnum.$);
     }
@@ -128,15 +135,14 @@ function createErrorResponse() {
 }
 
 function createResponse(response) {
-
   if (!response.identifierInformation) {
     log.error('no identifierInformation');
     return createErrorResponse();
   }
   const data = [];
-  requestPids.forEach(function (pid){
+  requestPids.forEach(function(pid) {
     let coverInfo = {};
-    response.identifierInformation.forEach(function (idInfo) {
+    response.identifierInformation.forEach(function(idInfo) {
       if (idInfo.identifier.pid && idInfo.identifier.pid.$ === pid) {
         coverInfo = getCoverUrlsFromIdentifierInformation(idInfo);
       }
@@ -162,14 +168,18 @@ export default (request, context) => {
     outputType: 'json'
   };
 
-  return context.call('moreinfo', params).then(body => {
-    if (containsError(body)) {
-      return createErrorResponse();
+  return context.call('moreinfo', params).then(
+    body => {
+      if (containsError(body)) {
+        return createErrorResponse();
+      }
+      return createResponse(body.data.moreInfoResponse);
+    },
+    error => {
+      const errMsg =
+        'CoverUrls could not be fetched. Server probably unavailable. Try request again without coverUrls.';
+      log.error(errMsg, error);
+      return {statusCode: 500, error: errMsg};
     }
-    return createResponse(body.data.moreInfoResponse);
-  }, error => {
-    const errMsg = 'CoverUrls could not be fetched. Server probably unavailable. Try request again without coverUrls.';
-    log.error(errMsg, error);
-    return {statusCode: 500, error: errMsg};
-  });
+  );
 };

@@ -33,7 +33,13 @@ export const schemas = {
  * @returns {Object}
  */
 export function like() {
-  return createCRUD('action', 'like', Router(), likeMap, getSchemaDefinition(swagger, 'Like'));
+  return createCRUD(
+    'action',
+    'like',
+    Router(),
+    likeMap,
+    getSchemaDefinition(swagger, 'Like')
+  );
 }
 
 /**
@@ -42,7 +48,13 @@ export function like() {
  * @returns {Object}
  */
 export function follow() {
-  return createCRUD('action', 'follow', Router(), followMap, getSchemaDefinition(swagger, 'Follow'));
+  return createCRUD(
+    'action',
+    'follow',
+    Router(),
+    followMap,
+    getSchemaDefinition(swagger, 'Follow')
+  );
 }
 
 /**
@@ -51,7 +63,13 @@ export function follow() {
  * @returns {Object}
  */
 export function flag() {
-  return createCRUD('action', 'flag', Router(), flagMap, getSchemaDefinition(swagger, 'Flag'));
+  return createCRUD(
+    'action',
+    'flag',
+    Router(),
+    flagMap,
+    getSchemaDefinition(swagger, 'Flag')
+  );
 }
 
 /**
@@ -60,5 +78,11 @@ export function flag() {
  * @returns {Object}
  */
 export function quarantine() {
-  return createCRUD('action', 'quarantine', Router(), quarantineMap, getSchemaDefinition(swagger, 'Quarantine'));
+  return createCRUD(
+    'action',
+    'quarantine',
+    Router(),
+    quarantineMap,
+    getSchemaDefinition(swagger, 'Quarantine')
+  );
 }

@@ -24,8 +24,7 @@ export function getSelector(relatedType, type, id) {
 
   if (relatedType === 'profile') {
     selector.profile_ref = id;
-  }
-  else if (typeMapping[relatedType] === 'Entity') {
+  } else if (typeMapping[relatedType] === 'Entity') {
     selector.entity_ref = id;
   }
   if (typeMapping[type] === 'Action') {
@@ -67,7 +66,9 @@ export function getRelatedList(relatedType, type, map, schema) {
       }
     );
 
-    provider.execute('listEntities', query, context).then(result => res.json(result));
+    provider
+      .execute('listEntities', query, context)
+      .then(result => res.json(result));
   };
 }
 
@@ -92,9 +93,7 @@ export function getFullGroupView(map, schema) {
             name: 'comments',
             limit: req.query.commentLimit || 2,
             offset: req.query.commentOffset || 0,
-            include: [
-              'owner'
-            ]
+            include: ['owner']
           }
         ]
       }
@@ -118,7 +117,9 @@ export function getFullGroupView(map, schema) {
       }
     );
 
-    provider.execute('getEntity', query, context).then(result => res.json(result));
+    provider
+      .execute('getEntity', query, context)
+      .then(result => res.json(result));
   };
 }
 
@@ -141,7 +142,7 @@ export function getProfileActivity(map, schema) {
     ];
 
     const include = [];
-    _include.forEach((inc) => {
+    _include.forEach(inc => {
       include.push(Object.assign(inc, {limit: limit, offset: offset}));
     });
 
@@ -161,6 +162,8 @@ export function getProfileActivity(map, schema) {
       }
     );
 
-    provider.execute('getEntity', query, context).then(result => res.json(result));
+    provider
+      .execute('getEntity', query, context)
+      .then(result => res.json(result));
   };
 }

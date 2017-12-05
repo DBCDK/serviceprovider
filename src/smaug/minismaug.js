@@ -1,5 +1,3 @@
-
-
 require('babel-register');
 
 var express = require('express');
@@ -16,9 +14,7 @@ if (typeof args.f === 'undefined') {
   process.exit(1);
 }
 
-const config = JSON.parse(
-  fs.readFileSync(
-    args.f, 'utf8'));
+const config = JSON.parse(fs.readFileSync(args.f, 'utf8'));
 
 var port = process.env.PORT || 3000; // eslint-disable-line no-process-env
 

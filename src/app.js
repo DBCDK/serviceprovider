@@ -1,5 +1,3 @@
-
-
 /**
  * @file
  * Configure and start our server
@@ -22,7 +20,11 @@ import community from './transformers/community/community';
 // Middleware
 import bodyParser from 'body-parser';
 import {log} from './utils';
-import {accessLogMiddleware, getContextMiddleware, requireAuthorized} from './app.middlewares';
+import {
+  accessLogMiddleware,
+  getContextMiddleware,
+  requireAuthorized
+} from './app.middlewares';
 import {healthCheck, getContext, fieldsFilter} from './app.utils';
 
 // Generation of swagger specification
@@ -55,18 +57,24 @@ function validateAndExecuteTransform(event, query, context) {
   if (validateErrors.length) {
     return Promise.resolve({
       statusCode: 400,
-      error: validateErrors.map(o => String(o.stack).replace(/^instance\.?/, '')).join('\n')
-    }); 
+      error: validateErrors
+        .map(o => String(o.stack).replace(/^instance\.?/, ''))
+        .join('\n')
+    });
   }
 
   return serviceProvider.execute(event, query, context);
 }
 
-function validateResponseAndStatusCode(event, response){
-  return (typeof response !== 'object') ||
+function validateResponseAndStatusCode(event, response) {
+  return (
+    typeof response !== 'object' ||
     typeof response.statusCode !== 'number' ||
-    (response.statusCode >= 200 && response.statusCode < 400 && !response.data) ||
-    (response.statusCode >= 400 && !response.error);
+    (response.statusCode >= 200 &&
+      response.statusCode < 400 &&
+      !response.data) ||
+    (response.statusCode >= 400 && !response.error)
+  );
 }
 
 /**
@@ -78,36 +86,42 @@ function validateResponseAndStatusCode(event, response){
  * @return {Promise}
  */
 function callApi(event, query, context) {
-  return validateAndExecuteTransform(event, query, context).then(response => {
-    const validateErrors = validateResponse(event, response.data);
-    if (validateErrors.length) {
+  return validateAndExecuteTransform(event, query, context)
+    .then(response => {
+      const validateErrors = validateResponse(event, response.data);
+      if (validateErrors.length) {
+        return {
+          statusCode: 400,
+          error: validateErrors
+            .map(o => String(o.stack).replace(/^instance\.?/, ''))
+            .join('\n')
+        };
+      }
+      if (validateResponseAndStatusCode(event, response)) {
+        log.error('response is not wrapped in an envelope', {
+          response: response
+        });
+        response = {
+          statusCode: 500,
+          data: response,
+          error: 'missing envelope'
+        };
+      }
+
+      if (typeof response.data === 'object') {
+        response.data = fieldsFilter(response.data, query);
+      }
+
+      return response;
+    })
+    .catch(err => {
+      log.error(String(err), {stacktrace: err.stack});
+
       return {
-        statusCode: 400,
-        error: validateErrors.map(o => String(o.stack).replace(/^instance\.?/, '')).join('\n')
-      };
-    }
-    if (validateResponseAndStatusCode(event, response)) {
-      log.error('response is not wrapped in an envelope', {response: response});
-      response = {
         statusCode: 500,
-        data: response,
-        error: 'missing envelope'
+        error: String(err)
       };
-    }
-
-    if (typeof response.data === 'object') {
-      response.data = fieldsFilter(response.data, query);
-    }
-
-    return response;
-  }).catch(err => {
-    log.error(String(err), {stacktrace: err.stack});
-
-    return {
-      statusCode: 500,
-      error: String(err)
-    };
-  });
+    });
 }
 
 /**
@@ -118,7 +132,8 @@ function callApi(event, query, context) {
  */
 function enableWSTransport(connection) {
   return serviceProvider.availableTransforms().forEach(key => {
-    connection.on(key, (data, callback) => { // eslint-disable-line no-loop-func
+    connection.on(key, (data, callback) => {
+      // eslint-disable-line no-loop-func
       getContext(data.access_token)
         .then(context => {
           return callApi(key, data, context);
@@ -145,29 +160,34 @@ function enableWSTransport(connection) {
  * @param {string} event
  */
 function enableHTTPTransport(event) {
-  app.all(apiPath + event, getContextMiddleware, requireAuthorized, (req, res) => { // eslint-disable-line no-loop-func
-    // TODO: should just be req.body, when all endpoints accept object-only as parameter, until then, this hack supports legacy transforms
-    let query = Array.isArray(req.body) ? req.body[0] : req.body;
+  app.all(
+    apiPath + event,
+    getContextMiddleware,
+    requireAuthorized,
+    (req, res) => {
+      // eslint-disable-line no-loop-func
+      // TODO: should just be req.body, when all endpoints accept object-only as parameter, until then, this hack supports legacy transforms
+      let query = Array.isArray(req.body) ? req.body[0] : req.body;
 
-    // We support both POST-body, GET-requests, and a combination of both.
-    // This code joins all parameters into a single object.
-    query = query || {};
-    for (const key in req.query) { // eslint-disable-line guard-for-in NOSONAR
-      const val = req.query[key];
-      try {
-        query[key] = JSON.parse(val);
+      // We support both POST-body, GET-requests, and a combination of both.
+      // This code joins all parameters into a single object.
+      query = query || {};
+      for (const key in req.query) {
+        // eslint-disable-line guard-for-in NOSONAR
+        const val = req.query[key];
+        try {
+          query[key] = JSON.parse(val);
+        } catch (e) {
+          query[key] =
+            val.indexOf(',') !== -1 ? val.split(',').filter(s => s) : val;
+        }
       }
-      catch (e) {
-        query[key] = (val.indexOf(',') !== -1) ? val.split(',').filter(s => s) : val;
+
+      if (typeof query.fields === 'string') {
+        query.fields = [query.fields];
       }
-    }
 
-    if (typeof query.fields === 'string') {
-      query.fields = [query.fields];
-    }
-
-    callApi(event, query, req.context)
-      .then(response => {
+      callApi(event, query, req.context).then(response => {
         if (response.statusCode) {
           res.status(response.statusCode);
         }
@@ -175,7 +195,8 @@ function enableHTTPTransport(event) {
         app.set('json spaces', query.pretty ? 2 : null);
         res.jsonp(response);
       });
-  });
+    }
+  );
 }
 
 /**
@@ -188,7 +209,10 @@ function enableHTTPTransport(event) {
 function enableCors(req, res, next) {
   res.header('Access-Control-Allow-Origin', '*');
   res.header('Access-Control-Allow-Methods', 'GET, POST, OPTIONS');
-  res.header('Access-Control-Allow-Headers', 'Authorization, Origin, X-Requested-With, Content-Type, Accept');
+  res.header(
+    'Access-Control-Allow-Headers',
+    'Authorization, Origin, X-Requested-With, Content-Type, Accept'
+  );
   next();
 }
 
@@ -206,7 +230,10 @@ function tokenErrorHandler(err, req, res, next) {
   }
 
   if (err instanceof TokenError) {
-    res.set('WWW-Authenticate', `Bearer error="${err.httpError}", error_description="${err.message}"`);
+    res.set(
+      'WWW-Authenticate',
+      `Bearer error="${err.httpError}", error_description="${err.message}"`
+    );
     res.status(err.httpStatusCode);
     return res.jsonp(err.toJson());
   }
@@ -223,7 +250,9 @@ function tokenErrorHandler(err, req, res, next) {
  * @param {Function} next
  */
 function gracefulErrorHandler(err, req, res, next) {
-  log.error('An error occurred! Got following: ' + err, {stacktrace: err.stack});
+  log.error('An error occurred! Got following: ' + err, {
+    stacktrace: err.stack
+  });
   if (res.headersSent) {
     return next(err);
   }
@@ -286,7 +315,9 @@ module.exports.run = function(worker) {
   worker.on('connection', enableWSTransport);
 
   // HTTP Transport
-  serviceProvider.availableTransforms().forEach(event => enableHTTPTransport(event));
+  serviceProvider
+    .availableTransforms()
+    .forEach(event => enableHTTPTransport(event));
 
   app.use(apiPath, express.static(path.join(__dirname, '../static')));
 

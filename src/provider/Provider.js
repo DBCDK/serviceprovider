@@ -1,5 +1,3 @@
-
-
 /**
  * @file
  * Basic service provider. Discovers and initializes the transforms.
@@ -67,7 +65,8 @@ export default function Provider() {
   };
 
   // we are going to reimplement a simpler mechanism to call the transformers
-  function execute(name, params, context) { // eslint-disable-line no-unused-vars
+  function execute(name, params, context) {
+    // eslint-disable-line no-unused-vars
     if (context.crud) {
       return caller(crudTransformerMap, context).call(name, params);
     }
