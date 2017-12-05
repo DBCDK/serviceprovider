@@ -5,14 +5,14 @@
 
 import {assert} from 'chai';
 import {deepEqual} from 'assert';
-import validate from '../validate';
+import {validateRequest, validateResponse} from '../validate';
 
 describe('Testing the validate.js file', () => {
   it('Should return empty array (= no errors)', () => {
     const name = 'search';
     const params = {q: 'ost'};
 
-    const result = validate(name, params);
+    const result = validateRequest(name, params);
     assert.isArray(result);
     assert.lengthOf(result, 0);
   });
@@ -21,7 +21,7 @@ describe('Testing the validate.js file', () => {
     const name = 'unknown_name';
     const params = {q: 'ost'};
 
-    const result = validate(name, params);
+    const result = validateRequest(name, params);
     assert.isArray(result);
     assert.lengthOf(result, 0);
   });
@@ -112,9 +112,33 @@ describe('Testing the validate.js file', () => {
           'instance additionalProperty "test" exists in instance when not allowed'
       }
     ]; // eslint-disable-line
-    const result = validate(name, params);
+    const result = validateRequest(name, params);
     assert.isArray(result);
     assert.lengthOf(result, 1);
     deepEqual(expected, result);
+  });
+});
+
+describe('Testing ValidateResponse', () => {
+  it('Should return empty array (= no errors)', () => {
+    const name = 'suggest';
+    const response = [{term: 'Harry Potter og De Vises Sten'}, {term: 'Harry Potter og Hemmelighedernes Kammer'}];
+    const result = validateResponse(name, response);
+    assert.isArray(result);
+    assert.lengthOf(result, 0);
+  });
+  it('Should return error array', () => {
+    const name = 'suggest';
+    const response = [{term: 1234}, {term: 'Harry Potter og Hemmelighedernes Kammer'}];
+    const result = validateResponse(name, response);
+    assert.isArray(result);
+    assert.lengthOf(result, 1);
+  });
+  it('Should return error array caused by extra properties', () => {
+    const name = 'suggest';
+    const response = [{notSupported: true, term: 'Harry Potter og Hemmelighedernes Kammer'}];
+    const result = validateResponse(name, response);
+    assert.isArray(result);
+    assert.lengthOf(result, 1);
   });
 });

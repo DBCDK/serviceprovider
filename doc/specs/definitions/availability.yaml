@@ -1,0 +1,13 @@
+definitions:
+  AvailabilityResponse:
+    $ref: "#/definitions/Availability"
+  Availability:
+    type: object
+    properties:
+      holdingStatus: 
+        type: object
+        properties:
+          willLend:
+            type: boolean
+      orderPossible:
+        type: boolean

@@ -100,7 +100,7 @@ function handleCoverUrlRequests(dataUrls, result, context) {
   }
 
   const promises = requests.map(req =>
-    context.request('http:' + req.url, {encoding: null}).then(o => {
+    context.request(`${req.url.search('http') === -1 && 'http:' || ''}${req.url}`, {encoding: null}).then(o => {
       result.data[req.i][req.field] = `data:image/jpeg;base64,${new Buffer(o, 'binary').toString('base64')}`;
     })
   );

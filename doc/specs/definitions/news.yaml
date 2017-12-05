@@ -1,0 +1,44 @@
+definitions:
+  NewsResponse:
+    type: array
+    items:
+      - $ref: "#/definitions/News"
+  News:
+    properties:
+      author:
+        $ref: "#/definitions/NewsField"
+      changed:
+        $ref: "#/definitions/NewsField"
+      created:
+        $ref: "#/definitions/NewsField"
+      ding_news_groups_ref:
+        $ref: "#/definitions/NewsField"
+      field_ding_news_body:
+        $ref: "#/definitions/NewsField"
+      field_ding_news_lead:
+        $ref: "#/definitions/NewsField"
+      field_ding_news_list_image:
+        $ref: "#/definitions/NewsField"
+      field_ding_news_materials:
+        $ref: "#/definitions/NewsField"
+      field_ding_news_tags:
+        $ref: "#/definitions/NewsField"
+      field_ding_news_title_image:
+        $ref: "#/definitions/NewsField"
+      nid:
+        type: integer
+      og_group_ref:
+        $ref: "#/definitions/NewsField"
+      status:
+        $ref: "#/definitions/NewsField"
+      title:
+        $ref: "#/definitions/NewsField"
+  NewsField:
+    type: object
+    properties:
+      attr:
+        type: array 
+        items: {}   
+      name:
+        type: string
+      value: {}

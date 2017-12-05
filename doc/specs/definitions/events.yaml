@@ -1,0 +1,65 @@
+definitions:
+  EventsResponse:
+    type: array
+    items:
+      - $ref: "#/definitions/Event"
+  Event:
+    type: object
+    properties:
+      author:
+        $ref: "#/definitions/EventField"
+      changed:
+        $ref: "#/definitions/EventField"
+      created:
+        $ref: "#/definitions/EventField"
+      ding_event_groups_ref:
+        $ref: "#/definitions/EventField"
+      field_ding_event_body:
+        $ref: "#/definitions/EventField"
+      field_ding_event_date:
+        $ref: "#/definitions/EventField"
+      field_ding_event_lead:
+        $ref: "#/definitions/EventField"
+      field_ding_event_list_image:
+        $ref: "#/definitions/EventField"
+      field_ding_event_location__country:
+        $ref: "#/definitions/EventField"
+      field_ding_event_location__first_name:
+        $ref: "#/definitions/EventField"
+      field_ding_event_location__last_name:
+        $ref: "#/definitions/EventField"
+      field_ding_event_location__locality:
+        $ref: "#/definitions/EventField"
+      field_ding_event_location__name_line:
+        $ref: "#/definitions/EventField"
+      field_ding_event_location__postal_code:
+        $ref: "#/definitions/EventField"
+      field_ding_event_location__premise:
+        $ref: "#/definitions/EventField"
+      field_ding_event_location__thoroughfare:
+        $ref: "#/definitions/EventField"
+      field_ding_event_materials:
+        $ref: "#/definitions/EventField"
+      field_ding_event_price:
+        $ref: "#/definitions/EventField"
+      field_ding_event_tags:
+        $ref: "#/definitions/EventField"
+      field_ding_event_title_image:
+        $ref: "#/definitions/EventField"
+      nid:
+        type: integer
+      og_group_ref:
+        $ref: "#/definitions/EventField"
+      status:
+        $ref: "#/definitions/EventField"
+      title:
+        $ref: "#/definitions/EventField"
+  EventField:
+    type: object
+    properties:
+      attr:
+        type: array  
+        items: {}
+      name:
+        type: string
+      value: {}

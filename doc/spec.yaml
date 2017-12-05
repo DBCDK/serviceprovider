@@ -15,6 +15,7 @@ api:
         items: {type: "string"}
         example: ["870970-basis:24284565"]
     response:
+      $ref: "#/definitions/AvailabilityResponse"
       example: [{"holdingstatus": {"willLend": true, "expectedDelivery": "2016-04-15"}, "orderPossible": true}]
   events:
     tags:
@@ -49,6 +50,7 @@ api:
         items: {type: "string"}
         example: ["nid", "title"]
     response:
+      $ref: "#/definitions/EventsResponse"
       example: [{"nid": "15", "title": {"name": "Titel", "value": "Mød forfatteren: Tim Buk-Swienty", "attr": []}, "...": "..."}, "..."]
     examples:
       - request: {"offset": 0, "limit": 2, "fields": ["nid", "title"]}
@@ -80,6 +82,7 @@ api:
         minimum: 1
         example: 2
     response:
+      $ref: "#/definitions/FacetsResults"
       example: { "creator": [{ "term": "nordisk ministerråd", "frequency": 2708}, { "term": "nordisk råd", "frequency": 2463}], "subject": [{ "term": "danmark", "frequency": 188792}, { "term": "historie", "frequency": 19867}], "type": "tidsskriftsartikel"}
   library:
     tags:
@@ -106,6 +109,8 @@ api:
         minimum: 0
         type: integer
         example: 10
+    response:
+      $ref: "#/definitions/LibraryResponse"
   libraries:
     tags:
       - Libraries
@@ -132,6 +137,8 @@ api:
     examples:
       - request: { "fields": ["branchId", "city", "longitude", "latitude", "geolocation"]}
       - request: { "branchIds": ["700401", "710104"], "fields": ["branchId", "city", "geolocation"]}
+    response:
+      $ref: "#/definitions/LibrariesResponse"
   news:
     tags:
       - CMS
@@ -157,6 +164,7 @@ api:
         minimum: 0
         type: integer
     response:
+      $ref: "#/definitions/NewsResponse"
       example: [{"nid": "19", "title": {"name": "Titel", "value": "Sportsstjerner - bag facaden", "attr": []}, "...": "..."}, "..."]
     examples:
       - request: {"offset": 0, "limit": 2, "fields": ["nid", "title"]}
@@ -208,6 +216,7 @@ api:
         type: 'boolean'
         example: true
     response:
+      $ref: "#/definitions/OrderResponse"
       example: { "status": "ok", "orsId": "1234567" }
     examples:
       - request: { "orderId": "1234", "orderType": "normal", "delete": true }
@@ -249,6 +258,7 @@ api:
         type: integer
         minimum: 1
     response:
+      $ref: "#/definitions/RecommendationResponse"
       example: [ { "title": ["Harry Potter og Fønixordenen"], "creator": ["..."], "weight": 123, "pid": ["300185-katalog:100562332"]}, "..."]
   recommend:
     tags:
@@ -285,6 +295,7 @@ api:
         description: maximum number of results returned
         type: integer
     response:
+      $ref: "#/definitions/RecommendationResponse"
       example: [ { "title": ["Harry Potter og Fønixordenen"], "creator": ["..."], "weight": 123, "pid": ["300185-katalog:100562332"]}, "..."]
   renew:
     tags:
@@ -298,6 +309,7 @@ api:
         type: string
         example: "7890"
     response:
+      $ref: "#/definitions/RenewResponse"
       example: {"loanId": "7890", "returnDate": "2016-09-12T00:00:00+01:00"}
     responses:
       403:
@@ -347,7 +359,7 @@ api:
         description: Optional search profile, it's passed directly to OpenSearch. In OpenSearch it's used to determine which works should be returned. The profile needs to be defined in VIP in order to use it.
         type: string
     response:
-      type: array
+      $ref: '#/definitions/SearchResponse'
       example: [{"identifier": ["300185-katalog:100562332"], "dcTitle": ["Harry Potter og Fønixordenen DVD"], "coverUrlFull": ["https://moreinfo.addi.dk/2.1/more_info_get.php?id=36565894&type=forside_500&key=55d553c259c9e46291a4"]}, {"identifier": ["870970-basis:51989252"], "dcTitle": ["Harry Potter og de vises sten"], "collection": ["300185-katalog:100562332", "870970-basis:51989252", "870971-forfweb:86203219", "870970-basis:24284514", "870970-basis:24284565", "..."], "dcSubjectDBCF": ["fantasy", "magi", "troldmænd"], "hasAdaption": ["870970-basis:27123279", "870970-basis:27963390"], "coverUrlFull": ["https://moreinfo.addi.dk/2.1/more_info_get.php?id=36565894&type=forside_500&key=55d553c259c9e46291a4"]}]
     examples:
       - request: { "q": "harry AND potter", "fields": ["identifier", "title", "collection", "subjectDBCF", "hasAdaptation", "coverUrlFull"], "sort": "rank_general", "offset": 2, "limit": 2 }
@@ -386,6 +398,7 @@ api:
         items: {type: "string"}
         example: ["term", "pid", "creator", "type"]
     response:
+      $ref: '#/definitions/SuggestResponse'
       example: [ { "term": "Harry Potter og Hemmelighedernes Kammer", "pid": "870970-basis:22375733", "creator": "Joanne K. Rowling", "type": "book"}, { "term": "Harry Potter og fangen fra Azkaban", "pid": "870970-basis:22639862", "creator": "Joanne K. Rowling", "type": "book" }]
     examples:
       - request: { "q": "harry", "type": "creator", "limit": 2 }
@@ -402,6 +415,7 @@ api:
     properties: {}
     example: {}
     response:
+      $ref: "#/definitions/UserResponse"
       example:
         id: "U2VydmljZVByb3ZpZGVy"
         library: "710100"
@@ -462,6 +476,7 @@ api:
         items: {type: "string"}
         example: ["title", "collection", "dcSubjectDBCF", "hasAdaptation", "coverUrlFull"]
     response:
+      $ref: '#/definitions/SearchResponse'
       example: [{ "dcTitle": ["Harry Potter og de vises sten"], "collection": ["300185-katalog:100562332", "870970-basis:51989252", "870971-forfweb:86203219", "870970-basis:24284514", "870970-basis:24284565", "..."], "dcSubjectDBCF": ["fantasy", "magi", "troldmænd"], "hasAdaption": ["870970-basis:27123279", "870970-basis:27963390"], "coverUrlFull": ["https://moreinfo.addi.dk/2.1/more_info_get.php?id=36565894&type=forside_500&key=55d553c259c9e46291a4"]}]
     examples:
       - request: { "pids": ["870970-basis:51989252",], "fields": ["title", "collection", "subjectDBCF", "hasAdaptation", "coverUrlFull"]}

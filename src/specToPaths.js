@@ -36,8 +36,6 @@ function createResponse(spec) {
         properties: {
           statusCode: {type: 'integer', default: 200},
           data: Object.assign({
-            type: 'object',
-            properties: {}
           }, spec.response),
           errors: {
             type: 'array',

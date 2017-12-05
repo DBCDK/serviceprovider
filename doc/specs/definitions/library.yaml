@@ -1,0 +1,96 @@
+definitions: 
+  LibraryResponse:
+    type: array
+    items:
+      - $ref: "#/definitions/Library"
+  Library:
+    properties:
+      author:
+        $ref: "#/definitions/Field"
+      changed:
+        $ref: "#/definitions/Field"
+      created:
+        $ref: "#/definitions/Field"
+      field_ding_library_addresse__country:
+        $ref: "#/definitions/Field"
+      field_ding_library_addresse__locality:
+        $ref: "#/definitions/Field"
+      field_ding_library_addresse__postal_code:
+        $ref: "#/definitions/Field"
+      field_ding_library_addresse__premise:
+        $ref: "#/definitions/Field"
+      field_ding_library_addresse__thoroughfare:
+        $ref: "#/definitions/Field"
+      field_ding_library_body:
+        $ref: "#/definitions/Field"
+      field_ding_library_fax_number:
+        $ref: "#/definitions/Field"
+      field_ding_library_lead:
+        $ref: "#/definitions/Field"
+      field_ding_library_list_image:
+        $ref: "#/definitions/Field"
+      field_ding_library_mail:
+        $ref: "#/definitions/Field"
+      field_ding_library_phone_number:
+        $ref: "#/definitions/Field"
+      field_ding_library_slug:
+        $ref: "#/definitions/Field"
+      field_ding_library_title_image:
+        $ref: "#/definitions/Field"
+      nid:
+        type: integer
+      opening_hours:
+        $ref: "#/definitions/OpeningHours"
+      status:
+        $ref: "#/definitions/Field"
+      title:
+        $ref: "#/definitions/Field"
+  
+  Field:
+    type: object
+    properties:
+      attr:
+        type: array 
+        items: {}   
+      name:
+        type: string
+      value: {}
+  OpeningHours:
+    type: array
+    items:
+      type: object
+      properties:
+        category_tid:
+          allOf: 
+            - type: string
+            - type: 'null'
+        customised:
+          allOf: 
+            - type: string
+            - type: 'null'
+        date:
+          type: string
+        end_time:
+          type: string
+        instance_id:
+          type: string
+        nid:
+          type: string
+        notice:
+          allOf: 
+            - type: string
+            - type: 'null'
+        original_instance_id:
+          allOf: 
+            - type: string
+            - type: 'null'
+        repeat_end_date:
+          allOf: 
+            - type: string
+            - type: 'null'
+        repeat_rule:
+          allOf: 
+            - type: string
+            - type: 'null'
+        start_time:
+          type: string

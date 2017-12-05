@@ -1,0 +1,113 @@
+definitions:
+  LibrariesResponse:
+    type: array
+    items:
+      - $ref: '#/definitions/Libraries'
+  Libraries:
+    type: object
+    properties:
+      agencyName: 
+        type: string
+      agencyId: 
+        type: string
+      agencyType: 
+        type: string
+      branchId: 
+        type: string
+      branchType: 
+        type: string
+      branchName: 
+        type: array
+        items: 
+          type: string
+      branchShortName: 
+        type: array
+        items: 
+          type: string
+      branchPhone: {}
+      branchEmail: {}
+      branchIsAgency: 
+        type: string
+      postalAddress: 
+        type: string
+      postalCode: 
+        type: string
+      city: 
+        type: string
+      openingHours: 
+        type: array
+        items: 
+          type: string
+      temporarilyClosed: 
+        type: string
+      illOrderReceiptText: 
+        type: array
+        items: 
+          type: string
+      pickupAllowed: 
+        type: string
+      lastUpdated: 
+        type: string
+      isOclcRsLibrary: 
+        type: string
+      stateAndUniversityLibraryCopyService: 
+        type: string
+      orderParameters: 
+        type: array
+        items: 
+          type: string
+      agencyEmail: 
+        type: string
+      lookupUrl: 
+        type: string
+      branchWebsiteUrl: 
+        type: string
+      librarydkSupportEmail: 
+        type: string
+      librarydkSupportPhone: 
+        type: string
+      temporarilyClosedReason: 
+        type: array
+        items: 
+          type: string
+      branchCatalogueUrl: 
+        type: string
+      userStatusUrl: 
+        type: string
+      agencyPhone: 
+        type: string
+      agencyCvrNumber: 
+        type: string
+      agencyPNumber: 
+        type: string
+      isil: 
+        type: string
+      registrationFormUrl: 
+        type: string
+      registrationFormUrlText: 
+        type: string
+      dropOffBranch: 
+        type: string
+      dropOffName: 
+        type: string
+      geolocation: 
+        properties:
+          latitude: 
+            type: string
+          longitude: 
+            type: string
+        type: object
+      agencyFax: 
+        type: string
+      agencyEanNumber: 
+        type: string
+      branchPNumber: 
+        type: string
+      serviceDeclarationUrl: 
+        type: string
+      paymentUrl: 
+        type: string
+      agencySubdivision: 
+        type: array
+        items: 
+          type: string
