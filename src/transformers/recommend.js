@@ -12,8 +12,10 @@ function getRecommenderUrl(request, context) {
 
   if (request.hasOwnProperty('recommender')) {
     if (!urls[request.recommender]) {
-      throw {statusCode: 400,
-        error: 'unknown or unsupported recommender type'};
+      throw {
+        statusCode: 400,
+        error: 'unknown or unsupported recommender type'
+      };
     }
 
     uri = urls[request.recommender];
@@ -81,9 +83,8 @@ export default function getRecommendations(request, context) {
 
       return {statusCode: 200, data: result};
     });
-  }
-  catch (err){
-    if (err.hasOwnProperty('statusCode')){
+  } catch (err) {
+    if (err.hasOwnProperty('statusCode')) {
       return Promise.resolve(err);
     }
   }

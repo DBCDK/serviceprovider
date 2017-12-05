@@ -9,12 +9,14 @@ const swagger = loadSwagger();
 v.addSchema(swagger, '/');
 
 // Placeholders for schemas
-const fullSpec = yaml.safeLoad(fs.readFileSync(__dirname + '/../doc/spec.yaml', 'utf-8'));
+const fullSpec = yaml.safeLoad(
+  fs.readFileSync(__dirname + '/../doc/spec.yaml', 'utf-8')
+);
 
 /**
  * Get JSON Schema for named request.
- * 
- * @param {String} name 
+ *
+ * @param {String} name
  */
 function getRequestSchema(name) {
   const spec = fullSpec.api[name];
@@ -31,7 +33,7 @@ function getRequestSchema(name) {
 
 /**
  * Get named JSON Schema for response.
- * @param {String} name 
+ * @param {String} name
  */
 function getResponseSchema(name) {
   const spec = fullSpec.api[name];
@@ -43,23 +45,22 @@ function getResponseSchema(name) {
 
 /**
  * Validate Request against Schema.
- * 
- * @param {String} name 
- * @param {Object} params 
+ *
+ * @param {String} name
+ * @param {Object} params
  */
-export function validateRequest (name, params) {
-  const schema = getRequestSchema(name); 
+export function validateRequest(name, params) {
+  const schema = getRequestSchema(name);
   return validate(params, schema).errors;
 }
 
 /**
  * Validate response against JSON Schema.
- * 
- * @param {String} name 
- * @param {Object} response 
+ *
+ * @param {String} name
+ * @param {Object} response
  */
 export function validateResponse(name, response) {
   const schema = getResponseSchema(name);
   return v.validate(response, schema).errors;
 }
-

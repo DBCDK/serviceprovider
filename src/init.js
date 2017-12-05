@@ -1,5 +1,3 @@
-
-
 /**
  * babelify all workers (ie. out execution entrypoint).
  */

@@ -22,14 +22,14 @@ function creatorSuggest(params, context) {
     localParams.n = params.limit;
   }
 
-  return context.call('suggestcreator', localParams)
-    .then(body => {
-      return {
-        statusCode: 200, data: body.data.response.suggestions.map((obj) => {
-          return {term: obj.suggestion};
-        })
-      };
-    });
+  return context.call('suggestcreator', localParams).then(body => {
+    return {
+      statusCode: 200,
+      data: body.data.response.suggestions.map(obj => {
+        return {term: obj.suggestion};
+      })
+    };
+  });
 }
 
 /**
@@ -52,29 +52,29 @@ function librarySuggest(params, context) {
     localParams.n = params.limit;
   }
 
-  return context.call('suggestlibrary', localParams)
-    .then(body => {
-      return {
-        statusCode: 200, data: body.data.response.suggestions.map((obj) => {
-          obj = obj.suggestion;
-          obj.geolokation = obj.geolokation || {};
+  return context.call('suggestlibrary', localParams).then(body => {
+    return {
+      statusCode: 200,
+      data: body.data.response.suggestions.map(obj => {
+        obj = obj.suggestion;
+        obj.geolokation = obj.geolokation || {};
 
-          return {
-            term: obj.navn,
-            agencyName: obj['væsensnavn'],
-            postalAddress: obj.adresse,
-            branchId: obj.id,
-            postalCode: obj.postnr,
-            geolocation: obj.geolokation && {
-              longitude: obj.geolokation.lng,
-              latitude: obj.geolokation.lat
-            },
-            agencyType: obj.bibliotekstype,
-            city: obj.by
-          };
-        })
-      };
-    });
+        return {
+          term: obj.navn,
+          agencyName: obj['væsensnavn'],
+          postalAddress: obj.adresse,
+          branchId: obj.id,
+          postalCode: obj.postnr,
+          geolocation: obj.geolokation && {
+            longitude: obj.geolokation.lng,
+            latitude: obj.geolokation.lat
+          },
+          agencyType: obj.bibliotekstype,
+          city: obj.by
+        };
+      })
+    };
+  });
 }
 
 /**
@@ -92,14 +92,14 @@ function subjectSuggest(params, context) {
     localParams.n = params.limit;
   }
 
-  return context.call('suggestsubject', localParams)
-    .then(body => {
-      return {
-        statusCode: 200, data: body.data.response.suggestions.map((obj) => {
-          return {term: obj.suggestion};
-        })
-      };
-    });
+  return context.call('suggestsubject', localParams).then(body => {
+    return {
+      statusCode: 200,
+      data: body.data.response.suggestions.map(obj => {
+        return {term: obj.suggestion};
+      })
+    };
+  });
 }
 
 /**
@@ -131,7 +131,8 @@ function mapTitleKeys(obj) {
 function titleSuggest(params, context) {
   log.debug('titlesuggest called with ' + params.q);
   const queryString = params.q.replace(new RegExp(' ', 'g'), '\\ ');
-  const query = '{!complexphrase inOrder=true}display.title:' + queryString + '*';
+  const query =
+    '{!complexphrase inOrder=true}display.title:' + queryString + '*';
 
   const localParams = {
     query: query,
@@ -148,14 +149,14 @@ function titleSuggest(params, context) {
   }
 
   log.debug('popsuggest params', {params: localParams});
-  return context.call('suggestpopular', localParams)
-    .then(body => {
-      return {
-        statusCode: 200, data: body.data.response.docs.map((obj) => {
-          return mapTitleKeys(obj);
-        })
-      };
-    });
+  return context.call('suggestpopular', localParams).then(body => {
+    return {
+      statusCode: 200,
+      data: body.data.response.docs.map(obj => {
+        return mapTitleKeys(obj);
+      })
+    };
+  });
 }
 
 // Supported suggest types
@@ -185,7 +186,9 @@ export default (params, context) => {
     return new Promise(resolve => {
       return resolve({
         statusCode: 400,
-        error: `Unsupported suggestion type ${params.type}. Supported types are: ${Object.keys(fMap)}`
+        error: `Unsupported suggestion type ${
+          params.type
+        }. Supported types are: ${Object.keys(fMap)}`
       });
     });
   }
@@ -198,4 +201,3 @@ export default (params, context) => {
     return result;
   });
 };
-

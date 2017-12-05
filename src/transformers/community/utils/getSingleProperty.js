@@ -31,14 +31,16 @@ const selectorMapping = {
 export default function getSingleProperty(parameters, type, map, schema) {
   return (req, res) => {
     if (!Array.isArray(parameters)) {
-      log.error(`Expected an array of parameters got ${typeof parameters}`, {parameters: parameters});
+      log.error(`Expected an array of parameters got ${typeof parameters}`, {
+        parameters: parameters
+      });
     }
 
     const provider = req.app.get('serviceProvider');
     const context = req.context;
     context.crud = true;
     const selector = {};
-    parameters.forEach((parameter) => {
+    parameters.forEach(parameter => {
       selector[parameter] = req.params[selectorMapping[parameter]];
     });
 
@@ -58,6 +60,8 @@ export default function getSingleProperty(parameters, type, map, schema) {
       }
     );
 
-    provider.execute('getSingleProperty', query, context).then(result => res.json(result));
+    provider
+      .execute('getSingleProperty', query, context)
+      .then(result => res.json(result));
   };
 }

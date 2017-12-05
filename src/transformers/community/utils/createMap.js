@@ -9,7 +9,9 @@
 export function createMap(schema, remap) {
   const schemaMap = {};
   // Map property keys to values as default.
-  Object.keys(schema.properties).forEach(key => {schemaMap[key] = key;});
+  Object.keys(schema.properties).forEach(key => {
+    schemaMap[key] = key;
+  });
 
   // Override with remap values.
   return Object.assign(schemaMap, remap);

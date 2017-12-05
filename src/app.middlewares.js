@@ -1,4 +1,3 @@
-
 import moment from 'moment';
 import {log} from './utils';
 
@@ -18,8 +17,9 @@ export function accessLogMiddleware(req, res, next) {
 
   res.on('finish', () => {
     const timeEnd = moment();
-    log.info(null, Object.assign(res.logData || {},
-      {
+    log.info(
+      null,
+      Object.assign(res.logData || {}, {
         type: 'accessLog',
         request: {
           method: req.method,
@@ -34,7 +34,8 @@ export function accessLogMiddleware(req, res, next) {
           end: timeEnd,
           taken: timeEnd.diff(timeStart)
         }
-      }));
+      })
+    );
   });
 
   next();
@@ -52,10 +53,10 @@ export function getContextMiddleware(req, res, next) {
   const tokenSearchers = getTokenSearchers(req);
 
   const bearerTokens = tokenSearchers
-  // execute all token searchers, and remove failures
-    .map((f) => f())
+    // execute all token searchers, and remove failures
+    .map(f => f())
     // remove failures
-    .filter((e) => typeof e !== 'undefined');
+    .filter(e => typeof e !== 'undefined');
 
   if (bearerTokens.length > 1) {
     return next(new MultipleTokensError());
@@ -69,13 +70,13 @@ export function getContextMiddleware(req, res, next) {
   }
 
   return getContext(bearerToken)
-    .then((context) => {
+    .then(context => {
       req.authorized = true;
       req.context = context;
       res.logData.clientId = context.app.clientId;
       return next();
     })
-    .catch((err) => {
+    .catch(err => {
       log.error(String(err), {stacktrace: err.stack});
       return next(err);
     });

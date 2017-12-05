@@ -1,5 +1,3 @@
-
-
 import searchTransformer from './opensearchSearch';
 import {makeTypeID} from '../requestTypeIdentifier';
 
@@ -13,8 +11,11 @@ export default (params, context) => {
   let workFields = [];
   fields.forEach(field => {
     let type = typeId.getType(field);
-    if (type === 'moreinfo' // moreinfo is a separate service, which we can get through work
-        || type === 'relations') { // relations in opensearch-search is based on collections, and we want it for the manifests
+    if (
+      type === 'moreinfo' || // moreinfo is a separate service, which we can get through work
+      type === 'relations'
+    ) {
+      // relations in opensearch-search is based on collections, and we want it for the manifests
       workFields.push(field);
     }
   });
@@ -31,7 +32,10 @@ export default (params, context) => {
     }
 
     // call work-endpoint with pids from search result, and desired fields
-    let workRequest = {pids: results.data.map(o => o.pid[0]), fields: workFields};
+    let workRequest = {
+      pids: results.data.map(o => o.pid[0]),
+      fields: workFields
+    };
     return context.call('work', workRequest).then(workResult => {
       // combine the objects from search and work endpoints.
       let result = [];

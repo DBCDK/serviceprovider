@@ -1,4 +1,3 @@
-
 /**
  * @file
  * orderPolicy transformer.
@@ -9,28 +8,28 @@
 import {extend} from 'lodash';
 
 /**
-* Validate parameters
-*
-* @param {object} params parameters to validate
-* @throws if validation fails
-*/
+ * Validate parameters
+ *
+ * @param {object} params parameters to validate
+ * @throws if validation fails
+ */
 export function validateParams(params) {
   if (!params.pids || params.pids.length === 0) {
-    throw ('missing pids parameter');
+    throw 'missing pids parameter';
   }
   if (params.expires && typeof params.expires !== 'string') {
-    throw ('Expires must be a string');
+    throw 'Expires must be a string';
   }
   if (params.expires && !params.expires.match(/^\d{4}-\d{2}-\d{2}$/g)) {
-    throw ('The expires argument must be of the form YYYY-MM-DD (example: 2016-06-24)');
+    throw 'The expires argument must be of the form YYYY-MM-DD (example: 2016-06-24)';
   }
 
   let dateOffset = new Date(params.expires) - Date.now();
   if (params.expires && dateOffset < 0) {
-    throw ('The expire argument must be a future date');
+    throw 'The expire argument must be a future date';
   }
   if (!params.pickUpBranch) {
-    throw ('pickUpBranch must be provided');
+    throw 'pickUpBranch must be provided';
   }
 }
 
@@ -41,10 +40,11 @@ function createNeedBeforeDate() {
   let offsetInDays = 90;
   let offsetInMilliseconds = offsetInDays * 24 * 60 * 60 * 1000;
   let date = new Date(Date.now() + offsetInMilliseconds);
-  let dateStr = `${date.getFullYear()}-${('0' + (date.getMonth() + 1)).slice(-2)}-${('0' + date.getDate()).slice(-2)}T00:00:00`;
+  let dateStr = `${date.getFullYear()}-${('0' + (date.getMonth() + 1)).slice(
+    -2
+  )}-${('0' + date.getDate()).slice(-2)}T00:00:00`;
   return dateStr;
 }
-
 
 /**
  * Retrieves user info from parameters and returns xml snippet for use
@@ -54,31 +54,32 @@ function createNeedBeforeDate() {
  * @returns {object} xml snippet with found user data
  */
 function getUserParams(params) {
-
   let result = {};
 
-  [['address', 'userAddress'],
-   ['email', 'userMail'],
-   ['name', 'userName'],
-   ['phone', 'userTelephone']].forEach((names) => {
-     result[names[0]] = '';
+  [
+    ['address', 'userAddress'],
+    ['email', 'userMail'],
+    ['name', 'userName'],
+    ['phone', 'userTelephone']
+  ].forEach(names => {
+    result[names[0]] = '';
 
-     if (params[names[0]]) {
-       result[names[0]] = `<${names[1]}>${params[names[0]]}</${names[1]}>`;
-     }
-   });
+    if (params[names[0]]) {
+      result[names[0]] = `<${names[1]}>${params[names[0]]}</${names[1]}>`;
+    }
+  });
 
   return result;
 }
 
 /**
-* Constructs soap request to perform placeOrder request
-* @param {array} pidList
-* @param {string} expireDate
-* @param {object} params Parameters to substitute into soap request
-* @param {string} orderSystem
-* @returns {string} soap request string
-*/
+ * Constructs soap request to perform placeOrder request
+ * @param {array} pidList
+ * @param {string} expireDate
+ * @param {object} params Parameters to substitute into soap request
+ * @param {string} orderSystem
+ * @returns {string} soap request string
+ */
 function constructSoap(pidList, expireDate, params, orderSystem) {
   let userParams = getUserParams(params);
 
@@ -95,9 +96,11 @@ function constructSoap(pidList, expireDate, params, orderSystem) {
            <needBeforeDate>${expireDate}</needBeforeDate>
            <orderSystem>${orderSystem}</orderSystem>
            <pickUpAgencyId>${params.pickUpBranch}</pickUpAgencyId>
-${pidList.map(pid => {
-  return `           <pid>${pid}</pid>`;
-}).join('\n')}
+${pidList
+    .map(pid => {
+      return `           <pid>${pid}</pid>`;
+    })
+    .join('\n')}
            <serviceRequester>${params.serviceRequester}</serviceRequester>
            ${userParams.address}
            <userId>${params.userId}</userId>
@@ -113,7 +116,6 @@ ${pidList.map(pid => {
   return soap;
 }
 
-
 /**
  * placeOrder.
  *
@@ -121,7 +123,8 @@ ${pidList.map(pid => {
  * @param {Object} context The context object fetched from smaug
  * @returns {Promise} promise with result
  */
-function placeOrder(request, context) { // eslint-disable-line no-unused-vars
+function placeOrder(request, context) {
+  // eslint-disable-line no-unused-vars
   let expireDate = createNeedBeforeDate();
   if (request.expires) {
     expireDate = request.expires + 'T00:00:00';
@@ -139,7 +142,7 @@ function placeOrder(request, context) { // eslint-disable-line no-unused-vars
 
       if (body.orderNotPlaced.placeOrderError) {
         err = body.orderNotPlaced.placeOrderError.$;
-        if (err === 'service_unavailable'){
+        if (err === 'service_unavailable') {
           status = 503;
         }
       }
@@ -150,7 +153,10 @@ function placeOrder(request, context) { // eslint-disable-line no-unused-vars
     if (!body.orderPlaced) {
       return {statusCode: 500, error: 'Unknown error occured'};
     }
-    return {statusCode: 200, data: {status: 'ok', orsId: body.orderPlaced.orderId.$}};
+    return {
+      statusCode: 200,
+      data: {status: 'ok', orsId: body.orderPlaced.orderId.$}
+    };
   });
 }
 
@@ -164,10 +170,10 @@ function placeOrder(request, context) { // eslint-disable-line no-unused-vars
  * @api public
  */
 export default (request, context) => {
-
   try {
     validateParams(request);
-  } catch (err) { // eslint-disable-line brace-style
+  } catch (err) {
+    // eslint-disable-line brace-style
     return new Promise(resolve => {
       return resolve({statusCode: 400, error: err});
     });

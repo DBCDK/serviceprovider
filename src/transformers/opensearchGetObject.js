@@ -1,5 +1,3 @@
-
-
 import {requestType, makeTypeID} from '../requestTypeIdentifier';
 import _ from 'lodash';
 import {log} from '../utils';
@@ -12,7 +10,9 @@ function getPids(request) {
     throw new Error('Pid not correctly present in request');
   }
   if (request.pids.length < 1) {
-    throw new Error('Illegal number of pids in request - at least one should be present.');
+    throw new Error(
+      'Illegal number of pids in request - at least one should be present.'
+    );
   }
   return request.pids;
 }
@@ -38,17 +38,23 @@ const dataObjectRequestTypes = {
 function getObjectFormats(defaultBehaviour, fields) {
   const objectFormat = [];
 
-  if (defaultBehaviour
-    || fields.some(field => {
+  if (
+    defaultBehaviour ||
+    fields.some(field => {
       return typeId.isType(field, requestType.BRIEFDISPLAY);
-    })) { // eslint-disable-line brace-style
+    })
+  ) {
+    // eslint-disable-line brace-style
     objectFormat.push('briefDisplay');
   }
 
-  if (defaultBehaviour
-    || fields.some(field => {
+  if (
+    defaultBehaviour ||
+    fields.some(field => {
       return typeId.isType(field, requestType.DKABM);
-    })) { // eslint-disable-line brace-style
+    })
+  ) {
+    // eslint-disable-line brace-style
     objectFormat.push('dkabm');
   }
 
@@ -56,17 +62,21 @@ function getObjectFormats(defaultBehaviour, fields) {
 }
 
 function getRequestRelationData(defaultBehaviour, fields) {
-  if (defaultBehaviour
-    || fields.some(field => {
+  if (
+    defaultBehaviour ||
+    fields.some(field => {
       return typeId.isType(field, requestType.RELATIONS);
-    })) { // eslint-disable-line brace-style
+    })
+  ) {
+    // eslint-disable-line brace-style
     return 'uri';
   }
 
   return null;
 }
 
-export function requestTransform(request, context) { // eslint-disable-line no-unused-vars
+export function requestTransform(request, context) {
+  // eslint-disable-line no-unused-vars
 
   const pids = getPids(request);
   const osContext = getAndValidateOpensearchContext(context);
@@ -96,10 +106,10 @@ export function requestTransform(request, context) { // eslint-disable-line no-u
 }
 
 function retrieveDkabmFields(result) {
-
-  return function (value, key) {
+  return function(value, key) {
     const a = [];
-    _.forEach(value, function (z) { // eslint-disable-line
+    _.forEach(value, function(z) {
+      // eslint-disable-line
       const x = {key: key};
       if (_.has(z, '$') && _.has(z, '@')) {
         x.ns = z['@'];
@@ -115,10 +125,13 @@ function retrieveDkabmFields(result) {
 
     a.map(X => {
       const identifier = X.ns + ':' + key;
-      const field = X.type ? typeId.getField(identifier, X.type) : typeId.getField(identifier);
+      const field = X.type
+        ? typeId.getField(identifier, X.type)
+        : typeId.getField(identifier);
       if (result[field]) {
         result[field].push(X.value);
-      } else { // eslint-disable-line brace-style
+      } else {
+        // eslint-disable-line brace-style
         result[field] = [X.value];
       }
     });
@@ -153,8 +166,11 @@ function validateAndGetBriefDisplay(searchResult) {
   if (!_.has(searchResult, 'formattedCollection.briefDisplay.manifestation')) {
     return {};
   }
-  const manifestations = searchResult.formattedCollection.briefDisplay.manifestation;
-  return (manifestations.length && manifestations.length > 0) ? manifestations[0] : {};
+  const manifestations =
+    searchResult.formattedCollection.briefDisplay.manifestation;
+  return manifestations.length && manifestations.length > 0
+    ? manifestations[0]
+    : {};
 }
 
 function getBriefDisplayData(searchResult) {
@@ -173,14 +189,13 @@ function getBriefDisplayData(searchResult) {
   return res;
 }
 
-
 // If there is no search result or it is empty, an empty array will be returned.
 function validateAndGetSearchResult(response) {
   if (!_.has(response, 'data.searchResponse.result.searchResult')) {
     return [];
   }
   const searchResult = response.data.searchResponse.result.searchResult;
-  return (searchResult.length && searchResult.length > 0) ? searchResult : [];
+  return searchResult.length && searchResult.length > 0 ? searchResult : [];
 }
 
 // Returns an empty array if no relations or if some property is missing.
@@ -217,8 +232,8 @@ function getRelationData(searchResult) {
   return res;
 }
 
-
-export function responseTransform(response, context, params) { // eslint-disable-line no-unused-vars
+export function responseTransform(response, context, params) {
+  // eslint-disable-line no-unused-vars
   if (_.has(response, 'data.searchResponse.error.$')) {
     const errMsg = 'Error in opensearchGetObject response.';
     log.error(errMsg);
@@ -236,9 +251,21 @@ export function responseTransform(response, context, params) { // eslint-disable
   }
 
   const data = searchResults.map(searchResult => {
-    const dkabmData = dataObjectsRequested.includes(dataObjectRequestTypes.DKABM) ? getDkabmData(searchResult) : {};
-    const briefDisplayData = dataObjectsRequested.includes(dataObjectRequestTypes.BRIEFDISPLAY) ? getBriefDisplayData(searchResult) : {};
-    const relationData = dataObjectsRequested.includes(dataObjectRequestTypes.RELATIONS) ? getRelationData(searchResult) : {};
+    const dkabmData = dataObjectsRequested.includes(
+      dataObjectRequestTypes.DKABM
+    )
+      ? getDkabmData(searchResult)
+      : {};
+    const briefDisplayData = dataObjectsRequested.includes(
+      dataObjectRequestTypes.BRIEFDISPLAY
+    )
+      ? getBriefDisplayData(searchResult)
+      : {};
+    const relationData = dataObjectsRequested.includes(
+      dataObjectRequestTypes.RELATIONS
+    )
+      ? getRelationData(searchResult)
+      : {};
     const result = {};
     _.extend(result, dkabmData, briefDisplayData, relationData);
     return result;
@@ -249,5 +276,7 @@ export function responseTransform(response, context, params) { // eslint-disable
 
 export default (request, context) => {
   const params = requestTransform(request, context);
-  return context.call('opensearch', params).then(body => responseTransform(body, context, params));
+  return context
+    .call('opensearch', params)
+    .then(body => responseTransform(body, context, params));
 };

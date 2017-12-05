@@ -11,16 +11,21 @@
  * @returns soap request string
  */
 function constructSoap(params) {
-
   return `<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:open="http://oss.dbc.dk/ns/openuserstatus">
    <soapenv:Header/>
    <soapenv:Body>
       <open:renewLoanRequest>
          <open:agencyId>${params.agencyId}</open:agencyId>
          <open:authentication>
-            <open:groupIdAut>${params['authentication.groupIdAut']}</open:groupIdAut>
-            <open:passwordAut>${params['authentication.passwordAut']}</open:passwordAut>
-            <open:userIdAut>${params['authentication.userIdAut']}</open:userIdAut>
+            <open:groupIdAut>${
+              params['authentication.groupIdAut']
+            }</open:groupIdAut>
+            <open:passwordAut>${
+              params['authentication.passwordAut']
+            }</open:passwordAut>
+            <open:userIdAut>${
+              params['authentication.userIdAut']
+            }</open:userIdAut>
          </open:authentication>
          <open:loanId>${params.loanId}</open:loanId>
          <open:outputType>json</open:outputType>
@@ -41,7 +46,6 @@ function constructSoap(params) {
  * @api public
  */
 export default (request, context) => {
-
   const params = {
     loanId: request.loanId,
     agencyId: context.get('user.agency', true),
@@ -54,7 +58,6 @@ export default (request, context) => {
 
   const soap = constructSoap(params);
   return context.call('openuserstatus', soap).then(body => {
-
     body = JSON.parse(body).renewLoanResponse.renewLoanStatus[0];
 
     if (body.renewLoanError) {

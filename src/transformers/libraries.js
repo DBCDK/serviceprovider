@@ -22,7 +22,8 @@ function getOrderParameters(context, agencyId) {
 
   return context.call('openagency', soap).then(body => {
     const result = [];
-    const parameters = JSON.parse(body).serviceResponse.userOrderParameters.userParameter;
+    const parameters = JSON.parse(body).serviceResponse.userOrderParameters
+      .userParameter;
 
     const parameterMap = {
       userName: 'name',
@@ -48,8 +49,7 @@ function getOrderParameters(context, agencyId) {
 function libraryIterator(val) {
   if (val.$) {
     return val.$;
-  }
-  else if (Array.isArray(val)) {
+  } else if (Array.isArray(val)) {
     return val.filter(i => !!i.$).map(j => j.$);
   }
 
@@ -69,8 +69,7 @@ function orderParameterPromiseHandler(results, agencyKeys, orderParameters) {
     agencyOrderParameters[agencyKeys[i]] = orderParameters[i];
   }
   for (let i = 0; i < results.length; ++i) {
-    results[i].orderParameters =
-      agencyOrderParameters[results[i].agencyId];
+    results[i].orderParameters = agencyOrderParameters[results[i].agencyId];
   }
   cache = results;
   timestamp = Date.now();
@@ -82,7 +81,9 @@ function openAgencyPromiseHandler(context, badgerfish) {
     const result = {};
 
     Object.keys(library)
-      .filter(libraryKey => libraryKey !== '@' && libraryKey.indexOf('ncip') !== 0)
+      .filter(
+        libraryKey => libraryKey !== '@' && libraryKey.indexOf('ncip') !== 0
+      )
       .forEach(key => (result[key] = libraryIterator(library[key])));
 
     return result;
@@ -95,7 +96,9 @@ function openAgencyPromiseHandler(context, badgerfish) {
 
   const agencyKeys = Object.keys(agencies);
   const agencyPromises = agencyKeys.map(getOrderParameters.bind(null, context));
-  return Promise.all(agencyPromises).then(orderParameterPromiseHandler.bind(null, results, agencyKeys));
+  return Promise.all(agencyPromises).then(
+    orderParameterPromiseHandler.bind(null, results, agencyKeys)
+  );
 }
 
 function getLibraries(context) {
@@ -112,7 +115,12 @@ function getLibraries(context) {
 
   return context
     .call('openagency', soap)
-    .then(body => openAgencyPromiseHandler(context, JSON.parse(body).findLibraryResponse.pickupAgency));
+    .then(body =>
+      openAgencyPromiseHandler(
+        context,
+        JSON.parse(body).findLibraryResponse.pickupAgency
+      )
+    );
 }
 
 function getLibrariesTransformPromiseHandler(params, context, libraries) {
@@ -147,10 +155,11 @@ export default function getLibrariesTransform(params, context) {
 
   if (cache) {
     promise = Promise.resolve(cache);
-  }
-  else {
+  } else {
     promise = getLibraries(context);
   }
 
-  return promise.then(getLibrariesTransformPromiseHandler.bind(null, params, context));
+  return promise.then(
+    getLibrariesTransformPromiseHandler.bind(null, params, context)
+  );
 }

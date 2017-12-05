@@ -1,7 +1,12 @@
-
-
 import openSearchWorkTransformer from './opensearchGetObject';
-import {checkResponseForErrorCodes, collectDataFromServices, handleFieldsRequest, populateEnvelopeData, handleMoreInfoVersion, getSearchPromises} from './utils/work.utils';
+import {
+  checkResponseForErrorCodes,
+  collectDataFromServices,
+  handleFieldsRequest,
+  populateEnvelopeData,
+  handleMoreInfoVersion,
+  getSearchPromises
+} from './utils/work.utils';
 import _ from 'lodash';
 
 const requestMethod = {
@@ -21,8 +26,7 @@ export function workRequest(request) {
 
   if (_.has(request, 'fields')) {
     transformedRequests = handleFieldsRequest(request, transformedRequests);
-  }
-  else {
+  } else {
     // Default:
     // Return dkabm, briefdisplay and relations from getObject
     // This should be default behaviour for getObject with no fields!
@@ -34,7 +38,8 @@ export function workRequest(request) {
   };
 }
 
-export function workResponse(response, context, state) { // eslint-disable-line no-unused-vars
+export function workResponse(response, context, state) {
+  // eslint-disable-line no-unused-vars
   let envelope = {
     statusCode: 200
   };
@@ -49,18 +54,15 @@ export function workResponse(response, context, state) { // eslint-disable-line 
       // Setting error envelope if found!
       envelope.statusCode = errornous.statusCode;
       envelope.error = errornous.error;
-    }
-
-    // Set number of data elements if not done in previous iteration
-    else if (!envelope.data) {
+    } else if (!envelope.data) {
+      // Set number of data elements if not done in previous iteration
       // Damn, this feel hacked.
       // But if you just do 'let x = Array(3).fill({})', you will get an array with the same
       // object three times. So if you add to x[0], you will also add to x[1] and x[2].
       // Not exactly what I expected.
       if (resp.data || (resp.length > 0 && resp[0].data)) {
         envelope = populateEnvelopeData(resp, envelope);
-      }
-      else {
+      } else {
         // Here be dragons!
         // The response does not contain any data - I don't think this is a good thing,
         // but i cant be certain. It might be that the call just returned no data - ie nothing was found.
@@ -88,7 +90,8 @@ function handleCoverUrlRequests(dataUrls, result, context) {
   const requests = [];
   for (const field of dataUrls) {
     for (let i = 0; i < result.data.length; ++i) {
-      const url = (result.data[i][field.replace('coverDataUrl', 'coverUrl')] || [])[0];
+      const url = (result.data[i][field.replace('coverDataUrl', 'coverUrl')] ||
+        [])[0];
       if (url) {
         requests.push({
           url,
@@ -100,9 +103,17 @@ function handleCoverUrlRequests(dataUrls, result, context) {
   }
 
   const promises = requests.map(req =>
-    context.request(`${req.url.search('http') === -1 && 'http:' || ''}${req.url}`, {encoding: null}).then(o => {
-      result.data[req.i][req.field] = `data:image/jpeg;base64,${new Buffer(o, 'binary').toString('base64')}`;
-    })
+    context
+      .request(
+        `${(req.url.search('http') === -1 && 'http:') || ''}${req.url}`,
+        {encoding: null}
+      )
+      .then(o => {
+        result.data[req.i][req.field] = `data:image/jpeg;base64,${new Buffer(
+          o,
+          'binary'
+        ).toString('base64')}`;
+      })
   );
 
   return Promise.all(promises).then(() => result);
@@ -112,7 +123,7 @@ export default (request, context) => {
   if (!request.pids || request.pids.length === 0) {
     const error = {
       statusCode: 400,
-      error: '\'pids\' not present in request'
+      error: "'pids' not present in request"
     };
 
     return Promise.resolve(error);
@@ -133,7 +144,10 @@ export default (request, context) => {
 
   if (_.has(params, requestMethod.GETOBJECT)) {
     // query opensearch through getObject method
-    const getObjectPromise = openSearchWorkTransformer(params.getobject, context);
+    const getObjectPromise = openSearchWorkTransformer(
+      params.getobject,
+      context
+    );
     promises.push(getObjectPromise);
     services.push(requestMethod.GETOBJECT);
   }
@@ -149,8 +163,13 @@ export default (request, context) => {
   return Promise.all(promises)
     .then(body => {
       return workResponse(body, context, state);
-    }).then(result => {
-      const dataUrls = (request.fields || []).filter(key => key.startsWith('coverDataUrl'));
-      return dataUrls.length === 0 ? result : handleCoverUrlRequests(dataUrls, result, context);
+    })
+    .then(result => {
+      const dataUrls = (request.fields || []).filter(key =>
+        key.startsWith('coverDataUrl')
+      );
+      return dataUrls.length === 0
+        ? result
+        : handleCoverUrlRequests(dataUrls, result, context);
     });
 };

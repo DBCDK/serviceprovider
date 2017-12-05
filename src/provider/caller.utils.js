@@ -1,5 +1,3 @@
-
-
 import fs from 'fs';
 import request from 'request';
 
@@ -19,7 +17,7 @@ if (mockFileName) {
 
 export function promiseRequest(req) {
   return new Promise((resolve, reject) => {
-    request(req, (err, res, data) => err ? reject(err) : resolve(data));
+    request(req, (err, res, data) => (err ? reject(err) : resolve(data)));
   });
 }
 
@@ -27,49 +25,51 @@ export function promiseRequest(req) {
  * randomId
  * @returns {String}
  */
-export const randomId = () => Math.random().toString(36).slice(2, 8);
+export const randomId = () =>
+  Math.random()
+    .toString(36)
+    .slice(2, 8);
 
 // function for escaping special regex characters
 const regexEscape = s => s.replace(/[\\[\](\|)*?+.^$]/g, c => '\\' + c);
 
 // these keys in entries in config contains information that are not secret
 const whitelist = {
-    "services": {
-      "ddbcmsapi": true,
-      "moreinfo": true,
-      "openagency": true,
-      "openholdingstatus": true,
-      "PRODopenorder": true,
-      "openorder": true,
-      "opensearch": true,
-      "openuserstatus": true,
-      "rank": true,
-      "suggestpopular": true,
-      "suggestcreator": true,
-      "suggestlibrary": true,
-      "suggestsubject": true,
-      "recommendurls": true,
-      "communityservice": true
-    },
-    "communityservice": {
-      "id": true
-    },
-    "search": {
-      "agency": true,
-      "profile": true,
-      "collectionidentifiers": true
-    },
-    "netpunkt": {
-    },
-    "user": {
-      "libraryId": true,
-      "agency": true,
-      "isil": true
-    },
-    "app": {
-      "orderpolicyrequester": true,
-      "orderSystem": true
-    }
+  services: {
+    ddbcmsapi: true,
+    moreinfo: true,
+    openagency: true,
+    openholdingstatus: true,
+    PRODopenorder: true,
+    openorder: true,
+    opensearch: true,
+    openuserstatus: true,
+    rank: true,
+    suggestpopular: true,
+    suggestcreator: true,
+    suggestlibrary: true,
+    suggestsubject: true,
+    recommendurls: true,
+    communityservice: true
+  },
+  communityservice: {
+    id: true
+  },
+  search: {
+    agency: true,
+    profile: true,
+    collectionidentifiers: true
+  },
+  netpunkt: {},
+  user: {
+    libraryId: true,
+    agency: true,
+    isil: true
+  },
+  app: {
+    orderpolicyrequester: true,
+    orderSystem: true
+  }
 };
 
 /**
@@ -88,7 +88,14 @@ function censor(str, context) {
   }
 
   // construct regex for global replacement in string
-  const re = new RegExp('(' + Object.keys(forbidden).map(regexEscape).join('|') + ')', 'g');
+  const re = new RegExp(
+    '(' +
+      Object.keys(forbidden)
+        .map(regexEscape)
+        .join('|') +
+      ')',
+    'g'
+  );
   str = str.replace(re, 'XXXXX');
 
   // remove ncipPassword in results from openagency
@@ -96,14 +103,16 @@ function censor(str, context) {
   return str;
 }
 
-
 /**
  * Utility function to write a unittest to a file.
  * The unit tests are typically saved `src/provider/__tests__/autotest_*.js`
  */
 export function saveTest(test) {
   if (test.createTest === 'mockfile') {
-    fs.writeFileSync(mockFileName, censor(JSON.stringify(_mockFile, null, 2), test.context));
+    fs.writeFileSync(
+      mockFileName,
+      censor(JSON.stringify(_mockFile, null, 2), test.context)
+    );
     return;
   }
 
@@ -124,12 +133,15 @@ import Provider from '../../provider/Provider.js';
 import {assert, fail} from 'chai';
 
 const context = ${JSON.stringify(cleanedContext, null, 2)};`;
-  source += censor(`
+  source += censor(
+    `
 const provider = Provider();
 const mockData = ${JSON.stringify(test.mockData, null, 2)};
 
 describe('Automated test: ${test.filename}', () => {
-  it('expected response. ID:${test.requestId}, for ${JSON.stringify(test.params)}', (done) => {
+  it('expected response. ID:${test.requestId}, for ${JSON.stringify(
+      test.params
+    )}', (done) => {
     context.mockData = mockData;
     provider.execute('${test.name}', ${JSON.stringify(test.params)}, context)
       .then(result => {
@@ -143,8 +155,13 @@ describe('Automated test: ${test.filename}', () => {
       });
   });
 });
-`, test.context);
-  fs.writeFile(`${__dirname}/../transformers/__tests__/${test.filename}.js`, source);
+`,
+    test.context
+  );
+  fs.writeFile(
+    `${__dirname}/../transformers/__tests__/${test.filename}.js`,
+    source
+  );
 }
 
 export const mockFile = _mockFile;
