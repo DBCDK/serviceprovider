@@ -101,7 +101,8 @@ let expected = {
     ],
     orders: [
       {
-        orderId: 'Hold:24395923',
+        orderId: '24395923',
+        orderType: 'Hold',
         status: 'In process',
         pickUpAgency: 'DK-710111',
         holdQueuePosition: '1',
@@ -110,7 +111,8 @@ let expected = {
         orderDate: '2016-05-27T00:00:00+02:00'
       },
       {
-        orderId: 'Hold:24400305',
+        orderId: '24400305',
+        orderType: 'Hold',
         status: 'In process',
         pickUpAgency: 'DK-710111',
         holdQueuePosition: '1',
@@ -119,7 +121,8 @@ let expected = {
         orderDate: '2016-05-30T00:00:00+02:00'
       },
       {
-        orderId: 'Hold:24400287',
+        orderId: '24400287',
+        orderType: 'Hold',
         status: 'In process',
         pickUpAgency: 'DK-710111',
         holdQueuePosition: '1',
@@ -128,7 +131,8 @@ let expected = {
         orderDate: '2016-05-30T00:00:00+02:00'
       },
       {
-        orderId: 'Hold:24404786',
+        orderId: '24404786',
+        orderType: 'Hold',
         status: 'In process',
         pickUpAgency: 'DK-710100',
         holdQueuePosition: '265',
@@ -137,7 +141,8 @@ let expected = {
         orderDate: '2016-05-31T00:00:00+02:00'
       },
       {
-        orderId: 'Hold:24401745',
+        orderId: '24401745',
+        orderType: 'Hold',
         status: 'In process',
         pickUpAgency: 'DK-710100',
         holdQueuePosition: '1',
@@ -145,7 +150,8 @@ let expected = {
         orderDate: '2016-05-30T00:00:00+02:00'
       },
       {
-        orderId: 'Hold:24404796',
+        orderId: '24404796',
+        orderType: 'Hold',
         status: 'In process',
         pickUpAgency: 'DK-710100',
         holdQueuePosition: '1',
@@ -154,7 +160,8 @@ let expected = {
         orderDate: '2016-05-31T00:00:00+02:00'
       },
       {
-        orderId: 'Hold:24400337',
+        orderId: '24400337',
+        orderType: 'Hold',
         status: 'In process',
         pickUpAgency: 'DK-710111',
         holdQueuePosition: '1',
@@ -163,7 +170,8 @@ let expected = {
         orderDate: '2016-05-30T00:00:00+02:00'
       },
       {
-        orderId: 'Hold:24400334',
+        orderId: '24400334',
+        orderType: 'Hold',
         status: 'Available for pickup',
         pickUpAgency: 'DK-710111',
         holdQueuePosition: '1',
