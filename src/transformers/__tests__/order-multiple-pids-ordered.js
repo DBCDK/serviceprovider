@@ -68,11 +68,17 @@ describe('Automated test: order-multiple-pids-ordered', () => {
         context
       )
       .then(result => {
-        assert.deepEqual(result, {statusCode: 200, data: {status: 'ok'}});
+        assert.deepEqual(result, {
+          statusCode: 200,
+          data: {status: 'ok', orsId: '1022805579'}
+        });
         done();
       })
       .catch(result => {
-        fail({throw: result}, {statusCode: 200, data: {status: 'ok'}});
+        fail(
+          {throw: result},
+          {statusCode: 200, data: {status: 'ok', orsId: '1022805579'}}
+        );
         done();
       });
   });

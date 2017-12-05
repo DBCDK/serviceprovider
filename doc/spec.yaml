@@ -164,7 +164,7 @@ api:
   order:
     tags:
       - Order
-    description: Order a library material, or remove an existing order.
+    description: "Order a library material, or remove an existing order. Notice: ordering a library material is asynchronous, so you cannot get an actual `orderId` back immediately. The `orsId` is an internal id from the ORS-system (used for a part of handling the order)."
     properties:
       orderId:
         description: The identifier for the order consist of orderId and orderType. Required for deleting an order. You get this from `/user`-status. Depending on the kind of order, it can take a long time from ordering, until the material with the orderId/orderType appears in the user status.
@@ -208,7 +208,7 @@ api:
         type: 'boolean'
         example: true
     response:
-      example: { "status": "ok" }
+      example: { "status": "ok", "orsId": "1234567" }
     examples:
       - request: { "orderId": "1234", "orderType": "normal", "delete": true }
         response: { "orderId": "1234", "deleted": true }
