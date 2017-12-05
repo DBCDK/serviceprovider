@@ -130,32 +130,40 @@ export function saveTest(test) {
     .toISOString()
     .slice(0, 10);
 
-  let source = `/* eslint-disable max-len, quotes, comma-spacing, key-spacing, quote-props, indent */
-// Request: ${test.name} ${JSON.stringify(test.params)}
+  let source = censor(
+    `// AUTOTEST GENERATOR: ${JSON.stringify({
+      endpoint: test.name,
+      params: test.params
+    })}
+//
+//
+// AUTOMATED UNIT TEST
+// DO NOT EDIT
+//
+//
+const endpoint = ${JSON.stringify(test.name)};
+const params = ${JSON.stringify(test.params)};
+
+const expected = ${JSON.stringify(test.result)};
+
+const context = ${JSON.stringify(cleanedContext)};
+const mockData = ${JSON.stringify(test.mockData)};
 
 import Provider from '../../provider/Provider.js';
 import {assert, fail} from 'chai';
-
-const context = ${JSON.stringify(cleanedContext, null, 2)};`;
-  source += censor(
-    `
 const provider = Provider();
-const mockData = ${JSON.stringify(test.mockData, null, 2)};
 
 describe('Automated test: ${test.filename}', () => {
-  it('expected response. ID:${test.requestId}, for ${JSON.stringify(
-      test.params
-    )}', (done) => {
+  it('has same result as recorded (in ${test.filename})', (done) => {
     assert(Date.now() < +new Date('${threeMonthsFromNow}'), 'Please recreate the automatically generated unit tests, such that the mock data does not come out of sync with the actual services. See README.md for details.');
     context.mockData = mockData;
-    provider.execute('${test.name}', ${JSON.stringify(test.params)}, context)
+    provider.execute(endpoint, params, context)
       .then(result => {
-        assert.deepEqual(result,
-            ${JSON.stringify(test.result, null, 2)});
+        assert.deepEqual(result, expected);
         done();
       })
       .catch(result => {
-        fail({throw: result}, ${JSON.stringify(test.result, null, 2)});
+        fail({throw: result}, expected);
         done();
       });
   });
