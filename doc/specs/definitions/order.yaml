@@ -8,3 +8,5 @@ definitions:
         type: string
       deleted:
         type: boolean
+      orsId:
+        type: string
