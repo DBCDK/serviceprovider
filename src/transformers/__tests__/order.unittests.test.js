@@ -9,19 +9,19 @@ const validateOrder = require('../placeOrder.js').validateParams;
 
 describe('Unittesting methods in order.utils.js - validateDeleteOrder', () => {
   it('Should throw when orderId is missing', () => {
-    const params = {};
+    const params = {orderType: 'normal'};
     const func = () => validateDeleteOrder(params);
     assert.throws(func);
   });
 
   it('Should throw when orderId is not a string', () => {
-    const params = {orderId: []};
+    const params = {orderId: [], orderType: 'normal'};
     const func = () => validateDeleteOrder(params);
     assert.throws(func);
   });
 
   it('Should not throw when orderId is a string', () => {
-    const params = {orderId: 'string'};
+    const params = {orderId: 'string', orderType: 'normal'};
     const func = () => validateDeleteOrder(params);
     assert.doesNotThrow(func);
   });
