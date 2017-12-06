@@ -1,6 +1,8 @@
 definitions:
   AvailabilityResponse:
-    $ref: "#/definitions/Availability"
+    type: array
+    items:
+      $ref: "#/definitions/Availability"
   Availability:
     type: object
     properties:
