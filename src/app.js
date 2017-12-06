@@ -90,12 +90,12 @@ function callApi(event, query, context) {
     .then(response => {
       const validateErrors = validateResponse(event, response.data);
       if (validateErrors.length) {
-        return {
-          statusCode: 400,
-          error: validateErrors
-            .map(o => String(o.stack).replace(/^instance\.?/, ''))
-            .join('\n')
-        };
+        log.error('response schema error', {
+          event,
+          query,
+          response,
+          validateErrors
+        });
       }
       if (validateResponseAndStatusCode(event, response)) {
         log.error('response is not wrapped in an envelope', {
