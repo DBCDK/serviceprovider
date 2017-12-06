@@ -147,7 +147,18 @@ function placeOrder(request, context) {
         }
       }
 
-      return {statusCode: status, error: err};
+      const error = {statusCode: status, error: err};
+
+      if (
+        err === 'owned_own_catalogue' &&
+        body.orderNotPlaced &&
+        body.orderNotPlaced.lookUpUrl &&
+        body.orderNotPlaced.lookUpUrl[0]
+      ) {
+        error.orderUrl = body.orderNotPlaced.lookUpUrl[0].$;
+      }
+
+      return error;
     }
 
     if (!body.orderPlaced) {
