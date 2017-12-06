@@ -108,6 +108,19 @@ class Context {
       };
     }
 
+    if (this.externalCallsInProgress === 0 && type === 'transformer') {
+      log.info('transformer-done', {
+        name,
+        params,
+        timings: {
+          total: Date.now() - this.startTime,
+          external: this.externalTiming
+        },
+        clientId: this.data && this.data.app && this.data.app.clientid,
+        statusCode: result.statusCode
+      });
+    }
+
     return result;
   }
 
