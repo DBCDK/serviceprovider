@@ -7,13 +7,16 @@ definitions:
     type: object
     properties:
       creator:
-        type: string
-      fromPid:
-        type: string
+        type: array
+        items:
+          type: string
       pid:
-        type: string
+        type: array
+        items:
+          type: string
       title:
-        type: string
-      weight:
-        type: integer
-    
+        type: array
+        items:
+          type: string
+      val:
+        type: number
