@@ -1,19 +1,19 @@
 // # Quick start guide to the open platform
 //
 // This introduction to getting started with the open platform is online on:
-// [https://openplatform.dbc.dk/v1/guide.html#client\_id:client\_secret](https://openplatform.dbc.dk/v1/guide.html#client_id:client_secret). Supply your `client_id` and `client_secret` in the url hash, to make the examples work.
+// [https://openplatform.dbc.dk/v3/guide.html#client\_id:client\_secret](https://openplatform.dbc.dk/v3/guide.html#client_id:client_secret). Supply your `client_id` and `client_secret` in the url hash, to make the examples work.
 //
-// The api-documentation is [https://openplatform.dbc.dk/v1/](https://openplatform.dbc.dk/v1/).
+// The api-documentation is [https://openplatform.dbc.dk/v3/](https://openplatform.dbc.dk/v3/).
 //
 // The guide is written as a literate JavaScript
-// [source file](https://openplatform.dbc.dk/v1/guide.js),
+// [source file](https://openplatform.dbc.dk/v3/guide.js),
 // that can be executed directly in the browser.
 // Open the browser console to see the result of the examples.
 //
 // # JavaScript API
 //
 // To use the open platform from a browser, load
-// `https://openplatform.dbc.dk/v1/dbc_openplatform.min.js`,
+// `https://openplatform.dbc.dk/v3/dbc_openplatform.min.js`,
 // with a `<script>`-tag, or in a similar way.
 // Then the `dbcOpenPlatform` object will be available.
 // Do not cache this JavaScript library indefinitely,
@@ -147,7 +147,7 @@ xhr_promise(xhr).then(function(result) {
 // You can also express the entire query in an url,
 // which is useful for interactive testing.
 // An example search url is:
-// <a id=sample_url>https://openplatform.dbc.dk/v1/search?q=hej&pretty=true&access_token=...</a>
+// <a id=sample_url>https://openplatform.dbc.dk/v3/search?q=hej&pretty=true&access_token=...</a>
 //
 // The serviceprovider tries to parse each individual url parameter
 // as JSON, and if that fails just use it as a string. This
@@ -158,11 +158,11 @@ xhr_promise(xhr).then(function(result) {
 // Requests to the API can be sent by POSTing a JSON object
 // to the API endpoint:
 
-HTTP_POST('https://openplatform.dbc.dk/v1/suggest',
+HTTP_POST('https://openplatform.dbc.dk/v3/suggest',
     {q: 'Steppe', type: 'title',
      access_token: access_token});
 
-HTTP_POST('https://openplatform.dbc.dk/v1/search',
+HTTP_POST('https://openplatform.dbc.dk/v3/search',
     {q: 'hello', access_token: access_token});
 
 // All of the other APIs also have the same structure
@@ -198,7 +198,7 @@ function HTTP_POST(url, parameters) {
 
 var link = document.getElementById('sample_url');
 link.href = link.innerHTML =
-  'https://openplatform.dbc.dk/v1/search?' +
+  'https://openplatform.dbc.dk/v3/search?' +
   'q=hej&pretty=true&access_token=' + access_token;
 
 // Close open code blocks. They contain scope for logins / tokens.
