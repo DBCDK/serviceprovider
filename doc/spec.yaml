@@ -259,7 +259,7 @@ api:
         minimum: 1
     response:
       $ref: "#/definitions/RecommendationResponse"
-      example: [ { "title": ["Harry Potter og Fønixordenen"], "creator": ["..."], "weight": 123, "pid": ["300185-katalog:100562332"]}, "..."]
+      example: [ { "title": ["Harry Potter og Fønixordenen"], "creator": ["..."], "val": 123, "pid": ["300185-katalog:100562332"]}, "..."]
   recommend:
     tags:
       - Recommend
