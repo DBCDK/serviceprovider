@@ -59,7 +59,7 @@ const mockData = {
     '{"placeOrderResponse":{"orderNotPlaced":{"lookUpUrl":[{"$":"http:\\/\\/stormp.kk.dk\\/linkme.asp?50758060"}],"placeOrderError":{"$":"owned_own_catalogue"}}},"@namespaces":{"oo":"http:\\/\\/oss.dbc.dk\\/ns\\/openorder"}}'
 };
 
-describe.only('Automated test: order-owned-own-catalogue-error', () => {
+describe('Automated test: order-owned-own-catalogue-error', () => {
   it('expected response. ID:pecnu8, for {"pids":["710100-katalog:50758060","710100-katalog:28657366"],"pickUpBranch":"710110","expires":"2019-03-06"}', done => {
     context.mockData = mockData;
     provider
