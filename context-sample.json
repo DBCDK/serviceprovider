@@ -42,7 +42,7 @@
       "isil": "DK-710100"
     },
     "app": {
-      "clientid": "XXXXX",
+      "clientId": "XXXXX",
       "ddbcmsapipassword": "XXXXX",
       "orderpolicyrequester": "190101",
       "orderSystem": "bibliotekdk"

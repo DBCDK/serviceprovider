@@ -166,7 +166,7 @@ class Context {
           total: Date.now() - this.startTime,
           external: this.externalTiming
         },
-        clientId: this.data && this.data.app && this.data.app.clientid,
+        clientId: this.data && this.data.app && this.data.app.clientId,
         statusCode: result.statusCode
       });
     }
