@@ -1,8 +1,18 @@
-/* eslint-disable max-len, quotes, comma-spacing, key-spacing, quote-props, indent */
-// Request: suggest {"q":"herlev","type":"unsupported","limit":3,"fields":["term"]}
+// AUTOTEST GENERATOR: {"endpoint":"suggest","params":{"q":"herlev","type":"unsupported","limit":3,"fields":["term"]}}
+//
+//
+// AUTOMATED UNIT TEST
+// DO NOT EDIT
+//
+//
+const endpoint = 'suggest';
+const params = {q: 'herlev', type: 'unsupported', limit: 3, fields: ['term']};
 
-import Provider from '../../provider/Provider.js';
-import {assert, fail} from 'chai';
+const expected = {
+  statusCode: 400,
+  error:
+    'Unsupported suggestion type unsupported. Supported types are: creator,library,subject,title'
+};
 
 const context = {
   services: {
@@ -13,7 +23,7 @@ const context = {
     PRODopenorder: 'https://openorder.addi.dk/2.8/',
     openorder: 'https://openorder.addi.dk/test_2.8/',
     opensearch: 'https://opensearch.addi.dk/b3.0_4.5/',
-    openuserstatus: 'https://openuserstatus.addi.dk/1.5/',
+    openuserstatus: 'https://openuserstatus.addi.dk/1.6.1/',
     rank: 'https://xptest.dbc.dk/ms/rank/v1',
     suggestpopular: 'http://xptest.dbc.dk/ms/entity-pop/v1',
     suggestcreator: 'http://xptest.dbc.dk/ms/entity-suggest/v1/creator',
@@ -25,20 +35,9 @@ const context = {
     },
     communityservice: 'http://localhost:4010/v1'
   },
-  communityservice: {
-    id: 1
-  },
-  search: {
-    agency: '775100',
-    profile: 'opac',
-    collectionidentifiers:
-      'rec.collectionIdentifier:150013-palle OR rec.collectionIdentifier:758000-katalog'
-  },
-  netpunkt: {
-    user: 'XXXXX',
-    group: 'XXXXX',
-    password: 'XXXXX'
-  },
+  communityservice: {id: 1},
+  search: {agency: '775100', profile: 'opac', collectionidentifiers: ''},
+  netpunkt: {user: 'XXXXX', group: 'XXXXX', password: 'XXXXX'},
   user: {
     id: 'XXXXX',
     salt: 'XXXXX',
@@ -48,41 +47,33 @@ const context = {
     isil: 'DK-710100'
   },
   app: {
-    clientid: 'XXXXX',
+    clientId: 'XXXXX',
     ddbcmsapipassword: 'XXXXX',
     orderpolicyrequester: '190101',
     orderSystem: 'bibliotekdk'
   }
 };
-const provider = Provider();
 const mockData = {};
 
+import Provider from '../../provider/Provider.js';
+import {assert, fail} from 'chai';
+const provider = Provider();
+
 describe('Automated test: suggest-unsupported-type', () => {
-  it('expected response. ID:hhnj4r, for {"q":"herlev","type":"unsupported","limit":3,"fields":["term"]}', done => {
+  it('has same result as recorded (in suggest-unsupported-type)', done => {
+    assert(
+      Date.now() < +new Date('2018-03-12'),
+      'Please recreate the automatically generated unit tests, such that the mock data does not come out of sync with the actual services. See README.md for details.'
+    );
     context.mockData = mockData;
     provider
-      .execute(
-        'suggest',
-        {q: 'herlev', type: 'unsupported', limit: 3, fields: ['term']},
-        context
-      )
+      .execute(endpoint, params, context)
       .then(result => {
-        assert.deepEqual(result, {
-          statusCode: 400,
-          error:
-            'Unsupported suggestion type unsupported. Supported types are: creator,library,subject,title'
-        });
+        assert.deepEqual(result, expected);
         done();
       })
       .catch(result => {
-        fail(
-          {throw: result},
-          {
-            statusCode: 400,
-            error:
-              'Unsupported suggestion type unsupported. Supported types are: creator,library,subject,title'
-          }
-        );
+        fail({throw: result}, expected);
         done();
       });
   });

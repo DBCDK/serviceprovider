@@ -1,8 +1,18 @@
-/* eslint-disable max-len, quotes, comma-spacing, key-spacing, quote-props, indent */
-// Request: search {"q":"harry AND potter","fields":["identifier","title","collection","subjectDBCF","hasAdaptation"],"sort":"invalid_sort"}
+// AUTOTEST GENERATOR: {"endpoint":"search","params":{"q":"harry AND potter","fields":["identifier","title","collection","subjectDBCF","hasAdaptation"],"sort":"invalid_sort"}}
+//
+//
+// AUTOMATED UNIT TEST
+// DO NOT EDIT
+//
+//
+const endpoint = 'search';
+const params = {
+  q: 'harry AND potter',
+  fields: ['identifier', 'title', 'collection', 'subjectDBCF', 'hasAdaptation'],
+  sort: 'invalid_sort'
+};
 
-import Provider from '../../provider/Provider.js';
-import {assert, fail} from 'chai';
+const expected = {statusCode: 500, error: 'Error: Unknown sort: invalid_sort'};
 
 const context = {
   services: {
@@ -13,7 +23,7 @@ const context = {
     PRODopenorder: 'https://openorder.addi.dk/2.8/',
     openorder: 'https://openorder.addi.dk/test_2.8/',
     opensearch: 'https://opensearch.addi.dk/b3.0_4.5/',
-    openuserstatus: 'https://openuserstatus.addi.dk/1.5/',
+    openuserstatus: 'https://openuserstatus.addi.dk/1.6.1/',
     rank: 'https://xptest.dbc.dk/ms/rank/v1',
     suggestpopular: 'http://xptest.dbc.dk/ms/entity-pop/v1',
     suggestcreator: 'http://xptest.dbc.dk/ms/entity-suggest/v1/creator',
@@ -25,20 +35,9 @@ const context = {
     },
     communityservice: 'http://localhost:4010/v1'
   },
-  communityservice: {
-    id: 1
-  },
-  search: {
-    agency: '775100',
-    profile: 'opac',
-    collectionidentifiers:
-      'rec.collectionIdentifier:150013-palle OR rec.collectionIdentifier:758000-katalog'
-  },
-  netpunkt: {
-    user: 'XXXXX',
-    group: 'XXXXX',
-    password: 'XXXXX'
-  },
+  communityservice: {id: 1},
+  search: {agency: '775100', profile: 'opac', collectionidentifiers: ''},
+  netpunkt: {user: 'XXXXX', group: 'XXXXX', password: 'XXXXX'},
   user: {
     id: 'XXXXX',
     salt: 'XXXXX',
@@ -48,54 +47,38 @@ const context = {
     isil: 'DK-710100'
   },
   app: {
-    clientid: 'XXXXX',
+    clientId: 'XXXXX',
     ddbcmsapipassword: 'XXXXX',
     orderpolicyrequester: '190101',
     orderSystem: 'bibliotekdk'
   }
 };
-const provider = Provider();
 const mockData = {
-  '["opensearch","<?xml version=\\"1.0\\" encoding=\\"UTF-8\\"?>\\n<SOAP-ENV:Envelope xmlns:SOAP-ENV=\\"http://schemas.xmlsoap.org/soap/envelope/\\" xmlns:ns1=\\"http://oss.dbc.dk/ns/opensearch\\">\\n  <SOAP-ENV:Body>\\n    <ns1:searchRequest>\\n      <ns1:query>harry AND potter</ns1:query>\\n      <ns1:agency>775100</ns1:agency>\\n      <ns1:profile>opac</ns1:profile>\\n      <ns1:start>1</ns1:start>\\n      <ns1:stepValue>10</ns1:stepValue>\\n      <ns1:sort>invalid_sort</ns1:sort>\\n      <ns1:collectionType>work-1</ns1:collectionType>\\n      <ns1:allObjects>0</ns1:allObjects>\\n      <ns1:objectFormat>briefDisplay</ns1:objectFormat>\\n      <ns1:objectFormat>dkabm</ns1:objectFormat>\\n      <ns1:outputType>json</ns1:outputType>\\n    </ns1:searchRequest>\\n  </SOAP-ENV:Body>\\n</SOAP-ENV:Envelope>\\n"]':
-    '{"searchResponse":{"error":{"$":"Error: Unknown sort: invalid_sort"}},"@namespaces":{"ac":"http:\\/\\/biblstandard.dk\\/ac\\/namespace\\/","dbcaddi":"http:\\/\\/oss.dbc.dk\\/rdf\\/dbcaddi#","dbcbib":"http:\\/\\/oss.dbc.dk\\/rdf\\/dbcbib#","dc":"http:\\/\\/purl.org\\/dc\\/elements\\/1.1\\/","dcmitype":"http:\\/\\/purl.org\\/dc\\/dcmitype\\/","dcterms":"http:\\/\\/purl.org\\/dc\\/terms\\/","dkabm":"http:\\/\\/biblstandard.dk\\/abm\\/namespace\\/dkabm\\/","dkdcplus":"http:\\/\\/biblstandard.dk\\/abm\\/namespace\\/dkdcplus\\/","docbook":"http:\\/\\/docbook.org\\/ns\\/docbook","kml":"http:\\/\\/www.opengis.net\\/kml\\/2.2","marcx":"info:lc\\/xmlns\\/marcxchange-v1","mx":"http:\\/\\/www.loc.gov\\/MARC21\\/slim","of":"http:\\/\\/oss.dbc.dk\\/ns\\/openformat","ofo":"http:\\/\\/oss.dbc.dk\\/ns\\/openformatoutput","os":"http:\\/\\/oss.dbc.dk\\/ns\\/opensearch","oso":"http:\\/\\/oss.dbc.dk\\/ns\\/opensearchobjects","oss":"http:\\/\\/oss.dbc.dk\\/ns\\/osstypes","xs":"http:\\/\\/www.w3.org\\/2001\\/XMLSchema","xsi":"http:\\/\\/www.w3.org\\/2001\\/XMLSchema-instance"}}',
   '["opensearch","<?xml version=\\"1.0\\" encoding=\\"UTF-8\\"?>\\n<SOAP-ENV:Envelope xmlns:SOAP-ENV=\\"http://schemas.xmlsoap.org/soap/envelope/\\" xmlns:ns1=\\"http://oss.dbc.dk/ns/opensearch\\">\\n  <SOAP-ENV:Body>\\n    <ns1:searchRequest>\\n      <ns1:query>harry AND potter</ns1:query>\\n      <ns1:agency>775100</ns1:agency>\\n      <ns1:profile>opac</ns1:profile>\\n      <ns1:start>1</ns1:start>\\n      <ns1:stepValue>10</ns1:stepValue>\\n      <ns1:sort>invalid_sort</ns1:sort>\\n      <ns1:collectionType>work-1</ns1:collectionType>\\n      <ns1:allObjects>1</ns1:allObjects>\\n      <ns1:objectFormat>briefDisplay</ns1:objectFormat>\\n      <ns1:objectFormat>dkabm</ns1:objectFormat>\\n      <ns1:outputType>json</ns1:outputType>\\n    </ns1:searchRequest>\\n  </SOAP-ENV:Body>\\n</SOAP-ENV:Envelope>\\n"]':
+    '{"searchResponse":{"error":{"$":"Error: Unknown sort: invalid_sort"}},"@namespaces":{"ac":"http:\\/\\/biblstandard.dk\\/ac\\/namespace\\/","dbcaddi":"http:\\/\\/oss.dbc.dk\\/rdf\\/dbcaddi#","dbcbib":"http:\\/\\/oss.dbc.dk\\/rdf\\/dbcbib#","dc":"http:\\/\\/purl.org\\/dc\\/elements\\/1.1\\/","dcmitype":"http:\\/\\/purl.org\\/dc\\/dcmitype\\/","dcterms":"http:\\/\\/purl.org\\/dc\\/terms\\/","dkabm":"http:\\/\\/biblstandard.dk\\/abm\\/namespace\\/dkabm\\/","dkdcplus":"http:\\/\\/biblstandard.dk\\/abm\\/namespace\\/dkdcplus\\/","docbook":"http:\\/\\/docbook.org\\/ns\\/docbook","kml":"http:\\/\\/www.opengis.net\\/kml\\/2.2","marcx":"info:lc\\/xmlns\\/marcxchange-v1","mx":"http:\\/\\/www.loc.gov\\/MARC21\\/slim","of":"http:\\/\\/oss.dbc.dk\\/ns\\/openformat","ofo":"http:\\/\\/oss.dbc.dk\\/ns\\/openformatoutput","os":"http:\\/\\/oss.dbc.dk\\/ns\\/opensearch","oso":"http:\\/\\/oss.dbc.dk\\/ns\\/opensearchobjects","oss":"http:\\/\\/oss.dbc.dk\\/ns\\/osstypes","xs":"http:\\/\\/www.w3.org\\/2001\\/XMLSchema","xsi":"http:\\/\\/www.w3.org\\/2001\\/XMLSchema-instance"}}',
+  '["opensearch","<?xml version=\\"1.0\\" encoding=\\"UTF-8\\"?>\\n<SOAP-ENV:Envelope xmlns:SOAP-ENV=\\"http://schemas.xmlsoap.org/soap/envelope/\\" xmlns:ns1=\\"http://oss.dbc.dk/ns/opensearch\\">\\n  <SOAP-ENV:Body>\\n    <ns1:searchRequest>\\n      <ns1:query>harry AND potter</ns1:query>\\n      <ns1:agency>775100</ns1:agency>\\n      <ns1:profile>opac</ns1:profile>\\n      <ns1:start>1</ns1:start>\\n      <ns1:stepValue>10</ns1:stepValue>\\n      <ns1:sort>invalid_sort</ns1:sort>\\n      <ns1:collectionType>work-1</ns1:collectionType>\\n      <ns1:allObjects>0</ns1:allObjects>\\n      <ns1:objectFormat>briefDisplay</ns1:objectFormat>\\n      <ns1:objectFormat>dkabm</ns1:objectFormat>\\n      <ns1:outputType>json</ns1:outputType>\\n    </ns1:searchRequest>\\n  </SOAP-ENV:Body>\\n</SOAP-ENV:Envelope>\\n"]':
     '{"searchResponse":{"error":{"$":"Error: Unknown sort: invalid_sort"}},"@namespaces":{"ac":"http:\\/\\/biblstandard.dk\\/ac\\/namespace\\/","dbcaddi":"http:\\/\\/oss.dbc.dk\\/rdf\\/dbcaddi#","dbcbib":"http:\\/\\/oss.dbc.dk\\/rdf\\/dbcbib#","dc":"http:\\/\\/purl.org\\/dc\\/elements\\/1.1\\/","dcmitype":"http:\\/\\/purl.org\\/dc\\/dcmitype\\/","dcterms":"http:\\/\\/purl.org\\/dc\\/terms\\/","dkabm":"http:\\/\\/biblstandard.dk\\/abm\\/namespace\\/dkabm\\/","dkdcplus":"http:\\/\\/biblstandard.dk\\/abm\\/namespace\\/dkdcplus\\/","docbook":"http:\\/\\/docbook.org\\/ns\\/docbook","kml":"http:\\/\\/www.opengis.net\\/kml\\/2.2","marcx":"info:lc\\/xmlns\\/marcxchange-v1","mx":"http:\\/\\/www.loc.gov\\/MARC21\\/slim","of":"http:\\/\\/oss.dbc.dk\\/ns\\/openformat","ofo":"http:\\/\\/oss.dbc.dk\\/ns\\/openformatoutput","os":"http:\\/\\/oss.dbc.dk\\/ns\\/opensearch","oso":"http:\\/\\/oss.dbc.dk\\/ns\\/opensearchobjects","oss":"http:\\/\\/oss.dbc.dk\\/ns\\/osstypes","xs":"http:\\/\\/www.w3.org\\/2001\\/XMLSchema","xsi":"http:\\/\\/www.w3.org\\/2001\\/XMLSchema-instance"}}'
 };
 
+import Provider from '../../provider/Provider.js';
+import {assert, fail} from 'chai';
+const provider = Provider();
+
 describe('Automated test: search_invalid_sort', () => {
-  it('expected response. ID:wv0ss8, for {"q":"harry AND potter","fields":["identifier","title","collection","subjectDBCF","hasAdaptation"],"sort":"invalid_sort"}', done => {
+  it('has same result as recorded (in search_invalid_sort)', done => {
+    assert(
+      Date.now() < +new Date('2018-03-12'),
+      'Please recreate the automatically generated unit tests, such that the mock data does not come out of sync with the actual services. See README.md for details.'
+    );
     context.mockData = mockData;
     provider
-      .execute(
-        'search',
-        {
-          q: 'harry AND potter',
-          fields: [
-            'identifier',
-            'title',
-            'collection',
-            'subjectDBCF',
-            'hasAdaptation'
-          ],
-          sort: 'invalid_sort'
-        },
-        context
-      )
+      .execute(endpoint, params, context)
       .then(result => {
-        assert.deepEqual(result, {
-          statusCode: 500,
-          error: 'Error: Unknown sort: invalid_sort'
-        });
+        assert.deepEqual(result, expected);
         done();
       })
       .catch(result => {
-        fail(
-          {throw: result},
-          {
-            statusCode: 500,
-            error: 'Error: Unknown sort: invalid_sort'
-          }
-        );
+        fail({throw: result}, expected);
         done();
       });
   });

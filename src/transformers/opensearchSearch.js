@@ -93,9 +93,7 @@ export default (params, context) => {
           );
         } else {
           parseErrors.push(
-            `Parse error: briefDisplay could not be found on object ${
-              collection
-            }`
+            `Parse error: briefDisplay could not be found on object ${collection}`
           );
           log.error('Parse error: briefDisplay could not be found on object', {
             collection: collection[0],
