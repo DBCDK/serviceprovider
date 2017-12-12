@@ -126,6 +126,10 @@ export function saveTest(test) {
     }
   }
 
+  const threeMonthsFromNow = new Date(Date.now() + 3 * 30 * 24 * 60 * 60 * 1000)
+    .toISOString()
+    .slice(0, 10);
+
   let source = `/* eslint-disable max-len, quotes, comma-spacing, key-spacing, quote-props, indent */
 // Request: ${test.name} ${JSON.stringify(test.params)}
 
@@ -142,6 +146,7 @@ describe('Automated test: ${test.filename}', () => {
   it('expected response. ID:${test.requestId}, for ${JSON.stringify(
       test.params
     )}', (done) => {
+    assert(Date.now() < +new Date('${threeMonthsFromNow}'), 'Please recreate the automatically generated unit tests, such that the mock data does not come out of sync with the actual services. See README.md for details.');
     context.mockData = mockData;
     provider.execute('${test.name}', ${JSON.stringify(test.params)}, context)
       .then(result => {
