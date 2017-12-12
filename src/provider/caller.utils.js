@@ -130,6 +130,14 @@ export function saveTest(test) {
     .toISOString()
     .slice(0, 10);
 
+  // sort mock data by key in order to avoid large diff when regenerating tests
+  const mockData = {};
+  const mockKeys = Object.keys(test.mockData);
+  mockKeys.sort();
+  for (const key of mockKeys) {
+    mockData[key] = test.mockData[key];
+  }
+
   let source = censor(
     `// AUTOTEST GENERATOR: ${JSON.stringify({
       endpoint: test.name,
@@ -147,7 +155,7 @@ const params = ${JSON.stringify(test.params)};
 const expected = ${JSON.stringify(test.result)};
 
 const context = ${JSON.stringify(cleanedContext)};
-const mockData = ${JSON.stringify(test.mockData)};
+const mockData = ${JSON.stringify(mockData)};
 
 import Provider from '../../provider/Provider.js';
 import {assert, fail} from 'chai';
@@ -171,6 +179,21 @@ describe('Automated test: ${test.filename}', () => {
 `,
     test.context
   );
+
+  // remove timings in mocked data, to avoid big diff when regenerating test
+  source = source
+    .replace(
+      /\\"time\\":{\\"\$\\":\\"\d+[.]\d+\\"}/g,
+      `\\"time\\":{\\"$\\":\\"0.1\\"}`
+    )
+    .replace(/\\"time\\": \d+}/g, `\\"time\\": 10}`)
+    .replace(/\\"stime\\": \d+,/g, `\\"stime\\": 10,`)
+    .replace(/\\"qtime\\": \d+,/g, `\\"qtime\\": 10,`)
+    .replace(
+      /\\"trackingId\\":{\\"\$\\":\\"[^"]+"}/g,
+      `\\"trackingId\\":{\\"$\\":\\"os:2017-12-24...\\"}`
+    );
+
   fs.writeFile(
     `${__dirname}/../transformers/__tests__/${test.filename}.js`,
     source
