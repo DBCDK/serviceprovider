@@ -58,17 +58,17 @@ const context = {
 };
 const mockData = {
   '["suggestsubject",{"qs":{"query":"herlev","rs":3,"n":3}}]':
-    '{"responseHeader": {"svn-revision": "106527", "ab-id": "1", "rt_searches": ["herlev", "herlev ruterne", "herlev statsskole"], "args": {"hr": "None", "hl": "None", "rs": "3"}, "q": "herlev", "version": "0.2.0", "build": "549", "time": 0}, "response": {"suggestions": [{"frequency": 105, "suggestion": "herlev"}, {"frequency": 19, "suggestion": "amtssygehuset i herlev"}, {"frequency": 8, "suggestion": "nørre herlev"}], "numFound": 5}}'
+    '{"responseHeader": {"svn-revision": "106527", "ab-id": "1", "rt_searches": ["herlev", "herlev ruterne", "herlev statsskole"], "args": {"hr": "None", "hl": "None", "rs": "3"}, "q": "herlev", "version": "0.2.0", "build": "549", "time": 10}, "response": {"suggestions": [{"frequency": 105, "suggestion": "herlev"}, {"frequency": 19, "suggestion": "amtssygehuset i herlev"}, {"frequency": 8, "suggestion": "nørre herlev"}], "numFound": 5}}'
 };
 
 import Provider from '../../provider/Provider.js';
 import {assert, fail} from 'chai';
 const provider = Provider();
 
-describe('Automated test: suggest-subject-fields', () => {
-  it('has same result as recorded (in suggest-subject-fields)', done => {
+describe('Automated test: suggest_subject_fields.auto', () => {
+  it('has same result as recorded (in suggest_subject_fields.auto)', done => {
     assert(
-      Date.now() < +new Date('2018-03-12'),
+      Date.now() < +new Date('2018-03-13'),
       'Please recreate the automatically generated unit tests, such that the mock data does not come out of sync with the actual services. See README.md for details.'
     );
     context.mockData = mockData;

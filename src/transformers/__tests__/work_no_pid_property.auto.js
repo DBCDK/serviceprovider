@@ -55,10 +55,10 @@ import Provider from '../../provider/Provider.js';
 import {assert, fail} from 'chai';
 const provider = Provider();
 
-describe('Automated test: work-no_pid_property', () => {
-  it('has same result as recorded (in work-no_pid_property)', done => {
+describe('Automated test: work_no_pid_property.auto', () => {
+  it('has same result as recorded (in work_no_pid_property.auto)', done => {
     assert(
-      Date.now() < +new Date('2018-03-12'),
+      Date.now() < +new Date('2018-03-13'),
       'Please recreate the automatically generated unit tests, such that the mock data does not come out of sync with the actual services. See README.md for details.'
     );
     context.mockData = mockData;
