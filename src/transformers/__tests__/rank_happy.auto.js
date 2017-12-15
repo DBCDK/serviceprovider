@@ -101,14 +101,14 @@ describe('Automated test: rank-happy', () => {
             {
               title: ['Journal 64 : krimithriller'],
               creator: ['Jussi Adler-Olsen'],
-              val: 62.798478002209706,
+              val: [62.798478002209706],
               ctkey: ['Journal_64_:_krimithriller::Jussi_Adler-Olsen'],
               pid: ['870970-basis:28511663']
             },
             {
               title: ['Det syvende barn'],
               creator: ['Erik Valeur'],
-              val: 42.07434137795138,
+              val: [42.07434137795138],
               ctkey: ['Det_syvende_barn::Erik_Valeur'],
               pid: ['870970-basis:28902239']
             }
@@ -125,14 +125,14 @@ describe('Automated test: rank-happy', () => {
               {
                 title: ['Journal 64 : krimithriller'],
                 creator: ['Jussi Adler-Olsen'],
-                val: 62.798478002209706,
+                val: [62.798478002209706],
                 ctkey: ['Journal_64_:_krimithriller::Jussi_Adler-Olsen'],
                 pid: ['870970-basis:28511663']
               },
               {
                 title: ['Det syvende barn'],
                 creator: ['Erik Valeur'],
-                val: 42.07434137795138,
+                val: [42.07434137795138],
                 ctkey: ['Det_syvende_barn::Erik_Valeur'],
                 pid: ['870970-basis:28902239']
               }

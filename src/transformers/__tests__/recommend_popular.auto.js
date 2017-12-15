@@ -100,19 +100,19 @@ describe('Automated test: recommend-popular', () => {
           data: [
             {
               creator: ['Jussi Adler-Olsen'],
-              val: 30889,
+              val: [30889],
               title: ['Journal 64 : krimithriller'],
               pid: ['870970-basis:28511663']
             },
             {
               creator: ['Jussi Adler-Olsen'],
-              val: 28783,
+              val: [28783],
               title: ['Marco effekten : krimithriller'],
               pid: ['870970-basis:29754519']
             },
             {
               creator: ['Sara Blædel'],
-              val: 26278,
+              val: [26278],
               title: ['De glemte piger : krimi'],
               pid: ['870970-basis:29060835']
             }
@@ -128,19 +128,19 @@ describe('Automated test: recommend-popular', () => {
             data: [
               {
                 creator: ['Jussi Adler-Olsen'],
-                val: 30889,
+                val: [30889],
                 title: ['Journal 64 : krimithriller'],
                 pid: ['870970-basis:28511663']
               },
               {
                 creator: ['Jussi Adler-Olsen'],
-                val: 28783,
+                val: [28783],
                 title: ['Marco effekten : krimithriller'],
                 pid: ['870970-basis:29754519']
               },
               {
                 creator: ['Sara Blædel'],
-                val: 26278,
+                val: [26278],
                 title: ['De glemte piger : krimi'],
                 pid: ['870970-basis:29060835']
               }
