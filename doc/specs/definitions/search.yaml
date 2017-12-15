@@ -362,19 +362,33 @@ definitions:
         items:
           type: string
       coverDataUrl117:
-        type: string
+        type: array
+        items:
+          type: string
       coverDataUrl207:
-        type: string
+        type: array
+        items:
+          type: string
       coverDataUrl42:
-        type: string
+        type: array
+        items:
+          type: string
       coverDataUrl500:
-        type: string
+        type: array
+        items:
+          type: string
       coverDataUrlBack:
-        type: string
+        type: array
+        items:
+          type: string
       coverDataUrlFull:
-        type: string
+        type: array
+        items:
+          type: string
       coverDataUrlThumbnail:
-        type: string
+        type: array
+        items:
+          type: string
       coverUrl117:
         type: array
         items:
