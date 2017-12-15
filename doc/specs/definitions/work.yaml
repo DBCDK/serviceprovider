@@ -1,5 +1,5 @@
 definitions:
-  SearchResponse:
+  WorkResponse:
     type: array
     items:
       - $ref: "#/definitions/Work"
