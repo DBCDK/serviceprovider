@@ -148,12 +148,12 @@ const mockData = {
         }
       ]
     ],
-    msecs: 43
+    msecs: 39
   }
 };
 
-describe('Automated test: recommend-default', () => {
-  it('expected response. ID:j9wsxy, for {"like":["870970-basis:45488713","870970-basis:28643713","870970-basis:29494940","870970-basis:29386404","870970-basis:28429576"],"recommender":"default","limit":10}', done => {
+describe('Automated test: recommend-default-explicit', () => {
+  it('expected response. ID:reg6n4, for {"like":["870970-basis:45488713","870970-basis:28643713","870970-basis:29494940","870970-basis:29386404","870970-basis:28429576"],"recommender":"default","limit":10}', done => {
     context.mockData = mockData;
     provider
       .execute(
@@ -177,61 +177,61 @@ describe('Automated test: recommend-default', () => {
           data: [
             {
               creator: ['Mari Jungstedt'],
-              val: 0.5212014338107577,
+              val: [0.5212014338107577],
               title: ['Den mørke engel : kriminalroman'],
               pid: ['870970-basis:28824130']
             },
             {
               creator: ['Mari Jungstedt'],
-              val: 0.49969786213953876,
+              val: [0.49969786213953876],
               title: ['Den farlige leg : kriminalroman'],
               pid: ['870970-basis:50625532']
             },
             {
               creator: ['Camilla Läckberg'],
-              val: 0.4797369002061243,
+              val: [0.4797369002061243],
               title: ['Fyrmesteren : kriminalroman'],
               pid: ['870970-basis:28709994']
             },
             {
               creator: ['Mari Jungstedt'],
-              val: 0.45033463212057645,
+              val: [0.45033463212057645],
               title: ['I denne søde sommertid : kriminalroman'],
               pid: ['870970-basis:28277350']
             },
             {
               creator: ['Camilla Läckberg'],
-              val: 0.4138118073099609,
+              val: [0.4138118073099609],
               title: ['Tyskerungen : kriminalroman'],
               pid: ['870970-basis:27670806']
             },
             {
               creator: ['Elsebeth Egholm'],
-              val: 0.3873503806990347,
+              val: [0.3873503806990347],
               title: ['Eget ansvar'],
               pid: ['870970-basis:29953554']
             },
             {
               creator: ['Grete Tulinius'],
-              val: 0.37914277339855307,
+              val: [0.37914277339855307],
               title: ['Noras bog : krimi'],
               pid: ['874310-katalog:DBB0041046']
             },
             {
               creator: ['Camilla Läckberg'],
-              val: 0.3678050803762474,
+              val: [0.3678050803762474],
               title: ['Ulykkesfuglen : kriminalroman'],
               pid: ['874310-katalog:DBB0708070']
             },
             {
               creator: ['Anna Grue'],
-              val: 0.3673895724014438,
+              val: [0.3673895724014438],
               title: ['Et spørgsmål om penge'],
               pid: ['870970-basis:29477744']
             },
             {
               creator: ['Camilla Läckberg'],
-              val: 0.3626510422203491,
+              val: [0.3626510422203491],
               title: ['Englemagersken : kriminalroman'],
               pid: ['870970-basis:45188981']
             }
