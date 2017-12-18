@@ -86,7 +86,6 @@ Overview of files and directories:
     - `app.js` - the main code entrypoint
     - `transformers/` - the code that transforms requests/data to/from the different services, and exposes them in the api.
     - `smaug/` - simple authentification server used during test and development
-- `qa/apitest/`, `ave-test/`, `performancetest/`, `add_imports_to_tests.py`, `mocktest.sh`, `siegetestendpoints.txt` - various testing
 - `static/` contains a swagger-ui, symlinks to guide, client-api, etc. This is served staticly. We are using a recent snapshot of `github:swagger-api:swagger-ui:dist/` as the stable swagger-ui release (as of May 2016) has a bug, with regard to `boolean` thet breaks the documentation.
 - `client/` - implementation and build script for the browser JavaScript client library.
 
