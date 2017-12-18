@@ -6,13 +6,11 @@ before_script:
   - sudo dpkg-reconfigure --frontend noninteractive tzdata
 script:
   - ./start-service-provider.sh
-  # mocktest is disabled for now
-  # ./mocktest.sh
-  - TZ='Europe/Copenhagen' npm test
+  - PORT=9000 TZ='Europe/Copenhagen' npm test
   - npm run lint
   - npm run swagger:validate # NOTE: expects a running SP!
 after_script:
-  - TZ='Europe/Copenhagen' npm run coverage
+  - PORT=9000 TZ='Europe/Copenhagen' npm run coverage
   - npm run coveralls
 notifications:
   slack:
