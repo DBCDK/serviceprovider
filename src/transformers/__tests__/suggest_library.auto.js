@@ -82,10 +82,10 @@ import Provider from '../../provider/Provider.js';
 import {assert, fail} from 'chai';
 const provider = Provider();
 
-describe('Automated test: suggest-library', () => {
-  it('has same result as recorded (in suggest-library)', done => {
+describe('Automated test: suggest_library.auto', () => {
+  it('has same result as recorded (in suggest_library.auto)', done => {
     assert(
-      Date.now() < +new Date('2018-03-12'),
+      Date.now() < +new Date('2018-03-13'),
       'Please recreate the automatically generated unit tests, such that the mock data does not come out of sync with the actual services. See README.md for details.'
     );
     context.mockData = mockData;

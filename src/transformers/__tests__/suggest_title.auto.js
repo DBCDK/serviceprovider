@@ -73,17 +73,17 @@ const context = {
 };
 const mockData = {
   '["suggestpopular",{"qs":{"query":"{!complexphrase inOrder=true}display.title:hest*","fields":"display.title,fedoraPid,display.creator,display.workType","rows":3}}]':
-    '{"responseHeader": {"args": {"fq": "work.isPrimaryObject:true", "rows": 3, "group": "true", "start": 0, "group.field": "fedoraPid", "group.main": "true", "fl": "display.title fedoraPid display.creator display.workType"}, "svn-revision": "106527", "ab-id": "1", "qtime": 8, "q": "{!complexphrase inOrder=true}display.title:hest*", "version": "0.1.0", "stime": 12, "qf": ["inOrder=true}display.title"], "build": "581", "modified_q": "{!boost b=loan.count}{!complexphrase inOrder=true}display.title:hest*"}, "response": {"start": 0, "numFound": 3313, "docs": [{"fedoraPid": "870970-basis:06598722", "display.creator": ["Jean M. Auel"], "display.title": ["Hestenes Dal"], "display.workType": ["book"]}, {"fedoraPid": "870970-basis:26191076", "display.creator": ["Ole Fr\\u00f8slev"], "display.title": ["Hestetyven"], "display.workType": ["book"]}, {"fedoraPid": "870970-basis:50507173", "display.creator": ["Ola Bauer"], "display.title": ["Hestehovedt\\u00e5gen"], "display.workType": ["book"]}]}}'
+    '{"responseHeader": {"args": {"fq": "work.isPrimaryObject:true", "rows": 3, "group": "true", "start": 0, "group.field": "fedoraPid", "group.main": "true", "fl": "display.title fedoraPid display.creator display.workType"}, "svn-revision": "106527", "ab-id": "1", "qtime": 10, "q": "{!complexphrase inOrder=true}display.title:hest*", "version": "0.1.0", "stime": 10, "qf": ["inOrder=true}display.title"], "build": "581", "modified_q": "{!boost b=loan.count}{!complexphrase inOrder=true}display.title:hest*"}, "response": {"start": 0, "numFound": 3313, "docs": [{"fedoraPid": "870970-basis:06598722", "display.creator": ["Jean M. Auel"], "display.title": ["Hestenes Dal"], "display.workType": ["book"]}, {"fedoraPid": "870970-basis:26191076", "display.creator": ["Ole Fr\\u00f8slev"], "display.title": ["Hestetyven"], "display.workType": ["book"]}, {"fedoraPid": "870970-basis:50507173", "display.creator": ["Ola Bauer"], "display.title": ["Hestehovedt\\u00e5gen"], "display.workType": ["book"]}]}}'
 };
 
 import Provider from '../../provider/Provider.js';
 import {assert, fail} from 'chai';
 const provider = Provider();
 
-describe('Automated test: suggest-title', () => {
-  it('has same result as recorded (in suggest-title)', done => {
+describe('Automated test: suggest_title.auto', () => {
+  it('has same result as recorded (in suggest_title.auto)', done => {
     assert(
-      Date.now() < +new Date('2018-03-12'),
+      Date.now() < +new Date('2018-03-13'),
       'Please recreate the automatically generated unit tests, such that the mock data does not come out of sync with the actual services. See README.md for details.'
     );
     context.mockData = mockData;

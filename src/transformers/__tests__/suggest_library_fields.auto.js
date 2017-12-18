@@ -88,17 +88,17 @@ const context = {
 };
 const mockData = {
   '["suggestlibrary",{"qs":{"query":"herlev","lt":"folkebibliotek","n":3}}]':
-    '{"responseHeader": {"q": "herlev", "version": "0.2.0", "build": "549", "time": 2, "ab-id": "1", "args": {"lt": "folkebibliotek", "gl": null}, "svn-revision": "106527"}, "response": {"suggestions": [{"suggestion": {"by": "Herlev", "væsensnavn": "Herlev Bibliotek", "adresse": "Biblioteket Kilden\\r\\nDildhaven 40", "navn": "Hjortespring Bibliotek", "postnr": "2730", "kortnavn": "Biblioteket Kilden", "latitude": "", "geolokation": {"lat": 0, "lng": 0}, "bibliotekstype": "Folkebibliotek", "id": "716301"}}, {"suggestion": {"by": "Herlev", "væsensnavn": "Herlev Bibliotek", "adresse": "Herlev Bygade 70", "navn": "Herlev-Bibliotek. Hovedbiblioteket", "postnr": "2730", "kortnavn": "Herlev Bibliotek", "latitude": "55.725455", "geolokation": {"lat": 0, "lng": 0}, "bibliotekstype": "Folkebibliotek", "id": "716300"}}], "numFound": 2}}'
+    '{"responseHeader": {"q": "herlev", "version": "0.2.0", "build": "549", "time": 1, "ab-id": "1", "args": {"lt": "folkebibliotek", "gl": null}, "svn-revision": "106527"}, "response": {"suggestions": [{"suggestion": {"by": "Herlev", "væsensnavn": "Herlev Bibliotek", "adresse": "Biblioteket Kilden\\r\\nDildhaven 40", "navn": "Hjortespring Bibliotek", "postnr": "2730", "kortnavn": "Biblioteket Kilden", "latitude": "", "geolokation": {"lat": 0, "lng": 0}, "bibliotekstype": "Folkebibliotek", "id": "716301"}}, {"suggestion": {"by": "Herlev", "væsensnavn": "Herlev Bibliotek", "adresse": "Herlev Bygade 70", "navn": "Herlev-Bibliotek. Hovedbiblioteket", "postnr": "2730", "kortnavn": "Herlev Bibliotek", "latitude": "55.725455", "geolokation": {"lat": 0, "lng": 0}, "bibliotekstype": "Folkebibliotek", "id": "716300"}}], "numFound": 2}}'
 };
 
 import Provider from '../../provider/Provider.js';
 import {assert, fail} from 'chai';
 const provider = Provider();
 
-describe('Automated test: suggest-library-fields', () => {
-  it('has same result as recorded (in suggest-library-fields)', done => {
+describe('Automated test: suggest_library_fields.auto', () => {
+  it('has same result as recorded (in suggest_library_fields.auto)', done => {
     assert(
-      Date.now() < +new Date('2018-03-12'),
+      Date.now() < +new Date('2018-03-13'),
       'Please recreate the automatically generated unit tests, such that the mock data does not come out of sync with the actual services. See README.md for details.'
     );
     context.mockData = mockData;

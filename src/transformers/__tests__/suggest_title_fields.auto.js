@@ -73,17 +73,17 @@ const context = {
 };
 const mockData = {
   '["suggestpopular",{"qs":{"query":"{!complexphrase inOrder=true}display.title:herlev*","fields":"display.title,fedoraPid,display.creator,display.workType","rows":3}}]':
-    '{"responseHeader": {"args": {"fq": "work.isPrimaryObject:true", "rows": 3, "group": "true", "start": 0, "group.field": "fedoraPid", "group.main": "true", "fl": "display.title fedoraPid display.creator display.workType"}, "svn-revision": "106527", "ab-id": "1", "qtime": 2, "q": "{!complexphrase inOrder=true}display.title:herlev*", "version": "0.1.0", "stime": 6, "qf": ["inOrder=true}display.title"], "build": "581", "modified_q": "{!boost b=loan.count}{!complexphrase inOrder=true}display.title:herlev*"}, "response": {"start": 0, "numFound": 228, "docs": [{"fedoraPid": "870970-basis:22591304", "display.creator": ["Lise Reinau"], "display.title": ["Herlev tur/retur"], "display.workType": ["music"]}, {"fedoraPid": "870970-basis:21085839", "display.creator": ["Hans-Henrik Thomsen (f. 1949)"], "display.title": ["Herlev-Ruterne"], "display.workType": ["book"]}, {"fedoraPid": "870970-basis:06131484", "display.creator": ["Olaf Hansen (f. 1913)"], "display.title": ["Herlev kommune 75 \\u00e5r"], "display.workType": ["book"]}]}}'
+    '{"responseHeader": {"args": {"fq": "work.isPrimaryObject:true", "rows": 3, "group": "true", "start": 0, "group.field": "fedoraPid", "group.main": "true", "fl": "display.title fedoraPid display.creator display.workType"}, "svn-revision": "106527", "ab-id": "1", "qtime": 10, "q": "{!complexphrase inOrder=true}display.title:herlev*", "version": "0.1.0", "stime": 10, "qf": ["inOrder=true}display.title"], "build": "581", "modified_q": "{!boost b=loan.count}{!complexphrase inOrder=true}display.title:herlev*"}, "response": {"start": 0, "numFound": 228, "docs": [{"fedoraPid": "870970-basis:22591304", "display.creator": ["Lise Reinau"], "display.title": ["Herlev tur/retur"], "display.workType": ["music"]}, {"fedoraPid": "870970-basis:21085839", "display.creator": ["Hans-Henrik Thomsen (f. 1949)"], "display.title": ["Herlev-Ruterne"], "display.workType": ["book"]}, {"fedoraPid": "870970-basis:06131484", "display.creator": ["Olaf Hansen (f. 1913)"], "display.title": ["Herlev kommune 75 \\u00e5r"], "display.workType": ["book"]}]}}'
 };
 
 import Provider from '../../provider/Provider.js';
 import {assert, fail} from 'chai';
 const provider = Provider();
 
-describe('Automated test: suggest-title-fields', () => {
-  it('has same result as recorded (in suggest-title-fields)', done => {
+describe('Automated test: suggest_title_fields.auto', () => {
+  it('has same result as recorded (in suggest_title_fields.auto)', done => {
     assert(
-      Date.now() < +new Date('2018-03-12'),
+      Date.now() < +new Date('2018-03-13'),
       'Please recreate the automatically generated unit tests, such that the mock data does not come out of sync with the actual services. See README.md for details.'
     );
     context.mockData = mockData;
