@@ -191,7 +191,9 @@ describe('Test include on profile', function() {
   it('should remap activities to an object', function(done) {
     request
       .get(
-        `http://localhost:8080/v1/community/profiles/${singleProfileId}/activity`
+        `http://localhost:8080/v1/community/profiles/${
+          singleProfileId
+        }/activity`
       )
       .query({access_token: token})
       .end((err, res) => {
@@ -284,7 +286,9 @@ describe('Test include on groups', function() {
       });
   });
 
-  it('should support mix of strings and objects in arrays for include', function(done) {
+  it('should support mix of strings and objects in arrays for include', function(
+    done
+  ) {
     request
       .get('http://localhost:8080/v1/community/groups')
       .query({access_token: token, include: '[{"name": "posts"}, "owner"]'})
@@ -530,7 +534,9 @@ describe('Test include on group/{id}', function() {
       });
   });
 
-  it('should support nested includes with nested includes on a single group', function(done) {
+  it('should support nested includes with nested includes on a single group', function(
+    done
+  ) {
     request
       .get(`http://localhost:8080/v1/community/groups/${singleGroupId}`)
       .query({

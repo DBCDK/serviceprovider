@@ -109,10 +109,9 @@ function handleCoverUrlRequests(dataUrls, result, context) {
         {encoding: null}
       )
       .then(o => {
-        result.data[req.i][req.field] = `data:image/jpeg;base64,${new Buffer(
-          o,
-          'binary'
-        ).toString('base64')}`;
+        result.data[req.i][req.field] = [
+          `data:image/jpeg;base64,${new Buffer(o, 'binary').toString('base64')}`
+        ];
       })
   );
 
