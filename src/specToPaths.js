@@ -31,6 +31,7 @@ function createResponse(spec) {
     200: {
       description: 'Response envelope',
       schema: {
+        title: 'Response',
         type: 'object',
         required: ['statusCode'],
         properties: {
@@ -39,8 +40,24 @@ function createResponse(spec) {
           errors: {
             type: 'array',
             items: {
+              title: 'Error',
               type: 'object',
               properties: {}
+            }
+          },
+          timings: {
+            title: 'Timings',
+            type: 'object',
+            properties: {
+              total: {
+                type: 'string',
+                description: 'Total time for processing the request'
+              },
+              external: {
+                type: 'string',
+                description:
+                  'Time spent waiting for underlying services. The time used by the open platform itself is `total - external`'
+              }
             }
           }
         }
