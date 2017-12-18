@@ -46,10 +46,12 @@ definitions:
       collectionDetails:
         $ref: "#/definitions/CollectionDetails"
       continuedIn:
+        description: see http://www.danbib.dk/broend3_relationer
         type: array
         items:
           type: string
       continues:
+        description: see http://www.danbib.dk/broend3_relationer
         type: array
         items:
           type: string
@@ -602,10 +604,12 @@ definitions:
         items:
           type: string
       discussedIn:
+        description: see http://www.danbib.dk/broend3_relationer
         type: array
         items:
           type: string
       discusses:
+        description: see http://www.danbib.dk/broend3_relationer
         type: array
         items:
           type: string
@@ -622,26 +626,32 @@ definitions:
         items:
           type: string
       hasAdaptation:
+        description: see http://www.danbib.dk/broend3_relationer
         type: array
         items:
           type: string
       hasAnalysis:
+        description: see http://www.danbib.dk/broend3_relationer
         type: array
         items:
           type: string
       hasCreatorDescription:
+        description: see http://www.danbib.dk/broend3_relationer
         type: array
         items:
           type: string
       hasDescriptionFromPublisher:
+        description: see http://www.danbib.dk/broend3_relationer
         type: array
         items:
           type: string
       hasManuscript:
+        description: see http://www.danbib.dk/broend3_relationer
         type: array
         items:
           type: string
       hasOnlineAccess:
+        description: see http://www.danbib.dk/broend3_relationer
         type: array
         items:
           type: string
@@ -654,10 +664,12 @@ definitions:
         items:
           type: string
       hasReview:
+        description: see http://www.danbib.dk/broend3_relationer
         type: array
         items:
           type: string
       hasSoundtrack:
+        description: see http://www.danbib.dk/broend3_relationer
         type: array
         items:
           type: string
@@ -670,54 +682,67 @@ definitions:
         items:
           type: string
       identifier:
+        description: '`identifier` as specified in [Dublin Core](http://dublincore.org/documents/dces/)'
         type: array
         items:
           type: string
       identifierISBN:
+        description: '`identifier` as specified in [Dublin Core](http://dublincore.org/documents/dces/) as ISBN(International Standard Book Number)'
         type: array
         items:
           type: string
       identifierISMN:
+        description: '`identifier` as specified in [Dublin Core](http://dublincore.org/documents/dces/) as ISMN(International Standard Music Number)'
         type: array
         items:
           type: string
       identifierISRC:
+        description: '`identifier` as specified in [Dublin Core](http://dublincore.org/documents/dces/) as ISRC(International Standard Recording Code)'
         type: array
         items:
           type: string
       identifierISSN:
+        description: '`identifier` as specified in [Dublin Core](http://dublincore.org/documents/dces/) as ISSN(International Standard Serial Number)'
         type: array
         items:
           type: string
       identifierPROVIDERID:
+        description: '`identifier` as specified in [Dublin Core](http://dublincore.org/documents/dces/)'
         type: array
         items:
           type: string
       identifierPROVIDERMID:
+        description: '`identifier` as specified in [Dublin Core](http://dublincore.org/documents/dces/)'
         type: array
         items:
           type: string
       identifierUPC:
+        description: '`identifier` as specified in [Dublin Core](http://dublincore.org/documents/dces/) as UPC(Universal Product Code)'
         type: array
         items:
           type: string
       identifierURI:
+        description: '`identifier` as specified in [Dublin Core](http://dublincore.org/documents/dces/) as URI(Uniform Resource Identifier)'
         type: array
         items:
           type: string
       isAdaptationOf:
+        description: see http://www.danbib.dk/broend3_relationer
         type: array
         items:
           type: string
       isAnalysisOf:
+        description: see http://www.danbib.dk/broend3_relationer
         type: array
         items:
           type: string
       isDescriptionFromPublisherOf:
+        description: see http://www.danbib.dk/broend3_relationer
         type: array
         items:
           type: string
       isManuscriptOf:
+        description: see http://www.danbib.dk/broend3_relationer
         type: array
         items:
           type: string
@@ -742,6 +767,7 @@ definitions:
         items:
           type: string
       isPartOfManifestation:
+        description: see http://www.danbib.dk/broend3_relationer
         type: array
         items:
           type: string
@@ -750,14 +776,17 @@ definitions:
         items:
           type: string
       isReviewOf:
+        description: see http://www.danbib.dk/broend3_relationer
         type: array
         items:
           type: string
       isSoundtrackOfGame:
+        description: see http://www.danbib.dk/broend3_relationer
         type: array
         items:
           type: string
       isSoundtrackOfMovie:
+        description: see http://www.danbib.dk/broend3_relationer
         type: array
         items:
           type: string
