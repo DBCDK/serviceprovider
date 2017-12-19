@@ -6,10 +6,12 @@ definitions:
   Availability:
     type: object
     properties:
-      holdingStatus: 
-        type: object
-        properties:
-          willLend:
-            type: boolean
+      expectedDelivery:
+        description: Date when the the material would be available, if applicable
+        type: string
+      willLend:
+        description: Whether it is possible to loan the material
+        type: boolean
       orderPossible:
+        description: Whether it is possible to order the material
         type: boolean
