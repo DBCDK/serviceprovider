@@ -21,15 +21,12 @@ async function availability(request, context) {
   }
 
   const data = {
-    holdingStatus: {
-      willLend: false,
-      expectedDelivery: null
-    },
+    willLend: false,
     orderPossible: true
   };
 
   if (_.has(openHoldingStatusRes, 'data.willLend')) {
-    data.holdingStatus = openHoldingStatusRes.data;
+    Object.assign(data, openHoldingStatusRes.data);
   }
 
   if (getOrderPolicyRes.data.orderPossible === 'false') {

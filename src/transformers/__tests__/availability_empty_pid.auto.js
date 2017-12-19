@@ -18,7 +18,7 @@ const context = {
     openholdingstatus: 'https://openholdingstatus.addi.dk/2.2/',
     PRODopenorder: 'https://openorder.addi.dk/2.8/',
     openorder: 'https://openorder.addi.dk/test_2.8/',
-    opensearch: 'https://opensearch.addi.dk/b3.0_4.5/',
+    opensearch: 'https://opensearch.addi.dk/b3.5_4.5/',
     openuserstatus: 'https://openuserstatus.addi.dk/1.6.1/',
     rank: 'https://xptest.dbc.dk/ms/rank/v1',
     suggestpopular: 'http://xptest.dbc.dk/ms/entity-pop/v1',
@@ -58,7 +58,7 @@ const provider = Provider();
 describe('Automated test: availability_empty_pid.auto', () => {
   it('has same result as recorded (in availability_empty_pid.auto)', done => {
     assert(
-      Date.now() < +new Date('2018-03-18'),
+      Date.now() < +new Date('2018-03-19'),
       'Please recreate the automatically generated unit tests, such that the mock data does not come out of sync with the actual services. See README.md for details.'
     );
     context.mockData = mockData;
