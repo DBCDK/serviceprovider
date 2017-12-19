@@ -11,6 +11,7 @@ import userTransformer from '../transformers/user';
 import renewTransformer from '../transformers/renew';
 import orderTransformer from '../transformers/order';
 import workTransformer from '../transformers/work';
+import statusTransformer from '../transformers/status';
 import availabilityTransformer from '../transformers/availability';
 import {ddbcms, news, events, library} from '../transformers/ddbcms';
 import caller from './caller';
@@ -52,7 +53,8 @@ export default function Provider() {
     order: orderTransformer,
     work: workTransformer,
     test: testTransformer,
-    availability: availabilityTransformer
+    availability: availabilityTransformer,
+    status: statusTransformer
   };
 
   const crudTransformerMap = {
