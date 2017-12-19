@@ -26,7 +26,7 @@ api:
       The requests are passed directly to/from the DDBCMS-API.
     properties:
       agency:
-        description: Agency ID to fetch content for
+        description: Agency ID to fetch content for. Defaults to agency in log in, if not specified.
         type: string
         example: 761500
       nids:
@@ -148,7 +148,7 @@ api:
       The requests are passed directly to/from the DDBCMS-API.
     properties:
       agency:
-        description: Agency ID to fetch content for
+        description: Agency ID to fetch content for. Defaults to agency in log in, if not specified.
         type: string
         example: 761500
       nids:
