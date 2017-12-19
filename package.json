@@ -7,7 +7,6 @@
     "prettier": "prettier --no-bracket-spacing --single-quote --write src/*.js src/*/*.js src/*/*/*.js src/*/*/*/*.js",
     "complexity": "cr -c .complexrc ./src",
     "preinstall": "cp -n context-sample.json context.json || true",
-    "apitest": "cd qa/apitest; ./apitest.sh",
     "dev": "run-p start:minismaug start:sp",
     "lint": "eslint ./src",
     "lint:checkstyle": "eslint ./src  -o report.xml -f checkstyle",
@@ -15,17 +14,10 @@
     "start:minismaug": "PORT=3000 forever -w --watchDirectory src/smaug src/smaug/minismaug.js --killSignal=SIGTERM -f context.json",
     "start:sp": "SMAUG=http://localhost:3000 SWAGGER_HTTP=true TEST_DEV=true forever -w --watchDirectory src/ --killSignal=SIGTERM src/main.js",
     "swagger:validate": "curl localhost:8080/v3/swagger.json > swagger.json ; swagger validate swagger.json",
-    "test": "SMAUG=http://localhost:3000 LOG_LEVEL=info node --max-old-space-size=8192 node_modules/mocha/bin/mocha --timeout 5000 --compilers js:babel-register --recursive src/**/__tests__/* src/__tests__/* src/transformers/utils/**/__tests__/*",
+    "test": "SMAUG=http://localhost:3000 LOG_LEVEL=info npx mocha --timeout 5000 --compilers js:babel-register --recursive src/**/__tests__/* src/__tests__/* src/transformers/utils/**/__tests__/*",
     "watch-test": "SMAUG=http://localhost:3000 LOG_LEVEL=info npx mocha --watch --timeout 5000 --compilers js:babel-register --recursive src/**/__tests__/* src/__tests__/* src/transformers/utils/**/__tests__/*",
-    "test:single": "SMAUG=http://localhost:3000 LOG_LEVEL=off mocha --compilers js:babel-register",
-    "test:community": "mocha ./src/transformers/community/__tests__/community_tests.js",
     "coverage": "SMAUG=http://localhost:3000 LOG_LEVEL=off babel-istanbul cover _mocha --report json --report lcov --dir ./qa/coverage/units -- --recursive src/**/__tests__/* src/__tests__/*",
     "coveralls": "cat qa/coverage/units/lcov.info | ./node_modules/coveralls/bin/coveralls.js",
-    "cukes": "LOG_LEVEL=off SMAUG=http://localhost:3000 MOCK_FILE=qa/apitest/mockdata.json SWAGGER_HTTP=true TEST_DEV=true NODE_ENV=cucumber cucumber.js --compilers js:babel/register ./qa/features",
-    "cukes:cover": "LOG_LEVEL=off SMAUG=http://localhost:3000 MOCK_FILE=qa/apitest/mockdata.json SWAGGER_HTTP=true TEST_DEV=true NODE_ENV=cucumber-coverage babel-istanbul cover node_modules/.bin/cucumber.js --report json --dir ./coverage/cukes -- --compilers js:babel/register ./qa/features",
-    "cukes:junit": "LOG_LEVEL=off SMAUG=http://localhost:3000 MOCK_FILE=qa/apitest/mockdata.json SWAGGER_HTTP=true TEST_DEV=true NODE_ENV=cucumber-junit cucumber.js --format=json --compilers js:babel/register ./qa/features | cucumber-junit > feature_report.xml",
-    "collect:coverage": "istanbul-combine -d coverage -p summary -r lcov -r html qa/coverage/cukes/coverage-final.json coverage/units/coverage-final.json",
-    "before:commit": "npm run lint && npm run coverage && npm run cukes:cover && npm run collect:coverage && npm run sonar",
     "sonar": "sonar-runner -Dsonar.projectKey=sp:local -Dsonar.projectName=ServiceProviderLocal -Dsonar.projectVersion=1.0 -Dsonar.sources=./src"
   },
   "pre-commit": [
@@ -62,11 +54,9 @@
     "minimist": "^1.2.0",
     "moment": "^2.19.2",
     "object-mapper": "^3.0.1",
-    "path": "^0.12.7",
     "request": "^2.81.0",
     "socketcluster": "^8.0.2",
-    "swagger": "^0.7.5",
-    "walk": "^2.3.9"
+    "swagger": "^0.7.5"
   },
   "devDependencies": {
     "babel-core": "^6.10.4",
