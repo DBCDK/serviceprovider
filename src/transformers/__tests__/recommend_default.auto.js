@@ -217,7 +217,7 @@ const mockData = {
         }
       ]
     ],
-    msecs: 43
+    msecs: 34
   }
 };
 
@@ -225,8 +225,8 @@ import Provider from '../../provider/Provider.js';
 import {assert, fail} from 'chai';
 const provider = Provider();
 
-describe('Automated test: recommend_default_explicit.auto', () => {
-  it('has same result as recorded (in recommend_default_explicit.auto)', done => {
+describe('Automated test: recommend_default.auto', () => {
+  it('has same result as recorded (in recommend_default.auto)', done => {
     assert(
       Date.now() < +new Date('2018-03-18'),
       'Please recreate the automatically generated unit tests, such that the mock data does not come out of sync with the actual services. See README.md for details.'

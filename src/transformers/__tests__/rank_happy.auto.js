@@ -1,8 +1,35 @@
-/* eslint-disable max-len, quotes, comma-spacing, key-spacing, quote-props, indent */
-// Request: rank {"pids":["870970-basis:28511663","870970-basis:28902239"],"like":["870970-basis:45488713","870970-basis:28643713"]}
+// AUTOTEST GENERATOR: {"endpoint":"rank","params":{"pids":["870970-basis:28511663","870970-basis:28902239"],"like":["870970-basis:45488713","870970-basis:28643713"]}}
+//
+//
+// AUTOMATED UNIT TEST
+// DO NOT EDIT
+//
+//
+const endpoint = 'rank';
+const params = {
+  pids: ['870970-basis:28511663', '870970-basis:28902239'],
+  like: ['870970-basis:45488713', '870970-basis:28643713']
+};
 
-import Provider from '../../provider/Provider.js';
-import {assert, fail} from 'chai';
+const expected = {
+  statusCode: 200,
+  data: [
+    {
+      title: ['Journal 64 : krimithriller'],
+      creator: ['Jussi Adler-Olsen'],
+      val: [62.798478002209706],
+      ctkey: ['Journal_64_:_krimithriller::Jussi_Adler-Olsen'],
+      pid: ['870970-basis:28511663']
+    },
+    {
+      title: ['Det syvende barn'],
+      creator: ['Erik Valeur'],
+      val: [42.07434137795138],
+      ctkey: ['Det_syvende_barn::Erik_Valeur'],
+      pid: ['870970-basis:28902239']
+    }
+  ]
+};
 
 const context = {
   services: {
@@ -25,19 +52,9 @@ const context = {
     },
     communityservice: 'http://localhost:4010/v1'
   },
-  communityservice: {
-    id: 1
-  },
-  search: {
-    agency: '775100',
-    profile: 'opac',
-    collectionidentifiers: ''
-  },
-  netpunkt: {
-    user: 'XXXXX',
-    group: 'XXXXX',
-    password: 'XXXXX'
-  },
+  communityservice: {id: 1},
+  search: {agency: '775100', profile: 'opac', collectionidentifiers: ''},
+  netpunkt: {user: 'XXXXX', group: 'XXXXX', password: 'XXXXX'},
   user: {
     id: 'XXXXX',
     salt: 'XXXXX',
@@ -47,13 +64,12 @@ const context = {
     isil: 'DK-710100'
   },
   app: {
-    clientid: 'XXXXX',
+    clientId: 'XXXXX',
     ddbcmsapipassword: 'XXXXX',
     orderpolicyrequester: '190101',
     orderSystem: 'bibliotekdk'
   }
 };
-const provider = Provider();
 const mockData = {
   '["https://xptest.dbc.dk/ms/rank/v1",{"uri":"https://xptest.dbc.dk/ms/rank/v1","method":"POST","json":{"like":["870970-basis:45488713","870970-basis:28643713"],"set":["870970-basis:28511663","870970-basis:28902239"]}}]': {
     result: [
@@ -62,7 +78,7 @@ const mockData = {
         {
           title: ['Journal 64 : krimithriller'],
           creator: ['Jussi Adler-Olsen'],
-          val: 62.798478002209706,
+          val: [62.798478002209706],
           ctkey: ['Journal_64_:_krimithriller::Jussi_Adler-Olsen'],
           pid: ['870970-basis:28511663']
         }
@@ -72,7 +88,7 @@ const mockData = {
         {
           title: ['Det syvende barn'],
           creator: ['Erik Valeur'],
-          val: 42.07434137795138,
+          val: [42.07434137795138],
           ctkey: ['Det_syvende_barn::Erik_Valeur'],
           pid: ['870970-basis:28902239']
         }
@@ -82,63 +98,25 @@ const mockData = {
   }
 };
 
-describe('Automated test: rank-happy', () => {
-  it('expected response. ID:fika6k, for {"pids":["870970-basis:28511663","870970-basis:28902239"],"like":["870970-basis:45488713","870970-basis:28643713"]}', done => {
+import Provider from '../../provider/Provider.js';
+import {assert, fail} from 'chai';
+const provider = Provider();
+
+describe('Automated test: rank_happy.auto', () => {
+  it('has same result as recorded (in rank_happy.auto)', done => {
+    assert(
+      Date.now() < +new Date('2018-03-18'),
+      'Please recreate the automatically generated unit tests, such that the mock data does not come out of sync with the actual services. See README.md for details.'
+    );
     context.mockData = mockData;
     provider
-      .execute(
-        'rank',
-        {
-          pids: ['870970-basis:28511663', '870970-basis:28902239'],
-          like: ['870970-basis:45488713', '870970-basis:28643713']
-        },
-        context
-      )
+      .execute(endpoint, params, context)
       .then(result => {
-        assert.deepEqual(result, {
-          statusCode: 200,
-          data: [
-            {
-              title: ['Journal 64 : krimithriller'],
-              creator: ['Jussi Adler-Olsen'],
-              val: [62.798478002209706],
-              ctkey: ['Journal_64_:_krimithriller::Jussi_Adler-Olsen'],
-              pid: ['870970-basis:28511663']
-            },
-            {
-              title: ['Det syvende barn'],
-              creator: ['Erik Valeur'],
-              val: [42.07434137795138],
-              ctkey: ['Det_syvende_barn::Erik_Valeur'],
-              pid: ['870970-basis:28902239']
-            }
-          ]
-        });
+        assert.deepEqual(result, expected);
         done();
       })
       .catch(result => {
-        fail(
-          {throw: result},
-          {
-            statusCode: 200,
-            data: [
-              {
-                title: ['Journal 64 : krimithriller'],
-                creator: ['Jussi Adler-Olsen'],
-                val: [62.798478002209706],
-                ctkey: ['Journal_64_:_krimithriller::Jussi_Adler-Olsen'],
-                pid: ['870970-basis:28511663']
-              },
-              {
-                title: ['Det syvende barn'],
-                creator: ['Erik Valeur'],
-                val: [42.07434137795138],
-                ctkey: ['Det_syvende_barn::Erik_Valeur'],
-                pid: ['870970-basis:28902239']
-              }
-            ]
-          }
-        );
+        fail({throw: result}, expected);
         done();
       });
   });
