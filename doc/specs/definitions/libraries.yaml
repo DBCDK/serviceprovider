@@ -15,18 +15,22 @@ definitions:
       branchId: 
         type: string
       branchType: 
+        description: "Type of branch, one of: H(Hovedbibliotek), f(filial), b(bogbus), P(privatbibliotek/skolebibliotek/udenlandsk bibliotek), D(DanBib-licens bibliotek), x(anden type)"
         type: string
       branchName: 
+        description: Branch name, first is in danish, second is in english.
         type: array
         items: 
           type: string
       branchShortName: 
+        description: Short branch name, first is in danish, second is in english.
         type: array
         items: 
           type: string
       branchPhone: {}
       branchEmail: {}
       branchIsAgency: 
+        description: 'Whether the branch also an agency, "0" means false, "1" means true.'
         type: string
       postalAddress: 
         type: string
@@ -35,24 +39,31 @@ definitions:
       city: 
         type: string
       openingHours: 
+        description: Opening hours, first is in danish, second is in english.
         type: array
         items: 
           type: string
       temporarilyClosed: 
+        description: 'Whether the branch is temporarily closed, "0" means false, "1" means true.'
         type: string
       illOrderReceiptText: 
+        description: Order receipt text, first is in danish, second is in english.
         type: array
         items: 
           type: string
       pickupAllowed: 
+        description: 'Indicator whether materials can be picked up at the given branch/agency. "0" means false, "1" means true.'
         type: string
       lastUpdated: 
         type: string
       isOclcRsLibrary: 
+        description: '"0" means false, "1" means true.'
         type: string
       stateAndUniversityLibraryCopyService: 
+        description: '"0" means false, "1" means true.'
         type: string
       orderParameters: 
+        description: List of parameters that should be passed to order, when ordering to this branch.
         type: array
         items: 
           type: string
