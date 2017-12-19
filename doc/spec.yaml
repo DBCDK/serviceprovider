@@ -481,6 +481,19 @@ api:
     examples:
       - request: { "pids": ["870970-basis:51989252",], "fields": ["title", "collection", "subjectDBCF", "hasAdaptation", "coverUrlFull"]}
         response: [{"title": ["Harry Potter og de vises sten"], "collection": ["300185-katalog:100562332", "870970-basis:51989252", "870971-forfweb:86203219", "870970-basis:24284514", "870970-basis:24284565", "..."], "subjectDBCF": ["fantasy", "magi", "troldmænd"], "hasAdaption": ["870970-basis:27123279", "870970-basis:27963390"], "coverUrlFull": ["https://moreinfo.addi.dk/2.1/more_info_get.php?id=36565894&type=forside_500&key=55d553c259c9e46291a4"]}]
+  status:
+    tags:
+      - Status
+    description: |
+      Status endpoint printing current version.
+
+      Currently in progress, - will be expanded later on,
+      to include info about underlying services, more doc/specification etc.
+
+      See issue #874
+    properties:
+    response:
+      example: {"version": "3.0.0"}
 
 defaultProperties:
   fields:
