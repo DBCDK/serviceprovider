@@ -1,5 +1,0 @@
-rank {"pids":["870970-basis:28511663", "870970-basis:28902239"], "like":["870970-basis:45488713", "870970-basis:28643713"], "createTest":"rank-happy"}
-recommend {"like":["870970-basis:45488713","870970-basis:28643713","870970-basis:29494940","870970-basis:29386404","870970-basis:28429576"],"recommender":"default","limit":10,"createTest":"recommend-default-explicit"}
-recommend {"like":["870970-basis:45488713","870970-basis:28643713","870970-basis:29494940","870970-basis:29386404","870970-basis:28429576"],"recommender":"default","limit":10,"createTest":"recommend-default"}
-recommend {"recommender":"WAT!?", "createTest":"recommend-error-wrong-recommender"}
-recommend {"recommender":"popular","limit":3, "createTest":"recommend-popular"}
