@@ -16,8 +16,8 @@
     "swagger:validate": "curl localhost:8080/v3/swagger.json > swagger.json ; swagger validate swagger.json",
     "test": "SMAUG=http://localhost:3000 LOG_LEVEL=info npx mocha --timeout 5000 --compilers js:babel-register --recursive src/**/__tests__/* src/__tests__/* src/transformers/utils/**/__tests__/*",
     "watch-test": "SMAUG=http://localhost:3000 LOG_LEVEL=info npx mocha --watch --timeout 5000 --compilers js:babel-register --recursive src/**/__tests__/* src/__tests__/* src/transformers/utils/**/__tests__/*",
-    "coverage": "SMAUG=http://localhost:3000 LOG_LEVEL=off babel-istanbul cover _mocha --report json --report lcov --dir ./qa/coverage/units -- --recursive src/**/__tests__/* src/__tests__/*",
-    "coveralls": "cat qa/coverage/units/lcov.info | ./node_modules/coveralls/bin/coveralls.js",
+    "coverage": "SMAUG=http://localhost:3000 LOG_LEVEL=off babel-istanbul cover _mocha --report json --report lcov --dir ./coverage/units -- --recursive src/**/__tests__/* src/__tests__/* src/transformers/utils/**/__tests__/*",
+    "coveralls": "cat coverage/units/lcov.info | ./node_modules/coveralls/bin/coveralls.js",
     "sonar": "sonar-runner -Dsonar.projectKey=sp:local -Dsonar.projectName=ServiceProviderLocal -Dsonar.projectVersion=1.0 -Dsonar.sources=./src"
   },
   "pre-commit": [
