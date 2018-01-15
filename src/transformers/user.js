@@ -163,6 +163,7 @@ export default (request, context) => {
     if (context.get('services.ddbcmsapi')) {
       data.ddbcmsapi = context.get('services.ddbcmsapi');
     }
+    data.agency = userAgencyId;
 
     return Promise.resolve({
       statusCode: 200,

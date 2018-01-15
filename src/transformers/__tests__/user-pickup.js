@@ -40,6 +40,7 @@ let expected = {
   "data": {
     "id": "foervg55pADXBKzi3h8jYjnYqYNfI9a3",
     "name": "X-name",
+    "agency": "710100",
     "loans": [{
       "loanId": "5084184839",
       "dueDate": "2016-06-10T00:00:00+02:00",

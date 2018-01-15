@@ -42,6 +42,7 @@ let expected = {
     "name": "X-name",
     "address": "X-address",
     "postalCode": "X-postalcode",
+    "agency": "100451",
     "mail": "X-mail",
     "loans": [{
       "loanId": "NCIPMDAxOXw5OTAwfHw5OTAwLnx8",
