@@ -4,7 +4,7 @@ definitions:
     properties:
       id:
         type: string
-      library:
+      agency:
         type: string
       debt:
         $ref: "#/definitions/Debt"

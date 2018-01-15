@@ -48,6 +48,7 @@ let expected = {
   statusCode: 200,
   data: {
     id: 'foervg55pADXBKzi3h8jYjnYqYNfI9a3',
+    agency: '710100',
     name: 'X-name',
     loans: [
       {
