@@ -72,6 +72,7 @@ describe('Automated test: user-get-user-info', () => {
             id: 'foervg55pADXBKzi3h8jYjnYqYNfI9a3',
             name: 'Joe User',
             address: 'Randomstreet 21, 3. tv.',
+            agency: '710100',
             postalCode: '2400',
             mail: 'email@example.com',
             loans: [

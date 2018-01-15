@@ -418,7 +418,7 @@ api:
       $ref: "#/definitions/UserResponse"
       example:
         id: "U2VydmljZVByb3ZpZGVy"
-        library: "710100"
+        agency: "710100"
         loans:
           - loanId: "4940377131"
             title: håndbog over håndbøger
