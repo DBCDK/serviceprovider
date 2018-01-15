@@ -14,13 +14,10 @@
     "start:minismaug": "PORT=3000 forever -w --watchDirectory src/smaug src/smaug/minismaug.js --killSignal=SIGTERM -f context.json",
     "start:sp": "SMAUG=http://localhost:3000 SWAGGER_HTTP=true TEST_DEV=true forever -w --watchDirectory src/ --killSignal=SIGTERM src/main.js",
     "swagger:validate": "curl localhost:8080/v3/swagger.json > swagger.json ; swagger validate swagger.json",
-    "test": "SMAUG=http://localhost:3000 LOG_LEVEL=info node --max-old-space-size=8192 node_modules/mocha/bin/mocha --timeout 5000 --compilers js:babel-register --recursive src/**/__tests__/* src/__tests__/* src/transformers/utils/**/__tests__/*",
+    "test": "SMAUG=http://localhost:3000 LOG_LEVEL=info npx mocha --timeout 5000 --compilers js:babel-register --recursive src/**/__tests__/* src/__tests__/* src/transformers/utils/**/__tests__/*",
     "watch-test": "SMAUG=http://localhost:3000 LOG_LEVEL=info npx mocha --watch --timeout 5000 --compilers js:babel-register --recursive src/**/__tests__/* src/__tests__/* src/transformers/utils/**/__tests__/*",
-    "test:single": "SMAUG=http://localhost:3000 LOG_LEVEL=off mocha --compilers js:babel-register",
-    "test:community": "mocha ./src/transformers/community/__tests__/community_tests.js",
-    "coverage": "SMAUG=http://localhost:3000 LOG_LEVEL=off babel-istanbul cover _mocha --report json --report lcov --dir ./coverage/units -- --recursive src/**/__tests__/* src/__tests__/*",
+    "coverage": "SMAUG=http://localhost:3000 LOG_LEVEL=off babel-istanbul cover _mocha --report json --report lcov --dir ./coverage/units -- --recursive src/**/__tests__/* src/__tests__/* src/transformers/utils/**/__tests__/*",
     "coveralls": "cat coverage/units/lcov.info | ./node_modules/coveralls/bin/coveralls.js",
-    "before:commit": "npm run lint && npm run coverage && npm run cukes:cover && npm run collect:coverage && npm run sonar",
     "sonar": "sonar-runner -Dsonar.projectKey=sp:local -Dsonar.projectName=ServiceProviderLocal -Dsonar.projectVersion=1.0 -Dsonar.sources=./src"
   },
   "pre-commit": [
@@ -57,11 +54,9 @@
     "minimist": "^1.2.0",
     "moment": "^2.19.2",
     "object-mapper": "^3.0.1",
-    "path": "^0.12.7",
     "request": "^2.81.0",
     "socketcluster": "^8.0.2",
-    "swagger": "^0.7.5",
-    "walk": "^2.3.9"
+    "swagger": "^0.7.5"
   },
   "devDependencies": {
     "babel-core": "^6.10.4",
