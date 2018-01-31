@@ -30,8 +30,6 @@ const IMAGE_SIZES = {
   detail: 'coverUrlFull'
 };
 
-let requestPids = [];
-
 /**
  * Tests whether the identifierInformation contains any cover-images.
  * Returns true if any cover-images are contained. False otherwise.
@@ -134,7 +132,7 @@ function createErrorResponse() {
   return {statusCode: 500, error: 'Internal Server Error'};
 }
 
-function createResponse(response) {
+function createResponse(response, requestPids) {
   if (!response.identifierInformation) {
     log.error('no identifierInformation');
     return createErrorResponse();
@@ -154,7 +152,6 @@ function createResponse(response) {
 }
 
 export default (request, context) => {
-  requestPids = request.pids;
   const params = {
     action: 'moreInfo',
     authenticationUser: context.get('netpunkt.user', true),
@@ -173,7 +170,7 @@ export default (request, context) => {
       if (containsError(body)) {
         return createErrorResponse();
       }
-      return createResponse(body.data.moreInfoResponse);
+      return createResponse(body.data.moreInfoResponse, request.pids);
     },
     error => {
       const errMsg =
