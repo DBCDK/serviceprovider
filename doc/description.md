@@ -32,7 +32,7 @@ et specifikt biblioteksvæsens beholdning:
 ####Autentificeret
 Endpoints som kræver en indlogget bruger skal kaldes med et autentificeret token. Dette gælder /order og /status. 
 
-  `curl --user "$CLIENT_ID":"$CLIENT_SECRET" -X POST https://auth.dbc.dk/oauth/token -d 'grant_type=password&username=$USER_ID@LIBRARY_ID&password=$PINCODE'`
+  `curl --user "$CLIENT_ID":"$CLIENT_SECRET" -X POST https://auth.dbc.dk/oauth/token -d 'grant_type=password&username=$USER_ID@$LIBRARY_ID&password=$PINCODE'`
 
 ### Supplerende dokumentation
 Kildekode, issue tracking, osv. findes på github: https://github.com/dbcdk/serviceprovider/,
