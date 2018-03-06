@@ -118,7 +118,6 @@ function runExamples() {
         'search', {q: 'flunkerne AND facet.type=billedbog', fields: ['pid'], limit: 2},
         'libraries', {agencyIds: [agency.value], fields: ['branchId']},
         'libraries', {branchIds: [agency.value], fields: ['branchName', 'geolocation', 'orderParameters']},
-        'rank', {'pids':['870970-basis:28511663','870970-basis:28902239'],'like':['870970-basis:45488713','870970-basis:28643713']},
         'suggest', {q: 'him', type: 'title', fields: ['term', 'creator', 'pid']},
         'suggest', {q: 'she', type: 'creator'},
         'work', {pids: ['775100-katalog:28934297'], fields: ['title', 'collectionDetails', 'coverUrlFull']},
