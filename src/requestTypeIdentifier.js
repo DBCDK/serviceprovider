@@ -123,7 +123,11 @@ export function TypeID() {
   this.getType = function(field) {
     const val = workContext[field];
     if (typeof val === 'undefined' || typeof val === 'string') {
-      die("key '" + field + "' is unknown");
+      if (field === '') {
+        die('fields parameters should not include the empty string');
+      } else {
+        die("unknown parameter: '" + field + "' in fields");
+      }
     }
 
     const namespace = val['@id'].split(':')[0];
