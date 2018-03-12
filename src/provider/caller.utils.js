@@ -49,7 +49,7 @@ const whitelist = {
     suggestcreator: true,
     suggestlibrary: true,
     suggestsubject: true,
-    recommendurls: true,
+    recommend: true,
     communityservice: true
   },
   communityservice: {

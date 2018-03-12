@@ -17,7 +17,6 @@ import {ddbcms, news, events, library} from '../transformers/ddbcms';
 import caller from './caller';
 import {testTransformer} from '../transformers/testTransformer.js';
 import recommendTransformer from '../transformers/recommend';
-import rankTransformer from '../transformers/rank';
 
 import createEntity from '../transformers/createEntity';
 import updateEntity from '../transformers/updateEntity';
@@ -47,7 +46,6 @@ export default function Provider() {
     libraries: librariesTransformer,
     facets: facetTransformer,
     recommend: recommendTransformer,
-    rank: rankTransformer,
     suggest: suggestTransformer,
     user: userTransformer,
     order: orderTransformer,

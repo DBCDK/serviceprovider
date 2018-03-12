@@ -221,79 +221,68 @@ api:
     examples:
       - request: { "orderId": "1234", "orderType": "normal", "delete": true }
         response: { "orderId": "1234", "deleted": true }
-  rank:
-    tags:
-      - Recommend
-    description: Similar to recommend, but sorts a list of ids in order of relevance, given a recommender with likes, dislikes and so on. **Notice:** the response meta data is the internal recommender data, and is simplified/outdated. Use the search/work endpoint to get actual meta data.
-    required:
-      - pids
-    properties:
-      pids:
-        description: list of materials that should be ranked
-        type: array
-        items: {type: "string"}
-        example: ["870970-basis:12345678", "..."]
-      recommender:
-        description: the type of recommender, such as default or popular
-        type: string
-        example: default
-      like:
-        description: list of liked materials
-        type: array
-        items: {type: "string"}
-        example: ["870970-basis:12345678", "..."]
-      dislike:
-        description: list of disliked materials
-        type: array
-        items: {type: "string"}
-        example: ["870970-basis:12345678", "..."]
-      known:
-        description: list of materials that is related to the user
-        type: array
-        items: {type: "string"}
-        example: ["870970-basis:12345678", "..."]
-      limit:
-        example: 10
-        description: Maximum number of recommendations returned. This is also limited by the recommender, so currently no more than 99 results are returned.
-        type: integer
-        minimum: 1
-    response:
-      $ref: "#/definitions/RecommendationResponse"
-      example: [ { "title": ["Harry Potter og Fønixordenen"], "creator": ["..."], "val": 123, "pid": ["300185-katalog:100562332"]}, "..."]
   recommend:
+    required:
+      - like
     tags:
       - Recommend
     description: Get recommendations based on a list of likes etc. **Notice:** the response meta data is the internal recommender data, and is simplified/outdated. Use the search/work endpoint to get actual meta data.
     properties:
-      recommender:
-        description: the type of recommender, such as default or popular
-        type: string
-        example: default
       like:
         description: list of liked materials
         type: array
         items: {type: "string"}
         example: ["870970-basis:12345678", "..."]
-      dislike:
-        description: list of disliked materials
-        type: array
-        items: {type: "string"}
-        example: ["870970-basis:12345678", "..."]
-      known:
-        description: list of materials that is related to the user
-        type: array
-        items: {type: "string"}
-        example: ["870970-basis:12345678", "..."]
-      discard:
-        description: list of materials that should not be returned from the recommender
+# not used at the moment, so no reason to publish yet:
+#      dislike:
+#        description: List of pids to base recommendation on (not used at the moment)
+#        type: array
+#        items: {type: "string"}
+#        example: ["870970-basis:12345678", "..."]
+      ignore:
+        description: List of pids to ignore (pids from the work they belong to will not be returned in recommendation list)
         type: array
         items: {type: "string"}
         example: ["870970-basis:12345678", "..."]
       limit:
         example: 10
         minimum: 1
-        description: maximum number of results returned
+        description: Paging. Number of items to return
         type: integer
+      offset:
+        example: 10
+        minimum: 0
+        description: Paging. first item to return (defaults to 0)
+        type: integer
+      filters:
+        description: object containing filters to apply to recommendations
+        type: object
+        properties:
+          authorFlood:
+            description: The maximum number of recommendations from a single author in the result
+            type: integer
+          subject:
+            description: List of subjects. Only materials with one of these subjects are returned type array
+            items: {type: "string"}
+          type:
+            description: List of material types. Only materials with one of these subjects are returned type array
+            items: {type: "string"}
+          language:
+            description: List of languages. Only materials with one of these subjects are returned type array
+            items: {type: "string"}
+          newerThan:
+            description: Year. Only materials that are newer than this year are returned
+            type: integer
+          olderThan:
+            description: Year. Only materials that are older than this year are returned
+            type: integer
+      boosters:
+        description: object containing boosters to apply to recommendations
+        type: object
+        properties:
+          authorFlood:
+            description: Boost on number of loans for each recommendations
+            type: integer
     response:
       $ref: "#/definitions/RecommendationResponse"
       example: [ { "title": ["Harry Potter og Fønixordenen"], "creator": ["..."], "weight": 123, "pid": ["300185-katalog:100562332"]}, "..."]

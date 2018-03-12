@@ -14,10 +14,7 @@
       "suggestcreator": "http://xptest.dbc.dk/ms/entity-suggest/v1/creator",
       "suggestlibrary": "http://xptest.dbc.dk/ms/entity-suggest/v1/library",
       "suggestsubject": "http://xptest.dbc.dk/ms/entity-suggest/v1/subject",
-      "recommendurls":{
-        "default": "https://xptest.dbc.dk/ms/recommend-cosim/v1",
-        "popular": "https://xptest.dbc.dk/ms/recommend-pop/v1"
-      },
+      "recommend": "http://staging.recomole.mcp1-proxy.dbc.dk/recomole/loan-cosim",
       "communityservice": "http://localhost:4010/v1"
     },
     "communityservice": {
