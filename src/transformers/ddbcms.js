@@ -8,6 +8,9 @@ export function ddbcms(params, context) {
       '), ' +
       'and that the ServiceProvider has been configured with the proper url and token.';
   }
+  if (params.agency.toUpperCase().startsWith('DK-')) {
+    params.agency = params.agency.slice(3);
+  }
   return context.query(
     context.get('services.ddbcmsapi') + 'content/fetch',
     params
