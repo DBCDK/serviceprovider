@@ -1,0 +1,51 @@
+definitions:
+  Status:
+    type: object
+    properties:
+      version:
+        description: version of open platform
+        type: string
+      endOfServiceDate:
+        description: when this version of openplatform will be deprecated
+        type: string
+      openagency:
+        description: status for openagency
+        $ref: "#/definitions/EndpointStatus"
+      openholdingstatus:
+        description: status for openholdingstatus
+        $ref: "#/definitions/EndpointStatus"
+      openorder:
+        description: status for openorder
+        $ref: "#/definitions/EndpointStatus"
+      opensearch:
+        description: status for opensearch
+        $ref: "#/definitions/EndpointStatus"
+      openuserstatus:
+        description: status for openuserstatus
+        $ref: "#/definitions/EndpointStatus"
+      moreinfo:
+        description: status for moreinfo
+        $ref: "#/definitions/EndpointStatus"
+      ddbcmsapi:
+        description: status for cmscontent
+        $ref: "#/definitions/EndpointStatus"
+      recommend:
+        description: status for recommender
+        $ref: "#/definitions/EndpointStatus"
+      suggest:
+        description: status for suggest
+        $ref: "#/definitions/EndpointStatus"
+  EndpointStatus:
+    type: object
+    properties:
+      url:
+        description: url/version for the underlying service
+        type: string
+      ok:
+        description: whether the underlying service is ok
+        type: boolean
+      error:
+        description: details about issues, if underlying service is not ok
+        type: string
+
+

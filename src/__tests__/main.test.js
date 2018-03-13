@@ -75,7 +75,7 @@ describe('main', () => {
     });
     it('handles requests', async () => {
       await new Promise((resolve, reject) => {
-        client.emit('status', {}, (err, result) => {
+        client.emit('status', {fields: ['version']}, (err, result) => {
           assert(err === null);
           assert.equal(result.statusCode, 200);
           assert.equal(result.data.version, version);
@@ -99,7 +99,9 @@ describe('main', () => {
 
   describe('GET transport', () => {
     it('handles requests', async () => {
-      const response = await prequest(apiUrl + 'status?access_token=qwerty');
+      const response = await prequest(
+        apiUrl + 'status?access_token=qwerty&fields=["version"]'
+      );
       const result = JSON.parse(response.body);
       assert.equal(result.statusCode, 200);
       assert.equal(result.data.version, version);
@@ -122,7 +124,7 @@ describe('main', () => {
       const response = await prequest({
         url: apiUrl + 'status',
         method: 'POST',
-        json: {access_token: 'qwerty'}
+        json: {access_token: 'qwerty', fields: ['version']}
       });
       const result = response.body;
       assert.equal(result.statusCode, 200);
