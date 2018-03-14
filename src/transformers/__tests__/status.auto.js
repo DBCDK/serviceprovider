@@ -60,9 +60,9 @@ const context = {
     id: 'XXXXX',
     salt: 'XXXXX',
     pin: 'XXXXX',
-    libraryId: '710100',
-    agency: '710100',
-    isil: 'DK-710100'
+    libraryId: '726501',
+    agency: '726500',
+    isil: 'DK-726500'
   },
   app: {
     clientId: 'XXXXX',
@@ -74,7 +74,7 @@ const context = {
 const mockData = {
   '["http://openagency.addi.dk/2.24/?HowRU",{}]': 'Gr8',
   '["http://staging.recomole.mcp1-proxy.dbc.dk/recomole/status",{}]':
-    '{"mem-usage": 103968, "statistics": [{"uptime": "166:15:17", "total-success": 11, "total-failure": 12, "window": {"failure": {"min": 0.526, "std": 10.333, "count": 12, "25%": 0.832, "50%": 1.251, "75%": 3.167, "max": 31.744, "mean": 5.86}, "success": {"min": 133.288, "std": 103.256, "count": 11, "25%": 174.248, "50%": 190.413, "75%": 313.687, "max": 422.297, "mean": 240.925}}, "active": 0, "name": "loan-cosim-recommender", "windowstart": "11:16:07", "startup": "2018-03-06 16:53:06"}], "build": "not available", "version": "devel", "ab-id": 1, "ok": true, "git": "not available"}',
+    '{"mem-usage": 104044, "statistics": [{"uptime": "187:28:49", "total-success": 21, "total-failure": 17, "window": {"failure": {"min": 0.526, "std": 12.211, "count": 17, "25%": 1.07, "50%": 2.681, "75%": 23.268, "max": 31.744, "mean": 11.242}, "success": {"min": 133.213, "std": 109.961, "count": 21, "25%": 153.216, "50%": 178.39, "75%": 215.044, "max": 535.136, "mean": 222.763}}, "active": 0, "name": "loan-cosim-recommender", "windowstart": "11:16:07", "startup": "2018-03-06 16:53:06"}], "build": "not available", "version": "devel", "ab-id": 1, "ok": true, "git": "not available"}',
   '["https://moreinfo.addi.dk/2.10/?HowRU",{}]': 'Gr8',
   '["https://openholdingstatus.addi.dk/2.2/?HowRU",{}]':
     'ERROR checking for holdings DK-100450 on Kaninbjerget',
@@ -88,21 +88,14 @@ import {assert, fail} from 'chai';
 const provider = Provider();
 
 describe('Automated test: status.auto', () => {
-  it('has same result as recorded (in status.auto)', done => {
+  it('has same result as recorded (in status.auto)', () => {
     assert(
-      Date.now() < +new Date('2018-06-11'),
+      Date.now() < +new Date('2018-06-12'),
       'Please recreate the automatically generated unit tests, such that the mock data does not come out of sync with the actual services. See README.md for details.'
     );
     context.mockData = mockData;
-    provider
-      .execute(endpoint, params, context)
-      .then(result => {
-        assert.deepEqual(result, expected);
-        done();
-      })
-      .catch(result => {
-        fail({throw: result}, expected);
-        done();
-      });
+    return provider.execute(endpoint, params, context).then(result => {
+      assert.deepEqual(result, expected);
+    });
   });
 });

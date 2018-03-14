@@ -34,7 +34,68 @@ function getSoap(
 `;
 }
 
-export default (params, context) => {
+function processResponse(body) {
+  body = JSON.parse(body).searchResponse;
+  if (body.error) {
+    return {
+      statusCode: 500,
+      error: body.error.$
+    };
+  }
+  body = body.result;
+
+  // let more = body.more.$; // this could be used for paging info later
+  let searchResult = body.searchResult || [];
+  let result = [];
+  const parseErrors = [];
+  searchResult.forEach(o => {
+    // eslint-disable-line no-loop-func
+    let collection = o.collection.object.map(obj => obj.identifier.$);
+    let dkabm = o.collection.object[0].record;
+    dkabm = workToJSON(dkabm);
+
+    let briefDisplays = [];
+    if (o.formattedCollection.briefDisplay) {
+      briefDisplays = o.formattedCollection.briefDisplay.manifestation.map(
+        briefDisplay => {
+          delete briefDisplay.fedoraPid;
+          return workToJSON(briefDisplay, 'bd');
+        }
+      );
+    } else {
+      parseErrors.push(
+        `Parse error: briefDisplay could not be found on object ${collection}`
+      );
+      log.error('Parse error: briefDisplay could not be found on object', {
+        collection: collection[0],
+        context: context.data,
+        OpenSearch: {trackingId: body.statInfo.trackingId.$}
+      });
+    }
+
+    // here we would call getObject or moreInfo if needed...
+    result.push(
+      Object.assign(
+        {
+          collection: collection,
+          collectionDetails: briefDisplays
+        },
+        dkabm,
+        briefDisplays[0]
+      )
+    );
+  });
+
+  const response = {statusCode: 200, data: result};
+
+  if (parseErrors.length) {
+    response.error = parseErrors;
+  }
+
+  return response;
+}
+
+export default async (params, context) => {
   if (!params.q) {
     return Promise.resolve({statusCode: 400, error: 'missing q parameter'});
   }
@@ -53,7 +114,7 @@ export default (params, context) => {
   // We make two simultaneous calls to opensearch improve support for multiVolume works
   // The first call only gets the work we searched for, that way we can set the correct PID, title and coverUrl
   // The second call gets all related objects, so you can identify multiVolume works.
-  return Promise.all([
+  const bodies = await Promise.all([
     context.call(
       'opensearch',
       getSoap(agency, profile, q, filterAgency, sort, offset, limit, 0)
@@ -62,96 +123,34 @@ export default (params, context) => {
       'opensearch',
       getSoap(agency, profile, q, filterAgency, sort, offset, limit, 1)
     )
-  ]).then(bodies => {
-    const responses = bodies.map(body => {
-      body = JSON.parse(body).searchResponse;
-      if (body.error) {
-        return {
-          statusCode: 500,
-          error: body.error.$
-        };
-      }
-      body = body.result;
+  ]);
 
-      // let more = body.more.$; // this could be used for paging info later
-      let searchResult = body.searchResult || [];
-      let result = [];
-      const parseErrors = [];
-      searchResult.forEach(o => {
-        // eslint-disable-line no-loop-func
-        let collection = o.collection.object.map(obj => obj.identifier.$);
-        let dkabm = o.collection.object[0].record;
-        dkabm = workToJSON(dkabm);
+  const responses = bodies.map(processResponse);
 
-        let briefDisplays = [];
-        if (o.formattedCollection.briefDisplay) {
-          briefDisplays = o.formattedCollection.briefDisplay.manifestation.map(
-            briefDisplay => {
-              delete briefDisplay.fedoraPid;
-              return workToJSON(briefDisplay, 'bd');
-            }
-          );
-        } else {
-          parseErrors.push(
-            `Parse error: briefDisplay could not be found on object ${
-              collection
-            }`
-          );
-          log.error('Parse error: briefDisplay could not be found on object', {
-            collection: collection[0],
-            context: context.data,
-            OpenSearch: {trackingId: body.statInfo.trackingId.$}
-          });
-        }
-
-        // here we would call getObject or moreInfo if needed...
-        result.push(
-          Object.assign(
-            {
-              collection: collection,
-              collectionDetails: briefDisplays
-            },
-            dkabm,
-            briefDisplays[0]
-          )
-        );
-      });
-
-      const response = {statusCode: 200, data: result};
-
-      if (parseErrors.length) {
-        response.error = parseErrors;
-      }
-
-      return response;
-    });
-
-    // Check if either object has failed.
-    if (responses[0].statusCode !== 200) {
-      return responses[0];
-    }
-
-    if (responses[1].statusCode !== 200) {
-      return responses[1];
-    }
-
-    // Merge the responses of the two arrays.
-    if (responses[0].data && responses[1].data) {
-      responses[0].data = responses[0].data.map((responseDetails, idx) => {
-        const collectionDetails = responses[1].data[idx];
-
-        if (collectionDetails.collection) {
-          responseDetails.collection = collectionDetails.collection;
-        }
-
-        if (collectionDetails.collectionDetails) {
-          responseDetails.collectionDetails =
-            collectionDetails.collectionDetails;
-        }
-
-        return responseDetails;
-      });
-    }
+  // Check if either object has failed.
+  if (responses[0].statusCode !== 200) {
     return responses[0];
-  });
+  }
+
+  if (responses[1].statusCode !== 200) {
+    return responses[1];
+  }
+
+  // Merge the responses of the two arrays.
+  if (responses[0].data && responses[1].data) {
+    responses[0].data = responses[0].data.map((responseDetails, idx) => {
+      const collectionDetails = responses[1].data[idx];
+
+      if (collectionDetails.collection) {
+        responseDetails.collection = collectionDetails.collection;
+      }
+
+      if (collectionDetails.collectionDetails) {
+        responseDetails.collectionDetails = collectionDetails.collectionDetails;
+      }
+
+      return responseDetails;
+    });
+  }
+  return responses[0];
 };

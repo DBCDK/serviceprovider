@@ -119,15 +119,13 @@ const context = {
     opensearch: 'https://opensearch.addi.dk/b3.5_4.5/',
     openuserstatus: 'https://openuserstatus.addi.dk/1.6.1/',
     rank: 'https://xptest.dbc.dk/ms/rank/v1',
+    suggest: 'XXXXX',
     suggestpopular: 'http://xptest.dbc.dk/ms/entity-pop/v1',
     suggestcreator: 'http://xptest.dbc.dk/ms/entity-suggest/v1/creator',
     suggestlibrary: 'http://xptest.dbc.dk/ms/entity-suggest/v1/library',
     suggestsubject: 'http://xptest.dbc.dk/ms/entity-suggest/v1/subject',
-    recommend: 'XXXXX',
-    recommendurls: {
-      default: 'https://xptest.dbc.dk/ms/recommend-cosim/v1',
-      popular: 'https://xptest.dbc.dk/ms/recommend-pop/v1'
-    },
+    recommend: 'http://staging.recomole.mcp1-proxy.dbc.dk/recomole/loan-cosim',
+    recommendurls: 'XXXXX',
     communityservice: 'http://localhost:4010/v1'
   },
   communityservice: {id: 1},
@@ -137,9 +135,9 @@ const context = {
     id: 'XXXXX',
     salt: 'XXXXX',
     pin: 'XXXXX',
-    libraryId: '710100',
-    agency: '710100',
-    isil: 'DK-710100'
+    libraryId: '726501',
+    agency: '726500',
+    isil: 'DK-726500'
   },
   app: {
     clientId: 'XXXXX',
@@ -149,21 +147,21 @@ const context = {
   }
 };
 const mockData = {
-  '["XXXXX",{"method":"post","json":{"like":["870970-basis:45488713"],"limit":10,"filters":{"authorFlood":1}}}]': {
+  '["http://staging.recomole.mcp1-proxy.dbc.dk/recomole/loan-cosim",{"method":"post","json":{"like":["870970-basis:45488713"],"limit":10,"filters":{"authorFlood":1}}}]': {
     responseHeader: {
       numReturned: 10,
-      time: 201,
+      time: 145,
       recommender: 'loan-cosim',
       timings: {
-        booster: 0.012,
+        booster: 0.011,
         fetch: 0.013,
-        workids: 17.967,
-        total: 199.541,
-        work2meta: 30.37,
-        ignore: 0.039,
-        'from-analysis': 39.999,
-        filter: 109.249,
-        augment: 0.032
+        workids: 15.748999999999999,
+        total: 141.25799999999998,
+        work2meta: 22.895,
+        ignore: 0.036000000000000004,
+        'from-analysis': 30.083,
+        filter: 69.162,
+        augment: 0.34299999999999997
       },
       build: 'not available',
       version: 'devel',
@@ -270,21 +268,14 @@ import {assert, fail} from 'chai';
 const provider = Provider();
 
 describe('Automated test: recommend_default_explicit.auto', () => {
-  it('has same result as recorded (in recommend_default_explicit.auto)', done => {
+  it('has same result as recorded (in recommend_default_explicit.auto)', () => {
     assert(
-      Date.now() < +new Date('2018-06-06'),
+      Date.now() < +new Date('2018-06-12'),
       'Please recreate the automatically generated unit tests, such that the mock data does not come out of sync with the actual services. See README.md for details.'
     );
     context.mockData = mockData;
-    provider
-      .execute(endpoint, params, context)
-      .then(result => {
-        assert.deepEqual(result, expected);
-        done();
-      })
-      .catch(result => {
-        fail({throw: result}, expected);
-        done();
-      });
+    return provider.execute(endpoint, params, context).then(result => {
+      assert.deepEqual(result, expected);
+    });
   });
 });
