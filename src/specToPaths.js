@@ -118,6 +118,21 @@ function apiMethodIterator(method, specs) {
     createResponse(spec)
   );
 
+  // Special case for search iterator due to hitCount etc.
+  if (method === 'search') {
+    Object.assign(responses['200'].schema.properties, {
+      hitCount: {
+        description:
+          'Number of search hits. Note that this does not equal the number of results/collections, as several hits might be combined to one collection.',
+        type: 'number'
+      },
+      more: {
+        description: 'Whether there are more results/pages to fetch',
+        type: 'boolean'
+      }
+    });
+  }
+
   // Create parameter list for GET-requests
   const params = Object.keys(request.schema.properties).map(name => {
     const schema = request.schema.properties[name];
