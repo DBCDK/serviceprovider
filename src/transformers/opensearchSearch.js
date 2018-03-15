@@ -86,7 +86,13 @@ function processResponse(body) {
     );
   });
 
-  const response = {statusCode: 200, data: result};
+  const response = {
+    statusCode: 200,
+    data: result,
+    // collectionCount: +body.collectionCount.$,
+    hitCount: +body.hitCount.$,
+    more: body.more.$ === 'true'
+  };
 
   if (parseErrors.length) {
     response.error = parseErrors;
