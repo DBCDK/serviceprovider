@@ -12,19 +12,8 @@ definitions:
       val:
         description: Similarity value
         type: number
-      loancount:
-        description: Number of loans of recommended pid
       from:
         description: recommendations based in this item
         type: array
         items:
           type: string
-      debug-creator:
-        description: Creator of recommended work (should only be used for debugging)
-        type: string
-      debug-title:
-        description: Title of recommended work (should only be used for debugging)
-        type: string
-      debug-work:
-        description: Recommmended work (should only be used for debugging)
-        type: string

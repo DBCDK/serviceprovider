@@ -28,7 +28,10 @@ export default async function getRecommendations(params, context) {
     }
   );
   if (result.response) {
-    return {statusCode: 200, data: result.response};
+    return {
+      statusCode: 200,
+      data: result.response.map(({pid, val, from}) => ({pid, val, from}))
+    };
   }
   return {statusCode: result.statusCode, error: result.value};
 }
