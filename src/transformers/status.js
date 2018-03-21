@@ -51,7 +51,18 @@ const serviceChecks = {
     );
   },
   communityservice: onlyUrl,
-  suggest: onlyUrl
+  suggest: async ({context, endpoint, url}) => {
+    let result;
+    try {
+      result = JSON.parse(await context.request(url + 'status', {}));
+    } catch (e) {
+      result = e;
+    }
+    return Object.assign(
+      {url},
+      result.ok ? {ok: true} : {error: JSON.stringify(result)}
+    );
+  }
 };
 
 export default async (request, context) => {

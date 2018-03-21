@@ -9,9 +9,9 @@ const endpoint = 'suggest';
 const params = {q: 'herlev', type: 'unsupported', limit: 3, fields: ['term']};
 
 const expected = {
-  statusCode: 400,
+  statusCode: 500,
   error:
-    'Unsupported suggestion type unsupported. Supported types are: creator,library,subject,title'
+    "unknown type 'unsupported'. supported types: ['all', 'title', 'subject', 'creator']"
 };
 
 const context = {
@@ -24,14 +24,8 @@ const context = {
     openorder: 'https://openorder.addi.dk/test_2.8/',
     opensearch: 'https://opensearch.addi.dk/b3.5_4.5/',
     openuserstatus: 'https://openuserstatus.addi.dk/1.6.1/',
-    rank: 'https://xptest.dbc.dk/ms/rank/v1',
-    suggest: 'XXXXX',
-    suggestpopular: 'http://xptest.dbc.dk/ms/entity-pop/v1',
-    suggestcreator: 'http://xptest.dbc.dk/ms/entity-suggest/v1/creator',
-    suggestlibrary: 'http://xptest.dbc.dk/ms/entity-suggest/v1/library',
-    suggestsubject: 'http://xptest.dbc.dk/ms/entity-suggest/v1/subject',
+    suggest: 'http://ortograf.mcp1-proxy.dbc.dk/ortograf/',
     recommend: 'http://staging.recomole.mcp1-proxy.dbc.dk/recomole/loan-cosim',
-    recommendurls: 'XXXXX',
     communityservice: 'http://localhost:4010/v1'
   },
   communityservice: {id: 1},
@@ -52,7 +46,10 @@ const context = {
     orderSystem: 'bibliotekdk'
   }
 };
-const mockData = {};
+const mockData = {
+  '["http://ortograf.mcp1-proxy.dbc.dk/ortograf/suggest",{"qs":{"type":"unsupported","q":"herlev","count":3}}]':
+    '{"traceback": ["  File \\"/root/miniconda3/lib/python3.5/site-packages/tornado/web.py\\", line 1510, in _execute\\n    result = method(*self.path_args, **self.path_kwargs)\\n", "  File \\"/root/miniconda3/lib/python3.5/site-packages/ortograf/ortograf.py\\", line 71, in get\\n    validate(params)\\n", "  File \\"/root/miniconda3/lib/python3.5/site-packages/ortograf/ortograf.py\\", line 55, in validate\\n    raise OrtografError(\\"unknown type \'%s\'. supported types: %s\\" % (params[\'type\'], str(list(TYPE_MAP.keys()))))\\n"], "value": "unknown type \'unsupported\'. supported types: [\'all\', \'title\', \'subject\', \'creator\']", "statusCode": 500, "type": "<class \'ortograf.ortograf.OrtografError\'>"}'
+};
 
 import Provider from '../../provider/Provider.js';
 import {assert, fail} from 'chai';
@@ -61,7 +58,7 @@ const provider = Provider();
 describe('Automated test: suggest_unsupported_type.auto', () => {
   it('has same result as recorded (in suggest_unsupported_type.auto)', () => {
     assert(
-      Date.now() < +new Date('2018-06-12'),
+      Date.now() < +new Date('2018-06-19'),
       'Please recreate the automatically generated unit tests, such that the mock data does not come out of sync with the actual services. See README.md for details.'
     );
     context.mockData = mockData;

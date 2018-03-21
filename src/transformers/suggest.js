@@ -1,203 +1,30 @@
 /**
- * @file
- * Suggest transformer.
+ * Retrieve recommendations from suggester service
  *
- * Wraps entitysuggest backends, and popsuggest backend.
- *
+ * @param {PlainObject} request
+ * @param {Context} context
+ * @returns {Promise}
  */
-import {log} from '../utils';
-
-/**
- * Creatorsuggest.
- *
- * @param {Object} params parameters from the user
- * @param {Object} context The context object fetched from smaug
- * @returns promise with result
- */
-function creatorSuggest(params, context) {
-  log.debug('creatorsuggest called with ' + params.q);
-
-  const localParams = {query: params.q};
-  if (params.limit) {
-    localParams.n = params.limit;
-  }
-
-  return context.call('suggestcreator', localParams).then(body => {
+export default async function getRecommendations(params, context) {
+  const url = context.get('services.suggest', true) + 'suggest';
+  const result = JSON.parse(
+    await context.request(url, {
+      qs: {
+        type: params.type || 'all',
+        q: params.q,
+        count: params.limit || 10
+      }
+    })
+  );
+  if (result.response) {
     return {
       statusCode: 200,
-      data: body.data.response.suggestions.map(obj => {
-        return {term: obj.suggestion};
-      })
+      data: result.response.docs.map(o => ({
+        term: o.term,
+        val: o.weight,
+        type: o.type.split(',')
+      }))
     };
-  });
+  }
+  return {statusCode: result.statusCode, error: result.value};
 }
-
-/**
- * Librarysuggest.
- *
- * @param {Object} params parameters from the user
- * @param {Object} context The context object fetched from smaug
- * @returns promise with result
- */
-function librarySuggest(params, context) {
-  log.debug('librarysuggest called with ' + params.q);
-
-  let libraryType = 'folkebibliotek';
-  if (params.librarytype) {
-    libraryType = params.librarytype;
-  }
-
-  const localParams = {query: params.q, lt: libraryType};
-  if (params.limit) {
-    localParams.n = params.limit;
-  }
-
-  return context.call('suggestlibrary', localParams).then(body => {
-    return {
-      statusCode: 200,
-      data: body.data.response.suggestions.map(obj => {
-        obj = obj.suggestion;
-        obj.geolokation = obj.geolokation || {};
-
-        return {
-          term: obj.navn,
-          agencyName: obj['væsensnavn'],
-          postalAddress: obj.adresse,
-          branchId: obj.id,
-          postalCode: obj.postnr,
-          geolocation: obj.geolokation && {
-            longitude: obj.geolokation.lng,
-            latitude: obj.geolokation.lat
-          },
-          agencyType: obj.bibliotekstype,
-          city: obj.by
-        };
-      })
-    };
-  });
-}
-
-/**
- * Subjectsuggest.
- *
- * @param {Object} params parameters from the user
- * @param {Object} context The context object fetched from smaug
- * @returns promise with result
- */
-function subjectSuggest(params, context) {
-  log.debug('subjectsuggest called with ' + params.q);
-  const localParams = {query: params.q, rs: 3};
-
-  if (params.limit) {
-    localParams.n = params.limit;
-  }
-
-  return context.call('suggestsubject', localParams).then(body => {
-    return {
-      statusCode: 200,
-      data: body.data.response.suggestions.map(obj => {
-        return {term: obj.suggestion};
-      })
-    };
-  });
-}
-
-/**
- * Maps keys from pop-suggest backend to serviceprovider api
- * @param {Object} obj pop-suggest response
- * @returns response with mapped keys
- */
-function mapTitleKeys(obj) {
-  const retObj = {term: obj['display.title'][0], pid: obj.fedoraPid};
-
-  if (obj.hasOwnProperty('display.creator')) {
-    retObj.creator = obj['display.creator'][0];
-  }
-
-  if (obj.hasOwnProperty('display.workType')) {
-    retObj.type = obj['display.workType'][0];
-  }
-
-  return retObj;
-}
-
-/**
- * Titlesuggest.
- *
- * @param {Object} params parameters from the user
- * @param {Object} context The context object fetched from smaug
- * @returns promise with result
- */
-function titleSuggest(params, context) {
-  log.debug('titlesuggest called with ' + params.q);
-  const queryString = params.q.replace(new RegExp(' ', 'g'), '\\ ');
-  const query =
-    '{!complexphrase inOrder=true}display.title:' + queryString + '*';
-
-  const localParams = {
-    query: query,
-    fields: 'display.title,fedoraPid,display.creator,display.workType'
-  };
-
-  const filter = context.get('search.collectionidentifiers');
-  if (filter) {
-    localParams.filter = filter;
-  }
-
-  if (params.limit) {
-    localParams.rows = params.limit;
-  }
-
-  log.debug('popsuggest params', {params: localParams});
-  return context.call('suggestpopular', localParams).then(body => {
-    return {
-      statusCode: 200,
-      data: body.data.response.docs.map(obj => {
-        return mapTitleKeys(obj);
-      })
-    };
-  });
-}
-
-// Supported suggest types
-const fMap = {
-  creator: creatorSuggest,
-  library: librarySuggest,
-  subject: subjectSuggest,
-  title: titleSuggest
-};
-
-/**
- * Default transformer.
- * Wraps the different suggesters and returns suggestiones from the
- * chosen one.
- *
- * @param {Object} params parameters from the user
- * @param {Object} context The context object fetched from smaug
- * @returns promise with result
- * @api public
- */
-export default (params, context) => {
-  if (!params.fields) {
-    params.fields = ['term'];
-  }
-
-  if (!fMap[params.type]) {
-    return new Promise(resolve => {
-      return resolve({
-        statusCode: 400,
-        error: `Unsupported suggestion type ${
-          params.type
-        }. Supported types are: ${Object.keys(fMap)}`
-      });
-    });
-  }
-
-  if (params.limit) {
-    params.limit = parseInt(params.limit, 10);
-  }
-
-  return fMap[params.type](params, context).then(result => {
-    return result;
-  });
-};

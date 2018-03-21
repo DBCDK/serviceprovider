@@ -11,24 +11,9 @@ const params = {q: 'hest', type: 'title', limit: 3, fields: ['term']};
 const expected = {
   statusCode: 200,
   data: [
-    {
-      term: 'Hestenes Dal',
-      pid: '870970-basis:06598722',
-      creator: 'Jean M. Auel',
-      type: 'book'
-    },
-    {
-      term: 'Hestetyven',
-      pid: '870970-basis:26191076',
-      creator: 'Ole Frøslev',
-      type: 'book'
-    },
-    {
-      term: 'Hestehovedtågen',
-      pid: '870970-basis:50507173',
-      creator: 'Ola Bauer',
-      type: 'book'
-    }
+    {term: 'heste', val: 7427, type: ['title']},
+    {term: 'ud og stjæle heste', val: 6702, type: ['title']},
+    {term: 'hestenes dal', val: 5653, type: ['title']}
   ]
 };
 
@@ -42,14 +27,8 @@ const context = {
     openorder: 'https://openorder.addi.dk/test_2.8/',
     opensearch: 'https://opensearch.addi.dk/b3.5_4.5/',
     openuserstatus: 'https://openuserstatus.addi.dk/1.6.1/',
-    rank: 'https://xptest.dbc.dk/ms/rank/v1',
-    suggest: 'XXXXX',
-    suggestpopular: 'http://xptest.dbc.dk/ms/entity-pop/v1',
-    suggestcreator: 'http://xptest.dbc.dk/ms/entity-suggest/v1/creator',
-    suggestlibrary: 'http://xptest.dbc.dk/ms/entity-suggest/v1/library',
-    suggestsubject: 'http://xptest.dbc.dk/ms/entity-suggest/v1/subject',
+    suggest: 'http://ortograf.mcp1-proxy.dbc.dk/ortograf/',
     recommend: 'http://staging.recomole.mcp1-proxy.dbc.dk/recomole/loan-cosim',
-    recommendurls: 'XXXXX',
     communityservice: 'http://localhost:4010/v1'
   },
   communityservice: {id: 1},
@@ -71,8 +50,8 @@ const context = {
   }
 };
 const mockData = {
-  '["suggestpopular",{"qs":{"query":"{!complexphrase inOrder=true}display.title:hest*","fields":"display.title,fedoraPid,display.creator,display.workType","rows":3}}]':
-    '{"responseHeader": {"args": {"fq": "work.isPrimaryObject:true", "rows": 3, "group": "true", "start": 0, "group.field": "fedoraPid", "group.main": "true", "fl": "display.title fedoraPid display.creator display.workType"}, "svn-revision": "106527", "ab-id": "1", "qtime": 10, "q": "{!complexphrase inOrder=true}display.title:hest*", "version": "0.1.0", "stime": 10, "qf": ["inOrder=true}display.title"], "build": "581", "modified_q": "{!boost b=loan.count}{!complexphrase inOrder=true}display.title:hest*"}, "response": {"start": 0, "numFound": 3313, "docs": [{"fedoraPid": "870970-basis:06598722", "display.creator": ["Jean M. Auel"], "display.title": ["Hestenes Dal"], "display.workType": ["book"]}, {"fedoraPid": "870970-basis:26191076", "display.creator": ["Ole Fr\\u00f8slev"], "display.title": ["Hestetyven"], "display.workType": ["book"]}, {"fedoraPid": "870970-basis:50507173", "display.creator": ["Ola Bauer"], "display.title": ["Hestehovedt\\u00e5gen"], "display.workType": ["book"]}]}}'
+  '["http://ortograf.mcp1-proxy.dbc.dk/ortograf/suggest",{"qs":{"type":"title","q":"hest","count":3}}]':
+    '{"responseHeader": {"status": 0, "timings": {"service-time": 32.242, "QTime": 22}}, "response": {"docs": [{"weight": 7427, "payload": "heste|title", "term": "heste", "all": ["heste"], "type": "title"}, {"weight": 6702, "payload": "ud og stj\\u00e6le heste|title", "term": "ud og stj\\u00e6le heste", "all": ["ud og stj\\u00e6le heste"], "type": "title"}, {"weight": 5653, "payload": "hestenes dal|title", "term": "hestenes dal", "all": ["hestenes dal"], "type": "title"}]}}'
 };
 
 import Provider from '../../provider/Provider.js';
@@ -82,7 +61,7 @@ const provider = Provider();
 describe('Automated test: suggest_title.auto', () => {
   it('has same result as recorded (in suggest_title.auto)', () => {
     assert(
-      Date.now() < +new Date('2018-06-12'),
+      Date.now() < +new Date('2018-06-19'),
       'Please recreate the automatically generated unit tests, such that the mock data does not come out of sync with the actual services. See README.md for details.'
     );
     context.mockData = mockData;

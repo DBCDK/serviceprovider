@@ -1,4 +1,4 @@
-// AUTOTEST GENERATOR: {"endpoint":"suggest","params":{"q":"herlev","type":"subject","limit":3,"fields":["term","id"]}}
+// AUTOTEST GENERATOR: {"endpoint":"suggest","params":{"q":"herlev","type":"subject","limit":3,"fields":["term","val","type"]}}
 //
 //
 // AUTOMATED UNIT TEST
@@ -6,14 +6,19 @@
 //
 //
 const endpoint = 'suggest';
-const params = {q: 'herlev', type: 'subject', limit: 3, fields: ['term', 'id']};
+const params = {
+  q: 'herlev',
+  type: 'subject',
+  limit: 3,
+  fields: ['term', 'val', 'type']
+};
 
 const expected = {
   statusCode: 200,
   data: [
-    {term: 'herlev'},
-    {term: 'amtssygehuset i herlev'},
-    {term: 'nørre herlev'}
+    {term: 'københavns amts sygehus i herlev', val: 32, type: ['subject']},
+    {term: 'herlev', val: 1, type: ['subject']},
+    {term: 'herlev hospital', val: 0, type: ['subject']}
   ]
 };
 
@@ -27,14 +32,8 @@ const context = {
     openorder: 'https://openorder.addi.dk/test_2.8/',
     opensearch: 'https://opensearch.addi.dk/b3.5_4.5/',
     openuserstatus: 'https://openuserstatus.addi.dk/1.6.1/',
-    rank: 'https://xptest.dbc.dk/ms/rank/v1',
-    suggest: 'XXXXX',
-    suggestpopular: 'http://xptest.dbc.dk/ms/entity-pop/v1',
-    suggestcreator: 'http://xptest.dbc.dk/ms/entity-suggest/v1/creator',
-    suggestlibrary: 'http://xptest.dbc.dk/ms/entity-suggest/v1/library',
-    suggestsubject: 'http://xptest.dbc.dk/ms/entity-suggest/v1/subject',
+    suggest: 'http://ortograf.mcp1-proxy.dbc.dk/ortograf/',
     recommend: 'http://staging.recomole.mcp1-proxy.dbc.dk/recomole/loan-cosim',
-    recommendurls: 'XXXXX',
     communityservice: 'http://localhost:4010/v1'
   },
   communityservice: {id: 1},
@@ -56,8 +55,8 @@ const context = {
   }
 };
 const mockData = {
-  '["suggestsubject",{"qs":{"query":"herlev","rs":3,"n":3}}]':
-    '{"responseHeader": {"svn-revision": "106527", "ab-id": "1", "rt_searches": ["herlev", "herlev ruterne", "herlev statsskole"], "args": {"hr": "None", "hl": "None", "rs": "3"}, "q": "herlev", "version": "0.2.0", "build": "549", "time": 10}, "response": {"suggestions": [{"frequency": 105, "suggestion": "herlev"}, {"frequency": 19, "suggestion": "amtssygehuset i herlev"}, {"frequency": 8, "suggestion": "nørre herlev"}], "numFound": 5}}'
+  '["http://ortograf.mcp1-proxy.dbc.dk/ortograf/suggest",{"qs":{"type":"subject","q":"herlev","count":3}}]':
+    '{"responseHeader": {"timings": {"QTime": 2, "service-time": 12.211}, "status": 0}, "response": {"docs": [{"term": "k\\u00f8benhavns amts sygehus i herlev", "all": ["k\\u00f8benhavns amts sygehus i herlev"], "weight": 32, "payload": "k\\u00f8benhavns amts sygehus i herlev|subject", "type": "subject"}, {"term": "herlev", "all": ["herlev"], "weight": 1, "payload": "herlev|subject", "type": "subject"}, {"term": "herlev hospital", "all": ["herlev hospital"], "weight": 0, "payload": "herlev hospital|subject", "type": "subject"}]}}'
 };
 
 import Provider from '../../provider/Provider.js';
@@ -67,7 +66,7 @@ const provider = Provider();
 describe('Automated test: suggest_subject_fields.auto', () => {
   it('has same result as recorded (in suggest_subject_fields.auto)', () => {
     assert(
-      Date.now() < +new Date('2018-06-12'),
+      Date.now() < +new Date('2018-06-19'),
       'Please recreate the automatically generated unit tests, such that the mock data does not come out of sync with the actual services. See README.md for details.'
     );
     context.mockData = mockData;

@@ -10,7 +10,11 @@ const params = {q: 'fisk', type: 'subject', limit: 3, fields: ['term']};
 
 const expected = {
   statusCode: 200,
-  data: [{term: 'biografiske'}, {term: 'fisk'}, {term: 'fiskeri'}]
+  data: [
+    {term: 'fisketure', val: 45600, type: ['subject']},
+    {term: 'fiskeri', val: 45439, type: ['subject']},
+    {term: 'fisk', val: 43374, type: ['subject']}
+  ]
 };
 
 const context = {
@@ -23,14 +27,8 @@ const context = {
     openorder: 'https://openorder.addi.dk/test_2.8/',
     opensearch: 'https://opensearch.addi.dk/b3.5_4.5/',
     openuserstatus: 'https://openuserstatus.addi.dk/1.6.1/',
-    rank: 'https://xptest.dbc.dk/ms/rank/v1',
-    suggest: 'XXXXX',
-    suggestpopular: 'http://xptest.dbc.dk/ms/entity-pop/v1',
-    suggestcreator: 'http://xptest.dbc.dk/ms/entity-suggest/v1/creator',
-    suggestlibrary: 'http://xptest.dbc.dk/ms/entity-suggest/v1/library',
-    suggestsubject: 'http://xptest.dbc.dk/ms/entity-suggest/v1/subject',
+    suggest: 'http://ortograf.mcp1-proxy.dbc.dk/ortograf/',
     recommend: 'http://staging.recomole.mcp1-proxy.dbc.dk/recomole/loan-cosim',
-    recommendurls: 'XXXXX',
     communityservice: 'http://localhost:4010/v1'
   },
   communityservice: {id: 1},
@@ -52,8 +50,8 @@ const context = {
   }
 };
 const mockData = {
-  '["suggestsubject",{"qs":{"query":"fisk","rs":3,"n":3}}]':
-    '{"responseHeader": {"svn-revision": "106527", "ab-id": "1", "rt_searches": ["fisk", "fiske", "fisker"], "args": {"hr": "None", "hl": "None", "rs": "3"}, "q": "fisk", "version": "0.2.0", "build": "549", "time": 10}, "response": {"suggestions": [{"frequency": 539916, "suggestion": "biografiske"}, {"frequency": 69469, "suggestion": "fisk"}, {"frequency": 54986, "suggestion": "fiskeri"}], "numFound": 137}}'
+  '["http://ortograf.mcp1-proxy.dbc.dk/ortograf/suggest",{"qs":{"type":"subject","q":"fisk","count":3}}]':
+    '{"responseHeader": {"status": 0, "timings": {"QTime": 5, "service-time": 15.885}}, "response": {"docs": [{"weight": 45600, "payload": "fisketure|subject", "term": "fisketure", "type": "subject", "all": ["fisketure"]}, {"weight": 45439, "payload": "fiskeri|subject", "term": "fiskeri", "type": "subject", "all": ["fiskeri"]}, {"weight": 43374, "payload": "fisk|subject", "term": "fisk", "type": "subject", "all": ["fisk"]}]}}'
 };
 
 import Provider from '../../provider/Provider.js';
@@ -63,7 +61,7 @@ const provider = Provider();
 describe('Automated test: suggest_subject.auto', () => {
   it('has same result as recorded (in suggest_subject.auto)', () => {
     assert(
-      Date.now() < +new Date('2018-06-12'),
+      Date.now() < +new Date('2018-06-19'),
       'Please recreate the automatically generated unit tests, such that the mock data does not come out of sync with the actual services. See README.md for details.'
     );
     context.mockData = mockData;

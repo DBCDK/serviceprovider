@@ -1,4 +1,4 @@
-// AUTOTEST GENERATOR: {"endpoint":"suggest","params":{"q":"herlev","type":"title","limit":3,"fields":["term","pid"]}}
+// AUTOTEST GENERATOR: {"endpoint":"suggest","params":{"q":"heste","limit":3}}
 //
 //
 // AUTOMATED UNIT TEST
@@ -6,14 +6,14 @@
 //
 //
 const endpoint = 'suggest';
-const params = {q: 'herlev', type: 'title', limit: 3, fields: ['term', 'pid']};
+const params = {q: 'heste', limit: 3};
 
 const expected = {
   statusCode: 200,
   data: [
-    {term: 'herlev tur/retur', val: 44, type: ['title']},
-    {term: 'herlev-ruterne', val: 8, type: ['title']},
-    {term: 'gamle dage i nr. herlev', val: 7, type: ['title']}
+    {term: 'heste', val: 612556, type: ['title', 'subject']},
+    {term: 'hestesport', val: 20286, type: ['title', 'subject']},
+    {term: 'ud og stjæle heste', val: 6702, type: ['title']}
   ]
 };
 
@@ -50,16 +50,16 @@ const context = {
   }
 };
 const mockData = {
-  '["http://ortograf.mcp1-proxy.dbc.dk/ortograf/suggest",{"qs":{"type":"title","q":"herlev","count":3}}]':
-    '{"responseHeader": {"status": 0, "timings": {"QTime": 17, "service-time": 25.322999999999997}}, "response": {"docs": [{"weight": 44, "payload": "herlev tur/retur|title", "term": "herlev tur/retur", "type": "title", "all": ["herlev tur/retur"]}, {"weight": 8, "payload": "herlev-ruterne|title", "term": "herlev-ruterne", "type": "title", "all": ["herlev-ruterne"]}, {"weight": 7, "payload": "gamle dage i nr. herlev|title", "term": "gamle dage i nr. herlev", "type": "title", "all": ["gamle dage i nr. herlev"]}]}}'
+  '["http://ortograf.mcp1-proxy.dbc.dk/ortograf/suggest",{"qs":{"type":"all","q":"heste","count":3}}]':
+    '{"responseHeader": {"timings": {"QTime": 20, "service-time": 29.305999999999997}, "status": 0}, "response": {"docs": [{"term": "heste", "all": ["heste"], "weight": 612556, "payload": "heste|title,subject", "type": "title,subject"}, {"term": "hestesport", "all": ["hestesport"], "weight": 20286, "payload": "hestesport|title,subject", "type": "title,subject"}, {"term": "ud og stj\\u00e6le heste", "all": ["ud og stj\\u00e6le heste"], "weight": 6702, "payload": "ud og stj\\u00e6le heste|title", "type": "title"}]}}'
 };
 
 import Provider from '../../provider/Provider.js';
 import {assert, fail} from 'chai';
 const provider = Provider();
 
-describe('Automated test: suggest_title_fields.auto', () => {
-  it('has same result as recorded (in suggest_title_fields.auto)', () => {
+describe('Automated test: suggest_all_default.auto', () => {
+  it('has same result as recorded (in suggest_all_default.auto)', () => {
     assert(
       Date.now() < +new Date('2018-06-19'),
       'Please recreate the automatically generated unit tests, such that the mock data does not come out of sync with the actual services. See README.md for details.'
