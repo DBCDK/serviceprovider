@@ -362,7 +362,6 @@ api:
       Notice that suggest/completion index is not real-time, so there is no guarantee that the `id` matches a bibliographic object in the `/work` endpoint, - though usually there will be one (they will be sync'ed every week).
     required:
       - q
-      - type
     properties:
       q:
         description: Query to complete
@@ -374,28 +373,15 @@ api:
         minimum: 1
         example: 10
       type:
-        description: The desired type of suggestions, possible values are `library`, `title`, `subject`, `creator`
+        description: The desired type of suggestions, possible values are `all`, `title`, `subject`, `creator`
         type: string
         example: "title"
-      librarytype:
-        description: Optional field only used when querying the library suggestor. It specifies which type of library is wanted, by default it's the public library.
-        type: string
-        example: "folkebibliotek"
-      fields:
-        description: "Fields to return, defaults to `term`. The `subject`- and `creator`-suggest only has `term`, while `title`-suggest also has `pid`, `creator`, and `type`, and the `library`-suggest has `agencyName`, `postalAddress`, `branchId`, `postalCode`, `geolocation`, `agencyType`, and `city`"
-        type: array
-        items: {type: "string"}
-        example: ["term", "pid", "creator", "type"]
     response:
       $ref: '#/definitions/SuggestResponse'
-      example: [ { "term": "Harry Potter og Hemmelighedernes Kammer", "pid": "870970-basis:22375733", "creator": "Joanne K. Rowling", "type": "book"}, { "term": "Harry Potter og fangen fra Azkaban", "pid": "870970-basis:22639862", "creator": "Joanne K. Rowling", "type": "book" }]
+      example: [ { "term": "harry potter og hemmelighedernes kammer"}, { "term": "harry potter og fangen fra azkaban"}]
     examples:
-      - request: { "q": "harry", "type": "creator", "limit": 2 }
-        response: [ { "term": "Harry Nilsson"}, { "term": "Harry Belafonte"}]
-      - request: { "q": "harry pot", "type": "title", "limit": 2, "fields": ["term", "pid", "creator", "type"]}
-        response: [ { "term": "Harry Potter og Hemmelighedernes Kammer", "pid": "870970-basis:22375733", "creator": "Joanne K. Rowling", "type": "book"}, { "term": "Harry Potter og fangen fra Azkaban", "pid": "870970-basis:22639862", "creator": "Joanne K. Rowling", "type": "book" }]
-      - request: { "q": "køge", "type": "library", "limit": 1, "fields": ["term", "væsensnavn", "adresse", "id", "postnr", "geolokation", "navn", "bibliotekstype", "by"]}
-        response: [ { "væsensnavn": "KøgeBibliotekerne", "adresse": "Kirkestræde 18", "id": "725900", "postnr": "4600", "geolokation": { "lat": 55.45783460000001, "lng": 12.1822443 }, "navn": "Køge Bibliotek", "bibliotekstype": "Folkebibliotek", "by": "Køge", "term": "Køge Bibliotek, Køge"}]
+      - request: { "q": "harry", "type": "creator", "limit": 2, "fields": ["term"] }
+        response: [ { "term": "harry nilsson"}, { "term": "harry belafonte"}]
   user:
     tags:
       - Status

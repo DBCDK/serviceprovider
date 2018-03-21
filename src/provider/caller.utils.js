@@ -45,10 +45,7 @@ const whitelist = {
     opensearch: true,
     openuserstatus: true,
     rank: true,
-    suggestpopular: true,
-    suggestcreator: true,
-    suggestlibrary: true,
-    suggestsubject: true,
+    suggest: true,
     recommend: true,
     communityservice: true
   },

@@ -7,33 +7,14 @@ definitions:
     type: object
     properties:
       term: 
+        description: the suggestion
         type: string
-      pid: 
+      val: 
+        description: weight of the suggestion
         type: string
       type: 
-        type: string  
-      creator: 
-        type: string
-      agencyName: 
-        type: string
-      postalAddress: 
-        type: string
-      branchId: 
-        type: string
-      postalCode: 
-        type: string
-      geolocation: 
-        $ref: '#/definitions/Geolocation'
-      agencyType: 
-        type: string
-      city: 
-        type: string
-    additionalProperties: false
-  Geolocation:
-    type: object
-    properties:
-      lat: 
-        type: string
-      lng: 
-        type: string
+        description: Where the suggestion comes from, i.e. `title`, `creator` og `subject`
+        type: array
+        items: 
+          type: string
     additionalProperties: false
