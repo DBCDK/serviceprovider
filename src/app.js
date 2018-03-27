@@ -319,7 +319,7 @@ module.exports.run = function(worker) {
     .availableTransforms()
     .forEach(event => enableHTTPTransport(event));
 
-  app.use(apiPath, express.static(path.join(__dirname, '../static')));
+  app.use(apiPath, express.static(path.join(__dirname, '../doc')));
 
   // The swagger specification is generated from `spec.yml`
   // and returned as this separate endpoint.
