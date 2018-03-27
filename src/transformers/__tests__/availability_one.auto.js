@@ -10,7 +10,7 @@ const params = {pids: ['870970-basis:28448716']};
 
 const expected = {
   statusCode: 200,
-  data: [{willLend: false, orderPossible: true}]
+  data: [{unavailable: 'openHoldingStatus error: item_not_found'}]
 };
 
 const context = {

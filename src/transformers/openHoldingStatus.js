@@ -29,7 +29,11 @@ export default (request, context) => {
 </soapenv:Envelope>`;
 
   return context.call('openholdingstatus', soap).then(body => {
-    body = JSON.parse(body).holdingsResponse.responder;
+    body = JSON.parse(body).holdingsResponse;
+    if (body.error) {
+      return {statusCode: 500, error: body.error[0].errorMessage.$};
+    }
+    body = body.responder;
     let data = {willLend: false};
     if (body && body.length > 0) {
       if (_.has(body[0], 'willLend.$')) {
