@@ -125,7 +125,7 @@ function getLibraries(context) {
 
 function getLibrariesTransformPromiseHandler(params, context, libraries) {
   if (Date.now() - timestamp > timeout) {
-    getLibraries(context);
+    setTimeout(() => getLibraries(context), 1000);
     timestamp = Date.now();
   }
 
