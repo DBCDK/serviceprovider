@@ -23,14 +23,8 @@ const context = {
     openorder: 'https://openorder.addi.dk/test_2.8/',
     opensearch: 'https://opensearch.addi.dk/b3.5_4.5/',
     openuserstatus: 'https://openuserstatus.addi.dk/1.6.1/',
-    rank: 'https://xptest.dbc.dk/ms/rank/v1',
     suggest: 'XXXXX',
-    suggestpopular: 'http://xptest.dbc.dk/ms/entity-pop/v1',
-    suggestcreator: 'http://xptest.dbc.dk/ms/entity-suggest/v1/creator',
-    suggestlibrary: 'http://xptest.dbc.dk/ms/entity-suggest/v1/library',
-    suggestsubject: 'http://xptest.dbc.dk/ms/entity-suggest/v1/subject',
     recommend: 'http://staging.recomole.mcp1-proxy.dbc.dk/recomole/loan-cosim',
-    recommendurls: 'XXXXX',
     communityservice: 'http://localhost:4010/v1'
   },
   communityservice: {id: 1},
@@ -74,7 +68,7 @@ const provider = Provider();
 describe('Automated test: recommend_error_invalid_pid.auto', () => {
   it('has same result as recorded (in recommend_error_invalid_pid.auto)', () => {
     assert(
-      Date.now() < +new Date('2018-06-12'),
+      Date.now() < +new Date('2018-06-19'),
       'Please recreate the automatically generated unit tests, such that the mock data does not come out of sync with the actual services. See README.md for details.'
     );
     context.mockData = mockData;
