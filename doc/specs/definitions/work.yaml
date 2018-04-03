@@ -399,49 +399,49 @@ definitions:
         items:
           type: string
       coverUrl117:
-        description: Url for a cover image with a height of 117 pixels. Notice this is a temporary url, that will only work for a limited amount of time.
+        description: Url for a cover image with a height of 117 pixels. Notice this is a temporary url, that will work for 24 hours.
         type: array
         items:
           type: string
         minItems: 1
         maxItems: 1
       coverUrl207:
-        description: Url for a cover image with a height of 207 pixels. Notice this is a temporary url, that will only work for a limited amount of time.
+        description: Url for a cover image with a height of 207 pixels. Notice this is a temporary url, that will work for 24 hours.
         type: array
         items:
           type: string
         minItems: 1
         maxItems: 1
       coverUrl42:
-        description: Url for a cover image with a height of 42 pixels. Notice this is a temporary url, that will only work for a limited amount of time.
+        description: Url for a cover image with a height of 42 pixels. Notice this is a temporary url, that will work for 24 hours.
         type: array
         items:
           type: string
         minItems: 1
         maxItems: 1
       coverUrl500:
-        description: Url for a cover image with a height of 500 pixels. Notice this is a temporary url, that will only work for a limited amount of time.
+        description: Url for a cover image with a height of 500 pixels. Notice this is a temporary url, that will work for 24 hours.
         type: array
         items:
           type: string
         minItems: 1
         maxItems: 1
       coverUrlBack:
-        description: Url for a back image of the material. Notice this is a temporary url, that will only work for a limited amount of time.
+        description: Url for a back image of the material. Notice this is a temporary url, that will work for 24 hours.
         type: array
         items:
           type: string
         minItems: 1
         maxItems: 1
       coverUrlFull:
-        description: Url for a large cover image. Notice this is a temporary url, that will only work for a limited amount of time.
+        description: Url for a large cover image. Notice this is a temporary url, that will work for 24 hours.
         type: array
         items:
           type: string
         minItems: 1
         maxItems: 1
       coverUrlThumbnail:
-        description: Url for a small cover image. Notice this is a temporary url, that will only work for a limited amount of time.
+        description: Url for a small cover image. Notice this is a temporary url, that will work for 24 hours.
         type: array
         items:
           type: string
