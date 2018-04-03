@@ -4,6 +4,7 @@
 //
 const {log} = require('../utils.js');
 const {version} = require('../../package.json');
+const _ = require('lodash');
 
 async function checkPhpService({context, endpoint, url}) {
   let result;
@@ -26,6 +27,78 @@ async function checkPhpService({context, endpoint, url}) {
 
 async function onlyUrl({context, endpoint, url}) {
   return {url};
+}
+
+async function performanceStat({request, context}) {
+  const isoWeek = request.week;
+
+  if (!isoWeek.match(/\d\d\d\d-W\d\d/)) {
+    throw {
+      statusCode: 400,
+      error: 'Invalid week parameter, should be formatted like: 2018-W05'
+    };
+  }
+  const week = isoWeek.replace('-W', '.');
+
+  const baseUrl = context.data.services.performance;
+  const url = baseUrl + 'prod_ux-' + week + '/';
+
+  const testExists = JSON.parse(await context.request(url, {}));
+  if (testExists.status === 404) {
+    throw {
+      statusCode: 404,
+      error: 'No statistics available for week ' + isoWeek
+    };
+  }
+
+  const query = {
+    query: {match: {msg: {query: 'transformer-done', type: 'phrase'}}},
+    filter: {term: {app: 'serviceprovider'}},
+    aggs: {
+      version: {
+        terms: {
+          field: '@version'
+        },
+        aggs: {
+          endpoints: {
+            terms: {
+              field: 'name'
+            },
+            aggs: {
+              external: {
+                percentiles: {
+                  field: 'timings.external'
+                }
+              },
+              total: {
+                percentiles: {
+                  field: 'timings.total'
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  };
+  const r = await context.request(url + '_search?size=0', {
+    method: 'POST',
+    json: query
+  });
+  const result = [];
+  for (const serviceVersion of r.aggregations.version.buckets) {
+    for (const bucket of serviceVersion.endpoints.buckets) {
+      result.push({
+        week: week.replace('.', '-W'),
+        endpoint: bucket.key,
+        version: serviceVersion.key,
+        count: bucket.doc_count,
+        underlyingServices: _.mapValues(bucket.external.values, Math.round),
+        total: _.mapValues(bucket.total.values, Math.round)
+      });
+    }
+  }
+  return result;
 }
 
 const serviceChecks = {
@@ -62,30 +135,41 @@ const serviceChecks = {
       {url},
       result.ok ? {ok: true} : {error: JSON.stringify(result)}
     );
-  }
+  },
+  performance: performanceStat
 };
 
 export default async (request, context) => {
   const data = {version, endOfServiceDate: '0000-00-00T00:00:00Z'};
-  let services = Object.keys(serviceChecks);
+  let checks = Object.keys(serviceChecks);
   if (Array.isArray(request.fields)) {
-    services = services.filter(s => request.fields.includes(s));
+    checks = checks.filter(s => request.fields.includes(s));
+  }
+  if (!request.week) {
+    checks = checks.filter(s => s !== 'performance');
   }
 
-  const results = await Promise.all(
-    services.map(async endpoint =>
-      serviceChecks[endpoint]({
-        endpoint,
-        request,
-        context,
-        url: context.data.services[endpoint]
-      })
-    )
-  );
+  try {
+    const results = await Promise.all(
+      checks.map(async endpoint =>
+        serviceChecks[endpoint]({
+          endpoint,
+          context,
+          url: context.data.services[endpoint],
+          request
+        })
+      )
+    );
 
-  for (const i in services) {
-    data[services[i]] = results[i];
+    for (const i in checks) {
+      data[checks[i]] = results[i];
+    }
+
+    return {statusCode: 200, data};
+  } catch (e) {
+    if (e.statusCode && e.error) {
+      return e;
+    }
+    throw e;
   }
-
-  return {statusCode: 200, data};
 };

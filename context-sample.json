@@ -11,6 +11,7 @@
       "openuserstatus": "https://openuserstatus.addi.dk/1.6.1/",
       "suggest": "http://ortograf.mcp1-proxy.dbc.dk/ortograf/",
       "recommend": "http://staging.recomole.mcp1-proxy.dbc.dk/recomole/loan-cosim",
+      "performance": "http://elk/elasticsearch",
       "communityservice": "http://localhost:4010/v1"
     },
     "communityservice": {

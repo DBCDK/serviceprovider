@@ -462,6 +462,9 @@ api:
     description: |
       Status endpoint printing current version of the open platform, as well as the version and status of various endpoints it depend upon.
     properties:
+      week:
+        description: 'Week-number to show performance statistics for. The week number has to have the format: `yyyy-Wnn`, where `yyyy` is the year, and `nn` is the week number. So for example: first week of 2018 is written as `2018-W01`.'
+        type: string
     response:
       $ref: "#/definitions/Status"
       example: {"statusCode":200,"data":{"version":"3.0.0","openagency":{"url":"http://openagency.addi.dk/2.24/","ok":true},"openholdingstatus":{"url":"https://openholdingstatus.addi.dk/2.2/","error":"ERROR checking for holdings DK-100450 on Kaninbjerget"},"openorder":{"url":"https://openorder.addi.dk/test_2.8/","ok":true},"opensearch":{"url":"https://opensearch.addi.dk/b3.5_4.5/","ok":true},"openuserstatus":{"url":"https://openuserstatus.addi.dk/1.6.1/","ok":true},"moreinfo":{"url":"https://moreinfo.addi.dk/2.10/","ok":true}}}

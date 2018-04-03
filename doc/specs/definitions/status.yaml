@@ -35,6 +35,10 @@ definitions:
       suggest:
         description: status for suggest
         $ref: "#/definitions/EndpointStatus"
+      performance:
+        type: array
+        items:
+          $ref: "#/definitions/PerformanceStatus"
   EndpointStatus:
     type: object
     properties:
@@ -47,5 +51,48 @@ definitions:
       error:
         description: details about issues, if underlying service is not ok
         type: string
-
-
+  PerformanceStatus:
+    type: object
+    properties:
+      week:
+        type: string
+        description: The week which the performance statistics is about.
+      endpoint:
+        type: string
+        description: Which endpoint the performnace statistics is about.
+      version:
+        type: string
+        description: Which version of the open platform the performance statistics is about.
+      count:
+        type: integer
+        description: Number of requests handled during the week.
+      underlyingServices:
+        description: Time used by underlying services.
+        $ref: "#/definitions/PerformanceQuantile"
+      total:
+        description: Total time taken by the request (underlying service + time taken by the open platform).
+        $ref: "#/definitions/PerformanceQuantile"
+  PerformanceQuantile:
+    type: object
+    properties:
+      "1.0":
+        type: integer
+        description: time taken in milliseconds at the 1 percentile fastest request
+      "5.0":
+        type: integer
+        description: time taken in milliseconds at the 5 percentile fastest request
+      "25.0":
+        type: integer
+        description: time taken in milliseconds at the fastest quartile
+      "50.0":
+        type: integer
+        description: time taken in milliseconds at the median request
+      "75.0":
+        type: integer
+        description: time taken in milliseconds at the slowest quartile
+      "95.0":
+        type: integer
+        description: time taken in milliseconds at the 5 percentile slowest request
+      "99.0":
+        type: integer
+        description: time taken in milliseconds at the 1 percentile slowest request
