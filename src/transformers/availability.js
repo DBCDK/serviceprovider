@@ -10,14 +10,12 @@ async function availability(request, context) {
   ]);
 
   if (openHoldingStatusRes.statusCode !== 200) {
-    throw new Error(
-      `openHolding response ${JSON.stringify} for ${request.pid}`
-    );
+    return {
+      unavailable: 'openHoldingStatus error: ' + openHoldingStatusRes.error
+    };
   }
   if (getOrderPolicyRes.statusCode !== 200) {
-    throw new Error(
-      `getOrderPolicyRes response ${JSON.stringify} for ${request.pid}`
-    );
+    return {unavailable: 'getOrderPolicy error: ' + getOrderPolicyRes.error};
   }
 
   const data = {

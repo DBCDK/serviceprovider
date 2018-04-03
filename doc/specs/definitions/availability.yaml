@@ -15,3 +15,6 @@ definitions:
       orderPossible:
         description: Whether it is possible to order the material
         type: boolean
+      unavailable:
+        description: Description of reason, if availability is unavailable, i.e. for nonexistant material, or material not for logged in library.
+        type: string
