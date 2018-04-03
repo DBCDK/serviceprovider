@@ -204,7 +204,7 @@ export function parameterGroupToParameters(paths, parameterGroups) {
  * @returns {Object}
  */
 export function specToPaths(specs) {
-  let paths = specs.paths || {};
+  let paths = {};
   const defaultProperties = specs.defaultProperties;
 
   for (const key in defaultProperties) {
@@ -218,6 +218,8 @@ export function specToPaths(specs) {
       paths[`/${method}`] = apiMethodIterator(method, specs);
     }
   }
+
+  Object.assign(paths, specs.paths || {});
 
   return paths;
 }
