@@ -280,7 +280,7 @@ api:
         description: object containing boosters to apply to recommendations
         type: object
         properties:
-          authorFlood:
+          loanCount:
             description: Boost on number of loans for each recommendations
             type: integer
     response:
