@@ -55,22 +55,6 @@
       Danish libraries can get access directly from DBC, see the description in danish above. Others have to go through a library to get access.
       </p>
     </div>
-    <div id="swagger-ui">
-    </div>
-    <script src="//unpkg.com/swagger-ui-dist@3/swagger-ui-bundle.js"></script>
-    <script>
-SwaggerUIBundle({
-  url: "./swagger.json",
-  dom_id: '#swagger-ui',
-  presets: [
-    SwaggerUIBundle.presets.apis,
-    SwaggerUIBundle.SwaggerUIStandalonePreset
-  ],
-})
-    </script>
-
-
-
 
 
     <div class="custom-documentation">
@@ -156,15 +140,48 @@ fetchToken.addEventListener('click', function () {
         curl --user "${CLIENT_ID}:${CLIENT_SECRET}" -X POST https://auth.dbc.dk/oauth/token -d "grant_type=password&amp;username=${USERNAME}&amp;password=${PASSWORD}"
       </code></p>
       <p>
-      Hvor <code>${USERNAME}</code> er <em>Lånernummer</em>@<em>Biblioteks-agency</em>, og <code>${PASSWORD}</code> er pinkode (eller det samme som <code>${USERNAME}</code> ved anonym bruger). Eksempler på username er:
-      <ul>
+      Hvor <code>${USERNAME}</code> er <em>Lånernummer</em>@<em>Biblioteks-agency</em>, og <code>${PASSWORD}</code> er pinkode (eller det samme som <code>${USERNAME}</code> ved anonym bruger). Eksempler på username/password er:
+      <!--ul>
         <li><code>12345678@710100</code> er brugeren med lånernummer 12345678, på Københavns Biblioteker, som har agency 710100</li>
         <li><code>@710100</code> er den anonyme bruger på Københavns Biblioteker</li>
         <li><code>@</code> er den anonyme bruger, der ikke er tilknyttet noget specifikt bibliotek</li>
-      </ul>
+      </ul-->
+<style>
+.login-eksempel th {
+  text-align: center;
+}
+.login-eksempel td {
+  border: 1px solid black;
+  vertical-align: top;
+  padding: 10px;
+}
+</style>
+      <table class="login-eksempel">
+        <tr><th>Bibliotek</th><th>Lånernummer</th><th>${USERNAME}</th><th>${PASSWORD}</th></tr>
+        <tr><td>Egentligt bibliotek, eksemplevis Københavns Biblioteker (agency 710100)</td><td>Egentligt lånernummer, eksempelvis: 12345678</td><td>"<code>12345678@710100</code>"</td><td>Brugerens faktiske pin-kode, eksempelvis "<code>1234</code>"</td></tr>
+        <tr><td>Egentligt bibliotek, eksemplevis Københavns Biblioteker (agency 710100)</td><td>Ingen bruger / anonymt login, intet lånernummer</td><td>"<code>@710100</code>"</td><td>Der er ingen pinkode, så derfor er ${PASSWORD} det samme som ${USERNAME}: "<code>@710100</code>"</td></tr>
+        <tr><td>Intet bibliotek. <br />Søgninger etc. foregår i den nationale base</td><td>Ingen bruger / anonymt login, intet lånernummer</td><td>"<code>@</code>"</td><td>Der er ingen pinkode, så derfor er ${PASSWORD} det samme som ${USERNAME}: "<code>@</code>"</td></tr>
+      </table>
       </p>
 
-      </div>
+    </div>
+
+    <div id="swagger-ui">
+    </div>
+    <script src="//unpkg.com/swagger-ui-dist@3/swagger-ui-bundle.js"></script>
+    <script>
+SwaggerUIBundle({
+  url: "./swagger.json",
+  dom_id: '#swagger-ui',
+  presets: [
+    SwaggerUIBundle.presets.apis,
+    SwaggerUIBundle.SwaggerUIStandalonePreset
+  ],
+})
+    </script>
+
+
+
 
   </body>
 </html>
