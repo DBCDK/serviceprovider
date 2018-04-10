@@ -57,7 +57,7 @@ async function performanceStat({request, context}) {
     aggs: {
       version: {
         terms: {
-          field: '@version'
+          field: 'version'
         },
         aggs: {
           endpoints: {

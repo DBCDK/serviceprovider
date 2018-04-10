@@ -47,6 +47,7 @@ const whitelist = {
     rank: true,
     suggest: true,
     recommend: true,
+    performance: true,
     communityservice: true
   },
   communityservice: {
