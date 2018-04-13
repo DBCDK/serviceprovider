@@ -87,51 +87,6 @@
       </table>
       <div id=tokenDiv></div>
       </p>
-      <script>
-
-fetchToken.addEventListener('click', function () {
-
-  if(!ClientId.value) {
-    tokenDiv.innerHTML = "FEJL: Mangler ClientId";
-    return;
-  }
-  if(!ClientSecret.value) {
-    tokenDiv.innerHTML = "FEJL: Mangler ClientSecret";
-    return;
-  }
-  if(!!User.value !== !!PIN.value) {
-    tokenDiv.innerHTML = "FEJL: Både PIN og Lånernummer skal angives, hvis en af dem angives";
-    return;
-  }
-  if(User.value && !Agency.value) {
-    tokenDiv.innerHTML = "FEJL: Mangler biblioteks-agency";
-    return;
-  }
-
-  var clientId = ClientId.value;
-  var clientSecret = ClientSecret.value;
-  var user = User.value + '@' + Agency.value;
-  var passwd = PIN.value || user;
-  var xhr = new XMLHttpRequest();
-  xhr.open('POST', 'https://auth.dbc.dk/oauth/token');
-  xhr.setRequestHeader('Authorization', 'Basic ' + btoa(clientId + ':' + clientSecret));
-  xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-  xhr.send('grant_type=password' + '&username=' + user + '&password=' + passwd);
-  tokenDiv.innerHTML = "Getting token...";
-
-  xhr.onreadystatechange = function() {
-    if (xhr.readyState === 4) {
-      if (xhr.status === 200) {
-        var result = xhr.response;
-        result = JSON.parse(result).access_token;
-        tokenDiv.innerHTML = "<em>Token:</em> " + String(result);
-      } else {
-        tokenDiv.innerHTML = "FEJL ved hent af token: " + xhr.response;
-      }
-    }
-  };
-});
-      </script>
 
       <p>
       Eller man kan sende en request direkte til OAuth2 serveren. Herunder eksempel med curl:
@@ -165,6 +120,63 @@ fetchToken.addEventListener('click', function () {
       </p>
 
     </div>
+
+
+
+      <script>
+var authUrl = "https://auth.dbc.dk/oauth/token";
+
+/* Workaround for staging, required by https://github.com/DBCDK/serviceprovider/issues/932 */
+if(location.host === 'openplatform-stg.dbc.dk')  {
+  authUrl = "https://auth-stg.dbc.dk/oauth/token";
+  document.body.innerHTML = document.body.innerHTML.replace('https://auth.dbc.dk/oauth/token', authUrl);
+}
+
+fetchToken.addEventListener('click', function () {
+
+  if(!ClientId.value) {
+    tokenDiv.innerHTML = "FEJL: Mangler ClientId";
+    return;
+  }
+  if(!ClientSecret.value) {
+    tokenDiv.innerHTML = "FEJL: Mangler ClientSecret";
+    return;
+  }
+  if(!!User.value !== !!PIN.value) {
+    tokenDiv.innerHTML = "FEJL: Både PIN og Lånernummer skal angives, hvis en af dem angives";
+    return;
+  }
+  if(User.value && !Agency.value) {
+    tokenDiv.innerHTML = "FEJL: Mangler biblioteks-agency";
+    return;
+  }
+
+  var clientId = ClientId.value;
+  var clientSecret = ClientSecret.value;
+  var user = User.value + '@' + Agency.value;
+  var passwd = PIN.value || user;
+  var xhr = new XMLHttpRequest();
+  xhr.open('POST', authUrl);
+  xhr.setRequestHeader('Authorization', 'Basic ' + btoa(clientId + ':' + clientSecret));
+  xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+  xhr.send('grant_type=password' + '&username=' + user + '&password=' + passwd);
+  tokenDiv.innerHTML = "Getting token...";
+
+  xhr.onreadystatechange = function() {
+    if (xhr.readyState === 4) {
+      if (xhr.status === 200) {
+        var result = xhr.response;
+        result = JSON.parse(result).access_token;
+        tokenDiv.innerHTML = "<em>Token:</em> " + String(result);
+      } else {
+        tokenDiv.innerHTML = "FEJL ved hent af token: " + xhr.response;
+      }
+    }
+  };
+});
+      </script>
+
+
 
     <div id="swagger-ui">
     </div>
