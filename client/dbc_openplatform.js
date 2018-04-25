@@ -77,7 +77,7 @@ openplatform.connect = function() {
   var promise, args, clientId, clientSecret, user, password;
 
   args = Array.prototype.slice.call(arguments);
-  if (!args.length === 0 && !apiToken) {
+  if (args.length === 0) {
     if (!apiToken) {
       throw 'missing token to connect';
     }
