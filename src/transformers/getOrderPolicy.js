@@ -44,15 +44,17 @@ function getOrderPolicy(pid, params, context) {
 
   return context.call('openorder', soap).then(body => {
     body = JSON.parse(body).checkOrderPolicyResponse;
-    let data = {};
-    if (
-      _.has(body, 'orderPossible.$') &&
-      _.has(body, 'orderPossibleReason.$')
-    ) {
-      data = {
-        orderPossible: body.orderPossible.$,
-        orderPossibleReason: body.orderPossibleReason.$
-      };
+    const data = {};
+
+    if (body.checkOrderPolicyError) {
+      return {statusCode: 500, error: body.checkOrderPolicyError.$};
+    }
+
+    if (body.orderPossible) {
+      data.orderPossible = body.orderPossible.$ !== 'false';
+    }
+    if (body.orderPossibleReason) {
+      data.orderPossibleReason = body.orderPossibleReason.$;
     }
     return {statusCode: 200, data: data};
   });
