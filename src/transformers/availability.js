@@ -18,20 +18,7 @@ async function availability(request, context) {
     return {unavailable: 'getOrderPolicy error: ' + getOrderPolicyRes.error};
   }
 
-  const data = {
-    willLend: false,
-    orderPossible: true
-  };
-
-  if (_.has(openHoldingStatusRes, 'data.willLend')) {
-    Object.assign(data, openHoldingStatusRes.data);
-  }
-
-  if (getOrderPolicyRes.data.orderPossible === 'false') {
-    data.orderPossible = false;
-  }
-
-  return data;
+  return Object.assign({}, openHoldingStatusRes.data, getOrderPolicyRes.data);
 }
 
 export default async (request, context) => {
