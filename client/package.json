@@ -1,0 +1,20 @@
+{
+  "name": "openplatform",
+  "license": "GPLv3",
+  "main": "dbc_openplatform.js",
+  "unpkg": "dbc_openplatform.min.js",
+  "repository": "github:dbcdk/serviceprovider",
+  "version": "3.0.0",
+  "homepage": "https://openplatform.dbc.dk",
+  "description": "",
+  "dependencies": {
+    "socketcluster-client": "^5.3.1"
+  },
+  "scripts": {
+    "build": "npx browserify dbc_openplatform.js -s dbcOpenPlatform | npx uglifyjs | cat > dbc_openplatform.min.js"
+  },
+  "devDependencies": {
+    "browserify": "^15.2.0",
+    "uglify-js": "^3.3.21"
+  }
+}
