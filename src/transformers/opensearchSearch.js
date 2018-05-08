@@ -34,14 +34,15 @@ function getSoap(
 `;
 }
 
+function assertIdentifier(o) {
+  if (!o.identifier) {
+    throw 'missing identifier in response from opensearch';
+  }
+}
+
 function processResponse(body) {
   try {
     body = JSON.parse(body).searchResponse;
-    function assertIdentifier(o) {
-      if (!o.identifier) {
-        throw 'missing identifier in response from opensearch';
-      }
-    }
     if (body.error) {
       return {
         statusCode: 500,
