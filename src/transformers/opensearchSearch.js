@@ -34,71 +34,92 @@ function getSoap(
 `;
 }
 
-function processResponse(body) {
-  body = JSON.parse(body).searchResponse;
-  if (body.error) {
-    return {
-      statusCode: 500,
-      error: body.error.$
-    };
+function assertIdentifier(o) {
+  if (!o.identifier) {
+    throw 'missing identifier in response from opensearch';
   }
-  body = body.result;
+}
 
-  // let more = body.more.$; // this could be used for paging info later
-  let searchResult = body.searchResult || [];
-  let result = [];
-  const parseErrors = [];
-  searchResult.forEach(o => {
-    // eslint-disable-line no-loop-func
-    let collection = o.collection.object.map(obj => obj.identifier.$);
-    let dkabm = o.collection.object[0].record;
-    dkabm = workToJSON(dkabm);
+function processResponse(body) {
+  try {
+    body = JSON.parse(body).searchResponse;
+    if (body.error) {
+      return {
+        statusCode: 500,
+        error: body.error.$
+      };
+    }
+    body = body.result;
 
-    let briefDisplays = [];
-    if (o.formattedCollection.briefDisplay) {
-      briefDisplays = o.formattedCollection.briefDisplay.manifestation.map(
-        briefDisplay => {
-          delete briefDisplay.fedoraPid;
-          return workToJSON(briefDisplay, 'bd');
-        }
-      );
-    } else {
-      parseErrors.push(
-        `Parse error: briefDisplay could not be found on object ${collection}`
-      );
-      log.error('Parse error: briefDisplay could not be found on object', {
-        collection: collection[0],
-        context: context.data,
-        OpenSearch: {trackingId: body.statInfo.trackingId.$}
+    // let more = body.more.$; // this could be used for paging info later
+    let searchResult = body.searchResult || [];
+    let result = [];
+    const parseErrors = [];
+    searchResult.forEach(o => {
+      // eslint-disable-line no-loop-func
+      let collection = o.collection.object.map(obj => {
+        assertIdentifier(obj);
+        return obj.identifier.$;
       });
+      let dkabm = o.collection.object[0].record;
+      dkabm = workToJSON(dkabm);
+
+      let briefDisplays = [];
+      if (o.formattedCollection.briefDisplay) {
+        briefDisplays = o.formattedCollection.briefDisplay.manifestation.map(
+          briefDisplay => {
+            assertIdentifier(briefDisplay);
+            delete briefDisplay.fedoraPid;
+            return workToJSON(briefDisplay, 'bd');
+          }
+        );
+      } else {
+        parseErrors.push(
+          `Parse error: briefDisplay could not be found on object ${collection}`
+        );
+        log.error('Parse error: briefDisplay could not be found on object', {
+          collection: collection[0],
+          context: context.data,
+          OpenSearch: {trackingId: body.statInfo.trackingId.$}
+        });
+      }
+
+      // here we would call getObject or moreInfo if needed...
+      result.push(
+        Object.assign(
+          {
+            collection: collection,
+            collectionDetails: briefDisplays
+          },
+          dkabm,
+          briefDisplays[0]
+        )
+      );
+    });
+
+    const response = {
+      statusCode: 200,
+      data: result,
+      // collectionCount: +body.collectionCount.$,
+      hitCount: +body.hitCount.$,
+      more: body.more.$ === 'true'
+    };
+
+    if (parseErrors.length) {
+      response.error = parseErrors;
     }
 
-    // here we would call getObject or moreInfo if needed...
-    result.push(
-      Object.assign(
-        {
-          collection: collection,
-          collectionDetails: briefDisplays
-        },
-        dkabm,
-        briefDisplays[0]
-      )
-    );
-  });
-
-  const response = {
-    statusCode: 200,
-    data: result,
-    // collectionCount: +body.collectionCount.$,
-    hitCount: +body.hitCount.$,
-    more: body.more.$ === 'true'
-  };
-
-  if (parseErrors.length) {
-    response.error = parseErrors;
+    return response;
+  } catch (e) {
+    log.error({
+      error: String(e),
+      searchResponse: body
+    });
+    return {
+      statusCode: 500,
+      error: String(e)
+    };
   }
-
-  return response;
 }
 
 export default async (params, context) => {
