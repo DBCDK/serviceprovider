@@ -78,8 +78,18 @@ function openAgencyPromiseHandler(context, badgerfish) {
     const result = {};
 
     Object.keys(library)
-      .filter(libraryKey => libraryKey !== '@' && libraryKey.indexOf('ncip') !== 0)
+      .filter(
+        libraryKey =>
+          libraryKey !== '@' &&
+          libraryKey.indexOf('ncip') !== 0 &&
+          library[libraryKey] !== null
+      )
       .forEach(key => (result[key] = libraryIterator(library[key])));
+
+    // eslint-disable-next-line no-undefined
+    if (result.agencyId === undefined) {
+      result.agencyId = result.branchId;
+    }
 
     return result;
   });
