@@ -175,7 +175,7 @@ export default (request, context) => {
     error => {
       const errMsg =
         'CoverUrls could not be fetched. Server probably unavailable. Try request again without coverUrls.';
-      log.error(errMsg, error);
+      log.error(errMsg, {error: String(error), pidList: params.pidList});
       return {statusCode: 500, error: errMsg};
     }
   );
