@@ -52,21 +52,8 @@ First install dependencies
     # Install dependencies
     npm install
 
-And then you can start the server with mock-data with `./start-service-provider.sh`, - or start a development version with:
-
-    # Optionally start a local minimal authorisation server
-    # - which just sends the specified context, and ignores token
-    PORT=3000 node src/smaug/minismaug.js -f context.json
-    
-    # Start autorestarting developement server.
-    # The SMAUG environment is the authentication server,
-    # if you do not run it locally, use another url.
-    # (examples could be `http://platform-i01:3000` or 
-    # `http://smaug.m.dbc.antistof.dk:3000` if you have
-    # access to these)
-
-    SMAUG=http://localhost:3000 npm run start
-
+And then you can start working with it with `npm run dev`.
+(or start the server with mock-data with `./start-service-provider.sh`)
 By default the ServiceProvider will run on port 8080 on localhost.
 
 If you then open a browser to `localhost:8080`, you will see the API-documentation, - and you can now also send requests to the API, for example:
