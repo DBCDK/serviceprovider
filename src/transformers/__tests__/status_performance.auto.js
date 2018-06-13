@@ -1,4 +1,4 @@
-// AUTOTEST GENERATOR: {"endpoint":"status","params":{"fields":["performance"],"week":"2018-W07"}}
+// AUTOTEST GENERATOR: {"endpoint":"status","params":{"fields":["performance"],"week":"2018-W15"}}
 //
 //
 // AUTOMATED UNIT TEST
@@ -6,7 +6,7 @@
 //
 //
 const endpoint = 'status';
-const params = {fields: ['performance'], week: '2018-W07'};
+const params = {fields: ['performance'], week: '2018-W15'};
 
 const expected = {
   statusCode: 200,
@@ -15,202 +15,34 @@ const expected = {
     endOfServiceDate: '0000-00-00T00:00:00Z',
     performance: [
       {
-        week: '2018-W07',
-        endpoint: 'recommend',
-        version: '1.0.0',
-        count: 8184,
-        underlyingServices: {
-          '1.0': 9,
-          '5.0': 9,
-          '25.0': 11,
-          '50.0': 13,
-          '75.0': 22,
-          '95.0': 41,
-          '99.0': 58
-        },
-        total: {
-          '1.0': 9,
-          '5.0': 10,
-          '25.0': 11,
-          '50.0': 14,
-          '75.0': 23,
-          '95.0': 42,
-          '99.0': 60
-        }
-      },
-      {
-        week: '2018-W07',
+        week: '2018-W15',
         endpoint: 'work',
-        version: '1.0.0',
-        count: 4267,
-        underlyingServices: {
-          '1.0': 121,
-          '5.0': 175,
-          '25.0': 336,
-          '50.0': 522,
-          '75.0': 833,
-          '95.0': 1674,
-          '99.0': 3601
-        },
-        total: {
-          '1.0': 122,
-          '5.0': 178,
-          '25.0': 339,
-          '50.0': 526,
-          '75.0': 839,
-          '95.0': 1687,
-          '99.0': 3625
-        }
-      },
-      {
-        week: '2018-W07',
-        endpoint: 'suggest',
-        version: '1.0.0',
-        count: 4040,
-        underlyingServices: {
-          '1.0': 152,
-          '5.0': 165,
-          '25.0': 174,
-          '50.0': 183,
-          '75.0': 192,
-          '95.0': 361,
-          '99.0': 855
-        },
-        total: {
-          '1.0': 154,
-          '5.0': 166,
-          '25.0': 176,
-          '50.0': 184,
-          '75.0': 193,
-          '95.0': 362,
-          '99.0': 857
-        }
-      },
-      {
-        week: '2018-W07',
-        endpoint: 'search',
-        version: '1.0.0',
-        count: 1009,
-        underlyingServices: {
-          '1.0': 114,
-          '5.0': 193,
-          '25.0': 593,
-          '50.0': 939,
-          '75.0': 1374,
-          '95.0': 2593,
-          '99.0': 4212
-        },
-        total: {
-          '1.0': 116,
-          '5.0': 194,
-          '25.0': 601,
-          '50.0': 959,
-          '75.0': 1400,
-          '95.0': 2621,
-          '99.0': 4249
-        }
-      },
-      {
-        week: '2018-W07',
-        endpoint: 'availability',
-        version: '1.0.0',
-        count: 56,
-        underlyingServices: {
-          '1.0': 483,
-          '5.0': 680,
-          '25.0': 1449,
-          '50.0': 1648,
-          '75.0': 1985,
-          '95.0': 2418,
-          '99.0': 2737
-        },
-        total: {
-          '1.0': 484,
-          '5.0': 681,
-          '25.0': 1451,
-          '50.0': 1650,
-          '75.0': 1986,
-          '95.0': 2419,
-          '99.0': 2738
-        }
-      },
-      {
-        week: '2018-W07',
-        endpoint: 'user',
-        version: '1.0.0',
-        count: 5,
-        underlyingServices: {
-          '1.0': 11395,
-          '5.0': 11614,
-          '25.0': 12709,
-          '50.0': 13345,
-          '75.0': 14014,
-          '95.0': 32024,
-          '99.0': 35626
-        },
-        total: {
-          '1.0': 11406,
-          '5.0': 11624,
-          '25.0': 12716,
-          '50.0': 13355,
-          '75.0': 14016,
-          '95.0': 32027,
-          '99.0': 35629
-        }
-      },
-      {
-        week: '2018-W07',
-        endpoint: 'user',
         version: '2.0.0',
-        count: 2551,
+        count: 155682,
         underlyingServices: {
-          '1.0': 155,
-          '5.0': 167,
-          '25.0': 18067,
-          '50.0': 38484,
-          '75.0': 49473,
-          '95.0': 72089,
-          '99.0': 159831
+          '1.0': 0,
+          '5.0': 0,
+          '25.0': 53,
+          '50.0': 249,
+          '75.0': 507,
+          '95.0': 3606,
+          '99.0': 5953
         },
         total: {
-          '1.0': 172,
-          '5.0': 221,
-          '25.0': 18067,
-          '50.0': 38486,
-          '75.0': 49470,
-          '95.0': 72089,
-          '99.0': 159831
+          '1.0': 0,
+          '5.0': 0,
+          '25.0': 55,
+          '50.0': 258,
+          '75.0': 516,
+          '95.0': 3622,
+          '99.0': 5973
         }
       },
       {
-        week: '2018-W07',
-        endpoint: 'availability',
-        version: '2.0.0',
-        count: 1735,
-        underlyingServices: {
-          '1.0': 10866,
-          '5.0': 21250,
-          '25.0': 37155,
-          '50.0': 55653,
-          '75.0': 68988,
-          '95.0': 98767,
-          '99.0': 159843
-        },
-        total: {
-          '1.0': 10866,
-          '5.0': 21251,
-          '25.0': 37156,
-          '50.0': 55657,
-          '75.0': 68989,
-          '95.0': 98767,
-          '99.0': 159843
-        }
-      },
-      {
-        week: '2018-W07',
+        week: '2018-W15',
         endpoint: 'libraries',
         version: '2.0.0',
-        count: 357,
+        count: 104646,
         underlyingServices: {
           '1.0': 0,
           '5.0': 0,
@@ -221,373 +53,637 @@ const expected = {
           '99.0': 0
         },
         total: {
-          '1.0': 36,
-          '5.0': 37,
-          '25.0': 42,
-          '50.0': 55,
-          '75.0': 75,
-          '95.0': 97,
-          '99.0': 113
+          '1.0': 30,
+          '5.0': 53,
+          '25.0': 60,
+          '50.0': 274,
+          '75.0': 2303,
+          '95.0': 3203,
+          '99.0': 6074
         }
       },
       {
-        week: '2018-W07',
-        endpoint: 'work',
-        version: '2.0.0',
-        count: 239,
-        underlyingServices: {
-          '1.0': 229,
-          '5.0': 285,
-          '25.0': 1265,
-          '50.0': 2043,
-          '75.0': 3886,
-          '95.0': 12301,
-          '99.0': 15753
-        },
-        total: {
-          '1.0': 248,
-          '5.0': 297,
-          '25.0': 1275,
-          '50.0': 2066,
-          '75.0': 3913,
-          '95.0': 12330,
-          '99.0': 15797
-        }
-      },
-      {
-        week: '2018-W07',
+        week: '2018-W15',
         endpoint: 'search',
         version: '2.0.0',
-        count: 238,
+        count: 104223,
         underlyingServices: {
-          '1.0': 80,
-          '5.0': 108,
-          '25.0': 1323,
-          '50.0': 2102,
-          '75.0': 3981,
-          '95.0': 12307,
-          '99.0': 15755
+          '1.0': 98,
+          '5.0': 199,
+          '25.0': 386,
+          '50.0': 767,
+          '75.0': 2464,
+          '95.0': 5061,
+          '99.0': 7268
+        },
+        total: {
+          '1.0': 100,
+          '5.0': 201,
+          '25.0': 397,
+          '50.0': 805,
+          '75.0': 2517,
+          '95.0': 5129,
+          '99.0': 7366
+        }
+      },
+      {
+        week: '2018-W15',
+        endpoint: 'availability',
+        version: '2.0.0',
+        count: 104039,
+        underlyingServices: {
+          '1.0': 873,
+          '5.0': 983,
+          '25.0': 1100,
+          '50.0': 1268,
+          '75.0': 1687,
+          '95.0': 2940,
+          '99.0': 3850
+        },
+        total: {
+          '1.0': 874,
+          '5.0': 984,
+          '25.0': 1101,
+          '50.0': 1268,
+          '75.0': 1689,
+          '95.0': 2940,
+          '99.0': 3851
+        }
+      },
+      {
+        week: '2018-W15',
+        endpoint: 'recommend',
+        version: '2.0.0',
+        count: 103742,
+        underlyingServices: {
+          '1.0': 7,
+          '5.0': 8,
+          '25.0': 10,
+          '50.0': 50,
+          '75.0': 61,
+          '95.0': 121,
+          '99.0': 129
+        },
+        total: {
+          '1.0': 7,
+          '5.0': 8,
+          '25.0': 10,
+          '50.0': 49,
+          '75.0': 75,
+          '95.0': 134,
+          '99.0': 185
+        }
+      },
+      {
+        week: '2018-W15',
+        endpoint: 'facets',
+        version: '2.0.0',
+        count: 102483,
+        underlyingServices: {
+          '1.0': 127,
+          '5.0': 196,
+          '25.0': 247,
+          '50.0': 291,
+          '75.0': 375,
+          '95.0': 585,
+          '99.0': 860
+        },
+        total: {
+          '1.0': 131,
+          '5.0': 200,
+          '25.0': 255,
+          '50.0': 306,
+          '75.0': 393,
+          '95.0': 608,
+          '99.0': 880
+        }
+      },
+      {
+        week: '2018-W15',
+        endpoint: 'user',
+        version: '2.0.0',
+        count: 1446,
+        underlyingServices: {
+          '1.0': 151,
+          '5.0': 159,
+          '25.0': 179,
+          '50.0': 206,
+          '75.0': 334,
+          '95.0': 4203,
+          '99.0': 15938
+        },
+        total: {
+          '1.0': 156,
+          '5.0': 163,
+          '25.0': 185,
+          '50.0': 215,
+          '75.0': 352,
+          '95.0': 4212,
+          '99.0': 15969
+        }
+      },
+      {
+        week: '2018-W15',
+        endpoint: 'order',
+        version: '2.0.0',
+        count: 6,
+        underlyingServices: {
+          '1.0': 1528,
+          '5.0': 1606,
+          '25.0': 1992,
+          '50.0': 2474,
+          '75.0': 17007,
+          '95.0': 28633,
+          '99.0': 30959
+        },
+        total: {
+          '1.0': 1529,
+          '5.0': 1607,
+          '25.0': 1994,
+          '50.0': 2478,
+          '75.0': 17011,
+          '95.0': 28636,
+          '99.0': 30962
+        }
+      },
+      {
+        week: '2018-W15',
+        endpoint: 'recommend',
+        version: '1.0.0',
+        count: 14994,
+        underlyingServices: {
+          '1.0': 7,
+          '5.0': 7,
+          '25.0': 9,
+          '50.0': 10,
+          '75.0': 18,
+          '95.0': 37,
+          '99.0': 57
+        },
+        total: {
+          '1.0': 7,
+          '5.0': 8,
+          '25.0': 9,
+          '50.0': 11,
+          '75.0': 19,
+          '95.0': 38,
+          '99.0': 58
+        }
+      },
+      {
+        week: '2018-W15',
+        endpoint: 'work',
+        version: '1.0.0',
+        count: 7752,
+        underlyingServices: {
+          '1.0': 101,
+          '5.0': 147,
+          '25.0': 248,
+          '50.0': 387,
+          '75.0': 656,
+          '95.0': 2928,
+          '99.0': 7676
+        },
+        total: {
+          '1.0': 103,
+          '5.0': 150,
+          '25.0': 251,
+          '50.0': 391,
+          '75.0': 659,
+          '95.0': 2939,
+          '99.0': 7681
+        }
+      },
+      {
+        week: '2018-W15',
+        endpoint: 'suggest',
+        version: '1.0.0',
+        count: 7476,
+        underlyingServices: {
+          '1.0': 154,
+          '5.0': 167,
+          '25.0': 178,
+          '50.0': 187,
+          '75.0': 196,
+          '95.0': 334,
+          '99.0': 779
+        },
+        total: {
+          '1.0': 154,
+          '5.0': 167,
+          '25.0': 179,
+          '50.0': 187,
+          '75.0': 197,
+          '95.0': 335,
+          '99.0': 780
+        }
+      },
+      {
+        week: '2018-W15',
+        endpoint: 'search',
+        version: '1.0.0',
+        count: 1270,
+        underlyingServices: {
+          '1.0': 99,
+          '5.0': 162,
+          '25.0': 456,
+          '50.0': 736,
+          '75.0': 1357,
+          '95.0': 3059,
+          '99.0': 18198
+        },
+        total: {
+          '1.0': 100,
+          '5.0': 164,
+          '25.0': 468,
+          '50.0': 745,
+          '75.0': 1375,
+          '95.0': 3083,
+          '99.0': 18215
+        }
+      },
+      {
+        week: '2018-W15',
+        endpoint: 'availability',
+        version: '1.0.0',
+        count: 680,
+        underlyingServices: {
+          '1.0': 487,
+          '5.0': 901,
+          '25.0': 1569,
+          '50.0': 1926,
+          '75.0': 2535,
+          '95.0': 7612,
+          '99.0': 11996
+        },
+        total: {
+          '1.0': 488,
+          '5.0': 902,
+          '25.0': 1570,
+          '50.0': 1928,
+          '75.0': 2536,
+          '95.0': 7612,
+          '99.0': 11996
+        }
+      },
+      {
+        week: '2018-W15',
+        endpoint: 'libraries',
+        version: '1.0.0',
+        count: 10,
+        underlyingServices: {
+          '1.0': 0,
+          '5.0': 0,
+          '25.0': 0,
+          '50.0': 0,
+          '75.0': 0,
+          '95.0': 0,
+          '99.0': 0
+        },
+        total: {
+          '1.0': 0,
+          '5.0': 0,
+          '25.0': 0,
+          '50.0': 1,
+          '75.0': 1,
+          '95.0': 1,
+          '99.0': 1
+        }
+      },
+      {
+        week: '2018-W15',
+        endpoint: 'facets',
+        version: '1.0.0',
+        count: 6,
+        underlyingServices: {
+          '1.0': 191,
+          '5.0': 199,
+          '25.0': 237,
+          '50.0': 284,
+          '75.0': 494,
+          '95.0': 662,
+          '99.0': 696
+        },
+        total: {
+          '1.0': 194,
+          '5.0': 201,
+          '25.0': 238,
+          '50.0': 284,
+          '75.0': 495,
+          '95.0': 664,
+          '99.0': 698
+        }
+      },
+      {
+        week: '2018-W15',
+        endpoint: 'order',
+        version: '1.0.0',
+        count: 6,
+        underlyingServices: {
+          '1.0': 1915,
+          '5.0': 1978,
+          '25.0': 2295,
+          '50.0': 2690,
+          '75.0': 4278,
+          '95.0': 5547,
+          '99.0': 5802
+        },
+        total: {
+          '1.0': 1918,
+          '5.0': 1981,
+          '25.0': 2298,
+          '50.0': 2694,
+          '75.0': 4282,
+          '95.0': 5552,
+          '99.0': 5806
+        }
+      },
+      {
+        week: '2018-W15',
+        endpoint: 'events',
+        version: '1.0.0',
+        count: 2,
+        underlyingServices: {
+          '1.0': 68,
+          '5.0': 68,
+          '25.0': 68,
+          '50.0': 68,
+          '75.0': 68,
+          '95.0': 68,
+          '99.0': 68
+        },
+        total: {
+          '1.0': 68,
+          '5.0': 68,
+          '25.0': 68,
+          '50.0': 68,
+          '75.0': 68,
+          '95.0': 68,
+          '99.0': 68
+        }
+      },
+      {
+        week: '2018-W15',
+        endpoint: 'news',
+        version: '1.0.0',
+        count: 2,
+        underlyingServices: {
+          '1.0': 45,
+          '5.0': 45,
+          '25.0': 45,
+          '50.0': 45,
+          '75.0': 45,
+          '95.0': 45,
+          '99.0': 45
+        },
+        total: {
+          '1.0': 45,
+          '5.0': 45,
+          '25.0': 45,
+          '50.0': 45,
+          '75.0': 45,
+          '95.0': 45,
+          '99.0': 45
+        }
+      },
+      {
+        week: '2018-W15',
+        endpoint: 'search',
+        version: '3.0.0',
+        count: 17,
+        underlyingServices: {
+          '1.0': 215,
+          '5.0': 421,
+          '25.0': 932,
+          '50.0': 1216,
+          '75.0': 1341,
+          '95.0': 2523,
+          '99.0': 3016
+        },
+        total: {
+          '1.0': 224,
+          '5.0': 454,
+          '25.0': 998,
+          '50.0': 1279,
+          '75.0': 1398,
+          '95.0': 2576,
+          '99.0': 3070
+        }
+      },
+      {
+        week: '2018-W15',
+        endpoint: 'status',
+        version: '3.0.0',
+        count: 8,
+        underlyingServices: {
+          '1.0': 5119,
+          '5.0': 5135,
+          '25.0': 5217,
+          '50.0': 5319,
+          '75.0': 5382,
+          '95.0': 5432,
+          '99.0': 5442
+        },
+        total: {
+          '1.0': 5123,
+          '5.0': 5140,
+          '25.0': 5224,
+          '50.0': 5329,
+          '75.0': 5389,
+          '95.0': 5437,
+          '99.0': 5447
+        }
+      },
+      {
+        week: '2018-W15',
+        endpoint: 'events',
+        version: '3.0.0',
+        count: 6,
+        underlyingServices: {
+          '1.0': 16,
+          '5.0': 26,
+          '25.0': 80,
+          '50.0': 147,
+          '75.0': 155,
+          '95.0': 161,
+          '99.0': 162
         },
         total: {
           '1.0': 82,
-          '5.0': 110,
-          '25.0': 1452,
-          '50.0': 2272,
-          '75.0': 4180,
-          '95.0': 12522,
-          '99.0': 16016
+          '5.0': 95,
+          '25.0': 159,
+          '50.0': 238,
+          '75.0': 281,
+          '95.0': 315,
+          '99.0': 322
         }
       },
       {
-        week: '2018-W07',
-        endpoint: 'events',
-        version: '2.0.0',
-        count: 2,
-        underlyingServices: {
-          '1.0': 19,
-          '5.0': 19,
-          '25.0': 20,
-          '50.0': 21,
-          '75.0': 21,
-          '95.0': 22,
-          '99.0': 22
-        },
-        total: {
-          '1.0': 108,
-          '5.0': 109,
-          '25.0': 111,
-          '50.0': 113,
-          '75.0': 116,
-          '95.0': 118,
-          '99.0': 118
-        }
-      },
-      {
-        week: '2018-W07',
-        endpoint: 'library',
-        version: '2.0.0',
-        count: 1,
-        underlyingServices: {
-          '1.0': 35,
-          '5.0': 35,
-          '25.0': 35,
-          '50.0': 35,
-          '75.0': 35,
-          '95.0': 35,
-          '99.0': 35
-        },
-        total: {
-          '1.0': 427,
-          '5.0': 427,
-          '25.0': 427,
-          '50.0': 427,
-          '75.0': 427,
-          '95.0': 427,
-          '99.0': 427
-        }
-      },
-      {
-        week: '2018-W07',
-        endpoint: 'order',
-        version: '2.0.0',
-        count: 1,
-        underlyingServices: {
-          '1.0': 3914,
-          '5.0': 3914,
-          '25.0': 3914,
-          '50.0': 3914,
-          '75.0': 3914,
-          '95.0': 3914,
-          '99.0': 3914
-        },
-        total: {
-          '1.0': 3919,
-          '5.0': 3919,
-          '25.0': 3919,
-          '50.0': 3919,
-          '75.0': 3919,
-          '95.0': 3919,
-          '99.0': 3919
-        }
-      },
-      {
-        week: '2018-W07',
-        endpoint: 'search',
-        version: '3.0.0',
-        count: 350,
-        underlyingServices: {
-          '1.0': 0,
-          '5.0': 80,
-          '25.0': 305,
-          '50.0': 1025,
-          '75.0': 2804,
-          '95.0': 3816,
-          '99.0': 4214
-        },
-        total: {
-          '1.0': 0,
-          '5.0': 82,
-          '25.0': 307,
-          '50.0': 1051,
-          '75.0': 2876,
-          '95.0': 3870,
-          '99.0': 4319
-        }
-      },
-      {
-        week: '2018-W07',
-        endpoint: 'events',
-        version: '3.0.0',
-        count: 95,
-        underlyingServices: {
-          '1.0': 9,
-          '5.0': 11,
-          '25.0': 14,
-          '50.0': 18,
-          '75.0': 30,
-          '95.0': 114,
-          '99.0': 1147
-        },
-        total: {
-          '1.0': 44,
-          '5.0': 53,
-          '25.0': 61,
-          '50.0': 74,
-          '75.0': 100,
-          '95.0': 182,
-          '99.0': 1204
-        }
-      },
-      {
-        week: '2018-W07',
-        endpoint: 'library',
-        version: '3.0.0',
-        count: 51,
-        underlyingServices: {
-          '1.0': 12,
-          '5.0': 12,
-          '25.0': 18,
-          '50.0': 26,
-          '75.0': 55,
-          '95.0': 97,
-          '99.0': 103
-        },
-        total: {
-          '1.0': 43,
-          '5.0': 137,
-          '25.0': 230,
-          '50.0': 261,
-          '75.0': 310,
-          '95.0': 436,
-          '99.0': 458
-        }
-      },
-      {
-        week: '2018-W07',
-        endpoint: 'rank',
-        version: '3.0.0',
-        count: 36,
-        underlyingServices: {
-          '1.0': 54,
-          '5.0': 55,
-          '25.0': 58,
-          '50.0': 60,
-          '75.0': 65,
-          '95.0': 73,
-          '99.0': 78
-        },
-        total: {
-          '1.0': 56,
-          '5.0': 57,
-          '25.0': 60,
-          '50.0': 62,
-          '75.0': 70,
-          '95.0': 76,
-          '99.0': 80
-        }
-      },
-      {
-        week: '2018-W07',
-        endpoint: 'availability',
-        version: '3.0.0',
-        count: 11,
-        underlyingServices: {
-          '1.0': 1487,
-          '5.0': 1488,
-          '25.0': 1636,
-          '50.0': 1744,
-          '75.0': 1862,
-          '95.0': 1902,
-          '99.0': 1917
-        },
-        total: {
-          '1.0': 1487,
-          '5.0': 1489,
-          '25.0': 1640,
-          '50.0': 1745,
-          '75.0': 1865,
-          '95.0': 1904,
-          '99.0': 1919
-        }
-      },
-      {
-        week: '2018-W07',
-        endpoint: 'facets',
-        version: '3.0.0',
-        count: 11,
-        underlyingServices: {
-          '1.0': 226,
-          '5.0': 230,
-          '25.0': 348,
-          '50.0': 422,
-          '75.0': 526,
-          '95.0': 657,
-          '99.0': 731
-        },
-        total: {
-          '1.0': 240,
-          '5.0': 242,
-          '25.0': 362,
-          '50.0': 436,
-          '75.0': 535,
-          '95.0': 669,
-          '99.0': 744
-        }
-      },
-      {
-        week: '2018-W07',
-        endpoint: 'recommend',
-        version: '3.0.0',
-        count: 11,
-        underlyingServices: {
-          '1.0': 31,
-          '5.0': 33,
-          '25.0': 35,
-          '50.0': 38,
-          '75.0': 40,
-          '95.0': 42,
-          '99.0': 42
-        },
-        total: {
-          '1.0': 60,
-          '5.0': 61,
-          '25.0': 64,
-          '50.0': 71,
-          '75.0': 80,
-          '95.0': 90,
-          '99.0': 92
-        }
-      },
-      {
-        week: '2018-W07',
-        endpoint: 'user',
-        version: '3.0.0',
-        count: 10,
-        underlyingServices: {
-          '1.0': 1395,
-          '5.0': 1418,
-          '25.0': 1521,
-          '50.0': 1588,
-          '75.0': 1770,
-          '95.0': 2859,
-          '99.0': 3344
-        },
-        total: {
-          '1.0': 1404,
-          '5.0': 1426,
-          '25.0': 1532,
-          '50.0': 1599,
-          '75.0': 1776,
-          '95.0': 2869,
-          '99.0': 3357
-        }
-      },
-      {
-        week: '2018-W07',
-        endpoint: 'work',
-        version: '3.0.0',
-        count: 10,
-        underlyingServices: {
-          '1.0': 929,
-          '5.0': 966,
-          '25.0': 1085,
-          '50.0': 1275,
-          '75.0': 1323,
-          '95.0': 1340,
-          '99.0': 1350
-        },
-        total: {
-          '1.0': 960,
-          '5.0': 999,
-          '25.0': 1119,
-          '50.0': 1335,
-          '75.0': 1372,
-          '95.0': 1416,
-          '99.0': 1426
-        }
-      },
-      {
-        week: '2018-W07',
+        week: '2018-W15',
         endpoint: 'suggest',
         version: '3.0.0',
-        count: 9,
+        count: 4,
         underlyingServices: {
-          '1.0': 179,
-          '5.0': 180,
-          '25.0': 181,
-          '50.0': 183,
-          '75.0': 190,
-          '95.0': 195,
-          '99.0': 196
+          '1.0': 0,
+          '5.0': 0,
+          '25.0': 0,
+          '50.0': 0,
+          '75.0': 0,
+          '95.0': 0,
+          '99.0': 0
         },
         total: {
-          '1.0': 185,
-          '5.0': 185,
-          '25.0': 189,
-          '50.0': 195,
-          '75.0': 198,
-          '95.0': 207,
-          '99.0': 207
+          '1.0': 2,
+          '5.0': 2,
+          '25.0': 2,
+          '50.0': 2,
+          '75.0': 2,
+          '95.0': 2,
+          '99.0': 2
+        }
+      },
+      {
+        week: '2018-W15',
+        endpoint: 'availability',
+        version: '3.0.0',
+        count: 2,
+        underlyingServices: {
+          '1.0': 1119,
+          '5.0': 1119,
+          '25.0': 1119,
+          '50.0': 1119,
+          '75.0': 1119,
+          '95.0': 1119,
+          '99.0': 1119
+        },
+        total: {
+          '1.0': 1124,
+          '5.0': 1124,
+          '25.0': 1124,
+          '50.0': 1124,
+          '75.0': 1124,
+          '95.0': 1124,
+          '99.0': 1124
+        }
+      },
+      {
+        week: '2018-W15',
+        endpoint: 'facets',
+        version: '3.0.0',
+        count: 2,
+        underlyingServices: {
+          '1.0': 542,
+          '5.0': 542,
+          '25.0': 542,
+          '50.0': 542,
+          '75.0': 542,
+          '95.0': 542,
+          '99.0': 542
+        },
+        total: {
+          '1.0': 565,
+          '5.0': 565,
+          '25.0': 565,
+          '50.0': 565,
+          '75.0': 565,
+          '95.0': 565,
+          '99.0': 565
+        }
+      },
+      {
+        week: '2018-W15',
+        endpoint: 'libraries',
+        version: '3.0.0',
+        count: 2,
+        underlyingServices: {
+          '1.0': 4274,
+          '5.0': 4274,
+          '25.0': 4274,
+          '50.0': 4274,
+          '75.0': 4274,
+          '95.0': 4274,
+          '99.0': 4274
+        },
+        total: {
+          '1.0': 4613,
+          '5.0': 4613,
+          '25.0': 4613,
+          '50.0': 4613,
+          '75.0': 4613,
+          '95.0': 4613,
+          '99.0': 4613
+        }
+      },
+      {
+        week: '2018-W15',
+        endpoint: 'library',
+        version: '3.0.0',
+        count: 2,
+        underlyingServices: {
+          '1.0': 80,
+          '5.0': 80,
+          '25.0': 80,
+          '50.0': 80,
+          '75.0': 80,
+          '95.0': 80,
+          '99.0': 80
+        },
+        total: {
+          '1.0': 213,
+          '5.0': 213,
+          '25.0': 213,
+          '50.0': 213,
+          '75.0': 213,
+          '95.0': 213,
+          '99.0': 213
+        }
+      },
+      {
+        week: '2018-W15',
+        endpoint: 'news',
+        version: '3.0.0',
+        count: 2,
+        underlyingServices: {
+          '1.0': 67,
+          '5.0': 67,
+          '25.0': 67,
+          '50.0': 67,
+          '75.0': 67,
+          '95.0': 67,
+          '99.0': 67
+        },
+        total: {
+          '1.0': 89,
+          '5.0': 89,
+          '25.0': 89,
+          '50.0': 89,
+          '75.0': 89,
+          '95.0': 89,
+          '99.0': 89
+        }
+      },
+      {
+        week: '2018-W15',
+        endpoint: 'recommend',
+        version: '3.0.0',
+        count: 2,
+        underlyingServices: {
+          '1.0': 0,
+          '5.0': 0,
+          '25.0': 0,
+          '50.0': 0,
+          '75.0': 0,
+          '95.0': 0,
+          '99.0': 0
+        },
+        total: {
+          '1.0': 2,
+          '5.0': 2,
+          '25.0': 2,
+          '50.0': 2,
+          '75.0': 2,
+          '95.0': 2,
+          '99.0': 2
         }
       }
     ]
@@ -598,32 +694,30 @@ const context = {
   services: {
     ddbcmsapi: 'https://cmscontent.dbc.dk/',
     moreinfo: 'https://moreinfo.addi.dk/2.11/',
-    openagency: 'http://openagency.addi.dk/2.24/',
-    openholdingstatus: 'https://openholdingstatus.addi.dk/2.2/',
-    PRODopenorder: 'https://openorder.addi.dk/2.8/',
-    openorder: 'https://openorder.addi.dk/test_2.8/',
-    Xopensearch: 'XXXXX',
-    opensearch: 'https://opensearch.addi.dk/b3.5_5.0/',
+    openagency: 'https://openagency.addi.dk/2.34/',
+    openholdingstatus: 'https://openholdingstatus.addi.dk/3.0/',
+    openorder: 'https://openorder.addi.dk/2.8/',
+    opensearch: 'https://opensearch.addi.dk/b3.5_4.5/',
     openuserstatus: 'https://openuserstatus.addi.dk/1.6.1/',
-    suggest: 'http://ortograf.mcp1-proxy.dbc.dk/ortograf/',
-    recommend: 'http://staging.recomole.mcp1-proxy.dbc.dk/recomole/loan-cosim',
-    performance: 'http://elk.dbc.dk:5601/elasticsearch/',
-    communityservice: 'http://localhost:4010/v1'
+    rank: 'https://xptest.dbc.dk/ms/rank/v1',
+    suggestpopular: 'XXXXX',
+    suggestcreator: 'XXXXX',
+    suggestlibrary: 'XXXXX',
+    suggestsubject: 'XXXXX',
+    performance: 'https://elk-p01.dbc.dk:9100/',
+    recommendurls: 'XXXXX'
   },
   communityservice: {id: 1},
-  search: {
-    agency: '150013',
-    profile: 'opac',
-    collectionidentifiers: 'rec.collectionIdentifier:150013-palle'
-  },
+  performance: {password: 'XXXXX', username: 'XXXXX'},
+  search: {agency: '710100', profile: 'opac'},
   netpunkt: {user: 'XXXXX', group: 'XXXXX', password: 'XXXXX'},
   user: {
     id: 'XXXXX',
     salt: 'XXXXX',
     pin: 'XXXXX',
-    libraryId: '726501',
-    agency: '726500',
-    isil: 'DK-726500'
+    libraryId: '710100',
+    agency: '710100',
+    isil: 'DK-710100'
   },
   app: {
     clientId: 'XXXXX',
@@ -633,246 +727,65 @@ const context = {
   }
 };
 const mockData = {
-  '["http://elk.dbc.dk:5601/elasticsearch/prod_ux-2018.07/",{}]':
-    '{"prod_ux-2018.07":{"aliases":{},"mappings":{"_default_":{"dynamic_templates":[{"string_fields":{"mapping":{"index":"analyzed","omit_norms":true,"type":"string","fields":{"raw":{"ignore_above":256,"index":"not_analyzed","type":"string"}}},"match":"*","match_mapping_type":"string"}}],"_all":{"enabled":true},"properties":{"@version":{"type":"string","index":"not_analyzed"},"geoip":{"dynamic":"true","properties":{"location":{"type":"geo_point"}}}}},"logs":{"dynamic_templates":[{"string_fields":{"mapping":{"index":"analyzed","omit_norms":true,"type":"string","fields":{"raw":{"ignore_above":256,"index":"not_analyzed","type":"string"}}},"match":"*","match_mapping_type":"string"}}],"_all":{"enabled":true},"properties":{"@timestamp":{"type":"date","format":"dateOptionalTime"},"@version":{"type":"string","index":"not_analyzed"},"action":{"properties":{"origin":{"type":"string","norms":{"enabled":false},"fields":{"raw":{"type":"string","index":"not_analyzed","ignore_above":256}}},"path":{"type":"string","norms":{"enabled":false},"fields":{"raw":{"type":"string","index":"not_analyzed","ignore_above":256}}},"pid":{"type":"string","norms":{"enabled":false},"fields":{"raw":{"type":"string","index":"not_analyzed","ignore_above":256}}},"type":{"type":"string","norms":{"enabled":false},"fields":{"raw":{"type":"string","index":"not_analyzed","ignore_above":256}}}}},"app":{"type":"string","norms":{"enabled":false},"fields":{"raw":{"type":"string","index":"not_analyzed","ignore_above":256}}},"attributes":{"properties":{"agencies":{"properties":{"agencyId":{"type":"string","norms":{"enabled":false},"fields":{"raw":{"type":"string","index":"not_analyzed","ignore_above":256}}},"userId":{"type":"string","norms":{"enabled":false},"fields":{"raw":{"type":"string","index":"not_analyzed","ignore_above":256}}},"userIdType":{"type":"string","norms":{"enabled":false},"fields":{"raw":{"type":"string","index":"not_analyzed","ignore_above":256}}}}},"authenticatedToken":{"type":"string","norms":{"enabled":false},"fields":{"raw":{"type":"string","index":"not_analyzed","ignore_above":256}}},"cpr":{"type":"string","norms":{"enabled":false},"fields":{"raw":{"type":"string","index":"not_analyzed","ignore_above":256}}},"userId":{"type":"string","norms":{"enabled":false},"fields":{"raw":{"type":"string","index":"not_analyzed","ignore_above":256}}}}},"authBackend":{"type":"string","norms":{"enabled":false},"fields":{"raw":{"type":"string","index":"not_analyzed","ignore_above":256}}},"authenticated":{"type":"boolean"},"clientId":{"type":"string","norms":{"enabled":false},"fields":{"raw":{"type":"string","index":"not_analyzed","ignore_above":256}}},"cookie":{"type":"string","norms":{"enabled":false},"fields":{"raw":{"type":"string","index":"not_analyzed","ignore_above":256}}},"created":{"type":"date","format":"dateOptionalTime"},"env":{"type":"string","norms":{"enabled":false},"fields":{"raw":{"type":"string","index":"not_analyzed","ignore_above":256}}},"error":{"properties":{"@timestamp":{"type":"date","format":"dateOptionalTime"},"@version":{"type":"long"},"error":{"type":"string","norms":{"enabled":false},"fields":{"raw":{"type":"string","index":"not_analyzed","ignore_above":256}}},"facility":{"type":"long"},"facility_label":{"type":"string","norms":{"enabled":false},"fields":{"raw":{"type":"string","index":"not_analyzed","ignore_above":256}}},"host":{"type":"string","norms":{"enabled":false},"fields":{"raw":{"type":"string","index":"not_analyzed","ignore_above":256}}},"message":{"type":"string","norms":{"enabled":false},"fields":{"raw":{"type":"string","index":"not_analyzed","ignore_above":256}}},"name":{"type":"string","norms":{"enabled":false},"fields":{"raw":{"type":"string","index":"not_analyzed","ignore_above":256}}},"severity_label":{"type":"string","norms":{"enabled":false},"fields":{"raw":{"type":"string","index":"not_analyzed","ignore_above":256}}},"stacktrace":{"type":"string","norms":{"enabled":false},"fields":{"raw":{"type":"string","index":"not_analyzed","ignore_above":256}}},"sys_group":{"type":"string","norms":{"enabled":false},"fields":{"raw":{"type":"string","index":"not_analyzed","ignore_above":256}}},"sys_host":{"type":"string","norms":{"enabled":false},"fields":{"raw":{"type":"string","index":"not_analyzed","ignore_above":256}}},"sys_hostip":{"type":"string","norms":{"enabled":false},"fields":{"raw":{"type":"string","index":"not_analyzed","ignore_above":256}}},"timestamp":{"type":"string","norms":{"enabled":false},"fields":{"raw":{"type":"string","index":"not_analyzed","ignore_above":256}}},"url":{"type":"string","norms":{"enabled":false},"fields":{"raw":{"type":"string","index":"not_analyzed","ignore_above":256}}},"version":{"type":"string","norms":{"enabled":false},"fields":{"raw":{"type":"string","index":"not_analyzed","ignore_above":256}}}}},"event":{"type":"string","norms":{"enabled":false},"fields":{"raw":{"type":"string","index":"not_analyzed","ignore_above":256}}},"facility":{"type":"long"},"facility_label":{"type":"string","norms":{"enabled":false},"fields":{"raw":{"type":"string","index":"not_analyzed","ignore_above":256}}},"geoip":{"dynamic":"true","properties":{"location":{"type":"geo_point"}}},"host":{"type":"string","norms":{"enabled":false},"fields":{"raw":{"type":"string","index":"not_analyzed","ignore_above":256}}},"hostname":{"type":"string","norms":{"enabled":false},"fields":{"raw":{"type":"string","index":"not_analyzed","ignore_above":256}}},"id":{"type":"long"},"level":{"type":"string","norms":{"enabled":false},"fields":{"raw":{"type":"string","index":"not_analyzed","ignore_above":256}}},"message":{"type":"string","norms":{"enabled":false},"fields":{"raw":{"type":"string","index":"not_analyzed","ignore_above":256}}},"msg":{"type":"string","norms":{"enabled":false},"fields":{"raw":{"type":"string","index":"not_analyzed","ignore_above":256}}},"name":{"type":"string","norms":{"enabled":false},"fields":{"raw":{"type":"string","index":"not_analyzed","ignore_above":256}}},"object":{"properties":{"$":{"type":"string","norms":{"enabled":false},"fields":{"raw":{"type":"string","index":"not_analyzed","ignore_above":256}}}}},"params":{"properties":{"@timestamp":{"type":"date","format":"dateOptionalTime"},"@version":{"type":"long"},"access_token":{"type":"string","norms":{"enabled":false},"fields":{"raw":{"type":"string","index":"not_analyzed","ignore_above":256}}},"agency":{"type":"string","norms":{"enabled":false},"fields":{"raw":{"type":"string","index":"not_analyzed","ignore_above":256}}},"agencyIds":{"type":"string","norms":{"enabled":false},"fields":{"raw":{"type":"string","index":"not_analyzed","ignore_above":256}}},"branchIds":{"type":"string","norms":{"enabled":false},"fields":{"raw":{"type":"string","index":"not_analyzed","ignore_above":256}}},"facility":{"type":"long"},"facility_label":{"type":"string","norms":{"enabled":false},"fields":{"raw":{"type":"string","index":"not_analyzed","ignore_above":256}}},"fields":{"type":"string","norms":{"enabled":false},"fields":{"raw":{"type":"string","index":"not_analyzed","ignore_above":256}}},"filter":{"type":"string","norms":{"enabled":false},"fields":{"raw":{"type":"string","index":"not_analyzed","ignore_above":256}}},"host":{"type":"string","norms":{"enabled":false},"fields":{"raw":{"type":"string","index":"not_analyzed","ignore_above":256}}},"json":{"properties":{"like":{"type":"string","norms":{"enabled":false},"fields":{"raw":{"type":"string","index":"not_analyzed","ignore_above":256}}},"maxresults":{"type":"long"},"set":{"type":"string","norms":{"enabled":false},"fields":{"raw":{"type":"string","index":"not_analyzed","ignore_above":256}}}}},"library":{"type":"string","norms":{"enabled":false},"fields":{"raw":{"type":"string","index":"not_analyzed","ignore_above":256}}},"like":{"type":"string","norms":{"enabled":false},"fields":{"raw":{"type":"string","index":"not_analyzed","ignore_above":256}}},"limit":{"type":"long"},"loanId":{"type":"string","norms":{"enabled":false},"fields":{"raw":{"type":"string","index":"not_analyzed","ignore_above":256}}},"method":{"type":"string","norms":{"enabled":false},"fields":{"raw":{"type":"string","index":"not_analyzed","ignore_above":256}}},"name":{"type":"string","norms":{"enabled":false},"fields":{"raw":{"type":"string","index":"not_analyzed","ignore_above":256}}},"offset":{"type":"long"},"params":{"type":"string","norms":{"enabled":false},"fields":{"raw":{"type":"string","index":"not_analyzed","ignore_above":256}}},"pid":{"type":"string","norms":{"enabled":false},"fields":{"raw":{"type":"string","index":"not_analyzed","ignore_above":256}}},"pids":{"type":"string","norms":{"enabled":false},"fields":{"raw":{"type":"string","index":"not_analyzed","ignore_above":256}}},"pretty":{"type":"boolean"},"q":{"type":"string","norms":{"enabled":false},"fields":{"raw":{"type":"string","index":"not_analyzed","ignore_above":256}}},"qs":{"properties":{"action":{"type":"string","norms":{"enabled":false},"fields":{"raw":{"type":"string","index":"not_analyzed","ignore_above":256}}},"agency":{"type":"string","norms":{"enabled":false},"fields":{"raw":{"type":"string","index":"not_analyzed","ignore_above":256}}},"agencyId":{"type":"string","norms":{"enabled":false},"fields":{"raw":{"type":"string","index":"not_analyzed","ignore_above":256}}},"amount":{"type":"long"},"authentication.groupIdAut":{"type":"string","norms":{"enabled":false},"fields":{"raw":{"type":"string","index":"not_analyzed","ignore_above":256}}},"authentication.passwordAut":{"type":"string","norms":{"enabled":false},"fields":{"raw":{"type":"string","index":"not_analyzed","ignore_above":256}}},"authentication.userIdAut":{"type":"string","norms":{"enabled":false},"fields":{"raw":{"type":"string","index":"not_analyzed","ignore_above":256}}},"authenticationGroup":{"type":"string","norms":{"enabled":false},"fields":{"raw":{"type":"string","index":"not_analyzed","ignore_above":256}}},"authenticationPassword":{"type":"string","norms":{"enabled":false},"fields":{"raw":{"type":"string","index":"not_analyzed","ignore_above":256}}},"authenticationUser":{"type":"string","norms":{"enabled":false},"fields":{"raw":{"type":"string","index":"not_analyzed","ignore_above":256}}},"fields":{"type":"string","norms":{"enabled":false},"fields":{"raw":{"type":"string","index":"not_analyzed","ignore_above":256}}},"filter":{"type":"string","norms":{"enabled":false},"fields":{"raw":{"type":"string","index":"not_analyzed","ignore_above":256}}},"identifier":{"type":"string","norms":{"enabled":false},"fields":{"raw":{"type":"string","index":"not_analyzed","ignore_above":256}}},"n":{"type":"long"},"objectFormat":{"type":"string","norms":{"enabled":false},"fields":{"raw":{"type":"string","index":"not_analyzed","ignore_above":256}}},"outputType":{"type":"string","norms":{"enabled":false},"fields":{"raw":{"type":"string","index":"not_analyzed","ignore_above":256}}},"pidList":{"type":"string","norms":{"enabled":false},"fields":{"raw":{"type":"string","index":"not_analyzed","ignore_above":256}}},"profile":{"type":"string","norms":{"enabled":false},"fields":{"raw":{"type":"string","index":"not_analyzed","ignore_above":256}}},"query":{"type":"string","norms":{"enabled":false},"fields":{"raw":{"type":"string","index":"not_analyzed","ignore_above":256}}},"relationData":{"type":"string","norms":{"enabled":false},"fields":{"raw":{"type":"string","index":"not_analyzed","ignore_above":256}}},"rows":{"type":"long"},"skip":{"type":"long"},"type":{"type":"string","norms":{"enabled":false},"fields":{"raw":{"type":"string","index":"not_analyzed","ignore_above":256}}},"userId":{"type":"string","norms":{"enabled":false},"fields":{"raw":{"type":"string","index":"not_analyzed","ignore_above":256}}},"userPincode":{"type":"string","norms":{"enabled":false},"fields":{"raw":{"type":"string","index":"not_analyzed","ignore_above":256}}}}},"query":{"type":"string","norms":{"enabled":false},"fields":{"raw":{"type":"string","index":"not_analyzed","ignore_above":256}}},"recommender":{"type":"string","norms":{"enabled":false},"fields":{"raw":{"type":"string","index":"not_analyzed","ignore_above":256}}},"rows":{"type":"long"},"severity_label":{"type":"string","norms":{"enabled":false},"fields":{"raw":{"type":"string","index":"not_analyzed","ignore_above":256}}},"sort":{"type":"string","norms":{"enabled":false},"fields":{"raw":{"type":"string","index":"not_analyzed","ignore_above":256}}},"sys_group":{"type":"string","norms":{"enabled":false},"fields":{"raw":{"type":"string","index":"not_analyzed","ignore_above":256}}},"sys_host":{"type":"string","norms":{"enabled":false},"fields":{"raw":{"type":"string","index":"not_analyzed","ignore_above":256}}},"sys_hostip":{"type":"string","norms":{"enabled":false},"fields":{"raw":{"type":"string","index":"not_analyzed","ignore_above":256}}},"timestamp":{"type":"string","norms":{"enabled":false},"fields":{"raw":{"type":"string","index":"not_analyzed","ignore_above":256}}},"timings":{"type":"boolean"},"type":{"type":"string","norms":{"enabled":false},"fields":{"raw":{"type":"string","index":"not_analyzed","ignore_above":256}}},"uri":{"type":"string","norms":{"enabled":false},"fields":{"raw":{"type":"string","index":"not_analyzed","ignore_above":256}}},"version":{"type":"string","norms":{"enabled":false},"fields":{"raw":{"type":"string","index":"not_analyzed","ignore_above":256}}}}},"pid":{"type":"long"},"port":{"type":"string","norms":{"enabled":false},"fields":{"raw":{"type":"string","index":"not_analyzed","ignore_above":256}}},"priority":{"type":"long"},"query":{"properties":{"access_token":{"type":"string","norms":{"enabled":false},"fields":{"raw":{"type":"string","index":"not_analyzed","ignore_above":256}}},"like":{"type":"string","norms":{"enabled":false},"fields":{"raw":{"type":"string","index":"not_analyzed","ignore_above":256}}},"pids":{"type":"string","norms":{"enabled":false},"fields":{"raw":{"type":"string","index":"not_analyzed","ignore_above":256}}},"pretty":{"type":"boolean"},"timings":{"type":"boolean"}}},"request":{"type":"string","norms":{"enabled":false},"fields":{"raw":{"type":"string","index":"not_analyzed","ignore_above":256}}},"response":{"type":"string","norms":{"enabled":false},"fields":{"raw":{"type":"string","index":"not_analyzed","ignore_above":256}}},"serviceRequester":{"type":"string","norms":{"enabled":false},"fields":{"raw":{"type":"string","index":"not_analyzed","ignore_above":256}}},"severity":{"type":"long"},"severity_label":{"type":"string","norms":{"enabled":false},"fields":{"raw":{"type":"string","index":"not_analyzed","ignore_above":256}}},"sid":{"type":"string","norms":{"enabled":false},"fields":{"raw":{"type":"string","index":"not_analyzed","ignore_above":256}}},"smaug":{"type":"string","norms":{"enabled":false},"fields":{"raw":{"type":"string","index":"not_analyzed","ignore_above":256}}},"stack":{"type":"string","norms":{"enabled":false},"fields":{"raw":{"type":"string","index":"not_analyzed","ignore_above":256}}},"stacktrace":{"type":"string","norms":{"enabled":false},"fields":{"raw":{"type":"string","index":"not_analyzed","ignore_above":256}}},"status":{"type":"string","norms":{"enabled":false},"fields":{"raw":{"type":"string","index":"not_analyzed","ignore_above":256}}},"statusCode":{"type":"long"},"sys_appid":{"type":"string","norms":{"enabled":false},"fields":{"raw":{"type":"string","index":"not_analyzed","ignore_above":256}}},"sys_group":{"type":"string","norms":{"enabled":false},"fields":{"raw":{"type":"string","index":"not_analyzed","ignore_above":256}}},"sys_host":{"type":"string","norms":{"enabled":false},"fields":{"raw":{"type":"string","index":"not_analyzed","ignore_above":256}}},"sys_hostip":{"type":"string","norms":{"enabled":false},"fields":{"raw":{"type":"string","index":"not_analyzed","ignore_above":256}}},"tag":{"type":"string","norms":{"enabled":false},"fields":{"raw":{"type":"string","index":"not_analyzed","ignore_above":256}}},"tags":{"type":"string","norms":{"enabled":false},"fields":{"raw":{"type":"string","index":"not_analyzed","ignore_above":256}}},"timestamp":{"type":"string","norms":{"enabled":false},"fields":{"raw":{"type":"string","index":"not_analyzed","ignore_above":256}}},"timings":{"properties":{"external":{"type":"long"},"total":{"type":"long"}}},"token":{"properties":{"access_token":{"type":"string","norms":{"enabled":false},"fields":{"raw":{"type":"string","index":"not_analyzed","ignore_above":256}}},"expires":{"type":"long"},"expires_in":{"type":"long"},"token_type":{"type":"string","norms":{"enabled":false},"fields":{"raw":{"type":"string","index":"not_analyzed","ignore_above":256}}}}},"user":{"type":"string","norms":{"enabled":false},"fields":{"raw":{"type":"string","index":"not_analyzed","ignore_above":256}}},"validateErrors":{"properties":{"argument":{"type":"string","norms":{"enabled":false},"fields":{"raw":{"type":"string","index":"not_analyzed","ignore_above":256}}},"instance":{"type":"double"},"message":{"type":"string","norms":{"enabled":false},"fields":{"raw":{"type":"string","index":"not_analyzed","ignore_above":256}}},"name":{"type":"string","norms":{"enabled":false},"fields":{"raw":{"type":"string","index":"not_analyzed","ignore_above":256}}},"property":{"type":"string","norms":{"enabled":false},"fields":{"raw":{"type":"string","index":"not_analyzed","ignore_above":256}}},"schema":{"properties":{"type":{"type":"string","norms":{"enabled":false},"fields":{"raw":{"type":"string","index":"not_analyzed","ignore_above":256}}}}},"stack":{"type":"string","norms":{"enabled":false},"fields":{"raw":{"type":"string","index":"not_analyzed","ignore_above":256}}}}},"version":{"type":"string","norms":{"enabled":false},"fields":{"raw":{"type":"string","index":"not_analyzed","ignore_above":256}}},"versions":{"properties":{"ares":{"type":"string","norms":{"enabled":false},"fields":{"raw":{"type":"string","index":"not_analyzed","ignore_above":256}}},"cldr":{"type":"string","norms":{"enabled":false},"fields":{"raw":{"type":"string","index":"not_analyzed","ignore_above":256}}},"http_parser":{"type":"string","norms":{"enabled":false},"fields":{"raw":{"type":"string","index":"not_analyzed","ignore_above":256}}},"icu":{"type":"string","norms":{"enabled":false},"fields":{"raw":{"type":"string","index":"not_analyzed","ignore_above":256}}},"modules":{"type":"string","norms":{"enabled":false},"fields":{"raw":{"type":"string","index":"not_analyzed","ignore_above":256}}},"nghttp2":{"type":"string","norms":{"enabled":false},"fields":{"raw":{"type":"string","index":"not_analyzed","ignore_above":256}}},"node":{"type":"string","norms":{"enabled":false},"fields":{"raw":{"type":"string","index":"not_analyzed","ignore_above":256}}},"openssl":{"type":"string","norms":{"enabled":false},"fields":{"raw":{"type":"string","index":"not_analyzed","ignore_above":256}}},"tz":{"type":"string","norms":{"enabled":false},"fields":{"raw":{"type":"string","index":"not_analyzed","ignore_above":256}}},"unicode":{"type":"string","norms":{"enabled":false},"fields":{"raw":{"type":"string","index":"not_analyzed","ignore_above":256}}},"uv":{"type":"string","norms":{"enabled":false},"fields":{"raw":{"type":"string","index":"not_analyzed","ignore_above":256}}},"v8":{"type":"string","norms":{"enabled":false},"fields":{"raw":{"type":"string","index":"not_analyzed","ignore_above":256}}},"zlib":{"type":"string","norms":{"enabled":false},"fields":{"raw":{"type":"string","index":"not_analyzed","ignore_above":256}}}}},"wsdl":{"type":"string","norms":{"enabled":false},"fields":{"raw":{"type":"string","index":"not_analyzed","ignore_above":256}}}}},"dkdcplus:cng":{"dynamic_templates":[{"string_fields":{"mapping":{"index":"analyzed","omit_norms":true,"type":"string","fields":{"raw":{"ignore_above":256,"index":"not_analyzed","type":"string"}}},"match":"*","match_mapping_type":"string"}}],"_all":{"enabled":true},"properties":{"@timestamp":{"type":"date","format":"dateOptionalTime"},"@version":{"type":"string","index":"not_analyzed"},"app":{"type":"string","norms":{"enabled":false},"fields":{"raw":{"type":"string","index":"not_analyzed","ignore_above":256}}},"facility":{"type":"long"},"facility_label":{"type":"string","norms":{"enabled":false},"fields":{"raw":{"type":"string","index":"not_analyzed","ignore_above":256}}},"geoip":{"dynamic":"true","properties":{"location":{"type":"geo_point"}}},"host":{"type":"string","norms":{"enabled":false},"fields":{"raw":{"type":"string","index":"not_analyzed","ignore_above":256}}},"level":{"type":"string","norms":{"enabled":false},"fields":{"raw":{"type":"string","index":"not_analyzed","ignore_above":256}}},"message":{"type":"string","norms":{"enabled":false},"fields":{"raw":{"type":"string","index":"not_analyzed","ignore_above":256}}},"msg":{"type":"string","norms":{"enabled":false},"fields":{"raw":{"type":"string","index":"not_analyzed","ignore_above":256}}},"pid":{"type":"long"},"priority":{"type":"long"},"severity":{"type":"long"},"severity_label":{"type":"string","norms":{"enabled":false},"fields":{"raw":{"type":"string","index":"not_analyzed","ignore_above":256}}},"sys_appid":{"type":"string","norms":{"enabled":false},"fields":{"raw":{"type":"string","index":"not_analyzed","ignore_above":256}}},"sys_group":{"type":"string","norms":{"enabled":false},"fields":{"raw":{"type":"string","index":"not_analyzed","ignore_above":256}}},"sys_host":{"type":"string","norms":{"enabled":false},"fields":{"raw":{"type":"string","index":"not_analyzed","ignore_above":256}}},"sys_hostip":{"type":"string","norms":{"enabled":false},"fields":{"raw":{"type":"string","index":"not_analyzed","ignore_above":256}}},"tag":{"type":"string","norms":{"enabled":false},"fields":{"raw":{"type":"string","index":"not_analyzed","ignore_above":256}}},"timestamp":{"type":"string","norms":{"enabled":false},"fields":{"raw":{"type":"string","index":"not_analyzed","ignore_above":256}}},"type":{"type":"string","norms":{"enabled":false},"fields":{"raw":{"type":"string","index":"not_analyzed","ignore_above":256}}},"version":{"type":"string","norms":{"enabled":false},"fields":{"raw":{"type":"string","index":"not_analyzed","ignore_above":256}}}}},"dkdcplus:aud":{"dynamic_templates":[{"string_fields":{"mapping":{"index":"analyzed","omit_norms":true,"type":"string","fields":{"raw":{"ignore_above":256,"index":"not_analyzed","type":"string"}}},"match":"*","match_mapping_type":"string"}}],"_all":{"enabled":true},"properties":{"@timestamp":{"type":"date","format":"dateOptionalTime"},"@version":{"type":"string","index":"not_analyzed"},"app":{"type":"string","norms":{"enabled":false},"fields":{"raw":{"type":"string","index":"not_analyzed","ignore_above":256}}},"facility":{"type":"long"},"facility_label":{"type":"string","norms":{"enabled":false},"fields":{"raw":{"type":"string","index":"not_analyzed","ignore_above":256}}},"geoip":{"dynamic":"true","properties":{"location":{"type":"geo_point"}}},"host":{"type":"string","norms":{"enabled":false},"fields":{"raw":{"type":"string","index":"not_analyzed","ignore_above":256}}},"level":{"type":"string","norms":{"enabled":false},"fields":{"raw":{"type":"string","index":"not_analyzed","ignore_above":256}}},"message":{"type":"string","norms":{"enabled":false},"fields":{"raw":{"type":"string","index":"not_analyzed","ignore_above":256}}},"msg":{"type":"string","norms":{"enabled":false},"fields":{"raw":{"type":"string","index":"not_analyzed","ignore_above":256}}},"pid":{"type":"long"},"priority":{"type":"long"},"severity":{"type":"long"},"severity_label":{"type":"string","norms":{"enabled":false},"fields":{"raw":{"type":"string","index":"not_analyzed","ignore_above":256}}},"sys_appid":{"type":"string","norms":{"enabled":false},"fields":{"raw":{"type":"string","index":"not_analyzed","ignore_above":256}}},"sys_group":{"type":"string","norms":{"enabled":false},"fields":{"raw":{"type":"string","index":"not_analyzed","ignore_above":256}}},"sys_host":{"type":"string","norms":{"enabled":false},"fields":{"raw":{"type":"string","index":"not_analyzed","ignore_above":256}}},"sys_hostip":{"type":"string","norms":{"enabled":false},"fields":{"raw":{"type":"string","index":"not_analyzed","ignore_above":256}}},"tag":{"type":"string","norms":{"enabled":false},"fields":{"raw":{"type":"string","index":"not_analyzed","ignore_above":256}}},"timestamp":{"type":"string","norms":{"enabled":false},"fields":{"raw":{"type":"string","index":"not_analyzed","ignore_above":256}}},"type":{"type":"string","norms":{"enabled":false},"fields":{"raw":{"type":"string","index":"not_analyzed","ignore_above":256}}},"version":{"type":"string","norms":{"enabled":false},"fields":{"raw":{"type":"string","index":"not_analyzed","ignore_above":256}}}}},"dkdcplus:vac":{"dynamic_templates":[{"string_fields":{"mapping":{"index":"analyzed","omit_norms":true,"type":"string","fields":{"raw":{"ignore_above":256,"index":"not_analyzed","type":"string"}}},"match":"*","match_mapping_type":"string"}}],"_all":{"enabled":true},"properties":{"@timestamp":{"type":"date","format":"dateOptionalTime"},"@version":{"type":"string","index":"not_analyzed"},"app":{"type":"string","norms":{"enabled":false},"fields":{"raw":{"type":"string","index":"not_analyzed","ignore_above":256}}},"facility":{"type":"long"},"facility_label":{"type":"string","norms":{"enabled":false},"fields":{"raw":{"type":"string","index":"not_analyzed","ignore_above":256}}},"geoip":{"dynamic":"true","properties":{"location":{"type":"geo_point"}}},"host":{"type":"string","norms":{"enabled":false},"fields":{"raw":{"type":"string","index":"not_analyzed","ignore_above":256}}},"level":{"type":"string","norms":{"enabled":false},"fields":{"raw":{"type":"string","index":"not_analyzed","ignore_above":256}}},"message":{"type":"string","norms":{"enabled":false},"fields":{"raw":{"type":"string","index":"not_analyzed","ignore_above":256}}},"msg":{"type":"string","norms":{"enabled":false},"fields":{"raw":{"type":"string","index":"not_analyzed","ignore_above":256}}},"pid":{"type":"long"},"priority":{"type":"long"},"severity":{"type":"long"},"severity_label":{"type":"string","norms":{"enabled":false},"fields":{"raw":{"type":"string","index":"not_analyzed","ignore_above":256}}},"sys_appid":{"type":"string","norms":{"enabled":false},"fields":{"raw":{"type":"string","index":"not_analyzed","ignore_above":256}}},"sys_group":{"type":"string","norms":{"enabled":false},"fields":{"raw":{"type":"string","index":"not_analyzed","ignore_above":256}}},"sys_host":{"type":"string","norms":{"enabled":false},"fields":{"raw":{"type":"string","index":"not_analyzed","ignore_above":256}}},"sys_hostip":{"type":"string","norms":{"enabled":false},"fields":{"raw":{"type":"string","index":"not_analyzed","ignore_above":256}}},"tag":{"type":"string","norms":{"enabled":false},"fields":{"raw":{"type":"string","index":"not_analyzed","ignore_above":256}}},"timestamp":{"type":"string","norms":{"enabled":false},"fields":{"raw":{"type":"string","index":"not_analyzed","ignore_above":256}}},"type":{"type":"string","norms":{"enabled":false},"fields":{"raw":{"type":"string","index":"not_analyzed","ignore_above":256}}},"version":{"type":"string","norms":{"enabled":false},"fields":{"raw":{"type":"string","index":"not_analyzed","ignore_above":256}}}}},"dkdcplus:clr":{"dynamic_templates":[{"string_fields":{"mapping":{"index":"analyzed","omit_norms":true,"type":"string","fields":{"raw":{"ignore_above":256,"index":"not_analyzed","type":"string"}}},"match":"*","match_mapping_type":"string"}}],"_all":{"enabled":true},"properties":{"@timestamp":{"type":"date","format":"dateOptionalTime"},"@version":{"type":"string","index":"not_analyzed"},"app":{"type":"string","norms":{"enabled":false},"fields":{"raw":{"type":"string","index":"not_analyzed","ignore_above":256}}},"facility":{"type":"long"},"facility_label":{"type":"string","norms":{"enabled":false},"fields":{"raw":{"type":"string","index":"not_analyzed","ignore_above":256}}},"geoip":{"dynamic":"true","properties":{"location":{"type":"geo_point"}}},"host":{"type":"string","norms":{"enabled":false},"fields":{"raw":{"type":"string","index":"not_analyzed","ignore_above":256}}},"level":{"type":"string","norms":{"enabled":false},"fields":{"raw":{"type":"string","index":"not_analyzed","ignore_above":256}}},"message":{"type":"string","norms":{"enabled":false},"fields":{"raw":{"type":"string","index":"not_analyzed","ignore_above":256}}},"msg":{"type":"string","norms":{"enabled":false},"fields":{"raw":{"type":"string","index":"not_analyzed","ignore_above":256}}},"pid":{"type":"long"},"priority":{"type":"long"},"severity":{"type":"long"},"severity_label":{"type":"string","norms":{"enabled":false},"fields":{"raw":{"type":"string","index":"not_analyzed","ignore_above":256}}},"sys_appid":{"type":"string","norms":{"enabled":false},"fields":{"raw":{"type":"string","index":"not_analyzed","ignore_above":256}}},"sys_group":{"type":"string","norms":{"enabled":false},"fields":{"raw":{"type":"string","index":"not_analyzed","ignore_above":256}}},"sys_host":{"type":"string","norms":{"enabled":false},"fields":{"raw":{"type":"string","index":"not_analyzed","ignore_above":256}}},"sys_hostip":{"type":"string","norms":{"enabled":false},"fields":{"raw":{"type":"string","index":"not_analyzed","ignore_above":256}}},"tag":{"type":"string","norms":{"enabled":false},"fields":{"raw":{"type":"string","index":"not_analyzed","ignore_above":256}}},"timestamp":{"type":"string","norms":{"enabled":false},"fields":{"raw":{"type":"string","index":"not_analyzed","ignore_above":256}}},"type":{"type":"string","norms":{"enabled":false},"fields":{"raw":{"type":"string","index":"not_analyzed","ignore_above":256}}},"version":{"type":"string","norms":{"enabled":false},"fields":{"raw":{"type":"string","index":"not_analyzed","ignore_above":256}}}}},"dkdcplus:dsr":{"dynamic_templates":[{"string_fields":{"mapping":{"index":"analyzed","omit_norms":true,"type":"string","fields":{"raw":{"ignore_above":256,"index":"not_analyzed","type":"string"}}},"match":"*","match_mapping_type":"string"}}],"_all":{"enabled":true},"properties":{"@timestamp":{"type":"date","format":"dateOptionalTime"},"@version":{"type":"string","index":"not_analyzed"},"app":{"type":"string","norms":{"enabled":false},"fields":{"raw":{"type":"string","index":"not_analyzed","ignore_above":256}}},"facility":{"type":"long"},"facility_label":{"type":"string","norms":{"enabled":false},"fields":{"raw":{"type":"string","index":"not_analyzed","ignore_above":256}}},"geoip":{"dynamic":"true","properties":{"location":{"type":"geo_point"}}},"host":{"type":"string","norms":{"enabled":false},"fields":{"raw":{"type":"string","index":"not_analyzed","ignore_above":256}}},"level":{"type":"string","norms":{"enabled":false},"fields":{"raw":{"type":"string","index":"not_analyzed","ignore_above":256}}},"message":{"type":"string","norms":{"enabled":false},"fields":{"raw":{"type":"string","index":"not_analyzed","ignore_above":256}}},"msg":{"type":"string","norms":{"enabled":false},"fields":{"raw":{"type":"string","index":"not_analyzed","ignore_above":256}}},"pid":{"type":"long"},"priority":{"type":"long"},"severity":{"type":"long"},"severity_label":{"type":"string","norms":{"enabled":false},"fields":{"raw":{"type":"string","index":"not_analyzed","ignore_above":256}}},"sys_appid":{"type":"string","norms":{"enabled":false},"fields":{"raw":{"type":"string","index":"not_analyzed","ignore_above":256}}},"sys_group":{"type":"string","norms":{"enabled":false},"fields":{"raw":{"type":"string","index":"not_analyzed","ignore_above":256}}},"sys_host":{"type":"string","norms":{"enabled":false},"fields":{"raw":{"type":"string","index":"not_analyzed","ignore_above":256}}},"sys_hostip":{"type":"string","norms":{"enabled":false},"fields":{"raw":{"type":"string","index":"not_analyzed","ignore_above":256}}},"tag":{"type":"string","norms":{"enabled":false},"fields":{"raw":{"type":"string","index":"not_analyzed","ignore_above":256}}},"timestamp":{"type":"string","norms":{"enabled":false},"fields":{"raw":{"type":"string","index":"not_analyzed","ignore_above":256}}},"type":{"type":"string","norms":{"enabled":false},"fields":{"raw":{"type":"string","index":"not_analyzed","ignore_above":256}}},"version":{"type":"string","norms":{"enabled":false},"fields":{"raw":{"type":"string","index":"not_analyzed","ignore_above":256}}}}},"accessLog":{"dynamic_templates":[{"string_fields":{"mapping":{"index":"analyzed","omit_norms":true,"type":"string","fields":{"raw":{"ignore_above":256,"index":"not_analyzed","type":"string"}}},"match":"*","match_mapping_type":"string"}}],"_all":{"enabled":true},"properties":{"@timestamp":{"type":"date","format":"dateOptionalTime"},"@version":{"type":"string","index":"not_analyzed"},"access_token":{"type":"string","norms":{"enabled":false},"fields":{"raw":{"type":"string","index":"not_analyzed","ignore_above":256}}},"app":{"type":"string","norms":{"enabled":false},"fields":{"raw":{"type":"string","index":"not_analyzed","ignore_above":256}}},"clientId":{"type":"string","norms":{"enabled":false},"fields":{"raw":{"type":"string","index":"not_analyzed","ignore_above":256}}},"facility":{"type":"long"},"facility_label":{"type":"string","norms":{"enabled":false},"fields":{"raw":{"type":"string","index":"not_analyzed","ignore_above":256}}},"geoip":{"dynamic":"true","properties":{"location":{"type":"geo_point"}}},"health":{"properties":{"ok":{"properties":{"agencyStore":{"properties":{"responseTime":{"type":"long"}}},"clientStore":{"properties":{"responseTime":{"type":"long"}}},"configStore":{"properties":{"responseTime":{"type":"long"}}},"tokenStore":{"properties":{"responseTime":{"type":"long"}}}}}}},"host":{"type":"string","norms":{"enabled":false},"fields":{"raw":{"type":"string","index":"not_analyzed","ignore_above":256}}},"level":{"type":"string","norms":{"enabled":false},"fields":{"raw":{"type":"string","index":"not_analyzed","ignore_above":256}}},"message":{"type":"string","norms":{"enabled":false},"fields":{"raw":{"type":"string","index":"not_analyzed","ignore_above":256}}},"pid":{"type":"long"},"priority":{"type":"long"},"request":{"properties":{"hostname":{"type":"string","norms":{"enabled":false},"fields":{"raw":{"type":"string","index":"not_analyzed","ignore_above":256}}},"method":{"type":"string","norms":{"enabled":false},"fields":{"raw":{"type":"string","index":"not_analyzed","ignore_above":256}}},"path":{"type":"string","norms":{"enabled":false},"fields":{"raw":{"type":"string","index":"not_analyzed","ignore_above":256}}},"query":{"properties":{"?access_token":{"type":"string","norms":{"enabled":false},"fields":{"raw":{"type":"string","index":"not_analyzed","ignore_above":256}}},"access_token":{"type":"string","norms":{"enabled":false},"fields":{"raw":{"type":"string","index":"not_analyzed","ignore_above":256}}},"agency":{"type":"string","norms":{"enabled":false},"fields":{"raw":{"type":"string","index":"not_analyzed","ignore_above":256}}},"agencyIds":{"type":"string","norms":{"enabled":false},"fields":{"raw":{"type":"string","index":"not_analyzed","ignore_above":256}}},"amp;oslash;der en nisse\\"":{"type":"string","norms":{"enabled":false},"fields":{"raw":{"type":"string","index":"not_analyzed","ignore_above":256}}},"branchIds":{"type":"string","norms":{"enabled":false},"fields":{"raw":{"type":"string","index":"not_analyzed","ignore_above":256}}},"fields":{"type":"string","norms":{"enabled":false},"fields":{"raw":{"type":"string","index":"not_analyzed","ignore_above":256}}},"like":{"type":"string","norms":{"enabled":false},"fields":{"raw":{"type":"string","index":"not_analyzed","ignore_above":256}}},"limit":{"type":"string","norms":{"enabled":false},"fields":{"raw":{"type":"string","index":"not_analyzed","ignore_above":256}}},"loanId":{"type":"string","norms":{"enabled":false},"fields":{"raw":{"type":"string","index":"not_analyzed","ignore_above":256}}},"offset":{"type":"string","norms":{"enabled":false},"fields":{"raw":{"type":"string","index":"not_analyzed","ignore_above":256}}},"pid":{"type":"string","norms":{"enabled":false},"fields":{"raw":{"type":"string","index":"not_analyzed","ignore_above":256}}},"pids":{"type":"string","norms":{"enabled":false},"fields":{"raw":{"type":"string","index":"not_analyzed","ignore_above":256}}},"pretty":{"type":"string","norms":{"enabled":false},"fields":{"raw":{"type":"string","index":"not_analyzed","ignore_above":256}}},"q":{"type":"string","norms":{"enabled":false},"fields":{"raw":{"type":"string","index":"not_analyzed","ignore_above":256}}},"sort":{"type":"string","norms":{"enabled":false},"fields":{"raw":{"type":"string","index":"not_analyzed","ignore_above":256}}},"timings":{"type":"string","norms":{"enabled":false},"fields":{"raw":{"type":"string","index":"not_analyzed","ignore_above":256}}},"token":{"type":"string","norms":{"enabled":false},"fields":{"raw":{"type":"string","index":"not_analyzed","ignore_above":256}}},"type":{"type":"string","norms":{"enabled":false},"fields":{"raw":{"type":"string","index":"not_analyzed","ignore_above":256}}}}},"remoteAddress":{"type":"string","norms":{"enabled":false},"fields":{"raw":{"type":"string","index":"not_analyzed","ignore_above":256}}}}},"response":{"properties":{"status":{"type":"long"}}},"severity":{"type":"long"},"severity_label":{"type":"string","norms":{"enabled":false},"fields":{"raw":{"type":"string","index":"not_analyzed","ignore_above":256}}},"sys_appid":{"type":"string","norms":{"enabled":false},"fields":{"raw":{"type":"string","index":"not_analyzed","ignore_above":256}}},"sys_group":{"type":"string","norms":{"enabled":false},"fields":{"raw":{"type":"string","index":"not_analyzed","ignore_above":256}}},"sys_host":{"type":"string","norms":{"enabled":false},"fields":{"raw":{"type":"string","index":"not_analyzed","ignore_above":256}}},"sys_hostip":{"type":"string","norms":{"enabled":false},"fields":{"raw":{"type":"string","index":"not_analyzed","ignore_above":256}}},"time":{"properties":{"end":{"type":"date","format":"dateOptionalTime"},"start":{"type":"date","format":"dateOptionalTime"},"taken":{"type":"long"}}},"timestamp":{"type":"string","norms":{"enabled":false},"fields":{"raw":{"type":"string","index":"not_analyzed","ignore_above":256}}},"token":{"type":"string","norms":{"enabled":false},"fields":{"raw":{"type":"string","index":"not_analyzed","ignore_above":256}}},"type":{"type":"string","norms":{"enabled":false},"fields":{"raw":{"type":"string","index":"not_analyzed","ignore_above":256}}},"user":{"type":"string","norms":{"enabled":false},"fields":{"raw":{"type":"string","index":"not_analyzed","ignore_above":256}}},"version":{"type":"string","norms":{"enabled":false},"fields":{"raw":{"type":"string","index":"not_analyzed","ignore_above":256}}}}},"dkdcplus:chr":{"dynamic_templates":[{"string_fields":{"mapping":{"index":"analyzed","omit_norms":true,"type":"string","fields":{"raw":{"ignore_above":256,"index":"not_analyzed","type":"string"}}},"match":"*","match_mapping_type":"string"}}],"_all":{"enabled":true},"properties":{"@timestamp":{"type":"date","format":"dateOptionalTime"},"@version":{"type":"string","index":"not_analyzed"},"app":{"type":"string","norms":{"enabled":false},"fields":{"raw":{"type":"string","index":"not_analyzed","ignore_above":256}}},"facility":{"type":"long"},"facility_label":{"type":"string","norms":{"enabled":false},"fields":{"raw":{"type":"string","index":"not_analyzed","ignore_above":256}}},"geoip":{"dynamic":"true","properties":{"location":{"type":"geo_point"}}},"host":{"type":"string","norms":{"enabled":false},"fields":{"raw":{"type":"string","index":"not_analyzed","ignore_above":256}}},"level":{"type":"string","norms":{"enabled":false},"fields":{"raw":{"type":"string","index":"not_analyzed","ignore_above":256}}},"message":{"type":"string","norms":{"enabled":false},"fields":{"raw":{"type":"string","index":"not_analyzed","ignore_above":256}}},"msg":{"type":"string","norms":{"enabled":false},"fields":{"raw":{"type":"string","index":"not_analyzed","ignore_above":256}}},"pid":{"type":"long"},"priority":{"type":"long"},"severity":{"type":"long"},"severity_label":{"type":"string","norms":{"enabled":false},"fields":{"raw":{"type":"string","index":"not_analyzed","ignore_above":256}}},"sys_appid":{"type":"string","norms":{"enabled":false},"fields":{"raw":{"type":"string","index":"not_analyzed","ignore_above":256}}},"sys_group":{"type":"string","norms":{"enabled":false},"fields":{"raw":{"type":"string","index":"not_analyzed","ignore_above":256}}},"sys_host":{"type":"string","norms":{"enabled":false},"fields":{"raw":{"type":"string","index":"not_analyzed","ignore_above":256}}},"sys_hostip":{"type":"string","norms":{"enabled":false},"fields":{"raw":{"type":"string","index":"not_analyzed","ignore_above":256}}},"tag":{"type":"string","norms":{"enabled":false},"fields":{"raw":{"type":"string","index":"not_analyzed","ignore_above":256}}},"timestamp":{"type":"string","norms":{"enabled":false},"fields":{"raw":{"type":"string","index":"not_analyzed","ignore_above":256}}},"type":{"type":"string","norms":{"enabled":false},"fields":{"raw":{"type":"string","index":"not_analyzed","ignore_above":256}}},"version":{"type":"string","norms":{"enabled":false},"fields":{"raw":{"type":"string","index":"not_analyzed","ignore_above":256}}}}}},"settings":{"index":{"refresh_interval":"5s","creation_date":"1518393606346","number_of_shards":"5","uuid":"UZigevtVQLmYrbjWeGP4Zw","version":{"created":"1070599"},"number_of_replicas":"1"}},"warmers":{}}}',
-  '["http://elk.dbc.dk:5601/elasticsearch/prod_ux-2018.07/_search?size=0",{"method":"POST","json":{"query":{"match":{"msg":{"query":"transformer-done","type":"phrase"}}},"filter":{"term":{"app":"serviceprovider"}},"aggs":{"version":{"terms":{"field":"version"},"aggs":{"endpoints":{"terms":{"field":"name"},"aggs":{"external":{"percentiles":{"field":"timings.external"}},"total":{"percentiles":{"field":"timings.total"}}}}}}}}}]': {
-    took: 65,
+  '["https://elk-p01.dbc.dk:9100/prod_ux-2018.15/",{}]':
+    '{"error":{"root_cause":[{"type":"status_exception","reason":"forbidden","header":{"WWW-Authenticate":"Basic"}}],"type":"status_exception","reason":"forbidden","header":{"WWW-Authenticate":"Basic"}},"status":401}',
+  '["https://elk-p01.dbc.dk:9100/prod_ux-2018.15//_search",{"method":"POST","auth":{"pass":"XXXXX","user":"XXXXX"},"json":{"size":0,"query":{"match":{"msg":"transformer-done"}},"aggs":{"version":{"terms":{"field":"version.keyword"},"aggs":{"endpoints":{"terms":{"field":"name.keyword"},"aggs":{"external":{"percentiles":{"field":"timings.external"}},"total":{"percentiles":{"field":"timings.total"}}}}}}}}}]': {
+    took: 135,
     timed_out: false,
-    _shards: {total: 5, successful: 5, failed: 0},
-    hits: {total: 23286, max_score: 0, hits: []},
+    _shards: {total: 9, successful: 9, skipped: 0, failed: 0},
+    hits: {total: 708516, max_score: 0, hits: []},
     aggregations: {
       version: {
         doc_count_error_upper_bound: 0,
         sum_other_doc_count: 0,
         buckets: [
           {
-            key: '1.0.0',
-            doc_count: 17561,
+            key: '2.0.0',
+            doc_count: 676267,
             endpoints: {
               doc_count_error_upper_bound: 0,
               sum_other_doc_count: 0,
               buckets: [
-                {
-                  key: 'recommend',
-                  doc_count: 8184,
-                  external: {
-                    values: {
-                      '1.0': 9,
-                      '5.0': 9,
-                      '25.0': 11,
-                      '50.0': 13,
-                      '75.0': 22,
-                      '95.0': 41,
-                      '99.0': 58
-                    }
-                  },
-                  total: {
-                    values: {
-                      '1.0': 9,
-                      '5.0': 10,
-                      '25.0': 11,
-                      '50.0': 14,
-                      '75.0': 22.999999999999996,
-                      '95.0': 42,
-                      '99.0': 59.835000000000036
-                    }
-                  }
-                },
                 {
                   key: 'work',
-                  doc_count: 4267,
-                  external: {
-                    values: {
-                      '1.0': 120.66,
-                      '5.0': 175.17499999999998,
-                      '25.0': 335.5136752136752,
-                      '50.0': 522.072463768116,
-                      '75.0': 832.9529220779222,
-                      '95.0': 1674.2499999999995,
-                      '99.0': 3601.0600000000013
-                    }
-                  },
+                  doc_count: 155682,
                   total: {
                     values: {
-                      '1.0': 121.66,
-                      '5.0': 178,
-                      '25.0': 339.38461538461536,
-                      '50.0': 526.2498814604078,
-                      '75.0': 839.059899569584,
-                      '95.0': 1686.5399999999995,
-                      '99.0': 3625.480000000003
-                    }
-                  }
-                },
-                {
-                  key: 'suggest',
-                  doc_count: 4040,
-                  external: {
-                    values: {
-                      '1.0': 152,
-                      '5.0': 165,
-                      '25.0': 174,
-                      '50.0': 182.53333333333333,
-                      '75.0': 192,
-                      '95.0': 360.9124999999998,
-                      '99.0': 854.9800000000023
+                      '1.0': 0,
+                      '5.0': 0,
+                      '25.0': 54.848432479905725,
+                      '50.0': 257.51078897529925,
+                      '75.0': 515.7840615407187,
+                      '95.0': 3622.136276428251,
+                      '99.0': 5973.254107692308
                     }
                   },
-                  total: {
-                    values: {
-                      '1.0': 154,
-                      '5.0': 166,
-                      '25.0': 176,
-                      '50.0': 183.99999999999997,
-                      '75.0': 193.36046511627907,
-                      '95.0': 361.9221212121208,
-                      '99.0': 856.760000000002
-                    }
-                  }
-                },
-                {
-                  key: 'search',
-                  doc_count: 1009,
                   external: {
                     values: {
-                      '1.0': 114.16,
-                      '5.0': 193.4,
-                      '25.0': 592.59375,
-                      '50.0': 938.8095238095239,
-                      '75.0': 1373.6666666666665,
-                      '95.0': 2592.6,
-                      '99.0': 4211.599999999999
-                    }
-                  },
-                  total: {
-                    values: {
-                      '1.0': 116.16000000000001,
-                      '5.0': 194.4,
-                      '25.0': 601.4,
-                      '50.0': 959.4444444444443,
-                      '75.0': 1400.404761904762,
-                      '95.0': 2621.3999999999987,
-                      '99.0': 4249.36
-                    }
-                  }
-                },
-                {
-                  key: 'availability',
-                  doc_count: 56,
-                  external: {
-                    values: {
-                      '1.0': 483.25,
-                      '5.0': 680.25,
-                      '25.0': 1449,
-                      '50.0': 1648,
-                      '75.0': 1984.75,
-                      '95.0': 2418,
-                      '99.0': 2737.000000000002
-                    }
-                  },
-                  total: {
-                    values: {
-                      '1.0': 484.35,
-                      '5.0': 681,
-                      '25.0': 1450.75,
-                      '50.0': 1649.5,
-                      '75.0': 1985.5,
-                      '95.0': 2419.25,
-                      '99.0': 2738.4500000000016
-                    }
-                  }
-                },
-                {
-                  key: 'user',
-                  doc_count: 5,
-                  external: {
-                    values: {
-                      '1.0': 11394.76,
-                      '5.0': 11613.8,
-                      '25.0': 12709,
-                      '50.0': 13345,
-                      '75.0': 14014,
-                      '95.0': 32024.399999999998,
-                      '99.0': 35626.479999999996
-                    }
-                  },
-                  total: {
-                    values: {
-                      '1.0': 11405.599999999999,
-                      '5.0': 11624.000000000002,
-                      '25.0': 12716,
-                      '50.0': 13355,
-                      '75.0': 14016,
-                      '95.0': 32027.199999999997,
-                      '99.0': 35629.439999999995
-                    }
-                  }
-                }
-              ]
-            }
-          },
-          {
-            key: '2.0.0',
-            doc_count: 5124,
-            endpoints: {
-              doc_count_error_upper_bound: 0,
-              sum_other_doc_count: 0,
-              buckets: [
-                {
-                  key: 'user',
-                  doc_count: 2551,
-                  external: {
-                    values: {
-                      '1.0': 155,
-                      '5.0': 166.75,
-                      '25.0': 18067.171703296703,
-                      '50.0': 38483.75789473684,
-                      '75.0': 49473.25,
-                      '95.0': 72088.83333333333,
-                      '99.0': 159830.5
-                    }
-                  },
-                  total: {
-                    values: {
-                      '1.0': 172,
-                      '5.0': 221.2777777777778,
-                      '25.0': 18066.642857142855,
-                      '50.0': 38486.07692307692,
-                      '75.0': 49469.71111111111,
-                      '95.0': 72089,
-                      '99.0': 159831
-                    }
-                  }
-                },
-                {
-                  key: 'availability',
-                  doc_count: 1735,
-                  external: {
-                    values: {
-                      '1.0': 10865.54,
-                      '5.0': 21250,
-                      '25.0': 37154.666666666664,
-                      '50.0': 55653.45333333334,
-                      '75.0': 68987.80714285714,
-                      '95.0': 98766.9,
-                      '99.0': 159843
-                    }
-                  },
-                  total: {
-                    values: {
-                      '1.0': 10865.54,
-                      '5.0': 21250.7,
-                      '25.0': 37156,
-                      '50.0': 55656.57839262187,
-                      '75.0': 68989.49285714286,
-                      '95.0': 98767.2,
-                      '99.0': 159843
+                      '1.0': 0,
+                      '5.0': 0,
+                      '25.0': 52.605666695214694,
+                      '50.0': 249.4183601419254,
+                      '75.0': 507.21518847068063,
+                      '95.0': 3605.6146278317165,
+                      '99.0': 5953.351773455379
                     }
                   }
                 },
                 {
                   key: 'libraries',
-                  doc_count: 357,
+                  doc_count: 104646,
+                  total: {
+                    values: {
+                      '1.0': 29.970000000000006,
+                      '5.0': 53,
+                      '25.0': 60,
+                      '50.0': 273.80421100985234,
+                      '75.0': 2302.58272538691,
+                      '95.0': 3203.473503521126,
+                      '99.0': 6073.571971326164
+                    }
+                  },
                   external: {
                     values: {
                       '1.0': 0,
@@ -883,146 +796,431 @@ const mockData = {
                       '95.0': 0,
                       '99.0': 0
                     }
-                  },
+                  }
+                },
+                {
+                  key: 'search',
+                  doc_count: 104223,
                   total: {
                     values: {
-                      '1.0': 36,
-                      '5.0': 37,
-                      '25.0': 41.75,
-                      '50.0': 55,
-                      '75.0': 75,
-                      '95.0': 97,
-                      '99.0': 113.32
+                      '1.0': 100,
+                      '5.0': 200.86469157259015,
+                      '25.0': 397.35965738465734,
+                      '50.0': 805.2804043420513,
+                      '75.0': 2516.5943557835644,
+                      '95.0': 5129.154921483254,
+                      '99.0': 7366.054190476188
+                    }
+                  },
+                  external: {
+                    values: {
+                      '1.0': 98,
+                      '5.0': 198.6177235534775,
+                      '25.0': 385.6862934248633,
+                      '50.0': 766.7505230592536,
+                      '75.0': 2463.944157732664,
+                      '95.0': 5061.478845531059,
+                      '99.0': 7268.054796536795
+                    }
+                  }
+                },
+                {
+                  key: 'availability',
+                  doc_count: 104039,
+                  total: {
+                    values: {
+                      '1.0': 873.6936842105264,
+                      '5.0': 984.4587106918237,
+                      '25.0': 1100.7526741783345,
+                      '50.0': 1268.3365054104813,
+                      '75.0': 1688.5308841617828,
+                      '95.0': 2940.4517876712325,
+                      '99.0': 3850.770612244898
+                    }
+                  },
+                  external: {
+                    values: {
+                      '1.0': 872.74,
+                      '5.0': 983.3272532411409,
+                      '25.0': 1099.843254169494,
+                      '50.0': 1267.7202342747114,
+                      '75.0': 1687.414112258968,
+                      '95.0': 2939.6632772323514,
+                      '99.0': 3849.6394285714287
+                    }
+                  }
+                },
+                {
+                  key: 'recommend',
+                  doc_count: 103742,
+                  total: {
+                    values: {
+                      '1.0': 7,
+                      '5.0': 8,
+                      '25.0': 10,
+                      '50.0': 48.54324344137217,
+                      '75.0': 74.87564322469983,
+                      '95.0': 134,
+                      '99.0': 185
+                    }
+                  },
+                  external: {
+                    values: {
+                      '1.0': 7,
+                      '5.0': 8,
+                      '25.0': 10,
+                      '50.0': 49.805969049019346,
+                      '75.0': 61,
+                      '95.0': 121,
+                      '99.0': 129
+                    }
+                  }
+                },
+                {
+                  key: 'facets',
+                  doc_count: 102483,
+                  total: {
+                    values: {
+                      '1.0': 131.25469047619046,
+                      '5.0': 200.0865912208505,
+                      '25.0': 254.6726829588753,
+                      '50.0': 306.42533122751604,
+                      '75.0': 392.5556907378336,
+                      '95.0': 608.2223952738989,
+                      '99.0': 880.0175595238085
+                    }
+                  },
+                  external: {
+                    values: {
+                      '1.0': 127.17632653061226,
+                      '5.0': 196,
+                      '25.0': 246.83469069870938,
+                      '50.0': 291.0654109705493,
+                      '75.0': 375.32594419073166,
+                      '95.0': 584.9486314229522,
+                      '99.0': 859.6857489878531
+                    }
+                  }
+                },
+                {
+                  key: 'user',
+                  doc_count: 1446,
+                  total: {
+                    values: {
+                      '1.0': 156,
+                      '5.0': 163,
+                      '25.0': 185,
+                      '50.0': 214.8,
+                      '75.0': 352.43333333333334,
+                      '95.0': 4211.899999999998,
+                      '99.0': 15969.019999999999
+                    }
+                  },
+                  external: {
+                    values: {
+                      '1.0': 151,
+                      '5.0': 159,
+                      '25.0': 179,
+                      '50.0': 205.72222222222223,
+                      '75.0': 333.5,
+                      '95.0': 4202.599999999997,
+                      '99.0': 15938.14
+                    }
+                  }
+                },
+                {
+                  key: 'order',
+                  doc_count: 6,
+                  total: {
+                    values: {
+                      '1.0': 1529.36,
+                      '5.0': 1606.8,
+                      '25.0': 1994,
+                      '50.0': 2478,
+                      '75.0': 17010.5,
+                      '95.0': 28636.499999999996,
+                      '99.0': 30961.7
+                    }
+                  },
+                  external: {
+                    values: {
+                      '1.0': 1528.3,
+                      '5.0': 1605.5000000000002,
+                      '25.0': 1991.5,
+                      '50.0': 2474,
+                      '75.0': 17007,
+                      '95.0': 28633.399999999998,
+                      '99.0': 30958.68
+                    }
+                  }
+                }
+              ]
+            }
+          },
+          {
+            key: '1.0.0',
+            doc_count: 32198,
+            endpoints: {
+              doc_count_error_upper_bound: 0,
+              sum_other_doc_count: 0,
+              buckets: [
+                {
+                  key: 'recommend',
+                  doc_count: 14994,
+                  total: {
+                    values: {
+                      '1.0': 7.000000000000001,
+                      '5.0': 8,
+                      '25.0': 9,
+                      '50.0': 11,
+                      '75.0': 19,
+                      '95.0': 38,
+                      '99.0': 58
+                    }
+                  },
+                  external: {
+                    values: {
+                      '1.0': 7,
+                      '5.0': 7,
+                      '25.0': 9,
+                      '50.0': 10,
+                      '75.0': 18,
+                      '95.0': 37,
+                      '99.0': 57
                     }
                   }
                 },
                 {
                   key: 'work',
-                  doc_count: 239,
-                  external: {
-                    values: {
-                      '1.0': 229,
-                      '5.0': 284.8,
-                      '25.0': 1264.5,
-                      '50.0': 2043,
-                      '75.0': 3886,
-                      '95.0': 12300.6,
-                      '99.0': 15753.119999999999
-                    }
-                  },
+                  doc_count: 7752,
                   total: {
                     values: {
-                      '1.0': 247.5,
-                      '5.0': 296.6,
-                      '25.0': 1275,
-                      '50.0': 2066.333333333333,
-                      '75.0': 3913,
-                      '95.0': 12329.599999999999,
-                      '99.0': 15796.800000000001
+                      '1.0': 103,
+                      '5.0': 149.68333333333334,
+                      '25.0': 251.1611111111111,
+                      '50.0': 391.006734006734,
+                      '75.0': 658.9538461538461,
+                      '95.0': 2938.7199999999993,
+                      '99.0': 7680.7199999999975
+                    }
+                  },
+                  external: {
+                    values: {
+                      '1.0': 101,
+                      '5.0': 147.01999999999998,
+                      '25.0': 248.2358299595142,
+                      '50.0': 387.09583333333336,
+                      '75.0': 655.8769957983193,
+                      '95.0': 2928.3666666666654,
+                      '99.0': 7676.269999999998
+                    }
+                  }
+                },
+                {
+                  key: 'suggest',
+                  doc_count: 7476,
+                  total: {
+                    values: {
+                      '1.0': 154.37,
+                      '5.0': 167,
+                      '25.0': 179,
+                      '50.0': 187,
+                      '75.0': 197.00617283950618,
+                      '95.0': 335.32857142857137,
+                      '99.0': 779.7800000000007
+                    }
+                  },
+                  external: {
+                    values: {
+                      '1.0': 154,
+                      '5.0': 167,
+                      '25.0': 178,
+                      '50.0': 186.8139534883721,
+                      '75.0': 196,
+                      '95.0': 333.83437499999957,
+                      '99.0': 778.7800000000007
                     }
                   }
                 },
                 {
                   key: 'search',
-                  doc_count: 238,
-                  external: {
-                    values: {
-                      '1.0': 79.74,
-                      '5.0': 108.25,
-                      '25.0': 1322.75,
-                      '50.0': 2102,
-                      '75.0': 3980.5,
-                      '95.0': 12307.399999999996,
-                      '99.0': 15755.380000000001
-                    }
-                  },
+                  doc_count: 1270,
                   total: {
                     values: {
-                      '1.0': 82.37,
-                      '5.0': 110.10000000000002,
-                      '25.0': 1451.75,
-                      '50.0': 2272,
-                      '75.0': 4180.25,
-                      '95.0': 12521.599999999999,
-                      '99.0': 16015.899999999998
+                      '1.0': 99.69999999999999,
+                      '5.0': 164.4,
+                      '25.0': 467.5,
+                      '50.0': 745.4285714285713,
+                      '75.0': 1374.5,
+                      '95.0': 3082.5999999999963,
+                      '99.0': 18215.199999999888
+                    }
+                  },
+                  external: {
+                    values: {
+                      '1.0': 99.35999999999999,
+                      '5.0': 162.4,
+                      '25.0': 456,
+                      '50.0': 736.3333333333333,
+                      '75.0': 1357,
+                      '95.0': 3059.099999999996,
+                      '99.0': 18197.939999999886
+                    }
+                  }
+                },
+                {
+                  key: 'availability',
+                  doc_count: 680,
+                  total: {
+                    values: {
+                      '1.0': 487.78,
+                      '5.0': 901.9499999999999,
+                      '25.0': 1569.75,
+                      '50.0': 1928,
+                      '75.0': 2535.5,
+                      '95.0': 7611.9000000000015,
+                      '99.0': 11996.020000000033
+                    }
+                  },
+                  external: {
+                    values: {
+                      '1.0': 487.39,
+                      '5.0': 900.95,
+                      '25.0': 1569.25,
+                      '50.0': 1926.1666666666665,
+                      '75.0': 2535.25,
+                      '95.0': 7611.9000000000015,
+                      '99.0': 11996.020000000033
+                    }
+                  }
+                },
+                {
+                  key: 'libraries',
+                  doc_count: 10,
+                  total: {
+                    values: {
+                      '1.0': 0,
+                      '5.0': 0,
+                      '25.0': 0,
+                      '50.0': 0.5,
+                      '75.0': 1,
+                      '95.0': 1,
+                      '99.0': 1
+                    }
+                  },
+                  external: {
+                    values: {
+                      '1.0': 0,
+                      '5.0': 0,
+                      '25.0': 0,
+                      '50.0': 0,
+                      '75.0': 0,
+                      '95.0': 0,
+                      '99.0': 0
+                    }
+                  }
+                },
+                {
+                  key: 'facets',
+                  doc_count: 6,
+                  total: {
+                    values: {
+                      '1.0': 193.84,
+                      '5.0': 201.20000000000002,
+                      '25.0': 238,
+                      '50.0': 284,
+                      '75.0': 495,
+                      '95.0': 663.8,
+                      '99.0': 697.56
+                    }
+                  },
+                  external: {
+                    values: {
+                      '1.0': 190.9,
+                      '5.0': 198.5,
+                      '25.0': 236.5,
+                      '50.0': 284,
+                      '75.0': 494,
+                      '95.0': 661.9999999999999,
+                      '99.0': 695.5999999999999
+                    }
+                  }
+                },
+                {
+                  key: 'order',
+                  doc_count: 6,
+                  total: {
+                    values: {
+                      '1.0': 1917.8400000000001,
+                      '5.0': 1981.2,
+                      '25.0': 2298,
+                      '50.0': 2694,
+                      '75.0': 4281.5,
+                      '95.0': 5551.5,
+                      '99.0': 5805.5
+                    }
+                  },
+                  external: {
+                    values: {
+                      '1.0': 1914.82,
+                      '5.0': 1978.1000000000001,
+                      '25.0': 2294.5,
+                      '50.0': 2690,
+                      '75.0': 4277.5,
+                      '95.0': 5547.499999999999,
+                      '99.0': 5801.5
                     }
                   }
                 },
                 {
                   key: 'events',
                   doc_count: 2,
-                  external: {
-                    values: {
-                      '1.0': 19.029999999999998,
-                      '5.0': 19.150000000000002,
-                      '25.0': 19.75,
-                      '50.0': 20.5,
-                      '75.0': 21.25,
-                      '95.0': 21.849999999999998,
-                      '99.0': 21.970000000000002
-                    }
-                  },
                   total: {
                     values: {
-                      '1.0': 108.10000000000001,
-                      '5.0': 108.5,
-                      '25.0': 110.5,
-                      '50.0': 113,
-                      '75.0': 115.5,
-                      '95.0': 117.5,
-                      '99.0': 117.89999999999999
+                      '1.0': 68,
+                      '5.0': 68,
+                      '25.0': 68,
+                      '50.0': 68,
+                      '75.0': 68,
+                      '95.0': 68,
+                      '99.0': 68
+                    }
+                  },
+                  external: {
+                    values: {
+                      '1.0': 68,
+                      '5.0': 68,
+                      '25.0': 68,
+                      '50.0': 68,
+                      '75.0': 68,
+                      '95.0': 68,
+                      '99.0': 68
                     }
                   }
                 },
                 {
-                  key: 'library',
-                  doc_count: 1,
-                  external: {
-                    values: {
-                      '1.0': 35,
-                      '5.0': 35,
-                      '25.0': 35,
-                      '50.0': 35,
-                      '75.0': 35,
-                      '95.0': 35,
-                      '99.0': 35
-                    }
-                  },
+                  key: 'news',
+                  doc_count: 2,
                   total: {
                     values: {
-                      '1.0': 427,
-                      '5.0': 427,
-                      '25.0': 427,
-                      '50.0': 427,
-                      '75.0': 427,
-                      '95.0': 427,
-                      '99.0': 427
-                    }
-                  }
-                },
-                {
-                  key: 'order',
-                  doc_count: 1,
-                  external: {
-                    values: {
-                      '1.0': 3914,
-                      '5.0': 3914,
-                      '25.0': 3914,
-                      '50.0': 3914,
-                      '75.0': 3914,
-                      '95.0': 3914,
-                      '99.0': 3914
+                      '1.0': 45,
+                      '5.0': 45,
+                      '25.0': 45,
+                      '50.0': 45,
+                      '75.0': 45,
+                      '95.0': 45,
+                      '99.0': 45
                     }
                   },
-                  total: {
+                  external: {
                     values: {
-                      '1.0': 3919,
-                      '5.0': 3919,
-                      '25.0': 3919,
-                      '50.0': 3919,
-                      '75.0': 3919,
-                      '95.0': 3919,
-                      '99.0': 3919
+                      '1.0': 45,
+                      '5.0': 45,
+                      '25.0': 45,
+                      '50.0': 45,
+                      '75.0': 45,
+                      '95.0': 45,
+                      '99.0': 45
                     }
                   }
                 }
@@ -1031,268 +1229,268 @@ const mockData = {
           },
           {
             key: '3.0.0',
-            doc_count: 601,
+            doc_count: 51,
             endpoints: {
               doc_count_error_upper_bound: 0,
-              sum_other_doc_count: 7,
+              sum_other_doc_count: 4,
               buckets: [
                 {
                   key: 'search',
-                  doc_count: 350,
-                  external: {
-                    values: {
-                      '1.0': 0,
-                      '5.0': 79.9,
-                      '25.0': 304.75,
-                      '50.0': 1024.5,
-                      '75.0': 2804,
-                      '95.0': 3816.4000000000005,
-                      '99.0': 4214.429999999999
-                    }
-                  },
+                  doc_count: 17,
                   total: {
                     values: {
-                      '1.0': 0,
-                      '5.0': 82,
-                      '25.0': 306.5,
-                      '50.0': 1050.6666666666665,
-                      '75.0': 2875.666666666667,
-                      '95.0': 3870.3,
-                      '99.0': 4319.23
+                      '1.0': 223.61,
+                      '5.0': 454.05,
+                      '25.0': 998,
+                      '50.0': 1279,
+                      '75.0': 1397.75,
+                      '95.0': 2575.549999999999,
+                      '99.0': 3070.3099999999995
+                    }
+                  },
+                  external: {
+                    values: {
+                      '1.0': 215.31,
+                      '5.0': 420.55,
+                      '25.0': 932.25,
+                      '50.0': 1215.5,
+                      '75.0': 1341,
+                      '95.0': 2523.349999999999,
+                      '99.0': 3015.8699999999994
+                    }
+                  }
+                },
+                {
+                  key: 'status',
+                  doc_count: 8,
+                  total: {
+                    values: {
+                      '1.0': 5123.2,
+                      '5.0': 5140,
+                      '25.0': 5224,
+                      '50.0': 5329,
+                      '75.0': 5389,
+                      '95.0': 5437,
+                      '99.0': 5446.599999999999
+                    }
+                  },
+                  external: {
+                    values: {
+                      '1.0': 5119.08,
+                      '5.0': 5135.4,
+                      '25.0': 5217,
+                      '50.0': 5319,
+                      '75.0': 5382,
+                      '95.0': 5432.4,
+                      '99.0': 5442.48
                     }
                   }
                 },
                 {
                   key: 'events',
-                  doc_count: 95,
-                  external: {
-                    values: {
-                      '1.0': 9,
-                      '5.0': 11,
-                      '25.0': 14,
-                      '50.0': 18,
-                      '75.0': 30,
-                      '95.0': 113.89999999999996,
-                      '99.0': 1146.6400000000006
-                    }
-                  },
+                  doc_count: 6,
                   total: {
                     values: {
-                      '1.0': 43.94,
-                      '5.0': 52.7,
-                      '25.0': 60.5,
-                      '50.0': 74,
-                      '75.0': 99.5,
-                      '95.0': 182.09999999999997,
-                      '99.0': 1204.3400000000004
-                    }
-                  }
-                },
-                {
-                  key: 'library',
-                  doc_count: 51,
-                  external: {
-                    values: {
-                      '1.0': 11.5,
-                      '5.0': 12,
-                      '25.0': 18,
-                      '50.0': 26,
-                      '75.0': 55,
-                      '95.0': 96.5,
-                      '99.0': 102.5
+                      '1.0': 82.18,
+                      '5.0': 94.9,
+                      '25.0': 158.5,
+                      '50.0': 238,
+                      '75.0': 281,
+                      '95.0': 315.4,
+                      '99.0': 322.28
                     }
                   },
-                  total: {
-                    values: {
-                      '1.0': 43,
-                      '5.0': 136.5,
-                      '25.0': 229.5,
-                      '50.0': 261,
-                      '75.0': 310,
-                      '95.0': 436,
-                      '99.0': 457.5
-                    }
-                  }
-                },
-                {
-                  key: 'rank',
-                  doc_count: 36,
                   external: {
                     values: {
-                      '1.0': 54.349999999999994,
-                      '5.0': 55,
-                      '25.0': 58,
-                      '50.0': 60,
-                      '75.0': 64.75,
-                      '95.0': 72.5,
-                      '99.0': 77.89999999999999
-                    }
-                  },
-                  total: {
-                    values: {
-                      '1.0': 56.349999999999994,
-                      '5.0': 57,
-                      '25.0': 60,
-                      '50.0': 62,
-                      '75.0': 70.25,
-                      '95.0': 75.75,
-                      '99.0': 79.94999999999999
-                    }
-                  }
-                },
-                {
-                  key: 'availability',
-                  doc_count: 11,
-                  external: {
-                    values: {
-                      '1.0': 1487.2,
-                      '5.0': 1488,
-                      '25.0': 1636,
-                      '50.0': 1744,
-                      '75.0': 1861.5,
-                      '95.0': 1902,
-                      '99.0': 1917.2
-                    }
-                  },
-                  total: {
-                    values: {
-                      '1.0': 1487.3999999999999,
-                      '5.0': 1489,
-                      '25.0': 1640,
-                      '50.0': 1745,
-                      '75.0': 1864.5,
-                      '95.0': 1904,
-                      '99.0': 1919.2
-                    }
-                  }
-                },
-                {
-                  key: 'facets',
-                  doc_count: 11,
-                  external: {
-                    values: {
-                      '1.0': 226,
-                      '5.0': 230,
-                      '25.0': 347.5,
-                      '50.0': 422,
-                      '75.0': 526,
-                      '95.0': 656.5,
-                      '99.0': 731.3000000000001
-                    }
-                  },
-                  total: {
-                    values: {
-                      '1.0': 239.6,
-                      '5.0': 242,
-                      '25.0': 362,
-                      '50.0': 436,
-                      '75.0': 534.5,
-                      '95.0': 669,
-                      '99.0': 744.2
-                    }
-                  }
-                },
-                {
-                  key: 'recommend',
-                  doc_count: 11,
-                  external: {
-                    values: {
-                      '1.0': 31.300000000000004,
-                      '5.0': 32.5,
-                      '25.0': 35,
-                      '50.0': 38,
-                      '75.0': 39.5,
-                      '95.0': 41.5,
-                      '99.0': 41.9
-                    }
-                  },
-                  total: {
-                    values: {
-                      '1.0': 60.1,
-                      '5.0': 60.5,
-                      '25.0': 63.5,
-                      '50.0': 71,
-                      '75.0': 79.5,
-                      '95.0': 90,
-                      '99.0': 91.60000000000001
-                    }
-                  }
-                },
-                {
-                  key: 'user',
-                  doc_count: 10,
-                  external: {
-                    values: {
-                      '1.0': 1394.85,
-                      '5.0': 1418.25,
-                      '25.0': 1520.75,
-                      '50.0': 1587.5,
-                      '75.0': 1770,
-                      '95.0': 2858.8499999999985,
-                      '99.0': 3343.7700000000004
-                    }
-                  },
-                  total: {
-                    values: {
-                      '1.0': 1404.4,
-                      '5.0': 1426,
-                      '25.0': 1531.5,
-                      '50.0': 1598.5,
-                      '75.0': 1776.25,
-                      '95.0': 2869.249999999998,
-                      '99.0': 3357.05
-                    }
-                  }
-                },
-                {
-                  key: 'work',
-                  doc_count: 10,
-                  external: {
-                    values: {
-                      '1.0': 929.1800000000001,
-                      '5.0': 965.9000000000001,
-                      '25.0': 1084.5,
-                      '50.0': 1275,
-                      '75.0': 1322.75,
-                      '95.0': 1340.4,
-                      '99.0': 1350.48
-                    }
-                  },
-                  total: {
-                    values: {
-                      '1.0': 959.81,
-                      '5.0': 999.05,
-                      '25.0': 1118.75,
-                      '50.0': 1335,
-                      '75.0': 1371.5,
-                      '95.0': 1415.5,
-                      '99.0': 1426.3
+                      '1.0': 15.68,
+                      '5.0': 26.400000000000002,
+                      '25.0': 80,
+                      '50.0': 147,
+                      '75.0': 154.5,
+                      '95.0': 160.5,
+                      '99.0': 161.7
                     }
                   }
                 },
                 {
                   key: 'suggest',
-                  doc_count: 9,
-                  external: {
-                    values: {
-                      '1.0': 179.16,
-                      '5.0': 179.8,
-                      '25.0': 181,
-                      '50.0': 183,
-                      '75.0': 190,
-                      '95.0': 194.8,
-                      '99.0': 195.76000000000002
-                    }
-                  },
+                  doc_count: 4,
                   total: {
                     values: {
-                      '1.0': 185.08,
-                      '5.0': 185.4,
-                      '25.0': 189,
-                      '50.0': 195,
-                      '75.0': 198,
-                      '95.0': 206.60000000000002,
-                      '99.0': 206.92000000000002
+                      '1.0': 2,
+                      '5.0': 2,
+                      '25.0': 2,
+                      '50.0': 2,
+                      '75.0': 2,
+                      '95.0': 2,
+                      '99.0': 2
+                    }
+                  },
+                  external: {
+                    values: {
+                      '1.0': 0,
+                      '5.0': 0,
+                      '25.0': 0,
+                      '50.0': 0,
+                      '75.0': 0,
+                      '95.0': 0,
+                      '99.0': 0
+                    }
+                  }
+                },
+                {
+                  key: 'availability',
+                  doc_count: 2,
+                  total: {
+                    values: {
+                      '1.0': 1124,
+                      '5.0': 1124,
+                      '25.0': 1124,
+                      '50.0': 1124,
+                      '75.0': 1124,
+                      '95.0': 1124,
+                      '99.0': 1124
+                    }
+                  },
+                  external: {
+                    values: {
+                      '1.0': 1119,
+                      '5.0': 1119,
+                      '25.0': 1119,
+                      '50.0': 1119,
+                      '75.0': 1119,
+                      '95.0': 1119,
+                      '99.0': 1119
+                    }
+                  }
+                },
+                {
+                  key: 'facets',
+                  doc_count: 2,
+                  total: {
+                    values: {
+                      '1.0': 565,
+                      '5.0': 565,
+                      '25.0': 565,
+                      '50.0': 565,
+                      '75.0': 565,
+                      '95.0': 565,
+                      '99.0': 565
+                    }
+                  },
+                  external: {
+                    values: {
+                      '1.0': 542,
+                      '5.0': 542,
+                      '25.0': 542,
+                      '50.0': 542,
+                      '75.0': 542,
+                      '95.0': 542,
+                      '99.0': 542
+                    }
+                  }
+                },
+                {
+                  key: 'libraries',
+                  doc_count: 2,
+                  total: {
+                    values: {
+                      '1.0': 4613,
+                      '5.0': 4613,
+                      '25.0': 4613,
+                      '50.0': 4613,
+                      '75.0': 4613,
+                      '95.0': 4613,
+                      '99.0': 4613
+                    }
+                  },
+                  external: {
+                    values: {
+                      '1.0': 4274,
+                      '5.0': 4274,
+                      '25.0': 4274,
+                      '50.0': 4274,
+                      '75.0': 4274,
+                      '95.0': 4274,
+                      '99.0': 4274
+                    }
+                  }
+                },
+                {
+                  key: 'library',
+                  doc_count: 2,
+                  total: {
+                    values: {
+                      '1.0': 213,
+                      '5.0': 213,
+                      '25.0': 213,
+                      '50.0': 213,
+                      '75.0': 213,
+                      '95.0': 213,
+                      '99.0': 213
+                    }
+                  },
+                  external: {
+                    values: {
+                      '1.0': 80,
+                      '5.0': 80,
+                      '25.0': 80,
+                      '50.0': 80,
+                      '75.0': 80,
+                      '95.0': 80,
+                      '99.0': 80
+                    }
+                  }
+                },
+                {
+                  key: 'news',
+                  doc_count: 2,
+                  total: {
+                    values: {
+                      '1.0': 89,
+                      '5.0': 89,
+                      '25.0': 89,
+                      '50.0': 89,
+                      '75.0': 89,
+                      '95.0': 89,
+                      '99.0': 89
+                    }
+                  },
+                  external: {
+                    values: {
+                      '1.0': 67,
+                      '5.0': 67,
+                      '25.0': 67,
+                      '50.0': 67,
+                      '75.0': 67,
+                      '95.0': 67,
+                      '99.0': 67
+                    }
+                  }
+                },
+                {
+                  key: 'recommend',
+                  doc_count: 2,
+                  total: {
+                    values: {
+                      '1.0': 2,
+                      '5.0': 2,
+                      '25.0': 2,
+                      '50.0': 2,
+                      '75.0': 2,
+                      '95.0': 2,
+                      '99.0': 2
+                    }
+                  },
+                  external: {
+                    values: {
+                      '1.0': 0,
+                      '5.0': 0,
+                      '25.0': 0,
+                      '50.0': 0,
+                      '75.0': 0,
+                      '95.0': 0,
+                      '99.0': 0
                     }
                   }
                 }
@@ -1312,7 +1510,7 @@ const provider = Provider();
 describe('Automated test: status_performance.auto', () => {
   it('has same result as recorded (in status_performance.auto)', () => {
     assert(
-      Date.now() < +new Date('2018-07-09'),
+      Date.now() < +new Date('2018-09-11'),
       'Please recreate the automatically generated unit tests, such that the mock data does not come out of sync with the actual services. See README.md for details.'
     );
     context.mockData = mockData;

@@ -35,12 +35,14 @@ async function performanceStat({request, context}) {
   if (!isoWeek.match(/\d\d\d\d-W\d\d/)) {
     throw {
       statusCode: 400,
-      error: 'Invalid week parameter, should be formatted like: 2018-W05'
+      error: 'Invalid week parameter, should be formatted like: 2018-W15'
     };
   }
   const week = isoWeek.replace('-W', '.');
 
   const baseUrl = context.data.services.performance;
+  const username = context.data.performance.username;
+  const password = context.data.performance.password;
   const url = baseUrl + 'prod_ux-' + week + '/';
 
   const testExists = JSON.parse(await context.request(url, {}));
@@ -52,17 +54,21 @@ async function performanceStat({request, context}) {
   }
 
   const query = {
-    query: {match: {msg: {query: 'transformer-done', type: 'phrase'}}},
-    filter: {term: {app: 'serviceprovider'}},
+    size: 0,
+    query: {
+      match: {
+        msg: 'transformer-done'
+      }
+    },
     aggs: {
       version: {
         terms: {
-          field: 'version'
+          field: 'version.keyword'
         },
         aggs: {
           endpoints: {
             terms: {
-              field: 'name'
+              field: 'name.keyword'
             },
             aggs: {
               external: {
@@ -81,10 +87,16 @@ async function performanceStat({request, context}) {
       }
     }
   };
-  const r = await context.request(url + '_search?size=0', {
+
+  const r = await context.request(`${url}/_search`, {
     method: 'POST',
+    auth: {
+      pass: password,
+      user: username
+    },
     json: query
   });
+
   const result = [];
   for (const serviceVersion of r.aggregations.version.buckets) {
     for (const bucket of serviceVersion.endpoints.buckets) {
