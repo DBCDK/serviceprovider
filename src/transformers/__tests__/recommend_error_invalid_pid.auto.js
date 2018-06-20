@@ -16,27 +16,33 @@ const expected = {
 const context = {
   services: {
     ddbcmsapi: 'https://cmscontent.dbc.dk/',
-    moreinfo: 'https://moreinfo.addi.dk/2.10/',
-    openagency: 'http://openagency.addi.dk/2.24/',
-    openholdingstatus: 'https://openholdingstatus.addi.dk/2.2/',
-    PRODopenorder: 'https://openorder.addi.dk/2.8/',
-    openorder: 'https://openorder.addi.dk/test_2.8/',
-    opensearch: 'https://opensearch.addi.dk/b3.5_4.5/',
+    moreinfo: 'https://moreinfo.addi.dk/2.11/',
+    openagency: 'https://openagency.addi.dk/2.34/',
+    openholdingstatus: 'https://openholdingstatus.addi.dk/3.0/',
+    openorder: 'https://openorder.addi.dk/2.8/',
+    opensearch: 'https://opensearch.addi.dk/b3.5_5.0/',
     openuserstatus: 'https://openuserstatus.addi.dk/1.6.1/',
-    suggest: 'XXXXX',
+    rank: 'https://xptest.dbc.dk/ms/rank/v1',
+    suggest: 'http://ortograf.mcp1-proxy.dbc.dk/ortograf/',
     recommend: 'http://staging.recomole.mcp1-proxy.dbc.dk/recomole/loan-cosim',
-    communityservice: 'http://localhost:4010/v1'
+    suggestpopular: 'XXXXX',
+    suggestcreator: 'XXXXX',
+    suggestlibrary: 'XXXXX',
+    suggestsubject: 'XXXXX',
+    performance: 'https://elk-p01.dbc.dk:9100/',
+    recommendurls: 'XXXXX'
   },
   communityservice: {id: 1},
-  search: {agency: '775100', profile: 'opac', collectionidentifiers: ''},
+  performance: {password: 'XXXXX', username: 'XXXXX'},
+  search: {agency: '710100', profile: 'opac'},
   netpunkt: {user: 'XXXXX', group: 'XXXXX', password: 'XXXXX'},
   user: {
     id: 'XXXXX',
     salt: 'XXXXX',
     pin: 'XXXXX',
-    libraryId: '726501',
-    agency: '726500',
-    isil: 'DK-726500'
+    libraryId: '710100',
+    agency: '710100',
+    isil: 'DK-710100'
   },
   app: {
     clientId: 'XXXXX',
@@ -47,17 +53,17 @@ const context = {
 };
 const mockData = {
   '["http://staging.recomole.mcp1-proxy.dbc.dk/recomole/loan-cosim",{"method":"post","json":{"like":["WAT!?"]}}]': {
-    traceback: [
-      '  File "/root/miniconda3/lib/python3.5/site-packages/tornado/web.py", line 1541, in _execute\n    result = method(*self.path_args, **self.path_kwargs)\n',
-      '  File "/root/miniconda3/lib/python3.5/site-packages/recomole/service.py", line 158, in post\n    self.__post()\n',
-      '  File "/root/miniconda3/lib/python3.5/site-packages/recomole/service.py", line 165, in __post\n    recommendations, extra = self.recommender(**request)\n',
-      '  File "/root/miniconda3/lib/python3.5/site-packages/recomole/loans_recommender.py", line 124, in __call__\n    return self.recommend(**kwargs)\n',
-      '  File "/root/miniconda3/lib/python3.5/site-packages/recomole/loans_recommender.py", line 136, in recommend\n    die("Could not find any works for pids %s" % kwargs[\'like\'], exception=RecommenderError)\n',
-      '  File "/root/miniconda3/lib/python3.5/site-packages/recomole/loans_recommender.py", line 39, in die\n    raise exception(mesg)\n'
-    ],
     statusCode: 500,
-    type: "<class 'recomole.loans_recommender.RecommenderError'>",
-    value: "Could not find any works for pids ['WAT!?']"
+    type: "<class 'recomole.recommender.RecommenderError'>",
+    value: "Could not find any works for pids ['WAT!?']",
+    traceback: [
+      '  File "/root/miniconda3/lib/python3.6/site-packages/tornado/web.py", line 1541, in _execute\n    result = method(*self.path_args, **self.path_kwargs)\n',
+      '  File "/root/miniconda3/lib/python3.6/site-packages/recomole/service.py", line 158, in post\n    self.__post()\n',
+      '  File "/root/miniconda3/lib/python3.6/site-packages/recomole/service.py", line 165, in __post\n    recommendations, extra = self.recommender(**request)\n',
+      '  File "/root/miniconda3/lib/python3.6/site-packages/recomole/recommender.py", line 301, in __call__\n    return self.recommend(**kwargs)\n',
+      '  File "/root/miniconda3/lib/python3.6/site-packages/recomole/recommender.py", line 313, in recommend\n    die("Could not find any works for pids %s" % kwargs[\'like\'], exception=RecommenderError)\n',
+      '  File "/root/miniconda3/lib/python3.6/site-packages/recomole/recommender.py", line 39, in die\n    raise exception(mesg)\n'
+    ]
   }
 };
 
@@ -68,7 +74,7 @@ const provider = Provider();
 describe('Automated test: recommend_error_invalid_pid.auto', () => {
   it('has same result as recorded (in recommend_error_invalid_pid.auto)', () => {
     assert(
-      Date.now() < +new Date('2018-06-19'),
+      Date.now() < +new Date('2018-09-18'),
       'Please recreate the automatically generated unit tests, such that the mock data does not come out of sync with the actual services. See README.md for details.'
     );
     context.mockData = mockData;

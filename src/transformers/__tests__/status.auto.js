@@ -13,22 +13,22 @@ const expected = {
   data: {
     version: '3.0.0',
     endOfServiceDate: '0000-00-00T00:00:00Z',
-    openagency: {url: 'http://openagency.addi.dk/2.24/', ok: true},
+    openagency: {url: 'https://openagency.addi.dk/2.34/', ok: true},
     openholdingstatus: {
-      url: 'https://openholdingstatus.addi.dk/2.2/',
+      url: 'https://openholdingstatus.addi.dk/3.0/',
       ok: false,
       error: 'ERROR checking for holdings DK-100450 on Kaninbjerget'
     },
-    openorder: {url: 'https://openorder.addi.dk/test_2.8/', ok: true},
-    opensearch: {url: 'https://opensearch.addi.dk/b3.5_4.5/', ok: true},
+    openorder: {url: 'https://openorder.addi.dk/2.8/', ok: true},
+    opensearch: {url: 'https://opensearch.addi.dk/b3.5_5.0/', ok: true},
     openuserstatus: {url: 'https://openuserstatus.addi.dk/1.6.1/', ok: true},
-    moreinfo: {url: 'https://moreinfo.addi.dk/2.10/', ok: true},
+    moreinfo: {url: 'https://moreinfo.addi.dk/2.11/', ok: true},
     ddbcmsapi: {url: 'https://cmscontent.dbc.dk/'},
     recommend: {
       url: 'http://staging.recomole.mcp1-proxy.dbc.dk/recomole/loan-cosim',
       ok: true
     },
-    communityservice: {url: 'http://localhost:4010/v1'},
+    communityservice: {url: ''},
     suggest: {url: 'http://ortograf.mcp1-proxy.dbc.dk/ortograf/', ok: true}
   }
 };
@@ -36,28 +36,34 @@ const expected = {
 const context = {
   services: {
     ddbcmsapi: 'https://cmscontent.dbc.dk/',
-    moreinfo: 'https://moreinfo.addi.dk/2.10/',
-    openagency: 'http://openagency.addi.dk/2.24/',
-    openholdingstatus: 'https://openholdingstatus.addi.dk/2.2/',
-    PRODopenorder: 'https://openorder.addi.dk/2.8/',
-    openorder: 'https://openorder.addi.dk/test_2.8/',
-    opensearch: 'https://opensearch.addi.dk/b3.5_4.5/',
+    moreinfo: 'https://moreinfo.addi.dk/2.11/',
+    openagency: 'https://openagency.addi.dk/2.34/',
+    openholdingstatus: 'https://openholdingstatus.addi.dk/3.0/',
+    openorder: 'https://openorder.addi.dk/2.8/',
+    opensearch: 'https://opensearch.addi.dk/b3.5_5.0/',
     openuserstatus: 'https://openuserstatus.addi.dk/1.6.1/',
+    rank: 'https://xptest.dbc.dk/ms/rank/v1',
     suggest: 'http://ortograf.mcp1-proxy.dbc.dk/ortograf/',
     recommend: 'http://staging.recomole.mcp1-proxy.dbc.dk/recomole/loan-cosim',
-    performance: 'XXXXX',
-    communityservice: 'http://localhost:4010/v1'
+    communityservice: '',
+    suggestpopular: 'XXXXX',
+    suggestcreator: 'XXXXX',
+    suggestlibrary: 'XXXXX',
+    suggestsubject: 'XXXXX',
+    performance: 'https://elk-p01.dbc.dk:9100/',
+    recommendurls: 'XXXXX'
   },
   communityservice: {id: 1},
-  search: {agency: '775100', profile: 'opac', collectionidentifiers: ''},
+  performance: {password: 'XXXXX', username: 'XXXXX'},
+  search: {agency: '710100', profile: 'opac'},
   netpunkt: {user: 'XXXXX', group: 'XXXXX', password: 'XXXXX'},
   user: {
     id: 'XXXXX',
     salt: 'XXXXX',
     pin: 'XXXXX',
-    libraryId: '726501',
-    agency: '726500',
-    isil: 'DK-726500'
+    libraryId: '710100',
+    agency: '710100',
+    isil: 'DK-710100'
   },
   app: {
     clientId: 'XXXXX',
@@ -67,16 +73,16 @@ const context = {
   }
 };
 const mockData = {
-  '["http://openagency.addi.dk/2.24/?HowRU",{}]': 'Gr8',
   '["http://ortograf.mcp1-proxy.dbc.dk/ortograf/status",{}]':
-    '{"ok": true, "ab-id": 1, "build": "HEAD", "git": "HEAD", "statistics": [{"uptime": "1034:40:44", "active": 0, "total-failure": 107, "startup": "2018-02-12 09:27:41", "total-success": 711224, "window": {"failure": {"std": null, "75%": null, "25%": null, "50%": null, "max": null, "min": null, "mean": null, "count": 0}, "success": {"std": 7.221, "75%": 21.808, "25%": 13.526, "50%": 16.462, "max": 68.898, "min": 5.857, "mean": 18.56, "count": 5000}}, "windowstart": "21:12:57", "name": "ortograf"}], "solr": [{"solr-ok": true, "url": "http://0.ortograf-solr.search.prod.mcp1.dbc.dk/solr/ortograf-all"}, {"solr-ok": true, "url": "http://0.ortograf-solr.search.prod.mcp1.dbc.dk/solr/ortograf-creator"}, {"solr-ok": true, "url": "http://0.ortograf-solr.search.prod.mcp1.dbc.dk/solr/ortograf-subject"}, {"solr-ok": true, "url": "http://0.ortograf-solr.search.prod.mcp1.dbc.dk/solr/ortograf-title"}], "version": "0.2", "mem-usage": 73188}',
+    '{"ok": true, "build": "1053", "git": "07dfa1446deaf502a87f905c20ea4c248ec97de3", "version": "0.2", "ab-id": 1, "mem-usage": 71968, "solr": [{"url": "http://0.ortograf-solr.microsearch.prod.mcp1.dbc.dk/solr/ortograf-all", "solr-ok": true}, {"url": "http://0.ortograf-solr.microsearch.prod.mcp1.dbc.dk/solr/ortograf-creator", "solr-ok": true}, {"url": "http://0.ortograf-solr.microsearch.prod.mcp1.dbc.dk/solr/ortograf-subject", "solr-ok": true}, {"url": "http://0.ortograf-solr.microsearch.prod.mcp1.dbc.dk/solr/ortograf-title", "solr-ok": true}], "statistics": [{"startup": "2018-06-07 15:39:06", "uptime": "308:23:19", "active": 0, "windowstart": "20:35:02", "total-success": 110760, "total-failure": 3, "window": {"success": {"count": 5000, "mean": 12.616, "std": 4.068, "min": 6.068, "25%": 9.951, "50%": 11.048, "75%": 14.179, "max": 44.912}, "failure": {"count": 0, "mean": null, "std": null, "min": null, "25%": null, "50%": null, "75%": null, "max": null}}, "name": "ortograf"}]}',
   '["http://staging.recomole.mcp1-proxy.dbc.dk/recomole/status",{}]':
-    '{"mem-usage": 104044, "statistics": [{"uptime": "499:15:19", "total-success": 23, "total-failure": 18, "window": {"failure": {"min": 0.526, "std": 12.38, "count": 18, "25%": 1.096, "50%": 3.653, "75%": 23.546, "max": 31.744, "mean": 12.089}, "success": {"min": 133.213, "std": 106.174, "count": 23, "25%": 153.461, "50%": 178.39, "75%": 237.939, "max": 535.136, "mean": 221.416}}, "active": 0, "name": "loan-cosim-recommender", "windowstart": "11:16:07", "startup": "2018-03-06 16:53:06"}], "build": "not available", "version": "devel", "ab-id": 1, "ok": true, "git": "not available"}',
-  '["https://moreinfo.addi.dk/2.10/?HowRU",{}]': 'Gr8',
-  '["https://openholdingstatus.addi.dk/2.2/?HowRU",{}]':
+    '{"ok": true, "build": "353", "git": "943b5b3d76fcfc70ac441d44f76990acdddebf05", "version": "0.1.0", "ab-id": 1, "mem-usage": 316784, "statistics": [{"startup": "2018-04-16 09:59:14", "uptime": "1562:03:11", "active": 0, "windowstart": "11:42:59", "total-success": 3807, "total-failure": 13, "window": {"success": {"count": 3807, "mean": 162.467, "std": 141.344, "min": 26.746, "25%": 99.981, "50%": 114.101, "75%": 176.231, "max": 1508.347}, "failure": {"count": 13, "mean": 43.4, "std": 40.966, "min": 13.593, "25%": 16.2, "50%": 26.587, "75%": 52.047, "max": 149.669}}, "name": "loan-cosim-recommender"}]}',
+  '["https://moreinfo.addi.dk/2.11/?HowRU",{}]': 'Gr8',
+  '["https://openagency.addi.dk/2.34/?HowRU",{}]': 'Gr8',
+  '["https://openholdingstatus.addi.dk/3.0/?HowRU",{}]':
     'ERROR checking for holdings DK-100450 on Kaninbjerget',
-  '["https://openorder.addi.dk/test_2.8/?HowRU",{}]': 'Gr8',
-  '["https://opensearch.addi.dk/b3.5_4.5/?HowRU",{}]': 'Gr8',
+  '["https://openorder.addi.dk/2.8/?HowRU",{}]': 'Gr8',
+  '["https://opensearch.addi.dk/b3.5_5.0/?HowRU",{}]': 'Gr8',
   '["https://openuserstatus.addi.dk/1.6.1/?HowRU",{}]': 'Gr8'
 };
 
@@ -87,7 +93,7 @@ const provider = Provider();
 describe('Automated test: status.auto', () => {
   it('has same result as recorded (in status.auto)', () => {
     assert(
-      Date.now() < +new Date('2018-06-25'),
+      Date.now() < +new Date('2018-09-18'),
       'Please recreate the automatically generated unit tests, such that the mock data does not come out of sync with the actual services. See README.md for details.'
     );
     context.mockData = mockData;

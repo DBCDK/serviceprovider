@@ -45,14 +45,6 @@ async function performanceStat({request, context}) {
   const password = context.data.performance.password;
   const url = baseUrl + 'prod_ux-' + week + '/';
 
-  const testExists = JSON.parse(await context.request(url, {}));
-  if (testExists.status === 404) {
-    throw {
-      statusCode: 404,
-      error: 'No statistics available for week ' + isoWeek
-    };
-  }
-
   const query = {
     size: 0,
     query: {
@@ -96,6 +88,19 @@ async function performanceStat({request, context}) {
     },
     json: query
   });
+  if (r.error) {
+    if (r.error.type === 'index_not_found_exception') {
+      throw {
+        statusCode: 404,
+        error: 'No statistics available for week ' + isoWeek
+      };
+    } else {
+      throw {
+        statusCode: 500,
+        error: r.error.type
+      };
+    }
+  }
 
   const result = [];
   for (const serviceVersion of r.aggregations.version.buckets) {
