@@ -18,3 +18,6 @@ definitions:
       unavailable:
         description: Description of reason, if availability is unavailable, i.e. for nonexistant material, or material not for logged in library.
         type: string
+      holdings:
+        description: Local holding status at branch level (for FBS-libraries). Only show branches for the currently logged in agency. The structure of the holdings result follows the FBS-API-specifications which can be downloaded from <http://fbsudrulning.dk/vejledninger/#/Ops%C3%A6tning?id=44>
+        type: array

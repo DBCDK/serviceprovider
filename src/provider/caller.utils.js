@@ -48,7 +48,11 @@ const whitelist = {
     suggest: true,
     recommend: true,
     performance: true,
-    communityservice: true
+    communityservice: true,
+    cicero: true
+  },
+  cicero: {
+    'DK-725300': {}
   },
   communityservice: {
     id: true
@@ -79,6 +83,17 @@ function censor(str, context) {
   const forbidden = {};
   for (const key in context) {
     for (const subkey in context[key]) {
+      if (typeof context[key][subkey] === 'object') {
+        for (const subsubkey in context[key][subkey]) {
+          if (
+            !whitelist[key] ||
+            !whitelist[key][subkey] ||
+            !whitelist[key][subkey][subsubkey]
+          ) {
+            forbidden[context[key][subkey][subsubkey]] = true;
+          }
+        }
+      }
       if (!whitelist[key] || !whitelist[key][subkey]) {
         forbidden[context[key][subkey]] = true;
       }
@@ -120,6 +135,16 @@ export function saveTest(test) {
     for (const key2 in cleanedContext[key1]) {
       if (!whitelist[key1] || !whitelist[key1][key2]) {
         cleanedContext[key1][key2] = 'XXXXX';
+      } else if (typeof cleanedContext[key1][key2] === 'object') {
+        cleanedContext[key1][key2] = Object.assign(
+          {},
+          test.context[key1][key2]
+        );
+        for (const key3 in cleanedContext[key1][key2]) {
+          if (!whitelist[key1][key2][key3]) {
+            cleanedContext[key1][key2][key3] = 'XXXXX';
+          }
+        }
       }
     }
   }

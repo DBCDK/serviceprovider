@@ -12,7 +12,14 @@
       "suggest": "http://ortograf.mcp1-proxy.dbc.dk/ortograf/",
       "recommend": "http://staging.recomole.mcp1-proxy.dbc.dk/recomole/loan-cosim",
       "performance": "http://elk/elasticsearch",
-      "communityservice": "http://localhost:4010/v1"
+      "communityservice": "http://localhost:4010/v1",
+      "cicero": "https://cicero-fbs.com/rest/external/v1/"
+    },
+    "cicero": {
+      "DK-710100": {
+        "username": "XXXXX",
+        "password": "XXXXX"
+      }
     },
     "performance": {
         "username": "XXXXX",
