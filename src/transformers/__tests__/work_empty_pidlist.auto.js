@@ -16,33 +16,33 @@ const expected = {statusCode: 400, error: "'pids' not present in request"};
 const context = {
   services: {
     ddbcmsapi: 'https://cmscontent.dbc.dk/',
-    moreinfo: 'https://moreinfo.addi.dk/2.10/',
-    openagency: 'http://openagency.addi.dk/2.24/',
-    openholdingstatus: 'https://openholdingstatus.addi.dk/2.2/',
-    PRODopenorder: 'https://openorder.addi.dk/2.8/',
-    openorder: 'https://openorder.addi.dk/test_2.8/',
-    opensearch: 'https://opensearch.addi.dk/b3.5_4.5/',
+    moreinfo: 'https://moreinfo.addi.dk/2.11/',
+    openagency: 'https://openagency.addi.dk/2.34/',
+    openholdingstatus: 'https://openholdingstatus.addi.dk/3.0/',
+    openorder: 'https://openorder.addi.dk/2.8/',
+    opensearch: 'https://opensearch.addi.dk/b3.5_5.0/',
     openuserstatus: 'https://openuserstatus.addi.dk/1.6.1/',
     rank: 'https://xptest.dbc.dk/ms/rank/v1',
-    suggest: 'XXXXX',
-    suggestpopular: 'http://xptest.dbc.dk/ms/entity-pop/v1',
-    suggestcreator: 'http://xptest.dbc.dk/ms/entity-suggest/v1/creator',
-    suggestlibrary: 'http://xptest.dbc.dk/ms/entity-suggest/v1/library',
-    suggestsubject: 'http://xptest.dbc.dk/ms/entity-suggest/v1/subject',
+    suggest: 'http://ortograf.mcp1-proxy.dbc.dk/ortograf/',
     recommend: 'http://staging.recomole.mcp1-proxy.dbc.dk/recomole/loan-cosim',
-    recommendurls: 'XXXXX',
-    communityservice: 'http://localhost:4010/v1'
+    suggestpopular: 'XXXXX',
+    suggestcreator: 'XXXXX',
+    suggestlibrary: 'XXXXX',
+    suggestsubject: 'XXXXX',
+    performance: 'https://elk-p01.dbc.dk:9100/',
+    recommendurls: 'XXXXX'
   },
   communityservice: {id: 1},
-  search: {agency: '775100', profile: 'opac', collectionidentifiers: ''},
+  performance: {password: 'XXXXX', username: 'XXXXX'},
+  search: {agency: '710100', profile: 'opac'},
   netpunkt: {user: 'XXXXX', group: 'XXXXX', password: 'XXXXX'},
   user: {
     id: 'XXXXX',
     salt: 'XXXXX',
     pin: 'XXXXX',
-    libraryId: '726501',
-    agency: '726500',
-    isil: 'DK-726500'
+    libraryId: '710100',
+    agency: '710100',
+    isil: 'DK-710100'
   },
   app: {
     clientId: 'XXXXX',
@@ -60,7 +60,7 @@ const provider = Provider();
 describe('Automated test: work_empty_pidlist.auto', () => {
   it('has same result as recorded (in work_empty_pidlist.auto)', () => {
     assert(
-      Date.now() < +new Date('2018-06-12'),
+      Date.now() < +new Date('2018-09-18'),
       'Please recreate the automatically generated unit tests, such that the mock data does not come out of sync with the actual services. See README.md for details.'
     );
     context.mockData = mockData;
