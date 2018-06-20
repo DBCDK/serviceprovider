@@ -30,11 +30,16 @@ export default (request, context) => {
 
   return context.call('openholdingstatus', soap).then(body => {
     body = JSON.parse(body).holdingsResponse;
+    let data = {willLend: false};
+
     if (body.error) {
+      if (body.error[0].errorMessage.$ === 'item_not_found') {
+        return {statusCode: 200, data: data};
+      }
       return {statusCode: 500, error: body.error[0].errorMessage.$};
     }
+
     body = body.responder;
-    let data = {willLend: false};
     if (body && body.length > 0) {
       if (_.has(body[0], 'willLend.$')) {
         data.willLend = body[0].willLend.$;

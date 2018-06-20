@@ -14,24 +14,25 @@ const context = {
   services: {
     ddbcmsapi: 'https://cmscontent.dbc.dk/',
     moreinfo: 'https://moreinfo.addi.dk/2.11/',
-    openagency: 'http://openagency.addi.dk/2.24/',
-    openholdingstatus: 'https://openholdingstatus.addi.dk/2.2/',
-    PRODopenorder: 'https://openorder.addi.dk/2.8/',
+    openagency: 'https://openagency.addi.dk/2.34/',
+    openholdingstatus: 'https://openholdingstatus.addi.dk/3.0/',
     openorder: 'https://openorder.addi.dk/2.8/',
-    Xopensearch: 'XXXXX',
     opensearch: 'https://opensearch.addi.dk/b3.5_5.0/',
     openuserstatus: 'https://openuserstatus.addi.dk/1.6.1/',
+    rank: 'https://xptest.dbc.dk/ms/rank/v1',
     suggest: 'http://ortograf.mcp1-proxy.dbc.dk/ortograf/',
     recommend: 'http://staging.recomole.mcp1-proxy.dbc.dk/recomole/loan-cosim',
-    performance: 'http://elk.dbc.dk:5601/elasticsearch/',
-    communityservice: 'http://localhost:4010/v1'
+    communityservice: '',
+    suggestpopular: 'XXXXX',
+    suggestcreator: 'XXXXX',
+    suggestlibrary: 'XXXXX',
+    suggestsubject: 'XXXXX',
+    performance: 'https://elk-p01.dbc.dk:9100/',
+    recommendurls: 'XXXXX'
   },
   communityservice: {id: 1},
-  search: {
-    agency: '150013',
-    profile: 'opac',
-    collectionidentifiers: 'rec.collectionIdentifier:150013-palle'
-  },
+  performance: {password: 'XXXXX', username: 'XXXXX'},
+  search: {agency: '710100', profile: 'opac'},
   netpunkt: {user: 'XXXXX', group: 'XXXXX', password: 'XXXXX'},
   user: {
     id: 'XXXXX',
@@ -54,10 +55,10 @@ import Provider from '../../provider/Provider.js';
 import {assert, fail} from 'chai';
 const provider = Provider();
 
-describe('Automated test: availability_empty_pid.auto', () => {
-  it('has same result as recorded (in availability_empty_pid.auto)', () => {
+describe('Automated test: availability_empty_pid.snapshot', () => {
+  it('has same result as recorded (in availability_empty_pid.snapshot)', () => {
     assert(
-      Date.now() < +new Date('2018-07-24'),
+      Date.now() < +new Date('2018-09-18'),
       'Please recreate the automatically generated unit tests, such that the mock data does not come out of sync with the actual services. See README.md for details.'
     );
     context.mockData = mockData;
