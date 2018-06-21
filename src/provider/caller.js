@@ -161,7 +161,7 @@ class Context {
     if (this.externalCallsInProgress === 0 && type === 'transformer') {
       log.info('transformer-done', {
         name,
-        params,
+        paramsStr: JSON.stringify(params),
         timings: {
           total: Date.now() - this.startTime,
           external: this.externalTiming
