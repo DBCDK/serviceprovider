@@ -467,7 +467,7 @@ api:
         type: string
         example: "2018-07-11T09:46:30.920Z"
       before:
-        description: first date / time for performance statistics, - default to one minute before `after`
+        description: first date / time for performance statistics, - defaults to one minute before `after`. Performance statistics are typically kept 8 weeks.
         type: string
         example: "2018-07-11T08:46:30.920Z"
     response:
