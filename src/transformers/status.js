@@ -30,26 +30,65 @@ async function onlyUrl({context, endpoint, url}) {
 }
 
 async function performanceStat({request, context}) {
-  const isoWeek = request.week;
-
-  if (!isoWeek.match(/\d\d\d\d-W\d\d/)) {
+  let before, after;
+  try {
+    before = request.before ? new Date(request.before) : new Date();
+    after = request.after ? new Date(request.after) : +before - 60 * 1000;
+    if (before < after) {
+      throw new Error();
+    }
+  } catch (e) {
     throw {
       statusCode: 400,
-      error: 'Invalid week parameter, should be formatted like: 2018-W15'
+      error: 'Invalid after/before parameters, must be dates, and ordered'
     };
   }
-  const week = isoWeek.replace('-W', '.');
 
-  const baseUrl = context.data.services.performance;
   const username = context.data.performance.username;
   const password = context.data.performance.password;
-  const url = baseUrl + 'prod_ux-' + week + '/';
+  let url = context.data.services.performance;
+
+  // TODO remove this when config has been updated
+  if (!url.endsWith('prod_ux-*/')) {
+    url += 'prod_ux-*/';
+  }
 
   const query = {
     size: 0,
+
     query: {
-      match: {
-        msg: 'transformer-done'
+      bool: {
+        must: [
+          {
+            match_all: {}
+          },
+          {
+            match_phrase: {
+              msg: {
+                query: 'transformer-done'
+              }
+            }
+          },
+          {
+            match_phrase: {
+              app: {
+                query: 'serviceprovider'
+              }
+            }
+          },
+          {
+            range: {
+              '@timestamp': {
+                gte: +after,
+                lte: +before,
+                format: 'epoch_millis'
+              }
+            }
+          }
+        ],
+        filter: [],
+        should: [],
+        must_not: []
       }
     },
     aggs: {
@@ -89,24 +128,16 @@ async function performanceStat({request, context}) {
     json: query
   });
   if (r.error) {
-    if (r.error.type === 'index_not_found_exception') {
-      throw {
-        statusCode: 404,
-        error: 'No statistics available for week ' + isoWeek
-      };
-    } else {
-      throw {
-        statusCode: 500,
-        error: r.error.type
-      };
-    }
+    throw {
+      statusCode: 500,
+      error: r.error.type
+    };
   }
 
   const result = [];
   for (const serviceVersion of r.aggregations.version.buckets) {
     for (const bucket of serviceVersion.endpoints.buckets) {
       result.push({
-        week: week.replace('.', '-W'),
         endpoint: bucket.key,
         version: serviceVersion.key,
         count: bucket.doc_count,
@@ -115,6 +146,7 @@ async function performanceStat({request, context}) {
       });
     }
   }
+  result.sort((a, b) => b.count - a.count);
   return result;
 }
 
@@ -161,9 +193,6 @@ export default async (request, context) => {
   let checks = Object.keys(serviceChecks);
   if (Array.isArray(request.fields)) {
     checks = checks.filter(s => request.fields.includes(s));
-  }
-  if (!request.week) {
-    checks = checks.filter(s => s !== 'performance');
   }
 
   try {
