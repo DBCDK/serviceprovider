@@ -119,7 +119,7 @@ async function performanceStat({request, context}) {
     }
   };
 
-  const r = await context.request(`${url}/_search`, {
+  const r = await context.request(`${url}_search`, {
     method: 'POST',
     auth: {
       pass: password,
