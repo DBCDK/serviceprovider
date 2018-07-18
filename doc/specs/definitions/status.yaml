@@ -54,9 +54,6 @@ definitions:
   PerformanceStatus:
     type: object
     properties:
-      week:
-        type: string
-        description: The week which the performance statistics is about.
       endpoint:
         type: string
         description: Which endpoint the performnace statistics is about.
