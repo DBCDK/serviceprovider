@@ -3,23 +3,6 @@
   "version": "3.0.0",
   "description": "The ServiceProvider or DBC Open Platform is the API for the danish public libraries.\n\nThe ServiceProvider provides access to DBCs services. The purpose is to make a unified, easy-to-use way to access the different bibliographic APIs. The serviceprovider works as a gateway to other services, and does not include the actual search/database/etc. logic.",
   "main": "src/main.js",
-  "scripts": {
-    "prettier": "prettier --no-bracket-spacing --single-quote --write src/*.js src/*/*.js src/*/*/*.js src/*/*/*/*.js client/dbc_openplatform.js",
-    "complexity": "cr -c .complexrc ./src",
-    "preinstall": "cp -n context-sample.json context.json || true",
-    "dev": "run-p start:minismaug start:sp",
-    "lint": "eslint ./src",
-    "lint:checkstyle": "eslint ./src  -o report.xml -f checkstyle",
-    "start": "node src/main.js",
-    "start:minismaug": "PORT=3000 forever -w --watchDirectory src/smaug src/smaug/minismaug.js --killSignal=SIGTERM -f context.json",
-    "start:sp": "SMAUG=http://localhost:3000 SWAGGER_HTTP=true TEST_DEV=true forever -w --watchDirectory src/ --killSignal=SIGTERM src/main.js",
-    "swagger:validate": "curl localhost:8080/v3/swagger.json > swagger.json ; npx swagger validate swagger.json",
-    "test": "SMAUG=http://localhost:3000 LOG_LEVEL=info npx mocha --timeout 5000 --compilers js:babel-register --recursive src/**/__tests__/* src/__tests__/* src/transformers/utils/**/__tests__/*",
-    "watch-test": "SMAUG=http://localhost:3000 LOG_LEVEL=info npx mocha --watch --timeout 5000 --compilers js:babel-register --recursive src/**/__tests__/* src/__tests__/* src/transformers/utils/**/__tests__/*",
-    "coverage": "SMAUG=http://localhost:3000 LOG_LEVEL=off babel-istanbul cover _mocha --report json --report lcov --dir ./coverage/units -- --recursive src/**/__tests__/* src/__tests__/* src/transformers/utils/**/__tests__/*",
-    "coveralls": "cat coverage/units/lcov.info | ./node_modules/coveralls/bin/coveralls.js",
-    "sonar": "sonar-runner -Dsonar.projectKey=sp:local -Dsonar.projectName=ServiceProviderLocal -Dsonar.projectVersion=1.0 -Dsonar.sources=./src"
-  },
   "pre-commit": [
     "prettier"
   ],
@@ -50,10 +33,12 @@
     "glob": "^7.1.1",
     "js-yaml": "^3.12.0",
     "jsonschema": "^1.2.4",
+    "knex": "^0.15.2",
     "lodash": "^4.17.10",
     "minimist": "^1.2.0",
     "moment": "^2.22.2",
     "object-mapper": "^3.0.1",
+    "pg": "^7.4.3",
     "request": "^2.87.0",
     "socketcluster": "^8.0.2"
   },
@@ -80,9 +65,27 @@
     "prettier": "^1.13.7",
     "sinon": "^2.2.0",
     "socketcluster-client": "^5.0.13",
+    "sqlite3": "^4.0.2",
     "superagent": "^3.8.3",
     "supertest": "^3.1.0",
     "uglify-js": "^3.4.5",
     "webpack": "^3.12.0"
+  },
+  "scripts": {
+    "prettier": "prettier --no-bracket-spacing --single-quote --write src/*.js src/*/*.js src/*/*/*.js src/*/*/*/*.js client/dbc_openplatform.js",
+    "complexity": "cr -c .complexrc ./src",
+    "preinstall": "cp -n context-sample.json context.json || true",
+    "dev": "run-p start:minismaug start:sp",
+    "lint": "eslint ./src",
+    "lint:checkstyle": "eslint ./src  -o report.xml -f checkstyle",
+    "start": "node src/main.js",
+    "start:minismaug": "PORT=3333 forever -w --watchDirectory src/smaug src/smaug/minismaug.js --killSignal=SIGTERM -f context.json",
+    "start:sp": "SMAUG=http://localhost:3333 SWAGGER_HTTP=true TEST_DEV=true forever -w --watchDirectory src/ --killSignal=SIGTERM src/main.js",
+    "swagger:validate": "curl localhost:8080/v3/swagger.json > swagger.json ; swagger validate swagger.json",
+    "test": "SMAUG=http://localhost:3333 LOG_LEVEL=info npx mocha --timeout 5000 --compilers js:babel-register --recursive src/**/__tests__/* src/__tests__/* src/transformers/utils/**/__tests__/*",
+    "watch-test": "SMAUG=http://localhost:3333 LOG_LEVEL=info npx mocha --watch --timeout 5000 --compilers js:babel-register --recursive src/**/__tests__/* src/__tests__/* src/transformers/utils/**/__tests__/*",
+    "coverage": "SMAUG=http://localhost:3333 LOG_LEVEL=off babel-istanbul cover _mocha --report json --report lcov --dir ./coverage/units -- --recursive src/**/__tests__/* src/__tests__/* src/transformers/utils/**/__tests__/*",
+    "coveralls": "cat coverage/units/lcov.info | ./node_modules/coveralls/bin/coveralls.js",
+    "sonar": "sonar-runner -Dsonar.projectKey=sp:local -Dsonar.projectName=ServiceProviderLocal -Dsonar.projectVersion=1.0 -Dsonar.sources=./src"
   }
 }
