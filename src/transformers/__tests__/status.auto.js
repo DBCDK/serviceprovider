@@ -1,10 +1,6 @@
 // AUTOTEST GENERATOR: {"endpoint":"status","params":{"before":"2018-07-13 10:02:00"}}
 //
 //
-// AUTOMATED UNIT TEST
-// DO NOT EDIT
-//
-//
 const endpoint = 'status';
 const params = {before: '2018-07-13 10:02:00'};
 
@@ -23,6 +19,12 @@ const expected = {
     openuserstatus: {url: 'https://openuserstatus.addi.dk/1.6.1/', ok: true},
     moreinfo: {url: 'https://moreinfo.addi.dk/2.11/', ok: true},
     ddbcmsapi: {url: 'https://cmscontent.dbc.dk/'},
+    storage: {
+      ok: true,
+      client: 'XXXXX',
+      user: 'XXXXX'
+    },
+
     recommend: {
       url: 'http://staging.recomole.mcp1-proxy.dbc.dk/recomole/loan-cosim',
       ok: true
@@ -266,6 +268,7 @@ const context = {
   communityservice: {id: 1},
   performance: {password: 'XXXXX', username: 'XXXXX'},
   search: {agency: '725300', profile: 'opac'},
+  storage: {user: 'XXXXX'},
   netpunkt: {user: 'XXXXX', group: 'XXXXX', password: 'XXXXX'},
   user: {
     id: 'XXXXX',

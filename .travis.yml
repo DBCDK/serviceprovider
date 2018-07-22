@@ -1,7 +1,10 @@
 language: node_js
 sudo: required
 dist: trusty
+services:
+  - postgresql
 before_script:
+  - psql -c 'create database serviceprovider;' -U postgres
   - echo 'Europe/Copenhagen' | sudo tee /etc/timezone
   - sudo dpkg-reconfigure --frontend noninteractive tzdata
 script:

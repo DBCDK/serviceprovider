@@ -1,21 +1,21 @@
-import fs from 'fs';
-import request from 'request';
+const fs = require('fs');
+const request = require('request');
 
 // Flag that allows createTest endpoint parameter
-export const testDev = process.env.TEST_DEV; // eslint-disable-line no-process-env
-export const mockFileName = process.env.MOCK_FILE; // eslint-disable-line no-process-env
-let _mockFile;
+const testDev = process.env.TEST_DEV; // eslint-disable-line no-process-env
+const mockFileName = process.env.MOCK_FILE; // eslint-disable-line no-process-env
+let mockFile;
 
 // Load mock-data if requested via environment
 if (mockFileName) {
   if (fs.existsSync(mockFileName)) {
-    _mockFile = JSON.parse(fs.readFileSync(mockFileName));
+    mockFile = JSON.parse(fs.readFileSync(mockFileName));
   } else {
-    _mockFile = {};
+    mockFile = {};
   }
 }
 
-export function promiseRequest(req) {
+function promiseRequest(req) {
   return new Promise((resolve, reject) => {
     request(req, (err, res, data) => (err ? reject(err) : resolve(data)));
   });
@@ -25,7 +25,7 @@ export function promiseRequest(req) {
  * randomId
  * @returns {String}
  */
-export const randomId = () =>
+const randomId = () =>
   Math.random()
     .toString(36)
     .slice(2, 8);
@@ -120,7 +120,7 @@ function censor(str, context) {
  * Utility function to write a unittest to a file.
  * The unit tests are typically saved `src/provider/__tests__/autotest_*.js`
  */
-export function saveTest(test) {
+function saveTest(test) {
   if (test.createTest === 'mockfile') {
     fs.writeFileSync(
       mockFileName,
@@ -220,4 +220,11 @@ describe('Automated test: ${test.filename}', () => {
   );
 }
 
-export const mockFile = _mockFile;
+module.exports = {
+  testDev,
+  mockFileName,
+  mockFile,
+  promiseRequest,
+  randomId,
+  saveTest
+};

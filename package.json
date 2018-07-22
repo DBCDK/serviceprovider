@@ -40,7 +40,8 @@
     "object-mapper": "^3.0.1",
     "pg": "^7.4.3",
     "request": "^2.87.0",
-    "socketcluster": "^8.0.2"
+    "socketcluster": "^8.0.2",
+    "uuid": "^3.3.2"
   },
   "devDependencies": {
     "babel-core": "^6.26.3",

@@ -33,6 +33,9 @@
       "profile": "opac",
       "collectionidentifiers": ""
     },
+    "storage": {
+      "user": "XstorageuserX"
+    },
     "netpunkt": {
       "user": "XXXXX",
       "group": "XXXXX",
@@ -47,7 +50,7 @@
       "isil": "DK-710100"
     },
     "app": {
-      "clientId": "XXXXX",
+      "clientId": "XclientIdX",
       "ddbcmsapipassword": "XXXXX",
       "orderpolicyrequester": "190101",
       "orderSystem": "bibliotekdk"

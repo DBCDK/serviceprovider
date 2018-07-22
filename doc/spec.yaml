@@ -353,6 +353,24 @@ api:
     examples:
       - request: { "q": "harry AND potter", "fields": ["identifier", "title", "collection", "subjectDBCF", "hasAdaptation", "coverUrlFull"], "sort": "rank_general", "offset": 2, "limit": 2 }
         response: [{"identifier": ["300185-katalog:100562332"], "title": ["Harry Potter og Fønixordenen DVD"], "coverUrlFull": ["https://moreinfo.addi.dk/2.1/more_info_get.php?id=36565894&type=forside_500&key=55d553c259c9e46291a4"]}, {"identifier": ["870970-basis:51989252"], "title": ["Harry Potter og de vises sten"], "collection": ["300185-katalog:100562332", "870970-basis:51989252", "870971-forfweb:86203219", "870970-basis:24284514", "870970-basis:24284565", "..."], "subjectDBCF": ["fantasy", "magi", "troldmænd"], "hasAdaption": ["870970-basis:27123279", "870970-basis:27963390"], "coverUrlFull": ["https://moreinfo.addi.dk/2.1/more_info_get.php?id=36565894&type=forside_500&key=55d553c259c9e46291a4"]}]
+  storage:
+    tags:
+      - Community
+    description: |
+      Save / fetch / find arbitrary data.
+    properties:
+      get:
+        description: retrieve data
+        type: string
+      put:
+        description: save data
+        type: object
+      find:
+        description: retrieve data
+        type: object
+      delete:
+        description: delte data
+        type: string
   suggest:
     tags:
       - Suggest

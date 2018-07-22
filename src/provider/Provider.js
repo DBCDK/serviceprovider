@@ -3,6 +3,9 @@
  * Basic service provider. Discovers and initializes the transforms.
  */
 
+const caller = require('./caller');
+const storageTransformer = require('../transformers/storage');
+const statusTransformer = require('../transformers/status');
 import suggestTransformer from '../transformers/suggest.js';
 import facetTransformer from '../transformers/facets';
 import searchTransformer from '../transformers/search';
@@ -11,10 +14,8 @@ import userTransformer from '../transformers/user';
 import renewTransformer from '../transformers/renew';
 import orderTransformer from '../transformers/order';
 import workTransformer from '../transformers/work';
-import statusTransformer from '../transformers/status';
 import availabilityTransformer from '../transformers/availability';
 import {ddbcms, news, events, library} from '../transformers/ddbcms';
-import caller from './caller';
 import {testTransformer} from '../transformers/testTransformer.js';
 import recommendTransformer from '../transformers/recommend';
 
@@ -50,6 +51,7 @@ export default function Provider() {
     user: userTransformer,
     order: orderTransformer,
     work: workTransformer,
+    storage: storageTransformer,
     test: testTransformer,
     availability: availabilityTransformer,
     status: statusTransformer

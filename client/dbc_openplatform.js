@@ -75,7 +75,13 @@ for (var i = 0; i < endpoints.length; ++i) {
  * @return a promise with the token.
  */
 openplatform.connect = function(options) {
-  var promise, args, clientId, clientSecret, user, password, socketClusterConfig;
+  var promise,
+    args,
+    clientId,
+    clientSecret,
+    user,
+    password,
+    socketClusterConfig;
   socketClusterConfig = {
     hostname: 'openplatform.dbc.dk',
     ackTimeout: 30000,
@@ -91,16 +97,21 @@ openplatform.connect = function(options) {
     }
     promise = Promise.resolve(apiToken);
   } else if (args.length === 1) {
-    if(typeof args[0] === 'string') {
+    if (typeof args[0] === 'string') {
       // token as parameter
       promise = Promise.resolve(args[0]);
     } else {
       // option object
       socketClusterConfig = options.socketClusterConfig || socketClusterConfig;
-      if(options.token) {
+      if (options.token) {
         promise = Promise.resolve(apiToken);
       } else {
-        promise = getToken(options.clientId, options.clientSecret, options.user || '@', options.password || '@');
+        promise = getToken(
+          options.clientId,
+          options.clientSecret,
+          options.user || '@',
+          options.password || '@'
+        );
       }
     }
   } else {

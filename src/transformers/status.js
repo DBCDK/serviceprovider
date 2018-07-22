@@ -5,6 +5,7 @@
 const {log} = require('../utils.js');
 const {version} = require('../../package.json');
 const _ = require('lodash');
+const {knex} = require('../knex.js');
 
 async function checkPhpService({context, endpoint, url}) {
   let result;
@@ -173,6 +174,19 @@ const serviceChecks = {
     );
   },
   communityservice: onlyUrl,
+  storage: async ({context}) => {
+    let ok = true;
+    try {
+      knex.raw('SELECT 1;');
+    } catch (e) {
+      ok = false;
+    }
+    return {
+      ok,
+      user: context.get('storage.user'),
+      client: context.get('app.clientId')
+    };
+  },
   suggest: async ({context, endpoint, url}) => {
     let result;
     try {
@@ -188,7 +202,7 @@ const serviceChecks = {
   performance: performanceStat
 };
 
-export default async (request, context) => {
+module.exports = async (request, context) => {
   const data = {version, endOfServiceDate: '0000-00-00T00:00:00Z'};
   let checks = Object.keys(serviceChecks);
   if (Array.isArray(request.fields)) {

@@ -3,17 +3,17 @@
  * are called through this file, which can spy on the results,
  * and optionally create unit-tests, look at timings etc.
  */
-import * as BaseSoapClient from 'dbc-node-basesoap-client';
-import {log} from '../utils';
-import {
+const BaseSoapClient = require('dbc-node-basesoap-client');
+const {log} = require('../utils');
+const {
   testDev,
   mockFile,
   mockFileName,
   randomId,
   saveTest,
   promiseRequest
-} from './caller.utils';
-import moment from 'moment';
+} = require('./caller.utils');
+const moment = require('moment');
 
 class Context {
   constructor(transformerMap, data) {
@@ -282,6 +282,6 @@ class Context {
 /**
  * Add a call function to the context.
  */
-export default function caller(transformerMap, contextData) {
+module.exports = function caller(transformerMap, contextData) {
   return new Context(transformerMap, contextData);
-}
+};
