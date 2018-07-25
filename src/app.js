@@ -16,6 +16,7 @@ import Provider from './provider/Provider';
 import {TokenError} from './smaug/errors';
 
 import community from './transformers/community/community';
+import {storageMiddleware} from './transformers/storage.js';
 
 // Middleware
 import bodyParser from 'body-parser';
@@ -307,6 +308,7 @@ module.exports.run = function(worker) {
   app.all('/', (req, res) => res.redirect(apiPath));
 
   app.use(apiPath + 'community', community());
+  app.use(apiPath + 'storage/', storageMiddleware);
 
   // Health check
   app.get('/health', healthCheck);

@@ -4,7 +4,7 @@
  */
 
 const caller = require('./caller');
-const storageTransformer = require('../transformers/storage');
+const {storageTransformer} = require('../transformers/storage');
 const statusTransformer = require('../transformers/status');
 import suggestTransformer from '../transformers/suggest.js';
 import facetTransformer from '../transformers/facets';

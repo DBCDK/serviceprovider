@@ -1,7 +1,8 @@
 const {log} = require('../utils.js');
 const _ = require('lodash');
-const uuidv1 = require('uuid/v1');
+const uuidv4 = require('uuid/v4');
 const {knex} = require('../knex.js');
+const metaTypeUuid = 'bf130fb7-8bd4-44fd-ad1d-43b6020ad102';
 
 async function get(id, context) {
   const user = context.get('app.clientId');
@@ -24,25 +25,39 @@ async function get(id, context) {
     return {statusCode: 403, error: 'no read access'};
   }
 
-  if (type.contenttype === 'application/json') {
-    result = result[0];
-    return {
-      statusCode: 200,
-      data: Object.assign({}, JSON.parse(result.data), {
-        _owner: result.owner,
-        _type: result.type,
-        _id: result.id,
-        _version: result.version,
-        _client: result.client
-      })
-    };
-  } else {
-    return {
-      statusCode: 500,
-      error: `${type} has invalid content-type. User "${
-        typeObj[0].owner
-      }" needs to fix the type definition.`
-    };
+  result = result[0];
+  switch (type.type) {
+    case 'json':
+      return {
+        statusCode: 200,
+        data: Object.assign({}, JSON.parse(result.data.toString('utf-8')), {
+          _owner: result.owner,
+          _type: result.type,
+          _id: result.id,
+          _version: result.version,
+          _client: result.client
+        })
+      };
+
+    case 'jpeg':
+      return {
+        statusCode: 200,
+        data: {
+          _data: result.data.toString('latin1'),
+          _owner: result.owner,
+          _type: result.type,
+          _id: result.id,
+          _version: result.version,
+          _client: result.client
+        }
+      };
+    default:
+      return {
+        statusCode: 500,
+        error: `${type} has invalid content-type. User "${
+          typeObj[0].owner
+        }" needs to fix the type definition.`
+      };
   }
 }
 
@@ -51,19 +66,22 @@ async function find(opts, ctx) {
   const type = (await get(_type, ctx)).data;
   const keys = Object.keys(opts).filter(key => key !== '_type');
 
-  for (let idx = 0; idx < type.indexes.length; ++idx) {
-    const index = type.indexes[idx];
-    if (
-      index.type === 'id' &&
-      index.keys.length === keys.length &&
-      index.keys.filter(key => opts.hasOwnProperty(key)).length === keys.length
-    ) {
-      const result = await knex('indexes')
-        .where('type', _type)
-        .where('idx', idx)
-        .where('key', JSON.stringify(index.keys.map(key => opts[key])))
-        .select('val');
-      return {statusCode: 200, data: result.map(({val}) => val)};
+  if (Array.isArray(type.indexes)) {
+    for (let idx = 0; idx < type.indexes.length; ++idx) {
+      const index = type.indexes[idx];
+      if (
+        index.type === 'id' &&
+        index.keys.length === keys.length &&
+        index.keys.filter(key => opts.hasOwnProperty(key)).length ===
+          keys.length
+      ) {
+        const result = await knex('indexes')
+          .where('type', _type)
+          .where('idx', idx)
+          .where('key', JSON.stringify(index.keys.map(key => opts[key])))
+          .select('val');
+        return {statusCode: 200, data: result.map(({val}) => val)};
+      }
     }
   }
   return {statusCode: 400, error: `no index for ${JSON.stringify(keys)}`};
@@ -73,7 +91,7 @@ function indexKeys(obj, type) {
   const result = [];
   for (let idx = 0; idx < type.indexes.length; ++idx) {
     const index = type.indexes[idx];
-    if ((index.type = 'id')) {
+    if (index.type === 'id') {
       const arrayKeys = index.keys.filter(k => Array.isArray(obj[k]));
       if (arrayKeys.length === 1) {
         // only support one array-key to avoid possible combinatorial explosion
@@ -102,7 +120,7 @@ function indexKeys(obj, type) {
   return result;
 }
 
-async function unindex(obj, type) {
+async function removeIndex(obj, type) {
   for (const row of indexKeys(obj, type)) {
     try {
       await knex('indexes')
@@ -114,7 +132,7 @@ async function unindex(obj, type) {
     }
   }
 }
-async function index(obj, type) {
+async function addIndex(obj, type) {
   for (const row of indexKeys(obj, type)) {
     try {
       await knex('indexes').insert(row);
@@ -122,6 +140,14 @@ async function index(obj, type) {
       // TODO log ...
       // ignore
     }
+  }
+}
+async function verifyModifiable({_id, _version}, {prev, user, type}) {
+  if (prev._owner !== user) {
+    throw {statusCode: 403, error: 'forbidden, not owner'};
+  }
+  if (_version && _version !== prev._version) {
+    throw {statusCode: 409, error: 'conflict'};
   }
 }
 function findPutData(obj, type) {
@@ -133,9 +159,14 @@ function findPutData(obj, type) {
     version: obj._version
   };
 
-  if (type.contenttype === 'application/json') {
+  if (type.type === 'json') {
     const keys = Object.keys(obj).filter(k => !k.startsWith('_'));
-    result.data = JSON.stringify(_.fromPairs(keys.map(k => [k, obj[k]])));
+    result.data = Buffer.from(
+      JSON.stringify(_.fromPairs(keys.map(k => [k, obj[k]]))),
+      'utf-8'
+    );
+  } else if (type.type === 'jpeg') {
+    result.data = Buffer.from(obj._data, 'latin1');
   } else {
     throw {statusCode: 500, error: 'invalid contenttype'};
   }
@@ -175,19 +206,19 @@ async function put(obj, ctx) {
     obj._owner = user;
     obj._client = ctx.get('app.clientId');
 
-    await unindex(prev, type);
-    await index(obj, type);
+    await removeIndex(prev, type);
+    await addIndex(obj, type);
     result = findPutData(obj, type);
     status = await knex('docs')
       .where('id', obj._id)
       .update(result);
   } else {
-    obj._id = uuidv1();
+    obj._id = uuidv4();
     obj._owner = user;
     obj._client = ctx.get('app.clientId');
     obj._version = new Date().toISOString();
 
-    index(obj, type);
+    addIndex(obj, type);
     result = findPutData(obj, type);
     status = await knex('docs').insert(result);
   }
@@ -198,22 +229,13 @@ async function put(obj, ctx) {
   };
 }
 
-async function verifyModifiable({_id, _version}, {prev, user, type}) {
-  if (prev._owner !== user) {
-    throw {statusCode: 403, error: 'forbidden, not owner'};
-  }
-  if (_version && _version !== prev._version) {
-    throw {statusCode: 409, error: 'conflict'};
-  }
-}
-
 async function del(_id, ctx) {
   const user = ctx.get('storage.user');
   const prev = (await get(_id, ctx)).data;
   const type = (await get(prev._type, ctx)).data;
 
   await verifyModifiable({_id}, {prev, user, type});
-  await unindex(prev, type);
+  await removeIndex(prev, type);
 
   await knex('docs')
     .where({id: prev._id, version: prev._version})
@@ -233,7 +255,7 @@ async function del(_id, ctx) {
   return {statusCode: 200, data: {}};
 }
 
-module.exports = async (request, context) => {
+async function storageTransformer(request, context) {
   try {
     let result;
     try {
@@ -255,17 +277,47 @@ module.exports = async (request, context) => {
     } catch (e) {
       if (e.statusCode) {
         return e;
-      } else {
-        throw e;
       }
+      throw e;
     }
     return result;
   } catch (e) {
     return {statusCode: 500, error: e.message};
   }
-};
+}
 
-const metaTypeUuid = 'bf130fb7-8bd4-44fd-ad1d-43b6020ad102';
+async function storageMiddleware(req, res, next) {
+  if (req.method === 'GET' && req.url.slice(1)) {
+    const uuid = req.url.slice(1);
+    try {
+      const [doc] = await knex('docs')
+        .where('id', uuid)
+        .select();
+      const type = JSON.parse(
+        (await knex('docs')
+          .where('id', doc.type)
+          .select())[0].data.toString('utf-8')
+      );
+      if (type.permissions.read !== 'any') {
+        return res.status(403).end('forbidden');
+      }
+      if (type.type !== 'jpeg') {
+        return res
+          .status(400)
+          .end(
+            'only jpeg-images can be fetched directly through url (may change later). Use API instead.'
+          );
+      }
+      res.header('Content-Type', 'image/jpeg');
+      return res.end(doc.data);
+    } catch (e) {
+      // TODO log error
+      // do nothing
+    }
+  }
+  return next();
+}
+
 async function initDB() {
   if (!await knex.schema.hasTable('docs')) {
     await knex.schema.createTable('docs', table => {
@@ -292,7 +344,7 @@ async function initDB() {
       version: new Date().toISOString(),
       data: JSON.stringify({
         name: 'type',
-        contenttype: 'application/json',
+        type: 'json',
         charset: 'utf-8',
         permissions: {
           read: 'any'
@@ -309,3 +361,8 @@ async function initDB() {
   }
 }
 initDB();
+
+module.exports = {
+  storageTransformer,
+  storageMiddleware
+};

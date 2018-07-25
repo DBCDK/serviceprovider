@@ -1,5 +1,8 @@
+/* eslint-disable no-use-before-define */
 const assert = require('assert');
 const _ = require('lodash');
+const {promisify} = require('util');
+const request = promisify(require('request'));
 const dbcOpenPlatform = makeApiWrapper();
 //
 // <small>(note: dbcOpenPlatform is usually loaded into the browser using a `<script>`-tag)</small>
@@ -16,7 +19,7 @@ describe('Storage endpoint', () => {
   // `type1` is a new type we create, and
   // `doc1` is a new document we create.
   //
-  let user, typeUuid, type1, doc1;
+  let user, typeUuid, type1, doc1, imageType, doc2;
 
   before(async () => {
     const status = await dbcOpenPlatform.status({
@@ -40,7 +43,7 @@ describe('Storage endpoint', () => {
       const typeDocument = await dbcOpenPlatform.storage({get: typeUuid});
       assert.deepEqual(typeDocument, {
         name: 'type',
-        contenttype: 'application/json',
+        type: 'json',
         charset: 'utf-8',
         permissions: {read: 'any'},
         indexes: [{type: 'id', keys: ['_owner', 'name']}],
@@ -61,7 +64,7 @@ describe('Storage endpoint', () => {
           _type: typeUuid,
           name: 'testType1',
           description: 'Type used during unit test',
-          contenttype: 'application/json',
+          type: 'json',
           permissions: {read: 'any'},
           indexes: [
             {type: 'id', keys: ['tags']},
@@ -249,15 +252,74 @@ describe('Storage endpoint', () => {
     });
   });
 
-  async function cleanupOldTestData() {
-    const types = await dbcOpenPlatform.storage({
-      find: {
-        _owner: user,
-        name: 'testType1'
-      }
+  describe('image', () => {
+    const jpegData = Buffer.from(
+      '/9j/4AAQSkZJRgABAQEASABIAAD/2wBDABALDA4MChAODQ4SERATGCgaGBYWGDEjJR0oOjM9PDkz' +
+        'ODdASFxOQERXRTc4UG1RV19iZ2hnPk1xeXBkeFxlZ2P/2wBDARESEhgVGC8aGi9jQjhCY2NjY2Nj' +
+        'Y2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2P/wAARCAAIAAgDAREA' +
+        'AhEBAxEB/8QAFAABAAAAAAAAAAAAAAAAAAAABv/EABsQAAICAwEAAAAAAAAAAAAAAAECAwQAEiFR' +
+        '/8QAFQEBAQAAAAAAAAAAAAAAAAAABAX/xAAfEQACAQIHAAAAAAAAAAAAAAABAwISMQAEESFx4fD/' +
+        '2gAMAwEAAhEDEQA/ACMIpGssrjqrqw9OFkWVUjF1McmUhkhYaHn1utv/2Q==',
+      'base64'
+    ).toString('latin1');
+
+    it('has to have a type with an image content-type', async () => {
+      imageType = await dbcOpenPlatform.storage({
+        put: {
+          _type: typeUuid,
+          name: 'testImage',
+          description: 'Type used during unit test',
+          type: 'jpeg',
+          permissions: {read: 'any'},
+          indexes: []
+        }
+      });
     });
-    for (const uuid of types) {
-      await dbcOpenPlatform.storage({delete: uuid});
+
+    it('can be stored', async () => {
+      doc2 = await dbcOpenPlatform.storage({
+        put: {
+          _type: imageType._id,
+          _data: jpegData
+        }
+      });
+    });
+
+    it('can be retrieved', async () => {
+      const result = await dbcOpenPlatform.storage({
+        get: doc2._id
+      });
+      assert.deepEqual(result, {
+        _data: jpegData,
+        _type: imageType._id,
+        _owner: user,
+        _version: doc2._version,
+        _id: doc2._id,
+        _client: 'CLIENT_ID'
+      });
+    });
+
+    it('can be retrieved using the http-endpoint', async () => {
+      const result = await request({
+        url: 'http://localhost:8080/v3/storage/' + doc2._id,
+        encoding: 'latin1'
+      });
+      assert.equal(result.headers['content-type'], 'image/jpeg');
+      assert.equal(result.body, jpegData);
+    });
+  });
+
+  async function cleanupOldTestData() {
+    for (const typeName of ['testType1', 'testImage']) {
+      const types = await dbcOpenPlatform.storage({
+        find: {
+          _owner: user,
+          name: typeName
+        }
+      });
+      for (const uuid of types) {
+        await dbcOpenPlatform.storage({delete: uuid});
+      }
     }
   }
 });
@@ -275,10 +337,10 @@ async function expectThrow(fn, error) {
 
 function makeApiWrapper() {
   const caller = require('../../provider/caller.js');
-  const storage = require('../storage.js');
+  const {storageTransformer} = require('../storage.js');
   const status = require('../status.js');
   const executor = caller(
-    {storage, status},
+    {storage: storageTransformer, status},
     {
       storage: {user: 'STORAGE_USER'},
       app: {clientId: 'CLIENT_ID'},

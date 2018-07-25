@@ -124,7 +124,7 @@ function saveTest(test) {
   if (test.createTest === 'mockfile') {
     fs.writeFileSync(
       mockFileName,
-      censor(JSON.stringify(_mockFile, null, 2), test.context)
+      censor(JSON.stringify(mockFile, null, 2), test.context)
     );
     return;
   }
