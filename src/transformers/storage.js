@@ -61,8 +61,39 @@ async function get(id, context) {
   }
 }
 
+const uuidRegExp = new RegExp(
+  '^xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx$'.replace(/x/g, '[0-9a-fA-F]')
+);
+
+async function lookupType(type, ctx) {
+  if (type.match(uuidRegExp)) {
+    return type;
+  }
+
+  const splitPos = type.indexOf('.');
+  if (splitPos === -1) {
+    throw {
+      statusCode: 400,
+      error: 'invalid type, must be an uuid or have the form: USERID.TYPENAME'
+    };
+  }
+
+  const result = (await find(
+    {_owner: type.slice(0, splitPos), name: type.slice(splitPos + 1)},
+    ctx
+  )).data;
+
+  if (!result.length) {
+    throw {
+      statusCode: 400,
+      error: `type does not exist: ${type}`
+    };
+  }
+  return result[0];
+}
+
 async function find(opts, ctx) {
-  const _type = opts._type || metaTypeUuid;
+  const _type = await lookupType(opts._type || metaTypeUuid, ctx);
   const type = (await get(_type, ctx)).data;
   const keys = Object.keys(opts).filter(key => key !== '_type');
 
@@ -181,6 +212,8 @@ async function put(obj, ctx) {
   if (typeof obj._type !== 'string') {
     return {statusCode: 400, error: 'missing _type'};
   }
+  obj._type = await lookupType(obj._type, ctx);
+
   let type;
   try {
     type = (await get(obj._type, ctx)).data;

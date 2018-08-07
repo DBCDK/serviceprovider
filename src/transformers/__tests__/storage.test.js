@@ -97,6 +97,15 @@ describe('Storage endpoint', () => {
         'Error: {"statusCode":400,"error":"invalid _type"}'
       );
     });
+
+    it('stores an object if we passes the newly created type', async () => {
+      const resultDoc = await dbcOpenPlatform.storage({
+        put: {
+          _type: user + '.testType1',
+          foo: 'bar'
+        }
+      });
+    });
   });
 
   describe('fetching data', () => {
@@ -130,6 +139,16 @@ describe('Storage endpoint', () => {
       let result = await dbcOpenPlatform.storage({
         find: {
           _type: type1._id,
+          tags: 'baz'
+        }
+      });
+      assert.deepEqual(result, [doc1._id]);
+    });
+
+    it('is possible to look up with a named type', async () => {
+      let result = await dbcOpenPlatform.storage({
+        find: {
+          _type: user + '.testType1',
           tags: 'baz'
         }
       });
