@@ -186,9 +186,7 @@ const provider = Provider();
 
 describe('Automated test: ${test.filename}', () => {
   it('has same result as recorded (in ${test.filename})', () => {
-    assert(Date.now() < +new Date('${
-      threeMonthsFromNow
-    }'), 'Please recreate the automatically generated unit tests, such that the mock data does not come out of sync with the actual services. See README.md for details.');
+    assert(Date.now() < +new Date('${threeMonthsFromNow}'), 'Please recreate the automatically generated unit tests, such that the mock data does not come out of sync with the actual services. See README.md for details.');
     context.mockData = mockData;
     return provider.execute(endpoint, params, context)
       .then(result => {

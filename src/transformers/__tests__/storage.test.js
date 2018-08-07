@@ -46,7 +46,7 @@ describe('Storage endpoint', () => {
         type: 'json',
         charset: 'utf-8',
         permissions: {read: 'any'},
-        indexes: [{type: 'id', keys: ['_owner', 'name']}],
+        indexes: [{value: '_id', keys: ['_owner', 'name']}],
         _owner: 'openplatform',
         _type: 'bf130fb7-8bd4-44fd-ad1d-43b6020ad102',
         _id: 'bf130fb7-8bd4-44fd-ad1d-43b6020ad102',
@@ -67,8 +67,8 @@ describe('Storage endpoint', () => {
           type: 'json',
           permissions: {read: 'any'},
           indexes: [
-            {type: 'id', keys: ['tags']},
-            {type: 'id', keys: ['_owner', 'title']}
+            {value: '_id', keys: ['tags']},
+            {value: '_id', keys: ['_owner', 'title']}
           ]
         }
       });
@@ -133,6 +133,17 @@ describe('Storage endpoint', () => {
       );
     });
   });
+
+  /*
+  describe('scanning index', () => {
+    scan: {
+      _type: type1._id,
+      index: ['tags', '_id'],
+      after: [''],
+      limit: 2
+    }
+  });
+  */
 
   describe('finding data', () => {
     it('finds documents by indexed keys', async () => {

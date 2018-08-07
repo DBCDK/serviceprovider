@@ -65,6 +65,33 @@ const uuidRegExp = new RegExp(
   '^xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx$'.replace(/x/g, '[0-9a-fA-F]')
 );
 
+async function find(opts, ctx) {
+  // eslint-disable-next-line no-use-before-define
+  const _type = await lookupType(opts._type || metaTypeUuid, ctx);
+  const type = (await get(_type, ctx)).data;
+  const keys = Object.keys(opts).filter(key => key !== '_type');
+
+  if (Array.isArray(type.indexes)) {
+    for (let idx = 0; idx < type.indexes.length; ++idx) {
+      const index = type.indexes[idx];
+      if (
+        index.value === '_id' &&
+        index.keys.length === keys.length &&
+        index.keys.filter(key => opts.hasOwnProperty(key)).length ===
+          keys.length
+      ) {
+        const result = await knex('indexes')
+          .where('type', _type)
+          .where('idx', idx)
+          .where('key', JSON.stringify(index.keys.map(key => opts[key])))
+          .select('val');
+        return {statusCode: 200, data: result.map(({val}) => val)};
+      }
+    }
+  }
+  return {statusCode: 400, error: `no index for ${JSON.stringify(keys)}`};
+}
+
 async function lookupType(type, ctx) {
   if (type.match(uuidRegExp)) {
     return type;
@@ -92,37 +119,11 @@ async function lookupType(type, ctx) {
   return result[0];
 }
 
-async function find(opts, ctx) {
-  const _type = await lookupType(opts._type || metaTypeUuid, ctx);
-  const type = (await get(_type, ctx)).data;
-  const keys = Object.keys(opts).filter(key => key !== '_type');
-
-  if (Array.isArray(type.indexes)) {
-    for (let idx = 0; idx < type.indexes.length; ++idx) {
-      const index = type.indexes[idx];
-      if (
-        index.type === 'id' &&
-        index.keys.length === keys.length &&
-        index.keys.filter(key => opts.hasOwnProperty(key)).length ===
-          keys.length
-      ) {
-        const result = await knex('indexes')
-          .where('type', _type)
-          .where('idx', idx)
-          .where('key', JSON.stringify(index.keys.map(key => opts[key])))
-          .select('val');
-        return {statusCode: 200, data: result.map(({val}) => val)};
-      }
-    }
-  }
-  return {statusCode: 400, error: `no index for ${JSON.stringify(keys)}`};
-}
-
 function indexKeys(obj, type) {
   const result = [];
   for (let idx = 0; idx < type.indexes.length; ++idx) {
     const index = type.indexes[idx];
-    if (index.type === 'id') {
+    if (index.value === '_id') {
       const arrayKeys = index.keys.filter(k => Array.isArray(obj[k]));
       if (arrayKeys.length === 1) {
         // only support one array-key to avoid possible combinatorial explosion
@@ -163,6 +164,7 @@ async function removeIndex(obj, type) {
     }
   }
 }
+
 async function addIndex(obj, type) {
   for (const row of indexKeys(obj, type)) {
     try {
@@ -173,6 +175,7 @@ async function addIndex(obj, type) {
     }
   }
 }
+
 async function verifyModifiable({_id, _version}, {prev, user, type}) {
   if (prev._owner !== user) {
     throw {statusCode: 403, error: 'forbidden, not owner'};
@@ -181,6 +184,7 @@ async function verifyModifiable({_id, _version}, {prev, user, type}) {
     throw {statusCode: 409, error: 'conflict'};
   }
 }
+
 function findPutData(obj, type) {
   const result = {
     id: obj._id,
@@ -352,7 +356,7 @@ async function storageMiddleware(req, res, next) {
 }
 
 async function initDB() {
-  if (!await knex.schema.hasTable('docs')) {
+  if (!(await knex.schema.hasTable('docs'))) {
     await knex.schema.createTable('docs', table => {
       table.uuid('id').notNullable();
       table.uuid('type').notNullable();
@@ -382,7 +386,7 @@ async function initDB() {
         permissions: {
           read: 'any'
         },
-        indexes: [{type: 'id', keys: ['_owner', 'name']}]
+        indexes: [{value: '_id', keys: ['_owner', 'name']}]
       })
     });
     await knex('indexes').insert({
