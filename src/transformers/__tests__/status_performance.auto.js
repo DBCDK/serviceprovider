@@ -947,7 +947,7 @@ import Provider from '../../provider/Provider.js';
 import {assert, fail} from 'chai';
 const provider = Provider();
 
-describe.only('Automated test: status_performance.auto', () => {
+describe('Automated test: status_performance.auto', () => {
   it('has same result as recorded (in status_performance.auto)', () => {
     assert(
       Date.now() < +new Date('2018-10-11'),
