@@ -1,6 +1,8 @@
 language: node_js
 sudo: required
 dist: trusty
+env:
+  - PG_CONNECTION_STRING=postgresql://postgres@localhost/serviceprovider
 services:
   - postgresql
 before_script:

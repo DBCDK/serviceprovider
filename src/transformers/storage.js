@@ -26,6 +26,7 @@ async function get(id, context) {
   }
 
   result = result[0];
+  result.version = new Date(result.version).toISOString();
   switch (type.type) {
     case 'json':
       return {
@@ -180,7 +181,7 @@ async function verifyModifiable({_id, _version}, {prev, user, type}) {
   if (prev._owner !== user) {
     throw {statusCode: 403, error: 'forbidden, not owner'};
   }
-  if (_version && _version !== prev._version) {
+  if (_version && +new Date(_version) !== +new Date(prev._version)) {
     throw {statusCode: 409, error: 'conflict'};
   }
 }
