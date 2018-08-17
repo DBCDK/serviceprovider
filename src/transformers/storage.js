@@ -84,7 +84,10 @@ async function find(opts, ctx) {
         const result = await knex('indexes')
           .where('type', _type)
           .where('idx', idx)
-          .where('key', JSON.stringify(index.keys.map(key => opts[key])))
+          .where(
+            'key',
+            index.keys.map(key => JSON.stringify(opts[key])).join('\n')
+          )
           .select('val');
         return {statusCode: 200, data: result.map(({val}) => val)};
       }
@@ -132,9 +135,9 @@ function indexKeys(obj, type) {
           result.push({
             type: obj._type,
             idx,
-            key: JSON.stringify(
-              index.keys.map(k => (k === arrayKeys[0] ? key : obj[k]))
-            ),
+            key: index.keys
+              .map(k => JSON.stringify(k === arrayKeys[0] ? key : obj[k]))
+              .join('\n'),
             val: obj._id
           });
         }
@@ -142,7 +145,7 @@ function indexKeys(obj, type) {
         result.push({
           type: obj._type,
           idx,
-          key: JSON.stringify(index.keys.map(k => obj[k])),
+          key: index.keys.map(k => JSON.stringify(obj[k])).join('\n'),
           val: obj._id
         });
       }
@@ -393,7 +396,7 @@ async function initDB() {
     await knex('indexes').insert({
       type: metaTypeUuid,
       idx: 0,
-      key: '["openplatform","type"]',
+      key: '"openplatform"\n"type"',
       val: metaTypeUuid
     });
   }
