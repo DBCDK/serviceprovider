@@ -57,6 +57,7 @@
     "object-mapper": "^3.0.1",
     "pg": "^7.4.3",
     "request": "^2.87.0",
+    "sharp": "^0.20.5",
     "socketcluster": "^8.0.2",
     "uuid": "^3.3.2"
   },

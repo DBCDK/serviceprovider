@@ -3,6 +3,7 @@ const _ = require('lodash');
 const uuidv4 = require('uuid/v4');
 const {knex} = require('../knex.js');
 const metaTypeUuid = 'bf130fb7-8bd4-44fd-ad1d-43b6020ad102';
+const sharp = require('sharp');
 
 async function get(id, context) {
   let result = await knex('docs')
@@ -347,7 +348,7 @@ async function scan(
     query = query.orderBy('key');
   }
 
-  if (limit !== undefined) {
+  if (typeof limit !== 'undefined') {
     query = query.limit(limit);
   }
 
@@ -399,7 +400,7 @@ async function storageTransformer(request, context) {
 
 async function storageMiddleware(req, res, next) {
   if (req.method === 'GET' && req.url.slice(1)) {
-    const uuid = req.url.slice(1);
+    const uuid = req.url.slice(1).replace(/[?].*/, '');
     try {
       const [doc] = await knex('docs')
         .where('id', uuid)
@@ -419,8 +420,15 @@ async function storageMiddleware(req, res, next) {
             'only jpeg-images can be fetched directly through url (may change later). Use API instead.'
           );
       }
+      const {width, height} = req.query;
+      let data = doc.data;
+      if (width || height) {
+        data = await sharp(data)
+          .resize(width && +width, height && +height)
+          .toBuffer();
+      }
       res.header('Content-Type', 'image/jpeg');
-      return res.end(doc.data);
+      return res.end(data);
     } catch (e) {
       log.error('storage middleware error', {error: String(e)});
       // do nothing

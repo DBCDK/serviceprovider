@@ -326,6 +326,20 @@ describe('Storage endpoint', () => {
       assert.equal(result.headers['content-type'], 'image/jpeg');
       assert.equal(result.body, jpegData);
     });
+    it('can be retrieved scaled using the http-endpoint', async () => {
+      const result = await request({
+        url:
+          'http://localhost:8080/v3/storage/' +
+          doc2._id +
+          '?width=256&height=256',
+        encoding: 'latin1'
+      });
+      assert.equal(result.headers['content-type'], 'image/jpeg');
+      // result starts has jpeg-files start
+      assert.equal(jpegData.slice(0, 3), result.body.slice(0, 3));
+      // check that the scaled image is somewhat larger than the original
+      assert(result.body.length > 1000);
+    });
   });
 
   describe('scanning index', () => {
