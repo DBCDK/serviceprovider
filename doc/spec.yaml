@@ -369,8 +369,11 @@ api:
         description: retrieve data
         type: object
       delete:
-        description: delte data
+        description: delete data
         type: string
+      scan:
+        description: scan through an index
+        type: object
   suggest:
     tags:
       - Suggest

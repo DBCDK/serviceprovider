@@ -5,8 +5,6 @@ const {knex} = require('../knex.js');
 const metaTypeUuid = 'bf130fb7-8bd4-44fd-ad1d-43b6020ad102';
 
 async function get(id, context) {
-  const user = context.get('app.clientId');
-
   let result = await knex('docs')
     .where('id', id)
     .select();
@@ -150,7 +148,10 @@ function indexKeys(obj, type) {
         });
       }
     } else {
-      // TODO log invalid index type
+      log.error('invalid index value type', {
+        type: obj._type,
+        valueType: index.value
+      });
     }
   }
   return result;
@@ -163,7 +164,7 @@ async function removeIndex(obj, type) {
         .where(row)
         .del();
     } catch (e) {
-      // TODO log ...
+      log.error('removeIndex error', {error: String(e)});
       // ignore
     }
   }
@@ -174,7 +175,7 @@ async function addIndex(obj, type) {
     try {
       await knex('indexes').insert(row);
     } catch (e) {
-      // TODO log ...
+      log.error('addIndex error', {error: String(e)});
       // ignore
     }
   }
@@ -214,9 +215,6 @@ function findPutData(obj, type) {
 
 async function put(obj, ctx) {
   const user = ctx.get('storage.user');
-  if (!user) {
-    return {statusCode: 403, error: 'invalid user'};
-  }
   if (typeof obj._type !== 'string') {
     return {statusCode: 400, error: 'missing _type'};
   }
@@ -296,7 +294,77 @@ async function del(_id, ctx) {
   return {statusCode: 200, data: {}};
 }
 
+async function scan(
+  {_type, index, after, before, reverse, limit, startsWith},
+  ctx
+) {
+  _type = await lookupType(_type, ctx);
+
+  let type = await get(_type, ctx);
+  if (!Array.isArray(type.data && type.data.indexes)) {
+    return {statusCode: 400, error: 'invalid _type'};
+  }
+
+  let indexes = type.data.indexes.filter(o => _.isEqual(index, o.keys));
+  if (indexes.length !== 1) {
+    return {statusCode: 400, error: 'no such index'};
+  }
+
+  const idx = type.data.indexes.indexOf(indexes[0]);
+
+  let query = knex('indexes')
+    .select('key', 'val')
+    .where({type: _type, idx});
+
+  if (after) {
+    query = query.andWhere(
+      'key',
+      '>',
+      after.map(o => JSON.stringify(o)).join('\n')
+    );
+  }
+  if (before) {
+    query = query.andWhere(
+      'key',
+      '<',
+      before.map(o => JSON.stringify(o)).join('\n')
+    );
+  }
+
+  if (startsWith) {
+    query = query.andWhere(
+      'key',
+      'like',
+      startsWith.map(o => JSON.stringify(o)).join('\n') + '%'
+    );
+  }
+  if (before && !after) {
+    reverse = !reverse;
+  }
+  if (reverse) {
+    query = query.orderBy('key', 'desc');
+  } else {
+    query = query.orderBy('key');
+  }
+
+  if (limit !== undefined) {
+    query = query.limit(limit);
+  }
+
+  let result = await query;
+  result = result.map(({key, val}) => ({
+    key: key.split('\n').map(s => JSON.parse(s)),
+    val
+  }));
+
+  return {statusCode: 200, data: result};
+}
+
 async function storageTransformer(request, context) {
+  const user = context.get('storage.user');
+  if (!user) {
+    return {statusCode: 403, error: 'invalid user'};
+  }
   try {
     let result;
     try {
@@ -308,10 +376,12 @@ async function storageTransformer(request, context) {
         result = put(request.put, context);
       } else if (request.delete) {
         result = del(request.delete, context);
+      } else if (request.scan) {
+        result = scan(request.scan, context);
       } else {
         result = {
           statusCode: 400,
-          error: 'storage need operation: get, find, put or delete'
+          error: 'storage need operation: get, find, scan, put or delete'
         };
       }
       result = await result;
@@ -352,7 +422,7 @@ async function storageMiddleware(req, res, next) {
       res.header('Content-Type', 'image/jpeg');
       return res.end(doc.data);
     } catch (e) {
-      // TODO log error
+      log.error('storage middleware error', {error: String(e)});
       // do nothing
     }
   }

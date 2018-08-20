@@ -134,17 +134,6 @@ describe('Storage endpoint', () => {
     });
   });
 
-  /*
-  describe('scanning index', () => {
-    scan: {
-      _type: type1._id,
-      index: ['tags', '_id'],
-      after: [''],
-      limit: 2
-    }
-  });
-  */
-
   describe('finding data', () => {
     it('finds documents by indexed keys', async () => {
       let result = await dbcOpenPlatform.storage({
@@ -339,8 +328,98 @@ describe('Storage endpoint', () => {
     });
   });
 
+  describe('scanning index', () => {
+    before(async () => {
+      await dbcOpenPlatform.storage({
+        put: {
+          _type: 'openplatform.type',
+          name: 'test',
+          description: 'Yet another type used during unit test',
+          type: 'json',
+          permissions: {read: 'any'},
+          indexes: []
+        }
+      });
+    });
+    it('scans for a prefix', async () => {
+      let result = await dbcOpenPlatform.storage({
+        scan: {
+          _type: 'openplatform.type',
+          index: ['_owner', 'name'],
+          startsWith: [user]
+        }
+      });
+
+      assert.deepEqual(Object.keys(result[0]), ['key', 'val']);
+      assert.deepEqual(result.map(o => o.key), [
+        [user, 'test'],
+        [user, 'testImage'],
+        [user, 'testType1']
+      ]);
+    });
+    it('reverse scans', async () => {
+      let result = await dbcOpenPlatform.storage({
+        scan: {
+          _type: 'openplatform.type',
+          index: ['_owner', 'name'],
+          startsWith: [user],
+          reverse: true,
+          limit: 2
+        }
+      });
+
+      assert.deepEqual(result.map(o => o.key), [
+        [user, 'testType1'],
+        [user, 'testImage']
+      ]);
+    });
+    it('scans before', async () => {
+      let result = await dbcOpenPlatform.storage({
+        scan: {
+          _type: 'openplatform.type',
+          index: ['_owner', 'name'],
+          startsWith: [user],
+          limit: 1,
+          before: [user, 'testType1']
+        }
+      });
+
+      assert.deepEqual(result.map(o => o.key), [[user, 'testImage']]);
+    });
+    it('scans from a certain point', async () => {
+      let result = await dbcOpenPlatform.storage({
+        scan: {
+          _type: 'openplatform.type',
+          index: ['_owner', 'name'],
+          after: [user, 'test'],
+          limit: 1,
+          startsWith: [user]
+        }
+      });
+
+      assert.deepEqual(result.map(o => o.key), [[user, 'testImage']]);
+    });
+  });
+
+  describe('count index', () => {
+    let countType;
+    before(async () => {
+      countType = await dbcOpenPlatform.storage({
+        put: {
+          _type: 'openplatform.type',
+          name: 'testType2',
+          description: 'Another type used during unit test',
+          type: 'json',
+          permissions: {read: 'any'},
+          indexes: [{value: '_count', keys: ['name']}]
+        }
+      });
+    });
+    it('has value zero when no elements', async () => {});
+  });
+
   async function cleanupOldTestData() {
-    for (const typeName of ['testType1', 'testImage']) {
+    for (const typeName of ['test', 'testType2', 'testType1', 'testImage']) {
       const types = await dbcOpenPlatform.storage({
         find: {
           _owner: user,
