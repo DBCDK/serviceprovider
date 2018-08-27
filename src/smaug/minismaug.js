@@ -16,7 +16,7 @@ if (typeof args.f === 'undefined') {
 
 const config = JSON.parse(fs.readFileSync(args.f, 'utf8'));
 
-var port = process.env.PORT || 3000; // eslint-disable-line no-process-env
+var port = process.env.PORT || 3333; // eslint-disable-line no-process-env
 
 app.get('/configuration', (req, res) => {
   res.send(JSON.stringify(config.context, null, 2));

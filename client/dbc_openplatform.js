@@ -16,6 +16,7 @@ var endpoints = [
   'renew',
   'search',
   'status',
+  'storage',
   'suggest',
   'user',
   'work'
@@ -73,8 +74,21 @@ for (var i = 0; i < endpoints.length; ++i) {
  *
  * @return a promise with the token.
  */
-openplatform.connect = function() {
-  var promise, args, clientId, clientSecret, user, password;
+openplatform.connect = function(options) {
+  var promise,
+    args,
+    clientId,
+    clientSecret,
+    user,
+    password,
+    socketClusterConfig;
+  socketClusterConfig = {
+    hostname: 'openplatform.dbc.dk',
+    ackTimeout: 30000,
+    port: 443,
+    secure: true,
+    path: '/v3/socketcluster/?access_token='
+  };
 
   args = Array.prototype.slice.call(arguments);
   if (args.length === 0) {
@@ -83,7 +97,23 @@ openplatform.connect = function() {
     }
     promise = Promise.resolve(apiToken);
   } else if (args.length === 1) {
-    promise = Promise.resolve(args[0]);
+    if (typeof args[0] === 'string') {
+      // token as parameter
+      promise = Promise.resolve(args[0]);
+    } else {
+      // option object
+      socketClusterConfig = options.socketClusterConfig || socketClusterConfig;
+      if (options.token) {
+        promise = Promise.resolve(apiToken);
+      } else {
+        promise = getToken(
+          options.clientId,
+          options.clientSecret,
+          options.user || '@',
+          options.password || '@'
+        );
+      }
+    }
   } else {
     clientId = args[0];
     clientSecret = args[1];
@@ -118,13 +148,8 @@ openplatform.connect = function() {
         sc.connect();
         return;
       }
-      sc = require('socketcluster-client').connect({
-        hostname: 'openplatform.dbc.dk',
-        ackTimeout: 30000,
-        port: 443,
-        secure: true,
-        path: '/v3/socketcluster/?access_token=' + token
-      });
+      socketClusterConfig.path += token;
+      sc = require('socketcluster-client').connect(socketClusterConfig);
       sc.on('connectAbort', function(result) {
         reject(result);
       });

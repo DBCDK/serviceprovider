@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Storage API examples</title>
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans:300,600' rel='stylesheet' type='text/css'>
+    <style>
+      body {
+        text-align: center;
+      }
+      #doc{
+        display: inline-block;
+        font-family: "Open Sans", sans-serif;
+        text-align: left;
+        max-width: 600px;
+      }
+    </style>
+  </head>
+  <body>
+    <div id=doc></div>
+    <script src=https://cdnjs.cloudflare.com/ajax/libs/es6-shim/0.35.1/es6-shim.min.js></script>
+    <script src=https://cdnjs.cloudflare.com/ajax/libs/showdown/1.4.1/showdown.min.js></script>
+    <script>
+      (function() {
+        var xhr = new XMLHttpRequest();
+        xhr.open('GET', 'storage.test.js');
+        xhr.onreadystatechange = function() {
+          if(xhr.readyState === 4) {
+            var markdown = xhr.response.split('\n')
+              .map(function(line) {
+                return line
+                  .replace(/^ *[^\/]/g, function(s) { return '    ' + s; })
+                  .replace(/^ *\/\/ ?/g, '');
+              }).join('\n');
+            var html = (new showdown.Converter()).makeHtml(markdown);
+            document.getElementById("doc").innerHTML = html;
+          }
+        };
+        xhr.send();
+      })();
+    </script>
+  </body>
+</html>

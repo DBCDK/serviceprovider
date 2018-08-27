@@ -43,3 +43,4 @@ NODE_ENV_DOCKERFILE
 /versions/
 context.json
 __results__
+serviceprovider.sqlite3

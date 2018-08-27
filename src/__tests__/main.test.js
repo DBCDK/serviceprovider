@@ -48,7 +48,7 @@ describe('main', () => {
   before(async () => {
     // start mini-smaug if not running
     try {
-      await prequest('http://localhost:3000/');
+      await prequest('http://localhost:3333/');
     } catch (e) {
       exec('npm run start:minismaug');
     }

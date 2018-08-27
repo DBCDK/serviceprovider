@@ -126,6 +126,8 @@ If a mock file is specified, then the behaviour of the `createTest` parameter is
 - __SWAGGER_HTTP__
 Include http as allowed scheme in swagger, this is useful when developing locally.
 
+- __PG_CONNECTION_STRING__
+The postgresql database to use for the storage endpoint. If not supplied, it will fallback to a `./serviceprovider.sqlite3`, which is useful for local development.
 
 ## Authorisation
 

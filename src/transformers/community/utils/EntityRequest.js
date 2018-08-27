@@ -203,21 +203,21 @@ export default class EntityRequest {
     }
     if (
       this._type === 'comment' &&
-      !await this.objectExists('Entity', json.entity_ref, 'post')
+      !(await this.objectExists('Entity', json.entity_ref, 'post'))
     ) {
       return this._createResponse({}, [
         {error: `post with id ${json.entity_ref} does not exist`, status: 400}
       ]);
     } else if (
       this._type === 'post' &&
-      !await this.objectExists('Entity', json.entity_ref, 'group')
+      !(await this.objectExists('Entity', json.entity_ref, 'group'))
     ) {
       return this._createResponse({}, [
         {error: `group with id ${json.entity_ref} does not exist`, status: 400}
       ]);
     } else if (
       json.profile_ref &&
-      !await this.objectExists('Profile', json.profile_ref)
+      !(await this.objectExists('Profile', json.profile_ref))
     ) {
       return this._createResponse({}, [
         {
@@ -227,11 +227,11 @@ export default class EntityRequest {
       ]);
     } else if (
       json.entity_ref &&
-      !await this.objectExists(
+      !(await this.objectExists(
         'Entity',
         json.entity_ref,
         json.attributes.reference.type
-      )
+      ))
     ) {
       return this._createResponse({}, [
         {

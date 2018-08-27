@@ -1,12 +1,12 @@
-import fs from 'fs';
-import {hostname} from 'os';
-import process from 'process';
-import {version} from '../package.json';
+const fs = require('fs');
+const {hostname} = require('os');
+const process = require('process');
+const {version} = require('../package.json');
 
 /**
  * Die function. Writes to console and throws error
  */
-export function die(str) {
+function die(str) {
   console.trace('ERROR: ' + str); // eslint-disable-line
   throw str;
 }
@@ -14,7 +14,7 @@ export function die(str) {
 /**
  * Returns the name of the given function
  */
-export function functionName(fun) {
+function functionName(fun) {
   let ret = fun.toString();
   ret = ret.substr('function '.length);
   ret = ret.substr(0, ret.indexOf('('));
@@ -25,7 +25,7 @@ export function functionName(fun) {
  * @returns current log level
  */
 
-export function getCurrentLogLevel() {
+function getCurrentLogLevel() {
   return process.env.LOG_LEVEL || 'INFO'; // eslint-disable-line no-process-env
 }
 
@@ -85,7 +85,7 @@ function doLog(level, msg, args) {
  * return true if the given path is an existing directory, false
  * otherwise.
  */
-export function isDir(path) {
+function isDir(path) {
   try {
     const stats = fs.lstatSync(path);
     if (stats.isDirectory()) {
@@ -97,7 +97,7 @@ export function isDir(path) {
   return false;
 }
 
-export const log = {
+const log = {
   log: doLog,
   info: (msg, args) => doLog('info', msg, args),
   warn: (msg, args) => doLog('warn', msg, args),
@@ -111,7 +111,7 @@ export const log = {
  * returns new function that logs time usage of function.
  *
  */
-export function timingDecorator(f) {
+function timingDecorator(f) {
   return function() {
     const start = Date.now();
     const r = f.apply(this, arguments);
@@ -121,3 +121,12 @@ export function timingDecorator(f) {
     return r;
   };
 }
+
+module.exports = {
+  die,
+  functionName,
+  getCurrentLogLevel,
+  isDir,
+  log,
+  timingDecorator
+};
