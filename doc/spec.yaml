@@ -374,6 +374,9 @@ api:
       scan:
         description: scan through an index
         type: object
+      count:
+        description: get number of (indexed) object
+        type: object
   suggest:
     tags:
       - Suggest

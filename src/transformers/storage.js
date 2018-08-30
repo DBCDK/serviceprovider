@@ -4,6 +4,7 @@ const uuidv4 = require('uuid/v4');
 const {knex} = require('../knex.js');
 const metaTypeUuid = 'bf130fb7-8bd4-44fd-ad1d-43b6020ad102';
 const sharp = require('sharp');
+const assert = require('assert');
 
 async function get(id, context) {
   let result = await knex('docs')
@@ -65,7 +66,7 @@ const uuidRegExp = new RegExp(
   '^xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx$'.replace(/x/g, '[0-9a-fA-F]')
 );
 
-async function find(opts, ctx) {
+async function indexLookup(valueType, opts, ctx) {
   // eslint-disable-next-line no-use-before-define
   const _type = await lookupType(opts._type || metaTypeUuid, ctx);
   const type = (await get(_type, ctx)).data;
@@ -75,7 +76,7 @@ async function find(opts, ctx) {
     for (let idx = 0; idx < type.indexes.length; ++idx) {
       const index = type.indexes[idx];
       if (
-        index.value === '_id' &&
+        index.value === valueType &&
         index.keys.length === keys.length &&
         index.keys.filter(key => opts.hasOwnProperty(key)).length ===
           keys.length
@@ -93,6 +94,18 @@ async function find(opts, ctx) {
     }
   }
   return {statusCode: 400, error: `no index for ${JSON.stringify(keys)}`};
+}
+
+async function find(opts, ctx) {
+  return indexLookup('_id', opts, ctx);
+}
+
+async function count(opts, ctx) {
+  const result = await indexLookup('_count', opts, ctx);
+  if (result.statusCode !== 200) {
+    return result;
+  }
+  return {statusCode: 200, data: +(result.data[0] || 0)};
 }
 
 async function lookupType(type, ctx) {
@@ -122,62 +135,84 @@ async function lookupType(type, ctx) {
   return result[0];
 }
 
-function indexKeys(obj, type) {
-  const result = [];
+async function indexKeys(obj, type, action) {
   for (let idx = 0; idx < type.indexes.length; ++idx) {
     const index = type.indexes[idx];
-    if (index.value === '_id') {
-      const arrayKeys = index.keys.filter(k => Array.isArray(obj[k]));
-      if (arrayKeys.length === 1) {
-        // only support one array-key to avoid possible combinatorial explosion
-        for (const key of obj[arrayKeys[0]]) {
-          result.push({
-            type: obj._type,
-            idx,
-            key: index.keys
-              .map(k => JSON.stringify(k === arrayKeys[0] ? key : obj[k]))
-              .join('\n'),
-            val: obj._id
-          });
-        }
-      } else {
+    const result = [];
+    const arrayKeys = index.keys.filter(k => Array.isArray(obj[k]));
+    if (arrayKeys.length === 1) {
+      // only support one array-key to avoid possible combinatorial explosion
+      for (const key of obj[arrayKeys[0]]) {
         result.push({
           type: obj._type,
           idx,
-          key: index.keys.map(k => JSON.stringify(obj[k])).join('\n'),
-          val: obj._id
+          key: index.keys
+            .map(k => JSON.stringify(k === arrayKeys[0] ? key : obj[k]))
+            .join('\n')
         });
+      }
+    } else {
+      result.push({
+        type: obj._type,
+        idx,
+        key: index.keys.map(k => JSON.stringify(obj[k])).join('\n')
+      });
+    }
+
+    if (index.value === '_id') {
+      for (const row of result) {
+        try {
+          if (action === 'remove') {
+            await knex('indexes')
+              .where(Object.assign({}, row, {val: obj._id}))
+              .del();
+          } else if (action === 'add') {
+            await knex('indexes').insert(
+              Object.assign({}, row, {val: obj._id})
+            );
+          } else {
+            assert.fail();
+          }
+        } catch (e) {
+          log.error(`index error while trying to {action} _id`, {
+            error: String(e)
+          });
+          // ignore
+        }
+      }
+    } else if (index.value === '_count') {
+      for (const row of result) {
+        try {
+          const [prevRow] = await knex('indexes')
+            .select('val')
+            .where(row);
+          let val = +(prevRow && prevRow.val) || 0;
+
+          if (action === 'remove') {
+            --val;
+          } else if (action === 'add') {
+            ++val;
+          } else {
+            assert.fail();
+          }
+
+          if (!prevRow) {
+            await knex('indexes').insert(Object.assign({}, row, {val}));
+          } else {
+            await knex('indexes')
+              .update({val})
+              .where(row);
+          }
+        } catch (e) {
+          log.error(`index error while trying to {action}`, {error: String(e)});
+          // ignore
+        }
       }
     } else {
       log.error('invalid index value type', {
         type: obj._type,
         valueType: index.value
       });
-    }
-  }
-  return result;
-}
-
-async function removeIndex(obj, type) {
-  for (const row of indexKeys(obj, type)) {
-    try {
-      await knex('indexes')
-        .where(row)
-        .del();
-    } catch (e) {
-      log.error('removeIndex error', {error: String(e)});
-      // ignore
-    }
-  }
-}
-
-async function addIndex(obj, type) {
-  for (const row of indexKeys(obj, type)) {
-    try {
-      await knex('indexes').insert(row);
-    } catch (e) {
-      log.error('addIndex error', {error: String(e)});
-      // ignore
     }
   }
 }
@@ -246,8 +281,8 @@ async function put(obj, ctx) {
     obj._owner = user;
     obj._client = ctx.get('app.clientId');
 
-    await removeIndex(prev, type);
-    await addIndex(obj, type);
+    await indexKeys(prev, type, 'remove');
+    await indexKeys(obj, type, 'add');
     result = findPutData(obj, type);
     status = await knex('docs')
       .where('id', obj._id)
@@ -258,7 +293,7 @@ async function put(obj, ctx) {
     obj._client = ctx.get('app.clientId');
     obj._version = new Date().toISOString();
 
-    addIndex(obj, type);
+    await indexKeys(obj, type, 'add');
     result = findPutData(obj, type);
     status = await knex('docs').insert(result);
   }
@@ -275,7 +310,7 @@ async function del(_id, ctx) {
   const type = (await get(prev._type, ctx)).data;
 
   await verifyModifiable({_id}, {prev, user, type});
-  await removeIndex(prev, type);
+  await indexKeys(prev, type, 'remove');
 
   await knex('docs')
     .where({id: prev._id, version: prev._version})
@@ -379,6 +414,8 @@ async function storageTransformer(request, context) {
         result = del(request.delete, context);
       } else if (request.scan) {
         result = scan(request.scan, context);
+      } else if (request.count) {
+        result = count(request.count, context);
       } else {
         result = {
           statusCode: 400,
