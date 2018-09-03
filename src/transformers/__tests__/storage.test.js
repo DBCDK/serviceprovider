@@ -416,7 +416,7 @@ describe('Storage endpoint', () => {
   });
 
   describe('count index', () => {
-    let countType;
+    let countType, objectId;
     before(async () => {
       countType = await dbcOpenPlatform.storage({
         put: {
@@ -429,7 +429,61 @@ describe('Storage endpoint', () => {
         }
       });
     });
-    it('has value zero when no elements', async () => {});
+    it('has value zero when no elements', async () => {
+      const result = await dbcOpenPlatform.storage({
+        count: {
+          _type: `${user}.testType2`,
+          name: 'hello'
+        }
+      });
+
+      assert.equal(result, 0);
+    });
+    it('has count matching number of objects', async () => {
+      await dbcOpenPlatform.storage({
+        put: {
+          _type: `${user}.testType2`,
+          name: 'hello'
+        }
+      });
+      await dbcOpenPlatform.storage({
+        put: {
+          _type: `${user}.testType2`,
+          name: 'world'
+        }
+      });
+      objectId = (await dbcOpenPlatform.storage({
+        put: {
+          _type: `${user}.testType2`,
+          name: 'hello'
+        }
+      }))._id;
+      let result = await dbcOpenPlatform.storage({
+        count: {
+          _type: `${user}.testType2`,
+          name: 'hello'
+        }
+      });
+      assert.equal(result, 2);
+
+      result = await dbcOpenPlatform.storage({
+        count: {
+          _type: `${user}.testType2`,
+          name: 'world'
+        }
+      });
+      assert.equal(result, 1);
+    });
+    it('reduces counts when object is deleted', async () => {
+      await dbcOpenPlatform.storage({delete: objectId});
+      let result = await dbcOpenPlatform.storage({
+        count: {
+          _type: `${user}.testType2`,
+          name: 'hello'
+        }
+      });
+      assert.equal(result, 1);
+    });
   });
 
   async function cleanupOldTestData() {
