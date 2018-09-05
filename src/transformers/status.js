@@ -48,12 +48,6 @@ async function performanceStat({request, context}) {
   const username = context.data.performance.username;
   const password = context.data.performance.password;
   let url = context.data.services.performance;
-
-  // TODO remove this when config has been updated
-  if (!url.endsWith('prod_ux-*/')) {
-    url += 'prod_ux-*/';
-  }
-
   const query = {
     size: 0,
 
