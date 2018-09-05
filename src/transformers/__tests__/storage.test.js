@@ -4,6 +4,7 @@ const _ = require('lodash');
 const {promisify} = require('util');
 const request = promisify(require('request'));
 const dbcOpenPlatform = makeApiWrapper();
+const {version} = require('../../../package.json');
 //
 // <small>(note: dbcOpenPlatform is usually loaded into the browser using a `<script>`-tag)</small>
 //
@@ -318,20 +319,37 @@ describe('Storage endpoint', () => {
       });
     });
 
+    const spUrl = `http://localhost:${process.env.PORT || 8080}/v${
+      version.split('.')[0]
+    }`;
+
+    async function hasLocalServiceProvider() {
+      try {
+        const result = await request(spUrl);
+        return result.statusCode === 200;
+      } catch (e) {
+        return false;
+      }
+    }
     it('can be retrieved using the http-endpoint', async () => {
+      if (!(await hasLocalServiceProvider())) {
+        console.warn('Skipping test needing running serviceprovider:');
+        return;
+      }
       const result = await request({
-        url: 'http://localhost:8080/v3/storage/' + doc2._id,
+        url: spUrl + '/storage/' + doc2._id,
         encoding: 'latin1'
       });
       assert.equal(result.headers['content-type'], 'image/jpeg');
       assert.equal(result.body, jpegData);
     });
     it('can be retrieved scaled using the http-endpoint', async () => {
+      if (!(await hasLocalServiceProvider())) {
+        console.warn('Skipping test needing running serviceprovider:');
+        return;
+      }
       const result = await request({
-        url:
-          'http://localhost:8080/v3/storage/' +
-          doc2._id +
-          '?width=256&height=256',
+        url: spUrl + '/storage/' + doc2._id + '?width=256&height=256',
         encoding: 'latin1'
       });
       assert.equal(result.headers['content-type'], 'image/jpeg');
