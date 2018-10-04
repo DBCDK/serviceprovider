@@ -1,0 +1,6388 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "version": "2.0.0",
+    "title": "Open Platform",
+    "description": "Dette er den åbne platform, hvilket er APIet for de danske biblioteker.\n\n### Få adgang til API'et\nMan skal være et dansk bibliotek, eller DDB, for at få API-adgang. Andre må sende forespørgslen gennem en af disse. <br>\nForespørgslen sendes til DBCs kundeservice (https://kundeservice.dbc.dk/) med følgende informationer:\n\n- Projektejer kontaktperson (bibliotek, email, telefon)\n- Teknisk kontaktperson (navn, email, telefon)\n- Navn/beskrivelse af app/klient\n- Eventuelt søge-profil (per default er dette det indloggede bibliotek. Alternative søgeprofiler kan være landsdækkende, såsom bibliotek.dk og biblo.dk)\n\nHerefter vil biblioteket modtage et eller flere `CLIENT_ID` / `CLIENT_SECRET`, der kan bruges til at få adgang til APIet. \n\n###Tokens\nAlle kald til API'et kræver en gyldig token. Der findes tre forskellige typer tokens. \n\nTokens til driftmiljø'et hentes fra https://auth.dbc.dk som beskrevet i eksemplerne herunder. Tokens til stagingmiljø'et hentes fra https://auth-stg.dbc.dk.\n\n####Anonym\nKan benyttes til alle forespørgsler som ikke indeholder biblioteks- eller brugerspecifikke data: \n\n  `curl --user \"$CLIENT_ID\":\"$CLIENT_SECRET\" -X POST https://auth.dbc.dk/oauth/token -d 'grant_type=password&username=@&password=@'`\n\n####Biblioteksspecifik\nØnskes forespørgsler afgrænset til et specifik bibliotek, kan man generere en biblioteksspecifik token. F.eks. hvis man ønsker at afgrænse en søgning til\net specifikt biblioteksvæsens beholdning:\n\n  `curl --user \"$CLIENT_ID\":\"$CLIENT_SECRET\" -X POST https://auth.dbc.dk/oauth/token -d 'grant_type=password&username=@$LIBRARY_ID&password=@$LIBRARY_ID'`\n\n`LIBRARY_ID` er et biblioteks ISIL nummer f.eks. 710100 for København.\n\n####Autentificeret\nEndpoints som kræver en indlogget bruger skal kaldes med et autentificeret token. Dette gælder /order og /status. \n\n  `curl --user \"$CLIENT_ID\":\"$CLIENT_SECRET\" -X POST https://auth.dbc.dk/oauth/token -d 'grant_type=password&username=$USER_ID@LIBRARY_ID&password=$PINCODE'`\n\n### Supplerende dokumentation\nKildekode, issue tracking, osv. findes på github: https://github.com/dbcdk/serviceprovider/,\nHer finder man også specifikationer, ogyderligere dokumentation [doc/](https://github.com/DBCDK/serviceprovider/tree/master/doc/).\nEksempelforespørgsler, og en \"getting started guide\" er tilgængelig her: [example.html](example.html) [guide.html](guide.html).\n\nDokumentation til community forespørgslerne kan findes på [/doc/community](https://github.com/DBCDK/serviceprovider/tree/master/doc/community) \n\n###English\n\nThis is the Open Platform, which is the API for the danish public libraries.\n\nDanish libraries can get access directly from DBC, see the description in danish above. Others have to go through a library to get access.\n"
+  },
+  "basePath": "/v2",
+  "schemes": [
+    "https",
+    "wss"
+  ],
+  "consumes": [
+    "application/json"
+  ],
+  "produces": [
+    "application/json"
+  ],
+  "paths": {
+    "/community/comments/": {
+      "get": {
+        "tags": [
+          "Community"
+        ],
+        "summary": "List of Comments",
+        "parameters": [
+          {
+            "$ref": "#/parameters/accessToken"
+          },
+          {
+            "$ref": "#/parameters/include"
+          },
+          {
+            "$ref": "#/parameters/limit"
+          },
+          {
+            "$ref": "#/parameters/offset"
+          },
+          {
+            "$ref": "#/parameters/counts"
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/responses/Comments"
+          },
+          "default": {
+            "$ref": "#/responses/Error"
+          }
+        }
+      },
+      "post": {
+        "summary": "Create Comment",
+        "tags": [
+          "Community"
+        ],
+        "parameters": [
+          {
+            "$ref": "#/parameters/accessToken"
+          },
+          {
+            "$ref": "#/parameters/commentPost"
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/responses/Comment"
+          },
+          "default": {
+            "$ref": "#/responses/Error"
+          }
+        }
+      }
+    },
+    "/community/comments/{id}": {
+      "get": {
+        "tags": [
+          "Community"
+        ],
+        "summary": "Comment in community",
+        "parameters": [
+          {
+            "$ref": "#/parameters/comment_id"
+          },
+          {
+            "$ref": "#/parameters/accessToken"
+          },
+          {
+            "$ref": "#/parameters/include"
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/responses/Comment"
+          },
+          "default": {
+            "$ref": "#/responses/Error"
+          }
+        }
+      },
+      "put": {
+        "summary": "Update Comment",
+        "tags": [
+          "Community"
+        ],
+        "parameters": [
+          {
+            "$ref": "#/parameters/accessToken"
+          },
+          {
+            "$ref": "#/parameters/comment_id"
+          },
+          {
+            "$ref": "#/parameters/commentPut"
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/responses/Comment"
+          },
+          "default": {
+            "$ref": "#/responses/Error"
+          }
+        }
+      },
+      "delete": {
+        "summary": "Delete Comment",
+        "tags": [
+          "Community"
+        ],
+        "parameters": [
+          {
+            "$ref": "#/parameters/accessToken"
+          },
+          {
+            "$ref": "#/parameters/comment_id"
+          },
+          {
+            "$ref": "#/parameters/modified_by"
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/responses/Comment"
+          },
+          "default": {
+            "$ref": "#/responses/Error"
+          }
+        }
+      }
+    },
+    "/community/comments/{id}/likes": {
+      "get": {
+        "tags": [
+          "Community"
+        ],
+        "summary": "List of Likes related to a specific Comment",
+        "parameters": [
+          {
+            "$ref": "#/parameters/accessToken"
+          },
+          {
+            "$ref": "#/parameters/comment_id"
+          },
+          {
+            "$ref": "#/parameters/include"
+          },
+          {
+            "$ref": "#/parameters/limit"
+          },
+          {
+            "$ref": "#/parameters/offset"
+          },
+          {
+            "$ref": "#/parameters/counts"
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/responses/Likes"
+          },
+          "500": {
+            "$ref": "#/responses/Error"
+          }
+        }
+      }
+    },
+    "/community/comments/{id}/follows": {
+      "get": {
+        "tags": [
+          "Community"
+        ],
+        "summary": "List of Followers related to a specific Comment",
+        "parameters": [
+          {
+            "$ref": "#/parameters/accessToken"
+          },
+          {
+            "$ref": "#/parameters/comment_id"
+          },
+          {
+            "$ref": "#/parameters/include"
+          },
+          {
+            "$ref": "#/parameters/limit"
+          },
+          {
+            "$ref": "#/parameters/offset"
+          },
+          {
+            "$ref": "#/parameters/counts"
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/responses/Follow"
+          },
+          "500": {
+            "$ref": "#/responses/Error"
+          }
+        }
+      }
+    },
+    "/community/comments/{id}/flags": {
+      "get": {
+        "tags": [
+          "Community"
+        ],
+        "summary": "List of Flags related to a specific Comment",
+        "parameters": [
+          {
+            "$ref": "#/parameters/accessToken"
+          },
+          {
+            "$ref": "#/parameters/comment_id"
+          },
+          {
+            "$ref": "#/parameters/include"
+          },
+          {
+            "$ref": "#/parameters/limit"
+          },
+          {
+            "$ref": "#/parameters/offset"
+          },
+          {
+            "$ref": "#/parameters/counts"
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/responses/Flag"
+          },
+          "500": {
+            "$ref": "#/responses/Error"
+          }
+        }
+      }
+    },
+    "/community/flags/": {
+      "get": {
+        "tags": [
+          "Community"
+        ],
+        "summary": "List of Flags",
+        "parameters": [
+          {
+            "$ref": "#/parameters/accessToken"
+          },
+          {
+            "$ref": "#/parameters/include"
+          },
+          {
+            "$ref": "#/parameters/limit"
+          },
+          {
+            "$ref": "#/parameters/offset"
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/responses/Flags"
+          },
+          "500": {
+            "$ref": "#/responses/Error"
+          },
+          "default": {
+            "$ref": "#/responses/Flags"
+          }
+        }
+      },
+      "post": {
+        "summary": "Create Flag",
+        "tags": [
+          "Community"
+        ],
+        "parameters": [
+          {
+            "$ref": "#/parameters/accessToken"
+          },
+          {
+            "name": "flag",
+            "in": "body",
+            "description": "a flag object",
+            "schema": {
+              "$ref": "#/definitions/ActionPost"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/responses/Follow"
+          },
+          "500": {
+            "$ref": "#/responses/Error"
+          }
+        }
+      }
+    },
+    "/community/flags/{id}": {
+      "get": {
+        "tags": [
+          "Community"
+        ],
+        "summary": "Get Flag",
+        "description": "Get a flag by ID",
+        "parameters": [
+          {
+            "$ref": "#/parameters/accessToken"
+          },
+          {
+            "$ref": "#/parameters/flag_id"
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/responses/Flag"
+          },
+          "500": {
+            "$ref": "#/responses/Error"
+          }
+        }
+      },
+      "delete": {
+        "summary": "Delete Flag",
+        "tags": [
+          "Community"
+        ],
+        "parameters": [
+          {
+            "$ref": "#/parameters/accessToken"
+          },
+          {
+            "$ref": "#/parameters/flag_id"
+          },
+          {
+            "$ref": "#/parameters/modified_by"
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/responses/Flag"
+          },
+          "default": {
+            "$ref": "#/responses/Error"
+          }
+        }
+      }
+    },
+    "/community/follows/": {
+      "get": {
+        "tags": [
+          "Community"
+        ],
+        "summary": "List of Follows",
+        "parameters": [
+          {
+            "$ref": "#/parameters/accessToken"
+          },
+          {
+            "$ref": "#/parameters/include"
+          },
+          {
+            "$ref": "#/parameters/limit"
+          },
+          {
+            "$ref": "#/parameters/offset"
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/responses/Follows"
+          },
+          "500": {
+            "$ref": "#/responses/Error"
+          },
+          "default": {
+            "$ref": "#/responses/Follows"
+          }
+        }
+      },
+      "post": {
+        "summary": "Create Follow",
+        "tags": [
+          "Community"
+        ],
+        "parameters": [
+          {
+            "$ref": "#/parameters/accessToken"
+          },
+          {
+            "name": "follow",
+            "in": "body",
+            "description": "a Follow object",
+            "schema": {
+              "$ref": "#/definitions/Follow"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/responses/Follow"
+          },
+          "500": {
+            "$ref": "#/responses/Error"
+          }
+        }
+      }
+    },
+    "/community/follows/{id}": {
+      "get": {
+        "tags": [
+          "Community"
+        ],
+        "summary": "Get Follow",
+        "description": "Get a Follow by ID",
+        "parameters": [
+          {
+            "$ref": "#/parameters/accessToken"
+          },
+          {
+            "$ref": "#/parameters/id"
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/responses/Follow"
+          },
+          "500": {
+            "$ref": "#/responses/Error"
+          }
+        }
+      },
+      "delete": {
+        "summary": "Delete Follow",
+        "tags": [
+          "Community"
+        ],
+        "parameters": [
+          {
+            "$ref": "#/parameters/accessToken"
+          },
+          {
+            "$ref": "#/parameters/follow_id"
+          },
+          {
+            "$ref": "#/parameters/modified_by"
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/responses/Follow"
+          },
+          "default": {
+            "$ref": "#/responses/Error"
+          }
+        }
+      }
+    },
+    "/community/groups/": {
+      "get": {
+        "tags": [
+          "Community"
+        ],
+        "summary": "List of Groups",
+        "parameters": [
+          {
+            "$ref": "#/parameters/accessToken"
+          },
+          {
+            "$ref": "#/parameters/include"
+          },
+          {
+            "$ref": "#/parameters/limit"
+          },
+          {
+            "$ref": "#/parameters/offset"
+          },
+          {
+            "$ref": "#/parameters/counts"
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/responses/Groups"
+          },
+          "500": {
+            "$ref": "#/responses/Error"
+          }
+        }
+      },
+      "post": {
+        "summary": "Create Group",
+        "tags": [
+          "Community"
+        ],
+        "parameters": [
+          {
+            "$ref": "#/parameters/accessToken"
+          },
+          {
+            "name": "group",
+            "in": "body",
+            "description": "The Group content",
+            "schema": {
+              "$ref": "#/definitions/GroupPost"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/responses/Group"
+          },
+          "default": {
+            "$ref": "#/responses/Error"
+          }
+        }
+      }
+    },
+    "/community/groups/{id}": {
+      "get": {
+        "tags": [
+          "Community"
+        ],
+        "summary": "Group in community",
+        "parameters": [
+          {
+            "$ref": "#/parameters/accessToken"
+          },
+          {
+            "$ref": "#/parameters/group_id"
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/responses/Group"
+          },
+          "default": {
+            "$ref": "#/responses/Error"
+          }
+        }
+      },
+      "put": {
+        "summary": "Update Group",
+        "tags": [
+          "Community"
+        ],
+        "parameters": [
+          {
+            "$ref": "#/parameters/accessToken"
+          },
+          {
+            "$ref": "#/parameters/group_id"
+          },
+          {
+            "$ref": "#/parameters/groupPut"
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/responses/Group"
+          },
+          "default": {
+            "$ref": "#/responses/Error"
+          }
+        }
+      },
+      "delete": {
+        "summary": "Delete Group",
+        "tags": [
+          "Community"
+        ],
+        "parameters": [
+          {
+            "$ref": "#/parameters/accessToken"
+          },
+          {
+            "$ref": "#/parameters/group_id"
+          },
+          {
+            "$ref": "#/parameters/modified_by"
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/responses/Group"
+          },
+          "default": {
+            "$ref": "#/responses/Error"
+          }
+        }
+      }
+    },
+    "/community/groups/groupnameExists/{groupname}": {
+      "get": {
+        "summary": "Checks if the given groupname exists",
+        "tags": [
+          "Community"
+        ],
+        "parameters": [
+          {
+            "$ref": "#/parameters/accessToken"
+          },
+          {
+            "$ref": "#/parameters/groupname"
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/responses/GroupnameExists"
+          },
+          "500": {
+            "$ref": "#/responses/Error"
+          }
+        }
+      }
+    },
+    "/community/groups/{id}/posts": {
+      "get": {
+        "tags": [
+          "Community"
+        ],
+        "summary": "List of Posts related to a specific Group",
+        "parameters": [
+          {
+            "$ref": "#/parameters/accessToken"
+          },
+          {
+            "$ref": "#/parameters/id"
+          },
+          {
+            "$ref": "#/parameters/include"
+          },
+          {
+            "$ref": "#/parameters/limit"
+          },
+          {
+            "$ref": "#/parameters/offset"
+          },
+          {
+            "$ref": "#/parameters/counts"
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/responses/Posts"
+          },
+          "500": {
+            "$ref": "#/responses/Error"
+          }
+        }
+      }
+    },
+    "/community/groups/{id}/likes": {
+      "get": {
+        "tags": [
+          "Community"
+        ],
+        "summary": "List of Likes related to a specific Group",
+        "parameters": [
+          {
+            "$ref": "#/parameters/accessToken"
+          },
+          {
+            "$ref": "#/parameters/id"
+          },
+          {
+            "$ref": "#/parameters/include"
+          },
+          {
+            "$ref": "#/parameters/limit"
+          },
+          {
+            "$ref": "#/parameters/offset"
+          },
+          {
+            "$ref": "#/parameters/counts"
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/responses/Likes"
+          },
+          "500": {
+            "$ref": "#/responses/Error"
+          }
+        }
+      }
+    },
+    "/community/groups/{id}/follows": {
+      "get": {
+        "tags": [
+          "Community"
+        ],
+        "summary": "List of Followers related to a specific Group",
+        "parameters": [
+          {
+            "$ref": "#/parameters/accessToken"
+          },
+          {
+            "$ref": "#/parameters/id"
+          },
+          {
+            "$ref": "#/parameters/include"
+          },
+          {
+            "$ref": "#/parameters/limit"
+          },
+          {
+            "$ref": "#/parameters/offset"
+          },
+          {
+            "$ref": "#/parameters/counts"
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/responses/Follow"
+          },
+          "500": {
+            "$ref": "#/responses/Error"
+          }
+        }
+      }
+    },
+    "/community/groups/{id}/flags": {
+      "get": {
+        "tags": [
+          "Community"
+        ],
+        "summary": "List of Flags related to a specific Group",
+        "parameters": [
+          {
+            "$ref": "#/parameters/accessToken"
+          },
+          {
+            "$ref": "#/parameters/id"
+          },
+          {
+            "$ref": "#/parameters/include"
+          },
+          {
+            "$ref": "#/parameters/limit"
+          },
+          {
+            "$ref": "#/parameters/offset"
+          },
+          {
+            "$ref": "#/parameters/counts"
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/responses/Flag"
+          },
+          "500": {
+            "$ref": "#/responses/Error"
+          }
+        }
+      }
+    },
+    "/community/groups/{id}/fullview": {
+      "get": {
+        "tags": [
+          "Community"
+        ],
+        "summary": "Group view including Posts and Comments",
+        "parameters": [
+          {
+            "$ref": "#/parameters/accessToken"
+          },
+          {
+            "$ref": "#/parameters/id"
+          },
+          {
+            "$ref": "#/parameters/postLimit"
+          },
+          {
+            "$ref": "#/parameters/postOffset"
+          },
+          {
+            "$ref": "#/parameters/commentLimit"
+          },
+          {
+            "$ref": "#/parameters/commentOffset"
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/responses/Group"
+          },
+          "500": {
+            "$ref": "#/responses/Error"
+          }
+        }
+      }
+    },
+    "/community/likes/": {
+      "get": {
+        "tags": [
+          "Community"
+        ],
+        "summary": "List Likes",
+        "parameters": [
+          {
+            "$ref": "#/parameters/accessToken"
+          },
+          {
+            "$ref": "#/parameters/include"
+          },
+          {
+            "$ref": "#/parameters/limit"
+          },
+          {
+            "$ref": "#/parameters/offset"
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/responses/Likes"
+          },
+          "500": {
+            "$ref": "#/responses/Error"
+          },
+          "default": {
+            "$ref": "#/responses/Likes"
+          }
+        }
+      },
+      "post": {
+        "summary": "Create Likes",
+        "tags": [
+          "Community"
+        ],
+        "parameters": [
+          {
+            "$ref": "#/parameters/accessToken"
+          },
+          {
+            "name": "like",
+            "in": "body",
+            "description": "The Like objekt",
+            "schema": {
+              "$ref": "#/definitions/ActionPost"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/responses/Like"
+          },
+          "500": {
+            "$ref": "#/responses/Error"
+          }
+        }
+      }
+    },
+    "/community/likes/{id}": {
+      "get": {
+        "tags": [
+          "Community"
+        ],
+        "summary": "Get Like",
+        "description": "Get a like by ID",
+        "parameters": [
+          {
+            "$ref": "#/parameters/accessToken"
+          },
+          {
+            "$ref": "#/parameters/like_id"
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/responses/Like"
+          },
+          "500": {
+            "$ref": "#/responses/Error"
+          }
+        }
+      },
+      "delete": {
+        "summary": "Delete Like",
+        "tags": [
+          "Community"
+        ],
+        "parameters": [
+          {
+            "$ref": "#/parameters/accessToken"
+          },
+          {
+            "$ref": "#/parameters/like_id"
+          },
+          {
+            "$ref": "#/parameters/modified_by"
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/responses/Like"
+          },
+          "default": {
+            "$ref": "#/responses/Error"
+          }
+        }
+      }
+    },
+    "/community/posts/": {
+      "get": {
+        "tags": [
+          "Community"
+        ],
+        "summary": "List of Posts",
+        "parameters": [
+          {
+            "$ref": "#/parameters/accessToken"
+          },
+          {
+            "$ref": "#/parameters/include"
+          },
+          {
+            "$ref": "#/parameters/limit"
+          },
+          {
+            "$ref": "#/parameters/offset"
+          },
+          {
+            "$ref": "#/parameters/counts"
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/responses/Posts"
+          }
+        }
+      },
+      "post": {
+        "summary": "Create Post",
+        "tags": [
+          "Community"
+        ],
+        "parameters": [
+          {
+            "$ref": "#/parameters/accessToken"
+          },
+          {
+            "$ref": "#/parameters/postPost"
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/responses/Post"
+          },
+          "default": {
+            "$ref": "#/responses/Error"
+          }
+        }
+      }
+    },
+    "/community/posts/{id}": {
+      "get": {
+        "tags": [
+          "Community"
+        ],
+        "summary": "Post in community",
+        "parameters": [
+          {
+            "$ref": "#/parameters/accessToken"
+          },
+          {
+            "$ref": "#/parameters/id"
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/responses/Post"
+          }
+        }
+      },
+      "put": {
+        "summary": "Update Post",
+        "tags": [
+          "Community"
+        ],
+        "parameters": [
+          {
+            "$ref": "#/parameters/accessToken"
+          },
+          {
+            "$ref": "#/parameters/id"
+          },
+          {
+            "$ref": "#/parameters/postPut"
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/responses/Post"
+          }
+        }
+      },
+      "delete": {
+        "summary": "Delete Post",
+        "tags": [
+          "Community"
+        ],
+        "parameters": [
+          {
+            "$ref": "#/parameters/accessToken"
+          },
+          {
+            "$ref": "#/parameters/id"
+          },
+          {
+            "$ref": "#/parameters/modified_by"
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/responses/Post"
+          }
+        }
+      }
+    },
+    "/community/posts/{id}/comments": {
+      "get": {
+        "tags": [
+          "Community"
+        ],
+        "summary": "List of Comments related to a specific Post",
+        "parameters": [
+          {
+            "$ref": "#/parameters/accessToken"
+          },
+          {
+            "$ref": "#/parameters/id"
+          },
+          {
+            "$ref": "#/parameters/include"
+          },
+          {
+            "$ref": "#/parameters/limit"
+          },
+          {
+            "$ref": "#/parameters/offset"
+          },
+          {
+            "$ref": "#/parameters/counts"
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/responses/Comments"
+          }
+        }
+      }
+    },
+    "/community/posts/{id}/likes": {
+      "get": {
+        "tags": [
+          "Community"
+        ],
+        "summary": "List of Likes related to a specific Post",
+        "parameters": [
+          {
+            "$ref": "#/parameters/accessToken"
+          },
+          {
+            "$ref": "#/parameters/id"
+          },
+          {
+            "$ref": "#/parameters/include"
+          },
+          {
+            "$ref": "#/parameters/limit"
+          },
+          {
+            "$ref": "#/parameters/offset"
+          },
+          {
+            "$ref": "#/parameters/counts"
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/responses/Likes"
+          },
+          "500": {
+            "$ref": "#/responses/Error"
+          }
+        }
+      }
+    },
+    "/community/posts/{id}/follows": {
+      "get": {
+        "tags": [
+          "Community"
+        ],
+        "summary": "List of Followers related to a specific Post",
+        "parameters": [
+          {
+            "$ref": "#/parameters/accessToken"
+          },
+          {
+            "$ref": "#/parameters/id"
+          },
+          {
+            "$ref": "#/parameters/include"
+          },
+          {
+            "$ref": "#/parameters/limit"
+          },
+          {
+            "$ref": "#/parameters/offset"
+          },
+          {
+            "$ref": "#/parameters/counts"
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/responses/Follow"
+          },
+          "500": {
+            "$ref": "#/responses/Error"
+          }
+        }
+      }
+    },
+    "/community/posts/{id}/flags": {
+      "get": {
+        "tags": [
+          "Community"
+        ],
+        "summary": "List of Flags related to a specific Post",
+        "parameters": [
+          {
+            "$ref": "#/parameters/accessToken"
+          },
+          {
+            "$ref": "#/parameters/id"
+          },
+          {
+            "$ref": "#/parameters/include"
+          },
+          {
+            "$ref": "#/parameters/limit"
+          },
+          {
+            "$ref": "#/parameters/offset"
+          },
+          {
+            "$ref": "#/parameters/counts"
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/responses/Flag"
+          },
+          "500": {
+            "$ref": "#/responses/Error"
+          }
+        }
+      }
+    },
+    "/community/profiles/": {
+      "get": {
+        "tags": [
+          "Community"
+        ],
+        "summary": "List of Profiles",
+        "parameters": [
+          {
+            "$ref": "#/parameters/accessToken"
+          },
+          {
+            "$ref": "#/parameters/include"
+          },
+          {
+            "$ref": "#/parameters/limit"
+          },
+          {
+            "$ref": "#/parameters/offset"
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/responses/Profiles"
+          },
+          "500": {
+            "$ref": "#/responses/Error"
+          },
+          "default": {
+            "$ref": "#/responses/Profiles"
+          }
+        }
+      },
+      "post": {
+        "summary": "Create Profile",
+        "tags": [
+          "Community"
+        ],
+        "parameters": [
+          {
+            "$ref": "#/parameters/accessToken"
+          },
+          {
+            "name": "profile",
+            "in": "body",
+            "description": "The profile",
+            "schema": {
+              "$ref": "#/definitions/ProfilePost"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/responses/Profile"
+          },
+          "500": {
+            "$ref": "#/responses/Error"
+          }
+        }
+      }
+    },
+    "/community/profiles/{profile_id}": {
+      "get": {
+        "tags": [
+          "Community"
+        ],
+        "summary": "Profile in community",
+        "description": "Get A profile by ID",
+        "parameters": [
+          {
+            "$ref": "#/parameters/accessToken"
+          },
+          {
+            "$ref": "#/parameters/profile_id"
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/responses/Profile"
+          },
+          "500": {
+            "$ref": "#/responses/Error"
+          }
+        }
+      },
+      "put": {
+        "summary": "Update Profile",
+        "tags": [
+          "Community"
+        ],
+        "parameters": [
+          {
+            "$ref": "#/parameters/accessToken"
+          },
+          {
+            "$ref": "#/parameters/profile_id"
+          },
+          {
+            "$ref": "#/parameters/profilePost"
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/responses/Profile"
+          },
+          "500": {
+            "$ref": "#/responses/Error"
+          }
+        }
+      },
+      "delete": {
+        "summary": "Delete Profile",
+        "tags": [
+          "Community"
+        ],
+        "parameters": [
+          {
+            "$ref": "#/parameters/accessToken"
+          },
+          {
+            "$ref": "#/parameters/profile_id"
+          },
+          {
+            "$ref": "#/parameters/modified_by"
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/responses/Profile"
+          },
+          "default": {
+            "$ref": "#/responses/Error"
+          }
+        }
+      }
+    },
+    "/community/profiles/{profile_id}/activity": {
+      "get": {
+        "summary": "Activityfeed for a specific Profile",
+        "tags": [
+          "Community"
+        ],
+        "parameters": [
+          {
+            "$ref": "#/parameters/accessToken"
+          },
+          {
+            "$ref": "#/parameters/profile_id"
+          },
+          {
+            "$ref": "#/parameters/limit"
+          },
+          {
+            "$ref": "#/parameters/offset"
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/responses/Activity"
+          },
+          "500": {
+            "$ref": "#/responses/Error"
+          }
+        }
+      }
+    },
+    "/community/profiles/usernameExists/{username}": {
+      "get": {
+        "summary": "Checks if a given username exists",
+        "tags": [
+          "Community"
+        ],
+        "parameters": [
+          {
+            "$ref": "#/parameters/accessToken"
+          },
+          {
+            "$ref": "#/parameters/username"
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/responses/UsernameExists"
+          },
+          "500": {
+            "$ref": "#/responses/Error"
+          }
+        }
+      }
+    },
+    "/community/profiles/{profile_id}/likes": {
+      "get": {
+        "tags": [
+          "Community"
+        ],
+        "summary": "List of Likes related to a specific Profile",
+        "parameters": [
+          {
+            "$ref": "#/parameters/accessToken"
+          },
+          {
+            "$ref": "#/parameters/profile_id"
+          },
+          {
+            "$ref": "#/parameters/include"
+          },
+          {
+            "$ref": "#/parameters/limit"
+          },
+          {
+            "$ref": "#/parameters/offset"
+          },
+          {
+            "$ref": "#/parameters/counts"
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/responses/Likes"
+          },
+          "500": {
+            "$ref": "#/responses/Error"
+          }
+        }
+      }
+    },
+    "/community/profiles/{profile_id}/isFollowingGroup/{id}": {
+      "get": {
+        "tags": [
+          "Community"
+        ],
+        "summary": "Checks if the profile given by the profile_id is following the group given by group_id",
+        "parameters": [
+          {
+            "$ref": "#/parameters/accessToken"
+          },
+          {
+            "$ref": "#/parameters/profile_id"
+          },
+          {
+            "$ref": "#/parameters/group_id"
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/responses/UserIsFollowingGroup"
+          },
+          "500": {
+            "$ref": "#/responses/Error"
+          }
+        }
+      }
+    },
+    "/community/profiles/{profile_id}/follows": {
+      "get": {
+        "tags": [
+          "Community"
+        ],
+        "summary": "List of Followers related to a specific Profile",
+        "parameters": [
+          {
+            "$ref": "#/parameters/accessToken"
+          },
+          {
+            "$ref": "#/parameters/profile_id"
+          },
+          {
+            "$ref": "#/parameters/include"
+          },
+          {
+            "$ref": "#/parameters/limit"
+          },
+          {
+            "$ref": "#/parameters/offset"
+          },
+          {
+            "$ref": "#/parameters/counts"
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/responses/Follows"
+          },
+          "500": {
+            "$ref": "#/responses/Error"
+          }
+        }
+      }
+    },
+    "/community/profiles/{profile_id}/flags": {
+      "get": {
+        "tags": [
+          "Community"
+        ],
+        "summary": "List of Flags related to a specific Profile",
+        "parameters": [
+          {
+            "$ref": "#/parameters/accessToken"
+          },
+          {
+            "$ref": "#/parameters/profile_id"
+          },
+          {
+            "$ref": "#/parameters/include"
+          },
+          {
+            "$ref": "#/parameters/limit"
+          },
+          {
+            "$ref": "#/parameters/offset"
+          },
+          {
+            "$ref": "#/parameters/counts"
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/responses/Flags"
+          },
+          "500": {
+            "$ref": "#/responses/Error"
+          }
+        }
+      }
+    },
+    "/community/profiles/{profile_id}/quarantines": {
+      "get": {
+        "tags": [
+          "Community"
+        ],
+        "summary": "List of Quarantines related to a specific Profile",
+        "parameters": [
+          {
+            "$ref": "#/parameters/accessToken"
+          },
+          {
+            "$ref": "#/parameters/profile_id"
+          },
+          {
+            "$ref": "#/parameters/include"
+          },
+          {
+            "$ref": "#/parameters/limit"
+          },
+          {
+            "$ref": "#/parameters/offset"
+          },
+          {
+            "$ref": "#/parameters/counts"
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/responses/Quarantines"
+          },
+          "500": {
+            "$ref": "#/responses/Error"
+          }
+        }
+      }
+    },
+    "/community/quarantine/": {
+      "get": {
+        "tags": [
+          "Community"
+        ],
+        "summary": "List of Quarantines",
+        "parameters": [
+          {
+            "$ref": "#/parameters/accessToken"
+          },
+          {
+            "$ref": "#/parameters/limit"
+          },
+          {
+            "$ref": "#/parameters/offset"
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/responses/Quarantines"
+          }
+        }
+      },
+      "post": {
+        "summary": "Create Quarantine",
+        "tags": [
+          "Community"
+        ],
+        "parameters": [
+          {
+            "$ref": "#/parameters/accessToken"
+          },
+          {
+            "name": "quarantine",
+            "in": "body",
+            "schema": {
+              "$ref": "#/definitions/QuarantinePost"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/responses/Quarantine"
+          }
+        }
+      }
+    },
+    "/community/quarantine/{id}": {
+      "get": {
+        "tags": [
+          "Community"
+        ],
+        "summary": "Quarantine in community",
+        "description": "Get a Quarantine by ID",
+        "parameters": [
+          {
+            "$ref": "#/parameters/accessToken"
+          },
+          {
+            "$ref": "#/parameters/quarantine_id"
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/responses/Quarantine"
+          }
+        }
+      },
+      "put": {
+        "summary": "Update a Quarantine",
+        "tags": [
+          "Community"
+        ],
+        "parameters": [
+          {
+            "$ref": "#/parameters/accessToken"
+          },
+          {
+            "$ref": "#/parameters/quarantine_id"
+          },
+          {
+            "$ref": "#/parameters/quarantinePut"
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/responses/Quarantine"
+          }
+        }
+      },
+      "delete": {
+        "summary": "Delete a Quarantine",
+        "tags": [
+          "Community"
+        ],
+        "parameters": [
+          {
+            "$ref": "#/parameters/accessToken"
+          },
+          {
+            "$ref": "#/parameters/quarantine_id"
+          },
+          {
+            "$ref": "#/parameters/modified_by"
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/responses/Quarantine"
+          }
+        }
+      }
+    },
+    "/community/reviews/": {
+      "get": {
+        "tags": [
+          "Community"
+        ],
+        "summary": "List of Reviews",
+        "parameters": [
+          {
+            "$ref": "#/parameters/accessToken"
+          },
+          {
+            "$ref": "#/parameters/include"
+          },
+          {
+            "$ref": "#/parameters/limit"
+          },
+          {
+            "$ref": "#/parameters/offset"
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/responses/Reviews"
+          },
+          "500": {
+            "$ref": "#/responses/Error"
+          },
+          "default": {
+            "$ref": "#/responses/Reviews"
+          }
+        }
+      },
+      "post": {
+        "summary": "Create Review",
+        "tags": [
+          "Community"
+        ],
+        "parameters": [
+          {
+            "$ref": "#/parameters/accessToken"
+          },
+          {
+            "name": "review",
+            "in": "body",
+            "description": "The review",
+            "schema": {
+              "$ref": "#/definitions/ReviewPost"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/responses/Review"
+          },
+          "500": {
+            "$ref": "#/responses/Error"
+          }
+        }
+      }
+    },
+    "/community/reviews/{id}": {
+      "get": {
+        "tags": [
+          "Community"
+        ],
+        "summary": "Review in community",
+        "description": "Get a review by ID",
+        "parameters": [
+          {
+            "$ref": "#/parameters/accessToken"
+          },
+          {
+            "$ref": "#/parameters/review_id"
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/responses/Review"
+          },
+          "500": {
+            "$ref": "#/responses/Error"
+          }
+        }
+      },
+      "put": {
+        "summary": "Update a Review",
+        "tags": [
+          "Community"
+        ],
+        "parameters": [
+          {
+            "$ref": "#/parameters/accessToken"
+          },
+          {
+            "$ref": "#/parameters/review_id"
+          },
+          {
+            "$ref": "#/parameters/reviewPut"
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/responses/Review"
+          },
+          "500": {
+            "$ref": "#/responses/Error"
+          }
+        }
+      },
+      "delete": {
+        "summary": "Delete a Review",
+        "tags": [
+          "Community"
+        ],
+        "parameters": [
+          {
+            "$ref": "#/parameters/accessToken"
+          },
+          {
+            "$ref": "#/parameters/review_id"
+          },
+          {
+            "$ref": "#/parameters/modified_by"
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/responses/Review"
+          },
+          "default": {
+            "$ref": "#/responses/Error"
+          }
+        }
+      }
+    },
+    "/community/reviews/{id}/likes": {
+      "get": {
+        "tags": [
+          "Community"
+        ],
+        "summary": "List of Likes related to a specific Review",
+        "parameters": [
+          {
+            "$ref": "#/parameters/accessToken"
+          },
+          {
+            "$ref": "#/parameters/review_id"
+          },
+          {
+            "$ref": "#/parameters/include"
+          },
+          {
+            "$ref": "#/parameters/limit"
+          },
+          {
+            "$ref": "#/parameters/offset"
+          },
+          {
+            "$ref": "#/parameters/counts"
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/responses/Likes"
+          },
+          "500": {
+            "$ref": "#/responses/Error"
+          }
+        }
+      }
+    },
+    "/community/reviews/{id}/flags": {
+      "get": {
+        "tags": [
+          "Community"
+        ],
+        "summary": "List of Flags related to a specific Review",
+        "parameters": [
+          {
+            "$ref": "#/parameters/accessToken"
+          },
+          {
+            "$ref": "#/parameters/review_id"
+          },
+          {
+            "$ref": "#/parameters/include"
+          },
+          {
+            "$ref": "#/parameters/limit"
+          },
+          {
+            "$ref": "#/parameters/offset"
+          },
+          {
+            "$ref": "#/parameters/counts"
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/responses/Flags"
+          },
+          "500": {
+            "$ref": "#/responses/Error"
+          }
+        }
+      }
+    },
+    "/availability": {
+      "post": {
+        "tags": [
+          "Order"
+        ],
+        "description": "Get information about whether a material can be ordered /\nare available for the currently logged in user. Holdingstatus holds information about holdings on specified library.\nOrderPossible indicates if a book can be ordered at current library.\n",
+        "parameters": [
+          {
+            "name": "request",
+            "description": "Request object",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "required": [
+                "pid",
+                "access_token"
+              ],
+              "properties": {
+                "fields": {
+                  "description": "which parts of the response to get",
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                },
+                "access_token": {
+                  "type": "string",
+                  "description": "Access token from the OAuth2 server",
+                  "example": "qwerty"
+                },
+                "pretty": {
+                  "description": "whether to prettyprint the resulting json",
+                  "type": "boolean",
+                  "example": true
+                },
+                "timings": {
+                  "description": "whether to include timings in the resulting json",
+                  "type": "boolean",
+                  "example": true
+                },
+                "pid": {
+                  "description": "pid of the work to order",
+                  "type": "string",
+                  "example": "870970-basis:24284565"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Response envelope",
+            "schema": {
+              "type": "object",
+              "required": [
+                "statusCode"
+              ],
+              "properties": {
+                "statusCode": {
+                  "type": "integer",
+                  "default": 200
+                },
+                "data": {
+                  "type": "object",
+                  "properties": {},
+                  "example": {
+                    "holdingstatus": {
+                      "willLend": true,
+                      "expectedDelivery": "2016-04-15"
+                    },
+                    "orderPossible": true
+                  }
+                },
+                "errors": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {}
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/responses/InvalidToken"
+          },
+          "500": {
+            "$ref": "#/responses/Error"
+          }
+        }
+      },
+      "get": {
+        "tags": [
+          "Order"
+        ],
+        "description": "Get information about whether a material can be ordered /\nare available for the currently logged in user. Holdingstatus holds information about holdings on specified library.\nOrderPossible indicates if a book can be ordered at current library.\n",
+        "parameters": [
+          {
+            "description": "which parts of the response to get",
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "in": "query",
+            "required": false,
+            "name": "fields"
+          },
+          {
+            "type": "string",
+            "description": "Access token from the OAuth2 server",
+            "in": "query",
+            "required": true,
+            "name": "access_token"
+          },
+          {
+            "description": "whether to prettyprint the resulting json",
+            "type": "boolean",
+            "in": "query",
+            "required": false,
+            "name": "pretty"
+          },
+          {
+            "description": "whether to include timings in the resulting json",
+            "type": "boolean",
+            "in": "query",
+            "required": false,
+            "name": "timings"
+          },
+          {
+            "description": "pid of the work to order",
+            "type": "string",
+            "in": "query",
+            "required": true,
+            "name": "pid"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Response envelope",
+            "schema": {
+              "type": "object",
+              "required": [
+                "statusCode"
+              ],
+              "properties": {
+                "statusCode": {
+                  "type": "integer",
+                  "default": 200
+                },
+                "data": {
+                  "type": "object",
+                  "properties": {},
+                  "example": {
+                    "holdingstatus": {
+                      "willLend": true,
+                      "expectedDelivery": "2016-04-15"
+                    },
+                    "orderPossible": true
+                  }
+                },
+                "errors": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {}
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/responses/InvalidToken"
+          },
+          "500": {
+            "$ref": "#/responses/Error"
+          }
+        }
+      }
+    },
+    "/events": {
+      "post": {
+        "tags": [
+          "CMS"
+        ],
+        "description": "List of events at the library where the application is logged in\nThe requests are passed directly to/from the DDBCMS-API.",
+        "parameters": [
+          {
+            "name": "request",
+            "description": "Request object",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "required": [
+                "access_token"
+              ],
+              "properties": {
+                "fields": {
+                  "description": "which parts of the response to get",
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  },
+                  "example": [
+                    "nid",
+                    "title"
+                  ]
+                },
+                "access_token": {
+                  "type": "string",
+                  "description": "Access token from the OAuth2 server",
+                  "example": "qwerty"
+                },
+                "pretty": {
+                  "description": "whether to prettyprint the resulting json",
+                  "type": "boolean",
+                  "example": true
+                },
+                "timings": {
+                  "description": "whether to include timings in the resulting json",
+                  "type": "boolean",
+                  "example": true
+                },
+                "agency": {
+                  "description": "Agency ID to fetch content for",
+                  "type": "string",
+                  "example": 761500
+                },
+                "nids": {
+                  "description": "to fetch events specified by ids",
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  },
+                  "example": [
+                    "15"
+                  ]
+                },
+                "limit": {
+                  "description": "number of items to get. This is passed to the DDBCMS-API, which decides how many to return. (currently usually less than the requested limit/amount).",
+                  "type": "integer",
+                  "minimum": 1,
+                  "example": 10
+                },
+                "offset": {
+                  "description": "offset to first item to get. This is passed to the ddb-cms.",
+                  "minimum": 0,
+                  "type": "integer",
+                  "example": 10
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Response envelope",
+            "schema": {
+              "type": "object",
+              "required": [
+                "statusCode"
+              ],
+              "properties": {
+                "statusCode": {
+                  "type": "integer",
+                  "default": 200
+                },
+                "data": {
+                  "type": "object",
+                  "properties": {},
+                  "example": [
+                    {
+                      "nid": "15",
+                      "title": {
+                        "name": "Titel",
+                        "value": "Mød forfatteren: Tim Buk-Swienty",
+                        "attr": []
+                      },
+                      "...": "..."
+                    },
+                    "..."
+                  ]
+                },
+                "errors": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {}
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/responses/InvalidToken"
+          },
+          "500": {
+            "$ref": "#/responses/Error"
+          }
+        }
+      },
+      "get": {
+        "tags": [
+          "CMS"
+        ],
+        "description": "List of events at the library where the application is logged in\nThe requests are passed directly to/from the DDBCMS-API.",
+        "parameters": [
+          {
+            "description": "which parts of the response to get",
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "in": "query",
+            "required": false,
+            "name": "fields"
+          },
+          {
+            "type": "string",
+            "description": "Access token from the OAuth2 server",
+            "in": "query",
+            "required": true,
+            "name": "access_token"
+          },
+          {
+            "description": "whether to prettyprint the resulting json",
+            "type": "boolean",
+            "in": "query",
+            "required": false,
+            "name": "pretty"
+          },
+          {
+            "description": "whether to include timings in the resulting json",
+            "type": "boolean",
+            "in": "query",
+            "required": false,
+            "name": "timings"
+          },
+          {
+            "description": "Agency ID to fetch content for",
+            "type": "string",
+            "in": "query",
+            "required": false,
+            "name": "agency"
+          },
+          {
+            "description": "to fetch events specified by ids",
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "in": "query",
+            "required": false,
+            "name": "nids"
+          },
+          {
+            "description": "number of items to get. This is passed to the DDBCMS-API, which decides how many to return. (currently usually less than the requested limit/amount).",
+            "type": "integer",
+            "minimum": 1,
+            "in": "query",
+            "required": false,
+            "name": "limit"
+          },
+          {
+            "description": "offset to first item to get. This is passed to the ddb-cms.",
+            "minimum": 0,
+            "type": "integer",
+            "in": "query",
+            "required": false,
+            "name": "offset"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Response envelope",
+            "schema": {
+              "type": "object",
+              "required": [
+                "statusCode"
+              ],
+              "properties": {
+                "statusCode": {
+                  "type": "integer",
+                  "default": 200
+                },
+                "data": {
+                  "type": "object",
+                  "properties": {},
+                  "example": [
+                    {
+                      "nid": "15",
+                      "title": {
+                        "name": "Titel",
+                        "value": "Mød forfatteren: Tim Buk-Swienty",
+                        "attr": []
+                      },
+                      "...": "..."
+                    },
+                    "..."
+                  ]
+                },
+                "errors": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {}
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/responses/InvalidToken"
+          },
+          "500": {
+            "$ref": "#/responses/Error"
+          }
+        }
+      }
+    },
+    "/facets": {
+      "post": {
+        "tags": [
+          "Search"
+        ],
+        "description": "Facets of a search result",
+        "parameters": [
+          {
+            "name": "request",
+            "description": "Request object",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "required": [
+                "q",
+                "access_token"
+              ],
+              "properties": {
+                "fields": {
+                  "description": "Limits the facets fetched. The default fields are `creator`, `subject`, `language`, `date`, and `form`.\n\nThe possible options are `access`, `acSource`, `audience`, `audienceCategory`, `branch`, `category`, `creator`, `creatorFunction`, `date`, `department`, `dk5`, `extraTitles`, `fictionSubject`, `form`, `gamePlatform`, `genre`, `genreCategory`, `geographic`, `language`, `level`, `let`, `literaryForm`, `lix`, `musicSubject`, `nationality`, `nonFictionSubject`, `partOf`, `period`, `primaryCreator`, `sheetMusic`, `subject`, `titleSeries`, and `type`.\n",
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  },
+                  "example": [
+                    "creator",
+                    "subject",
+                    "type"
+                  ]
+                },
+                "access_token": {
+                  "type": "string",
+                  "description": "Access token from the OAuth2 server",
+                  "example": "qwerty"
+                },
+                "pretty": {
+                  "description": "whether to prettyprint the resulting json",
+                  "type": "boolean",
+                  "example": true
+                },
+                "timings": {
+                  "description": "whether to include timings in the resulting json",
+                  "type": "boolean",
+                  "example": true
+                },
+                "q": {
+                  "description": "Query to find facets for. | The query is expressed in CQL, see https://en.wikipedia.org/wiki/Contextual_Query_Language\nA guide to CQL in danish, with list of the indexes available in this API is available on http://www.danbib.dk/broend3_soeg",
+                  "type": "string"
+                },
+                "limit": {
+                  "description": "number of facets per type",
+                  "type": "integer",
+                  "minimum": 1,
+                  "example": 2
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Response envelope",
+            "schema": {
+              "type": "object",
+              "required": [
+                "statusCode"
+              ],
+              "properties": {
+                "statusCode": {
+                  "type": "integer",
+                  "default": 200
+                },
+                "data": {
+                  "type": "object",
+                  "properties": {},
+                  "example": {
+                    "creator": [
+                      {
+                        "term": "nordisk ministerråd",
+                        "frequency": 2708
+                      },
+                      {
+                        "term": "nordisk råd",
+                        "frequency": 2463
+                      }
+                    ],
+                    "subject": [
+                      {
+                        "term": "danmark",
+                        "frequency": 188792
+                      },
+                      {
+                        "term": "historie",
+                        "frequency": 19867
+                      }
+                    ],
+                    "type": "tidsskriftsartikel"
+                  }
+                },
+                "errors": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {}
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/responses/InvalidToken"
+          },
+          "500": {
+            "$ref": "#/responses/Error"
+          }
+        }
+      },
+      "get": {
+        "tags": [
+          "Search"
+        ],
+        "description": "Facets of a search result",
+        "parameters": [
+          {
+            "description": "Limits the facets fetched. The default fields are `creator`, `subject`, `language`, `date`, and `form`.\n\nThe possible options are `access`, `acSource`, `audience`, `audienceCategory`, `branch`, `category`, `creator`, `creatorFunction`, `date`, `department`, `dk5`, `extraTitles`, `fictionSubject`, `form`, `gamePlatform`, `genre`, `genreCategory`, `geographic`, `language`, `level`, `let`, `literaryForm`, `lix`, `musicSubject`, `nationality`, `nonFictionSubject`, `partOf`, `period`, `primaryCreator`, `sheetMusic`, `subject`, `titleSeries`, and `type`.\n",
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "in": "query",
+            "required": false,
+            "name": "fields"
+          },
+          {
+            "type": "string",
+            "description": "Access token from the OAuth2 server",
+            "in": "query",
+            "required": true,
+            "name": "access_token"
+          },
+          {
+            "description": "whether to prettyprint the resulting json",
+            "type": "boolean",
+            "in": "query",
+            "required": false,
+            "name": "pretty"
+          },
+          {
+            "description": "whether to include timings in the resulting json",
+            "type": "boolean",
+            "in": "query",
+            "required": false,
+            "name": "timings"
+          },
+          {
+            "description": "Query to find facets for. | The query is expressed in CQL, see https://en.wikipedia.org/wiki/Contextual_Query_Language\nA guide to CQL in danish, with list of the indexes available in this API is available on http://www.danbib.dk/broend3_soeg",
+            "type": "string",
+            "in": "query",
+            "required": true,
+            "name": "q"
+          },
+          {
+            "description": "number of facets per type",
+            "type": "integer",
+            "minimum": 1,
+            "in": "query",
+            "required": false,
+            "name": "limit"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Response envelope",
+            "schema": {
+              "type": "object",
+              "required": [
+                "statusCode"
+              ],
+              "properties": {
+                "statusCode": {
+                  "type": "integer",
+                  "default": 200
+                },
+                "data": {
+                  "type": "object",
+                  "properties": {},
+                  "example": {
+                    "creator": [
+                      {
+                        "term": "nordisk ministerråd",
+                        "frequency": 2708
+                      },
+                      {
+                        "term": "nordisk råd",
+                        "frequency": 2463
+                      }
+                    ],
+                    "subject": [
+                      {
+                        "term": "danmark",
+                        "frequency": 188792
+                      },
+                      {
+                        "term": "historie",
+                        "frequency": 19867
+                      }
+                    ],
+                    "type": "tidsskriftsartikel"
+                  }
+                },
+                "errors": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {}
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/responses/InvalidToken"
+          },
+          "500": {
+            "$ref": "#/responses/Error"
+          }
+        }
+      }
+    },
+    "/library": {
+      "post": {
+        "tags": [
+          "CMS"
+        ],
+        "description": "The library endpoint returns information from the ding_library type in the cmscontent service.\n",
+        "parameters": [
+          {
+            "name": "request",
+            "description": "Request object",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "required": [
+                "access_token"
+              ],
+              "properties": {
+                "fields": {
+                  "description": "which parts of the response to get",
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                },
+                "access_token": {
+                  "type": "string",
+                  "description": "Access token from the OAuth2 server",
+                  "example": "qwerty"
+                },
+                "pretty": {
+                  "description": "whether to prettyprint the resulting json",
+                  "type": "boolean",
+                  "example": true
+                },
+                "timings": {
+                  "description": "whether to include timings in the resulting json",
+                  "type": "boolean",
+                  "example": true
+                },
+                "agency": {
+                  "description": "Agency ID to fetch content for",
+                  "type": "string",
+                  "example": 761500
+                },
+                "nids": {
+                  "description": "to fetch events specified by ids",
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  },
+                  "example": [
+                    "15"
+                  ]
+                },
+                "limit": {
+                  "description": "number of items to get. This is passed to the DDBCMS-API, which decides how many to return. (currently usually less than the requested limit/amount).",
+                  "type": "integer",
+                  "minimum": 1,
+                  "example": 10
+                },
+                "offset": {
+                  "description": "offset to first item to get. This is passed to the ddb-cms.",
+                  "minimum": 0,
+                  "type": "integer",
+                  "example": 10
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Response envelope",
+            "schema": {
+              "type": "object",
+              "required": [
+                "statusCode"
+              ],
+              "properties": {
+                "statusCode": {
+                  "type": "integer",
+                  "default": 200
+                },
+                "data": {
+                  "type": "object",
+                  "properties": {}
+                },
+                "errors": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {}
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/responses/InvalidToken"
+          },
+          "500": {
+            "$ref": "#/responses/Error"
+          }
+        }
+      },
+      "get": {
+        "tags": [
+          "CMS"
+        ],
+        "description": "The library endpoint returns information from the ding_library type in the cmscontent service.\n",
+        "parameters": [
+          {
+            "description": "which parts of the response to get",
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "in": "query",
+            "required": false,
+            "name": "fields"
+          },
+          {
+            "type": "string",
+            "description": "Access token from the OAuth2 server",
+            "in": "query",
+            "required": true,
+            "name": "access_token"
+          },
+          {
+            "description": "whether to prettyprint the resulting json",
+            "type": "boolean",
+            "in": "query",
+            "required": false,
+            "name": "pretty"
+          },
+          {
+            "description": "whether to include timings in the resulting json",
+            "type": "boolean",
+            "in": "query",
+            "required": false,
+            "name": "timings"
+          },
+          {
+            "description": "Agency ID to fetch content for",
+            "type": "string",
+            "in": "query",
+            "required": false,
+            "name": "agency"
+          },
+          {
+            "description": "to fetch events specified by ids",
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "in": "query",
+            "required": false,
+            "name": "nids"
+          },
+          {
+            "description": "number of items to get. This is passed to the DDBCMS-API, which decides how many to return. (currently usually less than the requested limit/amount).",
+            "type": "integer",
+            "minimum": 1,
+            "in": "query",
+            "required": false,
+            "name": "limit"
+          },
+          {
+            "description": "offset to first item to get. This is passed to the ddb-cms.",
+            "minimum": 0,
+            "type": "integer",
+            "in": "query",
+            "required": false,
+            "name": "offset"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Response envelope",
+            "schema": {
+              "type": "object",
+              "required": [
+                "statusCode"
+              ],
+              "properties": {
+                "statusCode": {
+                  "type": "integer",
+                  "default": 200
+                },
+                "data": {
+                  "type": "object",
+                  "properties": {}
+                },
+                "errors": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {}
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/responses/InvalidToken"
+          },
+          "500": {
+            "$ref": "#/responses/Error"
+          }
+        }
+      }
+    },
+    "/libraries": {
+      "post": {
+        "tags": [
+          "Libraries"
+        ],
+        "description": "List/information about libraries.\n\nThe possible result fields are a subset of those returned from DBCs openagency service.\n\nThe field that tells which information is required when ordering the book is `orderParameters`.\n",
+        "parameters": [
+          {
+            "name": "request",
+            "description": "Request object",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "required": [
+                "access_token"
+              ],
+              "properties": {
+                "fields": {
+                  "description": "which information about the library that is needed",
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  },
+                  "example": [
+                    "branchId",
+                    "city",
+                    "geolocation"
+                  ]
+                },
+                "access_token": {
+                  "type": "string",
+                  "description": "Access token from the OAuth2 server",
+                  "example": "qwerty"
+                },
+                "pretty": {
+                  "description": "whether to prettyprint the resulting json",
+                  "type": "boolean",
+                  "example": true
+                },
+                "timings": {
+                  "description": "whether to include timings in the resulting json",
+                  "type": "boolean",
+                  "example": true
+                },
+                "agencyIds": {
+                  "description": "ids (or isil) of agencies of libraries to fetch, - an agency is a collection of libraries, - return all libraries if neither `branchIds` nor `agencyIds` are supplied",
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                },
+                "branchIds": {
+                  "description": "ids (or isil) of libraries to fetch - return all libraries if neither `branchIds` nor `agencyIds` are supplied",
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Response envelope",
+            "schema": {
+              "type": "object",
+              "required": [
+                "statusCode"
+              ],
+              "properties": {
+                "statusCode": {
+                  "type": "integer",
+                  "default": 200
+                },
+                "data": {
+                  "type": "object",
+                  "properties": {}
+                },
+                "errors": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {}
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/responses/InvalidToken"
+          },
+          "500": {
+            "$ref": "#/responses/Error"
+          }
+        }
+      },
+      "get": {
+        "tags": [
+          "Libraries"
+        ],
+        "description": "List/information about libraries.\n\nThe possible result fields are a subset of those returned from DBCs openagency service.\n\nThe field that tells which information is required when ordering the book is `orderParameters`.\n",
+        "parameters": [
+          {
+            "description": "which information about the library that is needed",
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "in": "query",
+            "required": false,
+            "name": "fields"
+          },
+          {
+            "type": "string",
+            "description": "Access token from the OAuth2 server",
+            "in": "query",
+            "required": true,
+            "name": "access_token"
+          },
+          {
+            "description": "whether to prettyprint the resulting json",
+            "type": "boolean",
+            "in": "query",
+            "required": false,
+            "name": "pretty"
+          },
+          {
+            "description": "whether to include timings in the resulting json",
+            "type": "boolean",
+            "in": "query",
+            "required": false,
+            "name": "timings"
+          },
+          {
+            "description": "ids (or isil) of agencies of libraries to fetch, - an agency is a collection of libraries, - return all libraries if neither `branchIds` nor `agencyIds` are supplied",
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "in": "query",
+            "required": false,
+            "name": "agencyIds"
+          },
+          {
+            "description": "ids (or isil) of libraries to fetch - return all libraries if neither `branchIds` nor `agencyIds` are supplied",
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "in": "query",
+            "required": false,
+            "name": "branchIds"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Response envelope",
+            "schema": {
+              "type": "object",
+              "required": [
+                "statusCode"
+              ],
+              "properties": {
+                "statusCode": {
+                  "type": "integer",
+                  "default": 200
+                },
+                "data": {
+                  "type": "object",
+                  "properties": {}
+                },
+                "errors": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {}
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/responses/InvalidToken"
+          },
+          "500": {
+            "$ref": "#/responses/Error"
+          }
+        }
+      }
+    },
+    "/news": {
+      "post": {
+        "tags": [
+          "CMS"
+        ],
+        "description": "News-posts about the library.\n\nThe requests are passed directly to/from the DDBCMS-API.\n",
+        "parameters": [
+          {
+            "name": "request",
+            "description": "Request object",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "required": [
+                "access_token"
+              ],
+              "properties": {
+                "fields": {
+                  "description": "which parts of the response to get",
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                },
+                "access_token": {
+                  "type": "string",
+                  "description": "Access token from the OAuth2 server",
+                  "example": "qwerty"
+                },
+                "pretty": {
+                  "description": "whether to prettyprint the resulting json",
+                  "type": "boolean",
+                  "example": true
+                },
+                "timings": {
+                  "description": "whether to include timings in the resulting json",
+                  "type": "boolean",
+                  "example": true
+                },
+                "agency": {
+                  "description": "Agency ID to fetch content for",
+                  "type": "string",
+                  "example": 761500
+                },
+                "nids": {
+                  "description": "to fetch news specified by ids",
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                },
+                "limit": {
+                  "description": "number of items to get. This is passed to the DDBCMS-API, which decides how many to return. (currently usually less than the requested limit/amount).",
+                  "type": "integer",
+                  "minimum": 1
+                },
+                "offset": {
+                  "description": "offset to first item to get. This is passed to the ddb-cms.",
+                  "minimum": 0,
+                  "type": "integer"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Response envelope",
+            "schema": {
+              "type": "object",
+              "required": [
+                "statusCode"
+              ],
+              "properties": {
+                "statusCode": {
+                  "type": "integer",
+                  "default": 200
+                },
+                "data": {
+                  "type": "object",
+                  "properties": {},
+                  "example": [
+                    {
+                      "nid": "19",
+                      "title": {
+                        "name": "Titel",
+                        "value": "Sportsstjerner - bag facaden",
+                        "attr": []
+                      },
+                      "...": "..."
+                    },
+                    "..."
+                  ]
+                },
+                "errors": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {}
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/responses/InvalidToken"
+          },
+          "500": {
+            "$ref": "#/responses/Error"
+          }
+        }
+      },
+      "get": {
+        "tags": [
+          "CMS"
+        ],
+        "description": "News-posts about the library.\n\nThe requests are passed directly to/from the DDBCMS-API.\n",
+        "parameters": [
+          {
+            "description": "which parts of the response to get",
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "in": "query",
+            "required": false,
+            "name": "fields"
+          },
+          {
+            "type": "string",
+            "description": "Access token from the OAuth2 server",
+            "in": "query",
+            "required": true,
+            "name": "access_token"
+          },
+          {
+            "description": "whether to prettyprint the resulting json",
+            "type": "boolean",
+            "in": "query",
+            "required": false,
+            "name": "pretty"
+          },
+          {
+            "description": "whether to include timings in the resulting json",
+            "type": "boolean",
+            "in": "query",
+            "required": false,
+            "name": "timings"
+          },
+          {
+            "description": "Agency ID to fetch content for",
+            "type": "string",
+            "in": "query",
+            "required": false,
+            "name": "agency"
+          },
+          {
+            "description": "to fetch news specified by ids",
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "in": "query",
+            "required": false,
+            "name": "nids"
+          },
+          {
+            "description": "number of items to get. This is passed to the DDBCMS-API, which decides how many to return. (currently usually less than the requested limit/amount).",
+            "type": "integer",
+            "minimum": 1,
+            "in": "query",
+            "required": false,
+            "name": "limit"
+          },
+          {
+            "description": "offset to first item to get. This is passed to the ddb-cms.",
+            "minimum": 0,
+            "type": "integer",
+            "in": "query",
+            "required": false,
+            "name": "offset"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Response envelope",
+            "schema": {
+              "type": "object",
+              "required": [
+                "statusCode"
+              ],
+              "properties": {
+                "statusCode": {
+                  "type": "integer",
+                  "default": 200
+                },
+                "data": {
+                  "type": "object",
+                  "properties": {},
+                  "example": [
+                    {
+                      "nid": "19",
+                      "title": {
+                        "name": "Titel",
+                        "value": "Sportsstjerner - bag facaden",
+                        "attr": []
+                      },
+                      "...": "..."
+                    },
+                    "..."
+                  ]
+                },
+                "errors": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {}
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/responses/InvalidToken"
+          },
+          "500": {
+            "$ref": "#/responses/Error"
+          }
+        }
+      }
+    },
+    "/order": {
+      "post": {
+        "tags": [
+          "Order"
+        ],
+        "description": "Order a library material, or remove an existing order.",
+        "parameters": [
+          {
+            "name": "request",
+            "description": "Request object",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "required": [
+                "access_token"
+              ],
+              "properties": {
+                "fields": {
+                  "description": "which parts of the response to get",
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                },
+                "access_token": {
+                  "type": "string",
+                  "description": "Access token from the OAuth2 server",
+                  "example": "qwerty"
+                },
+                "pretty": {
+                  "description": "whether to prettyprint the resulting json",
+                  "type": "boolean",
+                  "example": true
+                },
+                "timings": {
+                  "description": "whether to include timings in the resulting json",
+                  "type": "boolean",
+                  "example": true
+                },
+                "orderId": {
+                  "description": "The identifier for the order, deleting an order. You get this from `/user`-status. Depending on the kind of order, it can take a long time from ordering, until the material with the orderId appears in the user status.",
+                  "type": "string",
+                  "example": "1234"
+                },
+                "pids": {
+                  "description": "The pids of the material to order. Several pids can be given, for example if you want to order a book, but does not care which of the editions. Required, and only applicable to new orders when making a new order.",
+                  "example": [
+                    "870970-basis:51989252"
+                  ],
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                },
+                "library": {
+                  "description": "The library branch id to deliver to. Required when making a new order. The branch id must belong the the agency where the user is logged in. (relationships between agencies and branches can be looked up in the `/libraries` endpoint)",
+                  "type": "string",
+                  "example": "700401"
+                },
+                "name": {
+                  "description": "The full name of the user. Required when making new order for some libraries, - check the /libraries endpoint.",
+                  "type": "string",
+                  "example": "Jens Jensen"
+                },
+                "address": {
+                  "description": "The address of the user. Required when making new order for some libraries, - check the /libraries endpoint.",
+                  "example": "Kirkestræde 1, 1234 Landsby",
+                  "type": "string"
+                },
+                "email": {
+                  "description": "The email of the user. Required when making new order for some libraries, - check the /libraries endpoint.",
+                  "example": "jens.jensen@example.com",
+                  "type": "string"
+                },
+                "phone": {
+                  "description": "The phone number of the user. Required when making new order for some libraries, - check the /libraries endpoint.",
+                  "example": 12345678,
+                  "type": "string"
+                },
+                "expires": {
+                  "description": "When the order expires if not fullfilled.",
+                  "type": "string",
+                  "example": "2016-06-24T00:00:00.000Z"
+                },
+                "delete": {
+                  "description": "whether to delete an order, - not applicable to new orders.",
+                  "type": "boolean",
+                  "example": true
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Response envelope",
+            "schema": {
+              "type": "object",
+              "required": [
+                "statusCode"
+              ],
+              "properties": {
+                "statusCode": {
+                  "type": "integer",
+                  "default": 200
+                },
+                "data": {
+                  "type": "object",
+                  "properties": {},
+                  "example": {
+                    "status": "ok"
+                  }
+                },
+                "errors": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {}
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/responses/InvalidToken"
+          },
+          "500": {
+            "$ref": "#/responses/Error"
+          }
+        }
+      },
+      "get": {
+        "tags": [
+          "Order"
+        ],
+        "description": "Order a library material, or remove an existing order.",
+        "parameters": [
+          {
+            "description": "which parts of the response to get",
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "in": "query",
+            "required": false,
+            "name": "fields"
+          },
+          {
+            "type": "string",
+            "description": "Access token from the OAuth2 server",
+            "in": "query",
+            "required": true,
+            "name": "access_token"
+          },
+          {
+            "description": "whether to prettyprint the resulting json",
+            "type": "boolean",
+            "in": "query",
+            "required": false,
+            "name": "pretty"
+          },
+          {
+            "description": "whether to include timings in the resulting json",
+            "type": "boolean",
+            "in": "query",
+            "required": false,
+            "name": "timings"
+          },
+          {
+            "description": "The identifier for the order, deleting an order. You get this from `/user`-status. Depending on the kind of order, it can take a long time from ordering, until the material with the orderId appears in the user status.",
+            "type": "string",
+            "in": "query",
+            "required": false,
+            "name": "orderId"
+          },
+          {
+            "description": "The pids of the material to order. Several pids can be given, for example if you want to order a book, but does not care which of the editions. Required, and only applicable to new orders when making a new order.",
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "in": "query",
+            "required": false,
+            "name": "pids"
+          },
+          {
+            "description": "The library branch id to deliver to. Required when making a new order. The branch id must belong the the agency where the user is logged in. (relationships between agencies and branches can be looked up in the `/libraries` endpoint)",
+            "type": "string",
+            "in": "query",
+            "required": false,
+            "name": "library"
+          },
+          {
+            "description": "The full name of the user. Required when making new order for some libraries, - check the /libraries endpoint.",
+            "type": "string",
+            "in": "query",
+            "required": false,
+            "name": "name"
+          },
+          {
+            "description": "The address of the user. Required when making new order for some libraries, - check the /libraries endpoint.",
+            "type": "string",
+            "in": "query",
+            "required": false,
+            "name": "address"
+          },
+          {
+            "description": "The email of the user. Required when making new order for some libraries, - check the /libraries endpoint.",
+            "type": "string",
+            "in": "query",
+            "required": false,
+            "name": "email"
+          },
+          {
+            "description": "The phone number of the user. Required when making new order for some libraries, - check the /libraries endpoint.",
+            "type": "string",
+            "in": "query",
+            "required": false,
+            "name": "phone"
+          },
+          {
+            "description": "When the order expires if not fullfilled.",
+            "type": "string",
+            "in": "query",
+            "required": false,
+            "name": "expires"
+          },
+          {
+            "description": "whether to delete an order, - not applicable to new orders.",
+            "type": "boolean",
+            "in": "query",
+            "required": false,
+            "name": "delete"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Response envelope",
+            "schema": {
+              "type": "object",
+              "required": [
+                "statusCode"
+              ],
+              "properties": {
+                "statusCode": {
+                  "type": "integer",
+                  "default": 200
+                },
+                "data": {
+                  "type": "object",
+                  "properties": {},
+                  "example": {
+                    "status": "ok"
+                  }
+                },
+                "errors": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {}
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/responses/InvalidToken"
+          },
+          "500": {
+            "$ref": "#/responses/Error"
+          }
+        }
+      }
+    },
+    "/rank": {
+      "post": {
+        "tags": [
+          "Recommend"
+        ],
+        "description": "Similar to recommend, but sorts a list of ids in order of relevance, given a recommender with likes, dislikes and so on.",
+        "parameters": [
+          {
+            "name": "request",
+            "description": "Request object",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "required": [
+                "pids",
+                "access_token"
+              ],
+              "properties": {
+                "fields": {
+                  "description": "which parts of the response to get",
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                },
+                "access_token": {
+                  "type": "string",
+                  "description": "Access token from the OAuth2 server",
+                  "example": "qwerty"
+                },
+                "pretty": {
+                  "description": "whether to prettyprint the resulting json",
+                  "type": "boolean",
+                  "example": true
+                },
+                "timings": {
+                  "description": "whether to include timings in the resulting json",
+                  "type": "boolean",
+                  "example": true
+                },
+                "pids": {
+                  "description": "list of materials that should be ranked",
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  },
+                  "example": [
+                    "870970-basis:12345678",
+                    "..."
+                  ]
+                },
+                "recommender": {
+                  "description": "the type of recommender, such as default or popular",
+                  "type": "string",
+                  "example": "default"
+                },
+                "like": {
+                  "description": "list of liked materials",
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  },
+                  "example": [
+                    "870970-basis:12345678",
+                    "..."
+                  ]
+                },
+                "dislike": {
+                  "description": "list of disliked materials",
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  },
+                  "example": [
+                    "870970-basis:12345678",
+                    "..."
+                  ]
+                },
+                "known": {
+                  "description": "list of materials that is related to the user",
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  },
+                  "example": [
+                    "870970-basis:12345678",
+                    "..."
+                  ]
+                },
+                "limit": {
+                  "example": 10,
+                  "description": "Maximum number of recommendations returned. This is also limited by the recommender, so currently no more than 99 results are returned.",
+                  "type": "integer",
+                  "minimum": 1
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Response envelope",
+            "schema": {
+              "type": "object",
+              "required": [
+                "statusCode"
+              ],
+              "properties": {
+                "statusCode": {
+                  "type": "integer",
+                  "default": 200
+                },
+                "data": {
+                  "type": "object",
+                  "properties": {},
+                  "example": [
+                    {
+                      "title": "Harry Potter og Fønixordenen",
+                      "creator": "...",
+                      "weight": 123,
+                      "pid": "300185-katalog:100562332",
+                      "fromPid": "870970-basis:51989252"
+                    },
+                    "..."
+                  ]
+                },
+                "errors": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {}
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/responses/InvalidToken"
+          },
+          "500": {
+            "$ref": "#/responses/Error"
+          }
+        }
+      },
+      "get": {
+        "tags": [
+          "Recommend"
+        ],
+        "description": "Similar to recommend, but sorts a list of ids in order of relevance, given a recommender with likes, dislikes and so on.",
+        "parameters": [
+          {
+            "description": "which parts of the response to get",
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "in": "query",
+            "required": false,
+            "name": "fields"
+          },
+          {
+            "type": "string",
+            "description": "Access token from the OAuth2 server",
+            "in": "query",
+            "required": true,
+            "name": "access_token"
+          },
+          {
+            "description": "whether to prettyprint the resulting json",
+            "type": "boolean",
+            "in": "query",
+            "required": false,
+            "name": "pretty"
+          },
+          {
+            "description": "whether to include timings in the resulting json",
+            "type": "boolean",
+            "in": "query",
+            "required": false,
+            "name": "timings"
+          },
+          {
+            "description": "list of materials that should be ranked",
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "in": "query",
+            "required": true,
+            "name": "pids"
+          },
+          {
+            "description": "the type of recommender, such as default or popular",
+            "type": "string",
+            "in": "query",
+            "required": false,
+            "name": "recommender"
+          },
+          {
+            "description": "list of liked materials",
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "in": "query",
+            "required": false,
+            "name": "like"
+          },
+          {
+            "description": "list of disliked materials",
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "in": "query",
+            "required": false,
+            "name": "dislike"
+          },
+          {
+            "description": "list of materials that is related to the user",
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "in": "query",
+            "required": false,
+            "name": "known"
+          },
+          {
+            "description": "Maximum number of recommendations returned. This is also limited by the recommender, so currently no more than 99 results are returned.",
+            "type": "integer",
+            "minimum": 1,
+            "in": "query",
+            "required": false,
+            "name": "limit"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Response envelope",
+            "schema": {
+              "type": "object",
+              "required": [
+                "statusCode"
+              ],
+              "properties": {
+                "statusCode": {
+                  "type": "integer",
+                  "default": 200
+                },
+                "data": {
+                  "type": "object",
+                  "properties": {},
+                  "example": [
+                    {
+                      "title": "Harry Potter og Fønixordenen",
+                      "creator": "...",
+                      "weight": 123,
+                      "pid": "300185-katalog:100562332",
+                      "fromPid": "870970-basis:51989252"
+                    },
+                    "..."
+                  ]
+                },
+                "errors": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {}
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/responses/InvalidToken"
+          },
+          "500": {
+            "$ref": "#/responses/Error"
+          }
+        }
+      }
+    },
+    "/recommend": {
+      "post": {
+        "tags": [
+          "Recommend"
+        ],
+        "description": "Get recommendations based on a list of likes",
+        "parameters": [
+          {
+            "name": "request",
+            "description": "Request object",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "required": [
+                "access_token"
+              ],
+              "properties": {
+                "fields": {
+                  "description": "which parts of the response to get",
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                },
+                "access_token": {
+                  "type": "string",
+                  "description": "Access token from the OAuth2 server",
+                  "example": "qwerty"
+                },
+                "pretty": {
+                  "description": "whether to prettyprint the resulting json",
+                  "type": "boolean",
+                  "example": true
+                },
+                "timings": {
+                  "description": "whether to include timings in the resulting json",
+                  "type": "boolean",
+                  "example": true
+                },
+                "recommender": {
+                  "description": "the type of recommender, such as default or popular",
+                  "type": "string",
+                  "example": "default"
+                },
+                "like": {
+                  "description": "list of liked materials",
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  },
+                  "example": [
+                    "870970-basis:12345678",
+                    "..."
+                  ]
+                },
+                "dislike": {
+                  "description": "list of disliked materials",
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  },
+                  "example": [
+                    "870970-basis:12345678",
+                    "..."
+                  ]
+                },
+                "known": {
+                  "description": "list of materials that is related to the user",
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  },
+                  "example": [
+                    "870970-basis:12345678",
+                    "..."
+                  ]
+                },
+                "discard": {
+                  "description": "list of materials that should not be returned from the recommender",
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  },
+                  "example": [
+                    "870970-basis:12345678",
+                    "..."
+                  ]
+                },
+                "limit": {
+                  "example": 10,
+                  "minimum": 1,
+                  "description": "maximum number of results returned",
+                  "type": "integer"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Response envelope",
+            "schema": {
+              "type": "object",
+              "required": [
+                "statusCode"
+              ],
+              "properties": {
+                "statusCode": {
+                  "type": "integer",
+                  "default": 200
+                },
+                "data": {
+                  "type": "object",
+                  "properties": {},
+                  "example": [
+                    {
+                      "title": "Harry Potter og Fønixordenen",
+                      "creator": "...",
+                      "weight": 123,
+                      "pid": "300185-katalog:100562332",
+                      "fromPid": "870970-basis:51989252"
+                    },
+                    "..."
+                  ]
+                },
+                "errors": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {}
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/responses/InvalidToken"
+          },
+          "500": {
+            "$ref": "#/responses/Error"
+          }
+        }
+      },
+      "get": {
+        "tags": [
+          "Recommend"
+        ],
+        "description": "Get recommendations based on a list of likes",
+        "parameters": [
+          {
+            "description": "which parts of the response to get",
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "in": "query",
+            "required": false,
+            "name": "fields"
+          },
+          {
+            "type": "string",
+            "description": "Access token from the OAuth2 server",
+            "in": "query",
+            "required": true,
+            "name": "access_token"
+          },
+          {
+            "description": "whether to prettyprint the resulting json",
+            "type": "boolean",
+            "in": "query",
+            "required": false,
+            "name": "pretty"
+          },
+          {
+            "description": "whether to include timings in the resulting json",
+            "type": "boolean",
+            "in": "query",
+            "required": false,
+            "name": "timings"
+          },
+          {
+            "description": "the type of recommender, such as default or popular",
+            "type": "string",
+            "in": "query",
+            "required": false,
+            "name": "recommender"
+          },
+          {
+            "description": "list of liked materials",
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "in": "query",
+            "required": false,
+            "name": "like"
+          },
+          {
+            "description": "list of disliked materials",
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "in": "query",
+            "required": false,
+            "name": "dislike"
+          },
+          {
+            "description": "list of materials that is related to the user",
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "in": "query",
+            "required": false,
+            "name": "known"
+          },
+          {
+            "description": "list of materials that should not be returned from the recommender",
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "in": "query",
+            "required": false,
+            "name": "discard"
+          },
+          {
+            "minimum": 1,
+            "description": "maximum number of results returned",
+            "type": "integer",
+            "in": "query",
+            "required": false,
+            "name": "limit"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Response envelope",
+            "schema": {
+              "type": "object",
+              "required": [
+                "statusCode"
+              ],
+              "properties": {
+                "statusCode": {
+                  "type": "integer",
+                  "default": 200
+                },
+                "data": {
+                  "type": "object",
+                  "properties": {},
+                  "example": [
+                    {
+                      "title": "Harry Potter og Fønixordenen",
+                      "creator": "...",
+                      "weight": 123,
+                      "pid": "300185-katalog:100562332",
+                      "fromPid": "870970-basis:51989252"
+                    },
+                    "..."
+                  ]
+                },
+                "errors": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {}
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/responses/InvalidToken"
+          },
+          "500": {
+            "$ref": "#/responses/Error"
+          }
+        }
+      }
+    },
+    "/renew": {
+      "post": {
+        "tags": [
+          "Status"
+        ],
+        "description": "Renew a material",
+        "parameters": [
+          {
+            "name": "request",
+            "description": "Request object",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "required": [
+                "loanId",
+                "access_token"
+              ],
+              "properties": {
+                "fields": {
+                  "description": "which parts of the response to get",
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                },
+                "access_token": {
+                  "type": "string",
+                  "description": "Access token from the OAuth2 server",
+                  "example": "qwerty"
+                },
+                "pretty": {
+                  "description": "whether to prettyprint the resulting json",
+                  "type": "boolean",
+                  "example": true
+                },
+                "timings": {
+                  "description": "whether to include timings in the resulting json",
+                  "type": "boolean",
+                  "example": true
+                },
+                "loanId": {
+                  "description": "id of the loan to renew",
+                  "type": "string",
+                  "example": "7890"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Response envelope",
+            "schema": {
+              "type": "object",
+              "required": [
+                "statusCode"
+              ],
+              "properties": {
+                "statusCode": {
+                  "type": "integer",
+                  "default": 200
+                },
+                "data": {
+                  "type": "object",
+                  "properties": {},
+                  "example": {
+                    "loanId": "7890",
+                    "returnDate": "2016-09-12T00:00:00+01:00"
+                  }
+                },
+                "errors": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {}
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/responses/InvalidToken"
+          },
+          "403": {
+            "$ref": "#/responses/InvalidUser"
+          },
+          "500": {
+            "$ref": "#/responses/Error"
+          }
+        }
+      },
+      "get": {
+        "tags": [
+          "Status"
+        ],
+        "description": "Renew a material",
+        "parameters": [
+          {
+            "description": "which parts of the response to get",
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "in": "query",
+            "required": false,
+            "name": "fields"
+          },
+          {
+            "type": "string",
+            "description": "Access token from the OAuth2 server",
+            "in": "query",
+            "required": true,
+            "name": "access_token"
+          },
+          {
+            "description": "whether to prettyprint the resulting json",
+            "type": "boolean",
+            "in": "query",
+            "required": false,
+            "name": "pretty"
+          },
+          {
+            "description": "whether to include timings in the resulting json",
+            "type": "boolean",
+            "in": "query",
+            "required": false,
+            "name": "timings"
+          },
+          {
+            "description": "id of the loan to renew",
+            "type": "string",
+            "in": "query",
+            "required": true,
+            "name": "loanId"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Response envelope",
+            "schema": {
+              "type": "object",
+              "required": [
+                "statusCode"
+              ],
+              "properties": {
+                "statusCode": {
+                  "type": "integer",
+                  "default": 200
+                },
+                "data": {
+                  "type": "object",
+                  "properties": {},
+                  "example": {
+                    "loanId": "7890",
+                    "returnDate": "2016-09-12T00:00:00+01:00"
+                  }
+                },
+                "errors": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {}
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/responses/InvalidToken"
+          },
+          "403": {
+            "$ref": "#/responses/InvalidUser"
+          },
+          "500": {
+            "$ref": "#/responses/Error"
+          }
+        }
+      }
+    },
+    "/search": {
+      "post": {
+        "tags": [
+          "Search"
+        ],
+        "description": "Search for a library material.",
+        "parameters": [
+          {
+            "name": "request",
+            "description": "Request object",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "required": [
+                "q",
+                "access_token"
+              ],
+              "properties": {
+                "fields": {
+                  "example": [
+                    "title",
+                    "creator",
+                    "pid"
+                  ],
+                  "description": "Which fields to return. Limiting the fields can also yield a performance improvement.\n\nThe entire list of possible fields can be seen on https://raw.githubusercontent.com/DBCDK/serviceprovider/master/doc/work-context.jsonld\n\nIf `fields` are omitted, only the collection-field, and the fields from DKABM and BriefDisplay is returned.\n",
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                },
+                "access_token": {
+                  "type": "string",
+                  "description": "Access token from the OAuth2 server",
+                  "example": "qwerty"
+                },
+                "pretty": {
+                  "description": "whether to prettyprint the resulting json",
+                  "type": "boolean",
+                  "example": true
+                },
+                "timings": {
+                  "description": "whether to include timings in the resulting json",
+                  "type": "boolean",
+                  "example": true
+                },
+                "q": {
+                  "example": "harry AND potter",
+                  "description": "Query to search for. | The query is expressed in CQL, see https://en.wikipedia.org/wiki/Contextual_Query_Language\nA guide to CQL in danish, with list of the indexes available in this API is available on http://www.danbib.dk/broend3_soeg",
+                  "type": "string"
+                },
+                "offset": {
+                  "example": 0,
+                  "description": "Starting position in search result",
+                  "type": "integer",
+                  "minimum": 0
+                },
+                "limit": {
+                  "example": 10,
+                  "description": "maximum number of results returned",
+                  "minimum": 1,
+                  "maximum": 50,
+                  "type": "integer"
+                },
+                "sort": {
+                  "example": "rank_title",
+                  "description": "Order/ranking of results. This correspond to the `sort` parameter of opensearch, which, at the time of writing, can take values such as  `rank_title`, `rank_general`, `rank_main_title`, `rank_subject`, `rank_verification` (title and creator), `rank_creator`, `rank_none`, `date_descending`, `article_date_descending`, `acquisitionDate_descending`, and `random`.",
+                  "type": "string"
+                },
+                "profile": {
+                  "example": "opac",
+                  "description": "Optional search profile, it's passed directly to OpenSearch. In OpenSearch it's used to determine which works should be returned. The profile needs to be defined in VIP in order to use it.",
+                  "type": "string"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Response envelope",
+            "schema": {
+              "type": "object",
+              "required": [
+                "statusCode"
+              ],
+              "properties": {
+                "statusCode": {
+                  "type": "integer",
+                  "default": 200
+                },
+                "data": {
+                  "type": "array",
+                  "properties": {},
+                  "example": [
+                    {
+                      "identifier": [
+                        "300185-katalog:100562332"
+                      ],
+                      "dcTitle": [
+                        "Harry Potter og Fønixordenen DVD"
+                      ],
+                      "coverUrlFull": [
+                        "https://moreinfo.addi.dk/2.1/more_info_get.php?id=36565894&type=forside_500&key=55d553c259c9e46291a4"
+                      ]
+                    },
+                    {
+                      "identifier": [
+                        "870970-basis:51989252"
+                      ],
+                      "dcTitle": [
+                        "Harry Potter og de vises sten"
+                      ],
+                      "collection": [
+                        "300185-katalog:100562332",
+                        "870970-basis:51989252",
+                        "870971-forfweb:86203219",
+                        "870970-basis:24284514",
+                        "870970-basis:24284565",
+                        "..."
+                      ],
+                      "dcSubjectDBCF": [
+                        "fantasy",
+                        "magi",
+                        "troldmænd"
+                      ],
+                      "hasAdaption": [
+                        "870970-basis:27123279",
+                        "870970-basis:27963390"
+                      ],
+                      "coverUrlFull": [
+                        "https://moreinfo.addi.dk/2.1/more_info_get.php?id=36565894&type=forside_500&key=55d553c259c9e46291a4"
+                      ]
+                    }
+                  ]
+                },
+                "errors": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {}
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/responses/InvalidToken"
+          },
+          "500": {
+            "$ref": "#/responses/Error"
+          }
+        }
+      },
+      "get": {
+        "tags": [
+          "Search"
+        ],
+        "description": "Search for a library material.",
+        "parameters": [
+          {
+            "description": "Which fields to return. Limiting the fields can also yield a performance improvement.\n\nThe entire list of possible fields can be seen on https://raw.githubusercontent.com/DBCDK/serviceprovider/master/doc/work-context.jsonld\n\nIf `fields` are omitted, only the collection-field, and the fields from DKABM and BriefDisplay is returned.\n",
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "in": "query",
+            "required": false,
+            "name": "fields"
+          },
+          {
+            "type": "string",
+            "description": "Access token from the OAuth2 server",
+            "in": "query",
+            "required": true,
+            "name": "access_token"
+          },
+          {
+            "description": "whether to prettyprint the resulting json",
+            "type": "boolean",
+            "in": "query",
+            "required": false,
+            "name": "pretty"
+          },
+          {
+            "description": "whether to include timings in the resulting json",
+            "type": "boolean",
+            "in": "query",
+            "required": false,
+            "name": "timings"
+          },
+          {
+            "description": "Query to search for. | The query is expressed in CQL, see https://en.wikipedia.org/wiki/Contextual_Query_Language\nA guide to CQL in danish, with list of the indexes available in this API is available on http://www.danbib.dk/broend3_soeg",
+            "type": "string",
+            "in": "query",
+            "required": true,
+            "name": "q"
+          },
+          {
+            "description": "Starting position in search result",
+            "type": "integer",
+            "minimum": 0,
+            "in": "query",
+            "required": false,
+            "name": "offset"
+          },
+          {
+            "description": "maximum number of results returned",
+            "minimum": 1,
+            "maximum": 50,
+            "type": "integer",
+            "in": "query",
+            "required": false,
+            "name": "limit"
+          },
+          {
+            "description": "Order/ranking of results. This correspond to the `sort` parameter of opensearch, which, at the time of writing, can take values such as  `rank_title`, `rank_general`, `rank_main_title`, `rank_subject`, `rank_verification` (title and creator), `rank_creator`, `rank_none`, `date_descending`, `article_date_descending`, `acquisitionDate_descending`, and `random`.",
+            "type": "string",
+            "in": "query",
+            "required": false,
+            "name": "sort"
+          },
+          {
+            "description": "Optional search profile, it's passed directly to OpenSearch. In OpenSearch it's used to determine which works should be returned. The profile needs to be defined in VIP in order to use it.",
+            "type": "string",
+            "in": "query",
+            "required": false,
+            "name": "profile"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Response envelope",
+            "schema": {
+              "type": "object",
+              "required": [
+                "statusCode"
+              ],
+              "properties": {
+                "statusCode": {
+                  "type": "integer",
+                  "default": 200
+                },
+                "data": {
+                  "type": "array",
+                  "properties": {},
+                  "example": [
+                    {
+                      "identifier": [
+                        "300185-katalog:100562332"
+                      ],
+                      "dcTitle": [
+                        "Harry Potter og Fønixordenen DVD"
+                      ],
+                      "coverUrlFull": [
+                        "https://moreinfo.addi.dk/2.1/more_info_get.php?id=36565894&type=forside_500&key=55d553c259c9e46291a4"
+                      ]
+                    },
+                    {
+                      "identifier": [
+                        "870970-basis:51989252"
+                      ],
+                      "dcTitle": [
+                        "Harry Potter og de vises sten"
+                      ],
+                      "collection": [
+                        "300185-katalog:100562332",
+                        "870970-basis:51989252",
+                        "870971-forfweb:86203219",
+                        "870970-basis:24284514",
+                        "870970-basis:24284565",
+                        "..."
+                      ],
+                      "dcSubjectDBCF": [
+                        "fantasy",
+                        "magi",
+                        "troldmænd"
+                      ],
+                      "hasAdaption": [
+                        "870970-basis:27123279",
+                        "870970-basis:27963390"
+                      ],
+                      "coverUrlFull": [
+                        "https://moreinfo.addi.dk/2.1/more_info_get.php?id=36565894&type=forside_500&key=55d553c259c9e46291a4"
+                      ]
+                    }
+                  ]
+                },
+                "errors": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {}
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/responses/InvalidToken"
+          },
+          "500": {
+            "$ref": "#/responses/Error"
+          }
+        }
+      }
+    },
+    "/suggest": {
+      "post": {
+        "tags": [
+          "Suggest"
+        ],
+        "description": "Suggestions for completing a query string.\n\nNotice that suggest/completion index is not real-time, so there is no guarantee that the `id` matches a bibliographic object in the `/work` endpoint, - though usually there will be one (they will be sync'ed every week).\n",
+        "parameters": [
+          {
+            "name": "request",
+            "description": "Request object",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "required": [
+                "q",
+                "type",
+                "access_token"
+              ],
+              "properties": {
+                "fields": {
+                  "description": "Fields to return, defaults to `term`. The `subject`- and `creator`-suggest only has `term`, while `title`-suggest also has `pid`, `creator`, and `type`, and the `library`-suggest has `agencyName`, `postalAddress`, `branchId`, `postalCode`, `geolocation`, `agencyType`, and `city`",
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  },
+                  "example": [
+                    "term",
+                    "pid",
+                    "creator",
+                    "type"
+                  ]
+                },
+                "access_token": {
+                  "type": "string",
+                  "description": "Access token from the OAuth2 server",
+                  "example": "qwerty"
+                },
+                "pretty": {
+                  "description": "whether to prettyprint the resulting json",
+                  "type": "boolean",
+                  "example": true
+                },
+                "timings": {
+                  "description": "whether to include timings in the resulting json",
+                  "type": "boolean",
+                  "example": true
+                },
+                "q": {
+                  "description": "Query to complete",
+                  "type": "string",
+                  "example": "harry"
+                },
+                "limit": {
+                  "description": "Maximum number of suggestions returned",
+                  "type": "integer",
+                  "minimum": 1,
+                  "example": 10
+                },
+                "type": {
+                  "description": "The desired type of suggestions, possible values are `library`, `title`, `subject`, `creator`",
+                  "type": "string",
+                  "example": "title"
+                },
+                "librarytype": {
+                  "description": "Optional field only used when querying the library suggestor. It specifies which type of library is wanted, by default it's the public library.",
+                  "type": "string",
+                  "example": "folkebibliotek"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Response envelope",
+            "schema": {
+              "type": "object",
+              "required": [
+                "statusCode"
+              ],
+              "properties": {
+                "statusCode": {
+                  "type": "integer",
+                  "default": 200
+                },
+                "data": {
+                  "type": "object",
+                  "properties": {},
+                  "example": [
+                    {
+                      "term": "Harry Potter og Hemmelighedernes Kammer",
+                      "pid": "870970-basis:22375733",
+                      "creator": "Joanne K. Rowling",
+                      "type": "book"
+                    },
+                    {
+                      "term": "Harry Potter og fangen fra Azkaban",
+                      "pid": "870970-basis:22639862",
+                      "creator": "Joanne K. Rowling",
+                      "type": "book"
+                    }
+                  ]
+                },
+                "errors": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {}
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/responses/InvalidToken"
+          },
+          "500": {
+            "$ref": "#/responses/Error"
+          }
+        }
+      },
+      "get": {
+        "tags": [
+          "Suggest"
+        ],
+        "description": "Suggestions for completing a query string.\n\nNotice that suggest/completion index is not real-time, so there is no guarantee that the `id` matches a bibliographic object in the `/work` endpoint, - though usually there will be one (they will be sync'ed every week).\n",
+        "parameters": [
+          {
+            "description": "Fields to return, defaults to `term`. The `subject`- and `creator`-suggest only has `term`, while `title`-suggest also has `pid`, `creator`, and `type`, and the `library`-suggest has `agencyName`, `postalAddress`, `branchId`, `postalCode`, `geolocation`, `agencyType`, and `city`",
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "in": "query",
+            "required": false,
+            "name": "fields"
+          },
+          {
+            "type": "string",
+            "description": "Access token from the OAuth2 server",
+            "in": "query",
+            "required": true,
+            "name": "access_token"
+          },
+          {
+            "description": "whether to prettyprint the resulting json",
+            "type": "boolean",
+            "in": "query",
+            "required": false,
+            "name": "pretty"
+          },
+          {
+            "description": "whether to include timings in the resulting json",
+            "type": "boolean",
+            "in": "query",
+            "required": false,
+            "name": "timings"
+          },
+          {
+            "description": "Query to complete",
+            "type": "string",
+            "in": "query",
+            "required": true,
+            "name": "q"
+          },
+          {
+            "description": "Maximum number of suggestions returned",
+            "type": "integer",
+            "minimum": 1,
+            "in": "query",
+            "required": false,
+            "name": "limit"
+          },
+          {
+            "description": "The desired type of suggestions, possible values are `library`, `title`, `subject`, `creator`",
+            "type": "string",
+            "in": "query",
+            "required": true,
+            "name": "type"
+          },
+          {
+            "description": "Optional field only used when querying the library suggestor. It specifies which type of library is wanted, by default it's the public library.",
+            "type": "string",
+            "in": "query",
+            "required": false,
+            "name": "librarytype"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Response envelope",
+            "schema": {
+              "type": "object",
+              "required": [
+                "statusCode"
+              ],
+              "properties": {
+                "statusCode": {
+                  "type": "integer",
+                  "default": 200
+                },
+                "data": {
+                  "type": "object",
+                  "properties": {},
+                  "example": [
+                    {
+                      "term": "Harry Potter og Hemmelighedernes Kammer",
+                      "pid": "870970-basis:22375733",
+                      "creator": "Joanne K. Rowling",
+                      "type": "book"
+                    },
+                    {
+                      "term": "Harry Potter og fangen fra Azkaban",
+                      "pid": "870970-basis:22639862",
+                      "creator": "Joanne K. Rowling",
+                      "type": "book"
+                    }
+                  ]
+                },
+                "errors": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {}
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/responses/InvalidToken"
+          },
+          "500": {
+            "$ref": "#/responses/Error"
+          }
+        }
+      }
+    },
+    "/user": {
+      "post": {
+        "tags": [
+          "Status"
+        ],
+        "description": "User status, including arrived loans, orders, unique id, etc.\n",
+        "parameters": [
+          {
+            "name": "request",
+            "description": "Request object",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "required": [
+                "access_token"
+              ],
+              "properties": {
+                "fields": {
+                  "description": "which parts of the response to get",
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                },
+                "access_token": {
+                  "type": "string",
+                  "description": "Access token from the OAuth2 server",
+                  "example": "qwerty"
+                },
+                "pretty": {
+                  "description": "whether to prettyprint the resulting json",
+                  "type": "boolean",
+                  "example": true
+                },
+                "timings": {
+                  "description": "whether to include timings in the resulting json",
+                  "type": "boolean",
+                  "example": true
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Response envelope",
+            "schema": {
+              "type": "object",
+              "required": [
+                "statusCode"
+              ],
+              "properties": {
+                "statusCode": {
+                  "type": "integer",
+                  "default": 200
+                },
+                "data": {
+                  "type": "object",
+                  "properties": {},
+                  "example": {
+                    "id": "U2VydmljZVByb3ZpZGVy",
+                    "agency": "710100",
+                    "loans": [
+                      {
+                        "loanId": "4940377131",
+                        "title": "håndbog over håndbøger",
+                        "creator": "La, Chris",
+                        "dueDate": "2016-04-16",
+                        "materialId": "9782361951085",
+                        "titleId": "51680057"
+                      }
+                    ],
+                    "orders": [
+                      {
+                        "orderId": "Hold:24395923",
+                        "status": "In process",
+                        "pickUpAgency": "DK-710111",
+                        "holdQueuePosition": "1",
+                        "creator": "Madsen, Peter, f. 1958",
+                        "title": "Eventyrbogen",
+                        "orderDate": "2016-05-27T00:00:00+02:00"
+                      },
+                      {
+                        "orderId": "Hold:24400334",
+                        "status": "Available for pickup",
+                        "pickUpAgency": "DK-710111",
+                        "holdQueuePosition": "1",
+                        "creator": "Lindgren, Astrid",
+                        "title": "Emils skarnsstreg nr. 325",
+                        "orderDate": "2016-05-30T00:00:00+02:00",
+                        "pickUpExpiryDate": "2016-06-04T00:00:00+02:00",
+                        "pickUpId": "Nummer 16"
+                      }
+                    ],
+                    "debt": [
+                      {
+                        "amount": "20",
+                        "currency": "DKK",
+                        "date": "2015-11-21T00:00:00.000Z",
+                        "creator": "Kristín Marja Baldursdóttir",
+                        "title": "Kantate"
+                      }
+                    ]
+                  }
+                },
+                "errors": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {}
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/responses/InvalidToken"
+          },
+          "403": {
+            "$ref": "#/responses/InvalidUser"
+          },
+          "500": {
+            "$ref": "#/responses/Error"
+          }
+        }
+      },
+      "get": {
+        "tags": [
+          "Status"
+        ],
+        "description": "User status, including arrived loans, orders, unique id, etc.\n",
+        "parameters": [
+          {
+            "description": "which parts of the response to get",
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "in": "query",
+            "required": false,
+            "name": "fields"
+          },
+          {
+            "type": "string",
+            "description": "Access token from the OAuth2 server",
+            "in": "query",
+            "required": true,
+            "name": "access_token"
+          },
+          {
+            "description": "whether to prettyprint the resulting json",
+            "type": "boolean",
+            "in": "query",
+            "required": false,
+            "name": "pretty"
+          },
+          {
+            "description": "whether to include timings in the resulting json",
+            "type": "boolean",
+            "in": "query",
+            "required": false,
+            "name": "timings"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Response envelope",
+            "schema": {
+              "type": "object",
+              "required": [
+                "statusCode"
+              ],
+              "properties": {
+                "statusCode": {
+                  "type": "integer",
+                  "default": 200
+                },
+                "data": {
+                  "type": "object",
+                  "properties": {},
+                  "example": {
+                    "id": "U2VydmljZVByb3ZpZGVy",
+                    "agency": "710100",
+                    "loans": [
+                      {
+                        "loanId": "4940377131",
+                        "title": "håndbog over håndbøger",
+                        "creator": "La, Chris",
+                        "dueDate": "2016-04-16",
+                        "materialId": "9782361951085",
+                        "titleId": "51680057"
+                      }
+                    ],
+                    "orders": [
+                      {
+                        "orderId": "Hold:24395923",
+                        "status": "In process",
+                        "pickUpAgency": "DK-710111",
+                        "holdQueuePosition": "1",
+                        "creator": "Madsen, Peter, f. 1958",
+                        "title": "Eventyrbogen",
+                        "orderDate": "2016-05-27T00:00:00+02:00"
+                      },
+                      {
+                        "orderId": "Hold:24400334",
+                        "status": "Available for pickup",
+                        "pickUpAgency": "DK-710111",
+                        "holdQueuePosition": "1",
+                        "creator": "Lindgren, Astrid",
+                        "title": "Emils skarnsstreg nr. 325",
+                        "orderDate": "2016-05-30T00:00:00+02:00",
+                        "pickUpExpiryDate": "2016-06-04T00:00:00+02:00",
+                        "pickUpId": "Nummer 16"
+                      }
+                    ],
+                    "debt": [
+                      {
+                        "amount": "20",
+                        "currency": "DKK",
+                        "date": "2015-11-21T00:00:00.000Z",
+                        "creator": "Kristín Marja Baldursdóttir",
+                        "title": "Kantate"
+                      }
+                    ]
+                  }
+                },
+                "errors": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {}
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/responses/InvalidToken"
+          },
+          "403": {
+            "$ref": "#/responses/InvalidUser"
+          },
+          "500": {
+            "$ref": "#/responses/Error"
+          }
+        }
+      }
+    },
+    "/work": {
+      "post": {
+        "tags": [
+          "Search"
+        ],
+        "description": "Retrieve meta information about a creative work",
+        "parameters": [
+          {
+            "name": "request",
+            "description": "Request object",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "required": [
+                "access_token"
+              ],
+              "properties": {
+                "fields": {
+                  "description": "Which fields to return. Limiting the fields can also yield a performance improvement.\n\nThe entire list of possible fields can be seen on https://raw.githubusercontent.com/DBCDK/serviceprovider/master/doc/work-context.jsonld\n\nIf `fields` are omitted, all fields are returned, except `cover*`, and `collection`.\n",
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  },
+                  "example": [
+                    "title",
+                    "collection",
+                    "dcSubjectDBCF",
+                    "hasAdaptation",
+                    "coverUrlFull"
+                  ]
+                },
+                "access_token": {
+                  "type": "string",
+                  "description": "Access token from the OAuth2 server",
+                  "example": "qwerty"
+                },
+                "pretty": {
+                  "description": "whether to prettyprint the resulting json",
+                  "type": "boolean",
+                  "example": true
+                },
+                "timings": {
+                  "description": "whether to include timings in the resulting json",
+                  "type": "boolean",
+                  "example": true
+                },
+                "pids": {
+                  "description": "The ids of the materials to look up. You should at most look up 20 ids per API call.",
+                  "type": "array",
+                  "maxItems": 20,
+                  "items": {
+                    "type": "string"
+                  },
+                  "example": [
+                    "870970-basis:51989252"
+                  ]
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Response envelope",
+            "schema": {
+              "type": "object",
+              "required": [
+                "statusCode"
+              ],
+              "properties": {
+                "statusCode": {
+                  "type": "integer",
+                  "default": 200
+                },
+                "data": {
+                  "type": "object",
+                  "properties": {},
+                  "example": [
+                    {
+                      "dcTitle": [
+                        "Harry Potter og de vises sten"
+                      ],
+                      "collection": [
+                        "300185-katalog:100562332",
+                        "870970-basis:51989252",
+                        "870971-forfweb:86203219",
+                        "870970-basis:24284514",
+                        "870970-basis:24284565",
+                        "..."
+                      ],
+                      "dcSubjectDBCF": [
+                        "fantasy",
+                        "magi",
+                        "troldmænd"
+                      ],
+                      "hasAdaption": [
+                        "870970-basis:27123279",
+                        "870970-basis:27963390"
+                      ],
+                      "coverUrlFull": [
+                        "https://moreinfo.addi.dk/2.1/more_info_get.php?id=36565894&type=forside_500&key=55d553c259c9e46291a4"
+                      ]
+                    }
+                  ]
+                },
+                "errors": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {}
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/responses/InvalidToken"
+          },
+          "500": {
+            "$ref": "#/responses/Error"
+          }
+        }
+      },
+      "get": {
+        "tags": [
+          "Search"
+        ],
+        "description": "Retrieve meta information about a creative work",
+        "parameters": [
+          {
+            "description": "Which fields to return. Limiting the fields can also yield a performance improvement.\n\nThe entire list of possible fields can be seen on https://raw.githubusercontent.com/DBCDK/serviceprovider/master/doc/work-context.jsonld\n\nIf `fields` are omitted, all fields are returned, except `cover*`, and `collection`.\n",
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "in": "query",
+            "required": false,
+            "name": "fields"
+          },
+          {
+            "type": "string",
+            "description": "Access token from the OAuth2 server",
+            "in": "query",
+            "required": true,
+            "name": "access_token"
+          },
+          {
+            "description": "whether to prettyprint the resulting json",
+            "type": "boolean",
+            "in": "query",
+            "required": false,
+            "name": "pretty"
+          },
+          {
+            "description": "whether to include timings in the resulting json",
+            "type": "boolean",
+            "in": "query",
+            "required": false,
+            "name": "timings"
+          },
+          {
+            "description": "The ids of the materials to look up. You should at most look up 20 ids per API call.",
+            "type": "array",
+            "maxItems": 20,
+            "items": {
+              "type": "string"
+            },
+            "in": "query",
+            "required": false,
+            "name": "pids"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Response envelope",
+            "schema": {
+              "type": "object",
+              "required": [
+                "statusCode"
+              ],
+              "properties": {
+                "statusCode": {
+                  "type": "integer",
+                  "default": 200
+                },
+                "data": {
+                  "type": "object",
+                  "properties": {},
+                  "example": [
+                    {
+                      "dcTitle": [
+                        "Harry Potter og de vises sten"
+                      ],
+                      "collection": [
+                        "300185-katalog:100562332",
+                        "870970-basis:51989252",
+                        "870971-forfweb:86203219",
+                        "870970-basis:24284514",
+                        "870970-basis:24284565",
+                        "..."
+                      ],
+                      "dcSubjectDBCF": [
+                        "fantasy",
+                        "magi",
+                        "troldmænd"
+                      ],
+                      "hasAdaption": [
+                        "870970-basis:27123279",
+                        "870970-basis:27963390"
+                      ],
+                      "coverUrlFull": [
+                        "https://moreinfo.addi.dk/2.1/more_info_get.php?id=36565894&type=forside_500&key=55d553c259c9e46291a4"
+                      ]
+                    }
+                  ]
+                },
+                "errors": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {}
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/responses/InvalidToken"
+          },
+          "500": {
+            "$ref": "#/responses/Error"
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "Profile": {
+      "type": "object",
+      "properties": {
+        "username": {
+          "type": "string"
+        },
+        "displayName": {
+          "type": "string"
+        },
+        "description": {
+          "type": "string"
+        },
+        "email": {
+          "type": "string"
+        },
+        "phone": {
+          "type": "string"
+        },
+        "created_epoch": {
+          "type": "integer",
+          "readOnly": true
+        },
+        "modified_epoch": {
+          "type": "integer",
+          "readOnly": true
+        },
+        "modified_by": {
+          "type": "integer"
+        },
+        "deleted_epoch": {
+          "type": "integer",
+          "readOnly": true
+        },
+        "birthday": {
+          "type": "string",
+          "format": "date"
+        },
+        "fullName": {
+          "type": "string"
+        },
+        "id": {
+          "type": "integer",
+          "readOnly": true
+        }
+      },
+      "required": [
+        "username"
+      ],
+      "additionalProperties": false
+    },
+    "ProfilePost": {
+      "type": "object",
+      "properties": {
+        "username": {
+          "type": "string"
+        },
+        "displayName": {
+          "type": "string"
+        },
+        "description": {
+          "type": "string"
+        },
+        "email": {
+          "type": "string"
+        },
+        "phone": {
+          "type": "string"
+        },
+        "birthday": {
+          "type": "string",
+          "format": "date"
+        },
+        "fullName": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "username"
+      ]
+    },
+    "ProfilePut": {
+      "type": "object",
+      "properties": {
+        "modified_by": {
+          "type": "integer"
+        },
+        "username": {
+          "type": "string"
+        },
+        "displayName": {
+          "type": "string"
+        },
+        "description": {
+          "type": "string"
+        },
+        "email": {
+          "type": "string"
+        },
+        "phone": {
+          "type": "string"
+        },
+        "birthday": {
+          "type": "string",
+          "format": "date"
+        },
+        "fullName": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "modified_by"
+      ]
+    },
+    "Profiles": {
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/Profile"
+      }
+    },
+    "Activity": {
+      "allOf": [
+        {
+          "$ref": "#/definitions/Profile"
+        }
+      ],
+      "properties": {
+        "activity": {
+          "type": "object",
+          "properties": {
+            "likes": {
+              "type": "object",
+              "properties": {
+                "Total": {
+                  "type": "integer"
+                },
+                "NextOffset": {
+                  "type": "integer"
+                },
+                "List": {
+                  "type": "array",
+                  "items": [
+                    {
+                      "$ref": "#/definitions/Like"
+                    }
+                  ]
+                }
+              }
+            },
+            "follows": {
+              "type": "object",
+              "properties": {
+                "Total": {
+                  "type": "integer"
+                },
+                "NextOffset": {
+                  "type": "integer"
+                },
+                "List": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/definitions/Follow"
+                  }
+                }
+              }
+            },
+            "flags": {
+              "type": "object",
+              "properties": {
+                "Total": {
+                  "type": "integer"
+                },
+                "NextOffset": {
+                  "type": "integer"
+                },
+                "List": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/definitions/Flag"
+                  }
+                }
+              }
+            },
+            "groups": {
+              "type": "object",
+              "properties": {
+                "Total": {
+                  "type": "integer"
+                },
+                "NextOffset": {
+                  "type": "integer"
+                },
+                "List": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/definitions/Group"
+                  }
+                }
+              }
+            },
+            "posts": {
+              "type": "object",
+              "properties": {
+                "Total": {
+                  "type": "integer"
+                },
+                "NextOffset": {
+                  "type": "integer"
+                },
+                "List": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/definitions/Post"
+                  }
+                }
+              }
+            },
+            "comments": {
+              "type": "object",
+              "properties": {
+                "Total": {
+                  "type": "integer"
+                },
+                "NextOffset": {
+                  "type": "integer"
+                },
+                "List": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/definitions/Comment"
+                  }
+                }
+              }
+            },
+            "reviews": {
+              "type": "object",
+              "properties": {
+                "Total": {
+                  "type": "integer"
+                },
+                "NextOffset": {
+                  "type": "integer"
+                },
+                "List": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/definitions/Review"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "UserIsFollowingGroup": {
+      "properties": {
+        "id": {
+          "type": "integer"
+        }
+      }
+    },
+    "UsernameExists": {
+      "properties": {
+        "id": {
+          "type": "integer"
+        }
+      }
+    },
+    "Group": {
+      "allOf": [
+        {
+          "$ref": "#/definitions/Entity"
+        }
+      ],
+      "properties": {
+        "title": {
+          "type": "string"
+        },
+        "body": {
+          "type": "string"
+        }
+      }
+    },
+    "GroupPost": {
+      "properties": {
+        "title": {
+          "type": "string"
+        },
+        "body": {
+          "type": "string"
+        },
+        "profile_id": {
+          "$ref": "#/parameters/profile_id"
+        },
+        "media": {
+          "$ref": "#/definitions/Media"
+        }
+      },
+      "required": [
+        "title",
+        "body",
+        "profile_id"
+      ]
+    },
+    "GroupPut": {
+      "properties": {
+        "modified_by": {
+          "type": "integer"
+        },
+        "title": {
+          "type": "string"
+        },
+        "body": {
+          "type": "string"
+        },
+        "media": {
+          "$ref": "#/definitions/Media"
+        }
+      },
+      "required": [
+        "modified_by"
+      ]
+    },
+    "Groups": {
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/Group"
+      }
+    },
+    "GroupnameExists": {
+      "properties": {
+        "id": {
+          "type": "integer"
+        }
+      }
+    },
+    "Post": {
+      "allOf": [
+        {
+          "$ref": "#/definitions/Entity"
+        }
+      ],
+      "properties": {
+        "title": {
+          "type": "string"
+        },
+        "body": {
+          "type": "string"
+        },
+        "group_id": {
+          "type": "integer"
+        }
+      }
+    },
+    "PostPost": {
+      "properties": {
+        "title": {
+          "type": "string"
+        },
+        "body": {
+          "type": "string"
+        },
+        "group_id": {
+          "type": "integer"
+        },
+        "profile_id": {
+          "$ref": "#/parameters/profile_id"
+        },
+        "media": {
+          "$ref": "#/definitions/Media"
+        }
+      },
+      "required": [
+        "title",
+        "body",
+        "group_id",
+        "profile_id"
+      ]
+    },
+    "PostPut": {
+      "properties": {
+        "title": {
+          "type": "string"
+        },
+        "body": {
+          "type": "string"
+        },
+        "modified_by": {
+          "type": "integer"
+        },
+        "media": {
+          "$ref": "#/definitions/Media"
+        }
+      },
+      "required": [
+        "modified_by"
+      ]
+    },
+    "Review": {
+      "allOf": [
+        {
+          "$ref": "#/definitions/Entity"
+        }
+      ],
+      "properties": {
+        "title": {
+          "type": "string"
+        },
+        "body": {
+          "type": "string"
+        },
+        "rating": {
+          "type": "integer"
+        },
+        "reference": {
+          "$ref": "#/definitions/Reference"
+        }
+      }
+    },
+    "ReviewPost": {
+      "properties": {
+        "profile_id": {
+          "type": "integer"
+        },
+        "title": {
+          "type": "string"
+        },
+        "body": {
+          "type": "string"
+        },
+        "rating": {
+          "type": "integer"
+        },
+        "reference": {
+          "$ref": "#/definitions/Reference"
+        }
+      },
+      "required": [
+        "profile_id"
+      ]
+    },
+    "ReviewPut": {
+      "properties": {
+        "modified_by": {
+          "type": "integer"
+        },
+        "title": {
+          "type": "string"
+        },
+        "body": {
+          "type": "string"
+        },
+        "rating": {
+          "type": "integer"
+        },
+        "reference": {
+          "$ref": "#/definitions/Reference"
+        }
+      },
+      "required": [
+        "modified_by"
+      ]
+    },
+    "Reviews": {
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/Review"
+      }
+    },
+    "Comment": {
+      "allOf": [
+        {
+          "$ref": "#/definitions/Entity"
+        }
+      ],
+      "properties": {
+        "title": {
+          "type": "string"
+        },
+        "body": {
+          "type": "string"
+        },
+        "post_id": {
+          "type": "integer"
+        }
+      },
+      "additionalProperties": true,
+      "required": [
+        "body",
+        "title",
+        "post_id"
+      ]
+    },
+    "CommentPost": {
+      "properties": {
+        "title": {
+          "type": "string"
+        },
+        "body": {
+          "type": "string"
+        },
+        "post_id": {
+          "type": "integer"
+        },
+        "profile_id": {
+          "$ref": "#/parameters/profile_id"
+        }
+      },
+      "required": [
+        "body",
+        "title",
+        "post_id"
+      ]
+    },
+    "CommentPut": {
+      "properties": {
+        "title": {
+          "type": "string"
+        },
+        "body": {
+          "type": "string"
+        },
+        "modifed_by": {
+          "type": "integer"
+        }
+      },
+      "required": [
+        "body",
+        "title",
+        "modifed_by"
+      ]
+    },
+    "Quarantine": {
+      "allOf": [
+        {
+          "$ref": "#/definitions/Base"
+        }
+      ],
+      "properties": {
+        "profile_id": {
+          "type": "integer"
+        },
+        "profile_ref": {
+          "type": "integer"
+        },
+        "reason": {
+          "type": "string"
+        },
+        "flags": {
+          "type": "array",
+          "items": {
+            "type": "integer"
+          }
+        }
+      }
+    },
+    "QuarantinePost": {
+      "properties": {
+        "profile_id": {
+          "type": "integer"
+        },
+        "profile_ref": {
+          "type": "integer"
+        },
+        "reason": {
+          "type": "string"
+        },
+        "flags": {
+          "type": "array",
+          "items": {
+            "type": "integer"
+          }
+        }
+      },
+      "required": [
+        "profile_id",
+        "profile_ref",
+        "reason"
+      ]
+    },
+    "QuarantinePut": {
+      "properties": {
+        "modified_by": {
+          "type": "integer"
+        },
+        "profile_id": {
+          "type": "integer"
+        },
+        "profile_ref": {
+          "type": "integer"
+        },
+        "reason": {
+          "type": "string"
+        },
+        "flags": {
+          "type": "array",
+          "items": {
+            "type": "integer"
+          }
+        }
+      },
+      "required": [
+        "modified_by"
+      ]
+    },
+    "Quarantines": {
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/Quarantine"
+      }
+    },
+    "Like": {
+      "allOf": [
+        {
+          "$ref": "#/definitions/Action"
+        }
+      ]
+    },
+    "Likes": {
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/Like"
+      }
+    },
+    "Follow": {
+      "allOf": [
+        {
+          "$ref": "#/definitions/ActionPost"
+        }
+      ]
+    },
+    "Follows": {
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/Follow"
+      }
+    },
+    "Flag": {
+      "allOf": [
+        {
+          "$ref": "#/definitions/Action"
+        }
+      ],
+      "properties": {
+        "reason": {
+          "type": "string"
+        }
+      }
+    },
+    "Flags": {
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/Flags"
+      }
+    },
+    "Posts": {
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/Post"
+      }
+    },
+    "Comments": {
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/Comment"
+      }
+    },
+    "Error": {
+      "type": "object",
+      "properties": {
+        "statusCode": {
+          "type": "integer"
+        },
+        "error": {
+          "type": "string"
+        }
+      },
+      "example": {
+        "statusCode": 500,
+        "error": "some unexpected error occured"
+      }
+    },
+    "InvalidToken": {
+      "type": "object",
+      "properties": {
+        "statusCode": {
+          "type": "integer"
+        },
+        "error": {
+          "type": "string"
+        },
+        "error_description": {
+          "type": "string"
+        }
+      },
+      "example": {
+        "statusCode": 401,
+        "error": "invalid_token",
+        "error_description": "The access token expired"
+      }
+    },
+    "InvalidUser": {
+      "type": "object",
+      "properties": {
+        "statusCode": {
+          "type": "integer"
+        },
+        "error": {
+          "type": "string"
+        }
+      },
+      "example": {
+        "statusCode": 300,
+        "error": "not logged in"
+      }
+    },
+    "Entity": {
+      "allOf": [
+        {
+          "$ref": "#/definitions/Base"
+        }
+      ],
+      "properties": {
+        "media": {
+          "$ref": "#/definitions/Media"
+        },
+        "profile_id": {
+          "type": "number",
+          "format": "integer"
+        }
+      },
+      "additionalProperties": true
+    },
+    "Action": {
+      "allOf": [
+        {
+          "$ref": "#/definitions/Base"
+        }
+      ],
+      "properties": {
+        "reference": {
+          "$ref": "#/definitions/Reference"
+        },
+        "profile_id": {
+          "type": "number",
+          "format": "integer"
+        }
+      }
+    },
+    "ActionPost": {
+      "properties": {
+        "reference": {
+          "$ref": "#/definitions/Reference"
+        },
+        "profile_id": {
+          "type": "number",
+          "format": "integer"
+        }
+      }
+    },
+    "Reference": {
+      "type": "object",
+      "required": [
+        "type",
+        "id"
+      ],
+      "properties": {
+        "type": {
+          "type": "string"
+        },
+        "id": {
+          "type": "integer"
+        }
+      }
+    },
+    "Media": {
+      "properties": {
+        "type": {
+          "type": "string"
+        },
+        "value": {
+          "type": "object"
+        }
+      },
+      "required": [
+        "type",
+        "value"
+      ]
+    },
+    "Base": {
+      "discriminator": "base",
+      "type": "object",
+      "properties": {
+        "created_epoch": {
+          "type": "integer"
+        },
+        "deleted_epoch": {
+          "type": "integer"
+        },
+        "modified_epoch": {
+          "type": "integer"
+        },
+        "modified_by": {
+          "type": "integer"
+        },
+        "id": {
+          "type": "integer"
+        }
+      },
+      "additionalProperties": true
+    }
+  },
+  "parameters": {
+    "accessToken": {
+      "name": "access_token",
+      "in": "query",
+      "description": "Access token from the OAuth2 server",
+      "type": "string",
+      "required": true
+    },
+    "limit": {
+      "name": "limit",
+      "in": "query",
+      "description": "Number of elements to return",
+      "default": 10,
+      "type": "integer"
+    },
+    "offset": {
+      "name": "offset",
+      "in": "query",
+      "description": "Offset value",
+      "default": 0,
+      "type": "integer"
+    },
+    "include": {
+      "name": "include",
+      "in": "query",
+      "description": "Include related objects. Json formatted object with type, limit, offset and count (Total number of elements) e.g. {type: post, limit: 10, offset: 0, count: 1}",
+      "type": "string"
+    },
+    "counts": {
+      "name": "counts",
+      "in": "query",
+      "description": "Include count of named related objects e.g. counts=[\"flags\", \"likes\"]",
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "postLimit": {
+      "name": "postLimit",
+      "in": "query",
+      "description": "limit of posts to include",
+      "type": "integer"
+    },
+    "postOffset": {
+      "name": "postOffset",
+      "in": "query",
+      "description": "Offset of included posts",
+      "type": "integer"
+    },
+    "commentLimit": {
+      "name": "commentLimit",
+      "in": "query",
+      "description": "limit of comments to include",
+      "type": "integer"
+    },
+    "commentOffset": {
+      "name": "commentOffset",
+      "in": "query",
+      "description": "Offset of included comments",
+      "type": "integer"
+    },
+    "id": {
+      "name": "id",
+      "in": "path",
+      "description": "Id of object",
+      "required": true,
+      "type": "integer"
+    },
+    "flag_id": {
+      "name": "id",
+      "in": "path",
+      "description": "Id of flag",
+      "required": true,
+      "type": "integer"
+    },
+    "like_id": {
+      "name": "id",
+      "in": "path",
+      "description": "Id of like",
+      "required": true,
+      "type": "integer"
+    },
+    "follow_id": {
+      "name": "id",
+      "in": "path",
+      "description": "Id of follow",
+      "required": true,
+      "type": "integer"
+    },
+    "comment_id": {
+      "name": "id",
+      "in": "path",
+      "description": "Id of comment",
+      "required": true,
+      "type": "integer"
+    },
+    "group_id": {
+      "name": "id",
+      "in": "path",
+      "description": "Id of group",
+      "required": true,
+      "type": "integer"
+    },
+    "review_id": {
+      "name": "id",
+      "in": "path",
+      "description": "Id of review",
+      "required": true,
+      "type": "integer"
+    },
+    "profile_id": {
+      "name": "profile_id",
+      "in": "path",
+      "description": "Id of profile",
+      "required": true,
+      "type": "integer"
+    },
+    "quarantine_id": {
+      "name": "id",
+      "in": "path",
+      "description": "Id of quarantine",
+      "required": true,
+      "type": "integer"
+    },
+    "profilePost": {
+      "name": "profile",
+      "in": "body",
+      "description": "The profile to create.",
+      "schema": {
+        "$ref": "#/definitions/ProfilePut"
+      }
+    },
+    "username": {
+      "name": "username",
+      "in": "path",
+      "description": "Username",
+      "required": true,
+      "type": "string"
+    },
+    "groupPut": {
+      "name": "group",
+      "in": "body",
+      "description": "The group to update",
+      "schema": {
+        "$ref": "#/definitions/GroupPut"
+      }
+    },
+    "groupname": {
+      "name": "groupname",
+      "in": "path",
+      "description": "Groupname",
+      "required": true,
+      "type": "string"
+    },
+    "postPost": {
+      "name": "post",
+      "in": "body",
+      "description": "The post to create.",
+      "schema": {
+        "$ref": "#/definitions/PostPost"
+      }
+    },
+    "postPut": {
+      "name": "post",
+      "in": "body",
+      "description": "The post to create.",
+      "schema": {
+        "$ref": "#/definitions/PostPut"
+      }
+    },
+    "commentPost": {
+      "name": "comment",
+      "in": "body",
+      "description": "The object representing the comment to create",
+      "schema": {
+        "$ref": "#/definitions/CommentPost"
+      }
+    },
+    "commentPut": {
+      "name": "comment",
+      "in": "body",
+      "description": "The object representing the updates that should made to the comment",
+      "schema": {
+        "$ref": "#/definitions/CommentPut"
+      }
+    },
+    "reviewPut": {
+      "name": "review",
+      "in": "body",
+      "description": "a review definition",
+      "schema": {
+        "$ref": "#/definitions/ReviewPut"
+      }
+    },
+    "quarantinePut": {
+      "name": "quarantine",
+      "in": "body",
+      "description": "a quarantine definition",
+      "schema": {
+        "$ref": "#/definitions/QuarantinePut"
+      }
+    },
+    "modified_by": {
+      "name": "Deleted By",
+      "in": "body",
+      "description": "Id of profile modifiying the object.",
+      "schema": {
+        "properties": {
+          "modified_by": {
+            "type": "integer"
+          }
+        }
+      }
+    }
+  },
+  "responses": {
+    "Profile": {
+      "description": "A profile object.",
+      "schema": {
+        "$ref": "#/definitions/Profile"
+      }
+    },
+    "Profiles": {
+      "description": "A list of profiles.",
+      "schema": {
+        "$ref": "#/definitions/Profiles"
+      }
+    },
+    "Activity": {
+      "description": "All activity made by user",
+      "schema": {
+        "$ref": "#/definitions/Activity"
+      }
+    },
+    "UserIsFollowingGroup": {
+      "description": "Returns the ID of the follow action",
+      "schema": {
+        "$ref": "#/definitions/UserIsFollowingGroup"
+      }
+    },
+    "Group": {
+      "description": "A group object.",
+      "schema": {
+        "$ref": "#/definitions/Group"
+      }
+    },
+    "Groups": {
+      "description": "A list of groups",
+      "schema": {
+        "$ref": "#/definitions/Groups"
+      }
+    },
+    "GroupnameExists": {
+      "description": "The group ID is returned if the groupname is found otherwise 400 is returned and the data object will be present but empty",
+      "schema": {
+        "$ref": "#/definitions/GroupnameExists"
+      }
+    },
+    "Like": {
+      "description": "A like.",
+      "schema": {
+        "$ref": "#/definitions/Like"
+      }
+    },
+    "Likes": {
+      "description": "A list of likes",
+      "schema": {
+        "$ref": "#/definitions/Likes"
+      }
+    },
+    "UsernameExists": {
+      "description": "The profile ID is returned if the username is found otherwise 400 is returned and the data object will be present but empty",
+      "schema": {
+        "$ref": "#/definitions/UsernameExists"
+      }
+    },
+    "Follow": {
+      "description": "A follow object.",
+      "schema": {
+        "$ref": "#/definitions/Follow"
+      }
+    },
+    "Follows": {
+      "description": "A list of follows",
+      "schema": {
+        "$ref": "#/definitions/Follows"
+      }
+    },
+    "Flag": {
+      "description": "A flag object.",
+      "schema": {
+        "$ref": "#/definitions/Flag"
+      }
+    },
+    "Flags": {
+      "description": "A list of flags",
+      "schema": {
+        "$ref": "#/definitions/Flags"
+      }
+    },
+    "Post": {
+      "description": "A post object.",
+      "schema": {
+        "$ref": "#/definitions/Post"
+      }
+    },
+    "Posts": {
+      "description": "A list of posts.",
+      "schema": {
+        "$ref": "#/definitions/Posts"
+      }
+    },
+    "Comment": {
+      "description": "A comment object.",
+      "schema": {
+        "$ref": "#/definitions/Comment"
+      }
+    },
+    "Comments": {
+      "description": "A list of comments.",
+      "schema": {
+        "$ref": "#/definitions/Comments"
+      }
+    },
+    "Review": {
+      "description": "A review object.",
+      "schema": {
+        "$ref": "#/definitions/Review"
+      }
+    },
+    "Reviews": {
+      "description": "A list of reviews.",
+      "schema": {
+        "$ref": "#/definitions/Reviews"
+      }
+    },
+    "Quarantine": {
+      "description": "A Quarantine object.",
+      "schema": {
+        "$ref": "#/definitions/Quarantine"
+      }
+    },
+    "Quarantines": {
+      "description": "A list of Quarantines.",
+      "schema": {
+        "$ref": "#/definitions/Quarantines"
+      }
+    },
+    "Error": {
+      "description": "An unexpected error occured.",
+      "schema": {
+        "$ref": "#/definitions/Error"
+      }
+    },
+    "InvalidToken": {
+      "description": "Invalid token is used",
+      "schema": {
+        "$ref": "#/definitions/InvalidToken"
+      }
+    },
+    "InvalidUser": {
+      "description": "Invalid user token",
+      "schema": {
+        "$ref": "#/definitions/InvalidUser"
+      }
+    }
+  }
+}
