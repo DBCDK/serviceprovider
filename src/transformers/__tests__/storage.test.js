@@ -41,7 +41,9 @@ describe('Storage endpoint', () => {
     });
 
     it('has a corresponding document with meta-data for data-types', async () => {
-      const typeDocument = await dbcOpenPlatform.storage({get: typeUuid});
+      const typeDocument = await dbcOpenPlatform.storage({
+        get: {_id: typeUuid}
+      });
       assert.deepEqual(typeDocument, {
         name: 'type',
         type: 'json',
@@ -112,7 +114,7 @@ describe('Storage endpoint', () => {
   describe('fetching data', () => {
     //
     it('returns document given an uuid', async () => {
-      const result = await dbcOpenPlatform.storage({get: doc1._id});
+      const result = await dbcOpenPlatform.storage({get: {_id: doc1._id}});
       assert.deepEqual(result, {
         title: 'hello world',
         tags: ['foo', 'bar', 'baz'],
@@ -128,7 +130,7 @@ describe('Storage endpoint', () => {
       await expectThrow(
         () =>
           dbcOpenPlatform.storage({
-            get: '89c17dad-0296-4684-98d1-aa5e379cbbdd'
+            get: {_id: '89c17dad-0296-4684-98d1-aa5e379cbbdd'}
           }),
         'Error: {"statusCode":404,"error":"id not found"}'
       );
@@ -197,7 +199,7 @@ describe('Storage endpoint', () => {
         }
       });
 
-      const result = await dbcOpenPlatform.storage({get: doc1._id});
+      const result = await dbcOpenPlatform.storage({get: {_id: doc1._id}});
       assert.deepEqual(result, {
         hello: 'world',
         tags: ['foo', 'quux'],
@@ -260,7 +262,7 @@ describe('Storage endpoint', () => {
         }
       });
 
-      const result = await dbcOpenPlatform.storage({get: doc1._id});
+      const result = await dbcOpenPlatform.storage({get: {_id: doc1._id}});
       assert.deepEqual(result, {
         tags: ['bar', 'baz'],
         _owner: user,
@@ -307,7 +309,7 @@ describe('Storage endpoint', () => {
 
     it('can be retrieved', async () => {
       const result = await dbcOpenPlatform.storage({
-        get: doc2._id
+        get: {_id: doc2._id}
       });
       assert.deepEqual(result, {
         _data: jpegData,
@@ -493,7 +495,7 @@ describe('Storage endpoint', () => {
       assert.equal(result, 1);
     });
     it('reduces counts when object is deleted', async () => {
-      await dbcOpenPlatform.storage({delete: objectId});
+      await dbcOpenPlatform.storage({delete: {_id: objectId}});
       let result = await dbcOpenPlatform.storage({
         count: {
           _type: `${user}.testType2`,
@@ -513,7 +515,7 @@ describe('Storage endpoint', () => {
         }
       });
       for (const uuid of types) {
-        await dbcOpenPlatform.storage({delete: uuid});
+        await dbcOpenPlatform.storage({delete: {_id: uuid}});
       }
     }
   }
