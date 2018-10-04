@@ -171,7 +171,7 @@ const serviceChecks = {
   storage: async ({context}) => {
     let ok = true;
     try {
-      knex.raw('SELECT 1;');
+      await knex.raw('SELECT 1;');
     } catch (e) {
       ok = false;
     }
