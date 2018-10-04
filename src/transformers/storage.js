@@ -6,9 +6,9 @@ const metaTypeUuid = 'bf130fb7-8bd4-44fd-ad1d-43b6020ad102';
 const sharp = require('sharp');
 const assert = require('assert');
 
-async function get(id, context) {
+async function get({_id}, context) {
   let result = await knex('docs')
-    .where('id', id)
+    .where('id', _id)
     .select();
   if (!result.length) {
     return {statusCode: 404, error: 'id not found'};
@@ -69,7 +69,7 @@ const uuidRegExp = new RegExp(
 async function indexLookup(valueType, opts, ctx) {
   // eslint-disable-next-line no-use-before-define
   const _type = await lookupType(opts._type || metaTypeUuid, ctx);
-  const type = (await get(_type, ctx)).data;
+  const type = (await get({_id: _type}, ctx)).data;
   const keys = Object.keys(opts).filter(key => key !== '_type');
 
   if (Array.isArray(type.indexes)) {
@@ -258,7 +258,7 @@ async function put(obj, ctx) {
 
   let type;
   try {
-    type = (await get(obj._type, ctx)).data;
+    type = (await get({_id: obj._type}, ctx)).data;
     if (!type || type._type !== metaTypeUuid) {
       throw {type: obj._type};
     }
@@ -270,7 +270,7 @@ async function put(obj, ctx) {
   let result, status;
 
   if (obj._id) {
-    const prev = (await get(obj._id, ctx)).data;
+    const prev = (await get({_id: obj._id}, ctx)).data;
     await verifyModifiable(obj, {prev, user, type});
 
     let version = Date.now();
@@ -304,10 +304,10 @@ async function put(obj, ctx) {
   };
 }
 
-async function del(_id, ctx) {
+async function del({_id}, ctx) {
   const user = ctx.get('storage.user');
-  const prev = (await get(_id, ctx)).data;
-  const type = (await get(prev._type, ctx)).data;
+  const prev = (await get({_id}, ctx)).data;
+  const type = (await get({_id: prev._type}, ctx)).data;
 
   await verifyModifiable({_id}, {prev, user, type});
   await indexKeys(prev, type, 'remove');
@@ -336,7 +336,7 @@ async function scan(
 ) {
   _type = await lookupType(_type, ctx);
 
-  let type = await get(_type, ctx);
+  let type = await get({_id: _type}, ctx);
   if (!Array.isArray(type.data && type.data.indexes)) {
     return {statusCode: 400, error: 'invalid _type'};
   }

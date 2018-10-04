@@ -361,7 +361,7 @@ api:
     properties:
       get:
         description: retrieve data
-        type: string
+        type: object
       put:
         description: save data
         type: object
@@ -370,7 +370,7 @@ api:
         type: object
       delete:
         description: delete data
-        type: string
+        type: object
       scan:
         description: scan through an index
         type: object
