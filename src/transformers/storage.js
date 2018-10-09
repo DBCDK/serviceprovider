@@ -1,3 +1,4 @@
+/*jshint loopfunc:true */
 const {log} = require('../utils.js');
 const _ = require('lodash');
 const uuidv4 = require('uuid/v4');
@@ -66,7 +67,7 @@ const uuidRegExp = new RegExp(
   '^xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx$'.replace(/x/g, '[0-9a-fA-F]')
 );
 
-async function indexLookup(valueType, opts, ctx) {
+async function find(opts, ctx) {
   // eslint-disable-next-line no-use-before-define
   const _type = await lookupType(opts._type || metaTypeUuid, ctx);
   const type = (await get({_id: _type}, ctx)).data;
@@ -76,12 +77,12 @@ async function indexLookup(valueType, opts, ctx) {
     for (let idx = 0; idx < type.indexes.length; ++idx) {
       const index = type.indexes[idx];
       if (
-        index.value === valueType &&
+        index.value === '_id' &&
         index.keys.length === keys.length &&
         index.keys.filter(key => opts.hasOwnProperty(key)).length ===
           keys.length
       ) {
-        const result = await knex('indexes')
+        const result = await knex('idIndex')
           .where('type', _type)
           .where('idx', idx)
           .where(
@@ -96,16 +97,34 @@ async function indexLookup(valueType, opts, ctx) {
   return {statusCode: 400, error: `no index for ${JSON.stringify(keys)}`};
 }
 
-async function find(opts, ctx) {
-  return indexLookup('_id', opts, ctx);
-}
-
 async function count(opts, ctx) {
-  const result = await indexLookup('_count', opts, ctx);
-  if (result.statusCode !== 200) {
-    return result;
+  // eslint-disable-next-line no-use-before-define
+  const _type = await lookupType(opts._type || metaTypeUuid, ctx);
+  const type = (await get({_id: _type}, ctx)).data;
+  const keys = Object.keys(opts).filter(key => key !== '_type');
+
+  if (Array.isArray(type.indexes)) {
+    for (let idx = 0; idx < type.indexes.length; ++idx) {
+      const index = type.indexes[idx];
+      if (
+        index.value === '_count' &&
+        index.keys.length === keys.length &&
+        index.keys.filter(key => opts.hasOwnProperty(key)).length ===
+          keys.length
+      ) {
+        const [result] = await knex('countIndex')
+          .where('type', _type)
+          .where('idx', idx)
+          .where(
+            'key',
+            index.keys.map(key => JSON.stringify(opts[key])).join('\n')
+          )
+          .select('val');
+        return {statusCode: 200, data: (result && result.val) || 0};
+      }
+    }
   }
-  return {statusCode: 200, data: +(result.data[0] || 0)};
+  return {statusCode: 400, error: `no index for ${JSON.stringify(keys)}`};
 }
 
 async function lookupType(type, ctx) {
@@ -136,9 +155,9 @@ async function lookupType(type, ctx) {
 }
 
 async function indexKeys(obj, type, action) {
+  const result = [];
   for (let idx = 0; idx < type.indexes.length; ++idx) {
     const index = type.indexes[idx];
-    const result = [];
     const arrayKeys = index.keys.filter(k => Array.isArray(obj[k]));
     if (arrayKeys.length === 1) {
       // only support one array-key to avoid possible combinatorial explosion
@@ -148,73 +167,79 @@ async function indexKeys(obj, type, action) {
           idx,
           key: index.keys
             .map(k => JSON.stringify(k === arrayKeys[0] ? key : obj[k]))
-            .join('\n')
+            .join('\n'),
+          val: index.value
         });
       }
     } else {
       result.push({
         type: obj._type,
         idx,
-        key: index.keys.map(k => JSON.stringify(obj[k])).join('\n')
-      });
-    }
-
-    if (index.value === '_id') {
-      for (const row of result) {
-        try {
-          if (action === 'remove') {
-            await knex('indexes')
-              .where(Object.assign({}, row, {val: obj._id}))
-              .del();
-          } else if (action === 'add') {
-            await knex('indexes').insert(
-              Object.assign({}, row, {val: obj._id})
-            );
-          } else {
-            assert.fail();
-          }
-        } catch (e) {
-          log.error(`index error while trying to {action} _id`, {
-            error: String(e)
-          });
-          // ignore
-        }
-      }
-    } else if (index.value === '_count') {
-      for (const row of result) {
-        try {
-          const [prevRow] = await knex('indexes')
-            .select('val')
-            .where(row);
-          let val = +(prevRow && prevRow.val) || 0;
-
-          if (action === 'remove') {
-            --val;
-          } else if (action === 'add') {
-            ++val;
-          } else {
-            assert.fail();
-          }
-
-          if (!prevRow) {
-            await knex('indexes').insert(Object.assign({}, row, {val}));
-          } else {
-            await knex('indexes')
-              .update({val})
-              .where(row);
-          }
-        } catch (e) {
-          log.error(`index error while trying to {action}`, {error: String(e)});
-          // ignore
-        }
-      }
-    } else {
-      log.error('invalid index value type', {
-        type: obj._type,
-        valueType: index.value
+        key: index.keys.map(k => JSON.stringify(obj[k])).join('\n'),
+        val: index.value
       });
     }
   }
+
+  const promises = [];
+  if (action === 'remove') {
+    promises.push(
+      knex('idIndex')
+        .where({val: obj._id})
+        .del()
+    );
+    for (const index of result) {
+      const row = Object.assign({}, index);
+      delete row.val;
+      if (index.val === '_count') {
+        promises.push(
+          (async () => {
+            const [prevRow] = await knex('countIndex')
+              .select('val')
+              .where(row);
+            if (prevRow && prevRow.val <= 1) {
+              await knex('countIndex')
+                .where(row)
+                .del();
+            } else {
+              await knex('countIndex')
+                .where(row)
+                .decrement('val', 1);
+            }
+          })()
+        );
+      }
+    }
+  }
+  if (action === 'add') {
+    for (const index of result) {
+      const row = Object.assign({}, index);
+      delete row.val;
+      if (index.val === '_count') {
+        promises.push(
+          (async () => {
+            if (
+              (await knex('countIndex')
+                .select('val')
+                .where(row)).length
+            ) {
+              await knex('countIndex')
+                .where(row)
+                .increment('val', 1);
+            } else {
+              await knex('countIndex').insert(Object.assign({}, row, {val: 1}));
+            }
+          })()
+        );
+      }
+      if (index.val === '_id') {
+        promises.push(
+          knex('idIndex').insert(Object.assign({}, row, {val: obj._id}))
+        );
+      }
+    }
+  }
+  await Promise.all(promises);
 }
 
 async function verifyModifiable({_id, _version}, {prev, user, type}) {
@@ -322,7 +347,10 @@ async function del({_id}, ctx) {
       knex('docs')
         .where({type: prev._id})
         .del(),
-      knex('indexes')
+      knex('idIndex')
+        .where({type: prev._id})
+        .del(),
+      knex('countIndex')
         .where({type: prev._id})
         .del()
     ]);
@@ -348,7 +376,7 @@ async function scan(
 
   const idx = type.data.indexes.indexOf(indexes[0]);
 
-  let query = knex('indexes')
+  let query = knex('idIndex')
     .select('key', 'val')
     .where({type: _type, idx});
 
@@ -475,6 +503,30 @@ async function storageMiddleware(req, res, next) {
 }
 
 async function initDB() {
+  if (!(await knex.schema.hasTable('countIndex'))) {
+    await knex.schema.createTable('countIndex', table => {
+      table.uuid('type').notNullable();
+      table.integer('idx').notNullable();
+      table.string('key').notNullable();
+      table.integer('val').notNullable();
+      table.primary(['type', 'idx', 'key']);
+    });
+  }
+  if (!(await knex.schema.hasTable('idIndex'))) {
+    await knex.schema.createTable('idIndex', table => {
+      table.uuid('type').notNullable();
+      table.integer('idx').notNullable();
+      table.string('key').notNullable();
+      table.uuid('val').notNullable();
+      table.primary(['type', 'idx', 'key', 'val']);
+    });
+    await knex('idIndex').insert({
+      type: metaTypeUuid,
+      idx: 0,
+      key: '"openplatform"\n"type"',
+      val: metaTypeUuid
+    });
+  }
   if (!(await knex.schema.hasTable('docs'))) {
     await knex.schema.createTable('docs', table => {
       table.uuid('id').notNullable();
@@ -484,13 +536,6 @@ async function initDB() {
       table.timestamp('version').notNullable();
       table.binary('data').notNullable();
       table.primary(['id']);
-    });
-    await knex.schema.createTable('indexes', table => {
-      table.uuid('type').notNullable();
-      table.integer('idx').notNullable();
-      table.string('key').notNullable();
-      table.string('val').notNullable();
-      table.primary(['type', 'idx', 'key', 'val']);
     });
     await knex('docs').insert({
       type: metaTypeUuid,
@@ -507,12 +552,6 @@ async function initDB() {
         },
         indexes: [{value: '_id', keys: ['_owner', 'name']}]
       })
-    });
-    await knex('indexes').insert({
-      type: metaTypeUuid,
-      idx: 0,
-      key: '"openplatform"\n"type"',
-      val: metaTypeUuid
     });
   }
 }
