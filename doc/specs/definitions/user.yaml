@@ -6,6 +6,14 @@ definitions:
         type: string
       agency:
         type: string
+      name:
+        type: string
+      address:
+        type: string
+      postalCode:
+        type: string
+      mail:
+        type: string
       debt:
         $ref: "#/definitions/Debt"
       loans:
