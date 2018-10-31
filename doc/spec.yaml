@@ -418,6 +418,10 @@ api:
       example:
         id: "U2VydmljZVByb3ZpZGVy"
         agency: "710100"
+        name: "Joe User"
+        address: "Eksempelvej 42"
+        postalCode: "1234"
+        mail: "joe@example.com"
         loans:
           - loanId: "4940377131"
             title: håndbog over håndbøger
