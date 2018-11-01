@@ -20,6 +20,7 @@ Changes to the Open Platform API that should be attended when migrating from v. 
 <table border=1>
 <tr> <th> version 2 </th> <th> version 3 </th> </tr>
 <tr><td>
+
 ```
   "data": [
     {
@@ -30,6 +31,7 @@ Changes to the Open Platform API that should be attended when migrating from v. 
     },
 ```
 </td><td>
+
 ```
   "data": [
     {
