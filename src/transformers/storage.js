@@ -375,8 +375,21 @@ async function scan(
   }
 
   const idx = type.data.indexes.indexOf(indexes[0]);
+  const idxType = type.data.indexes[idx].value;
+  let dbIndex;
 
-  let query = knex('idIndex')
+  if (idxType === '_id') {
+    dbIndex = 'idIndex';
+  } else if (idxType === '_count') {
+    dbIndex = 'countIndex';
+  } else {
+    return {
+      statusCode: 400,
+      error: 'the indexed value has to be _count or _id'
+    };
+  }
+
+  let query = knex(dbIndex)
     .select('key', 'val')
     .where({type: _type, idx});
 
