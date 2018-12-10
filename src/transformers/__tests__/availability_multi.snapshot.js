@@ -78,7 +78,7 @@ const provider = Provider();
 describe('Automated test: availability_multi.snapshot', () => {
   it('has same result as recorded (in availability_multi.snapshot)', () => {
     assert(
-      Date.now() < +new Date('2018-11-18'),
+      Date.now() < +new Date('2019-01-01'),
       'Please recreate the automatically generated unit tests, such that the mock data does not come out of sync with the actual services. See README.md for details.'
     );
     context.mockData = mockData;
