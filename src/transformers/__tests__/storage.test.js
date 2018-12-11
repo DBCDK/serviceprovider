@@ -494,6 +494,27 @@ describe('Storage endpoint', () => {
       });
       assert.equal(result, 1);
     });
+    it('scans for a prefix', async () => {
+      assert.deepEqual(
+        await dbcOpenPlatform.storage({
+          scan: {
+            _type: `${user}.testType2`,
+            index: ['name']
+          }
+        }),
+        [{key: ['hello'], val: 2}, {key: ['world'], val: 1}]
+      );
+      assert.deepEqual(
+        await dbcOpenPlatform.storage({
+          scan: {
+            _type: `${user}.testType2`,
+            index: ['name'],
+            before: ['hellox']
+          }
+        }),
+        [{key: ['hello'], val: 2}]
+      );
+    });
     it('reduces counts when object is deleted', async () => {
       await dbcOpenPlatform.storage({delete: {_id: objectId}});
       let result = await dbcOpenPlatform.storage({
