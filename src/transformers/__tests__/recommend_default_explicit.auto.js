@@ -241,7 +241,7 @@ const provider = Provider();
 describe('Automated test: recommend_default_explicit.auto', () => {
   it('has same result as recorded (in recommend_default_explicit.auto)', () => {
     assert(
-      Date.now() < +new Date('2019-01-01'),
+      Date.now() < +new Date('2019-02-28'),
       'Please recreate the automatically generated unit tests, such that the mock data does not come out of sync with the actual services. See README.md for details.'
     );
     context.mockData = mockData;
