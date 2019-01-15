@@ -42,6 +42,7 @@ async function get({_id}, context) {
       };
 
     case 'jpeg':
+    case 'image':
       return {
         statusCode: 200,
         data: {
@@ -266,7 +267,7 @@ function findPutData(obj, type) {
       JSON.stringify(_.fromPairs(keys.map(k => [k, obj[k]]))),
       'utf-8'
     );
-  } else if (type.type === 'jpeg') {
+  } else if (type.type === 'jpeg' || type.type === 'image') {
     result.data = Buffer.from(obj._data, 'latin1');
   } else {
     throw {statusCode: 500, error: 'invalid contenttype'};
@@ -476,6 +477,31 @@ async function storageTransformer(request, context) {
   }
 }
 
+/**
+ * Recognise magic number for PNG
+ */
+function bufferIsPNG(buffer) {
+  const magic = [0x89, 0x50, 0x4e, 0x47, 0x0d, 0x0a, 0x1a, 0x0a];
+  for (let i = 0; i < 8; ++i) {
+    if (buffer[i] !== magic[i]) {
+      return false;
+    }
+  }
+  return true;
+}
+
+/**
+ * Recognise magic number for JPEG
+ */
+function bufferIsJPEG(buffer) {
+  return (
+    buffer[0] === 0xff &&
+    buffer[1] === 0xd8 &&
+    buffer[buffer.length - 2] === 0xff &&
+    buffer[buffer.length - 1] === 0xd9
+  );
+}
+
 async function storageMiddleware(req, res, next) {
   if (req.method === 'GET' && req.url.slice(1)) {
     const uuid = req.url.slice(1).replace(/[?].*/, '');
@@ -491,11 +517,11 @@ async function storageMiddleware(req, res, next) {
       if (type.permissions.read !== 'any') {
         return res.status(403).end('forbidden');
       }
-      if (type.type !== 'jpeg') {
+      if (type.type !== 'jpeg' && type.type !== 'image') {
         return res
           .status(400)
           .end(
-            'only jpeg-images can be fetched directly through url (may change later). Use API instead.'
+            'only images can be fetched directly through url (may change later). Use API instead.'
           );
       }
       const {width, height} = req.query;
@@ -505,7 +531,14 @@ async function storageMiddleware(req, res, next) {
           .resize(width && +width, height && +height)
           .toBuffer();
       }
-      res.header('Content-Type', 'image/jpeg');
+
+      if (bufferIsJPEG(data)) {
+        res.header('Content-Type', 'image/jpeg');
+      } else if (bufferIsPNG(data)) {
+        res.header('Content-Type', 'image/png');
+      } else {
+        return res.status(400).end('invalid image format');
+      }
       return res.end(data);
     } catch (e) {
       log.error('storage middleware error', {error: String(e)});

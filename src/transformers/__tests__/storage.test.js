@@ -20,7 +20,7 @@ describe('Storage endpoint', () => {
   // `type1` is a new type we create, and
   // `doc1` is a new document we create.
   //
-  let user, typeUuid, type1, doc1, imageType, doc2;
+  let user, typeUuid, type1, doc1, imageType, doc2, doc3;
 
   before(async () => {
     const status = await dbcOpenPlatform.status({
@@ -284,6 +284,11 @@ describe('Storage endpoint', () => {
         '2gAMAwEAAhEDEQA/ACMIpGssrjqrqw9OFkWVUjF1McmUhkhYaHn1utv/2Q==',
       'base64'
     ).toString('latin1');
+    const pngData =
+      '\x89PNG\r\n\u001a\n\u0000\u0000\u0000\rIHDR\u0000\u0000\u0000\u0003' +
+      "\u0000\u0000\u0000\u0003\u0001\u0003\u0000\u0000\u0000læ'ü\u0000\u0000\u0000" +
+      '\u0006PLTEÿÿÿ\u0000\u0000\u0000UÂÓ~\u0000\u0000\u0000\u000eIDAT\b×cXÀàÀ°\u0000' +
+      '\u0000\u0004\u0001\u0004w~\u001f\u0000\u0000\u0000\u0000IEND®B`';
 
     it('has to have a type with an image content-type', async () => {
       imageType = await dbcOpenPlatform.storage({
@@ -291,14 +296,14 @@ describe('Storage endpoint', () => {
           _type: typeUuid,
           name: 'testImage',
           description: 'Type used during unit test',
-          type: 'jpeg',
+          type: 'image',
           permissions: {read: 'any'},
           indexes: []
         }
       });
     });
 
-    it('can be stored', async () => {
+    it('can store jpeg images', async () => {
       doc2 = await dbcOpenPlatform.storage({
         put: {
           _type: imageType._id,
@@ -307,7 +312,16 @@ describe('Storage endpoint', () => {
       });
     });
 
-    it('can be retrieved', async () => {
+    it('can store png images', async () => {
+      doc3 = await dbcOpenPlatform.storage({
+        put: {
+          _type: imageType._id,
+          _data: pngData
+        }
+      });
+    });
+
+    it('can retrieve an image', async () => {
       const result = await dbcOpenPlatform.storage({
         get: {_id: doc2._id}
       });
@@ -333,7 +347,7 @@ describe('Storage endpoint', () => {
         return false;
       }
     }
-    it('can be retrieved using the http-endpoint', async () => {
+    it('can retrieve image using the http-endpoint', async () => {
       if (!(await hasLocalServiceProvider())) {
         console.warn('Skipping test needing running serviceprovider:');
         return;
@@ -345,7 +359,7 @@ describe('Storage endpoint', () => {
       assert.equal(result.headers['content-type'], 'image/jpeg');
       assert.equal(result.body, jpegData);
     });
-    it('can be retrieved scaled using the http-endpoint', async () => {
+    it('can retrieve scaled jpeg image using the http-endpoint', async () => {
       if (!(await hasLocalServiceProvider())) {
         console.warn('Skipping test needing running serviceprovider:');
         return;
@@ -359,6 +373,21 @@ describe('Storage endpoint', () => {
       assert.equal(jpegData.slice(0, 3), result.body.slice(0, 3));
       // check that the scaled image is somewhat larger than the original
       assert(result.body.length > 1000);
+    });
+    it('can retrieve scaled png image using the http-endpoint', async () => {
+      if (!(await hasLocalServiceProvider())) {
+        console.warn('Skipping test needing running serviceprovider:');
+        return;
+      }
+      const result = await request({
+        url: spUrl + '/storage/' + doc3._id + '?width=256&height=256',
+        encoding: 'latin1'
+      });
+      assert.equal(result.headers['content-type'], 'image/png');
+      // result starts has jpeg-files start
+      assert.equal(pngData.slice(0, 8), result.body.slice(0, 8));
+      // check that the scaled image is somewhat larger than the original
+      assert(result.body.length > pngData.length);
     });
   });
 
