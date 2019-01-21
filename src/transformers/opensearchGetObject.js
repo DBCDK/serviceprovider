@@ -250,7 +250,6 @@ function getBriefDisplayData(searchResult) {
   return res;
 }
 
-
 /**
  * If there is no search result or it is empty, an empty array will be returned.
  * @param response
@@ -329,7 +328,10 @@ function validateAndGetFullTextReviews(searchResult) {
  * @returns {Array}
  */
 function validateAndGetSingleReview(item) {
-  if (!_.has(item, 'article.title.$') || item.article.title.$ !== 'Lektørudtalelse') {
+  if (
+    !_.has(item, 'article.title.$') ||
+    item.article.title.$ !== 'Lektørudtalelse'
+  ) {
     return [];
   }
   if (!_.has(item, 'article.section') || item.article.section.length === 0) {
@@ -346,22 +348,25 @@ function validateAndGetSingleReview(item) {
 function getFullTextReviewsData(searchResult) {
   const object = validateAndGetFullTextReviews(searchResult);
   const reviews = [];
-  _.forEach(object, item => {  // For each lektør
-      const singleReview = [];
-      const sections = validateAndGetSingleReview(item);
-      _.forEach(sections, section => {  // For each section for one lektør
-        let review = {};
-        _.forEach(section, (info, key) => {  // For each title, para etc...
-          if (_.has(info, '$')) {
-            review[key] = info.$;
-          }
-        });
-        if (review.length !== 0) {
-          singleReview.push(review);
+  _.forEach(object, item => {
+    // For each lektør
+    const singleReview = [];
+    const sections = validateAndGetSingleReview(item);
+    _.forEach(sections, section => {
+      // For each section for one lektør
+      let review = {};
+      _.forEach(section, (info, key) => {
+        // For each title, para etc...
+        if (_.has(info, '$')) {
+          review[key] = info.$;
         }
       });
-      reviews.push(singleReview);
+      if (review.length !== 0) {
+        singleReview.push(review);
+      }
     });
+    reviews.push(singleReview);
+  });
   return {fullTextReviews: reviews};
 }
 
@@ -412,7 +417,13 @@ export function responseTransform(response, context, params) {
       ? getFullTextReviewsData(searchResult)
       : {};
     const result = {};
-    _.extend(result, dkabmData, briefDisplayData, relationData, fullTextReviewsData);
+    _.extend(
+      result,
+      dkabmData,
+      briefDisplayData,
+      relationData,
+      fullTextReviewsData
+    );
     return result;
   });
   return {statusCode: 200, data: data};
