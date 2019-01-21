@@ -613,6 +613,9 @@ definitions:
         type: array
         items:
           type: string
+      fullTextReviews:
+        description: returns lektørudtalelser from docbook format
+        type: any
       extent:
         type: array
         items:
