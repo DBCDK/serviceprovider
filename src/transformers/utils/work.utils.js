@@ -17,7 +17,8 @@ export function isGetObject(field) {
   return (
     typeId.isType(field, requestType.DKABM) ||
     typeId.isType(field, requestType.BRIEFDISPLAY) ||
-    typeId.isType(field, requestType.RELATIONS)
+    typeId.isType(field, requestType.RELATIONS) ||
+    typeId.isType(field, requestType.DOCBOOK)
   );
 }
 
