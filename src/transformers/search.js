@@ -13,7 +13,8 @@ export default (params, context) => {
     let type = typeId.getType(field);
     if (
       type === 'moreinfo' || // moreinfo is a separate service, which we can get through work
-      type === 'relations'
+      type === 'relations' ||
+      type === 'docbook'
     ) {
       // relations in opensearch-search is based on collections, and we want it for the manifests
       workFields.push(field);

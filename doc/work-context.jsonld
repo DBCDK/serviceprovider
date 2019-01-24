@@ -152,6 +152,7 @@
 "descriptionSeries":{"@id":"dc:description","@type":"dkdcplus:series"},
 "discussedIn":{"@id":"dbcaddi:discussedIn"},
 "discusses":{"@id":"dbcaddi:discusses"},
+"fullTextReviews":{"@id":"docbook:fullTextReviews"},
 "extent":{"@id":"dcterms:extent"},
 "fedoraPid":{"@id":"bd:fedoraPid"},
 "format":{"@id":"dc:format"},

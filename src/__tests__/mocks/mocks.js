@@ -635,6 +635,7 @@ export const requestTypeIdentifierMock = {
   'dc:descriptionseries': 'descriptionSeries',
   'dbcaddi:discussedin': 'discussedIn',
   'dbcaddi:discusses': 'discusses',
+  'docbook:fulltextreviews': 'fullTextReviews',
   'dcterms:extent': 'extent',
   'bd:fedorapid': 'fedoraPid',
   'dc:format': 'format',

@@ -5,6 +5,11 @@ import {log} from '../utils';
 const filePath = __dirname + '/../../doc/work-context.jsonld';
 const typeId = makeTypeID(filePath);
 
+/**
+ *
+ * @param request
+ * @returns {*}
+ */
 function getPids(request) {
   if (!_.has(request, 'pids')) {
     throw new Error('Pid not correctly present in request');
@@ -17,6 +22,11 @@ function getPids(request) {
   return request.pids;
 }
 
+/**
+ *
+ * @param context
+ * @returns {{agency: *, profile: *}}
+ */
 function getAndValidateOpensearchContext(context) {
   const searchAgency = context.get('search.agency', true);
   if (!searchAgency) {
@@ -32,9 +42,16 @@ function getAndValidateOpensearchContext(context) {
 const dataObjectRequestTypes = {
   DKABM: 'dkabm',
   BRIEFDISPLAY: 'briefDisplay',
-  RELATIONS: 'relations'
+  RELATIONS: 'relations',
+  FULLTEXTREVIEWS: 'docbook'
 };
 
+/**
+ *
+ * @param defaultBehaviour
+ * @param fields
+ * @returns {Array}
+ */
 function getObjectFormats(defaultBehaviour, fields) {
   const objectFormat = [];
 
@@ -58,9 +75,25 @@ function getObjectFormats(defaultBehaviour, fields) {
     objectFormat.push('dkabm');
   }
 
+  if (
+    defaultBehaviour ||
+    fields.some(field => {
+      return typeId.isType(field, requestType.DOCBOOK);
+    })
+  ) {
+    // eslint-disable-line brace-style
+    objectFormat.push('docbook');
+  }
+
   return objectFormat;
 }
 
+/**
+ *
+ * @param defaultBehaviour
+ * @param fields
+ * @returns {*}
+ */
 function getRequestRelationData(defaultBehaviour, fields) {
   if (
     defaultBehaviour ||
@@ -75,6 +108,12 @@ function getRequestRelationData(defaultBehaviour, fields) {
   return null;
 }
 
+/**
+ *
+ * @param request
+ * @param context
+ * @returns {{action: string, identifier: *, agency: *, profile: *, outputType: string, objectFormat: Array}}
+ */
 export function requestTransform(request, context) {
   // eslint-disable-line no-unused-vars
 
@@ -105,6 +144,11 @@ export function requestTransform(request, context) {
   return requestParams;
 }
 
+/**
+ *
+ * @param result
+ * @returns {Function}
+ */
 function retrieveDkabmFields(result) {
   return function(value, key) {
     const a = [];
@@ -138,7 +182,11 @@ function retrieveDkabmFields(result) {
   };
 }
 
-// If there is no dkabm-record, and empty object will be returned.
+/**
+ * If there is no dkabm-record, and empty object will be returned.
+ * @param searchResult
+ * @returns {*}
+ */
 function validateAndGetDkabmRecord(searchResult) {
   if (!_.has(searchResult, 'collection.object')) {
     return {};
@@ -154,6 +202,10 @@ function validateAndGetDkabmRecord(searchResult) {
   return record;
 }
 
+/**
+ *
+ * @param searchResult
+ */
 function getDkabmData(searchResult) {
   const record = validateAndGetDkabmRecord(searchResult);
 
@@ -162,6 +214,11 @@ function getDkabmData(searchResult) {
   return result;
 }
 
+/**
+ *
+ * @param searchResult
+ * @returns {{}}
+ */
 function validateAndGetBriefDisplay(searchResult) {
   if (!_.has(searchResult, 'formattedCollection.briefDisplay.manifestation')) {
     return {};
@@ -173,6 +230,10 @@ function validateAndGetBriefDisplay(searchResult) {
     : {};
 }
 
+/**
+ *
+ * @param searchResult
+ */
 function getBriefDisplayData(searchResult) {
   const briefDisplay = validateAndGetBriefDisplay(searchResult);
 
@@ -189,7 +250,11 @@ function getBriefDisplayData(searchResult) {
   return res;
 }
 
-// If there is no search result or it is empty, an empty array will be returned.
+/**
+ * If there is no search result or it is empty, an empty array will be returned.
+ * @param response
+ * @returns {Array}
+ */
 function validateAndGetSearchResult(response) {
   if (!_.has(response, 'data.searchResponse.result.searchResult')) {
     return [];
@@ -198,7 +263,11 @@ function validateAndGetSearchResult(response) {
   return searchResult.length && searchResult.length > 0 ? searchResult : [];
 }
 
-// Returns an empty array if no relations or if some property is missing.
+/**
+ * Returns an empty array if no relations or if some property is missing.
+ * @param searchResult
+ * @returns {*}
+ */
 function validateAndGetRelations(searchResult) {
   if (!_.has(searchResult, 'collection.object')) {
     // no object return empty list:
@@ -215,6 +284,10 @@ function validateAndGetRelations(searchResult) {
   return obj0.relations.relation;
 }
 
+/**
+ *
+ * @param searchResult
+ */
 function getRelationData(searchResult) {
   const relations = validateAndGetRelations(searchResult);
 
@@ -232,6 +305,78 @@ function getRelationData(searchResult) {
   return res;
 }
 
+/**
+ * Returns an empty array if no full text reviews or if some property is missing.
+ * @param searchResult
+ * @returns {*}
+ */
+function validateAndGetFullTextReviews(searchResult) {
+  if (!_.has(searchResult, 'collection.object')) {
+    // no object return empty list:
+    return [];
+  }
+  const obj = searchResult.collection.object;
+  if (!obj.length || obj.length === 0) {
+    return [];
+  }
+  return obj;
+}
+
+/**
+ * Returns a single item of collection.object
+ * @param item
+ * @returns {Array}
+ */
+function validateAndGetSingleReview(item) {
+  if (
+    !_.has(item, 'article.title.$') ||
+    item.article.title.$ !== 'Lektørudtalelse'
+  ) {
+    return [];
+  }
+  if (!_.has(item, 'article.section') || item.article.section.length === 0) {
+    return [];
+  }
+  return item.article.section;
+}
+
+/**
+ * Extract data for full text reviews
+ * @param searchResult
+ * @returns {Array}
+ */
+function getFullTextReviewsData(searchResult) {
+  const object = validateAndGetFullTextReviews(searchResult);
+  const reviews = [];
+  _.forEach(object, item => {
+    // For each lektør
+    const singleReview = [];
+    const sections = validateAndGetSingleReview(item);
+    _.forEach(sections, section => {
+      // For each section for one lektør
+      let review = {};
+      _.forEach(section, (info, key) => {
+        // For each title, para etc...
+        if (_.has(info, '$')) {
+          review[key] = info.$;
+        }
+      });
+      if (review.length !== 0) {
+        singleReview.push(review);
+      }
+    });
+    reviews.push(singleReview);
+  });
+  return {fullTextReviews: reviews};
+}
+
+/**
+ * Transform the response
+ * @param response
+ * @param context
+ * @param params
+ * @returns {*}
+ */
 export function responseTransform(response, context, params) {
   // eslint-disable-line no-unused-vars
   if (_.has(response, 'data.searchResponse.error.$')) {
@@ -266,14 +411,30 @@ export function responseTransform(response, context, params) {
     )
       ? getRelationData(searchResult)
       : {};
+    const fullTextReviewsData = dataObjectsRequested.includes(
+      dataObjectRequestTypes.FULLTEXTREVIEWS
+    )
+      ? getFullTextReviewsData(searchResult)
+      : {};
     const result = {};
-    _.extend(result, dkabmData, briefDisplayData, relationData);
+    _.extend(
+      result,
+      dkabmData,
+      briefDisplayData,
+      relationData,
+      fullTextReviewsData
+    );
     return result;
   });
-
   return {statusCode: 200, data: data};
 }
 
+/**
+ *
+ * @param request
+ * @param context
+ * @returns {Request|Promise|*|PromiseLike<({statusCode, error}|{}|{statusCode, data}) | never>|Promise<({statusCode, error}|{}|{statusCode, data}) | never>}
+ */
 export default (request, context) => {
   const params = requestTransform(request, context);
   return context
