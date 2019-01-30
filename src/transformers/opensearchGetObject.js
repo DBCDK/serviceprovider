@@ -369,7 +369,7 @@ function getFullTextReviewsData(searchResult) {
       reviews.push(singleReview);
     }
   });
-  return reviews.length === 0 ? {}: {fullTextReviews: reviews};
+  return reviews.length === 0 ? {} : {fullTextReviews: reviews};
 }
 
 /**
