@@ -365,9 +365,11 @@ function getFullTextReviewsData(searchResult) {
         singleReview.push(review);
       }
     });
-    reviews.push(singleReview);
+    if (singleReview.length !== 0) {
+      reviews.push(singleReview);
+    }
   });
-  return {fullTextReviews: reviews};
+  return reviews.length === 0 ? {}: {fullTextReviews: reviews};
 }
 
 /**
