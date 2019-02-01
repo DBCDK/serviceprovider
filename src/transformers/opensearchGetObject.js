@@ -350,23 +350,44 @@ function getFullTextReviewsData(searchResult) {
   const reviews = [];
   _.forEach(object, item => {
     // For each lektør
-    const singleReview = [];
     const sections = validateAndGetSingleReview(item);
-    _.forEach(sections, section => {
-      // For each section for one lektør
-      let review = {};
-      _.forEach(section, (info, key) => {
-        // For each title, para etc...
-        if (_.has(info, '$')) {
-          review[key] = info.$;
+    if (sections.length !== 0) {
+      const singleReview = {};
+      singleReview.reviewer = {};
+      if (_.has(item, 'article.info.author.personname.firstname.$')) {
+        singleReview.reviewer.firstname =
+          item.article.info.author.personname.firstname.$;
+      }
+      if (_.has(item, 'article.info.author.personname.surname.$')) {
+        singleReview.reviewer.surname =
+          item.article.info.author.personname.surname.$;
+      }
+      if (_.has(item, 'creationDate.$')) {
+        singleReview.creationDate = item.creationDate.$;
+      }
+      singleReview.review = {};
+      _.forEach(sections, section => {
+        // For each section for one lektør
+        let title = null;
+        let para = null;
+        _.forEach(section, (info, key) => {
+          // For each title, para etc...
+          if (_.has(info, '$')) {
+            if (key === 'title') {
+              title = info.$;
+            }
+            if (key === 'para') {
+              para = info.$;
+            }
+          }
+        });
+        if (title !== null && para !== null) {
+          singleReview.review[title] = para;
         }
       });
-      if (review.length !== 0) {
-        singleReview.push(review);
+      if (singleReview.length !== 0) {
+        reviews.push(singleReview);
       }
-    });
-    if (singleReview.length !== 0) {
-      reviews.push(singleReview);
     }
   });
   return reviews.length === 0 ? {} : {fullTextReviews: reviews};
