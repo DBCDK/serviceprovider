@@ -18,28 +18,20 @@ const expected = {
       fedoraPid: ['870976-anmeld:31500346'],
       pid: ['870976-anmeld:31500346'],
       fullTextReviews: [
-        [
-          {
-            title: 'Kort om bogen',
-            para:
-              '49-årige David har en stor stilling på en avis. En dag bryder David sammen og må genfinde sig selv i et lille sommerhus. Et hverdagsrealistisk drama om stress og kærlighed, der med fordel kan formidles til mandlige læsere'
-          },
-          {
-            title: 'Beskrivelse',
-            para:
-              'David Bramsen er 49 år, han er single, far til en dreng og er aldrig kommet sig over bruddet med sønnens mor. David, der er uddannet journalist, har en fin stilling på avisen Bladet. Til et møde besvimer David. Mange år med alt for meget arbejde og rod i følelseslivet rammer David som en hammer. Han får orlov fra Bladet og lejer et lille sommerhus ved Roskilde Fjord. Her forsøger David at få fodfæste, at finde frem til sig selv. David er bogens jegfortæller'
-          },
-          {
-            title: 'Vurdering',
-            para:
-              'David er som hovedperson realistisk og levende. Der er ikke nogen nemme løsninger, men en hård kamp for at genfinde sig selv efter de mange år han har levet i et følelsesmæssigt vakuum. Sproget er enkelt, uden de store armbevægelser, og det passer fint til Davids udvikling, hvor det handler om at stå af ræset og trække vejret dybt ind. Michael Robak bruger sin erfaring fra journalistbranchen til at give den del af romanen en vigtig troværdighed'
-          },
-          {
-            title: 'Andre bøger om samme emne',
-            para:
+        {
+          reviewer: {firstname: 'Jacob Holm', surname: 'Krogsøe'},
+          creationDate: '2017-08-11T00:00:00+02:00',
+          review: {
+            'Kort om bogen':
+              '49-årige David har en stor stilling på en avis. En dag bryder David sammen og må genfinde sig selv i et lille sommerhus. Et hverdagsrealistisk drama om stress og kærlighed, der med fordel kan formidles til mandlige læsere',
+            Beskrivelse:
+              'David Bramsen er 49 år, han er single, far til en dreng og er aldrig kommet sig over bruddet med sønnens mor. David, der er uddannet journalist, har en fin stilling på avisen Bladet. Til et møde besvimer David. Mange år med alt for meget arbejde og rod i følelseslivet rammer David som en hammer. Han får orlov fra Bladet og lejer et lille sommerhus ved Roskilde Fjord. Her forsøger David at få fodfæste, at finde frem til sig selv. David er bogens jegfortæller',
+            Vurdering:
+              'David er som hovedperson realistisk og levende. Der er ikke nogen nemme løsninger, men en hård kamp for at genfinde sig selv efter de mange år han har levet i et følelsesmæssigt vakuum. Sproget er enkelt, uden de store armbevægelser, og det passer fint til Davids udvikling, hvor det handler om at stå af ræset og trække vejret dybt ind. Michael Robak bruger sin erfaring fra journalistbranchen til at give den del af romanen en vigtig troværdighed',
+            'Andre bøger om samme emne':
               'Novellesamlingen Ikke altid sådan her er spækket med sammenbrud og livskriser. Robak har tidligere skrevet Hele byen ved det der er fyldt med kærlighed og livskriser'
           }
-        ]
+        }
       ]
     }
   ]
@@ -89,12 +81,13 @@ const mockData = {
 
 import Provider from '../../provider/Provider.js';
 import {assert, fail} from 'chai';
+
 const provider = Provider();
 
 describe('Automated test: work_single_pid_full_text_reviews.auto', () => {
   it('has same result as recorded (in work_single_pid_full_text_reviews.auto)', () => {
     assert(
-      Date.now() < +new Date('2019-04-23'),
+      Date.now() < +new Date('2019-05-02'),
       'Please recreate the automatically generated unit tests, such that the mock data does not come out of sync with the actual services. See README.md for details.'
     );
     context.mockData = mockData;
