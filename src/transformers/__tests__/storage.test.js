@@ -1,17 +1,79 @@
-/* eslint-disable no-use-before-define */
+// # Storage endpoint
+//
+// The storage endpoint is the backend for storing quiz-data. It is a generic document storage, and could be extended to be used as backend for "Tværgående brugerprofil" or similar projects. The design is base on the generic backend in læsekompasset, and inspired by couchdb.
+//
+// Documents are either JSON-objects or image data, and has the following metadata:
+//
+// - `_id`, which is an UUID identifier that can be used for retrieval, and is assigned when the document is stored.
+// - `_type`, which is a reference to the datatype, which is used to determine access rights, whether it is image or JSON, and indexing rules.
+// - `_owner`, which is a reference to the user who created it.
+// - `_client`, which is a reference to the application which created it.
+// - `_version`, which is a document version, that can be used for atomic updates.
+//
+//
+// ## Data types and indexes
+//
+// The `_type` of a document is an UUID that refers to a JSON document in the storage endpoint, that has the specification of the type. The type specification has the following properties:
+//
+// - `name` the name of the type. This can be used to look up the type id. It is also used in a shorthand, so a request with `"_type": "someuser.sometype"` will use the `_id` of the type, where someuser is the `_owner` of the type-document, and sometype is the `name` of the type-document.
+// - `type` must either be `"json"` or `"image"`.
+// - `indexes` is a list of indexes. Each index is represented as a JSON object with the following properties:
+//    - `keys` is a list of property names to index
+//    - `value` that should either be `"_id"`, which is used for retrieving the document, or `"_count"`, which is used to count how many occurences of a given keys occur.
+// - `permissions` is used for access control. Should usually be `{"read": "any"}`, which means that everyone may read the data, and only document owner may change it.
+//
+// So if we wanted to store users in the storage endpoint, and wanted to be able to look them up by their username and group, we could define the following new type:
+//
+// ```
+// { "name": "user",
+//   "type": "json",
+//   "indexes": [
+//     {"value": "_id", "keys": ["username"]},
+//     {"value": "_id", "keys": ["group"]}
+//   ],
+//   "permissions": {"read": "any"},
+//   "_type": "openplatform.type"}
+// ```
+//
+// (Notes: `"_type"` is a special property that indicates that this document is a type-document, - whereas `"type"` is a normal property that just is a part of the document. `openplatform` is the super user which owns the type-type).
+//
+// ## Literate documentation and unit tests
+//
+// This documentation contains examples and unit tests for the storage endpoint as [literate code](https://en.wikipedia.org/wiki/Literate_programming). This means that code writte here like this:
+
 const assert = require('assert');
 const _ = require('lodash');
 const {promisify} = require('util');
 const request = promisify(require('request'));
-const dbcOpenPlatform = makeApiWrapper();
 const {version} = require('../../../package.json');
+/* eslint-disable no-use-before-define */
+
+const dbcOpenPlatform = makeApiWrapper();
+
+// are executed every time the tests are run, - such as when change are made to the open platform. This also makes sure that the examples in this documentation always runs.
 //
-// <small>(note: dbcOpenPlatform is usually loaded into the browser using a `<script>`-tag)</small>
+// Note: normally `dbcOpenPlatform` is defined when include the open platform API is loaded into the browser using a `<script>`-tag. The makeApiWrapper is just used for testing.
 //
-// # Storage API test / examples
+// We want all the examples to be in a separate test namespace:
 //
-// These are the unit tests of the storage api, which also serves as examples of how the API can be called.
+describe('Storage endpoint examples', () => {
+  //
+  // # API usage 
+  //
+  // ## Storing data 
+  //
+  // updating data
+  //
+  // ## Fetching data
+  //
+  // url for images
+  //
+  // ## Finding data
+  //
+
+// # Actual tests
 //
+});
 describe('Storage endpoint', () => {
   //
   // These are variable that we need across the tests:
@@ -369,9 +431,13 @@ describe('Storage endpoint', () => {
         encoding: 'latin1'
       });
       assert.equal(result.headers['content-type'], 'image/jpeg');
+      //
       // result starts has jpeg-files start
+      //
       assert.equal(jpegData.slice(0, 3), result.body.slice(0, 3));
+      //
       // check that the scaled image is somewhat larger than the original
+      //
       assert(result.body.length > 1000);
     });
     it('can retrieve scaled png image using the http-endpoint', async () => {
