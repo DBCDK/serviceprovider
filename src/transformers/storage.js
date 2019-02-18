@@ -491,6 +491,20 @@ function bufferIsPNG(buffer) {
 }
 
 /**
+ * Recognise magic number for GIF
+ */
+function bufferIsGIF(buffer) {
+  return (
+    buffer[0] === 0x47 &&
+    buffer[1] === 0x49 &&
+    buffer[2] === 0x46 &&
+    buffer[3] === 0x38 &&
+    (buffer[4] === 0x37 || buffer[4] === 0x39) &&
+    buffer[5] === 0x61
+  );
+}
+
+/**
  * Recognise magic number for JPEG
  */
 function bufferIsJPEG(buffer) {
@@ -536,6 +550,8 @@ async function storageMiddleware(req, res, next) {
         res.header('Content-Type', 'image/jpeg');
       } else if (bufferIsPNG(data)) {
         res.header('Content-Type', 'image/png');
+      } else if (bufferIsGIF(data)) {
+        res.header('Content-Type', 'image/gif');
       } else {
         return res.status(400).end('invalid image format');
       }

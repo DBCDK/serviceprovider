@@ -58,9 +58,9 @@ const dbcOpenPlatform = makeApiWrapper();
 //
 describe('Storage endpoint examples', () => {
   //
-  // # API usage 
+  // # API usage
   //
-  // ## Storing data 
+  // ## Storing data
   //
   // updating data
   //
@@ -70,9 +70,8 @@ describe('Storage endpoint examples', () => {
   //
   // ## Finding data
   //
-
-// # Actual tests
-//
+  // # Actual tests
+  //
 });
 describe('Storage endpoint', () => {
   //
@@ -82,7 +81,7 @@ describe('Storage endpoint', () => {
   // `type1` is a new type we create, and
   // `doc1` is a new document we create.
   //
-  let user, typeUuid, type1, doc1, imageType, doc2, doc3;
+  let user, typeUuid, type1, doc1, imageType, doc2, doc3, doc4;
 
   before(async () => {
     const status = await dbcOpenPlatform.status({
@@ -352,6 +351,11 @@ describe('Storage endpoint', () => {
       '\u0006PLTEÿÿÿ\u0000\u0000\u0000UÂÓ~\u0000\u0000\u0000\u000eIDAT\b×cXÀàÀ°\u0000' +
       '\u0000\u0004\u0001\u0004w~\u001f\u0000\u0000\u0000\u0000IEND®B`';
 
+    const gifData =
+      '\u0047\u0049\u0046\u0038\u0037\u0061\u0002\u0000\u0002\u0000\u0080' +
+      '\u0001\u0000\u0000\u0000\u0000\u00ff\u00ff\u00ff\u002c\u0000\u0000\u0000\u0000' +
+      '\u0002\u0000\u0002\u0000\u0000\u0002\u0003\u0044\u0002\u0005\u0000\u003b';
+
     it('has to have a type with an image content-type', async () => {
       imageType = await dbcOpenPlatform.storage({
         put: {
@@ -379,6 +383,15 @@ describe('Storage endpoint', () => {
         put: {
           _type: imageType._id,
           _data: pngData
+        }
+      });
+    });
+
+    it('can store gif images', async () => {
+      doc4 = await dbcOpenPlatform.storage({
+        put: {
+          _type: imageType._id,
+          _data: gifData
         }
       });
     });
@@ -450,10 +463,31 @@ describe('Storage endpoint', () => {
         encoding: 'latin1'
       });
       assert.equal(result.headers['content-type'], 'image/png');
-      // result starts has jpeg-files start
       assert.equal(pngData.slice(0, 8), result.body.slice(0, 8));
       // check that the scaled image is somewhat larger than the original
       assert(result.body.length > pngData.length);
+    });
+    it('can retrieve gif image using the http-endpoint', async () => {
+      if (!(await hasLocalServiceProvider())) {
+        console.warn('Skipping test needing running serviceprovider:');
+        return;
+      }
+
+      let result = await request({
+        url: spUrl + '/storage/' + doc4._id,
+        encoding: 'latin1'
+      });
+      assert.equal(result.headers['content-type'], 'image/gif');
+      assert.equal(gifData, result.body);
+
+      // when scaling, the image is converted to png
+      result = await request({
+        url: spUrl + '/storage/' + doc4._id + '?width=256&height=256',
+        encoding: 'latin1'
+      });
+      assert.equal(result.headers['content-type'], 'image/png');
+      assert.equal(pngData.slice(0, 8), result.body.slice(0, 8));
+      assert(result.body.length > gifData.length);
     });
   });
 
