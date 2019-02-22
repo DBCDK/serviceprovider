@@ -4,6 +4,10 @@ import {log} from '../utils';
 
 const filePath = __dirname + '/../../doc/work-context.jsonld';
 const typeId = makeTypeID(filePath);
+const FULL_TEXT_REVIEW = 'Lektørudtalelse';
+const REVIEW_CONTENT = 'review';
+const REVIEW_ORIGINALLY_MADE_FOR =
+  'Materialevurdering oprindeligt udarbejdet til';
 
 /**
  *
@@ -330,14 +334,16 @@ function validateAndGetFullTextReviews(searchResult) {
 function validateAndGetSingleReview(item) {
   if (
     !_.has(item, 'article.title.$') ||
-    item.article.title.$ !== 'Lektørudtalelse'
+    item.article.title.$ !== FULL_TEXT_REVIEW
   ) {
     return [];
   }
   if (!_.has(item, 'article.section') || item.article.section.length === 0) {
     return [];
   }
-  return item.article.section;
+  return Array.isArray(item.article.section)
+    ? item.article.section
+    : [item.article.section];
 }
 
 /**
@@ -368,7 +374,7 @@ function getFullTextReviewsData(searchResult) {
       singleReview.review = {};
       _.forEach(sections, section => {
         // For each section for one lektør
-        let title = null;
+        let title = REVIEW_CONTENT; // Default title, when no title exists (from reviews from june 2002)
         let para = null;
         _.forEach(section, (info, key) => {
           // For each title, para etc...
@@ -381,8 +387,17 @@ function getFullTextReviewsData(searchResult) {
             }
           }
         });
-        if (title !== null && para !== null) {
-          singleReview.review[title] = para;
+        if (para !== null) {
+          if (
+            title === REVIEW_CONTENT &&
+            para.search(REVIEW_ORIGINALLY_MADE_FOR) !== -1
+          ) {
+            // If special review note (originally made for) - then put outside of the singleReview array in 'note'
+            singleReview.note = para;
+          } else {
+            // Else it is a 'normal' review paragraph
+            singleReview.review[title] = para;
+          }
         }
       });
       if (singleReview.length !== 0) {
