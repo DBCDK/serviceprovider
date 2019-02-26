@@ -480,14 +480,14 @@ describe('Storage endpoint', () => {
       assert.equal(result.headers['content-type'], 'image/gif');
       assert.equal(gifData, result.body);
 
-      // when scaling, the image is converted to png
+      // it does not scale the image, as gifs are low-color and might be animated
+
       result = await request({
         url: spUrl + '/storage/' + doc4._id + '?width=256&height=256',
         encoding: 'latin1'
       });
-      assert.equal(result.headers['content-type'], 'image/png');
-      assert.equal(pngData.slice(0, 8), result.body.slice(0, 8));
-      assert(result.body.length > gifData.length);
+      assert.equal(result.headers['content-type'], 'image/gif');
+      assert.equal(gifData, result.body);
     });
   });
 
