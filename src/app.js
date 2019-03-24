@@ -37,6 +37,8 @@ const app = express();
 const SMAUG_LOCATION = process.env.SMAUG || null; // eslint-disable-line no-process-env
 const serviceProvider = Provider();
 
+const swaggerSpec = swaggerFromSpec();
+
 /**
  * Validates and executes transform.
  * Resolves with an error(!) if transform is not found or request is invalid.
@@ -182,6 +184,25 @@ function enableHTTPTransport(event) {
           query[key] =
             val.indexOf(',') !== -1 ? val.split(',').filter(s => s) : val;
         }
+
+        // Convert to arrays according to spec.
+        try {
+          const parameterSpec = swaggerSpec.paths[
+            '/' + event
+          ].get.parameters.filter(({name}) => name === key)[0];
+          if (parameterSpec.type === 'array' && !Array.isArray(query[key])) {
+            query[key] = [query[key]];
+          }
+        } catch (error) {
+          log.warn(
+            'Error converting GET-parameters. May be due to parameter not in spec.',
+            {
+              key,
+              event,
+              error: String(error)
+            }
+          );
+        }
       }
 
       if (typeof query.fields === 'string') {
@@ -326,8 +347,7 @@ module.exports.run = function(worker) {
   // The swagger specification is generated from `spec.yml`
   // and returned as this separate endpoint.
   app.all(apiPath + 'swagger.json', (req, res) => {
-    const spec = swaggerFromSpec();
-    res.jsonp(spec);
+    res.jsonp(swaggerSpec);
   });
 
   // handle token-related errors
