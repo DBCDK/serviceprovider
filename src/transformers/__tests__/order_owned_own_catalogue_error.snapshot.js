@@ -1,5 +1,5 @@
 /* eslint-disable max-len, quotes, comma-spacing, key-spacing, quote-props, indent */
-// Request: order {"pids":["710100-katalog:50758060","710100-katalog:28657366"],"pickUpBranch":"710110","expires":"2019-03-06"}
+// Request: order {"pids":["710100-katalog:50758060","710100-katalog:28657366"],"pickUpBranch":"710110","expires":"2019-06-28"}
 
 import Provider from '../../provider/Provider.js';
 import {assert, fail} from 'chai';
@@ -55,12 +55,12 @@ const context = {
 };
 const provider = Provider();
 const mockData = {
-  '["openorder","<SOAP-ENV:Envelope xmlns=\\"http://oss.dbc.dk/ns/openorder\\" xmlns:SOAP-ENV=\\"http://schemas.xmlsoap.org/soap/envelope/\\">\\n     <SOAP-ENV:Body>\\n        <placeOrderRequest>\\n           <authentication>\\n              <groupIdAut>XXXXX</groupIdAut>\\n              <passwordAut>XXXXX</passwordAut>\\n              <userIdAut>XXXXX</userIdAut>\\n           </authentication>\\n           <copy>false</copy>\\n           <exactEdition>false</exactEdition>\\n           <needBeforeDate>2019-03-06T00:00:00</needBeforeDate>\\n           <orderSystem>bibliotekdk</orderSystem>\\n           <pickUpAgencyId>710110</pickUpAgencyId>\\n           <pid>710100-katalog:50758060</pid>\\n           <pid>710100-katalog:28657366</pid>\\n           <serviceRequester>190101</serviceRequester>\\n           \\n           <userId>XXXXX</userId>\\n           <userIdAuthenticated>true</userIdAuthenticated>\\n           \\n           \\n           \\n           <verificationReferenceSource>dbcdatawell</verificationReferenceSource>\\n           <outputType>json</outputType>\\n         </placeOrderRequest>\\n      </SOAP-ENV:Body>\\n    </SOAP-ENV:Envelope>"]':
+  '["openorder","<SOAP-ENV:Envelope xmlns=\\"http://oss.dbc.dk/ns/openorder\\" xmlns:SOAP-ENV=\\"http://schemas.xmlsoap.org/soap/envelope/\\">\\n     <SOAP-ENV:Body>\\n        <placeOrderRequest>\\n           <authentication>\\n              <groupIdAut>XXXXX</groupIdAut>\\n              <passwordAut>XXXXX</passwordAut>\\n              <userIdAut>XXXXX</userIdAut>\\n           </authentication>\\n           <copy>false</copy>\\n           <exactEdition>false</exactEdition>\\n           <needBeforeDate>2019-06-28T00:00:00</needBeforeDate>\\n           <orderSystem>bibliotekdk</orderSystem>\\n           <pickUpAgencyId>710110</pickUpAgencyId>\\n           <pid>710100-katalog:50758060</pid>\\n           <pid>710100-katalog:28657366</pid>\\n           <serviceRequester>190101</serviceRequester>\\n           \\n           <userId>XXXXX</userId>\\n           <userIdAuthenticated>true</userIdAuthenticated>\\n           \\n           \\n           \\n           <verificationReferenceSource>dbcdatawell</verificationReferenceSource>\\n           <outputType>json</outputType>\\n         </placeOrderRequest>\\n      </SOAP-ENV:Body>\\n    </SOAP-ENV:Envelope>"]':
     '{"placeOrderResponse":{"orderNotPlaced":{"lookUpUrl":[{"$":"http:\\/\\/stormp.kk.dk\\/linkme.asp?50758060"}],"placeOrderError":{"$":"owned_own_catalogue"}}},"@namespaces":{"oo":"http:\\/\\/oss.dbc.dk\\/ns\\/openorder"}}'
 };
 
 describe('Automated test: order-owned-own-catalogue-error', () => {
-  it('expected response. ID:pecnu8, for {"pids":["710100-katalog:50758060","710100-katalog:28657366"],"pickUpBranch":"710110","expires":"2019-03-06"}', done => {
+  it('expected response. ID:pecnu8, for {"pids":["710100-katalog:50758060","710100-katalog:28657366"],"pickUpBranch":"710110","expires":"2019-06-28"}', done => {
     context.mockData = mockData;
     provider
       .execute(
@@ -68,7 +68,7 @@ describe('Automated test: order-owned-own-catalogue-error', () => {
         {
           pids: ['710100-katalog:50758060', '710100-katalog:28657366'],
           pickUpBranch: '710110',
-          expires: '2019-03-06'
+          expires: '2019-06-28'
         },
         context
       )

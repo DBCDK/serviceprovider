@@ -1,4 +1,4 @@
-definitions: 
+definitions:
   SuggestResponse:
     type: array
     items:
@@ -6,15 +6,15 @@ definitions:
   Suggestion:
     type: object
     properties:
-      term: 
+      term:
         description: the suggestion
         type: string
-      val: 
+      val:
         description: weight of the suggestion
-        type: string
-      type: 
+        type: number
+      type:
         description: Where the suggestion comes from, i.e. `title`, `creator` og `subject`
         type: array
-        items: 
+        items:
           type: string
     additionalProperties: false
