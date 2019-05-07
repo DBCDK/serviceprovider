@@ -20,7 +20,9 @@
 // - `indexes` is a list of indexes. Each index is represented as a JSON object with the following properties:
 //    - `keys` is a list of property names to index
 //    - `value` that should either be `"_id"`, which is used for retrieving the document, or `"_count"`, which is used to count how many occurences of a given keys occur.
-// - `permissions` is used for access control. Should usually be `{"read": "any"}`, which means that everyone may read the data, and only document owner may change it.
+// - `permissions` is used for access control. Could be:
+//    -`{"read": "any"}`, which means that everyone may read the data, and only document owner may change it.
+//    -`{"read": "if object.public"}`, which means that the public property on a json-typed object indicates whether everyone may read it.
 //
 // So if we wanted to store users in the storage endpoint, and wanted to be able to look them up by their username and group, we could define the following new type:
 //
@@ -48,7 +50,15 @@ const request = promisify(require('request'));
 const {version} = require('../../../package.json');
 /* eslint-disable no-use-before-define */
 
-const dbcOpenPlatform = makeApiWrapper();
+const dbcOpenPlatform = makeApiWrapper({
+  context: {storage: {user: 'STORAGE_USER'}}
+});
+const dbcOpenPlatformAuthenticatedUser = makeApiWrapper({
+  context: {user: {uniqueId: 'AUTHENTICATED_USER'}}
+});
+const dbcOpenPlatformAnonymousUser = makeApiWrapper({
+  context: {user: {uniqueId: null}}
+});
 
 // are executed every time the tests are run, - such as when change are made to the open platform. This also makes sure that the examples in this documentation always runs.
 //
@@ -81,7 +91,17 @@ describe('Storage endpoint', () => {
   // `type1` is a new type we create, and
   // `doc1` is a new document we create.
   //
-  let user, typeUuid, type1, doc1, imageType, doc2, doc3, doc4;
+  let user,
+    typeUuid,
+    type1,
+    typePrivate,
+    doc1,
+    docPrivate,
+    docPublic,
+    imageType,
+    doc2,
+    doc3,
+    doc4;
 
   before(async () => {
     const status = await dbcOpenPlatform.status({
@@ -656,8 +676,120 @@ describe('Storage endpoint', () => {
     });
   });
 
+  describe('User permissions', () => {
+    it('stores an object that is owned by the creator', async () => {
+      const doc = await dbcOpenPlatformAuthenticatedUser.storage({
+        put: {
+          _type: type1._id,
+          title: 'hello world',
+          tags: ['foo', 'bar', 'baz']
+        }
+      });
+      const result = await dbcOpenPlatformAuthenticatedUser.storage({
+        get: {_id: doc._id}
+      });
+      assert.equal(result._owner, 'AUTHENTICATED_USER');
+    });
+
+    it('can create a new data type with read permission "if object.public"', async () => {
+      typePrivate = await dbcOpenPlatform.storage({
+        put: {
+          _type: typeUuid,
+          name: 'testTypePrivate',
+          description: 'Type used during unit test',
+          type: 'json',
+          permissions: {read: 'if object.public'},
+          indexes: []
+        }
+      });
+    });
+
+    it('stores public and private objects', async () => {
+      docPublic = await dbcOpenPlatform.storage({
+        put: {
+          _type: typePrivate._id,
+          public: true,
+          title: 'hello world - public'
+        }
+      });
+      docPrivate = await dbcOpenPlatform.storage({
+        put: {
+          _type: typePrivate._id,
+          public: false,
+          title: 'hello world - private'
+        }
+      });
+    });
+
+    it('can fetch others public objects', async () => {
+      const result = await dbcOpenPlatformAuthenticatedUser.storage({
+        get: {_id: docPublic._id}
+      });
+      assert.deepEqual(
+        {
+          _type: typePrivate._id,
+          _client: 'CLIENT_ID',
+          _id: result._id,
+          _owner: 'STORAGE_USER',
+          _version: result._version,
+          public: true,
+          title: 'hello world - public'
+        },
+        result
+      );
+    });
+
+    it('fails when fetching others private objects', async () => {
+      await expectThrow(
+        () =>
+          dbcOpenPlatformAuthenticatedUser.storage({
+            get: {_id: docPrivate._id}
+          }),
+        'Error: {"statusCode":403,"error":"no read access"}'
+      );
+    });
+
+    it('can fetch owners private objects', async () => {
+      const result = await dbcOpenPlatform.storage({
+        get: {_id: docPrivate._id}
+      });
+      assert.deepEqual(
+        {
+          _type: typePrivate._id,
+          _client: 'CLIENT_ID',
+          _id: result._id,
+          _owner: 'STORAGE_USER',
+          _version: result._version,
+          public: false,
+          title: 'hello world - private'
+        },
+        result
+      );
+    });
+
+    it('fails when anonoymous user tries to store objects', async () => {
+      await expectThrow(
+        () =>
+          dbcOpenPlatformAnonymousUser.storage({
+            put: {
+              _type: typePrivate._id,
+              public: true,
+              title: 'hello world - public'
+            }
+          }),
+        'Error: {"statusCode":403,"error":"no write access"}'
+      );
+    });
+  });
+
   async function cleanupOldTestData() {
-    for (const typeName of ['test', 'testType2', 'testType1', 'testImage']) {
+    for (const typeName of [
+      'test',
+      'testType2',
+      'testType1',
+      'testImage',
+      'testTypePrivate'
+    ]) {
       const types = await dbcOpenPlatform.storage({
         find: {
           _owner: user,
@@ -670,6 +802,7 @@ describe('Storage endpoint', () => {
     }
   }
 });
+
 //
 // # Utility functions
 //
@@ -682,14 +815,14 @@ async function expectThrow(fn, error) {
   throw new Error('expected to throw, but did not');
 }
 
-function makeApiWrapper() {
+function makeApiWrapper({context}) {
   const caller = require('../../provider/caller.js');
   const {storageTransformer} = require('../storage.js');
   const status = require('../status.js');
   const executor = caller(
     {storage: storageTransformer, status},
     {
-      storage: {user: 'STORAGE_USER'},
+      ...context,
       app: {clientId: 'CLIENT_ID'},
       services: {}
     }

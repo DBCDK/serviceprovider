@@ -7,6 +7,20 @@ const metaTypeUuid = 'bf130fb7-8bd4-44fd-ad1d-43b6020ad102';
 const sharp = require('sharp');
 const assert = require('assert');
 
+const ANONYMOUS_USER = 'ANONYMOUS_USER';
+
+function getUser(ctx) {
+  let user = ctx.get('storage.user');
+  if (!user) {
+    user = ctx.get('user.uniqueId');
+  }
+  if (!user) {
+    user = ANONYMOUS_USER;
+  }
+
+  return user;
+}
+
 async function get({_id}, context) {
   let result = await knex('docs')
     .where('id', _id)
@@ -22,7 +36,9 @@ async function get({_id}, context) {
     return {statusCode: 404, error: 'type not found'};
   }
   const type = JSON.parse(typeObj[0].data);
-  if (!type.permissions.read === 'any') {
+  if (type.permissions.read === 'if object.public' && type.type === 'json') {
+    // tested below after we fetch actual data
+  } else if (type.permissions.read !== 'any') {
     return {statusCode: 403, error: 'no read access'};
   }
 
@@ -30,15 +46,30 @@ async function get({_id}, context) {
   result.version = new Date(result.version).toISOString();
   switch (type.type) {
     case 'json':
-      return {
-        statusCode: 200,
-        data: Object.assign({}, JSON.parse(result.data.toString('utf-8')), {
+      const data = Object.assign(
+        {},
+        JSON.parse(result.data.toString('utf-8')),
+        {
           _owner: result.owner,
           _type: result.type,
           _id: result.id,
           _version: result.version,
           _client: result.client
-        })
+        }
+      );
+
+      if (type.permissions.read === 'if object.public') {
+        const user = getUser(context);
+        if (!data.public) {
+          if (result.owner !== user) {
+            return {statusCode: 403, error: 'no read access'};
+          }
+        }
+      }
+
+      return {
+        statusCode: 200,
+        data
       };
 
     case 'jpeg':
@@ -276,7 +307,10 @@ function findPutData(obj, type) {
 }
 
 async function put(obj, ctx) {
-  const user = ctx.get('storage.user');
+  const user = getUser(ctx);
+  if (user === ANONYMOUS_USER) {
+    return {statusCode: 403, error: 'no write access'};
+  }
   if (typeof obj._type !== 'string') {
     return {statusCode: 400, error: 'missing _type'};
   }
@@ -331,7 +365,7 @@ async function put(obj, ctx) {
 }
 
 async function del({_id}, ctx) {
-  const user = ctx.get('storage.user');
+  const user = getUser(ctx);
   const prev = (await get({_id}, ctx)).data;
   const type = (await get({_id: prev._type}, ctx)).data;
 
@@ -439,7 +473,7 @@ async function scan(
 }
 
 async function storageTransformer(request, context) {
-  const user = context.get('storage.user');
+  const user = getUser(context);
   if (!user) {
     return {statusCode: 403, error: 'invalid user'};
   }
