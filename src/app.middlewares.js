@@ -71,7 +71,6 @@ export function getContextMiddleware(req, res, next) {
 
   return getContext(bearerToken)
     .then(context => {
-      console.log('got context', {context});
       req.authorized = true;
       req.context = context;
       res.logData.clientId = context.app.clientId;
