@@ -22,7 +22,7 @@
 //    - `value` that should either be `"_id"`, which is used for retrieving the document, or `"_count"`, which is used to count how many occurences of a given keys occur.
 // - `permissions` is used for access control. Could be:
 //    -`{"read": "any"}`, which means that everyone may read the data, and only document owner may change it.
-//    -`{"read": "if object.public"}`, which means that the public property on a json-typed object indicates whether everyone may read it.
+//    -`{"read": "if object.public"}`, which means that the `public` property on a json-typed object indicates whether everyone may read it. Objects withouth `.public = true` will not be found with scan/find, except in indexes starting with `_owner` and owned by the querying user.
 //
 // So if we wanted to store users in the storage endpoint, and wanted to be able to look them up by their username and group, we could define the following new type:
 //
@@ -699,7 +699,11 @@ describe('Storage endpoint', () => {
           description: 'Type used during unit test',
           type: 'json',
           permissions: {read: 'if object.public'},
-          indexes: []
+          indexes: [
+            {value: '_id', keys: ['key']},
+            {value: '_id', keys: ['_owner'], private: true},
+            {value: '_id', keys: ['_owner', 'key'], private: true}
+          ]
         }
       });
     });
@@ -709,14 +713,16 @@ describe('Storage endpoint', () => {
         put: {
           _type: typePrivate._id,
           public: true,
-          title: 'hello world - public'
+          title: 'hello world - public',
+          key: 'a'
         }
       });
       docPrivate = await dbcOpenPlatform.storage({
         put: {
           _type: typePrivate._id,
           public: false,
-          title: 'hello world - private'
+          title: 'hello world - private',
+          key: 'a'
         }
       });
     });
@@ -732,6 +738,7 @@ describe('Storage endpoint', () => {
           _id: result._id,
           _owner: 'STORAGE_USER',
           _version: result._version,
+          key: 'a',
           public: true,
           title: 'hello world - public'
         },
@@ -760,6 +767,7 @@ describe('Storage endpoint', () => {
           _id: result._id,
           _owner: 'STORAGE_USER',
           _version: result._version,
+          key: 'a',
           public: false,
           title: 'hello world - private'
         },
@@ -778,6 +786,49 @@ describe('Storage endpoint', () => {
             }
           }),
         'Error: {"statusCode":403,"error":"no write access"}'
+      );
+    });
+
+    it('it only indexes public objects by default', async () => {
+      let result = await dbcOpenPlatform.storage({
+        find: {
+          _type: typePrivate._id,
+          key: 'a'
+        }
+      });
+      assert.deepEqual(result, [docPublic._id]);
+    });
+
+    it('only owner can find its private indexes', async () => {
+      let result = await dbcOpenPlatform.storage({
+        find: {
+          _type: typePrivate._id,
+          _owner: user
+        }
+      });
+      assert.deepEqual(result, _.sortBy([docPublic._id, docPrivate._id]));
+      await expectThrow(
+        () =>
+          dbcOpenPlatformAuthenticatedUser.storage({
+            find: {
+              _type: typePrivate._id,
+              _owner: user
+            }
+          }),
+        'Error: {"statusCode":403,"error":"private index, and not owner"}'
+      );
+    });
+    it('private indexes cannot be scanned', async () => {
+      await expectThrow(
+        () =>
+          dbcOpenPlatformAuthenticatedUser.storage({
+            scan: {
+              _type: typePrivate._id,
+              index: ['_owner', 'key'],
+              startsWith: [user]
+            }
+          }),
+        'Error: {"statusCode":403,"error":"trying to scan private index"}'
       );
     });
   });

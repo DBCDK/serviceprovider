@@ -114,6 +114,9 @@ async function find(opts, ctx) {
         index.keys.filter(key => opts.hasOwnProperty(key)).length ===
           keys.length
       ) {
+        if(index.private && (getUser(ctx) !== opts._owner)) {
+          throw {statusCode: 403, error: 'private index, and not owner'};
+        }
         const result = await knex('idIndex')
           .where('type', _type)
           .where('idx', idx)
@@ -245,29 +248,38 @@ async function indexKeys(obj, type, action) {
   }
   if (action === 'add') {
     for (const index of result) {
-      const row = Object.assign({}, index);
-      delete row.val;
-      if (index.val === '_count') {
-        promises.push(
-          (async () => {
-            if (
-              (await knex('countIndex')
-                .select('val')
-                .where(row)).length
-            ) {
-              await knex('countIndex')
-                .where(row)
-                .increment('val', 1);
-            } else {
-              await knex('countIndex').insert(Object.assign({}, row, {val: 1}));
-            }
-          })()
-        );
-      }
-      if (index.val === '_id') {
-        promises.push(
-          knex('idIndex').insert(Object.assign({}, row, {val: obj._id}))
-        );
+      const indexType = type.indexes[index.idx];
+      if (
+        type.permissions.read === 'any' ||
+        (type.permissions.read === 'if object.public' && obj.public) ||
+        (indexType.private && indexType.keys[0] === '_owner')
+      ) {
+        const row = Object.assign({}, index);
+        delete row.val;
+        if (index.val === '_count') {
+          promises.push(
+            (async () => {
+              if (
+                (await knex('countIndex')
+                  .select('val')
+                  .where(row)).length
+              ) {
+                await knex('countIndex')
+                  .where(row)
+                  .increment('val', 1);
+              } else {
+                await knex('countIndex').insert(
+                  Object.assign({}, row, {val: 1})
+                );
+              }
+            })()
+          );
+        }
+        if (index.val === '_id') {
+          promises.push(
+            knex('idIndex').insert(Object.assign({}, row, {val: obj._id}))
+          );
+        }
       }
     }
   }
@@ -422,6 +434,10 @@ async function scan(
       statusCode: 400,
       error: 'the indexed value has to be _count or _id'
     };
+  }
+
+  if(type.data.indexes[idx].private) {
+    throw {statusCode: 403, error: 'trying to scan private index'};
   }
 
   let query = knex(dbIndex)
