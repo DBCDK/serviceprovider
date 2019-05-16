@@ -756,6 +756,16 @@ describe('Storage endpoint', () => {
       );
     });
 
+    it('fails when deleting others private objects', async () => {
+      await expectThrow(
+        () =>
+          dbcOpenPlatformAuthenticatedUser.storage({
+            delete: {_id: docPrivate._id}
+          }),
+        'Error: {"statusCode":403,"error":"no write access"}'
+      );
+    });
+
     it('can fetch owners private objects', async () => {
       const result = await dbcOpenPlatform.storage({
         get: {_id: docPrivate._id}

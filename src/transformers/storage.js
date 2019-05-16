@@ -114,7 +114,7 @@ async function find(opts, ctx) {
         index.keys.filter(key => opts.hasOwnProperty(key)).length ===
           keys.length
       ) {
-        if(index.private && (getUser(ctx) !== opts._owner)) {
+        if (index.private && getUser(ctx) !== opts._owner) {
           throw {statusCode: 403, error: 'private index, and not owner'};
         }
         const result = await knex('idIndex')
@@ -378,7 +378,14 @@ async function put(obj, ctx) {
 
 async function del({_id}, ctx) {
   const user = getUser(ctx);
-  const prev = (await get({_id}, ctx)).data;
+  const prevResponse = await get({_id}, ctx);
+  if (prevResponse.statusCode !== 200) {
+    if (prevResponse.statusCode === 403) {
+      return {statusCode: 403, error: 'no write access'};
+    }
+    return prevResponse;
+  }
+  const prev = prevResponse.data;
   const type = (await get({_id: prev._type}, ctx)).data;
 
   await verifyModifiable({_id}, {prev, user, type});
@@ -436,7 +443,7 @@ async function scan(
     };
   }
 
-  if(type.data.indexes[idx].private) {
+  if (type.data.indexes[idx].private) {
     throw {statusCode: 403, error: 'trying to scan private index'};
   }
 
