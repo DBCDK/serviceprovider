@@ -308,6 +308,22 @@ describe('Storage endpoint', () => {
       );
     });
 
+    it('throws a 404 if we try to change a document which does not exist', async () => {
+      await expectThrow(
+        () =>
+          dbcOpenPlatform.storage({
+            put: {
+              _type: type1._id,
+              _id: 'non-existing',
+              _version: doc1._version,
+              hello: 'world',
+              tags: ['foo', 'quux']
+            }
+          }),
+        'Error: {"statusCode":404,"error":"id not found"}'
+      );
+    });
+
     it('has reindexed the changed document', async () => {
       let result = await dbcOpenPlatform.storage({
         find: {

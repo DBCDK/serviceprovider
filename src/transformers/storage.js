@@ -343,6 +343,9 @@ async function put(obj, ctx) {
 
   if (obj._id) {
     const prev = (await get({_id: obj._id}, ctx)).data;
+    if (!prev) {
+      return {statusCode: 404, error: 'id not found'};
+    }
     await verifyModifiable(obj, {prev, user, type});
 
     let version = Date.now();
