@@ -50,7 +50,7 @@ let context = {
 };
 let provider = Provider();
 let mockData = {
-  '["openuserstatus",{"qs":{"agencyId":"775100","userId":"XXXXX","userPincode":"XXXXX","authentication.groupIdAut":"XXXXX","authentication.passwordAut":"XXXXX","authentication.userIdAut":"XXXXX","action":"getUserStatus","outputType":"json"}}]':
+  '["openuserstatus",{"qs":{"agencyId":"775100","userId":"XXXXX","authentication.groupIdAut":"XXXXX","authentication.passwordAut":"XXXXX","authentication.userIdAut":"XXXXX","action":"getUserStatus","outputType":"json"}}]':
     '{"getUserStatusResponse":{"getUserStatusError":{"$":"User authentication failed","@":"ous"},"@":"ous"},"@namespaces":{"ous":"http:\\/\\/oss.dbc.dk\\/ns\\/openuserstatus"}}'
 };
 
