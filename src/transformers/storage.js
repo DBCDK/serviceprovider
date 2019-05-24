@@ -106,8 +106,11 @@ async function find(opts, ctx) {
   const keys = Object.keys(opts).filter(key => key !== '_type');
 
   if (Array.isArray(type.indexes)) {
-    for (let idx = 0; idx < type.indexes.length; ++idx) {
-      const index = type.indexes[idx];
+    // make sure private indexes overrides public indexes, by traversing in sorted order
+    const indexes = _.sortBy(type.indexes, o => String(o.keys) + !o.private);
+
+    for (const index of indexes) {
+      const idx = type.indexes.indexOf(index);
       if (
         index.value === '_id' &&
         index.keys.length === keys.length &&
@@ -115,7 +118,7 @@ async function find(opts, ctx) {
           keys.length
       ) {
         if (index.private && getUser(ctx) !== opts._owner) {
-          throw {statusCode: 403, error: 'private index, and not owner'};
+          continue;
         }
         const result = await knex('idIndex')
           .where('type', _type)
@@ -426,9 +429,11 @@ async function scan(
     return {statusCode: 400, error: 'invalid _type'};
   }
 
-  let indexes = type.data.indexes.filter(o => _.isEqual(index, o.keys));
+  let indexes = type.data.indexes.filter(
+    o => _.isEqual(index, o.keys) && !o.private
+  );
   if (indexes.length !== 1) {
-    return {statusCode: 400, error: 'no such index'};
+    return {statusCode: 400, error: 'no such public index'};
   }
 
   const idx = type.data.indexes.indexOf(indexes[0]);
@@ -444,10 +449,6 @@ async function scan(
       statusCode: 400,
       error: 'the indexed value has to be _count or _id'
     };
-  }
-
-  if (type.data.indexes[idx].private) {
-    throw {statusCode: 403, error: 'trying to scan private index'};
   }
 
   let query = knex(dbIndex)
