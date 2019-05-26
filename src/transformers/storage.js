@@ -101,6 +101,21 @@ const uuidRegExp = new RegExp(
 
 async function find(opts, ctx) {
   // eslint-disable-next-line no-use-before-define
+
+  if (opts._type === '*') {
+    if (Object.keys(opts).length !== 2 || opts._owner !== getUser(ctx)) {
+      return {
+        statusCode: 400,
+        error:
+          'find _type wildcard only allowed when finding all objects for current user'
+      };
+    }
+    const result = await knex('docs')
+      .where('owner', opts._owner)
+      .select('id');
+    return {statusCode: 200, data: result.map(o => o.id)};
+  }
+
   const _type = await lookupType(opts._type || metaTypeUuid, ctx);
   const type = (await get({_id: _type}, ctx)).data;
   const keys = Object.keys(opts).filter(key => key !== '_type');
@@ -128,7 +143,7 @@ async function find(opts, ctx) {
             index.keys.map(key => JSON.stringify(opts[key])).join('\n')
           )
           .select('val');
-        return {statusCode: 200, data: result.map(({val}) => val)};
+        return {statusCode: 200, data: result.map(o => o.val)};
       }
     }
   }

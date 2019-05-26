@@ -263,6 +263,36 @@ describe('Storage endpoint', () => {
       });
       assert.deepEqual(result, []);
     });
+
+    it('is possible to find all data belonging to current user', async () => {
+      const result = await dbcOpenPlatform.storage({
+        find: {
+          _type: '*',
+          _owner: user
+        }
+      });
+      assert(result.includes(type1._id));
+      assert(result.includes(doc1._id));
+    });
+    it('it is not possible to find all data belonging to another user', async () => {
+      await expectThrow(
+        () =>
+          dbcOpenPlatformAuthenticatedUser.storage({
+            find: {_type: '*', _owner: user}
+          }),
+        'Error: {"statusCode":400,"error":"find _type wildcard only allowed when finding all objects for current user"}'
+      );
+    });
+
+    it('only allows wildcard _type when looking up owner', async () => {
+      await expectThrow(
+        () =>
+          dbcOpenPlatformAuthenticatedUser.storage({
+            find: {_type: '*', tags: 'baz'}
+          }),
+        'Error: {"statusCode":400,"error":"find _type wildcard only allowed when finding all objects for current user"}'
+      );
+    });
   });
 
   describe('updating data', () => {
