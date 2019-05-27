@@ -337,12 +337,13 @@ describe('Storage endpoint', () => {
     });
 
     it('throws a 404 if we try to change a document which does not exist', async () => {
+      const nonExisting = 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa';
       await expectThrow(
         () =>
           dbcOpenPlatform.storage({
             put: {
               _type: type1._id,
-              _id: 'non-existing',
+              _id: nonExisting,
               _version: doc1._version,
               hello: 'world',
               tags: ['foo', 'quux']

@@ -100,8 +100,6 @@ const uuidRegExp = new RegExp(
 );
 
 async function find(opts, ctx) {
-  // eslint-disable-next-line no-use-before-define
-
   if (opts._type === '*') {
     if (Object.keys(opts).length !== 2 || opts._owner !== getUser(ctx)) {
       return {
@@ -116,6 +114,7 @@ async function find(opts, ctx) {
     return {statusCode: 200, data: result.map(o => o.id)};
   }
 
+  // eslint-disable-next-line no-use-before-define
   const _type = await lookupType(opts._type || metaTypeUuid, ctx);
   const type = (await get({_id: _type}, ctx)).data;
   const keys = Object.keys(opts).filter(key => key !== '_type');
