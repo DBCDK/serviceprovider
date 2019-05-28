@@ -47,7 +47,6 @@ pipeline {
         always {
             script {
                 sh """
-                    docker rm $CONTAINER_NAME
                     docker rmi $DOCKER_NAME
                 """
             }
