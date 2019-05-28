@@ -1,0 +1,24 @@
+version: '3'
+services:
+  web:
+    image: serviceprovider:latest
+    env_file: ./docker.env
+    depends_on:
+      - database
+    ports:
+      - '3000:3000'
+
+  minismaug:
+    image: serviceprovider:latest
+    depends_on:
+      - database
+    ports:
+      - '3333:3333'
+    command: npm run start:minismaug
+  database:
+    image: postgres:9.6
+networks:
+  default:
+    ipam:
+      config:
+        - subnet: 10.0.0.0/16
