@@ -3,6 +3,7 @@
 # ServiceProvider / DBC Open Platform
 
 <!--[![GitHub tag](https://img.shields.io/github/tag/DBCDK/serviceprovider.svg?style=flat-square)](https://github.com/DBCDK/serviceprovider)-->
+
 [![David](https://img.shields.io/david/DBCDK/serviceprovider.svg?style=flat-square)](https://david-dm.org/DBCDK/serviceprovider#info=dependencies)
 [![David](https://img.shields.io/david/dev/DBCDK/serviceprovider.svg?style=flat-square)](https://david-dm.org/DBCDK/serviceprovider#info=devDependencies)
 [![Build Status](https://travis-ci.org/DBCDK/serviceprovider.svg?branch=master)](https://travis-ci.org/DBCDK/serviceprovider)
@@ -13,18 +14,18 @@ The [ServiceProvider](https://github.com/dbcdk/serviceprovider) or [DBC Open Pla
 
 - [ServiceProvider / DBC Open Platform](#serviceprovider--dbc-open-platform)
 - [Getting Started](#getting-started)
-    - [Installing / Running](#installing--running)
-    - [Code Structure](#code-structure)
+  - [Installing / Running](#installing--running)
+  - [Code Structure](#code-structure)
 - [Configuration](#configuration)
-    - [Environment Variables](#environment-variables)
-    - [Authorisation](#authorisation)
+  - [Environment Variables](#environment-variables)
+  - [Authorisation](#authorisation)
 - [Design](#design)
-    - [API Structure](#api-structure)
-    - [Transports](#transports)
-    - [Bibliographic Data Model](#bibliographic-data-model)
+  - [API Structure](#api-structure)
+  - [Transports](#transports)
+  - [Bibliographic Data Model](#bibliographic-data-model)
 - [Testing](#testing)
-    - [API-Test](#api-test)
-    - [Automatic Unit Test Creation](#automatic-unit-test-creation)
+  - [API-Test](#api-test)
+  - [Automatic Unit Test Creation](#automatic-unit-test-creation)
 
 The ServiceProvider provides access to DBCs services. The purpose is to make a unified, easy-to-use way to access the different bibliographic APIs. The serviceprovider works as a gateway to other services, and does not include the actual search/database/etc. logic.
 
@@ -32,9 +33,9 @@ Issue-tracking, and development, happens fully open on github. The project is li
 
 # Getting started
 
-The API is available on https://openplatform.dbc.dk/. This also include API-documentation, and a guide to getting started using the API. 
+The API is available on https://openplatform.dbc.dk/. This also include API-documentation, and a guide to getting started using the API.
 
-**IMPORTANT** the serviceprovider only works on DBCs internal network as it serves as the gateway to the services. 
+**IMPORTANT** the serviceprovider only works on DBCs internal network as it serves as the gateway to the services.
 
 You can still run the service provider, with tests and mockdata, but it will not be fully functional without the underlying services.
 
@@ -45,10 +46,10 @@ First install dependencies
     # Get / install the expected version of node
     source nvm.sh
     nvm install
-    
+
     # Optionally clean dependencies
     #rm -rf node_modules
-    
+
     # Install dependencies
     npm install
 
@@ -70,9 +71,9 @@ Overview of files and directories:
 
 - `doc/` - documentation, guide, and schema/specification of the API and bibliographic data model.
 - `src/` - the source code
-    - `app.js` - the main code entrypoint
-    - `transformers/` - the code that transforms requests/data to/from the different services, and exposes them in the api.
-    - `smaug/` - simple authentification server used during test and development
+  - `app.js` - the main code entrypoint
+  - `transformers/` - the code that transforms requests/data to/from the different services, and exposes them in the api.
+  - `smaug/` - simple authentification server used during test and development
 - `static/` contains a swagger-ui, symlinks to guide, client-api, etc. This is served staticly. We are using a recent snapshot of `github:swagger-api:swagger-ui:dist/` as the stable swagger-ui release (as of May 2016) has a bug, with regard to `boolean` thet breaks the documentation.
 - `client/` - implementation and build script for the browser JavaScript client library.
 
@@ -84,54 +85,57 @@ Configuration is passed through environment variables, and retrieved from the au
 
 The following environment variables can be used to override default settings in the application.
 
-- __LOG_LEVEL__
-Is either `TRACE` `DEBUG`,  `INFO`, `WARN`, `ERROR` or `OFF`
+- **LOG_LEVEL**
+  Is either `TRACE` `DEBUG`, `INFO`, `WARN`, `ERROR` or `OFF`
 
-- __APP_NAME__
-This variable is used to configure the name with which the application should appear in log.
+- **APP_NAME**
+  This variable is used to configure the name with which the application should appear in log.
 
   The default value is `app_name`
 
-- __PORT__
-Defines which port number the application should use.
-If `PORT` is undefined the application will be accessible at port 8080 (i.e. localhost:8080)
+- **PORT**
+  Defines which port number the application should use.
+  If `PORT` is undefined the application will be accessible at port 8080 (i.e. localhost:8080)
 
   The default value is `8080`
 
-- __NODE_WEB_WORKERS__
-Defines how many workers to use.
+- **NODE_WEB_WORKERS**
+  Defines how many workers to use.
 
   The default value is `1`
 
-- __NODE_WEB_BROKERS__
-Defines how many brokers to use.
+- **NODE_WEB_BROKERS**
+  Defines how many brokers to use.
 
   The default value is `1`
 
-- __AUTO_REBOOT__
-Defines if a worker reboots on crash. (This does not apply to the whole application, just the workers).
+- **AUTO_REBOOT**
+  Defines if a worker reboots on crash. (This does not apply to the whole application, just the workers).
 
   The default value is `true`
 
-- __SMAUG__
-Url of the authorisation server we use.
+- **SMAUG**
+  Url of the authorisation server we use.
 
-- __TEST_DEV__
-Boolean flag whether to support createTest parameter. If TEST_DEV is set, and a query is send with the extra parameter createTest set to a name, then this will be used to create a unit test. If the name is "random", and random name will be choosen, if the name is "mockfile", then the mock data will be written instead.
+- **TEST_DEV**
+  Boolean flag whether to support createTest parameter. If TEST_DEV is set, and a query is send with the extra parameter createTest set to a name, then this will be used to create a unit test. If the name is "random", and random name will be choosen, if the name is "mockfile", then the mock data will be written instead.
 
-- __MOCK_FILE__
-Filename for mock file to use instead of backend services. 
-If a mock file is specified, then the behaviour of the `createTest` parameter is to write a the latest mock-data to the mock file to be used for testing, instead of creating a new unit test.
+- **MOCK_FILE**
+  Filename for mock file to use instead of backend services.
+  If a mock file is specified, then the behaviour of the `createTest` parameter is to write a the latest mock-data to the mock file to be used for testing, instead of creating a new unit test.
 
-- __SWAGGER_HTTP__
-Include http as allowed scheme in swagger, this is useful when developing locally.
+- **SWAGGER_HTTP**
+  Include http as allowed scheme in swagger, this is useful when developing locally.
 
-- __PG_CONNECTION_STRING__
-The postgresql database to use for the storage endpoint. If not supplied, it will fallback to a `./serviceprovider.sqlite3`, which is useful for local development.
+- **PG_CONNECTION_STRING**
+  The postgresql database to use for the storage endpoint. If not supplied, it will fallback to a `./serviceprovider.sqlite3`, which is useful for local development.
+
+- **HTTP_ONLY**
+  The current version of socketcluster cannot run on node > 8. A temprorary fix for this is to make sockets optional. `HTTP_ONLY=true` will disable socketcluster.
 
 ## Authorisation
 
-Authorisation is done using OAuth 2. 
+Authorisation is done using OAuth 2.
 
 The authorisation server is called Smaug, and lives in another repository: https://github.com/dbcdk/smaug/. This also documents the API for gettin
 g a token.
@@ -149,7 +153,7 @@ The ServiceProvider, is based on [MobilSøg](https://github.com/DBCDK/mobilsoeg)
 
 ## API Structure
 
-__Requests__ to the API consist of the _endpoint name_, and a JSON object of _parameters_.
+**Requests** to the API consist of the _endpoint name_, and a JSON object of _parameters_.
 
 Parameters are general across endpoints:
 
@@ -161,7 +165,7 @@ Parameters are general across endpoints:
 - `offset` for paginated results, such as search result.
 - `limit` for paginated results, - number of results per page.
 
-__Responses__ are returned within an envelope, as a JSON object with the following properties:
+**Responses** are returned within an envelope, as a JSON object with the following properties:
 
 - `statusCode` contains the status of the request, ie `200` if it went ok.
 - `data` contains the actual response, if applicable
@@ -169,9 +173,9 @@ __Responses__ are returned within an envelope, as a JSON object with the followi
 
 To make sure it arrives to all kinds of clients(including jsonp), the HTTP-request itself usually suceeds(200), and the status of the api request is contained within the envelope.
 
-__The API__ is documented using OpenAPI 2.0 Specification (swagger), and the generated documentation can be seen on https://openplatform.dbc.dk/. The swagger specification is generated from a simpler `doc/spec.yaml` in the github repository.
+**The API** is documented using OpenAPI 2.0 Specification (swagger), and the generated documentation can be seen on https://openplatform.dbc.dk/. The swagger specification is generated from a simpler `doc/spec.yaml` in the github repository.
 
-The generated documentation is exposed at `/v1/`. The HTTP-API is exposed as `/v1/$ENDPOINT-NAME`. 
+The generated documentation is exposed at `/v1/`. The HTTP-API is exposed as `/v1/$ENDPOINT-NAME`.
 
 The production API runs ssl-only (HTTPS/WSS).
 
@@ -186,11 +190,10 @@ There are several transports:
 - HTTP GET requests - similar to HTTP-POST requests with same url, but the _parameters_ are given as url-parameters. This is a quick way to try out / experiment with the API. Parameters are parsed as JSON(if possible) and otherwise used as strings. Url-parameters can also be used in POST-requests to override values.
 - WebSockets - enable us to overcome the limited number of parallel HTTP-requests per domain in web browsers. There is a simple browser JavaScript client api `client/`, and the [guide](https://openplatform.dbc.dk/v1/guide.html) describes how it is used.
 
-
 ## Bibliographic Data Model
 
-Bibliographic objects are returned from both the `/work` and `/search` endpoints. 
-They are identified by a *id*, - an example would be "775100-katalog:29372365".
+Bibliographic objects are returned from both the `/work` and `/search` endpoints.
+They are identified by a _id_, - an example would be "775100-katalog:29372365".
 
 The bibliographic object is represented as a JSON-object with fields from:
 
@@ -201,11 +204,10 @@ The bibliographic object is represented as a JSON-object with fields from:
 - `collectionDetails` - list BriefDisplay of collection elements
 - moreInfo - covers as url and dataurl, - as `coverUrlXXX` or `coverDataUrlXXX` where `XXX` is one of `42`, `117`, `207`, `500`, `Back`, `Thumbnail` or `Full`, ie. `coverUrl42`.
 
-The mapping between keys in the JSON object, and the above sources can be seen in 
+The mapping between keys in the JSON object, and the above sources can be seen in
 https://github.com/DBCDK/serviceprovider/blob/master/doc/work-context.jsonld
 
 Each key present in the json-object, contains a non-empty array of values. Example: if the bibliographic xml-object contains:
-
 
 ```xml
 <dc:subject xsi:type="dkdcplus:DBCN">for 7 år</dc:subject>
@@ -217,27 +219,29 @@ Each key present in the json-object, contains a non-empty array of values. Examp
 it would map to json like:
 
 ```json
-{ "subjectDBCN": ["for 7 år", "for 8 år"],
+{
+  "subjectDBCN": ["for 7 år", "for 8 år"],
   "audience": ["børnematerialer"],
-  "dcTitle": ["Danmark"]}
+  "dcTitle": ["Danmark"]
+}
 ```
-
 
 This encoding is designed both easy to work directly with in client code. It will also be properly encoded linked data, if we add 1) an `@context` with the url of `work-context.jsonld` and 2) an `@id` with the id of the object.
 
 Note: a source for creator types of dkdcplus is danmarc, i.e. http://www.kat-format.dk/danMARC2/Danmarc2.bilagJ.htm
+
 # Testing
 
 We use different kinds of tests:
 
 - Unit tests are placed with the modules and components in a `__tests__` folder. Use `npm run test` to run the tests.
-    - Manually written unit tests
-    - Snapshot testing of transformers: There are many autogenerated unit tests, that verifies that the transformer returns the expected response, given the mocked data from the services.
-- Style checking with eslint. *travis*
-- Validation of generated swagger specification. *travis*
+  - Manually written unit tests
+  - Snapshot testing of transformers: There are many autogenerated unit tests, that verifies that the transformer returns the expected response, given the mocked data from the services.
+- Style checking with eslint. _travis_
+- Validation of generated swagger specification. _travis_
 - Semi-manual browser testing of the JavaScript browser client API (run `guide.js`, check that console-output is as expected), - tested in IE11, Edge, Mobile Safari (iOS browser), Firefox, Firefox Mobile, Chromium, Mobile Chrome, and Android 4.4 browsers.
 
-The tests marked with *travis*, are executed automatically on [travis](https://travis-ci.org/DBCDK/serviceprovider/).
+The tests marked with _travis_, are executed automatically on [travis](https://travis-ci.org/DBCDK/serviceprovider/).
 
 ## Autogenerated snapshot unit tests for transformers.
 
@@ -258,8 +262,8 @@ Then there are other snapshot tests that require a bit more work to regenerate, 
 
 - `libraries*` needs to be recreated individually on a newly started dev-server, as the mock data otherwise will be missed due to caching. This is done by running `node util/autotest.js recreate src/transformer/__test__/libraries...` one at time, restarting the serviceprovider in between each run.
 - `user*` needs credential for a logged in user, and the test needs to be cleaned up manually afterwards:
-    - `id` is the hash of login-credentials, and needs to be the hash of the mock-data instead. I.e. fix expected value of `id` to be the actual value, when running the test.
-    - You probably want to anonymise you email/name/... in both mock data an expected result.
+  - `id` is the hash of login-credentials, and needs to be the hash of the mock-data instead. I.e. fix expected value of `id` to be the actual value, when running the test.
+  - You probably want to anonymise you email/name/... in both mock data an expected result.
 - `order*`/`renew*` depends on logged-in user as well as various states of orders.
 - `events*`/`news*` needs a proper ddbcms endpoint in config.
 - `search_wrong_profile` expect the context from smaug to contain a wrong profile.

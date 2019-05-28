@@ -7,7 +7,6 @@
 // initialize babel, so all JSX and ES6 is transpiled
 require('babel-register');
 
-var SocketCluster = require('socketcluster').SocketCluster;
 var path = require('path');
 var majorVersion = parseInt(require('../package.json').version, 10);
 var log = require('./utils').log;
@@ -23,9 +22,14 @@ if (missingEnvVars.length > 0) {
   process.exit(1);
 }
 
+// Only support http not socketcluster
+if (process.env.HTTP_ONLY) {
+  require('./app').startServer();
+}
 // Using global to make sure we only have one socket cluster instance,
 // even if main is loaded several times (i.e. during watch-test).
-if (!global.socketClusterInstance) {
+else if (!global.socketClusterInstance) {
+  var SocketCluster = require('socketcluster').SocketCluster;
   global.socketClusterInstance = new SocketCluster({
     // eslint-disable-line no-new
     workers: Number(process.env.NODE_WEB_WORKERS) || 1, // eslint-disable-line no-process-env
@@ -33,7 +37,7 @@ if (!global.socketClusterInstance) {
     port: Number(process.env.PORT) || 8080, // eslint-disable-line no-process-env
     path: '/v' + majorVersion + '/socketcluster/',
     initController: path.join(__dirname, 'init.js'),
-    workerController: path.join(__dirname, 'app.js'),
+    workerController: path.join(__dirname, 'socket-cluster.js'),
     wsEngine: 'uws',
     rebootWorkerOnCrash: process.env.AUTO_REBOOT || true // eslint-disable-line no-process-env
   });
