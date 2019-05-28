@@ -41,107 +41,109 @@ function scClient() {
   return global.socketClusterClientPromise;
 }
 
-//
-// Actual test code
-//
-describe('main', () => {
-  before(async () => {
-    // start mini-smaug if not running
-    try {
-      await prequest('http://localhost:3333/');
-    } catch (e) {
-      exec('npm run start:minismaug');
-    }
-
-    // wait until the serviceprovider has started, at most 50*100ms
-    for (let i = 0; i < 50; ++i) {
-      try {
-        await prequest(apiUrl);
-        return;
-      } catch (e) {
-        // do nothing
-      }
-      await sleep(100);
-    }
-  });
-  it('has a server running', async () => {
-    await prequest(apiUrl);
-  });
-
-  describe('socket cluster transport', () => {
-    let client;
+if (!process.env.HTTP_ONLY) {
+  //
+  // Actual test code
+  //
+  describe('main', () => {
     before(async () => {
-      client = await scClient();
+      // start mini-smaug if not running
+      try {
+        await prequest('http://localhost:3333/');
+      } catch (e) {
+        exec('npm run start:minismaug');
+      }
+
+      // wait until the serviceprovider has started, at most 50*100ms
+      for (let i = 0; i < 50; ++i) {
+        try {
+          await prequest(apiUrl);
+          return;
+        } catch (e) {
+          // do nothing
+        }
+        await sleep(100);
+      }
     });
-    it('handles requests', async () => {
-      await new Promise((resolve, reject) => {
-        client.emit('status', {fields: ['version']}, (err, result) => {
-          assert(err === null);
-          assert.equal(result.statusCode, 200);
-          assert.equal(result.data.version, version);
-          resolve();
+    it('has a server running', async () => {
+      await prequest(apiUrl);
+    });
+
+    describe('socket cluster transport', () => {
+      let client;
+      before(async () => {
+        client = await scClient();
+      });
+      it('handles requests', async () => {
+        await new Promise((resolve, reject) => {
+          client.emit('status', {fields: ['version']}, (err, result) => {
+            assert(err === null);
+            assert.equal(result.statusCode, 200);
+            assert.equal(result.data.version, version);
+            resolve();
+          });
+        });
+      });
+      it('check, and fails on wrong parameters', async () => {
+        await new Promise((resolve, reject) => {
+          client.emit('status', {foo: 'bar'}, (err, result) => {
+            assert.equal(result.statusCode, 400);
+            assert.equal(
+              result.error,
+              ' additionalProperty "foo" exists in instance when not allowed'
+            );
+            resolve();
+          });
         });
       });
     });
-    it('check, and fails on wrong parameters', async () => {
-      await new Promise((resolve, reject) => {
-        client.emit('status', {foo: 'bar'}, (err, result) => {
-          assert.equal(result.statusCode, 400);
-          assert.equal(
-            result.error,
-            ' additionalProperty "foo" exists in instance when not allowed'
-          );
-          resolve();
+
+    describe('GET transport', () => {
+      it('handles requests', async () => {
+        const response = await prequest(
+          apiUrl + 'status?access_token=qwerty&fields=["version"]'
+        );
+        const result = JSON.parse(response.body);
+        assert.equal(result.statusCode, 200);
+        assert.equal(result.data.version, version);
+      });
+      it('check, and fails on wrong parameters', async () => {
+        const response = await prequest(
+          apiUrl + 'status?access_token=qwerty&foo=bar'
+        );
+        const result = JSON.parse(response.body);
+        assert.equal(result.statusCode, 400);
+        assert.equal(
+          result.error,
+          ' additionalProperty "foo" exists in instance when not allowed'
+        );
+      });
+    });
+
+    describe('POST transport', () => {
+      it('handles requests', async () => {
+        const response = await prequest({
+          url: apiUrl + 'status',
+          method: 'POST',
+          json: {access_token: 'qwerty', fields: ['version']}
         });
+        const result = response.body;
+        assert.equal(result.statusCode, 200);
+        assert.equal(result.data.version, version);
+      });
+      it('check, and fails on wrong parameters', async () => {
+        const response = await prequest({
+          url: apiUrl + 'status',
+          method: 'POST',
+          json: {access_token: 'qwerty', foo: 'bar'}
+        });
+        const result = response.body;
+        assert.equal(result.statusCode, 400);
+        assert.equal(
+          result.error,
+          ' additionalProperty "foo" exists in instance when not allowed'
+        );
       });
     });
   });
-
-  describe('GET transport', () => {
-    it('handles requests', async () => {
-      const response = await prequest(
-        apiUrl + 'status?access_token=qwerty&fields=["version"]'
-      );
-      const result = JSON.parse(response.body);
-      assert.equal(result.statusCode, 200);
-      assert.equal(result.data.version, version);
-    });
-    it('check, and fails on wrong parameters', async () => {
-      const response = await prequest(
-        apiUrl + 'status?access_token=qwerty&foo=bar'
-      );
-      const result = JSON.parse(response.body);
-      assert.equal(result.statusCode, 400);
-      assert.equal(
-        result.error,
-        ' additionalProperty "foo" exists in instance when not allowed'
-      );
-    });
-  });
-
-  describe('POST transport', () => {
-    it('handles requests', async () => {
-      const response = await prequest({
-        url: apiUrl + 'status',
-        method: 'POST',
-        json: {access_token: 'qwerty', fields: ['version']}
-      });
-      const result = response.body;
-      assert.equal(result.statusCode, 200);
-      assert.equal(result.data.version, version);
-    });
-    it('check, and fails on wrong parameters', async () => {
-      const response = await prequest({
-        url: apiUrl + 'status',
-        method: 'POST',
-        json: {access_token: 'qwerty', foo: 'bar'}
-      });
-      const result = response.body;
-      assert.equal(result.statusCode, 400);
-      assert.equal(
-        result.error,
-        ' additionalProperty "foo" exists in instance when not allowed'
-      );
-    });
-  });
-});
+}
