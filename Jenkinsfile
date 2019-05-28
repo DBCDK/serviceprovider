@@ -15,6 +15,9 @@ pipeline {
     agent {
         label 'devel9-head'
     }
+    triggers {
+        pollSCM("H/3 * * * *")
+    }
     stages {
         stage('Test and build image') {
             steps {
