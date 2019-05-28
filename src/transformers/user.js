@@ -114,7 +114,6 @@ export default (request, context) => {
   const params = {
     agencyId: userAgencyId,
     userId: context.get('user.id'),
-    userPincode: context.get('user.pin'),
     'authentication.groupIdAut': context.get('netpunkt.group', true),
     'authentication.passwordAut': context.get('netpunkt.password', true),
     'authentication.userIdAut': context.get('netpunkt.user', true),
