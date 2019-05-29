@@ -6,7 +6,7 @@ properties([
 ])
 
 def PRODUCT = "serviceprovider"
-def CONTAINER_NAME = "${PRODUCT}-${BRANCH_NAME}"
+def CONTAINER_NAME = "${PRODUCT}-${BRANCH_NAME.toLowerCase()}"
 def BUILD_NAME = "$PRODUCT :: $BRANCH_NAME"
 def DOCKER_REPO = "docker-ux.dbc.dk"
 def DOCKER_NAME = "${DOCKER_REPO}/${CONTAINER_NAME}:${BUILD_NUMBER}"
