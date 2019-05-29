@@ -7,6 +7,20 @@ const metaTypeUuid = 'bf130fb7-8bd4-44fd-ad1d-43b6020ad102';
 const sharp = require('sharp');
 const assert = require('assert');
 
+const ANONYMOUS_USER = 'ANONYMOUS_USER';
+
+function getUser(ctx) {
+  let user = ctx.get('storage.user');
+  if (!user) {
+    user = ctx.get('user.uniqueId');
+  }
+  if (!user) {
+    user = ANONYMOUS_USER;
+  }
+
+  return user;
+}
+
 async function get({_id}, context) {
   let result = await knex('docs')
     .where('id', _id)
@@ -22,7 +36,9 @@ async function get({_id}, context) {
     return {statusCode: 404, error: 'type not found'};
   }
   const type = JSON.parse(typeObj[0].data);
-  if (!type.permissions.read === 'any') {
+  if (type.permissions.read === 'if object.public' && type.type === 'json') {
+    // tested below after we fetch actual data
+  } else if (type.permissions.read !== 'any') {
     return {statusCode: 403, error: 'no read access'};
   }
 
@@ -30,15 +46,30 @@ async function get({_id}, context) {
   result.version = new Date(result.version).toISOString();
   switch (type.type) {
     case 'json':
-      return {
-        statusCode: 200,
-        data: Object.assign({}, JSON.parse(result.data.toString('utf-8')), {
+      const data = Object.assign(
+        {},
+        JSON.parse(result.data.toString('utf-8')),
+        {
           _owner: result.owner,
           _type: result.type,
           _id: result.id,
           _version: result.version,
           _client: result.client
-        })
+        }
+      );
+
+      if (type.permissions.read === 'if object.public') {
+        const user = getUser(context);
+        if (!data.public) {
+          if (result.owner !== user) {
+            return {statusCode: 403, error: 'no read access'};
+          }
+        }
+      }
+
+      return {
+        statusCode: 200,
+        data
       };
 
     case 'jpeg':
@@ -69,20 +100,40 @@ const uuidRegExp = new RegExp(
 );
 
 async function find(opts, ctx) {
+  if (opts._type === '*') {
+    if (Object.keys(opts).length !== 2 || opts._owner !== getUser(ctx)) {
+      return {
+        statusCode: 400,
+        error:
+          'find _type wildcard only allowed when finding all objects for current user'
+      };
+    }
+    const result = await knex('docs')
+      .where('owner', opts._owner)
+      .select('id');
+    return {statusCode: 200, data: result.map(o => o.id)};
+  }
+
   // eslint-disable-next-line no-use-before-define
   const _type = await lookupType(opts._type || metaTypeUuid, ctx);
   const type = (await get({_id: _type}, ctx)).data;
   const keys = Object.keys(opts).filter(key => key !== '_type');
 
   if (Array.isArray(type.indexes)) {
-    for (let idx = 0; idx < type.indexes.length; ++idx) {
-      const index = type.indexes[idx];
+    // make sure private indexes overrides public indexes, by traversing in sorted order
+    const indexes = _.sortBy(type.indexes, o => String(o.keys) + !o.private);
+
+    for (const index of indexes) {
+      const idx = type.indexes.indexOf(index);
       if (
         index.value === '_id' &&
         index.keys.length === keys.length &&
         index.keys.filter(key => opts.hasOwnProperty(key)).length ===
           keys.length
       ) {
+        if (index.private && getUser(ctx) !== opts._owner) {
+          continue;
+        }
         const result = await knex('idIndex')
           .where('type', _type)
           .where('idx', idx)
@@ -91,7 +142,7 @@ async function find(opts, ctx) {
             index.keys.map(key => JSON.stringify(opts[key])).join('\n')
           )
           .select('val');
-        return {statusCode: 200, data: result.map(({val}) => val)};
+        return {statusCode: 200, data: result.map(o => o.val)};
       }
     }
   }
@@ -214,29 +265,38 @@ async function indexKeys(obj, type, action) {
   }
   if (action === 'add') {
     for (const index of result) {
-      const row = Object.assign({}, index);
-      delete row.val;
-      if (index.val === '_count') {
-        promises.push(
-          (async () => {
-            if (
-              (await knex('countIndex')
-                .select('val')
-                .where(row)).length
-            ) {
-              await knex('countIndex')
-                .where(row)
-                .increment('val', 1);
-            } else {
-              await knex('countIndex').insert(Object.assign({}, row, {val: 1}));
-            }
-          })()
-        );
-      }
-      if (index.val === '_id') {
-        promises.push(
-          knex('idIndex').insert(Object.assign({}, row, {val: obj._id}))
-        );
+      const indexType = type.indexes[index.idx];
+      if (
+        type.permissions.read === 'any' ||
+        (type.permissions.read === 'if object.public' && obj.public) ||
+        (indexType.private && indexType.keys[0] === '_owner')
+      ) {
+        const row = Object.assign({}, index);
+        delete row.val;
+        if (index.val === '_count') {
+          promises.push(
+            (async () => {
+              if (
+                (await knex('countIndex')
+                  .select('val')
+                  .where(row)).length
+              ) {
+                await knex('countIndex')
+                  .where(row)
+                  .increment('val', 1);
+              } else {
+                await knex('countIndex').insert(
+                  Object.assign({}, row, {val: 1})
+                );
+              }
+            })()
+          );
+        }
+        if (index.val === '_id') {
+          promises.push(
+            knex('idIndex').insert(Object.assign({}, row, {val: obj._id}))
+          );
+        }
       }
     }
   }
@@ -276,7 +336,10 @@ function findPutData(obj, type) {
 }
 
 async function put(obj, ctx) {
-  const user = ctx.get('storage.user');
+  const user = getUser(ctx);
+  if (user === ANONYMOUS_USER) {
+    return {statusCode: 403, error: 'no write access'};
+  }
   if (typeof obj._type !== 'string') {
     return {statusCode: 400, error: 'missing _type'};
   }
@@ -297,6 +360,9 @@ async function put(obj, ctx) {
 
   if (obj._id) {
     const prev = (await get({_id: obj._id}, ctx)).data;
+    if (!prev) {
+      return {statusCode: 404, error: 'id not found'};
+    }
     await verifyModifiable(obj, {prev, user, type});
 
     let version = Date.now();
@@ -331,8 +397,15 @@ async function put(obj, ctx) {
 }
 
 async function del({_id}, ctx) {
-  const user = ctx.get('storage.user');
-  const prev = (await get({_id}, ctx)).data;
+  const user = getUser(ctx);
+  const prevResponse = await get({_id}, ctx);
+  if (prevResponse.statusCode !== 200) {
+    if (prevResponse.statusCode === 403) {
+      return {statusCode: 403, error: 'no write access'};
+    }
+    return prevResponse;
+  }
+  const prev = prevResponse.data;
   const type = (await get({_id: prev._type}, ctx)).data;
 
   await verifyModifiable({_id}, {prev, user, type});
@@ -370,9 +443,11 @@ async function scan(
     return {statusCode: 400, error: 'invalid _type'};
   }
 
-  let indexes = type.data.indexes.filter(o => _.isEqual(index, o.keys));
+  let indexes = type.data.indexes.filter(
+    o => _.isEqual(index, o.keys) && !o.private
+  );
   if (indexes.length !== 1) {
-    return {statusCode: 400, error: 'no such index'};
+    return {statusCode: 400, error: 'no such public index'};
   }
 
   const idx = type.data.indexes.indexOf(indexes[0]);
@@ -439,7 +514,7 @@ async function scan(
 }
 
 async function storageTransformer(request, context) {
-  const user = context.get('storage.user');
+  const user = getUser(context);
   if (!user) {
     return {statusCode: 403, error: 'invalid user'};
   }

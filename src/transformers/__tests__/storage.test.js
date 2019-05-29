@@ -20,7 +20,9 @@
 // - `indexes` is a list of indexes. Each index is represented as a JSON object with the following properties:
 //    - `keys` is a list of property names to index
 //    - `value` that should either be `"_id"`, which is used for retrieving the document, or `"_count"`, which is used to count how many occurences of a given keys occur.
-// - `permissions` is used for access control. Should usually be `{"read": "any"}`, which means that everyone may read the data, and only document owner may change it.
+// - `permissions` is used for access control. Could be:
+//    -`{"read": "any"}`, which means that everyone may read the data, and only document owner may change it.
+//    -`{"read": "if object.public"}`, which means that the `public` property on a json-typed object indicates whether everyone may read it. Objects withouth `.public = true` will not be found with scan/find, except in indexes starting with `_owner` and owned by the querying user.
 //
 // So if we wanted to store users in the storage endpoint, and wanted to be able to look them up by their username and group, we could define the following new type:
 //
@@ -48,7 +50,15 @@ const request = promisify(require('request'));
 const {version} = require('../../../package.json');
 /* eslint-disable no-use-before-define */
 
-const dbcOpenPlatform = makeApiWrapper();
+const dbcOpenPlatform = makeApiWrapper({
+  context: {storage: {user: 'STORAGE_USER'}}
+});
+const dbcOpenPlatformAuthenticatedUser = makeApiWrapper({
+  context: {user: {uniqueId: 'AUTHENTICATED_USER'}}
+});
+const dbcOpenPlatformAnonymousUser = makeApiWrapper({
+  context: {user: {uniqueId: null}}
+});
 
 // are executed every time the tests are run, - such as when change are made to the open platform. This also makes sure that the examples in this documentation always runs.
 //
@@ -84,20 +94,28 @@ describe('Storage endpoint', () => {
   let user, typeUuid, type1, doc1, imageType, doc2, doc3, doc4;
 
   before(async () => {
-    const status = await dbcOpenPlatform.status({
+    user = (await dbcOpenPlatform.status({
       fields: ['storage']
-    });
-    user = status.storage.user;
+    })).storage.user;
+
     await cleanupOldTestData();
+
+    const promises = [];
+
+    promises.push(
+      (async () => {
+        typeUuid = (await dbcOpenPlatform.storage({
+          find: {_owner: 'openplatform', name: 'type'}
+        }))[0];
+      })()
+    );
+
+    await Promise.all(promises);
   });
 
   describe('data-type type', () => {
     //
     it('can be looked up, and is a uuid', async () => {
-      typeUuid = (await dbcOpenPlatform.storage({
-        find: {_owner: 'openplatform', name: 'type'}
-      }))[0];
-
       assert.equal(typeUuid, 'bf130fb7-8bd4-44fd-ad1d-43b6020ad102');
     });
 
@@ -245,6 +263,36 @@ describe('Storage endpoint', () => {
       });
       assert.deepEqual(result, []);
     });
+
+    it('is possible to find all data belonging to current user', async () => {
+      const result = await dbcOpenPlatform.storage({
+        find: {
+          _type: '*',
+          _owner: user
+        }
+      });
+      assert(result.includes(type1._id));
+      assert(result.includes(doc1._id));
+    });
+    it('it is not possible to find all data belonging to another user', async () => {
+      await expectThrow(
+        () =>
+          dbcOpenPlatformAuthenticatedUser.storage({
+            find: {_type: '*', _owner: user}
+          }),
+        'Error: {"statusCode":400,"error":"find _type wildcard only allowed when finding all objects for current user"}'
+      );
+    });
+
+    it('only allows wildcard _type when looking up owner', async () => {
+      await expectThrow(
+        () =>
+          dbcOpenPlatformAuthenticatedUser.storage({
+            find: {_type: '*', tags: 'baz'}
+          }),
+        'Error: {"statusCode":400,"error":"find _type wildcard only allowed when finding all objects for current user"}'
+      );
+    });
   });
 
   describe('updating data', () => {
@@ -285,6 +333,23 @@ describe('Storage endpoint', () => {
             }
           }),
         'Error: {"statusCode":409,"error":"conflict"}'
+      );
+    });
+
+    it('throws a 404 if we try to change a document which does not exist', async () => {
+      const nonExisting = 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa';
+      await expectThrow(
+        () =>
+          dbcOpenPlatform.storage({
+            put: {
+              _type: type1._id,
+              _id: nonExisting,
+              _version: doc1._version,
+              hello: 'world',
+              tags: ['foo', 'quux']
+            }
+          }),
+        'Error: {"statusCode":404,"error":"id not found"}'
       );
     });
 
@@ -656,20 +721,255 @@ describe('Storage endpoint', () => {
     });
   });
 
-  async function cleanupOldTestData() {
-    for (const typeName of ['test', 'testType2', 'testType1', 'testImage']) {
-      const types = await dbcOpenPlatform.storage({
-        find: {
-          _owner: user,
-          name: typeName
+  describe('User permissions', () => {
+    let typePrivate, docPrivate, docPublic;
+    it('stores an object that is owned by the creator', async () => {
+      const doc = await dbcOpenPlatformAuthenticatedUser.storage({
+        put: {
+          _type: type1._id,
+          title: 'hello world',
+          tags: ['foo', 'bar', 'baz']
         }
       });
-      for (const uuid of types) {
-        await dbcOpenPlatform.storage({delete: {_id: uuid}});
+      const result = await dbcOpenPlatformAuthenticatedUser.storage({
+        get: {_id: doc._id}
+      });
+      assert.equal(result._owner, 'AUTHENTICATED_USER');
+    });
+
+    it('can create a new data type with read permission "if object.public"', async () => {
+      typePrivate = await dbcOpenPlatform.storage({
+        put: {
+          _type: typeUuid,
+          name: 'testTypePrivate',
+          description: 'Type used during unit test',
+          type: 'json',
+          permissions: {read: 'if object.public'},
+          indexes: [
+            {value: '_id', keys: ['key']},
+            {value: '_id', keys: ['_owner'], private: true},
+            {value: '_id', keys: ['_owner', 'key'], private: true}
+          ]
+        }
+      });
+    });
+
+    it('stores public and private objects', async () => {
+      docPublic = await dbcOpenPlatform.storage({
+        put: {
+          _type: typePrivate._id,
+          public: true,
+          title: 'hello world - public',
+          key: 'a'
+        }
+      });
+      docPrivate = await dbcOpenPlatform.storage({
+        put: {
+          _type: typePrivate._id,
+          public: false,
+          title: 'hello world - private',
+          key: 'a'
+        }
+      });
+    });
+
+    it('can fetch others public objects', async () => {
+      const result = await dbcOpenPlatformAuthenticatedUser.storage({
+        get: {_id: docPublic._id}
+      });
+      assert.deepEqual(
+        {
+          _type: typePrivate._id,
+          _client: 'CLIENT_ID',
+          _id: result._id,
+          _owner: 'STORAGE_USER',
+          _version: result._version,
+          key: 'a',
+          public: true,
+          title: 'hello world - public'
+        },
+        result
+      );
+    });
+
+    it('fails when fetching others private objects', async () => {
+      await expectThrow(
+        () =>
+          dbcOpenPlatformAuthenticatedUser.storage({
+            get: {_id: docPrivate._id}
+          }),
+        'Error: {"statusCode":403,"error":"no read access"}'
+      );
+    });
+
+    it('fails when deleting others private objects', async () => {
+      await expectThrow(
+        () =>
+          dbcOpenPlatformAuthenticatedUser.storage({
+            delete: {_id: docPrivate._id}
+          }),
+        'Error: {"statusCode":403,"error":"no write access"}'
+      );
+    });
+
+    it('can fetch owners private objects', async () => {
+      const result = await dbcOpenPlatform.storage({
+        get: {_id: docPrivate._id}
+      });
+      assert.deepEqual(
+        {
+          _type: typePrivate._id,
+          _client: 'CLIENT_ID',
+          _id: result._id,
+          _owner: 'STORAGE_USER',
+          _version: result._version,
+          key: 'a',
+          public: false,
+          title: 'hello world - private'
+        },
+        result
+      );
+    });
+
+    it('fails when anonoymous user tries to store objects', async () => {
+      await expectThrow(
+        () =>
+          dbcOpenPlatformAnonymousUser.storage({
+            put: {
+              _type: typePrivate._id,
+              public: true,
+              title: 'hello world - public'
+            }
+          }),
+        'Error: {"statusCode":403,"error":"no write access"}'
+      );
+    });
+
+    it('it only indexes public objects by default', async () => {
+      let result = await dbcOpenPlatform.storage({
+        find: {
+          _type: typePrivate._id,
+          key: 'a'
+        }
+      });
+      assert.deepEqual(result, [docPublic._id]);
+    });
+
+    it('only owner can find its private indexes', async () => {
+      let result = await dbcOpenPlatform.storage({
+        find: {
+          _type: typePrivate._id,
+          _owner: user
+        }
+      });
+      assert.deepEqual(result, _.sortBy([docPublic._id, docPrivate._id]));
+      await expectThrow(
+        () =>
+          dbcOpenPlatformAuthenticatedUser.storage({
+            find: {
+              _type: typePrivate._id,
+              _owner: user
+            }
+          }),
+        'Error: {"statusCode":400,"error":"no index for [\\"_owner\\"]"}'
+      );
+    });
+    it('private indexes cannot be scanned', async () => {
+      await expectThrow(
+        () =>
+          dbcOpenPlatformAuthenticatedUser.storage({
+            scan: {
+              _type: typePrivate._id,
+              index: ['_owner', 'key'],
+              startsWith: [user]
+            }
+          }),
+        'Error: {"statusCode":400,"error":"no such public index"}'
+      );
+    });
+  });
+
+  describe('Indexes with both public and private index', () => {
+    let typeMixed, docPrivate, docPublic;
+    before(async () => {
+      typeMixed = await dbcOpenPlatform.storage({
+        put: {
+          _type: typeUuid,
+          name: 'testTypeMixedPermission',
+          description: 'Type used during unit test',
+          type: 'json',
+          permissions: {read: 'if object.public'},
+          indexes: [
+            {value: '_id', keys: ['_owner', 'key']},
+            {value: '_id', keys: ['_owner', 'key'], private: true}
+          ]
+        }
+      });
+
+      docPublic = await dbcOpenPlatform.storage({
+        put: {
+          _type: typeMixed._id,
+          public: true,
+          title: 'hello 1',
+          key: 'a'
+        }
+      });
+      docPrivate = await dbcOpenPlatform.storage({
+        put: {
+          _type: typeMixed._id,
+          title: 'hello 2',
+          key: 'a'
+        }
+      });
+    });
+    it('owner can find data via private index', async () => {
+      let result = await dbcOpenPlatform.storage({
+        find: {
+          _type: typeMixed._id,
+          _owner: user,
+          key: 'a'
+        }
+      });
+      assert.deepEqual(result, _.sortBy([docPublic._id, docPrivate._id]));
+    });
+    it('non-owner can find data via public index', async () => {
+      let result = await dbcOpenPlatformAuthenticatedUser.storage({
+        find: {
+          _type: typeMixed._id,
+          _owner: user,
+          key: 'a'
+        }
+      });
+      assert.deepEqual(result, [docPublic._id]);
+    });
+  });
+
+  async function cleanupOldTestData() {
+    for (const typeName of [
+      'test',
+      'testType2',
+      'testType1',
+      'testImage',
+      'testTypePrivate',
+      'testTypeMixedPermission'
+    ]) {
+      try {
+        const types = await dbcOpenPlatform.storage({
+          find: {
+            _owner: user,
+            name: typeName
+          }
+        });
+        for (const uuid of types) {
+          await dbcOpenPlatform.storage({delete: {_id: uuid}});
+        }
+      } catch (e) {
+        // some cleanup may fail, if type was not created earlier
       }
     }
   }
 });
+
 //
 // # Utility functions
 //
@@ -682,17 +982,16 @@ async function expectThrow(fn, error) {
   throw new Error('expected to throw, but did not');
 }
 
-function makeApiWrapper() {
+function makeApiWrapper({context}) {
   const caller = require('../../provider/caller.js');
   const {storageTransformer} = require('../storage.js');
   const status = require('../status.js');
   const executor = caller(
     {storage: storageTransformer, status},
-    {
-      storage: {user: 'STORAGE_USER'},
+    Object.assign({}, context, {
       app: {clientId: 'CLIENT_ID'},
       services: {}
-    }
+    })
   );
   const api = {};
   function addFn(fn) {
