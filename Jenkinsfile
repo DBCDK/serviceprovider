@@ -10,6 +10,7 @@ def CONTAINER_NAME = "${PRODUCT}"
 def BUILD_NAME = "$PRODUCT :: $BRANCH_NAME"
 def DOCKER_REPO = "docker-ux.dbc.dk"
 def DOCKER_NAME = "${DOCKER_REPO}/${CONTAINER_NAME}:${BUILD_NUMBER}"
+def DOCKER_NAME_LATEST = "${DOCKER_REPO}/${CONTAINER_NAME}:latest"
 def DOCKER_STATUS = ''
 pipeline {
     agent {
@@ -40,6 +41,7 @@ pipeline {
                         BUILD_INFO.env.capture = true
                         BUILD_INFO.env.collect()
                         BUILD_INFO = ARTY_DOCKER.push("$DOCKER_NAME", 'docker-ux', BUILD_INFO)
+                        ARTY_DOCKER.push("$DOCKER_NAME_LATEST", 'docker-ux', BUILD_INFO)
                         ARTY_SERVER.publishBuildInfo BUILD_INFO
                     }
                 }
