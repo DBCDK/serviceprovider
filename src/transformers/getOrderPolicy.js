@@ -5,7 +5,8 @@
  * Wraps the getorderpolicy functionality of the openorder backend.
  *
  */
-import _ from 'lodash';
+var parseString = require('xml2js').parseString;
+var stripNS = require('xml2js').processors.stripPrefix;
 
 /**
  * Validate parameters
@@ -21,13 +22,14 @@ function validateParams(params) {
 
 /**
  * Constructs soap request to perform renew request
- * @param {object} param Parameters to substitute into soap request
+ * @param pid
+ * @param {object} params Parameters to substitute into soap request
+ * @param context
  * @returns soap request string
  */
 function getOrderPolicy(pid, params, context) {
   let soap = `<SOAP-ENV:Envelope xmlns="http://oss.dbc.dk/ns/openorder" xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/">
      <SOAP-ENV:Body>
-
         <checkOrderPolicyRequest>
            <authentication>
               <groupIdAut>${params['authentication.groupIdAut']}</groupIdAut>
@@ -37,24 +39,28 @@ function getOrderPolicy(pid, params, context) {
            <pickUpAgencyId>${params.agencyId}</pickUpAgencyId>
            <pid>${pid}</pid>
            <serviceRequester>${params.serviceRequester}</serviceRequester>
-           <outputType>json</outputType>
         </checkOrderPolicyRequest>
      </SOAP-ENV:Body>
   </SOAP-ENV:Envelope>`;
 
   return context.call('openorder', soap).then(body => {
-    body = JSON.parse(body).checkOrderPolicyResponse;
+    parseString(body, {trim: true, tagNameProcessors: [stripNS]}, function(
+      err,
+      result
+    ) {
+      body = result.Envelope.Body[0].checkOrderPolicyResponse[0];
+    });
     const data = {};
 
     if (body.checkOrderPolicyError) {
-      return {statusCode: 500, error: body.checkOrderPolicyError.$};
+      return {statusCode: 500, error: body.checkOrderPolicyError[0]};
     }
 
     if (body.orderPossible) {
-      data.orderPossible = body.orderPossible.$ !== 'false';
+      data.orderPossible = body.orderPossible[0] !== 'false';
     }
     if (body.orderPossibleReason) {
-      data.orderPossibleReason = body.orderPossibleReason.$;
+      data.orderPossibleReason = body.orderPossibleReason[0];
     }
     return {statusCode: 200, data: data};
   });
@@ -64,7 +70,7 @@ function getOrderPolicy(pid, params, context) {
  * Default transformer.
  * Wraps getorderpolicy of the openorder backend
  *
- * @param {Object} params parameters from the user (no entries from this object is used)
+ * @param {Object} request parameters from the user (no entries from this object is used)
  * @param {Object} context The context object fetched from smaug
  * @returns promise with result
  * @api public

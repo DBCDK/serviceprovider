@@ -6,6 +6,8 @@
  *
  */
 import {extend} from 'lodash';
+var parseString = require('xml2js').parseString;
+var stripNS = require('xml2js').processors.stripPrefix;
 
 /**
  * Validate parameters
@@ -109,7 +111,6 @@ ${pidList
            ${userParams.name}
            ${userParams.phone}
            <verificationReferenceSource>dbcdatawell</verificationReferenceSource>
-           <outputType>${params.outputType}</outputType>
          </placeOrderRequest>
       </SOAP-ENV:Body>
     </SOAP-ENV:Envelope>`;
@@ -133,15 +134,19 @@ function placeOrder(request, context) {
   // Make orderSystem configurable by smaug.
   const orderSystem = context.get('app.orderSystem', true);
   let soap = constructSoap(request.pids, expireDate, request, orderSystem);
-
   return context.call('openorder', soap).then(body => {
-    body = JSON.parse(body).placeOrderResponse;
+    parseString(body, {trim: true, tagNameProcessors: [stripNS]}, function(
+      err,
+      result
+    ) {
+      body = result.Envelope.Body[0].placeOrderResponse[0];
+    });
     let status = 500;
     if (body.orderNotPlaced) {
       let err = 'order not placed';
 
-      if (body.orderNotPlaced.placeOrderError) {
-        err = body.orderNotPlaced.placeOrderError.$;
+      if (body.orderNotPlaced[0].placeOrderError) {
+        err = body.orderNotPlaced[0].placeOrderError[0];
         if (err === 'service_unavailable') {
           status = 503;
         }
@@ -152,10 +157,10 @@ function placeOrder(request, context) {
       if (
         err === 'owned_own_catalogue' &&
         body.orderNotPlaced &&
-        body.orderNotPlaced.lookUpUrl &&
-        body.orderNotPlaced.lookUpUrl[0]
+        body.orderNotPlaced[0].lookUpUrl &&
+        body.orderNotPlaced[0].lookUpUrl[0]
       ) {
-        error.orderUrl = body.orderNotPlaced.lookUpUrl[0].$;
+        error.orderUrl = body.orderNotPlaced[0].lookUpUrl[0];
       }
 
       return error;
@@ -166,7 +171,7 @@ function placeOrder(request, context) {
     }
     return {
       statusCode: 200,
-      data: {status: 'ok', orsId: body.orderPlaced.orderId.$}
+      data: {status: 'ok', orsId: body.orderPlaced[0].orderId[0]}
     };
   });
 }
