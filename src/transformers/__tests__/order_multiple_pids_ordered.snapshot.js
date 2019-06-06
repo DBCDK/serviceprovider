@@ -1,28 +1,38 @@
-/* eslint-disable max-len, quotes, comma-spacing, key-spacing, quote-props */
-// Request: order {"pids":["870970-basis:28126727","870970-basis:27597726"],"expires":"2016-08-01","library":"DK-100451","phone":"123454","address":"ADDRESS","email":"EMAIL"}
+// AUTOTEST GENERATOR: {"endpoint":"order","params":{"pids":["870970-basis:28126727","870970-basis:27597726"],"expires":"2019-12-01","pickUpBranch":"DK-100450","phone":"123454","address":"ADDRESS","email":"EMAIL"}}
+//
+//
+// AUTOMATED UNIT TEST
+// DO NOT EDIT
+//
+//
+const endpoint = 'order';
+const params = {
+  pids: ['870970-basis:28126727', '870970-basis:27597726'],
+  expires: '2019-12-01',
+  pickUpBranch: 'DK-100450',
+  phone: '123454',
+  address: 'ADDRESS',
+  email: 'EMAIL'
+};
 
-import Provider from '../../provider/Provider.js';
-import {assert, fail} from 'chai';
+const expected = {statusCode: 200, data: {status: 'ok', orsId: '1033954030'}};
 
-let context = {
+const context = {
   services: {
     ddbcmsapi: 'http://rest.filmstriben.dbc.inlead.dk/web/',
-    moreinfo: 'http://moreinfo.addi.dk/2.6/',
-    openagency: 'http://openagency.addi.dk/2.24/',
-    openholdingstatus: 'https://openholdingstatus.addi.dk/2.2/',
-    openorder: 'https://openorder.addi.dk/2.7.1/',
-    TESTopenorder: 'https://openorder.addi.dk/test_2.7.1/',
-    opensearch: 'http://opensearch.addi.dk/b3.0_4.2/',
-    openuserstatus: 'https://openuserstatus.addi.dk/1.5/',
+    moreinfo: 'http://moreinfo.addi.dk/2.11/',
+    openagency: 'http://openagency.addi.dk/2.34/',
+    openholdingstatus: 'https://openholdingstatus.addi.dk/3.0/',
+    PRODopenorder: 'https://openorder.addi.dk/2.8/',
+    openorder: 'https://openorder.addi.dk/2.8/',
+    opensearch: 'http://opensearch.addi.dk/b3.5_5.0/',
+    openuserstatus: 'https://openuserstatus.addi.dk/1.6.1/',
     rank: 'https://xptest.dbc.dk/ms/rank/v1',
-    suggestpopular: 'http://xptest.dbc.dk/ms/entity-pop/v1',
-    suggestcreator: 'http://xptest.dbc.dk/ms/entity-suggest/v1/creator',
-    suggestlibrary: 'http://xptest.dbc.dk/ms/entity-suggest/v1/library',
-    suggestsubject: 'http://xptest.dbc.dk/ms/entity-suggest/v1/subject',
-    recommendurls: {
-      default: 'https://xptest.dbc.dk/ms/recommend-cosim/v1',
-      popular: 'https://xptest.dbc.dk/ms/recommend-pop/v1'
-    }
+    suggestpopular: 'XXXXX',
+    suggestcreator: 'XXXXX',
+    suggestlibrary: 'XXXXX',
+    suggestsubject: 'XXXXX',
+    recommendurls: 'XXXXX'
   },
   search: {
     agency: '775100',
@@ -32,8 +42,9 @@ let context = {
   },
   netpunkt: {user: 'XXXXX', group: 'XXXXX', password: 'XXXXX'},
   user: {
-    agency: 'DK-100451',
-    isil: 'DK-100451',
+    agency: '100450',
+    libraryId: '100450',
+    isil: 'DK-100450',
     id: 'XXXXX',
     pin: 'XXXXX',
     salt: 'XXXXX'
@@ -45,41 +56,24 @@ let context = {
     orderSystem: 'bibliotekdk'
   }
 };
-let provider = Provider();
-let mockData = {
-  '["openorder","<SOAP-ENV:Envelope xmlns=\\"http://oss.dbc.dk/ns/openorder\\" xmlns:SOAP-ENV=\\"http://schemas.xmlsoap.org/soap/envelope/\\">\\n     <SOAP-ENV:Body>\\n        <placeOrderRequest>\\n           <authentication>\\n              <groupIdAut>XXXXX</groupIdAut>\\n              <passwordAut>XXXXX</passwordAut>\\n              <userIdAut>XXXXX</userIdAut>\\n           </authentication>\\n           <copy>false</copy>\\n           <exactEdition>false</exactEdition>\\n           <needBeforeDate>2216-08-01T00:00:00</needBeforeDate>\\n           <orderSystem>bibliotekdk</orderSystem>\\n           <pickUpAgencyId>DK-100451</pickUpAgencyId>\\n           <pid>870970-basis:28126727</pid>\\n           <pid>870970-basis:27597726</pid>\\n           <serviceRequester>190101</serviceRequester>\\n           <userAddress>ADDRESS</userAddress>\\n           <userId>XXXXX</userId>\\n           <userIdAuthenticated>true</userIdAuthenticated>\\n           <userMail>EMAIL</userMail>\\n           \\n           <userTelephone>123454</userTelephone>\\n           <verificationReferenceSource>dbcdatawell</verificationReferenceSource>\\n           <outputType>json</outputType>\\n         </placeOrderRequest>\\n      </SOAP-ENV:Body>\\n    </SOAP-ENV:Envelope>"]':
-    '{"placeOrderResponse":{"orderPlaced":{"orderId":{"$":"1022805579"},"orderPlacedMessage":{"$":"owned_accepted"}}},"@namespaces":{"oo":"http:\\/\\/oss.dbc.dk\\/ns\\/openorder"}}'
+const mockData = {
+  '["openorder","<SOAP-ENV:Envelope xmlns=\\"http://oss.dbc.dk/ns/openorder\\" xmlns:SOAP-ENV=\\"http://schemas.xmlsoap.org/soap/envelope/\\">\\n     <SOAP-ENV:Body>\\n        <placeOrderRequest>\\n           <authentication>\\n              <groupIdAut>XXXXX</groupIdAut>\\n              <passwordAut>XXXXX</passwordAut>\\n              <userIdAut>XXXXX</userIdAut>\\n           </authentication>\\n           <copy>false</copy>\\n           <exactEdition>false</exactEdition>\\n           <needBeforeDate>2019-12-01T00:00:00</needBeforeDate>\\n           <orderSystem>bibliotekdk</orderSystem>\\n           <pickUpAgencyId>DK-100450</pickUpAgencyId>\\n           <pid>870970-basis:28126727</pid>\\n           <pid>870970-basis:27597726</pid>\\n           <serviceRequester>190101</serviceRequester>\\n           <userAddress>ADDRESS</userAddress>\\n           <userId>XXXXX</userId>\\n           <userIdAuthenticated>true</userIdAuthenticated>\\n           <userMail>EMAIL</userMail>\\n           \\n           <userTelephone>123454</userTelephone>\\n           <verificationReferenceSource>dbcdatawell</verificationReferenceSource>\\n         </placeOrderRequest>\\n      </SOAP-ENV:Body>\\n    </SOAP-ENV:Envelope>"]':
+    '<?xml version="1.0" encoding="UTF-8"?><SOAP-ENV:Envelope xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/" xmlns="http://oss.dbc.dk/ns/openorder"><SOAP-ENV:Body><placeOrderResponse><orderPlaced><orderId>1033954030</orderId><orderPlacedMessage>owned_accepted</orderPlacedMessage></orderPlaced></placeOrderResponse></SOAP-ENV:Body></SOAP-ENV:Envelope>'
 };
 
-describe('Automated test: order-multiple-pids-ordered', () => {
-  it('expected response. ID:zkfbw9, for {"pids":["870970-basis:28126727","870970-basis:27597726"],"expires":"2216-08-01","pickUpBranch":"DK-100451","phone":"123454","address":"ADDRESS","email":"EMAIL"}', done => {
+import Provider from '../../provider/Provider.js';
+import {assert, fail} from 'chai';
+const provider = Provider();
+
+describe('Automated test: order_multiple_pids_ordered.snapshot', () => {
+  it('has same result as recorded (in order_multiple_pids_ordered.snapshot)', () => {
+    assert(
+      Date.now() < +new Date('2019-09-04'),
+      'Please recreate the automatically generated unit tests, such that the mock data does not come out of sync with the actual services. See README.md for details.'
+    );
     context.mockData = mockData;
-    provider
-      .execute(
-        'order',
-        {
-          pids: ['870970-basis:28126727', '870970-basis:27597726'],
-          expires: '2216-08-01',
-          pickUpBranch: 'DK-100451',
-          phone: '123454',
-          address: 'ADDRESS',
-          email: 'EMAIL'
-        },
-        context
-      )
-      .then(result => {
-        assert.deepEqual(result, {
-          statusCode: 200,
-          data: {status: 'ok', orsId: '1022805579'}
-        });
-        done();
-      })
-      .catch(result => {
-        fail(
-          {throw: result},
-          {statusCode: 200, data: {status: 'ok', orsId: '1022805579'}}
-        );
-        done();
-      });
+    return provider.execute(endpoint, params, context).then(result => {
+      assert.deepEqual(result, expected);
+    });
   });
 });
