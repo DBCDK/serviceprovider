@@ -15,7 +15,7 @@ const params = {
   email: 'EMAIL'
 };
 
-const expected = {statusCode: 200, data: {status: 'ok', orsId: '1033954030'}};
+const expected = {statusCode: 200, data: {status: 'ok', orsId: '1033955652'}};
 
 const context = {
   services: {
@@ -23,8 +23,8 @@ const context = {
     moreinfo: 'http://moreinfo.addi.dk/2.11/',
     openagency: 'http://openagency.addi.dk/2.34/',
     openholdingstatus: 'https://openholdingstatus.addi.dk/3.0/',
-    PRODopenorder: 'https://openorder.addi.dk/2.8/',
-    openorder: 'https://openorder.addi.dk/2.8/',
+    PRODopenorder: 'https://openorder.addi.dk/3.0',
+    openorder: 'https://openorder.addi.dk/3.0',
     opensearch: 'http://opensearch.addi.dk/b3.5_5.0/',
     openuserstatus: 'https://openuserstatus.addi.dk/1.6.1/',
     rank: 'https://xptest.dbc.dk/ms/rank/v1',
@@ -34,12 +34,7 @@ const context = {
     suggestsubject: 'XXXXX',
     recommendurls: 'XXXXX'
   },
-  search: {
-    agency: '775100',
-    profile: 'opac',
-    collectionidentifiers:
-      'rec.collectionIdentifier:150013-palle OR rec.collectionIdentifier:758000-katalog'
-  },
+  search: {agency: '775100', profile: 'opac'},
   netpunkt: {user: 'XXXXX', group: 'XXXXX', password: 'XXXXX'},
   user: {
     agency: '100450',
@@ -58,7 +53,7 @@ const context = {
 };
 const mockData = {
   '["openorder","<SOAP-ENV:Envelope xmlns=\\"http://oss.dbc.dk/ns/openorder\\" xmlns:SOAP-ENV=\\"http://schemas.xmlsoap.org/soap/envelope/\\">\\n     <SOAP-ENV:Body>\\n        <placeOrderRequest>\\n           <authentication>\\n              <groupIdAut>XXXXX</groupIdAut>\\n              <passwordAut>XXXXX</passwordAut>\\n              <userIdAut>XXXXX</userIdAut>\\n           </authentication>\\n           <copy>false</copy>\\n           <exactEdition>false</exactEdition>\\n           <needBeforeDate>2019-12-01T00:00:00</needBeforeDate>\\n           <orderSystem>bibliotekdk</orderSystem>\\n           <pickUpAgencyId>DK-100450</pickUpAgencyId>\\n           <pid>870970-basis:28126727</pid>\\n           <pid>870970-basis:27597726</pid>\\n           <serviceRequester>190101</serviceRequester>\\n           <userAddress>ADDRESS</userAddress>\\n           <userId>XXXXX</userId>\\n           <userIdAuthenticated>true</userIdAuthenticated>\\n           <userMail>EMAIL</userMail>\\n           \\n           <userTelephone>123454</userTelephone>\\n           <verificationReferenceSource>dbcdatawell</verificationReferenceSource>\\n         </placeOrderRequest>\\n      </SOAP-ENV:Body>\\n    </SOAP-ENV:Envelope>"]':
-    '<?xml version="1.0" encoding="UTF-8"?><SOAP-ENV:Envelope xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/" xmlns="http://oss.dbc.dk/ns/openorder"><SOAP-ENV:Body><placeOrderResponse><orderPlaced><orderId>1033954030</orderId><orderPlacedMessage>owned_accepted</orderPlacedMessage></orderPlaced></placeOrderResponse></SOAP-ENV:Body></SOAP-ENV:Envelope>'
+    '<?xml version=\'1.0\' encoding=\'UTF-8\'?><S:Envelope xmlns:S="http://schemas.xmlsoap.org/soap/envelope/"><S:Body><ns1:placeOrderResponse xmlns:ns1="http://oss.dbc.dk/ns/openorder"><ns1:orderPlaced><ns1:orderId>1033955652</ns1:orderId><ns1:orderPlacedMessage>owned_accepted</ns1:orderPlacedMessage></ns1:orderPlaced></ns1:placeOrderResponse></S:Body></S:Envelope>'
 };
 
 import Provider from '../../provider/Provider.js';
