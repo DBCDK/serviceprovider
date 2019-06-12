@@ -518,7 +518,10 @@ async function scan(
 
   let result = await query;
   result = result.map(({key, val}) => ({
-    key: key.split('\n').map(s => JSON.parse(s)),
+    key: key
+      .split('\n')
+      .filter(s => !!s)
+      .map(s => JSON.parse(s)),
     val
   }));
 
