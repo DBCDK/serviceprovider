@@ -874,19 +874,6 @@ describe('Storage endpoint', () => {
         'Error: {"statusCode":400,"error":"no index for [\\"_owner\\"]"}'
       );
     });
-    it('private indexes cannot be scanned', async () => {
-      await expectThrow(
-        () =>
-          dbcOpenPlatformAuthenticatedUser.storage({
-            scan: {
-              _type: typePrivate._id,
-              index: ['_owner', 'key'],
-              startsWith: [user]
-            }
-          }),
-        'Error: {"statusCode":400,"error":"no such public index"}'
-      );
-    });
   });
 
   describe('Indexes with both public and private index', () => {
@@ -941,6 +928,31 @@ describe('Storage endpoint', () => {
         }
       });
       assert.deepEqual(result, [docPublic._id]);
+    });
+    it('Owner may scan private index', async () => {
+      let result = await dbcOpenPlatform.storage({
+        scan: {
+          _type: typeMixed._id,
+          index: ['_owner', 'key'],
+          startsWith: [user]
+        }
+      });
+      assert.deepEqual(Object.keys(result[0]), ['key', 'val']);
+      assert.deepEqual(
+        result.map(r => r.val),
+        _.sortBy([docPublic._id, docPrivate._id])
+      );
+    });
+    it('Non-owner may scan public index', async () => {
+      let result = await dbcOpenPlatformAuthenticatedUser.storage({
+        scan: {
+          _type: typeMixed._id,
+          index: ['_owner', 'key'],
+          startsWith: [user]
+        }
+      });
+      assert.deepEqual(Object.keys(result[0]), ['key', 'val']);
+      assert.deepEqual(result.map(r => r.val), [docPublic._id]);
     });
   });
 

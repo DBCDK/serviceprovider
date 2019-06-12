@@ -436,6 +436,7 @@ async function scan(
   {_type, index, after, before, reverse, limit, startsWith},
   ctx
 ) {
+  const user = getUser(ctx);
   _type = await lookupType(_type, ctx);
 
   let type = await get({_id: _type}, ctx);
@@ -444,8 +445,19 @@ async function scan(
   }
 
   let indexes = type.data.indexes.filter(
-    o => _.isEqual(index, o.keys) && !o.private
+    o =>
+      _.isEqual(index, o.keys) &&
+      o.private &&
+      startsWith &&
+      startsWith[0] === user
   );
+
+  if (indexes.length === 0) {
+    indexes = type.data.indexes.filter(
+      o => _.isEqual(index, o.keys) && !o.private
+    );
+  }
+
   if (indexes.length !== 1) {
     return {statusCode: 400, error: 'no such public index'};
   }
