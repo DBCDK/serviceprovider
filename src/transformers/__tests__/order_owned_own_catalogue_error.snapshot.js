@@ -1,50 +1,45 @@
-/* eslint-disable max-len, quotes, comma-spacing, key-spacing, quote-props, indent */
-// Request: order {"pids":["710100-katalog:50758060","710100-katalog:28657366"],"pickUpBranch":"710110","expires":"2019-06-28"}
+// AUTOTEST GENERATOR: {"endpoint":"order","params":{"pids":["7XXXXX0-katalog:50758060","7XXXXX0-katalog:28657366"],"pickUpBranch":"710110","expires":"2019-12-28"}}
+//
+//
+// AUTOMATED UNIT TEST
+// DO NOT EDIT
+//
+//
+const endpoint = 'order';
+const params = {
+  pids: ['7XXXXX0-katalog:50758060', '7XXXXX0-katalog:28657366'],
+  pickUpBranch: '710110',
+  expires: '2019-12-28'
+};
 
-import Provider from '../../provider/Provider.js';
-import {assert, fail} from 'chai';
+const expected = {statusCode: 200, data: {status: 'ok', orsId: '1033955662'}};
 
 const context = {
   services: {
-    ddbcmsapi: 'https://cmscontent.dbc.dk/',
-    moreinfo: 'https://moreinfo.addi.dk/2.10/',
-    openagency: 'http://openagency.addi.dk/2.24/',
-    openholdingstatus: 'https://openholdingstatus.addi.dk/2.2/',
-    PRODopenorder: 'https://openorder.addi.dk/2.8/',
-    openorder: 'https://openorder.addi.dk/test_2.8/',
-    opensearch: 'https://opensearch.addi.dk/b3.0_4.5/',
+    ddbcmsapi: 'http://rest.filmstriben.dbc.inlead.dk/web/',
+    moreinfo: 'http://moreinfo.addi.dk/2.11/',
+    openagency: 'http://openagency.addi.dk/2.34/',
+    openholdingstatus: 'https://openholdingstatus.addi.dk/3.0/',
+    PRODopenorder: 'https://openorder.addi.dk/3.0',
+    openorder: 'https://openorder.addi.dk/3.0',
+    opensearch: 'http://opensearch.addi.dk/b3.5_5.0/',
     openuserstatus: 'https://openuserstatus.addi.dk/1.6.1/',
     rank: 'https://xptest.dbc.dk/ms/rank/v1',
-    suggestpopular: 'http://xptest.dbc.dk/ms/entity-pop/v1',
-    suggestcreator: 'http://xptest.dbc.dk/ms/entity-suggest/v1/creator',
-    suggestlibrary: 'http://xptest.dbc.dk/ms/entity-suggest/v1/library',
-    suggestsubject: 'http://xptest.dbc.dk/ms/entity-suggest/v1/subject',
-    recommendurls: {
-      default: 'https://xptest.dbc.dk/ms/recommend-cosim/v1',
-      popular: 'https://xptest.dbc.dk/ms/recommend-pop/v1'
-    },
-    communityservice: 'http://localhost:4010/v1'
+    suggestpopular: 'XXXXX',
+    suggestcreator: 'XXXXX',
+    suggestlibrary: 'XXXXX',
+    suggestsubject: 'XXXXX',
+    recommendurls: 'XXXXX'
   },
-  communityservice: {
-    id: 1
-  },
-  search: {
-    agency: '775100',
-    profile: 'opac',
-    collectionidentifiers: ''
-  },
-  netpunkt: {
-    user: 'XXXXX',
-    group: 'XXXXX',
-    password: 'XXXXX'
-  },
+  search: {agency: '775100', profile: 'opac'},
+  netpunkt: {user: 'XXXXX', group: 'XXXXX', password: 'XXXXX'},
   user: {
+    agency: '100450',
+    libraryId: '100450',
+    isil: 'DK-100450',
     id: 'XXXXX',
-    salt: 'XXXXX',
     pin: 'XXXXX',
-    libraryId: '710100',
-    agency: '710100',
-    isil: 'DK-710100'
+    salt: 'XXXXX'
   },
   app: {
     clientid: 'XXXXX',
@@ -53,43 +48,24 @@ const context = {
     orderSystem: 'bibliotekdk'
   }
 };
-const provider = Provider();
 const mockData = {
-  '["openorder","<SOAP-ENV:Envelope xmlns=\\"http://oss.dbc.dk/ns/openorder\\" xmlns:SOAP-ENV=\\"http://schemas.xmlsoap.org/soap/envelope/\\">\\n     <SOAP-ENV:Body>\\n        <placeOrderRequest>\\n           <authentication>\\n              <groupIdAut>XXXXX</groupIdAut>\\n              <passwordAut>XXXXX</passwordAut>\\n              <userIdAut>XXXXX</userIdAut>\\n           </authentication>\\n           <copy>false</copy>\\n           <exactEdition>false</exactEdition>\\n           <needBeforeDate>2019-06-28T00:00:00</needBeforeDate>\\n           <orderSystem>bibliotekdk</orderSystem>\\n           <pickUpAgencyId>710110</pickUpAgencyId>\\n           <pid>710100-katalog:50758060</pid>\\n           <pid>710100-katalog:28657366</pid>\\n           <serviceRequester>190101</serviceRequester>\\n           \\n           <userId>XXXXX</userId>\\n           <userIdAuthenticated>true</userIdAuthenticated>\\n           \\n           \\n           \\n           <verificationReferenceSource>dbcdatawell</verificationReferenceSource>\\n           <outputType>json</outputType>\\n         </placeOrderRequest>\\n      </SOAP-ENV:Body>\\n    </SOAP-ENV:Envelope>"]':
-    '{"placeOrderResponse":{"orderNotPlaced":{"lookUpUrl":[{"$":"http:\\/\\/stormp.kk.dk\\/linkme.asp?50758060"}],"placeOrderError":{"$":"owned_own_catalogue"}}},"@namespaces":{"oo":"http:\\/\\/oss.dbc.dk\\/ns\\/openorder"}}'
+  '["openorder","<SOAP-ENV:Envelope xmlns=\\"http://oss.dbc.dk/ns/openorder\\" xmlns:SOAP-ENV=\\"http://schemas.xmlsoap.org/soap/envelope/\\">\\n     <SOAP-ENV:Body>\\n        <placeOrderRequest>\\n           <authentication>\\n              <groupIdAut>XXXXX</groupIdAut>\\n              <passwordAut>XXXXX</passwordAut>\\n              <userIdAut>XXXXX</userIdAut>\\n           </authentication>\\n           <copy>false</copy>\\n           <exactEdition>false</exactEdition>\\n           <needBeforeDate>2019-12-28T00:00:00</needBeforeDate>\\n           <orderSystem>bibliotekdk</orderSystem>\\n           <pickUpAgencyId>710110</pickUpAgencyId>\\n           <pid>7XXXXX0-katalog:50758060</pid>\\n           <pid>7XXXXX0-katalog:28657366</pid>\\n           <serviceRequester>190101</serviceRequester>\\n           \\n           <userId>XXXXX</userId>\\n           <userIdAuthenticated>true</userIdAuthenticated>\\n           \\n           \\n           \\n           <verificationReferenceSource>dbcdatawell</verificationReferenceSource>\\n         </placeOrderRequest>\\n      </SOAP-ENV:Body>\\n    </SOAP-ENV:Envelope>"]':
+    '<?xml version=\'1.0\' encoding=\'UTF-8\'?><S:Envelope xmlns:S="http://schemas.xmlsoap.org/soap/envelope/"><S:Body><ns1:placeOrderResponse xmlns:ns1="http://oss.dbc.dk/ns/openorder"><ns1:orderPlaced><ns1:orderId>1033955662</ns1:orderId><ns1:orderPlacedMessage>owned_accepted</ns1:orderPlacedMessage></ns1:orderPlaced></ns1:placeOrderResponse></S:Body></S:Envelope>'
 };
 
-describe('Automated test: order-owned-own-catalogue-error', () => {
-  it('expected response. ID:pecnu8, for {"pids":["710100-katalog:50758060","710100-katalog:28657366"],"pickUpBranch":"710110","expires":"2019-06-28"}', done => {
+import Provider from '../../provider/Provider.js';
+import {assert, fail} from 'chai';
+const provider = Provider();
+
+describe('Automated test: order_owned_own_catalogue_error.snapshot', () => {
+  it('has same result as recorded (in order_owned_own_catalogue_error.snapshot)', () => {
+    assert(
+      Date.now() < +new Date('2019-09-04'),
+      'Please recreate the automatically generated unit tests, such that the mock data does not come out of sync with the actual services. See README.md for details.'
+    );
     context.mockData = mockData;
-    provider
-      .execute(
-        'order',
-        {
-          pids: ['710100-katalog:50758060', '710100-katalog:28657366'],
-          pickUpBranch: '710110',
-          expires: '2019-06-28'
-        },
-        context
-      )
-      .then(result => {
-        assert.deepEqual(result, {
-          statusCode: 500,
-          error: 'owned_own_catalogue',
-          orderUrl: 'http://stormp.kk.dk/linkme.asp?50758060'
-        });
-        done();
-      })
-      .catch(result => {
-        fail(
-          {throw: result},
-          {
-            statusCode: 500,
-            error: 'owned_own_catalogue',
-            orderUrl: 'http://stormp.kk.dk/linkme.asp?50758060'
-          }
-        );
-        done();
-      });
+    return provider.execute(endpoint, params, context).then(result => {
+      assert.deepEqual(result, expected);
+    });
   });
 });

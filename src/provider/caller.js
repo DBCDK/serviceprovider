@@ -75,7 +75,8 @@ class Context {
         promise = promiseRequest({
           method: 'POST',
           url: url,
-          form: {xml: params}
+          headers: {'Content-Type': 'text/xml;charset=UTF-8;'},
+          body: params
         });
         break;
       }
@@ -265,7 +266,9 @@ class Context {
    *    c.get('rank.url')); // return string value
    *    c.get('rank'); // returns object
    *
-   * @param {object} context the context object to wrap
+   * @param key
+   * @param strict
+   * @returns {*}
    */
   get(key, strict = false) {
     const keys = key.split('.');
