@@ -10,7 +10,6 @@ let timestamp;
 
 function getOrderParameters(context, agencyId) {
   const soap = `
-    <?xml version="1.0" encoding="UTF-8"?>
     <SOAP-ENV:Envelope xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ns1="http://oss.dbc.dk/ns/openagency"><SOAP-ENV:Body>
     <ns1:serviceRequest>
     <ns1:agencyId>${agencyId}</ns1:agencyId>
