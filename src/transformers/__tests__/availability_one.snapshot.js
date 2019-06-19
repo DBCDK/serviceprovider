@@ -10,48 +10,58 @@ const params = {pids: ['870970-basis:28448716']};
 
 const expected = {
   statusCode: 200,
-  data: [{unavailable: 'openHoldingStatus error: error_searching_library'}]
+  data: [
+    {
+      willLend: true,
+      expectedDelivery: '2019-06-19T00:00:00+02:00',
+      orderPossible: true,
+      orderPossibleReason: 'owned_accepted'
+    }
+  ]
 };
 
 const context = {
   services: {
-    ddbcmsapi: 'http://rest.filmstriben.dbc.inlead.dk/web/',
-    moreinfo: 'http://moreinfo.addi.dk/2.11/',
-    openagency: 'http://openagency.addi.dk/2.34/',
-    openholdingstatus: 'https://openholdingstatus.addi.dk/3.0/',
-    PRODopenorder: 'https://openorder.addi.dk/3.0',
-    openorder: 'https://openorder.addi.dk/3.0',
-    opensearch: 'http://opensearch.addi.dk/b3.5_5.0/',
+    ddbcmsapi: 'https://cmscontent.dbc.dk/',
+    moreinfo: 'https://moreinfo.addi.dk/2.10/',
+    openagency: 'http://openagency.addi.dk/2.24/',
+    openholdingstatus: 'https://openholdingstatus.addi.dk/2.2/',
+    PRODopenorder: 'https://openorder.addi.dk/2.8/',
+    openorder: 'https://openorder.addi.dk/test_2.8/',
+    opensearch: 'https://opensearch.addi.dk/b3.5_5.0/',
     openuserstatus: 'https://openuserstatus.addi.dk/1.6.1/',
-    rank: 'https://xptest.dbc.dk/ms/rank/v1',
-    suggestpopular: 'XXXXX',
-    suggestcreator: 'XXXXX',
-    suggestlibrary: 'XXXXX',
-    suggestsubject: 'XXXXX',
-    recommendurls: 'XXXXX'
+    suggest: 'http://ortograf.mcp1-proxy.dbc.dk/ortograf/',
+    recommend: 'http://staging.recomole.mcp1-proxy.dbc.dk/recomole/loan-cosim',
+    performance: 'http://elk/elasticsearch',
+    communityservice: 'http://localhost:4010/v1',
+    cicero: 'https://cicero-fbs.com/rest/external/v1/'
   },
-  search: {agency: '775100', profile: 'opac'},
+  cicero: {'DK-710100': 'XXXXX'},
+  performance: {username: 'XXXXX', password: 'XXXXX'},
+  communityservice: {id: 1},
+  search: {agency: '775100', profile: 'opac', collectionidentifiers: ''},
+  storage: {user: 'XXXXX'},
   netpunkt: {user: 'XXXXX', group: 'XXXXX', password: 'XXXXX'},
   user: {
-    agency: '100450',
-    libraryId: '100450',
-    isil: 'DK-100450',
     id: 'XXXXX',
+    salt: 'XXXXX',
     pin: 'XXXXX',
-    salt: 'XXXXX'
+    libraryId: '710100',
+    agency: '710100',
+    isil: 'DK-710100'
   },
   app: {
-    clientid: 'XXXXX',
+    clientId: 'XXXXX',
     ddbcmsapipassword: 'XXXXX',
     orderpolicyrequester: '190101',
     orderSystem: 'bibliotekdk'
   }
 };
 const mockData = {
-  '["openholdingstatus","\\n <soapenv:Envelope xmlns:soapenv=\\"http://schemas.xmlsoap.org/soap/envelope/\\" xmlns:open=\\"http://oss.dbc.dk/ns/openholdingstatus\\">\\n   <soapenv:Header/>\\n   <soapenv:Body>\\n      <open:holdingsRequest>\\n         <open:authentication>\\n            <open:groupIdAut>XXXXX</open:groupIdAut>\\n            <open:passwordAut>XXXXX</open:passwordAut>\\n            <open:userIdAut>XXXXX</open:userIdAut>\\n         </open:authentication>\\n         <open:lookupRecord>\\n            <open:responderId>100450</open:responderId>\\n            <open:pid>870970-basis:28448716</open:pid>\\n         </open:lookupRecord>\\n         <open:outputType>json</open:outputType>\\n      </open:holdingsRequest>\\n   </soapenv:Body>\\n</soapenv:Envelope>"]':
-    '{"holdingsResponse":{"error":[{"pid":{"$":"870970-basis:28448716"},"responderId":{"$":"100450"},"errorMessage":{"$":"error_searching_library"}}]},"@namespaces":{"ohs":"http:\\/\\/oss.dbc.dk\\/ns\\/openholdingstatus"}}',
-  '["openorder","<SOAP-ENV:Envelope xmlns=\\"http://oss.dbc.dk/ns/openorder\\" xmlns:SOAP-ENV=\\"http://schemas.xmlsoap.org/soap/envelope/\\">\\n     <SOAP-ENV:Body>\\n        <checkOrderPolicyRequest>\\n           <authentication>\\n              <groupIdAut>XXXXX</groupIdAut>\\n              <passwordAut>XXXXX</passwordAut>\\n              <userIdAut>XXXXX</userIdAut>\\n           </authentication>\\n           <pickUpAgencyId>100450</pickUpAgencyId>\\n           <pid>870970-basis:28448716</pid>\\n           <serviceRequester>190101</serviceRequester>\\n        </checkOrderPolicyRequest>\\n     </SOAP-ENV:Body>\\n  </SOAP-ENV:Envelope>"]':
-    '<?xml version=\'1.0\' encoding=\'UTF-8\'?><S:Envelope xmlns:S="http://schemas.xmlsoap.org/soap/envelope/"><S:Body><ns1:checkOrderPolicyResponse xmlns:ns1="http://oss.dbc.dk/ns/openorder"><ns1:lookUpUrl>http://integrabib.dk/q1fjern/linkme.php?ccl=28448716</ns1:lookUpUrl><ns1:orderPossible>true</ns1:orderPossible><ns1:orderPossibleReason>owned_accepted</ns1:orderPossibleReason></ns1:checkOrderPolicyResponse></S:Body></S:Envelope>'
+  '["openholdingstatus","\\n <soapenv:Envelope xmlns:soapenv=\\"http://schemas.xmlsoap.org/soap/envelope/\\" xmlns:open=\\"http://oss.dbc.dk/ns/openholdingstatus\\">\\n   <soapenv:Header/>\\n   <soapenv:Body>\\n      <open:holdingsRequest>\\n         <open:authentication>\\n            <open:groupIdAut>XXXXX</open:groupIdAut>\\n            <open:passwordAut>XXXXX</open:passwordAut>\\n            <open:userIdAut>XXXXX</open:userIdAut>\\n         </open:authentication>\\n         <open:lookupRecord>\\n            <open:responderId>710100</open:responderId>\\n            <open:pid>870970-basis:28448716</open:pid>\\n         </open:lookupRecord>\\n         <open:outputType>json</open:outputType>\\n      </open:holdingsRequest>\\n   </soapenv:Body>\\n</soapenv:Envelope>"]':
+    '{"holdingsResponse":{"responder":[{"localHoldingsId":{"$":"28448716"},"willLend":{"$":"true"},"expectedDelivery":{"$":"2019-06-19"},"pid":{"$":"870970-basis:28448716"},"responderId":{"$":"710100"}}]},"@namespaces":null}',
+  '["openorder","<SOAP-ENV:Envelope xmlns=\\"http://oss.dbc.dk/ns/openorder\\" xmlns:SOAP-ENV=\\"http://schemas.xmlsoap.org/soap/envelope/\\">\\n     <SOAP-ENV:Body>\\n        <checkOrderPolicyRequest>\\n           <authentication>\\n              <groupIdAut>XXXXX</groupIdAut>\\n              <passwordAut>XXXXX</passwordAut>\\n              <userIdAut>XXXXX</userIdAut>\\n           </authentication>\\n           <pickUpAgencyId>710100</pickUpAgencyId>\\n           <pid>870970-basis:28448716</pid>\\n           <serviceRequester>190101</serviceRequester>\\n        </checkOrderPolicyRequest>\\n     </SOAP-ENV:Body>\\n  </SOAP-ENV:Envelope>"]':
+    '<?xml version="1.0" encoding="UTF-8"?><SOAP-ENV:Envelope xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/" xmlns="http://oss.dbc.dk/ns/openorder"><SOAP-ENV:Body><checkOrderPolicyResponse><lookUpUrl>http://bibliotek.kk.dk/ting/object/870970-basis%3A28448716</lookUpUrl><orderPossible>true</orderPossible><orderPossibleReason>owned_accepted</orderPossibleReason><orderCondition language="dan">Dansk betingelse</orderCondition><orderCondition language="eng">English condition</orderCondition></checkOrderPolicyResponse></SOAP-ENV:Body></SOAP-ENV:Envelope>'
 };
 
 import Provider from '../../provider/Provider.js';

@@ -12,33 +12,36 @@ const expected = {statusCode: 200, data: []};
 
 const context = {
   services: {
-    ddbcmsapi: 'http://rest.filmstriben.dbc.inlead.dk/web/',
-    moreinfo: 'http://moreinfo.addi.dk/2.11/',
-    openagency: 'http://openagency.addi.dk/2.34/',
-    openholdingstatus: 'https://openholdingstatus.addi.dk/3.0/',
-    PRODopenorder: 'https://openorder.addi.dk/3.0',
-    openorder: 'https://openorder.addi.dk/3.0',
-    opensearch: 'http://opensearch.addi.dk/b3.5_5.0/',
+    ddbcmsapi: 'https://cmscontent.dbc.dk/',
+    moreinfo: 'https://moreinfo.addi.dk/2.10/',
+    openagency: 'http://openagency.addi.dk/2.24/',
+    openholdingstatus: 'https://openholdingstatus.addi.dk/2.2/',
+    PRODopenorder: 'https://openorder.addi.dk/2.8/',
+    openorder: 'https://openorder.addi.dk/test_2.8/',
+    opensearch: 'https://opensearch.addi.dk/b3.5_5.0/',
     openuserstatus: 'https://openuserstatus.addi.dk/1.6.1/',
-    rank: 'https://xptest.dbc.dk/ms/rank/v1',
-    suggestpopular: 'XXXXX',
-    suggestcreator: 'XXXXX',
-    suggestlibrary: 'XXXXX',
-    suggestsubject: 'XXXXX',
-    recommendurls: 'XXXXX'
+    suggest: 'http://ortograf.mcp1-proxy.dbc.dk/ortograf/',
+    recommend: 'http://staging.recomole.mcp1-proxy.dbc.dk/recomole/loan-cosim',
+    performance: 'http://elk/elasticsearch',
+    communityservice: 'http://localhost:4010/v1',
+    cicero: 'https://cicero-fbs.com/rest/external/v1/'
   },
-  search: {agency: '775100', profile: 'opac'},
+  cicero: {'DK-710100': 'XXXXX'},
+  performance: {username: 'XXXXX', password: 'XXXXX'},
+  communityservice: {id: 1},
+  search: {agency: '775100', profile: 'opac', collectionidentifiers: ''},
+  storage: {user: 'XXXXX'},
   netpunkt: {user: 'XXXXX', group: 'XXXXX', password: 'XXXXX'},
   user: {
-    agency: '100450',
-    libraryId: '100450',
-    isil: 'DK-100450',
     id: 'XXXXX',
+    salt: 'XXXXX',
     pin: 'XXXXX',
-    salt: 'XXXXX'
+    libraryId: '710100',
+    agency: '710100',
+    isil: 'DK-710100'
   },
   app: {
-    clientid: 'XXXXX',
+    clientId: 'XXXXX',
     ddbcmsapipassword: 'XXXXX',
     orderpolicyrequester: '190101',
     orderSystem: 'bibliotekdk'
