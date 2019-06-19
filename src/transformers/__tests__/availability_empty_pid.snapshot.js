@@ -12,38 +12,33 @@ const expected = {statusCode: 200, data: []};
 
 const context = {
   services: {
-    ddbcmsapi: 'https://cmscontent.dbc.dk/',
-    moreinfo: 'https://moreinfo.addi.dk/2.11/',
-    openagency: 'https://openagency.addi.dk/2.34/',
+    ddbcmsapi: 'http://rest.filmstriben.dbc.inlead.dk/web/',
+    moreinfo: 'http://moreinfo.addi.dk/2.11/',
+    openagency: 'http://openagency.addi.dk/2.34/',
     openholdingstatus: 'https://openholdingstatus.addi.dk/3.0/',
-    openorder: 'https://openorder.addi.dk/2.8/',
-    opensearch: 'https://opensearch.addi.dk/b3.5_5.0/',
+    PRODopenorder: 'https://openorder.addi.dk/3.0',
+    openorder: 'https://openorder.addi.dk/3.0',
+    opensearch: 'http://opensearch.addi.dk/b3.5_5.0/',
     openuserstatus: 'https://openuserstatus.addi.dk/1.6.1/',
     rank: 'https://xptest.dbc.dk/ms/rank/v1',
-    suggest: 'http://ortograf.mcp1-proxy.dbc.dk/ortograf/',
-    recommend: 'http://staging.recomole.mcp1-proxy.dbc.dk/recomole/loan-cosim',
-    communityservice: '',
     suggestpopular: 'XXXXX',
     suggestcreator: 'XXXXX',
     suggestlibrary: 'XXXXX',
     suggestsubject: 'XXXXX',
-    performance: 'https://elk-p01.dbc.dk:9100/',
     recommendurls: 'XXXXX'
   },
-  communityservice: {id: 1},
-  performance: {password: 'XXXXX', username: 'XXXXX'},
-  search: {agency: '710100', profile: 'opac'},
+  search: {agency: '775100', profile: 'opac'},
   netpunkt: {user: 'XXXXX', group: 'XXXXX', password: 'XXXXX'},
   user: {
+    agency: '100450',
+    libraryId: '100450',
+    isil: 'DK-100450',
     id: 'XXXXX',
-    salt: 'XXXXX',
     pin: 'XXXXX',
-    libraryId: '710100',
-    agency: '710100',
-    isil: 'DK-710100'
+    salt: 'XXXXX'
   },
   app: {
-    clientId: 'XXXXX',
+    clientid: 'XXXXX',
     ddbcmsapipassword: 'XXXXX',
     orderpolicyrequester: '190101',
     orderSystem: 'bibliotekdk'
@@ -58,7 +53,7 @@ const provider = Provider();
 describe('Automated test: availability_empty_pid.snapshot', () => {
   it('has same result as recorded (in availability_empty_pid.snapshot)', () => {
     assert(
-      Date.now() < +new Date('2019-06-28'),
+      Date.now() < +new Date('2019-09-17'),
       'Please recreate the automatically generated unit tests, such that the mock data does not come out of sync with the actual services. See README.md for details.'
     );
     context.mockData = mockData;

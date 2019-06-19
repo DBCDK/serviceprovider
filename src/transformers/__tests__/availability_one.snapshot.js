@@ -10,14 +10,7 @@ const params = {pids: ['870970-basis:28448716']};
 
 const expected = {
   statusCode: 200,
-  data: [
-    {
-      willLend: true,
-      expectedDelivery: '2019-06-06T00:00:00+02:00',
-      orderPossible: true,
-      orderPossibleReason: 'owned_accepted'
-    }
-  ]
+  data: [{unavailable: 'openHoldingStatus error: error_searching_library'}]
 };
 
 const context = {
@@ -37,12 +30,12 @@ const context = {
     suggestsubject: 'XXXXX',
     recommendurls: 'XXXXX'
   },
-  search: {agency: '725300', profile: 'opac'},
+  search: {agency: '775100', profile: 'opac'},
   netpunkt: {user: 'XXXXX', group: 'XXXXX', password: 'XXXXX'},
   user: {
-    agency: '725300',
-    libraryId: '725300',
-    isil: 'DK-725300',
+    agency: '100450',
+    libraryId: '100450',
+    isil: 'DK-100450',
     id: 'XXXXX',
     pin: 'XXXXX',
     salt: 'XXXXX'
@@ -55,10 +48,10 @@ const context = {
   }
 };
 const mockData = {
-  '["openholdingstatus","\\n <soapenv:Envelope xmlns:soapenv=\\"http://schemas.xmlsoap.org/soap/envelope/\\" xmlns:open=\\"http://oss.dbc.dk/ns/openholdingstatus\\">\\n   <soapenv:Header/>\\n   <soapenv:Body>\\n      <open:holdingsRequest>\\n         <open:authentication>\\n            <open:groupIdAut>XXXXX</open:groupIdAut>\\n            <open:passwordAut>XXXXX</open:passwordAut>\\n            <open:userIdAut>XXXXX</open:userIdAut>\\n         </open:authentication>\\n         <open:lookupRecord>\\n            <open:responderId>725300</open:responderId>\\n            <open:pid>870970-basis:28448716</open:pid>\\n         </open:lookupRecord>\\n         <open:outputType>json</open:outputType>\\n      </open:holdingsRequest>\\n   </soapenv:Body>\\n</soapenv:Envelope>"]':
-    '{"holdingsResponse":{"responder":[{"localHoldingsId":{"$":"28448716"},"willLend":{"$":"true"},"expectedDelivery":{"$":"2019-06-06"},"pid":{"$":"870970-basis:28448716"},"responderId":{"$":"725300"}}]},"@namespaces":{"ohs":"http:\\/\\/oss.dbc.dk\\/ns\\/openholdingstatus"}}',
-  '["openorder","<SOAP-ENV:Envelope xmlns=\\"http://oss.dbc.dk/ns/openorder\\" xmlns:SOAP-ENV=\\"http://schemas.xmlsoap.org/soap/envelope/\\">\\n     <SOAP-ENV:Body>\\n        <checkOrderPolicyRequest>\\n           <authentication>\\n              <groupIdAut>XXXXX</groupIdAut>\\n              <passwordAut>XXXXX</passwordAut>\\n              <userIdAut>XXXXX</userIdAut>\\n           </authentication>\\n           <pickUpAgencyId>725300</pickUpAgencyId>\\n           <pid>870970-basis:28448716</pid>\\n           <serviceRequester>190101</serviceRequester>\\n        </checkOrderPolicyRequest>\\n     </SOAP-ENV:Body>\\n  </SOAP-ENV:Envelope>"]':
-    '<?xml version=\'1.0\' encoding=\'UTF-8\'?><S:Envelope xmlns:S="http://schemas.xmlsoap.org/soap/envelope/"><S:Body><ns1:checkOrderPolicyResponse xmlns:ns1="http://oss.dbc.dk/ns/openorder"><ns1:lookUpUrl>http://grevebib.dk/search/ting/28448716</ns1:lookUpUrl><ns1:orderPossible>true</ns1:orderPossible><ns1:orderPossibleReason>owned_accepted</ns1:orderPossibleReason></ns1:checkOrderPolicyResponse></S:Body></S:Envelope>'
+  '["openholdingstatus","\\n <soapenv:Envelope xmlns:soapenv=\\"http://schemas.xmlsoap.org/soap/envelope/\\" xmlns:open=\\"http://oss.dbc.dk/ns/openholdingstatus\\">\\n   <soapenv:Header/>\\n   <soapenv:Body>\\n      <open:holdingsRequest>\\n         <open:authentication>\\n            <open:groupIdAut>XXXXX</open:groupIdAut>\\n            <open:passwordAut>XXXXX</open:passwordAut>\\n            <open:userIdAut>XXXXX</open:userIdAut>\\n         </open:authentication>\\n         <open:lookupRecord>\\n            <open:responderId>100450</open:responderId>\\n            <open:pid>870970-basis:28448716</open:pid>\\n         </open:lookupRecord>\\n         <open:outputType>json</open:outputType>\\n      </open:holdingsRequest>\\n   </soapenv:Body>\\n</soapenv:Envelope>"]':
+    '{"holdingsResponse":{"error":[{"pid":{"$":"870970-basis:28448716"},"responderId":{"$":"100450"},"errorMessage":{"$":"error_searching_library"}}]},"@namespaces":{"ohs":"http:\\/\\/oss.dbc.dk\\/ns\\/openholdingstatus"}}',
+  '["openorder","<SOAP-ENV:Envelope xmlns=\\"http://oss.dbc.dk/ns/openorder\\" xmlns:SOAP-ENV=\\"http://schemas.xmlsoap.org/soap/envelope/\\">\\n     <SOAP-ENV:Body>\\n        <checkOrderPolicyRequest>\\n           <authentication>\\n              <groupIdAut>XXXXX</groupIdAut>\\n              <passwordAut>XXXXX</passwordAut>\\n              <userIdAut>XXXXX</userIdAut>\\n           </authentication>\\n           <pickUpAgencyId>100450</pickUpAgencyId>\\n           <pid>870970-basis:28448716</pid>\\n           <serviceRequester>190101</serviceRequester>\\n        </checkOrderPolicyRequest>\\n     </SOAP-ENV:Body>\\n  </SOAP-ENV:Envelope>"]':
+    '<?xml version=\'1.0\' encoding=\'UTF-8\'?><S:Envelope xmlns:S="http://schemas.xmlsoap.org/soap/envelope/"><S:Body><ns1:checkOrderPolicyResponse xmlns:ns1="http://oss.dbc.dk/ns/openorder"><ns1:lookUpUrl>http://integrabib.dk/q1fjern/linkme.php?ccl=28448716</ns1:lookUpUrl><ns1:orderPossible>true</ns1:orderPossible><ns1:orderPossibleReason>owned_accepted</ns1:orderPossibleReason></ns1:checkOrderPolicyResponse></S:Body></S:Envelope>'
 };
 
 import Provider from '../../provider/Provider.js';
@@ -68,7 +61,7 @@ const provider = Provider();
 describe('Automated test: availability_one.snapshot', () => {
   it('has same result as recorded (in availability_one.snapshot)', () => {
     assert(
-      Date.now() < +new Date('2019-09-04'),
+      Date.now() < +new Date('2019-09-17'),
       'Please recreate the automatically generated unit tests, such that the mock data does not come out of sync with the actual services. See README.md for details.'
     );
     context.mockData = mockData;
