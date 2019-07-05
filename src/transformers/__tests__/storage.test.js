@@ -53,6 +53,9 @@ const {version} = require('../../../package.json');
 const dbcOpenPlatform = makeApiWrapper({
   context: {storage: {user: 'STORAGE_USER'}}
 });
+const dbcOpenPlatformAdminClient = makeApiWrapper({
+  context: {storage: {user: 'STORAGE_ADMIN_USER', admin: true}}
+});
 const dbcOpenPlatformAuthenticatedUser = makeApiWrapper({
   context: {user: {uniqueId: 'AUTHENTICATED_USER'}}
 });
@@ -746,6 +749,7 @@ describe('Storage endpoint', () => {
           type: 'json',
           permissions: {read: 'if object.public'},
           indexes: [
+            {value: '_id', keys: ['key'], admin: true},
             {value: '_id', keys: ['key']},
             {value: '_id', keys: ['_owner'], private: true},
             {value: '_id', keys: ['_owner', 'key'], private: true}
@@ -874,6 +878,16 @@ describe('Storage endpoint', () => {
         'Error: {"statusCode":400,"error":"no index for [\\"_owner\\"]"}'
       );
     });
+
+    it('finds private objects when there is an admin index and admin-client is the requester', async () => {
+      let result = await dbcOpenPlatformAdminClient.storage({
+        find: {
+          _type: typePrivate._id,
+          key: 'a'
+        }
+      });
+      assert.deepEqual(result, _.sortBy([docPublic._id, docPrivate._id]));
+    });
   });
 
   describe('Indexes with both public and private index', () => {
@@ -888,7 +902,9 @@ describe('Storage endpoint', () => {
           permissions: {read: 'if object.public'},
           indexes: [
             {value: '_id', keys: ['_owner', 'key']},
-            {value: '_id', keys: ['_owner', 'key'], private: true}
+            {value: '_id', keys: ['_owner', 'key'], private: true},
+            {value: '_id', keys: ['key'], admin: true},
+            {value: '_id', keys: ['key']}
           ]
         }
       });
@@ -953,6 +969,31 @@ describe('Storage endpoint', () => {
       });
       assert.deepEqual(Object.keys(result[0]), ['key', 'val']);
       assert.deepEqual(result.map(r => r.val), [docPublic._id]);
+    });
+    it('Non-owner may scan public index - not admin index', async () => {
+      let result = await dbcOpenPlatform.storage({
+        scan: {
+          _type: typeMixed._id,
+          index: ['key'],
+          startsWith: ['a']
+        }
+      });
+      assert.deepEqual(Object.keys(result[0]), ['key', 'val']);
+      assert.deepEqual(result.map(r => r.val), [docPublic._id]);
+    });
+    it('Admin may scan admin index containing private objects', async () => {
+      let result = await dbcOpenPlatformAdminClient.storage({
+        scan: {
+          _type: typeMixed._id,
+          index: ['key'],
+          startsWith: ['a']
+        }
+      });
+      assert.deepEqual(Object.keys(result[0]), ['key', 'val']);
+      assert.deepEqual(
+        result.map(r => r.val),
+        _.sortBy([docPublic._id, docPrivate._id])
+      );
     });
   });
 

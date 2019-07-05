@@ -9,6 +9,19 @@ const assert = require('assert');
 
 const ANONYMOUS_USER = 'ANONYMOUS_USER';
 
+const onUpdateListeners = [];
+function onUpdate(func) {
+  onUpdateListeners.push(func);
+}
+const onDeleteListeners = [];
+function onDelete(func) {
+  onDeleteListeners.push(func);
+}
+const onCreateListeners = [];
+function onCreate(func) {
+  onCreateListeners.push(func);
+}
+
 function getUser(ctx) {
   let user = ctx.get('storage.user');
   if (!user) {
@@ -19,6 +32,16 @@ function getUser(ctx) {
   }
 
   return user;
+}
+
+function parseJsonDoc(result) {
+  return Object.assign({}, JSON.parse(result.data.toString('utf-8')), {
+    _owner: result.owner,
+    _type: result.type,
+    _id: result.id,
+    _version: result.version,
+    _client: result.client
+  });
 }
 
 async function get({_id}, context) {
@@ -46,17 +69,7 @@ async function get({_id}, context) {
   result.version = new Date(result.version).toISOString();
   switch (type.type) {
     case 'json':
-      const data = Object.assign(
-        {},
-        JSON.parse(result.data.toString('utf-8')),
-        {
-          _owner: result.owner,
-          _type: result.type,
-          _id: result.id,
-          _version: result.version,
-          _client: result.client
-        }
-      );
+      const data = parseJsonDoc(result);
 
       if (type.permissions.read === 'if object.public') {
         const user = getUser(context);
@@ -120,8 +133,11 @@ async function find(opts, ctx) {
   const keys = Object.keys(opts).filter(key => key !== '_type');
 
   if (Array.isArray(type.indexes)) {
-    // make sure private indexes overrides public indexes, by traversing in sorted order
-    const indexes = _.sortBy(type.indexes, o => String(o.keys) + !o.private);
+    // make sure private and admin indexes overrides public indexes, by traversing in sorted order
+    const indexes = _.sortBy(
+      type.indexes,
+      o => String(o.keys) + !o.admin + !o.private
+    );
 
     for (const index of indexes) {
       const idx = type.indexes.indexOf(index);
@@ -132,6 +148,9 @@ async function find(opts, ctx) {
           keys.length
       ) {
         if (index.private && getUser(ctx) !== opts._owner) {
+          continue;
+        }
+        if (index.admin && !ctx.get('storage.admin')) {
           continue;
         }
         const result = await knex('idIndex')
@@ -269,7 +288,8 @@ async function indexKeys(obj, type, action) {
       if (
         type.permissions.read === 'any' ||
         (type.permissions.read === 'if object.public' && obj.public) ||
-        (indexType.private && indexType.keys[0] === '_owner')
+        (indexType.private && indexType.keys[0] === '_owner') ||
+        indexType.admin
       ) {
         const row = Object.assign({}, index);
         delete row.val;
@@ -379,6 +399,8 @@ async function put(obj, ctx) {
     status = await knex('docs')
       .where('id', obj._id)
       .update(result);
+
+    onUpdateListeners.forEach(l => l(prev, obj, type, {scan, get}));
   } else {
     obj._id = uuidv4();
     obj._owner = user;
@@ -388,6 +410,7 @@ async function put(obj, ctx) {
     await indexKeys(obj, type, 'add');
     result = findPutData(obj, type);
     status = await knex('docs').insert(result);
+    onCreateListeners.forEach(l => l(obj, type, {scan, get}));
   }
 
   return {
@@ -429,11 +452,12 @@ async function del({_id}, ctx) {
         .del()
     ]);
   }
+  onDeleteListeners.forEach(l => l(prev, type, {scan, get}));
   return {statusCode: 200, data: {}};
 }
 
 async function scan(
-  {_type, index, after, before, reverse, limit, startsWith},
+  {_type, index, after, before, reverse, limit, startsWith, expand = false},
   ctx
 ) {
   const user = getUser(ctx);
@@ -445,16 +469,21 @@ async function scan(
   }
 
   let indexes = type.data.indexes.filter(
-    o =>
-      _.isEqual(index, o.keys) &&
-      o.private &&
-      startsWith &&
-      startsWith[0] === user
+    o => _.isEqual(index, o.keys) && o.admin && ctx.get('storage.admin')
   );
 
   if (indexes.length === 0) {
     indexes = type.data.indexes.filter(
-      o => _.isEqual(index, o.keys) && !o.private
+      o =>
+        _.isEqual(index, o.keys) &&
+        o.private &&
+        (startsWith && startsWith[0] === user)
+    );
+  }
+
+  if (indexes.length === 0) {
+    indexes = type.data.indexes.filter(
+      o => _.isEqual(index, o.keys) && !o.private && !o.admin
     );
   }
 
@@ -477,9 +506,26 @@ async function scan(
     };
   }
 
-  let query = knex(dbIndex)
-    .select('key', 'val')
-    .where({type: _type, idx});
+  let query = knex(dbIndex);
+  expand = expand && dbIndex === 'idIndex' && type.data.type === 'json';
+
+  if (expand) {
+    query = query
+      .select(
+        'key',
+        'val',
+        'docs.id',
+        'docs.version',
+        'docs.client',
+        'docs.owner',
+        'docs.type',
+        'docs.data'
+      )
+      .where({[dbIndex + '.type']: _type, idx})
+      .innerJoin('docs', 'val', 'docs.id');
+  } else {
+    query = query.select('key', 'val').where({type: _type, idx});
+  }
 
   if (after) {
     query = query.andWhere(
@@ -517,13 +563,25 @@ async function scan(
   }
 
   let result = await query;
-  result = result.map(({key, val}) => ({
-    key: key
-      .split('\n')
-      .filter(s => !!s)
-      .map(s => JSON.parse(s)),
-    val
-  }));
+
+  if (expand) {
+    // the index and docs are not updated in one atomic operation
+    // hence we remove object when the scanned index
+    // is public but the object is private
+    result = result
+      .map(result => parseJsonDoc(result))
+      .filter(
+        ({data}) => indexes[0].admin || indexes[0].private || data.public
+      );
+  } else {
+    result = result.map(({key, val}) => ({
+      key: key
+        .split('\n')
+        .filter(s => !!s)
+        .map(s => JSON.parse(s)),
+      val
+    }));
+  }
 
   return {statusCode: 200, data: result};
 }
@@ -711,5 +769,8 @@ initDB();
 
 module.exports = {
   storageTransformer,
-  storageMiddleware
+  storageMiddleware,
+  onUpdate,
+  onDelete,
+  onCreate
 };
