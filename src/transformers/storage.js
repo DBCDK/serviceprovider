@@ -521,7 +521,7 @@ async function scan(
         'docs.type',
         'docs.data'
       )
-      .where({[dbIndex + '.type']: _type, idx})
+      .where({'idIndex.type': _type, idx})
       .innerJoin('docs', 'val', 'docs.id');
   } else {
     query = query.select('key', 'val').where({type: _type, idx});
@@ -571,7 +571,7 @@ async function scan(
     result = result
       .map(result => parseJsonDoc(result))
       .filter(
-        ({data}) => indexes[0].admin || indexes[0].private || data.public
+        data => data && (indexes[0].admin || indexes[0].private || data.public)
       );
   } else {
     result = result.map(({key, val}) => ({

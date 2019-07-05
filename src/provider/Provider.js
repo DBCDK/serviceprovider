@@ -4,7 +4,8 @@
  */
 
 const caller = require('./caller');
-const {storageTransformer} = require('../transformers/storage');
+const storage = require('../transformers/storage');
+const listAggregation = require('../transformers/aggregations/list');
 const statusTransformer = require('../transformers/status');
 import suggestTransformer from '../transformers/suggest.js';
 import facetTransformer from '../transformers/facets';
@@ -34,6 +35,10 @@ import deleteEntity from '../transformers/deleteEntity';
  * @api public
  */
 export default function Provider() {
+  storage.onUpdate(listAggregation.onUpdate);
+  storage.onDelete(listAggregation.onDelete);
+  storage.onCreate(listAggregation.onCreate);
+
   /**
    * Structure containing all the new transformers.
    */
@@ -51,7 +56,7 @@ export default function Provider() {
     user: userTransformer,
     order: orderTransformer,
     work: workTransformer,
-    storage: storageTransformer,
+    storage: storage.storageTransformer,
     test: testTransformer,
     availability: availabilityTransformer,
     status: statusTransformer
