@@ -5,7 +5,7 @@
 
 const caller = require('./caller');
 const storage = require('../transformers/storage');
-const listAggregation = require('../transformers/aggregations/list');
+const listObserver = require('../transformers/aggregations/list.observer');
 const statusTransformer = require('../transformers/status');
 import suggestTransformer from '../transformers/suggest.js';
 import facetTransformer from '../transformers/facets';
@@ -35,9 +35,9 @@ import deleteEntity from '../transformers/deleteEntity';
  * @api public
  */
 export default function Provider() {
-  storage.onUpdate(listAggregation.onUpdate);
-  storage.onDelete(listAggregation.onDelete);
-  storage.onCreate(listAggregation.onCreate);
+  storage.onUpdate(listObserver.onUpdate);
+  storage.onDelete(listObserver.onDelete);
+  storage.onCreate(listObserver.onCreate);
 
   /**
    * Structure containing all the new transformers.
