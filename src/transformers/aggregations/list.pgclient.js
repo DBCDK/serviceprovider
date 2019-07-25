@@ -59,11 +59,64 @@ async function deleteList(listId) {
     .del();
 }
 
+const uuidRegExp = new RegExp(
+  '^xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx$'.replace(/x/g, '[0-9a-fA-F]')
+);
+
+const SORT_OPTIONS = [
+  'num_items',
+  'num_follows',
+  'num_comments',
+  'created',
+  'modified'
+];
+
+async function find({type, sort = 'created', pid, limit = 10, offset = 0}) {
+  if (!type || !type.match(uuidRegExp)) {
+    throw {statusCode: 400, error: 'Invalid type'};
+  }
+  if (!SORT_OPTIONS.includes(sort)) {
+    throw {
+      statusCode: 400,
+      error: `Unsupported sort. Supported sort: ${SORT_OPTIONS.join(', ')}`
+    };
+  }
+  const query = knex('storage_list_aggr')
+    .select('*')
+    .where({type: type});
+
+  if (pid) {
+    query.whereRaw(`pids @> :pid`, {pid: JSON.stringify(pid)});
+  }
+  query.orderBy(sort, 'desc');
+  query.limit(limit);
+  query.offset(offset);
+  const result = await query;
+  result.forEach(element => {
+    element._type = element.type;
+    element._id = element.id;
+    element._owner = element.owner;
+    element.cf_type = 'list';
+    element.cf_created = element.created.getTime() / 1000;
+    element.cf_modified = element.modified.getTime() / 1000;
+
+    delete element.created;
+    delete element.modified;
+    delete element.id;
+    delete element.type;
+    delete element.owner;
+  });
+  return result;
+}
+
 async function initDB() {
   if (!(await knex.schema.hasTable('storage_list_aggr'))) {
     await knex.schema.createTable('storage_list_aggr', table => {
       table.uuid('id').notNullable();
-      table.uuid('type').notNullable();
+      table
+        .uuid('type')
+        .notNullable()
+        .index();
       table.string('owner').index();
       table.string('owner_name');
       table.string('owner_image');
@@ -96,5 +149,6 @@ module.exports = {
   deleteOwner,
   updateOwner,
   upsertList,
-  deleteList
+  deleteList,
+  find
 };

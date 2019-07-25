@@ -6,6 +6,7 @@
 const caller = require('./caller');
 const storage = require('../transformers/storage');
 const listObserver = require('../transformers/aggregations/list.observer');
+const aggregationTransformer = require('../transformers/aggregations/transformer');
 const statusTransformer = require('../transformers/status');
 import suggestTransformer from '../transformers/suggest.js';
 import facetTransformer from '../transformers/facets';
@@ -26,7 +27,6 @@ import listEntities from '../transformers/listEntities';
 import getSingleProperty from '../transformers/getSingleProperty';
 import getEntity from '../transformers/getEntity';
 import deleteEntity from '../transformers/deleteEntity';
-
 /**
  * Initialization of the provider and the underlying services.
  *
@@ -59,7 +59,8 @@ export default function Provider() {
     storage: storage.storageTransformer,
     test: testTransformer,
     availability: availabilityTransformer,
-    status: statusTransformer
+    status: statusTransformer,
+    aggregation: aggregationTransformer
   };
 
   const crudTransformerMap = {
