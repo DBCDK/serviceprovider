@@ -1,4 +1,5 @@
 /*jshint loopfunc:true */
+/* eslint-disable no-use-before-define */
 const {log} = require('../utils.js');
 const _ = require('lodash');
 const uuidv4 = require('uuid/v4');
@@ -569,7 +570,7 @@ async function scan(
     // hence we remove object when the scanned index
     // is public but the object is private
     result = result
-      .map(result => parseJsonDoc(result))
+      .map(r => parseJsonDoc(r))
       .filter(
         data => data && (indexes[0].admin || indexes[0].private || data.public)
       );

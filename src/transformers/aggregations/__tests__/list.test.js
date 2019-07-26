@@ -1,3 +1,5 @@
+/* eslint-disable no-use-before-define */
+
 const assert = require('assert');
 
 const dbcOpenPlatform = makeApiWrapper({
@@ -198,32 +200,25 @@ describe('List observer', () => {
   });
 });
 
-const createTestList = async ({
-  title,
-  numItems,
-  numComments,
-  numFollows,
-  public,
-  _type
-}) => {
+const createTestList = async l => {
   const list = await dbcOpenPlatformAuthenticatedUser.storage({
     put: {
       type: 'CUSTOM_LIST',
-      public,
-      title,
-      description: title + '-description',
+      public: l.public,
+      title: l.title,
+      description: l.title + '-description',
       list: [],
       cf_created: 1564123991,
       cf_type: 'list',
       cf_modified: 1564124002,
       cf_key: '',
       deleted: {},
-      image: title + '-image',
-      _type
+      image: l.title + '-image',
+      _type: l._type
     }
   });
 
-  for (let i = 0; i < numItems; i++) {
+  for (let i = 0; i < l.numItems; i++) {
     await dbcOpenPlatformAuthenticatedUser.storage({
       put: {
         book: null,
@@ -231,14 +226,14 @@ const createTestList = async ({
         cf_created: 1564129011,
         cf_type: 'list-entry',
         cf_key: list._id,
-        public,
+        public: l.public,
         cf_modified: 1564129011,
-        _type
+        _type: l._type
       }
     });
   }
 
-  for (let i = 0; i < numFollows; i++) {
+  for (let i = 0; i < l.numFollows; i++) {
     await dbcOpenPlatformAuthenticatedUser.storage({
       put: {
         id: list._id,
@@ -247,20 +242,20 @@ const createTestList = async ({
         cat: 'list',
         cf_created: 1564129289,
         cf_modified: 1564129289,
-        _type
+        _type: l._type
       }
     });
   }
-  for (let i = 0; i < numComments; i++) {
+  for (let i = 0; i < l.numComments; i++) {
     await dbcOpenPlatformAuthenticatedUser.storage({
       put: {
         cf_key: list._id,
         cf_type: 'comment',
-        public: true,
+        public: l.public,
         comment: 'some-comment',
         cf_created: 1564129368,
         cf_modified: 1564129368,
-        _type
+        _type: l._type
       }
     });
   }

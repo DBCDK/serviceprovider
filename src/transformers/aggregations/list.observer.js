@@ -6,6 +6,9 @@
  * with regards to lists
  *
  */
+
+/* eslint-disable no-use-before-define */
+
 const {log} = require('../../utils.js');
 const _ = require('lodash');
 const client = require('./list.pgclient');
@@ -69,14 +72,17 @@ async function onUpdate(prev, obj, type, storage) {
   }
 
   if (prev.cf_type && !obj.cf_type) {
-    return await onDelete(prev, type, storage);
+    await onDelete(prev, type, storage);
+    return;
   }
 
   switch (obj.cf_type) {
     case 'list':
-      return await refreshList(obj._id, type, storage);
+      await refreshList(obj._id, type, storage);
+      return;
     case 'USER_PROFILE':
-      return await client.updateOwner(obj, type._id);
+      await client.updateOwner(obj, type._id);
+      return;
     default:
       break;
   }
@@ -91,16 +97,21 @@ async function onDelete(prev, type, storage) {
   }
   switch (prev.cf_type) {
     case 'list':
-      return await refreshList(prev._id, type, storage);
+      await refreshList(prev._id, type, storage);
+      break;
     case 'list-entry':
-      return await refreshList(prev.cf_key, type, storage);
+      await refreshList(prev.cf_key, type, storage);
+      break;
     case 'comment':
       const listId = await getListIdFromComment(prev, storage);
-      return await refreshList(listId, type, storage);
+      await refreshList(listId, type, storage);
+      break;
     case 'follows':
-      return await refreshList(prev.cf_key, type, storage);
+      await refreshList(prev.cf_key, type, storage);
+      break;
     case 'USER_PROFILE':
-      return await client.deleteOwner(prev._owner, type._id);
+      await client.deleteOwner(prev._owner, type._id);
+      break;
     default:
       break;
   }
@@ -111,14 +122,18 @@ async function onCreate(obj, type, storage) {
   }
   switch (obj.cf_type) {
     case 'list':
-      return await refreshList(obj._id, type, storage);
+      await refreshList(obj._id, type, storage);
+      break;
     case 'list-entry':
-      return await refreshList(obj.cf_key, type, storage);
+      await refreshList(obj.cf_key, type, storage);
+      break;
     case 'comment':
       const listId = await getListIdFromComment(obj, storage);
-      return await refreshList(listId, type, storage);
+      await refreshList(listId, type, storage);
+      break;
     case 'follows':
-      return await refreshList(obj.cf_key, type, storage);
+      await refreshList(obj.cf_key, type, storage);
+      break;
     default:
       break;
   }
@@ -133,6 +148,7 @@ async function getListIdFromComment(commentObj, storage) {
   if (commentTarget.cf_type === 'list-entry') {
     return commentTarget.cf_key;
   }
+  return null;
 }
 
 async function refreshList(listId, type, storage) {
