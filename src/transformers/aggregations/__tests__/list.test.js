@@ -20,7 +20,7 @@ describe('List observer', () => {
       await dbcOpenPlatform.storage({
         delete: {_id: type._id}
       });
-      await sleep(2000);
+      await pendingPromises();
     }
     type = await dbcOpenPlatform.storage({
       put: {
@@ -76,7 +76,7 @@ describe('List observer', () => {
       await dbcOpenPlatform.storage({
         delete: {_id: type._id}
       });
-      await sleep(2000);
+      await pendingPromises();
     }
   });
 
@@ -91,7 +91,7 @@ describe('List observer', () => {
     });
 
     // wait for list.observer
-    await sleep(2000);
+    await pendingPromises();
 
     const res = await dbcOpenPlatformAnonymousUser.aggregation({
       aggregationType: 'list',
@@ -111,7 +111,7 @@ describe('List observer', () => {
     });
 
     // wait for list.observer
-    await sleep(2000);
+    await pendingPromises();
 
     const res = (await dbcOpenPlatformAnonymousUser.aggregation({
       aggregationType: 'list',
@@ -170,7 +170,7 @@ describe('List observer', () => {
     });
 
     // wait for list.observer
-    await sleep(2000);
+    await pendingPromises();
 
     let res = (await dbcOpenPlatformAnonymousUser.aggregation({
       aggregationType: 'list',
@@ -271,10 +271,12 @@ const createTestList = async l => {
   }
 };
 
-const sleep = ms => {
-  return new Promise(resolve => {
-    setTimeout(() => resolve(), ms);
-  });
+let promises = [];
+const pendingPromises = () => {
+  const p = [...promises];
+  promises = [];
+
+  return Promise.all(p);
 };
 
 function makeApiWrapper({context}) {
@@ -283,9 +285,15 @@ function makeApiWrapper({context}) {
   const listObserver = require('../list.observer.js');
   const aggregationTransformer = require('../transformer.js');
 
-  storage.onUpdate(listObserver.onUpdate);
-  storage.onDelete(listObserver.onDelete);
-  storage.onCreate(listObserver.onCreate);
+  storage.onUpdate((prev, obj, type, storage) => {
+    promises.push(listObserver.onUpdate(prev, obj, type, storage));
+  });
+  storage.onDelete((prev, type, storage) => {
+    promises.push(listObserver.onDelete(prev, type, storage));
+  });
+  storage.onCreate((obj, type, storage) => {
+    promises.push(listObserver.onCreate(obj, type, storage));
+  });
 
   const status = require('../../status.js');
   const executor = caller(
