@@ -6,7 +6,6 @@ const uuidv4 = require('uuid/v4');
 const {knex} = require('../knex.js');
 const metaTypeUuid = 'bf130fb7-8bd4-44fd-ad1d-43b6020ad102';
 const sharp = require('sharp');
-const assert = require('assert');
 
 const ANONYMOUS_USER = 'ANONYMOUS_USER';
 
@@ -324,12 +323,29 @@ async function indexKeys(obj, type, action) {
   await Promise.all(promises);
 }
 
-async function verifyModifiable({_id, _version}, {prev, user, type}) {
+async function verifyModifiable(
+  {_id, _version, indexes},
+  {prev, user, type},
+  action
+) {
   if (prev._owner !== user) {
     throw {statusCode: 403, error: 'forbidden, not owner'};
   }
   if (_version && +new Date(_version) !== +new Date(prev._version)) {
     throw {statusCode: 409, error: 'conflict'};
+  }
+  if (type._id === metaTypeUuid) {
+    // check that no prevous indexes has been modified
+    // since it is not supported currently
+    if (
+      action === 'update' &&
+      !_.isEqual(
+        prev.indexes,
+        indexes ? indexes.slice(0, prev.indexes.length) : []
+      )
+    ) {
+      throw {statusCode: 409, error: 'modify existing index not supported'};
+    }
   }
 }
 
@@ -354,6 +370,31 @@ function findPutData(obj, type) {
     throw {statusCode: 500, error: 'invalid contenttype'};
   }
   return result;
+}
+
+async function reindex(type) {
+  if (type.type !== 'json') {
+    return;
+  }
+  let remaining;
+  await knex
+    .select('*')
+    .from('docs')
+    .where('type', type._id)
+    .stream(stream => {
+      stream.on('data', async data => {
+        stream.pause();
+        const parsed = parseJsonDoc(data);
+        const doWork = async () => {
+          await indexKeys(parsed, type, 'remove');
+          await indexKeys(parsed, type, 'add');
+        };
+        remaining = doWork();
+        await remaining;
+        stream.resume();
+      });
+    });
+  await remaining;
 }
 
 async function put(obj, ctx) {
@@ -384,7 +425,7 @@ async function put(obj, ctx) {
     if (!prev) {
       return {statusCode: 404, error: 'id not found'};
     }
-    await verifyModifiable(obj, {prev, user, type});
+    await verifyModifiable(obj, {prev, user, type}, 'update');
 
     let version = Date.now();
     while (new Date(version).toISOString() <= prev._version) {
@@ -402,6 +443,10 @@ async function put(obj, ctx) {
       .update(result);
 
     onUpdateListeners.forEach(l => l(prev, obj, type, {scan, get}));
+
+    if (type._id === metaTypeUuid) {
+      await reindex(obj);
+    }
   } else {
     obj._id = uuidv4();
     obj._owner = user;

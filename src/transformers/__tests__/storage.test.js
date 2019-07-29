@@ -866,7 +866,10 @@ describe('Storage endpoint', () => {
           _owner: user
         }
       });
-      assert.deepEqual(result, _.sortBy([docPublic._id, docPrivate._id]));
+      assert.deepEqual(
+        _.sortBy(result),
+        _.sortBy([docPublic._id, docPrivate._id])
+      );
       await expectThrow(
         () =>
           dbcOpenPlatformAuthenticatedUser.storage({
@@ -886,7 +889,10 @@ describe('Storage endpoint', () => {
           key: 'a'
         }
       });
-      assert.deepEqual(result, _.sortBy([docPublic._id, docPrivate._id]));
+      assert.deepEqual(
+        _.sortBy(result),
+        _.sortBy([docPublic._id, docPrivate._id])
+      );
     });
   });
 
@@ -994,6 +1000,72 @@ describe('Storage endpoint', () => {
         result.map(r => r.val),
         _.sortBy([docPublic._id, docPrivate._id])
       );
+    });
+  });
+
+  describe('reindex', () => {
+    let type;
+    before(async () => {
+      type = await dbcOpenPlatform.storage({
+        put: {
+          _type: typeUuid,
+          name: 'test',
+          description: 'Yet another type used during unit test',
+          type: 'json',
+          permissions: {read: 'if object.public'},
+          indexes: [{value: '_id', keys: ['title']}]
+        }
+      });
+      await dbcOpenPlatformAuthenticatedUser.storage({
+        put: {
+          _type: type._id,
+          title: 'hello',
+          key: 'a',
+          public: true
+        }
+      });
+    });
+    it('should fail updating type, if index is removed', async () => {
+      await expectThrow(
+        () =>
+          dbcOpenPlatform.storage({
+            put: {
+              _id: type._id,
+              _type: typeUuid,
+              name: 'test',
+              description: 'Yet another type used during unit test',
+              type: 'json',
+              permissions: {read: 'if object.public'},
+              indexes: [{value: '_id', keys: ['key']}]
+            }
+          }),
+        'Error: {"statusCode":409,"error":"modify existing index not supported"}'
+      );
+    });
+    it('performs a reindex and scans for a prefix', async () => {
+      type = await dbcOpenPlatform.storage({
+        put: {
+          _id: type._id,
+          _type: typeUuid,
+          name: 'test',
+          description: 'Yet another type used during unit test',
+          type: 'json',
+          permissions: {read: 'if object.public'},
+          indexes: [
+            {value: '_id', keys: ['title']},
+            {value: '_id', keys: ['key']}
+          ]
+        }
+      });
+      let result = await dbcOpenPlatformAnonymousUser.storage({
+        scan: {
+          _type: type._id,
+          index: ['key'],
+          startsWith: ['a']
+        }
+      });
+
+      assert.deepEqual(result.map(e => e.key), [['a']]);
     });
   });
 
