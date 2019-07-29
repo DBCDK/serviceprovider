@@ -285,14 +285,14 @@ function makeApiWrapper({context}) {
   const listObserver = require('../list.observer.js');
   const aggregationTransformer = require('../transformer.js');
 
-  storage.onUpdate((prev, obj, type, storage) => {
-    promises.push(listObserver.onUpdate(prev, obj, type, storage));
+  storage.onUpdate((prev, obj, type, st) => {
+    promises.push(listObserver.onUpdate(prev, obj, type, st));
   });
-  storage.onDelete((prev, type, storage) => {
-    promises.push(listObserver.onDelete(prev, type, storage));
+  storage.onDelete((prev, type, st) => {
+    promises.push(listObserver.onDelete(prev, type, st));
   });
-  storage.onCreate((obj, type, storage) => {
-    promises.push(listObserver.onCreate(obj, type, storage));
+  storage.onCreate((obj, type, st) => {
+    promises.push(listObserver.onCreate(obj, type, st));
   });
 
   const status = require('../../status.js');
