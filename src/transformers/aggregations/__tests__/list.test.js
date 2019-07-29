@@ -20,6 +20,7 @@ describe('List observer', () => {
       await dbcOpenPlatform.storage({
         delete: {_id: type._id}
       });
+      await sleep(2000);
     }
     type = await dbcOpenPlatform.storage({
       put: {
@@ -70,6 +71,15 @@ describe('List observer', () => {
     });
   });
 
+  after(async () => {
+    if (type) {
+      await dbcOpenPlatform.storage({
+        delete: {_id: type._id}
+      });
+      await sleep(2000);
+    }
+  });
+
   it('should not aggregate data for private lists', async () => {
     await createTestList({
       public: false,
@@ -81,7 +91,7 @@ describe('List observer', () => {
     });
 
     // wait for list.observer
-    await sleep(100);
+    await sleep(2000);
 
     const res = await dbcOpenPlatformAnonymousUser.aggregation({
       aggregationType: 'list',
@@ -101,7 +111,7 @@ describe('List observer', () => {
     });
 
     // wait for list.observer
-    await sleep(100);
+    await sleep(2000);
 
     const res = (await dbcOpenPlatformAnonymousUser.aggregation({
       aggregationType: 'list',
@@ -160,7 +170,7 @@ describe('List observer', () => {
     });
 
     // wait for list.observer
-    await sleep(100);
+    await sleep(2000);
 
     let res = (await dbcOpenPlatformAnonymousUser.aggregation({
       aggregationType: 'list',
