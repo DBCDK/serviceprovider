@@ -57,6 +57,7 @@
     "moment": "^2.22.2",
     "object-mapper": "^3.0.1",
     "pg": "^7.4.3",
+    "pg-query-stream": "^2.0.0",
     "request": "^2.87.0",
     "sharp": "^0.20.5",
     "socketcluster": "^8.0.2",
