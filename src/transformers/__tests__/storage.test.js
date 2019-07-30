@@ -939,7 +939,10 @@ describe('Storage endpoint', () => {
           key: 'a'
         }
       });
-      assert.deepEqual(result, _.sortBy([docPublic._id, docPrivate._id]));
+      assert.deepEqual(
+        _.sortBy(result),
+        _.sortBy([docPublic._id, docPrivate._id])
+      );
     });
     it('non-owner can find data via public index', async () => {
       let result = await dbcOpenPlatformAuthenticatedUser.storage({
@@ -961,7 +964,7 @@ describe('Storage endpoint', () => {
       });
       assert.deepEqual(Object.keys(result[0]), ['key', 'val']);
       assert.deepEqual(
-        result.map(r => r.val),
+        _.sortBy(result.map(r => r.val)),
         _.sortBy([docPublic._id, docPrivate._id])
       );
     });
@@ -985,7 +988,7 @@ describe('Storage endpoint', () => {
         }
       });
       assert.deepEqual(Object.keys(result[0]), ['key', 'val']);
-      assert.deepEqual(result.map(r => r.val), [docPublic._id]);
+      assert.deepEqual(_.sortBy(result.map(r => r.val)), [docPublic._id]);
     });
     it('Admin may scan admin index containing private objects', async () => {
       let result = await dbcOpenPlatformAdminClient.storage({
@@ -997,7 +1000,7 @@ describe('Storage endpoint', () => {
       });
       assert.deepEqual(Object.keys(result[0]), ['key', 'val']);
       assert.deepEqual(
-        result.map(r => r.val),
+        _.sortBy(result.map(r => r.val)),
         _.sortBy([docPublic._id, docPrivate._id])
       );
     });
