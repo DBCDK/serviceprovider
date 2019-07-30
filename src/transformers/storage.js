@@ -376,6 +376,8 @@ async function reindex(type) {
   if (type.type !== 'json') {
     return;
   }
+  log.info('Reindexing started', {type});
+  let counter = 0;
   let remaining;
   await knex
     .select('*')
@@ -391,10 +393,15 @@ async function reindex(type) {
         };
         remaining = doWork();
         await remaining;
+        counter++;
+        if (counter % 1000 === 0) {
+          log.info('Reindexing status', {_id: type._id, counter});
+        }
         stream.resume();
       });
     });
   await remaining;
+  log.info('Reindexing completed', {_id: type._id, counter});
 }
 
 async function put(obj, ctx) {
