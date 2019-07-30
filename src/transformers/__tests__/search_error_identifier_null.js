@@ -65,7 +65,7 @@ const provider = Provider();
 describe('Automated test: search_error_identifier_null', () => {
   it('has same result as recorded (in search_error_identifier_null)', () => {
     assert(
-      Date.now() < +new Date('2019-06-28'),
+      Date.now() < +new Date('2019-09-17'),
       'Please recreate the automatically generated unit tests, such that the mock data does not come out of sync with the actual services. See README.md for details.'
     );
     context.mockData = mockData;

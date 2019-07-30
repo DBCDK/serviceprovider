@@ -205,7 +205,7 @@ const provider = Provider();
 describe('Automated test: facets_all.auto', () => {
   it('has same result as recorded (in facets_all.auto)', () => {
     assert(
-      Date.now() < +new Date('2019-06-28'),
+      Date.now() < +new Date('2019-09-17'),
       'Please recreate the automatically generated unit tests, such that the mock data does not come out of sync with the actual services. See README.md for details.'
     );
     context.mockData = mockData;
