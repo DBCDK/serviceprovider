@@ -57,6 +57,7 @@ async function onUpdate(prev, obj, type, storage) {
           index: ['cf_type', 'cf_key', 'cf_created'],
           startsWith: ['list']
         },
+        null,
         anonCtx
       )).data.map(l => l.val);
 
@@ -140,8 +141,11 @@ async function onCreate(obj, type, storage) {
 }
 
 async function getListIdFromComment(commentObj, storage) {
-  const commentTarget = (await storage.get({_id: commentObj.cf_key}, anonCtx))
-    .data;
+  const commentTarget = (await storage.get(
+    {_id: commentObj.cf_key},
+    null,
+    anonCtx
+  )).data;
   if (commentTarget.cf_type === 'list') {
     return commentTarget._id;
   }
@@ -156,7 +160,7 @@ async function refreshList(listId, type, storage) {
     return;
   }
   try {
-    const list = (await storage.get({_id: listId}, anonCtx)).data;
+    const list = (await storage.get({_id: listId}, null, anonCtx)).data;
     if (!list) {
       await client.deleteList(listId);
       return;
@@ -168,6 +172,7 @@ async function refreshList(listId, type, storage) {
         startsWith: [list._owner, 'USER_PROFILE'],
         expand: true
       },
+      null,
       anonCtx
     )).data[0];
 
@@ -178,6 +183,7 @@ async function refreshList(listId, type, storage) {
         startsWith: ['list-entry', list._id],
         expand: true
       },
+      null,
       anonCtx
     )).data.filter(item => !list.deleted || !list.deleted[item._id]);
     let num_comments = (await storage.scan(
@@ -186,6 +192,7 @@ async function refreshList(listId, type, storage) {
         index: ['cf_type', 'cf_key', 'cf_created'],
         startsWith: ['comment', list._id]
       },
+      null,
       anonCtx
     )).data.length;
     for (let i = 0; i < items.length; i++) {
@@ -195,6 +202,7 @@ async function refreshList(listId, type, storage) {
           index: ['cf_type', 'cf_key', 'cf_created'],
           startsWith: ['comment', items[i]._id]
         },
+        null,
         anonCtx
       )).data.length;
       num_comments += numItemComments;
@@ -205,6 +213,7 @@ async function refreshList(listId, type, storage) {
         index: ['cf_type', 'cf_key', 'cf_created'],
         startsWith: ['follows', list._id]
       },
+      null,
       adminCtx
     )).data.length;
 
