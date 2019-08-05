@@ -403,6 +403,9 @@ async function reindex(type) {
   log.info('Reindexing completed', {_id: type._id, counter});
 }
 async function hasRole(user, role) {
+  if (!role.match(uuidRegExp)) {
+    return false;
+  }
   const res = await knex('roles')
     .select('*')
     .where({userId: user, roleId: role});
