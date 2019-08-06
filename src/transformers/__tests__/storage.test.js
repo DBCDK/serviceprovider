@@ -1174,7 +1174,7 @@ describe('Storage endpoint', () => {
         get_roles: {}
       });
 
-      assert.deepEqual(result.map(role => role._id), [role._id]);
+      assert.deepEqual(result.map(r => r._id), [role._id]);
     });
     it('should allow put with role, when user has role', async () => {
       obj = await dbcOpenPlatformAuthenticatedUser.storage({
