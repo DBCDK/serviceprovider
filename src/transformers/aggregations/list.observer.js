@@ -19,11 +19,12 @@ const createCtx = ctx => {
     }
   };
 };
+const ROOT_TYPE_ID = 'bf130fb7-8bd4-44fd-ad1d-43b6020ad102';
 const anonCtx = createCtx({});
 const adminCtx = createCtx({storage: {admin: true}});
 
 function isType(obj) {
-  return obj._type === 'bf130fb7-8bd4-44fd-ad1d-43b6020ad102';
+  return obj._type === ROOT_TYPE_ID;
 }
 function isValidType(obj) {
   const requiredIndexes = [
@@ -227,7 +228,9 @@ async function refreshList(listId, type, storage) {
 
     await client.upsertList(listAggr);
   } catch (e) {
-    // swallow
+    log.error('Failed refreshing list', {
+      error: String(e)
+    });
   }
 }
 

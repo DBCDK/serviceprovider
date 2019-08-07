@@ -100,7 +100,7 @@ describe('List observer', () => {
     assert.equal(res.length, 0);
   });
 
-  it('show show aggregation for public list', async () => {
+  it('show aggregation for public list', async () => {
     await createTestList({
       public: true,
       title: 'list1',
