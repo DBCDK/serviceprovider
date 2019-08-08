@@ -44,7 +44,7 @@ function parseJsonDoc(result) {
   });
 }
 
-async function get({_id}, context) {
+async function get({_id}, user, context) {
   let result = await knex('docs')
     .where('id', _id)
     .select();
@@ -72,7 +72,6 @@ async function get({_id}, context) {
       const data = parseJsonDoc(result);
 
       if (type.permissions.read === 'if object.public') {
-        const user = getUser(context);
         if (!data.public) {
           if (result.owner !== user) {
             return {statusCode: 403, error: 'no read access'};
@@ -112,9 +111,9 @@ const uuidRegExp = new RegExp(
   '^xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx$'.replace(/x/g, '[0-9a-fA-F]')
 );
 
-async function find(opts, ctx) {
+async function find(opts, user, ctx) {
   if (opts._type === '*') {
-    if (Object.keys(opts).length !== 2 || opts._owner !== getUser(ctx)) {
+    if (Object.keys(opts).length !== 2 || opts._owner !== user) {
       return {
         statusCode: 400,
         error:
@@ -129,7 +128,7 @@ async function find(opts, ctx) {
 
   // eslint-disable-next-line no-use-before-define
   const _type = await lookupType(opts._type || metaTypeUuid, ctx);
-  const type = (await get({_id: _type}, ctx)).data;
+  const type = (await get({_id: _type}, user, ctx)).data;
   const keys = Object.keys(opts).filter(key => key !== '_type');
 
   if (Array.isArray(type.indexes)) {
@@ -147,7 +146,7 @@ async function find(opts, ctx) {
         index.keys.filter(key => opts.hasOwnProperty(key)).length ===
           keys.length
       ) {
-        if (index.private && getUser(ctx) !== opts._owner) {
+        if (index.private && user !== opts._owner) {
           continue;
         }
         if (index.admin && !ctx.get('storage.admin')) {
@@ -168,10 +167,10 @@ async function find(opts, ctx) {
   return {statusCode: 400, error: `no index for ${JSON.stringify(keys)}`};
 }
 
-async function count(opts, ctx) {
+async function count(opts, user, ctx) {
   // eslint-disable-next-line no-use-before-define
   const _type = await lookupType(opts._type || metaTypeUuid, ctx);
-  const type = (await get({_id: _type}, ctx)).data;
+  const type = (await get({_id: _type}, user, ctx)).data;
   const keys = Object.keys(opts).filter(key => key !== '_type');
 
   if (Array.isArray(type.indexes)) {
@@ -403,20 +402,29 @@ async function reindex(type) {
   await remaining;
   log.info('Reindexing completed', {_id: type._id, counter});
 }
+async function hasRole(user, role) {
+  if (!role.match(uuidRegExp)) {
+    return false;
+  }
+  const res = await knex('roles')
+    .select('*')
+    .where({userId: user, roleId: role});
+  return res.length > 0;
+}
 
-async function put(obj, ctx) {
-  const user = getUser(ctx);
+async function put(obj, user, ctx) {
   if (user === ANONYMOUS_USER) {
     return {statusCode: 403, error: 'no write access'};
   }
   if (typeof obj._type !== 'string') {
     return {statusCode: 400, error: 'missing _type'};
   }
+
   obj._type = await lookupType(obj._type, ctx);
 
   let type;
   try {
-    type = (await get({_id: obj._type}, ctx)).data;
+    type = (await get({_id: obj._type}, user, ctx)).data;
     if (!type || type._type !== metaTypeUuid) {
       throw {type: obj._type};
     }
@@ -428,7 +436,7 @@ async function put(obj, ctx) {
   let result, status;
 
   if (obj._id) {
-    const prev = (await get({_id: obj._id}, ctx)).data;
+    const prev = (await get({_id: obj._id}, user, ctx)).data;
     if (!prev) {
       return {statusCode: 404, error: 'id not found'};
     }
@@ -472,9 +480,8 @@ async function put(obj, ctx) {
   };
 }
 
-async function del({_id}, ctx) {
-  const user = getUser(ctx);
-  const prevResponse = await get({_id}, ctx);
+async function del({_id}, user, ctx) {
+  const prevResponse = await get({_id}, user, ctx);
   if (prevResponse.statusCode !== 200) {
     if (prevResponse.statusCode === 403) {
       return {statusCode: 403, error: 'no write access'};
@@ -482,7 +489,7 @@ async function del({_id}, ctx) {
     return prevResponse;
   }
   const prev = prevResponse.data;
-  const type = (await get({_id: prev._type}, ctx)).data;
+  const type = (await get({_id: prev._type}, user, ctx)).data;
 
   await verifyModifiable({_id}, {prev, user, type});
   await indexKeys(prev, type, 'remove');
@@ -511,12 +518,12 @@ async function del({_id}, ctx) {
 
 async function scan(
   {_type, index, after, before, reverse, limit, startsWith, expand = false},
+  user,
   ctx
 ) {
-  const user = getUser(ctx);
   _type = await lookupType(_type, ctx);
 
-  let type = await get({_id: _type}, ctx);
+  let type = await get({_id: _type}, user, ctx);
   if (!Array.isArray(type.data && type.data.indexes)) {
     return {statusCode: 400, error: 'invalid _type'};
   }
@@ -639,30 +646,96 @@ async function scan(
   return {statusCode: 200, data: result};
 }
 
+async function assignRole({userId, roleId}, user, ctx) {
+  if (!userId) {
+    return {statusCode: 400, error: 'missing userId'};
+  }
+  if (!roleId) {
+    return {statusCode: 400, error: 'missing roleId'};
+  }
+  const role = (await get({_id: roleId}, user, ctx)).data;
+  if (role._owner !== user) {
+    return {statusCode: 403, error: 'no write access'};
+  }
+  await knex('roles').insert({
+    userId,
+    roleId
+  });
+  return {statusCode: 200, data: {}};
+}
+
+async function unassignRole({userId, roleId}, user, ctx) {
+  if (!userId) {
+    return {statusCode: 400, error: 'missing userId'};
+  }
+  if (!roleId) {
+    return {statusCode: 400, error: 'missing roleId'};
+  }
+  const role = (await get({_id: roleId}, user, ctx)).data;
+  if (role._owner !== user) {
+    return {statusCode: 403, error: 'no write access'};
+  }
+  await knex('roles')
+    .where({userId})
+    .del();
+
+  return {statusCode: 200, data: {}};
+}
+
+async function getRoles({}, user, ctx) {
+  const res = await knex('roles')
+    .select('*')
+    .where({userId: user});
+
+  const roles = (await Promise.all(
+    res.map(async row => {
+      try {
+        return (await get({_id: row.roleId}, user, ctx)).data;
+      } catch (e) {
+        return null;
+      }
+    })
+  )).filter(role => !!role);
+  return {statusCode: 200, data: roles};
+}
+
 async function storageTransformer(request, context) {
-  const user = getUser(context);
+  let user = getUser(context);
   if (!user) {
     return {statusCode: 403, error: 'invalid user'};
+  }
+  if (request.role) {
+    if (!(await hasRole(user, request.role))) {
+      return {statusCode: 403, error: 'Invalid role for user'};
+    }
+    user = request.role;
   }
   try {
     let result;
     try {
       if (request.get) {
-        result = get(request.get, context);
+        result = get(request.get, user, context);
       } else if (request.find) {
-        result = find(request.find, context);
+        result = find(request.find, user, context);
       } else if (request.put) {
-        result = put(request.put, context);
+        result = put(request.put, user, context);
       } else if (request.delete) {
-        result = del(request.delete, context);
+        result = del(request.delete, user, context);
       } else if (request.scan) {
-        result = scan(request.scan, context);
+        result = scan(request.scan, user, context);
       } else if (request.count) {
-        result = count(request.count, context);
+        result = count(request.count, user, context);
+      } else if (request.assign_role) {
+        result = assignRole(request.assign_role, user, context);
+      } else if (request.unassign_role) {
+        result = unassignRole(request.unassign_role, user, context);
+      } else if (request.get_roles) {
+        result = getRoles(request.get_roles, user, context);
       } else {
         result = {
           statusCode: 400,
-          error: 'storage need operation: get, find, scan, put or delete'
+          error:
+            'storage need operation: assign_role, get, find, scan, put or delete'
         };
       }
       result = await result;
@@ -815,6 +888,13 @@ async function initDB() {
         },
         indexes: [{value: '_id', keys: ['_owner', 'name']}]
       })
+    });
+  }
+  if (!(await knex.schema.hasTable('roles'))) {
+    await knex.schema.createTable('roles', table => {
+      table.string('userId').notNullable();
+      table.uuid('roleId').notNullable();
+      table.primary(['userId', 'roleId']);
     });
   }
 }

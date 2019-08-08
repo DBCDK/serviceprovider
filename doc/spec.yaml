@@ -377,6 +377,18 @@ api:
       count:
         description: get number of (indexed) object
         type: object
+      assign_role:
+        description: assign role to user
+        type: object
+      unassign_role:
+        description: unassign role from user
+        type: object
+      get_roles:
+        description: get assigned roles for user
+        type: object
+      role:
+        description: the role the user acts as
+        type: string
   suggest:
     tags:
       - Suggest
