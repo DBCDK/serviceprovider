@@ -37,7 +37,7 @@ function getRequestSchema(name) {
  */
 function getResponseSchema(name) {
   const spec = fullSpec.api[name];
-  if (spec.response && spec.response) {
+  if (spec && spec.response && spec.response) {
     return spec.response;
   }
   return {};

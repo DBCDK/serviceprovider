@@ -53,8 +53,14 @@ const {version} = require('../../../package.json');
 const dbcOpenPlatform = makeApiWrapper({
   context: {storage: {user: 'STORAGE_USER'}}
 });
+const dbcOpenPlatformAdminClient = makeApiWrapper({
+  context: {storage: {user: 'STORAGE_ADMIN_USER', admin: true}}
+});
 const dbcOpenPlatformAuthenticatedUser = makeApiWrapper({
   context: {user: {uniqueId: 'AUTHENTICATED_USER'}}
+});
+const dbcOpenPlatformAuthenticatedUser2 = makeApiWrapper({
+  context: {user: {uniqueId: 'AUTHENTICATED_USER_2'}}
 });
 const dbcOpenPlatformAnonymousUser = makeApiWrapper({
   context: {user: {uniqueId: null}}
@@ -746,6 +752,7 @@ describe('Storage endpoint', () => {
           type: 'json',
           permissions: {read: 'if object.public'},
           indexes: [
+            {value: '_id', keys: ['key'], admin: true},
             {value: '_id', keys: ['key']},
             {value: '_id', keys: ['_owner'], private: true},
             {value: '_id', keys: ['_owner', 'key'], private: true}
@@ -862,7 +869,10 @@ describe('Storage endpoint', () => {
           _owner: user
         }
       });
-      assert.deepEqual(result, _.sortBy([docPublic._id, docPrivate._id]));
+      assert.deepEqual(
+        _.sortBy(result),
+        _.sortBy([docPublic._id, docPrivate._id])
+      );
       await expectThrow(
         () =>
           dbcOpenPlatformAuthenticatedUser.storage({
@@ -872,6 +882,19 @@ describe('Storage endpoint', () => {
             }
           }),
         'Error: {"statusCode":400,"error":"no index for [\\"_owner\\"]"}'
+      );
+    });
+
+    it('finds private objects when there is an admin index and admin-client is the requester', async () => {
+      let result = await dbcOpenPlatformAdminClient.storage({
+        find: {
+          _type: typePrivate._id,
+          key: 'a'
+        }
+      });
+      assert.deepEqual(
+        _.sortBy(result),
+        _.sortBy([docPublic._id, docPrivate._id])
       );
     });
   });
@@ -888,7 +911,9 @@ describe('Storage endpoint', () => {
           permissions: {read: 'if object.public'},
           indexes: [
             {value: '_id', keys: ['_owner', 'key']},
-            {value: '_id', keys: ['_owner', 'key'], private: true}
+            {value: '_id', keys: ['_owner', 'key'], private: true},
+            {value: '_id', keys: ['key'], admin: true},
+            {value: '_id', keys: ['key']}
           ]
         }
       });
@@ -917,7 +942,10 @@ describe('Storage endpoint', () => {
           key: 'a'
         }
       });
-      assert.deepEqual(result, _.sortBy([docPublic._id, docPrivate._id]));
+      assert.deepEqual(
+        _.sortBy(result),
+        _.sortBy([docPublic._id, docPrivate._id])
+      );
     });
     it('non-owner can find data via public index', async () => {
       let result = await dbcOpenPlatformAuthenticatedUser.storage({
@@ -939,7 +967,7 @@ describe('Storage endpoint', () => {
       });
       assert.deepEqual(Object.keys(result[0]), ['key', 'val']);
       assert.deepEqual(
-        result.map(r => r.val),
+        _.sortBy(result.map(r => r.val)),
         _.sortBy([docPublic._id, docPrivate._id])
       );
     });
@@ -954,10 +982,291 @@ describe('Storage endpoint', () => {
       assert.deepEqual(Object.keys(result[0]), ['key', 'val']);
       assert.deepEqual(result.map(r => r.val), [docPublic._id]);
     });
+    it('Non-owner may scan public index - not admin index', async () => {
+      let result = await dbcOpenPlatform.storage({
+        scan: {
+          _type: typeMixed._id,
+          index: ['key'],
+          startsWith: ['a']
+        }
+      });
+      assert.deepEqual(Object.keys(result[0]), ['key', 'val']);
+      assert.deepEqual(_.sortBy(result.map(r => r.val)), [docPublic._id]);
+    });
+    it('Admin may scan admin index containing private objects', async () => {
+      let result = await dbcOpenPlatformAdminClient.storage({
+        scan: {
+          _type: typeMixed._id,
+          index: ['key'],
+          startsWith: ['a']
+        }
+      });
+      assert.deepEqual(Object.keys(result[0]), ['key', 'val']);
+      assert.deepEqual(
+        _.sortBy(result.map(r => r.val)),
+        _.sortBy([docPublic._id, docPrivate._id])
+      );
+    });
+  });
+
+  describe('reindex', () => {
+    let type;
+    before(async () => {
+      type = await dbcOpenPlatform.storage({
+        put: {
+          _type: typeUuid,
+          name: 'test',
+          description: 'Yet another type used during unit test',
+          type: 'json',
+          permissions: {read: 'if object.public'},
+          indexes: [{value: '_id', keys: ['title']}]
+        }
+      });
+      await dbcOpenPlatformAuthenticatedUser.storage({
+        put: {
+          _type: type._id,
+          title: 'hello',
+          key: 'a',
+          public: true
+        }
+      });
+    });
+    it('should fail updating type, if index is removed', async () => {
+      await expectThrow(
+        () =>
+          dbcOpenPlatform.storage({
+            put: {
+              _id: type._id,
+              _type: typeUuid,
+              name: 'test',
+              description: 'Yet another type used during unit test',
+              type: 'json',
+              permissions: {read: 'if object.public'},
+              indexes: [{value: '_id', keys: ['key']}]
+            }
+          }),
+        'Error: {"statusCode":409,"error":"modify existing index not supported"}'
+      );
+    });
+    it('performs a reindex and scans for a prefix', async () => {
+      type = await dbcOpenPlatform.storage({
+        put: {
+          _id: type._id,
+          _type: typeUuid,
+          name: 'test',
+          description: 'Yet another type used during unit test',
+          type: 'json',
+          permissions: {read: 'if object.public'},
+          indexes: [
+            {value: '_id', keys: ['title']},
+            {value: '_id', keys: ['key']}
+          ]
+        }
+      });
+      let result = await dbcOpenPlatformAnonymousUser.storage({
+        scan: {
+          _type: type._id,
+          index: ['key'],
+          startsWith: ['a']
+        }
+      });
+
+      assert.deepEqual(result.map(e => e.key), [['a']]);
+    });
+  });
+
+  describe('roles', () => {
+    let type, role, obj;
+    before(async () => {
+      type = await dbcOpenPlatform.storage({
+        put: {
+          _type: typeUuid,
+          name: 'test',
+          description: 'Yet another type used during unit test',
+          type: 'json',
+          permissions: {read: 'if object.public'},
+          indexes: [{value: '_id', keys: ['_owner', 'key'], private: true}]
+        }
+      });
+
+      role = await dbcOpenPlatform.storage({
+        put: {
+          _type: typeUuid,
+          type: 'role',
+          name: 'role',
+          machineName: 'editor',
+          displayName: 'Redaktør',
+          description: 'May edit stuff'
+        }
+      });
+
+      await dbcOpenPlatform.storage({
+        assign_role: {
+          userId: 'AUTHENTICATED_USER_2',
+          roleId: role._id
+        }
+      });
+    });
+    it('should deny assign role to user when not owner of role', async () => {
+      await expectThrow(
+        () =>
+          dbcOpenPlatformAuthenticatedUser.storage({
+            assign_role: {
+              userId: 'AUTHENTICATED_USER',
+              roleId: role._id
+            }
+          }),
+        'Error: {"statusCode":403,"error":"no write access"}'
+      );
+    });
+    it('should fail when missing roleId', async () => {
+      await expectThrow(
+        () =>
+          dbcOpenPlatformAuthenticatedUser.storage({
+            assign_role: {
+              userId: 'AUTHENTICATED_USER'
+            }
+          }),
+        'Error: {"statusCode":400,"error":"missing roleId"}'
+      );
+    });
+    it('should fail when missing userId', async () => {
+      await expectThrow(
+        () =>
+          dbcOpenPlatformAuthenticatedUser.storage({
+            assign_role: {
+              roleId: role._id
+            }
+          }),
+        'Error: {"statusCode":400,"error":"missing userId"}'
+      );
+    });
+    it('should return no roles', async () => {
+      const result = await dbcOpenPlatformAuthenticatedUser.storage({
+        get_roles: {}
+      });
+
+      assert.deepEqual(result, []);
+    });
+    it('should deny put with role, when user not part of role', async () => {
+      await expectThrow(
+        () =>
+          dbcOpenPlatformAuthenticatedUser.storage({
+            put: {
+              _type: type._id,
+              title: 'hello',
+              key: 'a'
+            },
+            role: role._id
+          }),
+        'Error: {"statusCode":403,"error":"Invalid role for user"}'
+      );
+    });
+    it('should assign role to user, and user may retrieve own roles', async () => {
+      await dbcOpenPlatform.storage({
+        assign_role: {
+          userId: 'AUTHENTICATED_USER',
+          roleId: role._id
+        }
+      });
+
+      const result = await dbcOpenPlatformAuthenticatedUser.storage({
+        get_roles: {}
+      });
+
+      assert.deepEqual(result.map(r => r._id), [role._id]);
+    });
+    it('should allow put with role, when user has role', async () => {
+      obj = await dbcOpenPlatformAuthenticatedUser.storage({
+        put: {
+          _type: type._id,
+          title: 'hello',
+          key: 'a'
+        },
+        role: role._id
+      });
+    });
+    it('should allow get for other user with correct role', async () => {
+      const o = await dbcOpenPlatformAuthenticatedUser2.storage({
+        get: {
+          _id: obj._id
+        },
+        role: role._id
+      });
+      assert.equal(o._owner, role._id);
+    });
+    it('should allow find for other user with correct role', async () => {
+      const o = await dbcOpenPlatformAuthenticatedUser2.storage({
+        find: {
+          _type: type._id,
+          _owner: role._id,
+          key: 'a'
+        },
+        role: role._id
+      });
+      assert.equal(o[0], obj._id);
+    });
+    it('should allow scan for other user with correct role', async () => {
+      const o = await dbcOpenPlatformAuthenticatedUser2.storage({
+        scan: {
+          _type: type._id,
+          index: ['_owner', 'key'],
+          startsWith: [role._id, 'a']
+        },
+        role: role._id
+      });
+      assert.equal(o[0].val, obj._id);
+    });
+    it('should allow put by other user with corect role', async () => {
+      await dbcOpenPlatformAuthenticatedUser2.storage({
+        put: {
+          _id: obj._id,
+          _type: type._id,
+          title: 'hello modified',
+          key: 'a'
+        },
+        role: role._id
+      });
+      const o = await dbcOpenPlatformAuthenticatedUser.storage({
+        get: {
+          _id: obj._id
+        },
+        role: role._id
+      });
+      assert.equal(o.title, 'hello modified');
+    });
+
+    it('should deny unassign role when not owner of role', async () => {
+      await expectThrow(
+        () =>
+          dbcOpenPlatformAuthenticatedUser.storage({
+            unassign_role: {
+              userId: 'AUTHENTICATED_USER',
+              roleId: role._id
+            }
+          }),
+        'Error: {"statusCode":403,"error":"no write access"}'
+      );
+    });
+    it('should unassign role', async () => {
+      await dbcOpenPlatform.storage({
+        unassign_role: {
+          userId: 'AUTHENTICATED_USER',
+          roleId: role._id
+        }
+      });
+
+      const result = await dbcOpenPlatformAuthenticatedUser.storage({
+        get_roles: {}
+      });
+
+      assert.deepEqual(result, []);
+    });
   });
 
   async function cleanupOldTestData() {
     for (const typeName of [
+      'role',
       'test',
       'testType2',
       'testType1',

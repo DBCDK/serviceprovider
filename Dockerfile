@@ -24,11 +24,25 @@ RUN cp -R src prod_build/src && \
   cp -R context-sample.json prod_build/context.json
 
 
+# install postgres for test purposes
+RUN apt-get update &&\
+    apt-get install -y postgresql-10
+
+USER postgres
+
+RUN /etc/init.d/postgresql start &&\
+    psql --command "CREATE USER storage WITH SUPERUSER PASSWORD 'storage';" &&\
+    createdb -O storage storage
+
+USER root
+ENV PG_CONNECTION_STRING="postgresql://storage:storage@localhost:5432/storage"
+
 # run test @see package.json
 RUN ln -fs /usr/share/zoneinfo/Europe/Berlin /etc/localtime
 RUN dpkg-reconfigure -f noninteractive tzdata
 ENV HTTP_ONLY=true
-RUN npm run test
+RUN /etc/init.d/postgresql start &&\
+    npm run test
 
 #
 # ---- Release ----

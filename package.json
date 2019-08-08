@@ -15,8 +15,8 @@
     "start:sp": "SMAUG=http://localhost:3333 SWAGGER_HTTP=true TEST_DEV=true forever -w --watchDirectory src/ --killSignal=SIGTERM src/main.js",
     "start:sp-prod": "SMAUG=https://auth-config.dbc.dk SWAGGER_HTTP=true TEST_DEV=true forever -w --watchDirectory src/ --killSignal=SIGTERM src/main.js",
     "swagger:validate": "curl localhost:8080/v3/swagger.json > swagger.json ; npx swagger validate swagger.json",
-    "test": "SMAUG=http://localhost:3333 LOG_LEVEL=info npx mocha --timeout 5000 --compilers js:babel-register --recursive src/**/__tests__/* src/__tests__/* src/transformers/utils/**/__tests__/*",
-    "watch-test": "SMAUG=http://localhost:3333 LOG_LEVEL=info npx mocha --watch --timeout 5000 --compilers js:babel-register --recursive src/**/__tests__/* src/__tests__/* src/transformers/utils/**/__tests__/*",
+    "test": "SMAUG=http://localhost:3333 LOG_LEVEL=info npx mocha --timeout 15000 --compilers js:babel-register --recursive src/**/__tests__/* src/__tests__/* src/transformers/utils/**/__tests__/* src/transformers/aggregations/__tests__/*",
+    "watch-test": "SMAUG=http://localhost:3333 LOG_LEVEL=info npx mocha --watch --timeout 15000 --compilers js:babel-register --recursive src/**/__tests__/* src/__tests__/* src/transformers/utils/**/__tests__/* src/transformers/aggregations/__tests__/*",
     "coverage": "SMAUG=http://localhost:3333 LOG_LEVEL=off babel-istanbul cover _mocha --report json --report lcov --dir ./coverage/units -- --recursive src/**/__tests__/* src/__tests__/* src/transformers/utils/**/__tests__/*",
     "coveralls": "cat coverage/units/lcov.info | ./node_modules/coveralls/bin/coveralls.js",
     "sonar": "sonar-runner -Dsonar.projectKey=sp:local -Dsonar.projectName=ServiceProviderLocal -Dsonar.projectVersion=1.0 -Dsonar.sources=./src"
@@ -57,6 +57,7 @@
     "moment": "^2.22.2",
     "object-mapper": "^3.0.1",
     "pg": "^7.4.3",
+    "pg-query-stream": "^2.0.0",
     "request": "^2.87.0",
     "sharp": "^0.20.5",
     "socketcluster": "^8.0.2",
