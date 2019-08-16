@@ -55,9 +55,9 @@ export default async function getArticles(params, context) {
     ) {
       return {statusCode: 200, data: []};
     }
-
     const data = parsed.getArticleResponse.getArticleResponseDetails.map(
       entry => ({
+        id: entry.articleIdentifier.$,
         html: entry.imArticle.$
       })
     );
