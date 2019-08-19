@@ -21,45 +21,11 @@ const expected = {
 const context = {
   access: ['infomedia'],
   services: {
-    ddbcmsapi: 'https://cmscontent.dbc.dk/',
-    moreinfo: 'https://moreinfo.addi.dk/2.11/',
-    openagency: 'https://openagency.addi.dk/2.34/',
-    openholdingstatus: 'https://openholdingstatus.addi.dk/3.0/',
-    PRODopenorder: 'https://openorder.addi.dk/2.8/',
-    openorder: 'https://openorder.addi.dk/2.8/',
-    opensearch: 'https://opensearch.addi.dk/b3.5_5.0/',
-    openuserstatus: 'https://openuserstatus.addi.dk/1.6.1/',
-    suggest: 'http://ortograf.mcp1-proxy.dbc.dk/ortograf/',
-    recommend: 'http://staging.recomole.mcp1-proxy.dbc.dk/recomole/loan-cosim',
-    performance: 'https://elk-p01.dbc.dk:9100/',
-    communityservice: 'http://localhost:4010/v1',
-    cicero: 'https://cicero-fbs.com/rest/external/v1/',
-    rank: 'https://xptest.dbc.dk/ms/rank/v1',
     infomediaservice: 'http://infomedia.mcp1-proxy.dbc.dk/server.php'
   },
   infomedia: {
     userId: 'XXXXX',
     libraryCode: 'XXXXX'
-  },
-  cicero: {'DK-710100': 'XXXXX'},
-  performance: {username: 'XXXXX', password: 'XXXXX'},
-  communityservice: {id: 1},
-  search: {agency: '710100', profile: 'opac', collectionidentifiers: ''},
-  storage: {user: 'XXXXX'},
-  netpunkt: {user: 'XXXXX', group: 'XXXXX', password: 'XXXXX'},
-  user: {
-    id: 'XXXXX',
-    salt: 'XXXXX',
-    pin: 'XXXXX',
-    libraryId: '710100',
-    agency: '710100',
-    isil: 'DK-710100'
-  },
-  app: {
-    clientId: 'XXXXX',
-    ddbcmsapipassword: 'XXXXX',
-    orderpolicyrequester: '190101',
-    orderSystem: 'bibliotekdk'
   }
 };
 const mockData = {
