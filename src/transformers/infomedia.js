@@ -1,3 +1,7 @@
+function toFaust(pid) {
+  return pid.replace(/\d+-\w+:/, '');
+}
+
 /**
  * Retrieve articles from infomedia service
  *
@@ -9,7 +13,7 @@ export default async function getArticles(params, context) {
   const access = context.get('access', true);
   const userId = context.get('infomedia.userId', true);
   const libraryCode = context.get('infomedia.libraryCode', true);
-  const faust = params.faust;
+  const pid = params.pid;
   if (!access.includes('infomedia')) {
     return {
       statusCode: 403,
@@ -19,10 +23,10 @@ export default async function getArticles(params, context) {
 
   // This check will be unnecessary when a proper definition
   // is created. When we want swagger documentation.
-  if (!faust) {
+  if (!pid) {
     return {
       statusCode: 400,
-      error: "Missing param 'faust'"
+      error: "Missing param 'pid'"
     };
   }
 
@@ -37,7 +41,7 @@ export default async function getArticles(params, context) {
     <SOAP-ENV:Body>
     <uaim:getArticleRequest>
       <uaim:articleIdentifier>
-        <uaim:faust>${faust}</uaim:faust>
+        <uaim:faust>${toFaust(pid)}</uaim:faust>
       </uaim:articleIdentifier>
       <uaim:userId>${userId}</uaim:userId>
       <uaim:libraryCode>${libraryCode}</uaim:libraryCode>
