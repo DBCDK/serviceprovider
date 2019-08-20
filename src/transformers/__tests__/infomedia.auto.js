@@ -24,8 +24,10 @@ const context = {
     infomediaservice: 'http://infomedia.mcp1-proxy.dbc.dk/server.php'
   },
   infomedia: {
-    userId: 'XXXXX',
-    libraryCode: 'XXXXX'
+    userId: 'XXXXX'
+  },
+  user: {
+    libraryId: 'XXXXX'
   }
 };
 const mockData = {

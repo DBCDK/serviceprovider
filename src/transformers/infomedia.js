@@ -12,7 +12,7 @@ function toFaust(pid) {
 export default async function getArticles(params, context) {
   const access = context.get('access', true);
   const userId = context.get('infomedia.userId', true);
-  const libraryCode = context.get('infomedia.libraryCode', true);
+  const libraryCode = context.get('user.libraryId', true);
   const pid = params.pid;
   if (!access.includes('infomedia')) {
     return {
