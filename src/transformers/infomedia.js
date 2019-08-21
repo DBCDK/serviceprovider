@@ -53,6 +53,13 @@ export default async function getArticles(params, context) {
   return context.call('infomediaservice', soap).then(body => {
     const parsed = JSON.parse(body);
 
+    if (parsed.getArticleResponse && parsed.getArticleResponse.error) {
+      if (parsed.getArticleResponse.error.$ === 'service_not_licensed') {
+        return {statusCode: 403, error: 'forbidden'};
+      }
+      return {statusCode: 500, error: parsed.getArticleResponse.error.$};
+    }
+
     if (
       !parsed.getArticleResponse ||
       !parsed.getArticleResponse.getArticleResponseDetails
