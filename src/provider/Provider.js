@@ -20,6 +20,7 @@ import availabilityTransformer from '../transformers/availability';
 import {ddbcms, news, events, library} from '../transformers/ddbcms';
 import {testTransformer} from '../transformers/testTransformer.js';
 import recommendTransformer from '../transformers/recommend';
+import infomediaTransformer from '../transformers/infomedia';
 
 import createEntity from '../transformers/createEntity';
 import updateEntity from '../transformers/updateEntity';
@@ -60,7 +61,8 @@ export default function Provider() {
     test: testTransformer,
     availability: availabilityTransformer,
     status: statusTransformer,
-    aggregation: aggregationTransformer
+    aggregation: aggregationTransformer,
+    infomedia: infomediaTransformer
   };
 
   const crudTransformerMap = {
