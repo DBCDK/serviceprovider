@@ -44,7 +44,10 @@ export default async function getArticles(params, context) {
         <uaim:faust>${toFaust(pid)}</uaim:faust>
       </uaim:articleIdentifier>
       <uaim:userId>${userId}</uaim:userId>
-      <uaim:libraryCode>${libraryCode}</uaim:libraryCode>
+      <uaim:libraryCode>${libraryCode.replace(
+        /[^0-9]+/g,
+        ''
+      )}</uaim:libraryCode>
       <uaim:outputType>json</uaim:outputType>
     </uaim:getArticleRequest>
     </SOAP-ENV:Body>
