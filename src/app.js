@@ -5,10 +5,7 @@
 
 // Config
 import {enableHTTPTransport, serviceProvider} from './provider';
-import {version} from '../package.json';
-// path for the API-endpoint, ie /v0/, /v1/, or ..
-const apiPath = '/v' + parseInt(version, 10) + '/';
-
+import {apiPath} from './utils/config';
 // Libraries
 import express from 'express';
 import path from 'path';
@@ -138,15 +135,12 @@ app.use(apiPath + 'storage/', storageMiddleware);
 // Health check
 app.get('/health', healthCheck);
 
-// WebSocket/SocketCluster transport
-//worker.on('connection', enableWSTransport);
-
-// HTTP Transport
 serviceProvider
   .availableTransforms()
   .forEach(event => enableHTTPTransport(event, app));
 
 app.use(apiPath, express.static(path.join(__dirname, '../doc')));
+app.use(apiPath, express.static(path.join(__dirname, '../client')));
 
 // The swagger specification is generated from `spec.yml`
 // and returned as this separate endpoint.
@@ -164,15 +158,6 @@ app.use(gracefulErrorHandler);
 // Handle 404's
 app.use(notFoundHandler);
 
-export default app;
-
-export function startServer() {
-  app.listen(process.env.PORT || 8080, () => {
-    log.info('started', {
-      event: 'started',
-      port: app.get('port'),
-      versions: process.versions,
-      smaug: process.env.SMAUG || null // eslint-disable-line no-process-env
-    });
-  });
+export function startServer(server) {
+  server.on('request', app);
 }
