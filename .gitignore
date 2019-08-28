@@ -33,7 +33,7 @@ node_modules
 # ============
 # CONFIG
 # ============
-config.js
+/config.js
 
 NODE_ENV_DOCKERFILE
 
