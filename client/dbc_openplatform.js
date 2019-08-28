@@ -9,6 +9,7 @@ var endpoints = [
   'availability',
   'events',
   'facets',
+  'infomedia',
   'libraries',
   'news',
   'order',
