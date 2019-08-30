@@ -24,6 +24,7 @@ pipeline {
             steps {
                 script {
                     sh "docker build -t $DOCKER_NAME --pull --no-cache ."
+                    sh "docker tag $DOCKER_NAME $DOCKER_NAME_LATEST"
                 }
             }
         }
