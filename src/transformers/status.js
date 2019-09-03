@@ -1,3 +1,5 @@
+import getOrderPolicy from './getOrderPolicy';
+
 // Return the status from the service platform
 //
 // Partial implementation / in progress, see #875
@@ -15,6 +17,29 @@ async function checkPhpService({context, endpoint, url}) {
     result = e;
   }
   return result === 'Gr8'
+    ? {
+        url,
+        ok: true
+      }
+    : {
+        url,
+        ok: false,
+        error: String(result)
+      };
+}
+
+async function checkOpenOrder({context, endpoint, url}) {
+  let result;
+  try {
+    result = await getOrderPolicy(
+      {pids: ['870970-basis:25775481']},
+      context,
+      790900
+    );
+  } catch (e) {
+    result = e;
+  }
+  return result.statusCode === 200
     ? {
         url,
         ok: true
@@ -148,7 +173,7 @@ async function performanceStat({request, context}) {
 const serviceChecks = {
   openagency: checkPhpService,
   openholdingstatus: checkPhpService,
-  openorder: checkPhpService,
+  openorder: checkOpenOrder,
   opensearch: checkPhpService,
   openuserstatus: checkPhpService,
   moreinfo: checkPhpService,

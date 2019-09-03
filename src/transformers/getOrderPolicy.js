@@ -75,7 +75,7 @@ function getOrderPolicy(pid, params, context) {
  * @returns promise with result
  * @api public
  */
-export default (request, context) => {
+export default (request, context, agencyId = null) => {
   try {
     validateParams(request);
   } catch (err) {
@@ -86,7 +86,7 @@ export default (request, context) => {
   }
 
   let params = {
-    agencyId: context.get('user.agency', true),
+    agencyId: agencyId || context.get('user.agency', true),
     userId: context.get('user.id'),
     userPincode: context.get('user.pin'),
     'authentication.groupIdAut': context.get('netpunkt.group', true),
