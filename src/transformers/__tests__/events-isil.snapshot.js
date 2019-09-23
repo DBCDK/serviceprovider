@@ -107,8 +107,6 @@ describe('Automated test: events', () => {
         context
       )
       .then(result => {
-        console.log('result', JSON.stringify(result));
-
         assert.deepEqual(result, {
           statusCode: 200,
           data: [

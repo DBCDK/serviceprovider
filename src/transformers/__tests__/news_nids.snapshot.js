@@ -118,10 +118,26 @@ describe('Automated test: news_nids', () => {
                 value: 'Sportsstjerner - bag facaden',
                 attr: []
               },
-              author: {name: 'Forfatter', value: 'admin', attr: []},
-              created: {name: 'Oprettet', value: 1387229872, attr: []},
-              changed: {name: 'Opdateret', value: 1451918109, attr: []},
-              status: {name: 'Status', value: 1, attr: []},
+              author: {
+                name: 'Forfatter',
+                value: 'admin',
+                attr: []
+              },
+              created: {
+                name: 'Oprettet',
+                value: 1387229872,
+                attr: []
+              },
+              changed: {
+                name: 'Opdateret',
+                value: 1451918109,
+                attr: []
+              },
+              status: {
+                name: 'Status',
+                value: 1,
+                attr: []
+              },
               field_ding_news_body: {
                 name: 'Body',
                 value:
@@ -146,6 +162,10 @@ describe('Automated test: news_nids', () => {
                 value: [],
                 attr: []
               },
+              field_ding_news_category: {
+                name: 'News Category',
+                terms: ['Film']
+              },
               nid: 19
             },
             {
@@ -154,11 +174,31 @@ describe('Automated test: news_nids', () => {
                 value: 'Bagud med danskopgaven ? her er hjælp til dig',
                 attr: []
               },
-              author: {name: 'Forfatter', value: 'admin', attr: []},
-              created: {name: 'Oprettet', value: 1454401649, attr: []},
-              changed: {name: 'Opdateret', value: 1454401649, attr: []},
-              status: {name: 'Status', value: 1, attr: []},
-              ding_news_groups_ref: {name: 'Groups', value: [], attr: []},
+              author: {
+                name: 'Forfatter',
+                value: 'admin',
+                attr: []
+              },
+              created: {
+                name: 'Oprettet',
+                value: 1454401649,
+                attr: []
+              },
+              changed: {
+                name: 'Opdateret',
+                value: 1454401649,
+                attr: []
+              },
+              status: {
+                name: 'Status',
+                value: 1,
+                attr: []
+              },
+              ding_news_groups_ref: {
+                name: 'Groups',
+                value: [],
+                attr: []
+              },
               field_ding_news_body: {
                 name: 'Body',
                 value:
@@ -190,7 +230,15 @@ describe('Automated test: news_nids', () => {
                 ],
                 attr: ['image/jpeg']
               },
-              og_group_ref: {name: 'Library', value: ['3'], attr: []},
+              og_group_ref: {
+                name: 'Library',
+                value: ['3'],
+                attr: []
+              },
+              field_ding_news_category: {
+                name: 'News Category',
+                terms: ['Bøger']
+              },
               nid: 40
             }
           ]

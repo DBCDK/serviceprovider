@@ -113,10 +113,26 @@ describe('Automated test: news', () => {
                 value: 'Sportsstjerner - bag facaden',
                 attr: []
               },
-              author: {name: 'Forfatter', value: 'admin', attr: []},
-              created: {name: 'Oprettet', value: 1387229872, attr: []},
-              changed: {name: 'Opdateret', value: 1451918109, attr: []},
-              status: {name: 'Status', value: 1, attr: []},
+              author: {
+                name: 'Forfatter',
+                value: 'admin',
+                attr: []
+              },
+              created: {
+                name: 'Oprettet',
+                value: 1387229872,
+                attr: []
+              },
+              changed: {
+                name: 'Opdateret',
+                value: 1451918109,
+                attr: []
+              },
+              status: {
+                name: 'Status',
+                value: 1,
+                attr: []
+              },
               field_ding_news_body: {
                 name: 'Body',
                 value:
@@ -141,6 +157,10 @@ describe('Automated test: news', () => {
                 value: [],
                 attr: []
               },
+              field_ding_news_category: {
+                name: 'News Category',
+                terms: ['Film']
+              },
               nid: 19
             },
             {
@@ -149,11 +169,31 @@ describe('Automated test: news', () => {
                 value: 'Bagud med danskopgaven ? her er hjælp til dig',
                 attr: []
               },
-              author: {name: 'Forfatter', value: 'admin', attr: []},
-              created: {name: 'Oprettet', value: 1454401649, attr: []},
-              changed: {name: 'Opdateret', value: 1454401649, attr: []},
-              status: {name: 'Status', value: 1, attr: []},
-              ding_news_groups_ref: {name: 'Groups', value: [], attr: []},
+              author: {
+                name: 'Forfatter',
+                value: 'admin',
+                attr: []
+              },
+              created: {
+                name: 'Oprettet',
+                value: 1454401649,
+                attr: []
+              },
+              changed: {
+                name: 'Opdateret',
+                value: 1454401649,
+                attr: []
+              },
+              status: {
+                name: 'Status',
+                value: 1,
+                attr: []
+              },
+              ding_news_groups_ref: {
+                name: 'Groups',
+                value: [],
+                attr: []
+              },
               field_ding_news_body: {
                 name: 'Body',
                 value:
@@ -185,15 +225,43 @@ describe('Automated test: news', () => {
                 ],
                 attr: ['image/jpeg']
               },
-              og_group_ref: {name: 'Library', value: ['3'], attr: []},
+              og_group_ref: {
+                name: 'Library',
+                value: ['3'],
+                attr: []
+              },
+              field_ding_news_category: {
+                name: 'News Category',
+                terms: ['Bøger']
+              },
               nid: 40
             },
             {
-              title: {name: 'Titel', value: 'AFB test nyhed', attr: []},
-              author: {name: 'Forfatter', value: 'admin', attr: []},
-              created: {name: 'Oprettet', value: 1453290892, attr: []},
-              changed: {name: 'Opdateret', value: 1454692591, attr: []},
-              status: {name: 'Status', value: 1, attr: []},
+              title: {
+                name: 'Titel',
+                value: 'AFB test nyhed',
+                attr: []
+              },
+              author: {
+                name: 'Forfatter',
+                value: 'admin',
+                attr: []
+              },
+              created: {
+                name: 'Oprettet',
+                value: 1453290892,
+                attr: []
+              },
+              changed: {
+                name: 'Opdateret',
+                value: 1454692591,
+                attr: []
+              },
+              status: {
+                name: 'Status',
+                value: 1,
+                attr: []
+              },
               ding_news_groups_ref: {
                 name: 'Groups',
                 value: ['2', '1'],
@@ -237,11 +305,19 @@ describe('Automated test: news', () => {
                 ],
                 attr: ['image/jpeg']
               },
-              og_group_ref: {name: 'Library', value: ['3'], attr: []},
+              og_group_ref: {
+                name: 'Library',
+                value: ['3'],
+                attr: []
+              },
               field_ding_news_tags: {
                 name: 'Tags',
                 value: ['this', 'is', 'tags', 'this is a long tag'],
                 attr: []
+              },
+              field_ding_news_category: {
+                name: 'News Category',
+                terms: ['Anbefalinger']
               },
               nid: 36
             },
@@ -251,11 +327,31 @@ describe('Automated test: news', () => {
                 value: 'Vil du interviewes om eReolen?',
                 attr: []
               },
-              author: {name: 'Forfatter', value: 'admin', attr: []},
-              created: {name: 'Oprettet', value: 1454402002, attr: []},
-              changed: {name: 'Opdateret', value: 1454692950, attr: []},
-              status: {name: 'Status', value: 1, attr: []},
-              ding_news_groups_ref: {name: 'Groups', value: [], attr: []},
+              author: {
+                name: 'Forfatter',
+                value: 'admin',
+                attr: []
+              },
+              created: {
+                name: 'Oprettet',
+                value: 1454402002,
+                attr: []
+              },
+              changed: {
+                name: 'Opdateret',
+                value: 1454692950,
+                attr: []
+              },
+              status: {
+                name: 'Status',
+                value: 1,
+                attr: []
+              },
+              ding_news_groups_ref: {
+                name: 'Groups',
+                value: [],
+                attr: []
+              },
               field_ding_news_body: {
                 name: 'Body',
                 value:
@@ -291,7 +387,15 @@ describe('Automated test: news', () => {
                 ],
                 attr: ['image/jpeg']
               },
-              og_group_ref: {name: 'Library', value: [], attr: []},
+              og_group_ref: {
+                name: 'Library',
+                value: [],
+                attr: []
+              },
+              field_ding_news_category: {
+                name: 'News Category',
+                terms: ['Anbefalinger']
+              },
               nid: 41
             }
           ]
