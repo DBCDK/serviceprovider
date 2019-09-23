@@ -16,6 +16,8 @@ definitions:
         $ref: "#/definitions/EventField"
       field_ding_event_body:
         $ref: "#/definitions/EventField"
+      field_ding_event_category:
+        $ref: "#/definitions/EventField"
       field_ding_event_date:
         $ref: "#/definitions/EventField"
       field_ding_event_lead:
@@ -44,6 +46,8 @@ definitions:
         $ref: "#/definitions/EventField"
       field_ding_event_tags:
         $ref: "#/definitions/EventField"
+      field_ding_event_target:
+        $ref: "#/definitions/EventField"
       field_ding_event_title_image:
         $ref: "#/definitions/EventField"
       nid:
@@ -58,7 +62,7 @@ definitions:
     type: object
     properties:
       attr:
-        type: array  
+        type: array
         items: {}
       name:
         type: string
