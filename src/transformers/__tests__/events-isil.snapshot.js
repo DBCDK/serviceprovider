@@ -116,10 +116,26 @@ describe('Automated test: events', () => {
                 value: 'Mød forfatteren: Tim Buk-Swienty',
                 attr: []
               },
-              author: {name: 'Forfatter', value: 'admin', attr: []},
-              created: {name: 'Oprettet', value: 1387237332, attr: []},
-              changed: {name: 'Opdateret', value: 1452689863, attr: []},
-              status: {name: 'Status', value: 1, attr: []},
+              author: {
+                name: 'Forfatter',
+                value: 'admin',
+                attr: []
+              },
+              created: {
+                name: 'Oprettet',
+                value: 1387237332,
+                attr: []
+              },
+              changed: {
+                name: 'Opdateret',
+                value: 1452689863,
+                attr: []
+              },
+              status: {
+                name: 'Status',
+                value: 1,
+                attr: []
+              },
               field_ding_event_body: {
                 name: 'Body',
                 value:
@@ -184,7 +200,11 @@ describe('Automated test: events', () => {
                 value: [],
                 attr: []
               },
-              field_ding_event_price: {name: 'Price', value: [], attr: []},
+              field_ding_event_price: {
+                name: 'Price',
+                value: [],
+                attr: []
+              },
               field_ding_event_title_image: {
                 name: 'Title image',
                 value: [
@@ -194,8 +214,19 @@ describe('Automated test: events', () => {
               },
               field_ding_event_date: {
                 name: 'Event date',
-                value: {from: '2016-05-15 08:30:00', to: '2016-05-15 10:00:00'},
+                value: {
+                  from: '2016-05-15 08:30:00',
+                  to: '2016-05-15 10:00:00'
+                },
                 attr: []
+              },
+              field_ding_event_category: {
+                name: 'Event category',
+                terms: ['Internet & undervisning']
+              },
+              field_ding_event_target: {
+                name: 'Event target',
+                terms: ['For børn']
               },
               nid: 15
             }

@@ -19,7 +19,9 @@ export function ddbcms(params, context) {
 
 let ddbResponse = result => ({
   statusCode: 200,
-  data: result.data.items.map(o => Object.assign(o.fields, {nid: o.nid}))
+  data: result.data.items.map(o =>
+    Object.assign(o.fields, o.taxonomy, {nid: o.nid})
+  )
 });
 
 let ddbRequest = type => (params, context) => {

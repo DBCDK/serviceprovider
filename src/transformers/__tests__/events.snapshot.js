@@ -194,6 +194,14 @@ describe('Automated test: events', () => {
                 value: {from: '2016-05-15 08:30:00', to: '2016-05-15 10:00:00'},
                 attr: []
               },
+              field_ding_event_category: {
+                name: 'Event category',
+                terms: ['Internet & undervisning']
+              },
+              field_ding_event_target: {
+                name: 'Event target',
+                terms: ['For børn']
+              },
               nid: 15
             }
           ]
