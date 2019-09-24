@@ -40,7 +40,8 @@ function parseJsonDoc(result) {
     _type: result.type,
     _id: result.id,
     _version: result.version,
-    _client: result.client
+    _client: result.client,
+    _created: result.created
   });
 }
 
@@ -67,6 +68,7 @@ async function get({_id}, user, context) {
 
   result = result[0];
   result.version = new Date(result.version).toISOString();
+  result.created = new Date(result.created).toISOString();
   switch (type.type) {
     case 'json':
       const data = parseJsonDoc(result);
@@ -94,7 +96,8 @@ async function get({_id}, user, context) {
           _type: result.type,
           _id: result.id,
           _version: result.version,
-          _client: result.client
+          _client: result.client,
+          _created: result._created
         }
       };
     default:
@@ -579,7 +582,8 @@ async function scan(
         'docs.client',
         'docs.owner',
         'docs.type',
-        'docs.data'
+        'docs.data',
+        'docs.created'
       )
       .where({'idIndex.type': _type, idx})
       .innerJoin('docs', 'val', 'docs.id');
@@ -895,6 +899,14 @@ async function initDB() {
       table.string('userId').notNullable();
       table.uuid('roleId').notNullable();
       table.primary(['userId', 'roleId']);
+    });
+  }
+  if (!(await knex.schema.hasColumn('docs', 'created'))) {
+    await knex.schema.table('docs', table => {
+      table
+        .timestamp('created')
+        .notNullable()
+        .defaultTo(knex.fn.now());
     });
   }
 }

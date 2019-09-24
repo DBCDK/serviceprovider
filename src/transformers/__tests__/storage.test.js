@@ -139,7 +139,8 @@ describe('Storage endpoint', () => {
         _type: 'bf130fb7-8bd4-44fd-ad1d-43b6020ad102',
         _id: 'bf130fb7-8bd4-44fd-ad1d-43b6020ad102',
         _version: String(typeDocument._version),
-        _client: 'openplatform'
+        _client: 'openplatform',
+        _created: String(typeDocument._created)
       });
     });
   });
@@ -207,7 +208,8 @@ describe('Storage endpoint', () => {
         _type: type1._id,
         _id: doc1._id,
         _version: String(result._version),
-        _client: 'CLIENT_ID'
+        _client: 'CLIENT_ID',
+        _created: String(result._created)
       });
     });
 
@@ -322,8 +324,10 @@ describe('Storage endpoint', () => {
         _type: type1._id,
         _id: doc1._id,
         _version: String(result._version),
-        _client: 'CLIENT_ID'
+        _client: 'CLIENT_ID',
+        _created: String(result._created)
       });
+      assert.notEqual(String(result._version), String(result._created));
     });
 
     it('throws a conflict if we try to change a document with the wrong version', async () => {
@@ -401,7 +405,8 @@ describe('Storage endpoint', () => {
         _type: type1._id,
         _id: doc1._id,
         _version: String(result._version),
-        _client: 'CLIENT_ID'
+        _client: 'CLIENT_ID',
+        _created: String(result._created)
       });
     });
   });
@@ -477,7 +482,8 @@ describe('Storage endpoint', () => {
         _owner: user,
         _version: doc2._version,
         _id: doc2._id,
-        _client: 'CLIENT_ID'
+        _client: 'CLIENT_ID',
+        _created: doc2._created
       });
     });
 
@@ -793,7 +799,8 @@ describe('Storage endpoint', () => {
           _version: result._version,
           key: 'a',
           public: true,
-          title: 'hello world - public'
+          title: 'hello world - public',
+          _created: String(result._created)
         },
         result
       );
@@ -832,7 +839,8 @@ describe('Storage endpoint', () => {
           _version: result._version,
           key: 'a',
           public: false,
-          title: 'hello world - private'
+          title: 'hello world - private',
+          _created: String(result._created)
         },
         result
       );
