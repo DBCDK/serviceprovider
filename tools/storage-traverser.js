@@ -4,13 +4,10 @@ const config = {
 };
 const knex = require('knex')(config);
 
-// will traverse in streaming fashion
-// ie. should not run out of memory
-traverseAll(async doc => {
-  // DO STUFF TO EACH DOC HERE
-  console.log(doc._id);
-});
-
+/**
+ * Will traverse in streaming fashion
+ * ie. should not run out of memory
+ */
 async function traverseAll(callback) {
   let remaining;
   let counter = 0;
@@ -60,3 +57,5 @@ function parseImg(result) {
     _created: result.created
   };
 }
+
+module.exports = {traverseAll, knex};
