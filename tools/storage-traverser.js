@@ -3,6 +3,7 @@ const config = {
   connection: process.env.PG_CONNECTION_STRING
 };
 const knex = require('knex')(config);
+const _ = require('lodash');
 
 /**
  * Will traverse in streaming fashion
@@ -58,4 +59,24 @@ function parseImg(result) {
   };
 }
 
-module.exports = {traverseAll, knex};
+async function ninjaUpdate(doc) {
+  const result = {
+    id: doc._id,
+    owner: doc._owner,
+    client: doc._client,
+    type: doc._type,
+    version: doc._version
+  };
+  const keys = Object.keys(doc).filter(k => !k.startsWith('_'));
+  result.data = Buffer.from(
+    JSON.stringify(_.fromPairs(keys.map(k => [k, doc[k]]))),
+    'utf-8'
+  );
+  await knex('docs')
+    .where('id', result.id)
+    .update(result);
+
+  return result;
+}
+
+module.exports = {traverseAll, ninjaUpdate, knex};
