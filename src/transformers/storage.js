@@ -97,7 +97,7 @@ async function get({_id}, user, context) {
           _id: result.id,
           _version: result.version,
           _client: result.client,
-          _created: result._created
+          _created: result.created
         }
       };
     default:

@@ -483,7 +483,7 @@ describe('Storage endpoint', () => {
         _version: doc2._version,
         _id: doc2._id,
         _client: 'CLIENT_ID',
-        _created: doc2._created
+        _created: result._created
       });
     });
 
