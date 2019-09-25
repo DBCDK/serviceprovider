@@ -30,29 +30,29 @@ describe('List observer', () => {
         type: 'json',
         permissions: {read: 'if object.public'},
         indexes: [
-          {value: '_id', keys: ['cf_type', 'cf_key', 'cf_created']},
-          {value: '_id', keys: ['cf_type', 'cf_created']},
+          {value: '_id', keys: ['cf_type', 'cf_key', '_created']},
+          {value: '_id', keys: ['cf_type', '_created']},
           {
             value: '_id',
-            keys: ['_owner', 'cf_type', 'cf_key', 'cf_created'],
+            keys: ['_owner', 'cf_type', 'cf_key', '_created'],
             private: true
           },
           {
             value: '_id',
-            keys: ['_owner', 'cf_type', 'cf_key', 'cf_created']
+            keys: ['_owner', 'cf_type', 'cf_key', '_created']
           },
           {
             value: '_id',
-            keys: ['_owner', 'cf_type', 'cf_created'],
+            keys: ['_owner', 'cf_type', '_created'],
             private: true
           },
           {
             value: '_id',
-            keys: ['_owner', 'cf_type', 'cf_created']
+            keys: ['_owner', 'cf_type', '_created']
           },
           {
             value: '_id',
-            keys: ['cf_type', 'cf_key', 'cf_created'],
+            keys: ['cf_type', 'cf_key', '_created'],
             admin: true
           }
         ]

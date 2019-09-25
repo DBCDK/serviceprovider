@@ -28,14 +28,14 @@ function isType(obj) {
 }
 function isValidType(obj) {
   const requiredIndexes = [
-    {value: '_id', keys: ['cf_type', 'cf_key', 'cf_created']},
+    {value: '_id', keys: ['cf_type', 'cf_key', '_created']},
     {
       value: '_id',
-      keys: ['_owner', 'cf_type', 'cf_created']
+      keys: ['_owner', 'cf_type', '_created']
     },
     {
       value: '_id',
-      keys: ['cf_type', 'cf_key', 'cf_created'],
+      keys: ['cf_type', 'cf_key', '_created'],
       admin: true
     }
   ];
@@ -55,7 +55,7 @@ async function onUpdate(prev, obj, type, storage) {
       const lists = (await storage.scan(
         {
           _type: obj._id,
-          index: ['cf_type', 'cf_key', 'cf_created'],
+          index: ['cf_type', 'cf_key', '_created'],
           startsWith: ['list']
         },
         null,
@@ -169,7 +169,7 @@ async function refreshList(listId, type, storage) {
     const owner = (await storage.scan(
       {
         _type: list._type,
-        index: ['_owner', 'cf_type', 'cf_created'],
+        index: ['_owner', 'cf_type', '_created'],
         startsWith: [list._owner, 'USER_PROFILE'],
         expand: true
       },
@@ -180,7 +180,7 @@ async function refreshList(listId, type, storage) {
     const items = (await storage.scan(
       {
         _type: list._type,
-        index: ['cf_type', 'cf_key', 'cf_created'],
+        index: ['cf_type', 'cf_key', '_created'],
         startsWith: ['list-entry', list._id],
         expand: true
       },
@@ -190,7 +190,7 @@ async function refreshList(listId, type, storage) {
     let num_comments = (await storage.scan(
       {
         _type: list._type,
-        index: ['cf_type', 'cf_key', 'cf_created'],
+        index: ['cf_type', 'cf_key', '_created'],
         startsWith: ['comment', list._id]
       },
       null,
@@ -200,7 +200,7 @@ async function refreshList(listId, type, storage) {
       const numItemComments = (await storage.scan(
         {
           _type: list._type,
-          index: ['cf_type', 'cf_key', 'cf_created'],
+          index: ['cf_type', 'cf_key', '_created'],
           startsWith: ['comment', items[i]._id]
         },
         null,
@@ -211,7 +211,7 @@ async function refreshList(listId, type, storage) {
     let num_follows = (await storage.scan(
       {
         _type: list._type,
-        index: ['cf_type', 'cf_key', 'cf_created'],
+        index: ['cf_type', 'cf_key', '_created'],
         startsWith: ['follows', list._id]
       },
       null,
@@ -230,8 +230,8 @@ async function refreshList(listId, type, storage) {
       num_items: items.length,
       num_comments,
       num_follows,
-      created: new Date(list.cf_created * 1000),
-      modified: new Date(list.cf_modified * 1000),
+      created: list._created,
+      modified: list._version,
       pids: JSON.stringify(items.map(item => item.pid))
     };
 
