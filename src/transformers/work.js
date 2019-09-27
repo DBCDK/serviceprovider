@@ -1,4 +1,5 @@
 import openSearchWorkTransformer from './opensearchGetObject';
+import openformatTransformer from './openformat';
 import {
   checkResponseForErrorCodes,
   collectDataFromServices,
@@ -12,7 +13,8 @@ import _ from 'lodash';
 const requestMethod = {
   MOREINFO: 'moreinfo',
   SEARCH: 'search',
-  GETOBJECT: 'getobject'
+  GETOBJECT: 'getobject',
+  OPENFORMAT: 'openformat'
 };
 
 export function workRequest(request) {
@@ -74,6 +76,8 @@ export function workResponse(response, context, state) {
     const service = state.services[i];
     envelope = collectDataFromServices(service, resp, envelope);
   }
+
+  console.log('envelopXXXXX', envelope);
 
   return envelope;
 }
@@ -155,6 +159,17 @@ export default (request, context) => {
     const searchPromises = getSearchPromises(context, params);
     promises.push(Promise.all(searchPromises));
     services.push(requestMethod.SEARCH);
+  }
+
+  if (_.has(params, requestMethod.OPENFORMAT)) {
+    // query moreinfo through its transformer.
+    const openformatPromises = openformatTransformer(
+      params.openformat,
+      context
+    );
+
+    promises.push(openformatPromises);
+    services.push(requestMethod.OPENFORMAT);
   }
 
   state.services = services;

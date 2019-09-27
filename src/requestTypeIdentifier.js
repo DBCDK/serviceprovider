@@ -77,7 +77,8 @@ export const requestType = {
   BRIEFDISPLAY: 'briefdisplay',
   COLLECTION: 'collection',
   DKABM: 'dkabm',
-  DOCBOOK: 'docbook'
+  DOCBOOK: 'docbook',
+  OPENFORMAT: 'openformat'
 };
 
 /**
@@ -112,7 +113,8 @@ export function TypeID() {
     mi: requestType.MOREINFO,
     dbcaddi: requestType.RELATIONS,
     dbcbib: requestType.RELATIONS,
-    docbook: requestType.DOCBOOK
+    docbook: requestType.DOCBOOK,
+    of: requestType.OPENFORMAT
   };
 
   /**
