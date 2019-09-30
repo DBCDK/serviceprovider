@@ -249,8 +249,6 @@
   "type": {"@id": "bd:type"},
   "version": {"@id": "dkdcplus:version"},
   "workType": {"@id": "bd:workType"},
-  "openTest": {"@id": "of:openTest"},
   "lix": {"@id": "of:lix"},
-  "dk5": {"@id": "of:dk5"},
-  "isbn": {"@id": "of:isbn"}
+  "shelf": {"@id": "of:shelf"}
 }

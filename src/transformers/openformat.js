@@ -24,9 +24,12 @@ async function callOpenformat(params, context) {
       err,
       result
     ) {
-      data.push(
-        result.Envelope.Body[0].formatResponse[0].customDisplay[0].fields[0]
-      );
+      const resp =
+        result.Envelope.Body[0].formatResponse[0].customDisplay[0].fields[0];
+
+      if (resp) {
+        data.push(resp);
+      }
     });
   }
 

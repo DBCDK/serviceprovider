@@ -11,10 +11,12 @@ export default (params, context) => {
   let workFields = [];
   fields.forEach(field => {
     let type = typeId.getType(field);
+
     if (
       type === 'moreinfo' || // moreinfo is a separate service, which we can get through work
       type === 'relations' ||
-      type === 'docbook'
+      type === 'docbook' ||
+      type === 'openformat'
     ) {
       // relations in opensearch-search is based on collections, and we want it for the manifests
       workFields.push(field);

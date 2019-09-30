@@ -77,8 +77,6 @@ export function workResponse(response, context, state) {
     envelope = collectDataFromServices(service, resp, envelope);
   }
 
-  console.log('envelopXXXXX', envelope);
-
   return envelope;
 }
 

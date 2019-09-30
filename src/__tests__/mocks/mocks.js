@@ -715,5 +715,7 @@ export const requestTypeIdentifierMock = {
   'dc:typebibdk-type': 'typeBibDKType',
   'bd:type': 'type',
   'dkdcplus:version': 'version',
-  'bd:worktype': 'workType'
+  'bd:worktype': 'workType',
+  "of:lix":"lix",
+  "of:shelf":"shelf"
 };
