@@ -716,6 +716,6 @@ export const requestTypeIdentifierMock = {
   'bd:type': 'type',
   'dkdcplus:version': 'version',
   'bd:worktype': 'workType',
-  "of:lix":"lix",
-  "of:shelf":"shelf"
+  'of:lix': 'lix',
+  'of:shelf': 'shelf'
 };
