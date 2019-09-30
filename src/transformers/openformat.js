@@ -39,10 +39,6 @@ async function callOpenformat(params, context) {
   };
 }
 
-// {
-//   data: [{openTest: ['blah blah data']}];
-// }
-
 export default (params, context) => {
   return callOpenformat(params, context);
 };
