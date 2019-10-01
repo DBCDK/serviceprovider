@@ -26,13 +26,13 @@ RUN cp -R src prod_build/src && \
 
 # install postgres for test purposes
 RUN apt-get update &&\
-    apt-get install -y postgresql-10
+  apt-get install -y postgresql-10
 
 USER postgres
 
 RUN /etc/init.d/postgresql start &&\
-    psql --command "CREATE USER storage WITH SUPERUSER PASSWORD 'storage';" &&\
-    createdb -O storage storage
+  psql --command "CREATE USER storage WITH SUPERUSER PASSWORD 'storage';" &&\
+  createdb -O storage storage
 
 USER root
 ENV PG_CONNECTION_STRING="postgresql://storage:storage@localhost:5432/storage"
@@ -42,12 +42,13 @@ RUN ln -fs /usr/share/zoneinfo/Europe/Berlin /etc/localtime
 RUN dpkg-reconfigure -f noninteractive tzdata
 ENV HTTP_ONLY=true
 RUN /etc/init.d/postgresql start &&\
-    npm run test
+  npm run test
 
 #
 # ---- Release ----
 FROM $NODE_BASEIMAGE AS release
 WORKDIR /home/node/app
+ENV  BABEL_CACHE_PATH=~/app/babel.cache.json
 COPY --chown=node:node --from=build /home/node/app/prod_build ./
 EXPOSE 3000
 USER node
