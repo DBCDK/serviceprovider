@@ -160,7 +160,7 @@ export default (request, context) => {
   }
 
   if (_.has(params, requestMethod.OPENFORMAT)) {
-    // query moreinfo through its transformer.
+    // query openformat through its transformer.
     const openformatPromises = openformatTransformer(
       params.openformat,
       context
