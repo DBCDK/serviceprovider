@@ -3,7 +3,7 @@ definitions:
     type: array
     items:
       - $ref: "#/definitions/Work"
-  
+
   Work:
     type: object
     properties:
@@ -961,16 +961,26 @@ definitions:
         type: array
         items:
           type: string
+      lix:
+        description: 'Returns Lix number (Readability indicator)'
+        type: array
+        items:
+          type: string
+      shelf:
+        description: 'Returns shelf label (hyldemærke)'
+        type: array
+        items:
+          type: string
     additionalProperties: false
-  
-  CollectionDetails: 
+
+  CollectionDetails:
     type: array
-    items: 
+    items:
       $ref: '#/definitions/CollectionDetail'
-  
+
   CollectionDetail:
     type: object
-    properties: 
+    properties:
       accessType:
         type: array
         items:

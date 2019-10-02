@@ -13,7 +13,8 @@
       "recommend": "http://staging.recomole.mcp1-proxy.dbc.dk/recomole/loan-cosim",
       "performance": "http://elk/elasticsearch",
       "communityservice": "http://localhost:4010/v1",
-      "cicero": "https://cicero-fbs.com/rest/external/v1/"
+      "cicero": "https://cicero-fbs.com/rest/external/v1/",
+      "openformat": "http://openformat-php-develop.frontend-features.svc.cloud.dbc.dk/server.php"
     },
     "cicero": {
       "DK-710100": {
@@ -22,11 +23,11 @@
       }
     },
     "performance": {
-        "username": "XXXXX",
-        "password": "XXXXX"
+      "username": "XXXXX",
+      "password": "XXXXX"
     },
     "communityservice": {
-      "id" : 1
+      "id": 1
     },
     "search": {
       "agency": "775100",

@@ -10,7 +10,8 @@ const typeId = makeTypeID(filePath);
 const requestMethod = {
   MOREINFO: 'moreinfo',
   SEARCH: 'search',
-  GETOBJECT: 'getobject'
+  GETOBJECT: 'getobject',
+  OPENFORMAT: 'openformat'
 };
 
 export function isGetObject(field) {
@@ -127,6 +128,21 @@ export function handleMoreInfoVersion(context, params) {
 }
 
 /**
+ * example ...
+ *
+ * @param {object} context
+ * @param {object} params
+ * @return {Promise}
+ */
+export function handleOpenFormat(resp, envelope) {
+  for (let x = 0; x < resp.data.length; x++) {
+    _.extend(envelope.data[x], resp.data[x]);
+  }
+
+  return envelope;
+}
+
+/**
  * Returns an array of promises for search
  *
  * @param {object} context
@@ -167,6 +183,11 @@ export function collectDataFromServices(service, resp, envelope) {
 
     case requestMethod.SEARCH: {
       envelope = handleSearch(resp, envelope);
+      break;
+    }
+
+    case requestMethod.OPENFORMAT: {
+      envelope = handleOpenFormat(resp, envelope);
       break;
     }
     default:
@@ -214,6 +235,16 @@ export function handleFieldsRequest(request, transformedRequests) {
   if (fields.some(field => typeId.isType(field, requestType.MOREINFO))) {
     // send this to the coverurl transformer.
     transformedRequests[requestMethod.MOREINFO] = {pids: request.pids};
+  }
+
+  if (fields.some(field => typeId.isType(field, requestType.OPENFORMAT))) {
+    // send this to the openformat transformer.
+    transformedRequests[requestMethod.OPENFORMAT] = {
+      fields: fields.filter(field =>
+        typeId.isType(field, requestType.OPENFORMAT)
+      ),
+      pids: request.pids
+    };
   }
 
   return transformedRequests;
