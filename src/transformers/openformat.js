@@ -44,9 +44,9 @@ async function getOpenformatFields(params, context) {
   // Add fields from request
 
   // const data = [];
-  const data = (await Promise.all(
+  const data = await Promise.all(
     params.pids.map(pid => callOpenformat(pid, params, context))
-  )).filter(e => e);
+  );
 
   return {
     statusCode: 200,
