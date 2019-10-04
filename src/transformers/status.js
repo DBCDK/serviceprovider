@@ -1,4 +1,5 @@
 import getOrderPolicy from './getOrderPolicy';
+import openformatTransformer from './openformat';
 
 // Return the status from the service platform
 //
@@ -39,6 +40,24 @@ async function checkOpenOrder({context, endpoint, url}) {
   } catch (e) {
     result = e;
   }
+  return result.statusCode === 200
+    ? {
+        url,
+        ok: true
+      }
+    : {
+        url,
+        ok: false,
+        error: String(result)
+      };
+}
+
+async function checkOpenformat({context, endpoint, url}) {
+  const result = await openformatTransformer(
+    {fields: ['shelf'], pids: ['870970-basis:25775481']},
+    context
+  );
+
   return result.statusCode === 200
     ? {
         url,
@@ -154,6 +173,8 @@ async function performanceStat({request, context}) {
     };
   }
 
+  console.log('########## r', r);
+
   const result = [];
   for (const serviceVersion of r.aggregations.version.buckets) {
     for (const bucket of serviceVersion.endpoints.buckets) {
@@ -174,6 +195,7 @@ const serviceChecks = {
   openagency: checkPhpService,
   openholdingstatus: checkPhpService,
   openorder: checkOpenOrder,
+  openformat: checkOpenformat,
   opensearch: checkPhpService,
   openuserstatus: checkPhpService,
   moreinfo: checkPhpService,
