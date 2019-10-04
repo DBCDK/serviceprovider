@@ -10,6 +10,11 @@ const expected = {
     version: '3.0.0',
     endOfServiceDate: '0000-00-00T00:00:00Z',
     openagency: {url: 'https://openagency.addi.dk/2.34/', ok: true},
+    openformat: {
+      ok: true,
+      url:
+        'http://openformat-php-develop.frontend-features.svc.cloud.dbc.dk/server.php'
+    },
     openholdingstatus: {
       url: 'https://openholdingstatus.addi.dk/3.0/',
       ok: true
@@ -250,6 +255,8 @@ const context = {
     openagency: 'https://openagency.addi.dk/2.34/',
     openholdingstatus: 'https://openholdingstatus.addi.dk/3.0/',
     openorder: 'https://openorder.addi.dk/2.8/',
+    openformat:
+      'http://openformat-php-develop.frontend-features.svc.cloud.dbc.dk/server.php',
     opensearch: 'https://opensearch.addi.dk/b3.5_5.0/',
     openuserstatus: 'https://openuserstatus.addi.dk/1.6.1/',
     rank: 'https://xptest.dbc.dk/ms/rank/v1',
