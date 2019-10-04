@@ -173,8 +173,6 @@ async function performanceStat({request, context}) {
     };
   }
 
-  console.log('########## r', r);
-
   const result = [];
   for (const serviceVersion of r.aggregations.version.buckets) {
     for (const bucket of serviceVersion.endpoints.buckets) {
