@@ -486,7 +486,7 @@ api:
 
           The entire list of possible fields can be seen on https://raw.githubusercontent.com/DBCDK/serviceprovider/master/doc/work-context.jsonld
 
-          If `fields` are omitted, all fields are returned, except `cover*`, and `collection`.
+          If `fields` are omitted, all fields are returned, except `cover*`, `collection`, `lix` and `shelf`.
         type: array
         items: {type: "string"}
         example: ["title", "collection", "dcSubjectDBCF", "hasAdaptation", "coverUrlFull"]
