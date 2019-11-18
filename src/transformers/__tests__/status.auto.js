@@ -19,7 +19,7 @@ const expected = {
       url: 'https://openholdingstatus.addi.dk/3.0/',
       ok: true
     },
-    openorder: {url: 'https://openorder.addi.dk/2.8/', ok: true},
+    openorder: {url: 'https://openorder.addi.dk/3.0', ok: true},
     opensearch: {url: 'https://opensearch.addi.dk/b3.5_5.0/', ok: true},
     openuserstatus: {url: 'https://openuserstatus.addi.dk/1.6.1/', ok: true},
     moreinfo: {url: 'https://moreinfo.addi.dk/2.11/', ok: true},
@@ -254,7 +254,7 @@ const context = {
     moreinfo: 'https://moreinfo.addi.dk/2.11/',
     openagency: 'https://openagency.addi.dk/2.34/',
     openholdingstatus: 'https://openholdingstatus.addi.dk/3.0/',
-    openorder: 'https://openorder.addi.dk/2.8/',
+    openorder: 'https://openorder.addi.dk/3.0',
     openformat:
       'http://openformat-php-develop.frontend-features.svc.cloud.dbc.dk/server.php',
     opensearch: 'https://opensearch.addi.dk/b3.5_5.0/',
@@ -578,7 +578,8 @@ const mockData = {
   '["https://moreinfo.addi.dk/2.11/?HowRU",{}]': 'Gr8',
   '["https://openagency.addi.dk/2.34/?HowRU",{}]': 'Gr8',
   '["https://openholdingstatus.addi.dk/3.0/?HowRU",{}]': 'Gr8',
-  '["https://openorder.addi.dk/2.8/?HowRU",{}]': 'Gr8',
+  '["openorder","<SOAP-ENV:Envelope xmlns=\\"http://oss.dbc.dk/ns/openorder\\" xmlns:SOAP-ENV=\\"http://schemas.xmlsoap.org/soap/envelope/\\">\\n     <SOAP-ENV:Body>\\n        <checkOrderPolicyRequest>\\n           <authentication>\\n              <groupIdAut>XXXXX</groupIdAut>\\n              <passwordAut>XXXXX</passwordAut>\\n              <userIdAut>XXXXX</userIdAut>\\n           </authentication>\\n           <pickUpAgencyId>790900</pickUpAgencyId>\\n           <pid>870970-basis:25775481</pid>\\n           <serviceRequester>190101</serviceRequester>\\n        </checkOrderPolicyRequest>\\n     </SOAP-ENV:Body>\\n  </SOAP-ENV:Envelope>"]':
+    '<?xml version=\'1.0\' encoding=\'UTF-8\'?><S:Envelope xmlns:S="http://schemas.xmlsoap.org/soap/envelope/"><S:Body><ns1:checkOrderPolicyResponse xmlns:ns1="http://oss.dbc.dk/ns/openorder"><ns1:orderPossible>true</ns1:orderPossible><ns1:orderPossibleReason>not_owned_ILL_loc</ns1:orderPossibleReason></ns1:checkOrderPolicyResponse></S:Body></S:Envelope>',
   '["https://opensearch.addi.dk/b3.5_5.0/?HowRU",{}]': 'Gr8',
   '["https://openuserstatus.addi.dk/1.6.1/?HowRU",{}]': 'Gr8'
 };
