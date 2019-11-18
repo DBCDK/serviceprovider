@@ -12,8 +12,14 @@ function toFaust(pid) {
 export default async function getArticles(params, context) {
   const access = context.get('access', true);
   const userId = context.get('infomedia.userId', true);
-  const libraryCode = context.get('user.libraryId', true);
+  const user_libraryCode = context.get('user.libraryId', true);
   const pid = params.pid;
+
+  //  Use predefined librarycode or librarycode by the loggedIn user
+  const libraryCode = params.libraryCode
+    ? params.libraryCode
+    : user_libraryCode;
+
   if (!access.includes('infomedia')) {
     return {
       statusCode: 403,
@@ -32,11 +38,11 @@ export default async function getArticles(params, context) {
 
   let soap = `
   <SOAP-ENV:Envelope xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope"
-    xmlns:xml="http://www.w3.org/XML/1998/namespace" 
-    xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" 
-    xmlns:xs="http://www.w3.org/2001/XMLSchema" 
-    xmlns:uaim="http://oss.dbc.dk/ns/useraccessinfomedia" 
-    xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" 
+    xmlns:xml="http://www.w3.org/XML/1998/namespace"
+    xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+    xmlns:xs="http://www.w3.org/2001/XMLSchema"
+    xmlns:uaim="http://oss.dbc.dk/ns/useraccessinfomedia"
+    xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
     xmlns:xmlns="http://www.w3.org/1999/xhtml">
     <SOAP-ENV:Body>
     <uaim:getArticleRequest>
@@ -69,12 +75,14 @@ export default async function getArticles(params, context) {
     ) {
       return {statusCode: 200, data: []};
     }
+
     const data = parsed.getArticleResponse.getArticleResponseDetails.map(
       entry => ({
         id: entry.articleIdentifier.$,
         html: entry.imArticle.$
       })
     );
+
     return {
       statusCode: 200,
       data
