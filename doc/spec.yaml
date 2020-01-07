@@ -65,7 +65,7 @@ api:
         description: Query to find facets for. |
           The query is expressed in CQL, see https://en.wikipedia.org/wiki/Contextual_Query_Language
 
-          A guide to CQL in danish, with list of the indexes available in this API is available on http://www.danbib.dk/broend3_soeg
+          For a danish list of supported indexes, see https://opensearch.addi.dk/b3.5_5.2/?showCqlFile
         type: string
       fields:
         description: |
@@ -316,7 +316,7 @@ api:
         description: Query to search for. |
           The query is expressed in CQL, see https://en.wikipedia.org/wiki/Contextual_Query_Language
 
-          A guide to CQL in danish, with list of the indexes available in this API is available on http://www.danbib.dk/broend3_soeg
+          For a danish list of supported indexes, see https://opensearch.addi.dk/b3.5_5.2/?showCqlFile
         type: string
       offset:
         example: 0
