@@ -75,7 +75,7 @@ describe('Testing the validate.js file', () => {
             q: {
               example: 'harry AND potter',
               description:
-                'Query to search for. | The query is expressed in CQL, see https://en.wikipedia.org/wiki/Contextual_Query_Language\nA guide to CQL in danish, with list of the indexes available in this API is available on http://www.danbib.dk/broend3_soeg',
+                'Query to search for. | The query is expressed in CQL, see https://en.wikipedia.org/wiki/Contextual_Query_Language\nFor a danish list of supported indexes, see https://opensearch.addi.dk/b3.5_5.2/?showCqlFile',
               type: 'string'
             },
             offset: {
