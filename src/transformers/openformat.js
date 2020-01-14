@@ -13,7 +13,6 @@ async function callOpenformat(pid, params, context) {
 
   const fields = {};
   params.fields.map(field => (fields[field] = `{${ofFieldMap[field]}}`));
-  console.log(fields);
   try {
     const xmlResult = await context.request(url, {
       qs: {
