@@ -250,5 +250,6 @@
   "version": {"@id": "dkdcplus:version"},
   "workType": {"@id": "bd:workType"},
   "lix": {"@id": "of:lix"},
-  "shelf": {"@id": "of:shelf"}
+  "shelfmark": {"@id": "of:ddb_shelfmark"},
+  "shelfmarkPrefix": {"@id": "of:ddb_shelfmark_prefix"}
 }

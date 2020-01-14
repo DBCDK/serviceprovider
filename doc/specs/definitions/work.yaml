@@ -2,7 +2,7 @@ definitions:
   WorkResponse:
     type: array
     items:
-      - $ref: "#/definitions/Work"
+      - $ref: '#/definitions/Work'
 
   Work:
     type: object
@@ -44,7 +44,7 @@ definitions:
         items:
           type: string
       collectionDetails:
-        $ref: "#/definitions/CollectionDetails"
+        $ref: '#/definitions/CollectionDetails'
       continuedIn:
         description: see http://www.danbib.dk/broend3_relationer
         type: array
@@ -593,7 +593,7 @@ definitions:
         type: array
         items:
           type: string
-          pattern: "^[0-9]{4}$"
+          pattern: '^[0-9]{4}$'
           example: 2017
       description:
         type: array
@@ -966,8 +966,13 @@ definitions:
         type: array
         items:
           type: string
-      shelf:
+      shelfmark:
         description: 'Returns shelf label (hyldemærke)'
+        type: array
+        items:
+          type: string
+      shelfmark_prefix:
+        description: 'Returns shelf prefix label'
         type: array
         items:
           type: string

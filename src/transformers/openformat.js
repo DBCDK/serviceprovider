@@ -2,13 +2,17 @@ import {log} from '../utils';
 
 var parseString = require('xml2js').parseString;
 var stripNS = require('xml2js').processors.stripPrefix;
+const ofFieldMap = {
+  lix: 'lix',
+  shelfmark: 'ddb_shelfmark',
+  shelfmarkPrefix: 'ddb_shelfmark_prefix'
+};
 
 async function callOpenformat(pid, params, context) {
   const url = context.get('services.openformat', true);
 
   const fields = {};
-  params.fields.map(field => (fields[field] = `{${field}}`));
-
+  params.fields.map(field => (fields[field] = `{${ofFieldMap[field]}}`));
   try {
     const xmlResult = await context.request(url, {
       qs: {

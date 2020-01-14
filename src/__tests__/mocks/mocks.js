@@ -717,5 +717,6 @@ export const requestTypeIdentifierMock = {
   'dkdcplus:version': 'version',
   'bd:worktype': 'workType',
   'of:lix': 'lix',
-  'of:shelf': 'shelf'
+  'of:ddb_shelfmark': 'shelfmark',
+  'of:ddb_shelfmark_prefix': 'shelfmarkPrefix'
 };
