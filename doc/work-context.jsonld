@@ -251,5 +251,5 @@
   "workType": {"@id": "bd:workType"},
   "lix": {"@id": "of:lix"},
   "shelfmark": {"@id": "of:ddb_shelfmark"},
-  "shelfmark_prefix": {"@id": "of:ddb_shelfmark_prefix"}
+  "shelfmarkPrefix": {"@id": "of:ddb_shelfmark_prefix"}
 }
