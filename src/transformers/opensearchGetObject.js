@@ -246,10 +246,12 @@ function getBriefDisplayData(searchResult) {
     const ns = 'bd';
     const identifier = ns + ':' + key;
     const field = typeId.getField(identifier);
-    if (!res[field]) {
+    if ((field === 'pid' && value) || field !== 'pid') {
       res[field] = [];
     }
-    res[field].push(value.$);
+    if (value) {
+      res[field].push(value.$);
+    }
   });
   return res;
 }
