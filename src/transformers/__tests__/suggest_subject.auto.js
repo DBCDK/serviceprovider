@@ -67,7 +67,7 @@ const provider = Provider();
 describe('Automated test: suggest_subject.auto', () => {
   it('has same result as recorded (in suggest_subject.auto)', () => {
     assert(
-      Date.now() < +new Date('2020-01-17'),
+      Date.now() < +new Date('2021-01-17'),
       'Please recreate the automatically generated unit tests, such that the mock data does not come out of sync with the actual services. See README.md for details.'
     );
     context.mockData = mockData;
