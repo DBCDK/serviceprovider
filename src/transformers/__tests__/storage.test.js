@@ -100,9 +100,11 @@ describe('Storage endpoint', () => {
   let user, typeUuid, type1, doc1, imageType, doc2, doc3, doc4;
 
   before(async () => {
-    user = (await dbcOpenPlatform.status({
-      fields: ['storage']
-    })).storage.user;
+    user = (
+      await dbcOpenPlatform.status({
+        fields: ['storage']
+      })
+    ).storage.user;
 
     await cleanupOldTestData();
 
@@ -110,9 +112,11 @@ describe('Storage endpoint', () => {
 
     promises.push(
       (async () => {
-        typeUuid = (await dbcOpenPlatform.storage({
-          find: {_owner: 'openplatform', name: 'type'}
-        }))[0];
+        typeUuid = (
+          await dbcOpenPlatform.storage({
+            find: {_owner: 'openplatform', name: 'type'}
+          })
+        )[0];
       })()
     );
 
@@ -591,11 +595,14 @@ describe('Storage endpoint', () => {
       });
 
       assert.deepEqual(Object.keys(result[0]), ['key', 'val']);
-      assert.deepEqual(result.map(o => o.key), [
-        [user, 'test'],
-        [user, 'testImage'],
-        [user, 'testType1']
-      ]);
+      assert.deepEqual(
+        result.map(o => o.key),
+        [
+          [user, 'test'],
+          [user, 'testImage'],
+          [user, 'testType1']
+        ]
+      );
     });
     it('reverse scans', async () => {
       let result = await dbcOpenPlatform.storage({
@@ -608,10 +615,13 @@ describe('Storage endpoint', () => {
         }
       });
 
-      assert.deepEqual(result.map(o => o.key), [
-        [user, 'testType1'],
-        [user, 'testImage']
-      ]);
+      assert.deepEqual(
+        result.map(o => o.key),
+        [
+          [user, 'testType1'],
+          [user, 'testImage']
+        ]
+      );
     });
     it('scans before', async () => {
       let result = await dbcOpenPlatform.storage({
@@ -624,7 +634,10 @@ describe('Storage endpoint', () => {
         }
       });
 
-      assert.deepEqual(result.map(o => o.key), [[user, 'testImage']]);
+      assert.deepEqual(
+        result.map(o => o.key),
+        [[user, 'testImage']]
+      );
     });
     it('scans from a certain point', async () => {
       let result = await dbcOpenPlatform.storage({
@@ -637,7 +650,10 @@ describe('Storage endpoint', () => {
         }
       });
 
-      assert.deepEqual(result.map(o => o.key), [[user, 'testImage']]);
+      assert.deepEqual(
+        result.map(o => o.key),
+        [[user, 'testImage']]
+      );
     });
   });
 
@@ -678,12 +694,14 @@ describe('Storage endpoint', () => {
           name: 'world'
         }
       });
-      objectId = (await dbcOpenPlatform.storage({
-        put: {
-          _type: `${user}.testType2`,
-          name: 'hello'
-        }
-      }))._id;
+      objectId = (
+        await dbcOpenPlatform.storage({
+          put: {
+            _type: `${user}.testType2`,
+            name: 'hello'
+          }
+        })
+      )._id;
       let result = await dbcOpenPlatform.storage({
         count: {
           _type: `${user}.testType2`,
@@ -708,7 +726,10 @@ describe('Storage endpoint', () => {
             index: ['name']
           }
         }),
-        [{key: ['hello'], val: 2}, {key: ['world'], val: 1}]
+        [
+          {key: ['hello'], val: 2},
+          {key: ['world'], val: 1}
+        ]
       );
       assert.deepEqual(
         await dbcOpenPlatform.storage({
@@ -988,7 +1009,10 @@ describe('Storage endpoint', () => {
         }
       });
       assert.deepEqual(Object.keys(result[0]), ['key', 'val']);
-      assert.deepEqual(result.map(r => r.val), [docPublic._id]);
+      assert.deepEqual(
+        result.map(r => r.val),
+        [docPublic._id]
+      );
     });
     it('Non-owner may scan public index - not admin index', async () => {
       let result = await dbcOpenPlatform.storage({
@@ -1079,7 +1103,10 @@ describe('Storage endpoint', () => {
         }
       });
 
-      assert.deepEqual(result.map(e => e.key), [['a']]);
+      assert.deepEqual(
+        result.map(e => e.key),
+        [['a']]
+      );
     });
   });
 
@@ -1182,7 +1209,10 @@ describe('Storage endpoint', () => {
         get_roles: {}
       });
 
-      assert.deepEqual(result.map(r => r._id), [role._id]);
+      assert.deepEqual(
+        result.map(r => r._id),
+        [role._id]
+      );
     });
     it('should allow put with role, when user has role', async () => {
       obj = await dbcOpenPlatformAuthenticatedUser.storage({
