@@ -4,7 +4,7 @@ Nedenstående er et bud på API til udstilling af beholdningsservice via den åb
 
 ## Kald 1: Holdings per itemId
 
-`curl https://openplatform.dbc.dk/v3/holdings/?access_token={TOKEN}agency=${AGENCY}&item_id=${ITEM_ID}`
+`curl https://openplatform.dbc.dk/v3/holdingsitems/?access_token={TOKEN}agency=${AGENCY}&item_id=${ITEM_ID}`
 
 Kaldet returnerer en liste af holdings:
 
@@ -43,7 +43,7 @@ Der gælder for listen af holdings, at det:
 
 ## Kald 2: Holdings for liste af pid'er
 
-`curl https://openplatform.dbc.dk/v3/holdings/?access_token={TOKEN}agency={AGENCY}&pids={PID1},{PID2}...`
+`curl https://openplatform.dbc.dk/v3/holdingsitems/?access_token={TOKEN}agency={AGENCY}&pids={PID1},{PID2}...`
 
 Resultatet indeholder en liste, med en indgang for hver pid i kaldet. For hver pid findes en liste af holdings:
 
@@ -68,11 +68,12 @@ Resultatet indeholder en liste, med en indgang for hver pid i kaldet. For hver p
           "circulationRule": "",
           "readyForLoan": 0,
           "note": ""
-        },
-        {
-          "pid": "pid2",
-          "holdings": [...]
-        },
+        }, ...]
+      },
+      {
+        "pid": "pid2",
+        "holdings": [...]
+      },
         ...
       ]
     }
