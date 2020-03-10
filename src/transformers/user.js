@@ -4,8 +4,8 @@
  *
  * Wraps userstatus backend.
  */
-import {pbkdf2} from 'crypto';
-import {getIdFromIsil} from './utils/isil.utils';
+import { pbkdf2 } from 'crypto';
+import { getIdFromIsil } from './utils/isil.utils';
 
 /**
  * Maps loan item from backend response to serviceprovider api
@@ -103,7 +103,7 @@ function order(orderItem) {
  * @api public
  */
 export default (request, context) => {
-  if (!(context.get('user.id') && context.get('user.pin'))) {
+  if (!context.get('user.id')) {
     return Promise.resolve({
       statusCode: 403,
       error: 'not logged in'
