@@ -421,12 +421,11 @@ describe('Storage endpoint', () => {
         '2gAMAwEAAhEDEQA/ACMIpGssrjqrqw9OFkWVUjF1McmUhkhYaHn1utv/2Q==',
       'base64'
     ).toString('latin1');
-    const pngData =
-      '\x89PNG\r\n\u001a\n\u0000\u0000\u0000\rIHDR\u0000\u0000\u0000\u0003' +
-      "\u0000\u0000\u0000\u0003\u0001\u0003\u0000\u0000\u0000læ'ü\u0000\u0000\u0000" +
-      '\u0006PLTEÿÿÿ\u0000\u0000\u0000UÂÓ~\u0000\u0000\u0000\u000eIDAT\b×cXÀàÀ°\u0000' +
-      '\u0000\u0004\u0001\u0004w~\u001f\u0000\u0000\u0000\u0000IEND®B`';
-
+    const pngData = Buffer.from(
+      'iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mP8z/C/HgAGgwJ/lK3Q6wA' +
+        'AAABJRU5ErkJggg==',
+      'base64'
+    ).toString('latin1');
     const gifData =
       '\u0047\u0049\u0046\u0038\u0037\u0061\u0002\u0000\u0002\u0000\u0080' +
       '\u0001\u0000\u0000\u0000\u0000\u00ff\u00ff\u00ff\u002c\u0000\u0000\u0000\u0000' +
