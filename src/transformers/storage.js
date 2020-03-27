@@ -820,7 +820,7 @@ async function storageMiddleware(req, res, next) {
       let data = doc.data;
       if ((width || height) && !bufferIsGIF(data)) {
         data = await sharp(data)
-          .resize(width && +width, height && +height)
+          .resize(width && parseInt(width), height && parseInt(height))
           .toBuffer();
       }
 
