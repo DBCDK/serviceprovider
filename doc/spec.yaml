@@ -423,7 +423,12 @@ api:
       - Status
     description: |
       User status, including arrived loans, orders, unique id, etc.
-    properties: {}
+    properties:
+      userinfo:
+        description: Type of user information to select. Possible values are `userData`, `userLoan`, `userOrder`, `userFiscal`
+        type: array
+        items: {type: "string"}
+        example: ["userData", "userLoan"]
     example: {}
     response:
       $ref: "#/definitions/UserResponse"
