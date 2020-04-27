@@ -496,6 +496,35 @@ api:
     examples:
       - request: { "pids": ["870970-basis:51989252",], "fields": ["title", "collection", "subjectDBCF", "hasAdaptation", "coverUrlFull"]}
         response: [{"title": ["Harry Potter og de vises sten"], "collection": ["300185-katalog:100562332", "870970-basis:51989252", "870971-forfweb:86203219", "870970-basis:24284514", "870970-basis:24284565", "..."], "subjectDBCF": ["fantasy", "magi", "troldmænd"], "hasAdaption": ["870970-basis:27123279", "870970-basis:27963390"], "coverUrlFull": ["https://moreinfo.addi.dk/2.1/more_info_get.php?id=36565894&type=forside_500&key=55d553c259c9e46291a4"]}]
+
+  holding:
+    tags:
+      - Search
+    description: blah blah ...
+    properties:
+      pids:
+        description: The ids of the materials to look up. You should at most look up 20 ids per API call.
+        type: array
+        maxItems: 20
+        items: {type: "string"}
+        example: ["870970-basis:51989252"]
+      fields:
+        description: |
+          Which fields to return. Limiting the fields can also yield a performance improvement.
+
+          The entire list of possible fields can be seen on https://raw.githubusercontent.com/DBCDK/serviceprovider/master/doc/work-context.jsonld
+
+          If `fields` are omitted, all fields are returned, except `cover*`, `collection`, `lix` and `shelf`.
+        type: array
+        items: {type: "string"}
+        example: ["title", "collection", "dcSubjectDBCF", "hasAdaptation", "coverUrlFull"]
+    response:
+      $ref: '#/definitions/WorkResponse'
+      example: [{ "dcTitle": ["Harry Potter og de vises sten"], "collection": ["300185-katalog:100562332", "870970-basis:51989252", "870971-forfweb:86203219", "870970-basis:24284514", "870970-basis:24284565", "..."], "dcSubjectDBCF": ["fantasy", "magi", "troldmænd"], "hasAdaption": ["870970-basis:27123279", "870970-basis:27963390"], "coverUrlFull": ["https://moreinfo.addi.dk/2.1/more_info_get.php?id=36565894&type=forside_500&key=55d553c259c9e46291a4"]}]
+    examples:
+      - request: { "pids": ["870970-basis:51989252",], "fields": ["title", "collection", "subjectDBCF", "hasAdaptation", "coverUrlFull"]}
+        response: [{"title": ["Harry Potter og de vises sten"], "collection": ["300185-katalog:100562332", "870970-basis:51989252", "870971-forfweb:86203219", "870970-basis:24284514", "870970-basis:24284565", "..."], "subjectDBCF": ["fantasy", "magi", "troldmænd"], "hasAdaption": ["870970-basis:27123279", "870970-basis:27963390"], "coverUrlFull": ["https://moreinfo.addi.dk/2.1/more_info_get.php?id=36565894&type=forside_500&key=55d553c259c9e46291a4"]}]
+
   status:
     tags:
       - Status
