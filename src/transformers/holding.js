@@ -20,12 +20,17 @@
  * @api public
  */
 export default (request, context) => {
-  if (!context.get('user.id')) {
-    return Promise.resolve({
-      statusCode: 403,
-      error: 'not logged in'
-    });
-  }
+  // if (!context.get('user.id')) {
+  //   return Promise.resolve({
+  //     statusCode: 403,
+  //     error: 'not logged in'
+  //   });
+  // }
+
+  console.log('############### Visiting the holding.js transformer ...');
+  console.log('############### Params: ');
+  console.log('############### request: ', request);
+  console.log('############### context: ', context);
 
   return context.call('openuserstatus', params).then(body => {
     if (body.data.getUserStatusResponse.getUserStatusError) {
