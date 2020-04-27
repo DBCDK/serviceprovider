@@ -64,6 +64,7 @@ const whitelist = {
   },
   netpunkt: {},
   user: {
+    id: true,
     libraryId: true,
     agency: true,
     isil: true
