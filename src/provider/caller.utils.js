@@ -214,7 +214,11 @@ describe('Automated test: ${test.filename}', () => {
 
   fs.writeFile(
     `${__dirname}/../transformers/__tests__/${test.filename}.js`,
-    source
+    source,
+    err => {
+      if (err) throw err;
+      console.log('The file has been saved!');
+    }
   );
 }
 
