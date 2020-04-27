@@ -4,8 +4,8 @@
  *
  * Wraps userstatus backend.
  */
-import { pbkdf2 } from 'crypto';
-import { getIdFromIsil } from './utils/isil.utils';
+import {pbkdf2} from 'crypto';
+import {getIdFromIsil} from './utils/isil.utils';
 
 /**
  * Maps loan item from backend response to serviceprovider api
