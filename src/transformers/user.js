@@ -111,6 +111,15 @@ export default (request, context) => {
   }
 
   const userAgencyId = getIdFromIsil(context.get('user.agency', true));
+
+  // Default userinfo specifications (All)
+  let selectUserInfo = ['userData', 'userLoan', 'userOrder', 'userFiscal'];
+
+  // If request contains custom userinfo specifications use them instead
+  if (request.userinfo) {
+    selectUserInfo = request.userinfo;
+  }
+
   const params = {
     agencyId: userAgencyId,
     userId: context.get('user.id'),
@@ -118,6 +127,7 @@ export default (request, context) => {
     'authentication.passwordAut': context.get('netpunkt.password', true),
     'authentication.userIdAut': context.get('netpunkt.user', true),
     action: 'getUserStatus',
+    selectUserInfo,
     outputType: 'json'
   };
 
@@ -158,25 +168,32 @@ export default (request, context) => {
         data.mail = body.data.getUserStatusResponse.userMail.$;
       }
 
-      let loans = [];
-      if (body.data.getUserStatusResponse.userStatus.loanedItems.loan) {
-        loans = body.data.getUserStatusResponse.userStatus.loanedItems.loan;
+      if (selectUserInfo.includes('userLoan')) {
+        let loans = [];
+        if (body.data.getUserStatusResponse.userStatus.loanedItems.loan) {
+          loans = body.data.getUserStatusResponse.userStatus.loanedItems.loan;
+        }
+        data.loans = loans.map(loan);
       }
-      data.loans = loans.map(loan);
 
-      let orders = [];
-      if (body.data.getUserStatusResponse.userStatus.orderedItems.order) {
-        orders = body.data.getUserStatusResponse.userStatus.orderedItems.order;
+      if (selectUserInfo.includes('userOrder')) {
+        let orders = [];
+        if (body.data.getUserStatusResponse.userStatus.orderedItems.order) {
+          orders =
+            body.data.getUserStatusResponse.userStatus.orderedItems.order;
+        }
+        data.orders = orders.map(order);
       }
-      data.orders = orders.map(order);
 
-      let debts = [];
-      if (body.data.getUserStatusResponse.userStatus.fiscalAccount) {
-        debts =
-          body.data.getUserStatusResponse.userStatus.fiscalAccount
-            .fiscalTransaction || [];
+      if (selectUserInfo.includes('userFiscal')) {
+        let debts = [];
+        if (body.data.getUserStatusResponse.userStatus.fiscalAccount) {
+          debts =
+            body.data.getUserStatusResponse.userStatus.fiscalAccount
+              .fiscalTransaction || [];
+        }
+        data.debt = debts.map(debt);
       }
-      data.debt = debts.map(debt);
 
       if (context.get('services.ddbcmsapi')) {
         data.ddbcmsapi = context.get('services.ddbcmsapi');

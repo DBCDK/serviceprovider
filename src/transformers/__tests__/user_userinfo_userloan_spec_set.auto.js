@@ -1,4 +1,4 @@
-// AUTOTEST GENERATOR: {"endpoint":"user","params":{}}
+// AUTOTEST GENERATOR: {"endpoint":"user","params":{"userinfo":["userLoan"]}}
 //
 //
 // AUTOMATED UNIT TEST
@@ -6,9 +6,20 @@
 //
 //
 const endpoint = 'user';
-const params = {};
+const params = {userinfo: ['userLoan']};
 
-const expected = {statusCode: 500, error: 'User authentication failed'};
+const expected = {
+  statusCode: 200,
+  data: {
+    id: '4TXozSGMOycrE1BhPudNFslbOI3OJO6x',
+    name: 'Michelle Hoffmann',
+    address: 'Kornbakke Allé 13',
+    postalCode: '8200',
+    loans: [],
+    ddbcmsapi: 'https://cmscontent.dbc.dk/',
+    agency: '790900'
+  }
+};
 
 const context = {
   services: {
@@ -37,12 +48,11 @@ const context = {
   storage: {user: 'XXXXX'},
   netpunkt: {user: 'XXXXX', group: 'XXXXX', password: 'XXXXX'},
   user: {
-    id: 'XXXXX',
+    id: '0102033690',
     salt: 'XXXXX',
-    pin: 'XXXXX',
-    libraryId: '710100',
-    agency: '710100',
-    isil: 'DK-710100'
+    libraryId: '790900',
+    agency: '790900',
+    isil: 'DK-790900'
   },
   app: {
     clientId: 'XXXXX',
@@ -52,16 +62,16 @@ const context = {
   }
 };
 const mockData = {
-  '["openuserstatus",{"qs":{"agencyId":"710100","userId":"XXXXX","authentication.groupIdAut":"XXXXX","authentication.passwordAut":"XXXXX","authentication.userIdAut":"XXXXX","action":"getUserStatus","selectUserInfo":["userData","userLoan","userOrder","userFiscal"],"outputType":"json"}}]':
-    '{"getUserStatusResponse":{"getUserStatusError":{"$":"User authentication failed","@":"ous"},"@":"ous"},"@namespaces":{"ous":"http:\\/\\/oss.dbc.dk\\/ns\\/openuserstatus"}}'
+  '["openuserstatus",{"qs":{"agencyId":"790900","userId":"0102033690","authentication.groupIdAut":"XXXXX","authentication.passwordAut":"XXXXX","authentication.userIdAut":"XXXXX","action":"getUserStatus","selectUserInfo":["userLoan"],"outputType":"json"}}]':
+    '{"getUserStatusResponse":{"userId":{"$":"0102033690","@":"ous"},"userName":{"$":"Michelle Hoffmann","@":"ous"},"userAddress":{"$":"Kornbakke All\\u00e9 13","@":"ous"},"userPostalCode":{"$":"8200","@":"ous"},"userCountry":{"$":"DK","@":"ous"},"userStatus":{"loanedItems":{"loansCount":{"$":"0","@":"ous"},"@":"ous"},"@":"ous"},"@":"ous"},"@namespaces":{"ous":"http:\\/\\/oss.dbc.dk\\/ns\\/openuserstatus"}}'
 };
 
 import Provider from '../../provider/Provider.js';
 import {assert, fail} from 'chai';
 const provider = Provider();
 
-describe('Automated test: user_fail.snapshot', () => {
-  it('has same result as recorded (in user_fail.snapshot)', () => {
+describe('Automated test: user_userinfo_userLoan_spec_set.auto', () => {
+  it('has same result as recorded (in user_userinfo_userLoan_spec_set.auto)', () => {
     assert(
       Date.now() < +new Date('2020-07-26'),
       'Please recreate the automatically generated unit tests, such that the mock data does not come out of sync with the actual services. See README.md for details.'
