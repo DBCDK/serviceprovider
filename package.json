@@ -21,18 +21,12 @@
     "coveralls": "cat coverage/units/lcov.info | ./node_modules/coveralls/bin/coveralls.js",
     "sonar": "sonar-runner -Dsonar.projectKey=sp:local -Dsonar.projectName=ServiceProviderLocal -Dsonar.projectVersion=1.0 -Dsonar.sources=./src"
   },
-  "pre-commit": [
-    "prettier"
-  ],
+  "pre-commit": ["prettier"],
   "repository": {
     "type": "git",
     "url": "git+https://github.com/DBCDK/serviceprovider.git"
   },
-  "keywords": [
-    "serviceprovider",
-    "API",
-    "dbc"
-  ],
+  "keywords": ["serviceprovider", "API", "dbc"],
   "author": "dbcdk",
   "license": "GPL-3.0",
   "bugs": {
