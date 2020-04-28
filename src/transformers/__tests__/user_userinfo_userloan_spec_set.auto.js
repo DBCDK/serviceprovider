@@ -1,4 +1,4 @@
-// AUTOTEST GENERATOR: {"endpoint":"user","params":{"userinfo":["userData"]}}
+// AUTOTEST GENERATOR: {"endpoint":"user","params":{"userinfo":["userLoan"]}}
 //
 //
 // AUTOMATED UNIT TEST
@@ -6,7 +6,7 @@
 //
 //
 const endpoint = 'user';
-const params = {userinfo: ['userData']};
+const params = {userinfo: ['userLoan']};
 
 const expected = {
   statusCode: 200,
@@ -15,6 +15,7 @@ const expected = {
     name: 'Michelle Hoffmann',
     address: 'Kornbakke Allé 13',
     postalCode: '8200',
+    loans: [],
     ddbcmsapi: 'https://cmscontent.dbc.dk/',
     agency: '790900'
   }
@@ -61,16 +62,16 @@ const context = {
   }
 };
 const mockData = {
-  '["openuserstatus",{"qs":{"agencyId":"790900","userId":"0102033690","authentication.groupIdAut":"XXXXX","authentication.passwordAut":"XXXXX","authentication.userIdAut":"XXXXX","action":"getUserStatus","selectUserInfo":["userData"],"outputType":"json"}}]':
-    '{"getUserStatusResponse":{"userId":{"$":"0102033690","@":"ous"},"userName":{"$":"Michelle Hoffmann","@":"ous"},"userAddress":{"$":"Kornbakke All\\u00e9 13","@":"ous"},"userPostalCode":{"$":"8200","@":"ous"},"userCountry":{"$":"DK","@":"ous"},"@":"ous"},"@namespaces":{"ous":"http:\\/\\/oss.dbc.dk\\/ns\\/openuserstatus"}}'
+  '["openuserstatus",{"qs":{"agencyId":"790900","userId":"0102033690","authentication.groupIdAut":"XXXXX","authentication.passwordAut":"XXXXX","authentication.userIdAut":"XXXXX","action":"getUserStatus","selectUserInfo":["userLoan"],"outputType":"json"}}]':
+    '{"getUserStatusResponse":{"userId":{"$":"0102033690","@":"ous"},"userName":{"$":"Michelle Hoffmann","@":"ous"},"userAddress":{"$":"Kornbakke All\\u00e9 13","@":"ous"},"userPostalCode":{"$":"8200","@":"ous"},"userCountry":{"$":"DK","@":"ous"},"userStatus":{"loanedItems":{"loansCount":{"$":"0","@":"ous"},"@":"ous"},"@":"ous"},"@":"ous"},"@namespaces":{"ous":"http:\\/\\/oss.dbc.dk\\/ns\\/openuserstatus"}}'
 };
 
 import Provider from '../../provider/Provider.js';
 import {assert, fail} from 'chai';
 const provider = Provider();
 
-describe('Automated test: user_userinfo_userdata_spec_set.auto', () => {
-  it('has same result as recorded (in user_userinfo_userdata_spec_set.auto)', () => {
+describe('Automated test: user_userinfo_userLoan_spec_set.auto', () => {
+  it('has same result as recorded (in user_userinfo_userLoan_spec_set.auto)', () => {
     assert(
       Date.now() < +new Date('2020-07-26'),
       'Please recreate the automatically generated unit tests, such that the mock data does not come out of sync with the actual services. See README.md for details.'

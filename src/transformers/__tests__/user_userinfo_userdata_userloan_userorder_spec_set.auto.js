@@ -1,4 +1,4 @@
-// AUTOTEST GENERATOR: {"endpoint":"user","params":{}}
+// AUTOTEST GENERATOR: {"endpoint":"user","params":{"userinfo":["userData","userLoan","userOrder"]}}
 //
 //
 // AUTOMATED UNIT TEST
@@ -6,7 +6,7 @@
 //
 //
 const endpoint = 'user';
-const params = {};
+const params = {userinfo: ['userData', 'userLoan', 'userOrder']};
 
 const expected = {
   statusCode: 200,
@@ -40,7 +40,6 @@ const expected = {
         titleId: '23424916'
       }
     ],
-    debt: [],
     ddbcmsapi: 'https://cmscontent.dbc.dk/',
     agency: '790900'
   }
@@ -87,7 +86,7 @@ const context = {
   }
 };
 const mockData = {
-  '["openuserstatus",{"qs":{"agencyId":"790900","userId":"0102033690","authentication.groupIdAut":"XXXXX","authentication.passwordAut":"XXXXX","authentication.userIdAut":"XXXXX","action":"getUserStatus","selectUserInfo":["userData","userLoan","userOrder","userFiscal"],"outputType":"json"}}]':
+  '["openuserstatus",{"qs":{"agencyId":"790900","userId":"0102033690","authentication.groupIdAut":"XXXXX","authentication.passwordAut":"XXXXX","authentication.userIdAut":"XXXXX","action":"getUserStatus","selectUserInfo":["userData","userLoan","userOrder"],"outputType":"json"}}]':
     '{"getUserStatusResponse":{"userId":{"$":"0102033690","@":"ous"},"userName":{"$":"Michelle Hoffmann","@":"ous"},"userAddress":{"$":"Kornbakke All\\u00e9 13","@":"ous"},"userPostalCode":{"$":"8200","@":"ous"},"userCountry":{"$":"DK","@":"ous"},"userStatus":{"loanedItems":{"loansCount":{"$":"0","@":"ous"},"@":"ous"},"orderedItems":{"order":[{"author":{"$":"Norton, Mary","@":"ous"},"bibliographicItemId":{"$":"87-01-78271-1","@":"ous"},"bibliographicRecordId":{"$":"01191748","@":"ous"},"edition":{"$":"[Nyt oplag]","@":"ous"},"pagination":{"$":"147 sider","@":"ous"},"publisher":{"$":"[Gyldendal] 1979","@":"ous"},"language":{"$":"dan","@":"ous"},"mediumType":{"$":"Bog","@":"ous"},"title":{"$":"L\\u00e5nerne flytter ud","@":"ous"},"orderDate":{"$":"2020-04-23T20:18:23+02:00","@":"ous"},"orderId":{"$":"378","@":"ous"},"orderStatus":{"$":"At reservation shelf","@":"ous"},"orderType":{"$":"normal","@":"ous"},"pickUpExpiryDate":{"$":"2020-05-07T00:00:00+02:00","@":"ous"},"pickUpAgency":{"$":"DK-790900","@":"ous"},"@":"ous"},{"author":{"$":"Brooke, Lauren","@":"ous"},"bibliographicItemId":{"$":"9788721016395","@":"ous"},"bibliographicRecordId":{"$":"23424916","@":"ous"},"edition":{"$":"1. udgave","@":"ous"},"pagination":{"$":"196 sider","@":"ous"},"publisher":{"$":"Borgen 2007","@":"ous"},"language":{"$":"dan","@":"ous"},"mediumType":{"$":"Bog","@":"ous"},"title":{"$":"Efter uvejret","@":"ous"},"orderDate":{"$":"2020-04-23T20:18:23+02:00","@":"ous"},"orderId":{"$":"379","@":"ous"},"orderStatus":{"$":"Active","@":"ous"},"orderType":{"$":"normal","@":"ous"},"holdQueuePosition":{"$":"1","@":"ous"},"pickUpAgency":{"$":"DK-790900","@":"ous"},"@":"ous"}],"ordersCount":{"$":"2","@":"ous"},"@":"ous"},"@":"ous"},"@":"ous"},"@namespaces":{"ous":"http:\\/\\/oss.dbc.dk\\/ns\\/openuserstatus"}}'
 };
 
@@ -95,8 +94,8 @@ import Provider from '../../provider/Provider.js';
 import {assert, fail} from 'chai';
 const provider = Provider();
 
-describe('Automated test: user_all_userinfo_no_spec_set.auto', () => {
-  it('has same result as recorded (in user_all_userinfo_no_spec_set.auto)', () => {
+describe('Automated test: user_userinfo_userdata_userLoan_userorder_spec_set.auto', () => {
+  it('has same result as recorded (in user_userinfo_userdata_userLoan_userorder_spec_set.auto)', () => {
     assert(
       Date.now() < +new Date('2020-07-26'),
       'Please recreate the automatically generated unit tests, such that the mock data does not come out of sync with the actual services. See README.md for details.'

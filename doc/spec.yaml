@@ -425,7 +425,7 @@ api:
       User status, including arrived loans, orders, unique id, etc.
     properties:
       userinfo:
-        description: Type of user information to select. Possible values are `userData`, `userLoan`, `userOrder`, `userFiscal`
+        description: Type of user information to select. Possible values are `userData`, `userLoan`, `userOrder`, `userFiscal`. If no userInfo is set, all values are returned.
         type: array
         items: {type: "string"}
         example: ["userData", "userLoan"]
