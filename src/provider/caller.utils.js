@@ -16,6 +16,8 @@ if (mockFileName) {
 }
 
 function promiseRequest(req) {
+  console.log('############### promiseRequest(req)....', req);
+
   return new Promise((resolve, reject) => {
     request(req, (err, res, data) => (err ? reject(err) : resolve(data)));
   });
