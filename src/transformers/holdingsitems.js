@@ -4,6 +4,8 @@
  *
  */
 
+import {log} from '../utils';
+
 /**
  * Maps holdings-items-content-service from backend response to serviceprovider api
 
@@ -15,9 +17,9 @@
 
 /**
  * Default transformer.
- * Wraps holdings-items-content-service backend and returns holdings info
+ * Wraps holdings-items-content-service backend and returns holdingsitems info
  *
- * @param {Object} request parameters from the /holding
+ * @param {Object} request parameters from the /holdingsitems
  * @param {Object} context The context object fetched from smaug
  * @returns {Object|Promise} promise with result
  * @api public
@@ -53,18 +55,25 @@ export default (request, context) => {
     itemId: request.item_id || null
   };
 
-  // Request library options (optinal)
+  // Request library options (optional)
   const options = {
     // The "useQuerystring" option is used to serialize an array in a query as foo=bar&foo=baz instead of the default.
     useQuerystring: true
   };
 
-  const service = context.get('services.holding');
+  const service = context.get('services.holdingsitems');
   const path = request.pids ? '/holdings-by-pid' : '/holdings-by-item-id';
   const api = service + path;
 
   return context.call(api, params, options).then(body => {
     if (!body.data) {
+      log.error(`/holdingsitems - No response was returned from the ${api}`, {
+        api,
+        params,
+        options,
+        body
+      });
+
       return Promise.resolve({
         statusCode: 500,
         error: 'Some error occurred'

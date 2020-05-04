@@ -22,7 +22,7 @@ import {testTransformer} from '../transformers/testTransformer.js';
 import recommendTransformer from '../transformers/recommend';
 import infomediaTransformer from '../transformers/infomedia';
 import openformatTransformer from '../transformers/openformat';
-import holdingTransformer from '../transformers/holding';
+import holdingsitemsTransformer from '../transformers/holdingsitems';
 
 import createEntity from '../transformers/createEntity';
 import updateEntity from '../transformers/updateEntity';
@@ -66,7 +66,7 @@ export default function Provider() {
     aggregation: aggregationTransformer,
     infomedia: infomediaTransformer,
     openformat: openformatTransformer,
-    holding: holdingTransformer
+    holdingsitems: holdingsitemsTransformer
   };
 
   const crudTransformerMap = {

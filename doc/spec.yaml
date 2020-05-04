@@ -502,10 +502,10 @@ api:
       - request: { "pids": ["870970-basis:51989252",], "fields": ["title", "collection", "subjectDBCF", "hasAdaptation", "coverUrlFull"]}
         response: [{"title": ["Harry Potter og de vises sten"], "collection": ["300185-katalog:100562332", "870970-basis:51989252", "870971-forfweb:86203219", "870970-basis:24284514", "870970-basis:24284565", "..."], "subjectDBCF": ["fantasy", "magi", "troldmænd"], "hasAdaption": ["870970-basis:27123279", "870970-basis:27963390"], "coverUrlFull": ["https://moreinfo.addi.dk/2.1/more_info_get.php?id=36565894&type=forside_500&key=55d553c259c9e46291a4"]}]
 
-  holding:
+  holdingsitems:
     tags:
       - Search
-    description: This is a description of the holding api . . .
+    description: Retrieve holding information from a work, given by a pid/pids or item_id. An agencyId is required.
     properties:
       agency:
         description: The id of the agency.
@@ -516,22 +516,12 @@ api:
         type: string
         example: "0123456789"
       pids:
-        description: The ids of the materials to look up. You should at most look up 20 ids per API call.
+        description: The ids of the materials to look up.
         type: array
         maxItems: 20
         items: {type: "string"}
         example: ["870970-basis:51989252"]
 
-      fields:
-        description: |
-          Which fields to return. Limiting the fields can also yield a performance improvement.
-
-          The entire list of possible fields can be seen on https://raw.githubusercontent.com/DBCDK/serviceprovider/master/doc/work-context.jsonld
-
-          If `fields` are omitted, all fields are returned.
-        type: array
-        items: {type: "string"}
-        example: ["department", "location", "status"]
     response:
       $ref: '#/definitions/WorkResponse'
       example: {"statusCode":200,"data":[{"pid":"pid1","holdingsitems":[{"bibliographicRecordId":"","issueId":"","itemId":"xxx","branchId":"","branch":"","department":"","location":"","subLocation":"","issueText":"","status":"","circulationRule":"","readyForLoan":0,"note":""},...]},{"pid":"pid2","holdingsitems":[...]},...]}
