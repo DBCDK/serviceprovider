@@ -1,36 +1,36 @@
-// AUTOTEST GENERATOR: {"endpoint":"holding","params":{"pretty":true,"agency":"761500","pids":["someRandomStuff:01242180","hanekam:01242091"]}}
+// AUTOTEST GENERATOR: {"endpoint":"holdingsitems","params":{"agency":"761500","pids":["someRandomStuff:01242180","hanekam:01242091"]}}
 //
 //
 // AUTOMATED UNIT TEST
 // DO NOT EDIT
 //
 //
-const endpoint = 'holding';
+const endpoint = 'holdingsitems';
 const params = {
-  pretty: true,
   agency: '761500',
   pids: ['someRandomStuff:01242180', 'hanekam:01242091']
 };
 
 const expected = {
   statusCode: 200,
-  data: {
-    holdings: {
-      'someRandomStuff:01242180': [
+  data: [
+    {
+      pid: 'someRandomStuff:01242180',
+      holdingsitems: [
         {
           bibliographicRecordId: '01242180',
-          branch: 'Horsens Bibliotek',
+          branch: 'Brædstrup Bibliotek',
           branchId: '',
           circulationRule: 'alm',
           department: 'Voksen',
           issueId: '',
           issueText: '',
-          itemId: '3452301496',
-          location: 'Magasin',
+          itemId: '4140294565',
+          location: '',
           note: '',
           readyForLoan: 3,
           status: 'OnShelf',
-          subLocation: ''
+          subLocation: 'Fag'
         },
         {
           bibliographicRecordId: '01242180',
@@ -49,36 +49,24 @@ const expected = {
         },
         {
           bibliographicRecordId: '01242180',
-          branch: 'Brædstrup Bibliotek',
-          branchId: '',
-          circulationRule: 'alm',
-          department: 'Voksen',
-          issueId: '',
-          issueText: '',
-          itemId: '4140294565',
-          location: '',
-          note: '',
-          readyForLoan: 3,
-          status: 'OnShelf',
-          subLocation: 'Fag'
-        }
-      ],
-      'hanekam:01242091': [
-        {
-          bibliographicRecordId: '01242091',
           branch: 'Horsens Bibliotek',
           branchId: '',
           circulationRule: 'alm',
           department: 'Voksen',
           issueId: '',
           issueText: '',
-          itemId: '3452299146',
+          itemId: '3452301496',
           location: 'Magasin',
           note: '',
           readyForLoan: 3,
           status: 'OnShelf',
           subLocation: ''
-        },
+        }
+      ]
+    },
+    {
+      pid: 'hanekam:01242091',
+      holdingsitems: [
         {
           bibliographicRecordId: '01242091',
           branch: 'Horsens Bibliotek',
@@ -96,6 +84,21 @@ const expected = {
         },
         {
           bibliographicRecordId: '01242091',
+          branch: 'Horsens Bibliotek',
+          branchId: '',
+          circulationRule: 'alm',
+          department: 'Voksen',
+          issueId: '',
+          issueText: '',
+          itemId: '3452299146',
+          location: 'Magasin',
+          note: '',
+          readyForLoan: 3,
+          status: 'OnShelf',
+          subLocation: ''
+        },
+        {
+          bibliographicRecordId: '01242091',
           branch: 'Brædstrup Bibliotek',
           branchId: '',
           circulationRule: 'alm',
@@ -110,9 +113,8 @@ const expected = {
           subLocation: 'Fag'
         }
       ]
-    },
-    trackingId: '0cfe70f7-37db-4091-a3d4-30817fc1db4c'
-  }
+    }
+  ]
 };
 
 const context = {
@@ -131,7 +133,7 @@ const context = {
     communityservice: 'http://localhost:4010/v1',
     cicero: 'https://cicero-fbs.com/rest/external/v1/',
     openformat: 'XXXXX',
-    holding: 'XXXXX',
+    holdingsitems: 'XXXXX',
     infomediaservice: 'XXXXX'
   },
   infomedia: {userId: 'XXXXX', libraryCode: 'XXXXX'},
@@ -158,7 +160,7 @@ const context = {
 };
 const mockData = {
   '["XXXXX/holdings-by-pid",{"qs":{"agency":"761500","pid":["someRandomStuff:01242180","hanekam:01242091"],"itemId":null},"useQuerystring":true}]':
-    '{"holdings":{"someRandomStuff:01242180":[{"bibliographicRecordId":"01242180","branch":"Horsens Bibliotek","branchId":"","circulationRule":"alm","department":"Voksen","issueId":"","issueText":"","itemId":"3452301496","location":"Magasin","note":"","readyForLoan":3,"status":"OnShelf","subLocation":""},{"bibliographicRecordId":"01242180","branch":"Horsens Bibliotek","branchId":"","circulationRule":"0","department":"Voksen","issueId":"","issueText":"","itemId":"746452144","location":"","note":"","readyForLoan":3,"status":"NotForLoan","subLocation":"Fag"},{"bibliographicRecordId":"01242180","branch":"Brædstrup Bibliotek","branchId":"","circulationRule":"alm","department":"Voksen","issueId":"","issueText":"","itemId":"4140294565","location":"","note":"","readyForLoan":3,"status":"OnShelf","subLocation":"Fag"}],"hanekam:01242091":[{"bibliographicRecordId":"01242091","branch":"Horsens Bibliotek","branchId":"","circulationRule":"alm","department":"Voksen","issueId":"","issueText":"","itemId":"3452299146","location":"Magasin","note":"","readyForLoan":3,"status":"OnShelf","subLocation":""},{"bibliographicRecordId":"01242091","branch":"Horsens Bibliotek","branchId":"","circulationRule":"0","department":"Voksen","issueId":"","issueText":"","itemId":"746452063","location":"","note":"","readyForLoan":3,"status":"NotForLoan","subLocation":"Fag"},{"bibliographicRecordId":"01242091","branch":"Brædstrup Bibliotek","branchId":"","circulationRule":"alm","department":"Voksen","issueId":"","issueText":"","itemId":"4140294484","location":"","note":"","readyForLoan":3,"status":"OnShelf","subLocation":"Fag"}]},"trackingId":"0cfe70f7-37db-4091-a3d4-30817fc1db4c"}'
+    '{"holdings":{"someRandomStuff:01242180":[{"bibliographicRecordId":"01242180","branch":"Brædstrup Bibliotek","branchId":"","circulationRule":"alm","department":"Voksen","issueId":"","issueText":"","itemId":"4140294565","location":"","note":"","readyForLoan":3,"status":"OnShelf","subLocation":"Fag"},{"bibliographicRecordId":"01242180","branch":"Horsens Bibliotek","branchId":"","circulationRule":"0","department":"Voksen","issueId":"","issueText":"","itemId":"746452144","location":"","note":"","readyForLoan":3,"status":"NotForLoan","subLocation":"Fag"},{"bibliographicRecordId":"01242180","branch":"Horsens Bibliotek","branchId":"","circulationRule":"alm","department":"Voksen","issueId":"","issueText":"","itemId":"3452301496","location":"Magasin","note":"","readyForLoan":3,"status":"OnShelf","subLocation":""}],"hanekam:01242091":[{"bibliographicRecordId":"01242091","branch":"Horsens Bibliotek","branchId":"","circulationRule":"0","department":"Voksen","issueId":"","issueText":"","itemId":"746452063","location":"","note":"","readyForLoan":3,"status":"NotForLoan","subLocation":"Fag"},{"bibliographicRecordId":"01242091","branch":"Horsens Bibliotek","branchId":"","circulationRule":"alm","department":"Voksen","issueId":"","issueText":"","itemId":"3452299146","location":"Magasin","note":"","readyForLoan":3,"status":"OnShelf","subLocation":""},{"bibliographicRecordId":"01242091","branch":"Brædstrup Bibliotek","branchId":"","circulationRule":"alm","department":"Voksen","issueId":"","issueText":"","itemId":"4140294484","location":"","note":"","readyForLoan":3,"status":"OnShelf","subLocation":"Fag"}]},"trackingId":"bfaeefdb-51b8-4fef-a642-3a5453ea60b9"}'
 };
 
 import Provider from '../../provider/Provider.js';
@@ -168,7 +170,7 @@ const provider = Provider();
 describe('Automated test: holding_multiple_pids_result.auto', () => {
   it('has same result as recorded (in holding_multiple_pids_result.auto)', () => {
     assert(
-      Date.now() < +new Date('2020-07-29'),
+      Date.now() < +new Date('2020-08-03'),
       'Please recreate the automatically generated unit tests, such that the mock data does not come out of sync with the actual services. See README.md for details.'
     );
     context.mockData = mockData;

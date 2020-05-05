@@ -15,6 +15,16 @@ import {log} from '../utils';
  * @returns {Object} response with mapped keys
  */
 
+function returnPidsResponse(data) {
+  return Object.keys(data.holdings).map(pid => {
+    return {pid: pid, holdingsitems: data.holdings[pid]};
+  });
+}
+
+function returnItemIdResponse(data) {
+  return {holdingsitems: data.holdings};
+}
+
 /**
  * Default transformer.
  * Wraps holdings-items-content-service backend and returns holdingsitems info
@@ -25,8 +35,12 @@ import {log} from '../utils';
  * @api public
  */
 export default (request, context) => {
+  let agency = request.agency;
+  const pids = request.pids;
+  const itemId = request.item_id;
+
   // Ensure request contain an angency id
-  if (!request.agency) {
+  if (!agency) {
     return Promise.resolve({
       statusCode: 400,
       error: 'Request must contain a valid agency prop'
@@ -34,7 +48,7 @@ export default (request, context) => {
   }
 
   // Ensure request contain either pids or item_id
-  if (!request.pids && !request.item_id) {
+  if (!pids && !itemId) {
     return Promise.resolve({
       statusCode: 400,
       error: 'Request must either contain the `pids` or `item_id` prop'
@@ -42,17 +56,31 @@ export default (request, context) => {
   }
 
   // Ensure request does not contain both pids and item_id
-  if (request.pids && request.item_id) {
+  if (pids && itemId) {
     return Promise.resolve({
       statusCode: 400,
       error: 'Request is not allowed to contain both `pids` and `item_id` prop'
     });
   }
 
+  // If agency contains leading 'DK-' it will be removed
+  if (agency.includes('DK-')) {
+    agency = agency.replace('DK-', '');
+  }
+
+  // Ensure agency is a int
+  var agencyIsInt = /^\d+$/.test(agency);
+  if (!agencyIsInt) {
+    return Promise.resolve({
+      statusCode: 400,
+      error: 'Agency is not a number'
+    });
+  }
+
   const params = {
-    agency: request.agency,
-    pid: request.pids || null,
-    itemId: request.item_id || null
+    agency: agency,
+    pid: pids || null,
+    itemId: itemId || null
   };
 
   // Request library options (optional)
@@ -80,9 +108,23 @@ export default (request, context) => {
       });
     }
 
+    // Default data return
+    let data = [];
+
+    // Structure data as ItemId response
+    if (itemId) {
+      data = returnItemIdResponse(body.data);
+    }
+
+    // Structure data as pids response
+    if (pids) {
+      data = returnPidsResponse(body.data);
+    }
+
+    // Return response
     return Promise.resolve({
       statusCode: 200,
-      data: body.data
+      data
     });
   });
 };

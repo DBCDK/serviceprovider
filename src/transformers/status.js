@@ -70,6 +70,23 @@ async function checkOpenformat({context, endpoint, url}) {
       };
 }
 
+async function checkHoldingItems({context, endpoint, url}) {
+  const api = `${url}/status`;
+  const err = {url, ok: false};
+
+  return context.call(api, {}).then(body => {
+    if (!body.data) {
+      return err;
+    }
+
+    return {
+      url,
+      ok: body.data.ok,
+      text: body.data.text
+    };
+  });
+}
+
 async function onlyUrl({context, endpoint, url}) {
   return {url};
 }
@@ -194,6 +211,7 @@ const serviceChecks = {
   openholdingstatus: checkPhpService,
   openorder: checkOpenOrder,
   openformat: checkOpenformat,
+  holdingsitems: checkHoldingItems,
   opensearch: checkPhpService,
   openuserstatus: checkPhpService,
   moreinfo: checkPhpService,

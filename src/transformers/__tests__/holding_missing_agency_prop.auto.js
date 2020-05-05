@@ -1,12 +1,12 @@
-// AUTOTEST GENERATOR: {"endpoint":"holding","params":{"pretty":true,"item_id":"3439785456"}}
+// AUTOTEST GENERATOR: {"endpoint":"holdingsitems","params":{"item_id":"3439785456"}}
 //
 //
 // AUTOMATED UNIT TEST
 // DO NOT EDIT
 //
 //
-const endpoint = 'holding';
-const params = {pretty: true, item_id: '3439785456'};
+const endpoint = 'holdingsitems';
+const params = {item_id: '3439785456'};
 
 const expected = {
   statusCode: 400,
@@ -29,7 +29,7 @@ const context = {
     communityservice: 'http://localhost:4010/v1',
     cicero: 'https://cicero-fbs.com/rest/external/v1/',
     openformat: 'XXXXX',
-    holding: 'XXXXX',
+    holdingsitems: 'XXXXX',
     infomediaservice: 'XXXXX'
   },
   infomedia: {userId: 'XXXXX', libraryCode: 'XXXXX'},
@@ -63,7 +63,7 @@ const provider = Provider();
 describe('Automated test: holding_missing_agency_prop.auto', () => {
   it('has same result as recorded (in holding_missing_agency_prop.auto)', () => {
     assert(
-      Date.now() < +new Date('2020-07-29'),
+      Date.now() < +new Date('2020-08-03'),
       'Please recreate the automatically generated unit tests, such that the mock data does not come out of sync with the actual services. See README.md for details.'
     );
     context.mockData = mockData;
