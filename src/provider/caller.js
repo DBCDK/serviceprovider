@@ -65,9 +65,9 @@ class Context {
     const url = this.data.services[name] || name;
     switch (type) {
       case 'transformer': {
-        promise = this.transformerMap[name](params, this).then(response => {
-          return this._rectifyDateFormats(response);
-        });
+        promise = this.transformerMap[name](params, this).then(response =>
+          this._rectifyDateFormats(response)
+        );
         break;
       }
 
