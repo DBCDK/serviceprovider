@@ -1,3 +1,16 @@
+/**
+ *
+ * !!!OBS createTest notes:
+ *
+ * To create a new/updated status.auto.js test remember to add the before/after params to the url:
+ *
+ * after="2020/05/01"&before="2020/05/06"
+ *
+ * Example url:
+ * http://localhost:8080/v3/status?access_token=QWERTY&after="2020/05/01"&before="2020/05/06"&createTest=status.auto
+ *
+ */
+
 import getOrderPolicy from './getOrderPolicy';
 import openformatTransformer from './openformat';
 
@@ -111,7 +124,6 @@ async function performanceStat({request, context}) {
   let url = context.data.services.performance;
   const query = {
     size: 0,
-
     query: {
       bool: {
         must: [
@@ -183,6 +195,9 @@ async function performanceStat({request, context}) {
     },
     json: query
   });
+
+  console.log('################################### r.error', r, r.error);
+
   if (r.error) {
     throw {
       statusCode: 500,
