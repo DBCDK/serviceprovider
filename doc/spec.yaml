@@ -523,7 +523,7 @@ api:
         example: ["870970-basis:51989252"]
 
     response:
-      $ref: '#/definitions/holdingsitems'
+      $ref: '#/definitions/HoldingsItemsResponse'
       example: {"statusCode":200,"data":{"holdingsitems":[{"bibliographicRecordId":"01201182","branch":"Brædstrup Bibliotek","branchId":"","circulationRule":"alm","department":"Voksen","issueId":"","issueText":"","itemId":"3439785456","location":"","note":"","readyForLoan":1,"status":"OnShelf","subLocation":"Udenlandsk skønlitteratur"}]}}
     examples:
       - request: {agency: '761500', item_id: '3439785456'}

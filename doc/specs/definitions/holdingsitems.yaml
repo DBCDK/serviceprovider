@@ -1,36 +1,36 @@
 definitions:
   HoldingsItemsResponse:
-    type: array|Object
-    items:
-      - $ref: '#/definitions/holdingsitems'
-
-  holdingsitems:
     type: array
-    properties:
-      bibliographicRecordId:
-        type: string
-      branch:
-        type: string
-      branchId:
-        type: string
-      circulationRule:
-        type: string
-      department:
-        type: string
-      issueId:
-        type: string
-      itemId:
-        type: string
-      location:
-        type: string
-      note:
-        type: string
-      readyForLoan:
-        type: integer
-      status:
-        type: string
-      subLocation:
-        type: string
-
-  pid:
-    type: string
+    items:
+      type: object
+      properties:
+        pid: string
+        holdingsitems:
+          type: array
+          items:
+            type: object
+            properties:
+              bibliographicRecordId:
+                type: string
+              branch:
+                type: string
+              branchId:
+                type: string
+              circulationRule:
+                type: string
+              department:
+                type: string
+              issueId:
+                type: string
+              itemId:
+                type: string
+              location:
+                type: string
+              note:
+                type: string
+              readyForLoan:
+                type: integer
+              status:
+                type: string
+              subLocation:
+                type: string
