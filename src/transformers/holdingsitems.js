@@ -4,15 +4,21 @@
  *
  */
 
+/**
+  * Maps holdings-items-content-service from backend response to serviceprovider api
+
+  * @param {Object} agency (Required)
+  * @param {array} pids
+  * @param {string} item_id
+  * @returns {Array}
+  */
+
 import {log} from '../utils';
 
 /**
- * Maps holdings-items-content-service from backend response to serviceprovider api
-
- * @param {Object} agency (Required)
- * @param {array} pids
- * @param {string} item_id
- * @returns {Object} response with mapped keys
+ * Function to restructure and return pids api repsonse
+ * @param {array} data
+ * @returns {array}
  */
 
 function returnPidsResponse(data) {
@@ -21,6 +27,11 @@ function returnPidsResponse(data) {
   });
 }
 
+/**
+ * Function to restructure and return item_id api repsonse
+ * @param {object} data
+ * @returns {object}
+ */
 function returnItemIdResponse(data) {
   return {holdingsitems: data.holdings};
 }

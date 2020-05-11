@@ -528,7 +528,8 @@ api:
     examples:
       - request: {agency: '761500', item_id: '3439785456'}
         response: {"statusCode":200,"data":{"holdingsitems":[{"bibliographicRecordId":"01201182","branch":"Brædstrup Bibliotek","branchId":"","circulationRule":"alm","department":"Voksen","issueId":"","issueText":"","itemId":"3439785456","location":"","note":"","readyForLoan":1,"status":"OnShelf","subLocation":"Udenlandsk skønlitteratur"}]}}
-
+      - request: {agency: '761500', pids: ["foo:01242180","bar:01242091"]}
+        response: {"statusCode":200,"data":[{"pid":"someRandomStuff:01242180","holdingsitems":[{"bibliographicRecordId":"01242180","branch":"Horsens Bibliotek","branchId":"","circulationRule":"alm","department":"Voksen","issueId":"","issueText":"","itemId":"3452301496","location":"Magasin","note":"","readyForLoan":3,"status":"OnShelf","subLocation":""},{"bibliographicRecordId":"01242180","branch":"Horsens Bibliotek","branchId":"","circulationRule":"0","department":"Voksen","issueId":"","issueText":"","itemId":"746452144","location":"","note":"","readyForLoan":3,"status":"NotForLoan","subLocation":"Fag"},{"bibliographicRecordId":"01242180","branch":"Brædstrup Bibliotek","branchId":"","circulationRule":"alm","department":"Voksen","issueId":"","issueText":"","itemId":"4140294565","location":"","note":"","readyForLoan":3,"status":"OnShelf","subLocation":"Fag"}]}]}
   status:
     tags:
       - Status
