@@ -14,7 +14,9 @@
       "performance": "http://elk/elasticsearch",
       "communityservice": "http://localhost:4010/v1",
       "cicero": "https://cicero-fbs.com/rest/external/v1/",
-      "openformat": "http://openformat-php-develop.frontend-features.svc.cloud.dbc.dk/server.php"
+      "openformat": "http://openformat-php-develop.frontend-features.svc.cloud.dbc.dk/server.php",
+      "holdingsitems": "http://holdings-items-content-service.cisterne.svc.cloud.dbc.dk/holdings-items-content-service/api",
+      "infomediaservice": "http://infomedia.mcp1-proxy.dbc.dk/server.php"
     },
     "cicero": {
       "DK-710100": {

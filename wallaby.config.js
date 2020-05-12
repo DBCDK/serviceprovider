@@ -11,18 +11,17 @@ module.exports = function(wallaby) {
       '!src/**/__tests__/*.js'
     ],
 
-    tests: [
-      'src/**/*.test.js',
-      'src/**/__tests__/*.js'
-    ],
+    tests: ['src/**/*.test.js', 'src/**/__tests__/*.js'],
 
     compilers: {
       '**/*.js': wallaby.compilers.babel({
         babel: babel,
-        plugins: ['transform-es2015-modules-commonjs', 'transform-async-to-generator']
+        plugins: [
+          'transform-es2015-modules-commonjs',
+          'transform-async-to-generator'
+        ]
       })
     },
-
 
     env: {
       type: 'node',

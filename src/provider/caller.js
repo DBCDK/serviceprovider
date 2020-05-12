@@ -222,14 +222,15 @@ class Context {
    *
    * @param name the name of the endpoint
    * @param params the parameters to pass to the endpoint
+   * @param options options for request call (https://www.npmjs.com/package/request)
    * @returns {Promise}
    */
-  call(name, params) {
+  call(name, params, options = {}) {
     if (this.transformerMap[name]) {
       return this.transformer(name, params);
     }
     if (typeof params === 'object') {
-      return this.query(name, params);
+      return this.query(name, params, options);
     }
     return this.soapstring(name, params);
   }
@@ -242,8 +243,10 @@ class Context {
     return this._call('basesoap', name, params);
   }
 
-  query(name, params) {
-    return this._call('request', name, {qs: params}).then(s => ({
+  query(name, params, options) {
+    params = Object.assign({qs: params}, options);
+
+    return this._call('request', name, params).then(s => ({
       data: JSON.parse(s)
     }));
   }
