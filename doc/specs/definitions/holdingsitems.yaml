@@ -4,7 +4,6 @@ definitions:
     items:
       type: object
       properties:
-        pid: string
         holdingsitems:
           type: array
           items:
