@@ -22,3 +22,4 @@ if (missingEnvVars.length > 0) {
 export const apiPath = '/v' + parseInt(version, 10) + '/';
 export const port = process.env.PORT || 8080;
 export const smaug = process.env.SMAUG || null;
+export const appId = 'serviceprovider' + apiPath;
