@@ -108,7 +108,6 @@ export default (request, context) => {
   const api = service + path;
 
   return context.call(api, params, options).then(body => {
-    console.log('#############', body);
     if (!body.data) {
       log.error(`/holdingsitems - No response was returned from the ${api}`, {
         api,
