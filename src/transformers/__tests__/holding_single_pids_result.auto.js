@@ -106,7 +106,7 @@ const context = {
   }
 };
 const mockData = {
-  '["XXXXX/holdings-by-pid",{"qs":{"agency":"761500","pid":["someRandomStuff:01242180"],"itemId":null,"appId":"serviceprovider/v3/"},"useQuerystring":true}]':
+  '["XXXXX/holdings-by-pid",{"qs":{"agency":"761500","pid":["someRandomStuff:01242180"],"itemId":null,"appId":"openplatform/v3/"},"useQuerystring":true}]':
     '{"holdings":{"someRandomStuff:01242180":[{"bibliographicRecordId":"01242180","branch":"Horsens Bibliotek","branchId":"","circulationRule":"alm","department":"Voksen","issueId":"","issueText":"","itemId":"3452301496","location":"Magasin","note":"","readyForLoan":3,"status":"OnShelf","subLocation":""},{"bibliographicRecordId":"01242180","branch":"Horsens Bibliotek","branchId":"","circulationRule":"0","department":"Voksen","issueId":"","issueText":"","itemId":"746452144","location":"","note":"","readyForLoan":3,"status":"NotForLoan","subLocation":"Fag"},{"bibliographicRecordId":"01242180","branch":"Brædstrup Bibliotek","branchId":"","circulationRule":"alm","department":"Voksen","issueId":"","issueText":"","itemId":"4140294565","location":"","note":"","readyForLoan":3,"status":"OnShelf","subLocation":"Fag"}]},"trackingId":"f10fa327-b02e-4b0d-a10b-2f6d52a4e16f"}'
 };
 
