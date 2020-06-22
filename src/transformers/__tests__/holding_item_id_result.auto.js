@@ -73,7 +73,7 @@ const context = {
   }
 };
 const mockData = {
-  '["XXXXX/holdings-by-item-id",{"qs":{"agency":"761500","pid":null,"itemId":"3439785456"},"useQuerystring":true}]':
+  '["XXXXX/holdings-by-item-id",{"qs":{"agency":"761500","pid":null,"itemId":"3439785456","appId":"openplatform/v3/"},"useQuerystring":true}]':
     '{"holdings":[{"bibliographicRecordId":"01201182","branch":"Brædstrup Bibliotek","branchId":"","circulationRule":"alm","department":"Voksen","issueId":"","issueText":"","itemId":"3439785456","location":"","note":"","readyForLoan":1,"status":"OnShelf","subLocation":"Udenlandsk skønlitteratur"}],"trackingId":"506db625-3d6b-4201-98e0-7a7ac2acb299"}'
 };
 

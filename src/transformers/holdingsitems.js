@@ -14,6 +14,7 @@
   */
 
 import {log} from '../utils';
+import {appId} from '../utils/config';
 
 /**
  * Function to restructure and return pids api repsonse
@@ -91,7 +92,9 @@ export default (request, context) => {
   const params = {
     agency: agency,
     pid: pids || null,
-    itemId: itemId || null
+    itemId: itemId || null,
+    // include AppId for api-service log
+    appId: appId
   };
 
   // Request library options (optional)
