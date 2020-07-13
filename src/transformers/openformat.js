@@ -5,7 +5,10 @@ var stripNS = require('xml2js').processors.stripPrefix;
 const ofFieldMap = {
   lix: 'lix',
   shelfmark: 'ddb_shelfmark',
-  shelfmarkPrefix: 'ddb_shelfmark_prefix'
+  shelfmarkPrefix: 'ddb_shelfmark_prefix',
+  artesisShelfmark: 'artesis_shelfmark',
+  artesisShelfmarkPrefix: 'artesis_shelfmark_prefix',
+  artesisShelfmarkExtra: 'artesis_shelfmark_extra'
 };
 
 async function callOpenformat(pid, params, context) {
@@ -13,6 +16,9 @@ async function callOpenformat(pid, params, context) {
 
   const fields = {};
   params.fields.map(field => (fields[field] = `{${ofFieldMap[field]}}`));
+
+  console.log('fiiiiiiiiiiiiiiiiiiiiiiiiiields', JSON.stringify(fields));
+
   try {
     const xmlResult = await context.request(url, {
       qs: {
@@ -24,18 +30,27 @@ async function callOpenformat(pid, params, context) {
       }
     });
 
+    console.log('ZZZZZZZZZZZZZZZZZZZZZZZZZzxmlResult', xmlResult);
+
     let resp = {};
     parseString(xmlResult, {trim: true, tagNameProcessors: [stripNS]}, function(
       err,
       result
     ) {
       try {
+        console.log(
+          'reeeeeeeeeeeeeeeeeeeeeeeeeeeeeesult',
+          JSON.stringify(result)
+        );
+
         resp =
           result.Envelope.Body[0].formatResponse[0].customDisplay[0].fields[0];
       } catch (e) {
         log.error('openformat parse error', {error: String(e)});
       }
     });
+
+    console.log('RESPPPPPPPPPPPPPPPPP', resp);
 
     return resp;
   } catch (err) {

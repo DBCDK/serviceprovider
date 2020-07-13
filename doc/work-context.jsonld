@@ -251,5 +251,8 @@
   "workType": {"@id": "bd:workType"},
   "lix": {"@id": "of:lix"},
   "shelfmark": {"@id": "of:ddb_shelfmark"},
-  "shelfmarkPrefix": {"@id": "of:ddb_shelfmark_prefix"}
+  "shelfmarkPrefix": {"@id": "of:ddb_shelfmark_prefix"},
+  "artesisShelfmark": {"@id": "of:artesis_shelfmark"},
+  "artesisShelfmarkPrefix": {"@id": "of:artesis_shelfmark_prefix"},
+  "artesisShelfmarkExtra": {"@id": "of:artesis_shelfmark_extra"}
 }

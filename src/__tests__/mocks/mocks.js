@@ -718,5 +718,8 @@ export const requestTypeIdentifierMock = {
   'bd:worktype': 'workType',
   'of:lix': 'lix',
   'of:ddb_shelfmark': 'shelfmark',
-  'of:ddb_shelfmark_prefix': 'shelfmarkPrefix'
+  'of:ddb_shelfmark_prefix': 'shelfmarkPrefix',
+  'of:artesis_shelfmark': 'artesisShelfmark',
+  'of:artesis_shelfmark_prefix': 'artesisShelfmarkPrefix',
+  'of:artesis_shelfmark_extra': 'artesisShelfmarkExtra'
 };

@@ -975,6 +975,21 @@ definitions:
         description: 'Returns shelf prefix label'
         type: array
         items:
+          type: string,
+      artesisShelfmark:
+        description: 'Returns Artesis 3 letters shelf label (hyldemærke)'
+        type: array
+        items:
+          type: string
+      artesisShelfmark_prefix:
+        description: 'Returns Artesis shelf prefix label'
+        type: array
+        items:
+          type: string
+      artesisShelfmark_extra:
+        description: 'Returns Artesis full shelf label (hyldemærke)'
+        type: array
+        items:
           type: string
     additionalProperties: false
 
