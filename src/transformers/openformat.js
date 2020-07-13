@@ -5,7 +5,10 @@ var stripNS = require('xml2js').processors.stripPrefix;
 const ofFieldMap = {
   lix: 'lix',
   shelfmark: 'ddb_shelfmark',
-  shelfmarkPrefix: 'ddb_shelfmark_prefix'
+  shelfmarkPrefix: 'ddb_shelfmark_prefix',
+  artesisShelfmark: 'artesis_shelfmark',
+  artesisShelfmarkPrefix: 'artesis_shelfmark_prefix',
+  artesisShelfmarkExtra: 'artesis_shelfmark_extra'
 };
 
 async function callOpenformat(pid, params, context) {
@@ -13,6 +16,7 @@ async function callOpenformat(pid, params, context) {
 
   const fields = {};
   params.fields.map(field => (fields[field] = `{${ofFieldMap[field]}}`));
+
   try {
     const xmlResult = await context.request(url, {
       qs: {
