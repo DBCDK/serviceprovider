@@ -144,7 +144,7 @@ const provider = Provider();
 describe('Automated test: search_with_shelf.auto', () => {
   it('has same result as recorded (in search_with_shelf.auto)', () => {
     assert(
-      Date.now() < +new Date('2020-12-31'),
+      Date.now() < +new Date('2021-01-01'),
       'Please recreate the automatically generated unit tests, such that the mock data does not come out of sync with the actual services. See README.md for details.'
     );
     context.mockData = mockData;

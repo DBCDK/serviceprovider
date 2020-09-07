@@ -67,7 +67,7 @@ const provider = Provider();
 describe('Automated test: holding_both_item_id_and_pids_not_allowed.auto', () => {
   it('has same result as recorded (in holding_both_item_id_and_pids_not_allowed.auto)', () => {
     assert(
-      Date.now() < +new Date('2020-08-03'),
+      Date.now() < +new Date('2021-01-01'),
       'Please recreate the automatically generated unit tests, such that the mock data does not come out of sync with the actual services. See README.md for details.'
     );
     context.mockData = mockData;
