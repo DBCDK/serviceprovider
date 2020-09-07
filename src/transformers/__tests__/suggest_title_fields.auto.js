@@ -6,7 +6,12 @@
 //
 //
 const endpoint = 'suggest';
-const params = {q: 'herlev', type: 'title', limit: 3, fields: ['term', 'pid']};
+const params = {
+  q: 'herlev',
+  type: 'title',
+  limit: 3,
+  fields: ['term', 'pid']
+};
 
 const expected = {
   statusCode: 200,
@@ -67,7 +72,7 @@ const provider = Provider();
 describe('Automated test: suggest_title_fields.auto', () => {
   it('has same result as recorded (in suggest_title_fields.auto)', () => {
     assert(
-      Date.now() < +new Date('2021-01-17'),
+      Date.now() < +new Date('2021-01-01'),
       'Please recreate the automatically generated unit tests, such that the mock data does not come out of sync with the actual services. See README.md for details.'
     );
     context.mockData = mockData;

@@ -11,7 +11,10 @@ const params = {
   fields: ['title', 'dcTitle', 'coverUrlFull', 'collection']
 };
 
-const expected = {statusCode: 200, data: [{pid: ['870970-basis:28448717']}]};
+const expected = {
+  statusCode: 200,
+  data: [{pid: ['870970-basis:28448717']}]
+};
 
 const context = {
   services: {
@@ -69,7 +72,7 @@ const provider = Provider();
 describe('Automated test: work_invalid_pid_title_dcTitle_coverUrlFull_collection.auto', () => {
   it('has same result as recorded (in work_invalid_pid_title_dcTitle_coverUrlFull_collection.auto)', () => {
     assert(
-      Date.now() < +new Date('2021-01-17'),
+      Date.now() < +new Date('2021-01-01'),
       'Please recreate the automatically generated unit tests, such that the mock data does not come out of sync with the actual services. See README.md for details.'
     );
     context.mockData = mockData;

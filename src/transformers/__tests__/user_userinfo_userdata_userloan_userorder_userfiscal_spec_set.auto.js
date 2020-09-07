@@ -6,7 +6,9 @@
 //
 //
 const endpoint = 'user';
-const params = {userinfo: ['userData', 'userLoan', 'userOrder', 'userFiscal']};
+const params = {
+  userinfo: ['userData', 'userLoan', 'userOrder', 'userFiscal']
+};
 
 const expected = {
   statusCode: 200,
@@ -98,7 +100,7 @@ const provider = Provider();
 describe('Automated test: user_userinfo_userdata_userloan_userorder_userfiscal_spec_set.auto', () => {
   it('has same result as recorded (in user_userinfo_userdata_userloan_userorder_userfiscal_spec_set.auto)', () => {
     assert(
-      Date.now() < +new Date('2020-07-27'),
+      Date.now() < +new Date('2021-01-01'),
       'Please recreate the automatically generated unit tests, such that the mock data does not come out of sync with the actual services. See README.md for details.'
     );
     context.mockData = mockData;

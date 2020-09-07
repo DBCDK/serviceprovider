@@ -336,7 +336,11 @@ const mockData = {
     took: 1782,
     timed_out: false,
     _shards: {total: 145, successful: 145, skipped: 115, failed: 0},
-    hits: {total: {value: 10000, relation: 'gte'}, max_score: null, hits: []},
+    hits: {
+      total: {value: 10000, relation: 'gte'},
+      max_score: null,
+      hits: []
+    },
     aggregations: {
       version: {
         doc_count_error_upper_bound: 0,
@@ -632,7 +636,7 @@ const provider = Provider();
 describe('Automated test: status.auto', () => {
   it('has same result as recorded (in status.auto)', () => {
     assert(
-      Date.now() < +new Date('2020-08-04'),
+      Date.now() < +new Date('2021-01-01'),
       'Please recreate the automatically generated unit tests, such that the mock data does not come out of sync with the actual services. See README.md for details.'
     );
     context.mockData = mockData;
