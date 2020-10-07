@@ -6,7 +6,7 @@
 //
 //
 const endpoint = 'recommend';
-const params = { like: ['870970-basis:45488713'] };
+const params = {like: ['870970-basis:45488713']};
 
 const expected = {
   statusCode: 200,
@@ -16,23 +16,23 @@ const expected = {
       val: 0.48284091834412546,
       from: ['work:1400234']
     },
-    { pid: '870970-basis:28718020', val: 3, from: ['work:1400234'] },
-    { pid: '870970-basis:29743681', val: 244, from: ['work:1400234'] },
+    {pid: '870970-basis:28718020', val: 3, from: ['work:1400234']},
+    {pid: '870970-basis:29743681', val: 244, from: ['work:1400234']},
     {
       pid: '870970-basis:50946800',
       val: 0.3891770940906558,
       from: ['work:1400234']
     },
-    { pid: '870970-basis:28878443', val: 2, from: ['work:1400234'] },
-    { pid: '870970-basis:51418328', val: 71, from: ['work:1400234'] },
-    { pid: '870970-basis:29344612', val: 61, from: ['work:1400234'] },
+    {pid: '870970-basis:28878443', val: 2, from: ['work:1400234']},
+    {pid: '870970-basis:51418328', val: 71, from: ['work:1400234']},
+    {pid: '870970-basis:29344612', val: 61, from: ['work:1400234']},
     {
       pid: '870970-basis:29344396',
       val: 0.3859171932392937,
       from: ['work:1400234']
     },
-    { pid: '870970-basis:52677556', val: 2, from: ['work:1400234'] },
-    { pid: '870970-basis:29840997', val: 2, from: ['work:1400234'] }
+    {pid: '870970-basis:52677556', val: 2, from: ['work:1400234']},
+    {pid: '870970-basis:29840997', val: 2, from: ['work:1400234']}
   ]
 };
 
@@ -57,13 +57,13 @@ const context = {
       'http://holdings-items-content-service.cisterne.svc.cloud.dbc.dk/holdings-items-content-service/api',
     infomediaservice: 'http://infomedia.mcp1-proxy.dbc.dk/server.php'
   },
-  infomedia: { userId: 'XXXXX', libraryCode: 'XXXXX' },
-  cicero: { 'DK-710100': 'XXXXX' },
-  performance: { username: 'XXXXX', password: 'XXXXX' },
-  communityservice: { id: 1 },
-  search: { agency: '775100', profile: 'opac', collectionidentifiers: '' },
-  storage: { user: 'XXXXX' },
-  netpunkt: { user: 'XXXXX', group: 'XXXXX', password: 'XXXXX' },
+  infomedia: {userId: 'XXXXX', libraryCode: 'XXXXX'},
+  cicero: {'DK-710100': 'XXXXX'},
+  performance: {username: 'XXXXX', password: 'XXXXX'},
+  communityservice: {id: 1},
+  search: {agency: '775100', profile: 'opac', collectionidentifiers: ''},
+  storage: {user: 'XXXXX'},
+  netpunkt: {user: 'XXXXX', group: 'XXXXX', password: 'XXXXX'},
   user: {
     id: 'XXXXX',
     salt: 'XXXXX',
@@ -170,7 +170,7 @@ const mockData = {
 };
 
 import Provider from '../../provider/Provider.js';
-import { assert, fail } from 'chai';
+import {assert, fail} from 'chai';
 const provider = Provider();
 
 describe('Automated test: recommend_single_like.auto', () => {

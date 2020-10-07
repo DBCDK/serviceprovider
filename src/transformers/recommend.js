@@ -1,4 +1,4 @@
-import { pick, identity } from 'lodash';
+import {pick, identity} from 'lodash';
 
 /**
  *
@@ -47,7 +47,7 @@ export default async function getRecommendations(params, context) {
     // );
 
     const data = result.response.map(
-      ({ pid, value, work, title, creator, reader, seed }) => {
+      ({pid, value, work, title, creator, reader, seed}) => {
         // basic props (always returned)
         const obj = {
           pid,
@@ -74,5 +74,5 @@ export default async function getRecommendations(params, context) {
     };
   }
 
-  return { statusCode: result.statusCode, error: result.value };
+  return {statusCode: result.statusCode, error: result.value};
 }
