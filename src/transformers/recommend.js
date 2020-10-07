@@ -1,5 +1,3 @@
-import {pick, identity} from 'lodash';
-
 /**
  *
  * @param {PlainObject} request
@@ -7,13 +5,14 @@ import {pick, identity} from 'lodash';
  * @returns {Promise}
  */
 export default async function getRecommendations(params, context) {
-  let request = {};
+  const request = {};
   for (const key of [
     'like',
     'dislike',
     'offset',
     'limit',
     'ignore',
+    'filters',
     'boosters',
     'debug'
   ]) {
@@ -23,7 +22,7 @@ export default async function getRecommendations(params, context) {
   }
 
   // set debugMode status (if debug, some debug-props will be returned in the)
-  const isDebugMode = params['debug'];
+  const isDebugMode = params.debug;
 
   const result = await context.request(
     context.get('services.recommend', true),
@@ -34,18 +33,7 @@ export default async function getRecommendations(params, context) {
   );
 
   if (result.response) {
-    // const data = result.response.map(
-    //   ({ pid, value, work, title, creator, reader, seed }) => ({
-    //     pid,
-    //     val: value,
-    //     from: [seed],
-    //     'debug-work': isDebugMode && work,
-    //     'debug-creator': isDebugMode && creator,
-    //     'debug-title': isDebugMode && title,
-    //     reader: isDebugMode && reader
-    //   })
-    // );
-
+    // Rewrite new api props to previous api props
     const data = result.response.map(
       ({pid, value, work, title, creator, reader, seed}) => {
         // basic props (always returned)
@@ -62,14 +50,13 @@ export default async function getRecommendations(params, context) {
           'debug-title': title,
           reader
         };
-
+        // Merge objects
         return Object.assign({}, obj, isDebugMode ? debug : {});
       }
     );
 
     return {
       statusCode: 200,
-      // Rewrite new api props to previous api props
       data
     };
   }
