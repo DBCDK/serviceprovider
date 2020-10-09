@@ -11,11 +11,18 @@ api:
       pids:
         description: pids of the works to check availability for
         type: array
-        items: {type: "string"}
-        example: ["870970-basis:24284565"]
+        items: { type: 'string' }
+        example: ['870970-basis:24284565']
     response:
-      $ref: "#/definitions/AvailabilityResponse"
-      example: [{"willLend": true, "expectedDelivery": "2016-04-15", "orderPossible": true}]
+      $ref: '#/definitions/AvailabilityResponse'
+      example:
+        [
+          {
+            'willLend': true,
+            'expectedDelivery': '2016-04-15',
+            'orderPossible': true,
+          },
+        ]
   events:
     tags:
       - CMS
@@ -31,8 +38,8 @@ api:
       nids:
         description: to fetch events specified by ids
         type: array
-        items: {type: "string"}
-        example: ["15"]
+        items: { type: 'string' }
+        example: ['15']
       limit:
         description: number of items to get. This is passed to the DDBCMS-API, which decides how many to return. (currently usually less than the requested limit/amount).
         type: integer
@@ -46,14 +53,27 @@ api:
       fields:
         description: which parts of the response to get
         type: array
-        items: {type: "string"}
-        example: ["nid", "title"]
+        items: { type: 'string' }
+        example: ['nid', 'title']
     response:
-      $ref: "#/definitions/EventsResponse"
-      example: [{"nid": "15", "title": {"name": "Titel", "value": "Mød forfatteren: Tim Buk-Swienty", "attr": []}, "...": "..."}, "..."]
+      $ref: '#/definitions/EventsResponse'
+      example:
+        [
+          {
+            'nid': '15',
+            'title':
+              {
+                'name': 'Titel',
+                'value': 'Mød forfatteren: Tim Buk-Swienty',
+                'attr': [],
+              },
+            '...': '...',
+          },
+          '...',
+        ]
     examples:
-      - request: {"offset": 0, "limit": 2, "fields": ["nid", "title"]}
-      - request: {"nids": ["15"]}
+      - request: { 'offset': 0, 'limit': 2, 'fields': ['nid', 'title'] }
+      - request: { 'nids': ['15'] }
   facets:
     tags:
       - Search
@@ -73,16 +93,29 @@ api:
 
           The possible options are `access`, `acSource`, `audience`, `audienceCategory`, `branch`, `category`, `creator`, `creatorFunction`, `date`, `department`, `dk5`, `extraTitles`, `fictionSubject`, `form`, `gamePlatform`, `genre`, `genreCategory`, `geographic`, `language`, `level`, `let`, `literaryForm`, `lix`, `musicSubject`, `nationality`, `nonFictionSubject`, `partOf`, `period`, `primaryCreator`, `sheetMusic`, `subject`, `titleSeries`, and `type`.
         type: array
-        items: {type: "string"}
-        example: ["creator", "subject", "type"]
+        items: { type: 'string' }
+        example: ['creator', 'subject', 'type']
       limit:
         description: number of facets per type
         type: integer
         minimum: 1
         example: 2
     response:
-      $ref: "#/definitions/FacetsResults"
-      example: { "creator": [{ "term": "nordisk ministerråd", "frequency": 2708}, { "term": "nordisk råd", "frequency": 2463}], "subject": [{ "term": "danmark", "frequency": 188792}, { "term": "historie", "frequency": 19867}], "type": "tidsskriftsartikel"}
+      $ref: '#/definitions/FacetsResults'
+      example:
+        {
+          'creator':
+            [
+              { 'term': 'nordisk ministerråd', 'frequency': 2708 },
+              { 'term': 'nordisk råd', 'frequency': 2463 },
+            ],
+          'subject':
+            [
+              { 'term': 'danmark', 'frequency': 188792 },
+              { 'term': 'historie', 'frequency': 19867 },
+            ],
+          'type': 'tidsskriftsartikel',
+        }
   library:
     tags:
       - CMS
@@ -96,8 +129,8 @@ api:
       nids:
         description: to fetch events specified by ids
         type: array
-        items: {type: "string"}
-        example: ["15"]
+        items: { type: 'string' }
+        example: ['15']
       limit:
         description: number of items to get. This is passed to the DDBCMS-API, which decides how many to return. (currently usually less than the requested limit/amount).
         type: integer
@@ -109,7 +142,7 @@ api:
         type: integer
         example: 10
     response:
-      $ref: "#/definitions/LibraryResponse"
+      $ref: '#/definitions/LibraryResponse'
   libraries:
     tags:
       - Libraries
@@ -123,22 +156,79 @@ api:
       agencyIds:
         description: ids (or isil) of agencies of libraries to fetch, - an agency is a collection of libraries, - return all libraries if neither `branchIds` nor `agencyIds` are supplied
         type: array
-        items: {type: "string"}
+        items: { type: 'string' }
       branchIds:
         description: ids (or isil) of libraries to fetch - return all libraries if neither `branchIds` nor `agencyIds` are supplied
         type: array
-        items: {type: "string"}
+        items: { type: 'string' }
       fields:
         description: which information about the library that is needed
         type: array
-        items: {type: "string"}
-        example: ["branchId", "city", "geolocation"]
+        items: { type: 'string' }
+        example: ['branchId', 'city', 'geolocation']
     examples:
-      - request: { "fields": ["branchId", "city", "longitude", "latitude", "geolocation"]}
-      - request: { "branchIds": ["700401", "710104"], "fields": ["branchId", "city", "geolocation"]}
+      - request:
+          {
+            'fields':
+              ['branchId', 'city', 'longitude', 'latitude', 'geolocation'],
+          }
+      - request:
+          {
+            'branchIds': ['700401', '710104'],
+            'fields': ['branchId', 'city', 'geolocation'],
+          }
     response:
-      $ref: "#/definitions/LibrariesResponse"
-      example: [{"agencyName":"Varde Bibliotek","agencyId":"757300","agencyType":"Folkebibliotek","agencyEmail":"biblioteket@vardebib.dk","agencyPhone":"75 22 10 88","agencyCvrNumber":"29189811","agencyPNumber":"1006399153","agencyEanNumber":"5798004822784","branchId":"757302","branchType":"f","branchName":["Nr. Nebel Bibliotek"],"branchShortName":["Nørre Nebel"],"branchPhone":"75288682","branchEmail":"biblioteket@vardebib.dk","branchIsAgency":"0","postalAddress":"Sønder Allé 21","postalCode":"6830","city":"Nørre Nebel","isil":"DK-757302","branchPNumber":"1016594683","branchCatalogueUrl":"https://www.vardebib.dk","lookupUrl":"https://www.vardebib.dk/ting/object/757300%3A","branchWebsiteUrl":"http://www.vardebib.dk/varde","userStatusUrl":"https://www.vardebib.dk","librarydkSupportEmail":"voksen@vardebib.dk","librarydkSupportPhone":"76946917","openingHours":["Mandag-søndag 7-22\r\n\r\nBetjening:\r\nMandag 10.00-13.00\r\nOnsdag og fredag 14.00-17.00","Monday-Sunday 7 a.m-10 p.m\r\n\r\nService:\r\nMonday 10 a.m- 1 p.m\r\nWednesday and Friday 2 p.m-5 p.m"],"temporarilyClosed":"0","illOrderReceiptText":["Tak for din bestilling, den vil blive behandlet inden for 8 arbejdstimer","Thank you for your order. It will be executed within 24 hours"],"pickupAllowed":"1","dropOffBranch":"757302","dropOffName":"Nr. Nebel Bibliotek","lastUpdated":"2017-12-14T00:00:00+01:00","isOclcRsLibrary":"0","stateAndUniversityLibraryCopyService":"1","geolocation":{"latitude":"55.77804","longitude":"8.294803"},"orderParameters":["cardno","pincode","name","email"]}]
+      $ref: '#/definitions/LibrariesResponse'
+      example:
+        [
+          {
+            'agencyName': 'Varde Bibliotek',
+            'agencyId': '757300',
+            'agencyType': 'Folkebibliotek',
+            'agencyEmail': 'biblioteket@vardebib.dk',
+            'agencyPhone': '75 22 10 88',
+            'agencyCvrNumber': '29189811',
+            'agencyPNumber': '1006399153',
+            'agencyEanNumber': '5798004822784',
+            'branchId': '757302',
+            'branchType': 'f',
+            'branchName': ['Nr. Nebel Bibliotek'],
+            'branchShortName': ['Nørre Nebel'],
+            'branchPhone': '75288682',
+            'branchEmail': 'biblioteket@vardebib.dk',
+            'branchIsAgency': '0',
+            'postalAddress': 'Sønder Allé 21',
+            'postalCode': '6830',
+            'city': 'Nørre Nebel',
+            'isil': 'DK-757302',
+            'branchPNumber': '1016594683',
+            'branchCatalogueUrl': 'https://www.vardebib.dk',
+            'lookupUrl': 'https://www.vardebib.dk/ting/object/757300%3A',
+            'branchWebsiteUrl': 'http://www.vardebib.dk/varde',
+            'userStatusUrl': 'https://www.vardebib.dk',
+            'librarydkSupportEmail': 'voksen@vardebib.dk',
+            'librarydkSupportPhone': '76946917',
+            'openingHours':
+              [
+                "Mandag-søndag 7-22\r\n\r\nBetjening:\r\nMandag 10.00-13.00\r\nOnsdag og fredag 14.00-17.00",
+                "Monday-Sunday 7 a.m-10 p.m\r\n\r\nService:\r\nMonday 10 a.m- 1 p.m\r\nWednesday and Friday 2 p.m-5 p.m",
+              ],
+            'temporarilyClosed': '0',
+            'illOrderReceiptText':
+              [
+                'Tak for din bestilling, den vil blive behandlet inden for 8 arbejdstimer',
+                'Thank you for your order. It will be executed within 24 hours',
+              ],
+            'pickupAllowed': '1',
+            'dropOffBranch': '757302',
+            'dropOffName': 'Nr. Nebel Bibliotek',
+            'lastUpdated': '2017-12-14T00:00:00+01:00',
+            'isOclcRsLibrary': '0',
+            'stateAndUniversityLibraryCopyService': '1',
+            'geolocation': { 'latitude': '55.77804', 'longitude': '8.294803' },
+            'orderParameters': ['cardno', 'pincode', 'name', 'email'],
+          },
+        ]
   news:
     tags:
       - CMS
@@ -154,7 +244,7 @@ api:
       nids:
         description: to fetch news specified by ids
         type: array
-        items: {type: "string"}
+        items: { type: 'string' }
       limit:
         description: number of items to get. This is passed to the DDBCMS-API, which decides how many to return. (currently usually less than the requested limit/amount).
         type: integer
@@ -164,33 +254,46 @@ api:
         minimum: 0
         type: integer
     response:
-      $ref: "#/definitions/NewsResponse"
-      example: [{"nid": "19", "title": {"name": "Titel", "value": "Sportsstjerner - bag facaden", "attr": []}, "...": "..."}, "..."]
+      $ref: '#/definitions/NewsResponse'
+      example:
+        [
+          {
+            'nid': '19',
+            'title':
+              {
+                'name': 'Titel',
+                'value': 'Sportsstjerner - bag facaden',
+                'attr': [],
+              },
+            '...': '...',
+          },
+          '...',
+        ]
     examples:
-      - request: {"offset": 0, "limit": 2, "fields": ["nid", "title"]}
-      - request: {"nids": ["19"]}
+      - request: { 'offset': 0, 'limit': 2, 'fields': ['nid', 'title'] }
+      - request: { 'nids': ['19'] }
   order:
     tags:
       - Order
-    description: "Order a library material, or remove an existing order. Notice: ordering a library material is asynchronous, so you cannot get an actual `orderId` back immediately. The `orsId` is an internal id from the ORS-system (used for a part of handling the order)."
+    description: 'Order a library material, or remove an existing order. Notice: ordering a library material is asynchronous, so you cannot get an actual `orderId` back immediately. The `orsId` is an internal id from the ORS-system (used for a part of handling the order).'
     properties:
       orderId:
         description: The identifier for the order consist of orderId and orderType. Required for deleting an order. You get this from `/user`-status. Depending on the kind of order, it can take a long time from ordering, until the material with the orderId/orderType appears in the user status.
         type: string
-        example: "1234"
+        example: '1234'
       orderType:
         description: The identifier for the order consist of orderId and orderType. Required for deleting an order. You get this from `/user`-status. Depending on the kind of order, it can take a long time from ordering, until the material with the orderId/orderType appears in the user status. Possible values for orderType are `Estimate`, `Hold`, `Loan`, `Non-returnable Copy`, `normal`, and `Stack Retrieval`
         type: string
-        example: "normal"
+        example: 'normal'
       pids:
         description: The pids of the material to order. Several pids can be given, for example if you want to order a book, but does not care which of the editions. Required, and only applicable to new orders when making a new order.
-        example: ["870970-basis:51989252"]
+        example: ['870970-basis:51989252']
         type: array
-        items: {type: "string"}
+        items: { type: 'string' }
       pickUpBranch:
         description: The library branch id to deliver to. Required when making a new order. The branch id must belong the the agency where the user is logged in. (relationships between agencies and branches can be looked up in the `/libraries` endpoint)
         type: string
-        example: "700401"
+        example: '700401'
       name:
         description: The full name of the user. Required when making new order for some libraries, - check the /libraries endpoint.
         type: string
@@ -216,11 +319,11 @@ api:
         type: 'boolean'
         example: true
     response:
-      $ref: "#/definitions/OrderResponse"
-      example: { "status": "ok", "orsId": "1234567" }
+      $ref: '#/definitions/OrderResponse'
+      example: { 'status': 'ok', 'orsId': '1234567' }
     examples:
-      - request: { "orderId": "1234", "orderType": "normal", "delete": true }
-        response: { "orderId": "1234", "deleted": true }
+      - request: { 'orderId': '1234', 'orderType': 'normal', 'delete': true }
+        response: { 'orderId': '1234', 'deleted': true }
   recommend:
     required:
       - like
@@ -231,19 +334,19 @@ api:
       like:
         description: list of liked materials
         type: array
-        items: {type: "string"}
-        example: ["870970-basis:12345678", "..."]
-# not used at the moment, so no reason to publish yet:
-#      dislike:
-#        description: List of pids to base recommendation on (not used at the moment)
-#        type: array
-#        items: {type: "string"}
-#        example: ["870970-basis:12345678", "..."]
+        items: { type: 'string' }
+        example: ['870970-basis:12345678', '...']
+      # not used at the moment, so no reason to publish yet:
+      #      dislike:
+      #        description: List of pids to base recommendation on (not used at the moment)
+      #        type: array
+      #        items: {type: "string"}
+      #        example: ["870970-basis:12345678", "..."]
       ignore:
         description: List of pids to ignore (pids from the work they belong to will not be returned in recommendation list)
         type: array
-        items: {type: "string"}
-        example: ["870970-basis:12345678", "..."]
+        items: { type: 'string' }
+        example: ['870970-basis:12345678', '...']
       limit:
         example: 10
         minimum: 1
@@ -255,7 +358,7 @@ api:
         description: Paging. first item to return (defaults to 0)
         type: integer
       filters:
-        description: object containing filters to apply to recommendations
+        description: (**Deprecated**). object containing filters will no longer take effect in recommendations
         type: object
         properties:
           authorFlood:
@@ -263,13 +366,13 @@ api:
             type: integer
           subject:
             description: List of subjects. Only materials with one of these subjects are returned type array
-            items: {type: "string"}
+            items: { type: 'string' }
           type:
             description: List of material types. Only materials with one of these subjects are returned type array
-            items: {type: "string"}
+            items: { type: 'string' }
           language:
             description: List of languages. Only materials with one of these subjects are returned type array
-            items: {type: "string"}
+            items: { type: 'string' }
           newerThan:
             description: Year. Only materials that are newer than this year are returned
             type: integer
@@ -277,15 +380,29 @@ api:
             description: Year. Only materials that are older than this year are returned
             type: integer
       boosters:
-        description: object containing boosters to apply to recommendations
+        description: (**Deprecated**). object containing boosters will no longer take effect in recommendations
         type: object
         properties:
           loanCount:
             description: Boost on number of loans for each recommendations
             type: integer
+      debug:
+        description: Debug mode. In debug mode some extra debug-props will be returned. Debug-props can change and should **never** be used for anything other than debugging.
+        type: bool
+
+        
     response:
-      $ref: "#/definitions/RecommendationResponse"
-      example: [ { "title": ["Harry Potter og Fønixordenen"], "creator": ["..."], "weight": 123, "pid": ["300185-katalog:100562332"]}, "..."]
+      $ref: '#/definitions/RecommendationResponse'
+      example:
+        [
+          {
+            'title': ['Harry Potter og Fønixordenen'],
+            'creator': ['...'],
+            'weight': 123,
+            'pid': ['300185-katalog:100562332'],
+          },
+          '...',
+        ]
   renew:
     tags:
       - Status
@@ -296,10 +413,10 @@ api:
       loanId:
         description: id of the loan to renew
         type: string
-        example: "7890"
+        example: '7890'
     response:
-      $ref: "#/definitions/RenewResponse"
-      example: {"loanId": "7890", "returnDate": "2016-09-12T00:00:00+01:00"}
+      $ref: '#/definitions/RenewResponse'
+      example: { 'loanId': '7890', 'returnDate': '2016-09-12T00:00:00+01:00' }
     responses:
       403:
         $ref: '#/responses/InvalidUser'
@@ -312,7 +429,7 @@ api:
       - q
     properties:
       q:
-        example: "harry AND potter"
+        example: 'harry AND potter'
         description: Query to search for. |
           The query is expressed in CQL, see https://en.wikipedia.org/wiki/Contextual_Query_Language
 
@@ -330,7 +447,7 @@ api:
         maximum: 50
         type: integer
       fields:
-        example: ["title", "creator", "pid"]
+        example: ['title', 'creator', 'pid']
         description: |
           Which fields to return. Limiting the fields can also yield a performance improvement.
 
@@ -338,21 +455,94 @@ api:
 
           If `fields` are omitted, only the collection-field, and the fields from DKABM and BriefDisplay is returned.
         type: array
-        items: {type: "string"}
+        items: { type: 'string' }
       sort:
-        example: "rank_title"
+        example: 'rank_title'
         description: Order/ranking of results. This correspond to the `sort` parameter of opensearch, which, at the time of writing, can take values such as  `rank_title`, `rank_general`, `rank_main_title`, `rank_subject`, `rank_verification` (title and creator), `rank_creator`, `rank_none`, `date_descending`, `article_date_descending`, `acquisitionDate_descending`, and `random`.
         type: string
       profile:
-        example: "opac"
+        example: 'opac'
         description: Optional search profile, it's passed directly to OpenSearch. In OpenSearch it's used to determine which works should be returned. The profile needs to be defined in VIP in order to use it.
         type: string
     response:
       $ref: '#/definitions/WorkResponse'
-      example: [{"identifier": ["300185-katalog:100562332"], "dcTitle": ["Harry Potter og Fønixordenen DVD"], "coverUrlFull": ["https://moreinfo.addi.dk/2.1/more_info_get.php?id=36565894&type=forside_500&key=55d553c259c9e46291a4"]}, {"identifier": ["870970-basis:51989252"], "dcTitle": ["Harry Potter og de vises sten"], "collection": ["300185-katalog:100562332", "870970-basis:51989252", "870971-forfweb:86203219", "870970-basis:24284514", "870970-basis:24284565", "..."], "dcSubjectDBCF": ["fantasy", "magi", "troldmænd"], "hasAdaption": ["870970-basis:27123279", "870970-basis:27963390"], "coverUrlFull": ["https://moreinfo.addi.dk/2.1/more_info_get.php?id=36565894&type=forside_500&key=55d553c259c9e46291a4"]}]
+      example:
+        [
+          {
+            'identifier': ['300185-katalog:100562332'],
+            'dcTitle': ['Harry Potter og Fønixordenen DVD'],
+            'coverUrlFull':
+              [
+                'https://moreinfo.addi.dk/2.1/more_info_get.php?id=36565894&type=forside_500&key=55d553c259c9e46291a4',
+              ],
+          },
+          {
+            'identifier': ['870970-basis:51989252'],
+            'dcTitle': ['Harry Potter og de vises sten'],
+            'collection':
+              [
+                '300185-katalog:100562332',
+                '870970-basis:51989252',
+                '870971-forfweb:86203219',
+                '870970-basis:24284514',
+                '870970-basis:24284565',
+                '...',
+              ],
+            'dcSubjectDBCF': ['fantasy', 'magi', 'troldmænd'],
+            'hasAdaption': ['870970-basis:27123279', '870970-basis:27963390'],
+            'coverUrlFull':
+              [
+                'https://moreinfo.addi.dk/2.1/more_info_get.php?id=36565894&type=forside_500&key=55d553c259c9e46291a4',
+              ],
+          },
+        ]
     examples:
-      - request: { "q": "harry AND potter", "fields": ["identifier", "title", "collection", "subjectDBCF", "hasAdaptation", "coverUrlFull"], "sort": "rank_general", "offset": 2, "limit": 2 }
-        response: [{"identifier": ["300185-katalog:100562332"], "title": ["Harry Potter og Fønixordenen DVD"], "coverUrlFull": ["https://moreinfo.addi.dk/2.1/more_info_get.php?id=36565894&type=forside_500&key=55d553c259c9e46291a4"]}, {"identifier": ["870970-basis:51989252"], "title": ["Harry Potter og de vises sten"], "collection": ["300185-katalog:100562332", "870970-basis:51989252", "870971-forfweb:86203219", "870970-basis:24284514", "870970-basis:24284565", "..."], "subjectDBCF": ["fantasy", "magi", "troldmænd"], "hasAdaption": ["870970-basis:27123279", "870970-basis:27963390"], "coverUrlFull": ["https://moreinfo.addi.dk/2.1/more_info_get.php?id=36565894&type=forside_500&key=55d553c259c9e46291a4"]}]
+      - request:
+          {
+            'q': 'harry AND potter',
+            'fields':
+              [
+                'identifier',
+                'title',
+                'collection',
+                'subjectDBCF',
+                'hasAdaptation',
+                'coverUrlFull',
+              ],
+            'sort': 'rank_general',
+            'offset': 2,
+            'limit': 2,
+          }
+        response:
+          [
+            {
+              'identifier': ['300185-katalog:100562332'],
+              'title': ['Harry Potter og Fønixordenen DVD'],
+              'coverUrlFull':
+                [
+                  'https://moreinfo.addi.dk/2.1/more_info_get.php?id=36565894&type=forside_500&key=55d553c259c9e46291a4',
+                ],
+            },
+            {
+              'identifier': ['870970-basis:51989252'],
+              'title': ['Harry Potter og de vises sten'],
+              'collection':
+                [
+                  '300185-katalog:100562332',
+                  '870970-basis:51989252',
+                  '870971-forfweb:86203219',
+                  '870970-basis:24284514',
+                  '870970-basis:24284565',
+                  '...',
+                ],
+              'subjectDBCF': ['fantasy', 'magi', 'troldmænd'],
+              'hasAdaption': ['870970-basis:27123279', '870970-basis:27963390'],
+              'coverUrlFull':
+                [
+                  'https://moreinfo.addi.dk/2.1/more_info_get.php?id=36565894&type=forside_500&key=55d553c259c9e46291a4',
+                ],
+            },
+          ]
   storage:
     tags:
       - Community
@@ -402,7 +592,7 @@ api:
       q:
         description: Query to complete
         type: string
-        example: "harry"
+        example: 'harry'
       limit:
         description: Maximum number of suggestions returned
         type: integer
@@ -411,13 +601,18 @@ api:
       type:
         description: The desired type of suggestions, possible values are `all`, `title`, `subject`, `creator`
         type: string
-        example: "title"
+        example: 'title'
     response:
       $ref: '#/definitions/SuggestResponse'
-      example: [ { "term": "harry potter og hemmelighedernes kammer"}, { "term": "harry potter og fangen fra azkaban"}]
+      example:
+        [
+          { 'term': 'harry potter og hemmelighedernes kammer' },
+          { 'term': 'harry potter og fangen fra azkaban' },
+        ]
     examples:
-      - request: { "q": "harry", "type": "creator", "limit": 2, "fields": ["term"] }
-        response: [ { "term": "harry nilsson"}, { "term": "harry belafonte"}]
+      - request:
+          { 'q': 'harry', 'type': 'creator', 'limit': 2, 'fields': ['term'] }
+        response: [{ 'term': 'harry nilsson' }, { 'term': 'harry belafonte' }]
   user:
     tags:
       - Status
@@ -427,46 +622,46 @@ api:
       userinfo:
         description: Type of user information to select. Possible values are `userData`, `userLoan`, `userOrder`, `userFiscal`. If no userInfo is set, all values are returned.
         type: array
-        items: {type: "string"}
-        example: ["userData", "userLoan"]
+        items: { type: 'string' }
+        example: ['userData', 'userLoan']
     example: {}
     response:
-      $ref: "#/definitions/UserResponse"
+      $ref: '#/definitions/UserResponse'
       example:
-        id: "U2VydmljZVByb3ZpZGVy"
-        agency: "710100"
-        name: "Joe User"
-        address: "Eksempelvej 42"
-        postalCode: "1234"
-        mail: "joe@example.com"
+        id: 'U2VydmljZVByb3ZpZGVy'
+        agency: '710100'
+        name: 'Joe User'
+        address: 'Eksempelvej 42'
+        postalCode: '1234'
+        mail: 'joe@example.com'
         loans:
-          - loanId: "4940377131"
+          - loanId: '4940377131'
             title: håndbog over håndbøger
             creator: La, Chris
-            dueDate: "2016-04-16"
-            materialId: "9782361951085"
-            titleId: "51680057"
+            dueDate: '2016-04-16'
+            materialId: '9782361951085'
+            titleId: '51680057'
         orders:
-          - orderId: "24395923"
-            orderType: "Hold"
-            status: "In process"
-            pickUpAgency: "DK-710111"
-            holdQueuePosition: "1"
-            creator: "Madsen, Peter, f. 1958"
-            title: "Eventyrbogen"
-            orderDate: "2016-05-27T00:00:00+02:00"
-          - orderId: "24400334"
-            orderType: "normal"
-            status: "Available for pickup"
-            pickUpAgency: "DK-710111"
-            holdQueuePosition: "1"
-            creator: "Lindgren, Astrid"
-            title: "Emils skarnsstreg nr. 325"
-            orderDate: "2016-05-30T00:00:00+02:00"
-            pickUpExpiryDate: "2016-06-04T00:00:00+02:00"
-            pickUpId: "Nummer 16"
+          - orderId: '24395923'
+            orderType: 'Hold'
+            status: 'In process'
+            pickUpAgency: 'DK-710111'
+            holdQueuePosition: '1'
+            creator: 'Madsen, Peter, f. 1958'
+            title: 'Eventyrbogen'
+            orderDate: '2016-05-27T00:00:00+02:00'
+          - orderId: '24400334'
+            orderType: 'normal'
+            status: 'Available for pickup'
+            pickUpAgency: 'DK-710111'
+            holdQueuePosition: '1'
+            creator: 'Lindgren, Astrid'
+            title: 'Emils skarnsstreg nr. 325'
+            orderDate: '2016-05-30T00:00:00+02:00'
+            pickUpExpiryDate: '2016-06-04T00:00:00+02:00'
+            pickUpId: 'Nummer 16'
         debt:
-          - amount: "20"
+          - amount: '20'
             currency: DKK
             date: 2015-11-21
             creator: Kristín Marja Baldursdóttir
@@ -483,8 +678,8 @@ api:
         description: The ids of the materials to look up. You should at most look up 20 ids per API call.
         type: array
         maxItems: 20
-        items: {type: "string"}
-        example: ["870970-basis:51989252"]
+        items: { type: 'string' }
+        example: ['870970-basis:51989252']
       fields:
         description: |
           Which fields to return. Limiting the fields can also yield a performance improvement.
@@ -493,14 +688,72 @@ api:
 
           If `fields` are omitted, all fields are returned, except `cover*`, `collection`, `lix` and `shelf`.
         type: array
-        items: {type: "string"}
-        example: ["title", "collection", "dcSubjectDBCF", "hasAdaptation", "coverUrlFull"]
+        items: { type: 'string' }
+        example:
+          [
+            'title',
+            'collection',
+            'dcSubjectDBCF',
+            'hasAdaptation',
+            'coverUrlFull',
+          ]
     response:
       $ref: '#/definitions/WorkResponse'
-      example: [{ "dcTitle": ["Harry Potter og de vises sten"], "collection": ["300185-katalog:100562332", "870970-basis:51989252", "870971-forfweb:86203219", "870970-basis:24284514", "870970-basis:24284565", "..."], "dcSubjectDBCF": ["fantasy", "magi", "troldmænd"], "hasAdaption": ["870970-basis:27123279", "870970-basis:27963390"], "coverUrlFull": ["https://moreinfo.addi.dk/2.1/more_info_get.php?id=36565894&type=forside_500&key=55d553c259c9e46291a4"]}]
+      example:
+        [
+          {
+            'dcTitle': ['Harry Potter og de vises sten'],
+            'collection':
+              [
+                '300185-katalog:100562332',
+                '870970-basis:51989252',
+                '870971-forfweb:86203219',
+                '870970-basis:24284514',
+                '870970-basis:24284565',
+                '...',
+              ],
+            'dcSubjectDBCF': ['fantasy', 'magi', 'troldmænd'],
+            'hasAdaption': ['870970-basis:27123279', '870970-basis:27963390'],
+            'coverUrlFull':
+              [
+                'https://moreinfo.addi.dk/2.1/more_info_get.php?id=36565894&type=forside_500&key=55d553c259c9e46291a4',
+              ],
+          },
+        ]
     examples:
-      - request: { "pids": ["870970-basis:51989252",], "fields": ["title", "collection", "subjectDBCF", "hasAdaptation", "coverUrlFull"]}
-        response: [{"title": ["Harry Potter og de vises sten"], "collection": ["300185-katalog:100562332", "870970-basis:51989252", "870971-forfweb:86203219", "870970-basis:24284514", "870970-basis:24284565", "..."], "subjectDBCF": ["fantasy", "magi", "troldmænd"], "hasAdaption": ["870970-basis:27123279", "870970-basis:27963390"], "coverUrlFull": ["https://moreinfo.addi.dk/2.1/more_info_get.php?id=36565894&type=forside_500&key=55d553c259c9e46291a4"]}]
+      - request:
+          {
+            'pids': ['870970-basis:51989252'],
+            'fields':
+              [
+                'title',
+                'collection',
+                'subjectDBCF',
+                'hasAdaptation',
+                'coverUrlFull',
+              ],
+          }
+        response:
+          [
+            {
+              'title': ['Harry Potter og de vises sten'],
+              'collection':
+                [
+                  '300185-katalog:100562332',
+                  '870970-basis:51989252',
+                  '870971-forfweb:86203219',
+                  '870970-basis:24284514',
+                  '870970-basis:24284565',
+                  '...',
+                ],
+              'subjectDBCF': ['fantasy', 'magi', 'troldmænd'],
+              'hasAdaption': ['870970-basis:27123279', '870970-basis:27963390'],
+              'coverUrlFull':
+                [
+                  'https://moreinfo.addi.dk/2.1/more_info_get.php?id=36565894&type=forside_500&key=55d553c259c9e46291a4',
+                ],
+            },
+          ]
 
   holdingsitems:
     tags:
@@ -510,26 +763,131 @@ api:
       agency:
         description: The id of the agency.
         type: string
-        example: "710100"
+        example: '710100'
       item_id:
         description: The id of the material to look up.
         type: string
-        example: "0123456789"
+        example: '0123456789'
       pids:
         description: The ids of the materials to look up.
         type: array
         maxItems: 20
-        items: {type: "string"}
-        example: ["870970-basis:51989252"]
+        items: { type: 'string' }
+        example: ['870970-basis:51989252']
 
     response:
       $ref: '#/definitions/HoldingsItemsResponse'
-      example: {"statusCode":200,"data":{"holdingsitems":[{"bibliographicRecordId":"01201182","branch":"Brædstrup Bibliotek","branchId":"","circulationRule":"alm","department":"Voksen","issueId":"","issueText":"","itemId":"3439785456","location":"","note":"","readyForLoan":1,"status":"OnShelf","subLocation":"Udenlandsk skønlitteratur"}]}}
+      example:
+        {
+          'statusCode': 200,
+          'data':
+            {
+              'holdingsitems':
+                [
+                  {
+                    'bibliographicRecordId': '01201182',
+                    'branch': 'Brædstrup Bibliotek',
+                    'branchId': '',
+                    'circulationRule': 'alm',
+                    'department': 'Voksen',
+                    'issueId': '',
+                    'issueText': '',
+                    'itemId': '3439785456',
+                    'location': '',
+                    'note': '',
+                    'readyForLoan': 1,
+                    'status': 'OnShelf',
+                    'subLocation': 'Udenlandsk skønlitteratur',
+                  },
+                ],
+            },
+        }
     examples:
-      - request: {agency: '761500', item_id: '3439785456'}
-        response: {"statusCode":200,"data":{"holdingsitems":[{"bibliographicRecordId":"01201182","branch":"Brædstrup Bibliotek","branchId":"","circulationRule":"alm","department":"Voksen","issueId":"","issueText":"","itemId":"3439785456","location":"","note":"","readyForLoan":1,"status":"OnShelf","subLocation":"Udenlandsk skønlitteratur"}]}}
-      - request: {agency: '761500', pids: ["foo:01242180","bar:01242091"]}
-        response: {"statusCode":200,"data":[{"pid":"someRandomStuff:01242180","holdingsitems":[{"bibliographicRecordId":"01242180","branch":"Horsens Bibliotek","branchId":"","circulationRule":"alm","department":"Voksen","issueId":"","issueText":"","itemId":"3452301496","location":"Magasin","note":"","readyForLoan":3,"status":"OnShelf","subLocation":""},{"bibliographicRecordId":"01242180","branch":"Horsens Bibliotek","branchId":"","circulationRule":"0","department":"Voksen","issueId":"","issueText":"","itemId":"746452144","location":"","note":"","readyForLoan":3,"status":"NotForLoan","subLocation":"Fag"},{"bibliographicRecordId":"01242180","branch":"Brædstrup Bibliotek","branchId":"","circulationRule":"alm","department":"Voksen","issueId":"","issueText":"","itemId":"4140294565","location":"","note":"","readyForLoan":3,"status":"OnShelf","subLocation":"Fag"}]}]}
+      - request: { agency: '761500', item_id: '3439785456' }
+        response:
+          {
+            'statusCode': 200,
+            'data':
+              {
+                'holdingsitems':
+                  [
+                    {
+                      'bibliographicRecordId': '01201182',
+                      'branch': 'Brædstrup Bibliotek',
+                      'branchId': '',
+                      'circulationRule': 'alm',
+                      'department': 'Voksen',
+                      'issueId': '',
+                      'issueText': '',
+                      'itemId': '3439785456',
+                      'location': '',
+                      'note': '',
+                      'readyForLoan': 1,
+                      'status': 'OnShelf',
+                      'subLocation': 'Udenlandsk skønlitteratur',
+                    },
+                  ],
+              },
+          }
+      - request: { agency: '761500', pids: ['foo:01242180', 'bar:01242091'] }
+        response:
+          {
+            'statusCode': 200,
+            'data':
+              [
+                {
+                  'pid': 'someRandomStuff:01242180',
+                  'holdingsitems':
+                    [
+                      {
+                        'bibliographicRecordId': '01242180',
+                        'branch': 'Horsens Bibliotek',
+                        'branchId': '',
+                        'circulationRule': 'alm',
+                        'department': 'Voksen',
+                        'issueId': '',
+                        'issueText': '',
+                        'itemId': '3452301496',
+                        'location': 'Magasin',
+                        'note': '',
+                        'readyForLoan': 3,
+                        'status': 'OnShelf',
+                        'subLocation': '',
+                      },
+                      {
+                        'bibliographicRecordId': '01242180',
+                        'branch': 'Horsens Bibliotek',
+                        'branchId': '',
+                        'circulationRule': '0',
+                        'department': 'Voksen',
+                        'issueId': '',
+                        'issueText': '',
+                        'itemId': '746452144',
+                        'location': '',
+                        'note': '',
+                        'readyForLoan': 3,
+                        'status': 'NotForLoan',
+                        'subLocation': 'Fag',
+                      },
+                      {
+                        'bibliographicRecordId': '01242180',
+                        'branch': 'Brædstrup Bibliotek',
+                        'branchId': '',
+                        'circulationRule': 'alm',
+                        'department': 'Voksen',
+                        'issueId': '',
+                        'issueText': '',
+                        'itemId': '4140294565',
+                        'location': '',
+                        'note': '',
+                        'readyForLoan': 3,
+                        'status': 'OnShelf',
+                        'subLocation': 'Fag',
+                      },
+                    ],
+                },
+              ],
+          }
   status:
     tags:
       - Status
@@ -539,19 +897,41 @@ api:
       after:
         description: last date / time for performance statistics, - defaults to now
         type: string
-        example: "2018-07-11T09:46:30.920Z"
+        example: '2018-07-11T09:46:30.920Z'
       before:
         description: first date / time for performance statistics, - defaults to one minute before `after`. Performance statistics are typically kept 8 weeks.
         type: string
-        example: "2018-07-11T08:46:30.920Z"
+        example: '2018-07-11T08:46:30.920Z'
     response:
-      $ref: "#/definitions/Status"
-      example: {"statusCode":200,"data":{"version":"3.0.0","openagency":{"url":"http://openagency.addi.dk/2.24/","ok":true},"openholdingstatus":{"url":"https://openholdingstatus.addi.dk/2.2/","error":"ERROR checking for holdings DK-100450 on Kaninbjerget"},"openorder":{"url":"https://openorder.addi.dk/test_2.8/","ok":true},"opensearch":{"url":"https://opensearch.addi.dk/b3.5_4.5/","ok":true},"openuserstatus":{"url":"https://openuserstatus.addi.dk/1.6.1/","ok":true},"moreinfo":{"url":"https://moreinfo.addi.dk/2.10/","ok":true}}}
+      $ref: '#/definitions/Status'
+      example:
+        {
+          'statusCode': 200,
+          'data':
+            {
+              'version': '3.0.0',
+              'openagency':
+                { 'url': 'http://openagency.addi.dk/2.24/', 'ok': true },
+              'openholdingstatus':
+                {
+                  'url': 'https://openholdingstatus.addi.dk/2.2/',
+                  'error': 'ERROR checking for holdings DK-100450 on Kaninbjerget',
+                },
+              'openorder':
+                { 'url': 'https://openorder.addi.dk/test_2.8/', 'ok': true },
+              'opensearch':
+                { 'url': 'https://opensearch.addi.dk/b3.5_4.5/', 'ok': true },
+              'openuserstatus':
+                { 'url': 'https://openuserstatus.addi.dk/1.6.1/', 'ok': true },
+              'moreinfo':
+                { 'url': 'https://moreinfo.addi.dk/2.10/', 'ok': true },
+            },
+        }
 defaultProperties:
   fields:
     description: which parts of the response to get
     type: array
-    items: {type: "string"}
+    items: { type: 'string' }
   access_token:
     type: 'string'
     description: 'Access token from the OAuth2 server'
@@ -567,7 +947,7 @@ defaultProperties:
   createTest:
     description: name of test to create, or "random" for random name, or "mockfile" for writing mockfile.
     type: 'string'
-    example: "random"
+    example: 'random'
     noSwag: true
   callback:
     type: 'string'
