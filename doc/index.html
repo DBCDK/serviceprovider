@@ -1,229 +1,271 @@
 <!DOCTYPE html>
 <html>
-	<head>
-		<meta charset="UTF-8">
-		<title>Open Platform</title>
-		<link href="//unpkg.com/swagger-ui-dist@3.22.1/swagger-ui.css" rel="stylesheet" type="text/css"/>
-	</head>
 
-	<body>
-		<style> 
-.custom-documentation {
-	display: block;
-	max-width: 1420px;
-	margin: 0 auto;
-	padding: 0 20px;
-	line-height: 1.3;
-	font-family: "Droid Sans", sans-serif;
-}
-	.custom-documentation th {
-		text-align: right;
-	}
-		</style>
-		<div class="custom-documentation">
-			<h1>Open Platform</h1>
-			Dette er den åbne platform, hvilket er APIet for de danske biblioteker.
+<head>
+	<meta charset="UTF-8">
+	<title>Open Platform</title>
+	<link href="//unpkg.com/swagger-ui-dist@3.22.1/swagger-ui.css" rel="stylesheet" type="text/css" />
+</head>
 
-			<h3>Få adgang til API'et</h3>
-			Man skal være et dansk bibliotek for at få API-adgang. Andre må sende forespørgslen gennem en af disse. <br>
-			Forespørgslen sendes til DBCs kundeservice (https://kundeservice.dbc.dk/) med følgende informationer:
+<body>
+	<style>
+		.custom-documentation {
+			display: block;
+			max-width: 1420px;
+			margin: 0 auto;
+			padding: 0 20px;
+			line-height: 1.3;
+			font-family: "Droid Sans", sans-serif;
+		}
 
-			<ul>
-				<li>Projektejer kontaktperson (bibliotek, email, telefon)</li>
-				<li>Teknisk kontaktperson (navn, email, telefon)</li>
-				<li>Navn/beskrivelse af app/klient</li>
-				<li>Eventuelt søge-profil (per default er dette det indloggede bibliotek. Alternative søgeprofiler kan være landsdækkende, såsom bibliotek.dk og biblo.dk)</li>
-			</ul>
+		.custom-documentation th {
+			text-align: right;
+		}
+	</style>
+	<div class="custom-documentation">
+		<h1>Open Platform</h1>
+		Dette er den åbne platform, hvilket er APIet for de danske biblioteker.
 
-			Herefter vil biblioteket modtage et eller flere <code>CLIENT_ID</code> / <code>CLIENT_SECRET</code>, der kan bruges til at få adgang til APIet. 
+		<h3>Få adgang til API'et</h3>
+		Man skal være et dansk bibliotek for at få API-adgang. Andre må sende forespørgslen gennem en af disse. <br>
+		Forespørgslen sendes til DBCs kundeservice (https://kundeservice.dbc.dk/) med følgende informationer:
 
-			<h3>Supplerende dokumentation</h3>
+		<ul>
+			<li>Projektejer kontaktperson (bibliotek, email, telefon)</li>
+			<li>Teknisk kontaktperson (navn, email, telefon)</li>
+			<li>Navn/beskrivelse af app/klient</li>
+			<li>Eventuelt søge-profil (per default er dette det indloggede bibliotek. Alternative søgeprofiler kan være
+				landsdækkende, såsom bibliotek.dk)</li>
+		</ul>
 
-			<p>
-			Kildekode, issue tracking, osv. findes på <a href="https://github.com/dbcdk/serviceprovider/">github:dbcdk/serviceprovider</a>,
-			Her finder man også specifikationer, og yderligere dokumentation i <a href="https://github.com/DBCDK/serviceprovider/tree/master/doc/">doc/</a>.
-			Eksempelforespørgsler, og en "getting started guide" er tilgængelig her: <a href="example.html">example.html</a> <a href="guide.html">guide.html</a>.
-			</p>
+		Herefter vil biblioteket modtage et eller flere <code>CLIENT_ID</code> / <code>CLIENT_SECRET</code>, der kan
+		bruges til at få adgang til APIet.
 
-			<h3>English</h3>
+		<h3>Supplerende dokumentation</h3>
 
-			<p>
+		<p>
+			Kildekode, issue tracking, osv. findes på <a
+				href="https://github.com/dbcdk/serviceprovider/">github:dbcdk/serviceprovider</a>,
+			Her finder man også specifikationer, og yderligere dokumentation i <a
+				href="https://github.com/DBCDK/serviceprovider/tree/master/doc/">doc/</a>.
+			Eksempelforespørgsler, og en "getting started guide" er tilgængelig her: <a
+				href="example.html">example.html</a> <a href="guide.html">guide.html</a>.
+		</p>
+
+		<h3>English</h3>
+
+		<p>
 			This is the Open Platform, which is the API for the danish public libraries.
-			</p>
+		</p>
 
-			<p>
-			Danish libraries can get access directly from DBC, see the description in danish above. Others have to go through a library to get access.
-			</p>
-		</div>
+		<p>
+			Danish libraries can get access directly from DBC, see the description in danish above. Others have to go
+			through a library to get access.
+		</p>
+	</div>
 
 
-		<div class="custom-documentation">
-			<h2>Tokens</h2>
+	<div class="custom-documentation">
+		<h2>Tokens</h2>
 
-			<p>
+		<p>
 			Alle kald til API'et kræver en gyldig token.
-			Tokens til driftmiljø'et hentes fra https://auth.dbc.dk/. Dette er en OAuth2 server, hvor der kan logges på med "password-grants".
-			Ved OAuth2-login er <code>username</code>: "<em>Lånernummer</em>@<em>Biblioteks-agency</em>" og <code>password</code> er pinkode.
-			</p>
-			<p>
-			Det er muligt at udelade lånernummer, hvorved man logger ind som en anonym bruger (OAuth2 <code>password</code> er så det samme som <code>username</code>). 
-			</p>
-			<p>
-			Hvis man udelader lånernummer, kan man også udelade biblioteks-agency, hvorved man logger ind som anonym bruger på nationalt niveau, i stedet for på et givent bibliotek.
-			</p>
-			<p>
+			Tokens til driftmiljø'et hentes fra https://auth.dbc.dk/. Dette er en OAuth2 server, hvor der kan logges på
+			med "password-grants".
+			Ved OAuth2-login er <code>username</code>: "<em>Lånernummer</em>@<em>Biblioteks-agency</em>" og
+			<code>password</code> er pinkode.
+		</p>
+		<p>
+			Det er muligt at udelade lånernummer, hvorved man logger ind som en anonym bruger (OAuth2
+			<code>password</code> er så det samme som <code>username</code>).
+		</p>
+		<p>
+			Hvis man udelader lånernummer, kan man også udelade biblioteks-agency, hvorved man logger ind som anonym
+			bruger på nationalt niveau, i stedet for på et givent bibliotek.
+		</p>
+		<p>
 
-			<p>
+		<p>
 			Det er muligt at hent et token ud fra et ClientId/ClientSecret med følgende formular:
-			</p>
-			<p>
-			<table>
-				<tr><th>ClientId:</th><td><input id=ClientId /></td><td>(påkrævet)</td></tr>
-				<tr><th>ClientSecret:</th><td><input id=ClientSecret /></td><td>(påkrævet)</tr>
-				<tr><th>Lånernummer:</th><td><input id=User /></td><td>(optional)</tr>
-				<tr><th>PIN:</th><td><input id=PIN /></td><td>(kun påkrævet hvis lånernummer)</tr>
-				<tr><th>Bibliotek-agency:</th><td><input id=Agency /></td><td>(påkrævet hvis lånernummer, ellers optional)</tr>
-				<tr><th></th><td></td><td><br/><button id="fetchToken">Hent token</button></td></tr>
-			</table>
-			<div id=tokenDiv></div>
-			</p>
+		</p>
+		<p>
+		<table>
+			<tr>
+				<th>ClientId:</th>
+				<td><input id=ClientId /></td>
+				<td>(påkrævet)</td>
+			</tr>
+			<tr>
+				<th>ClientSecret:</th>
+				<td><input id=ClientSecret /></td>
+				<td>(påkrævet)
+			</tr>
+			<tr>
+				<th>Lånernummer:</th>
+				<td><input id=User /></td>
+				<td>(optional)
+			</tr>
+			<tr>
+				<th>PIN:</th>
+				<td><input id=PIN /></td>
+				<td>(kun påkrævet hvis lånernummer)
+			</tr>
+			<tr>
+				<th>Bibliotek-agency:</th>
+				<td><input id=Agency /></td>
+				<td>(påkrævet hvis lånernummer, ellers optional)
+			</tr>
+			<tr>
+				<th></th>
+				<td></td>
+				<td><br /><button id="fetchToken">Hent token</button></td>
+			</tr>
+		</table>
+		<div id=tokenDiv></div>
+		</p>
 
-			<p>
+		<p>
 			Eller man kan sende en request direkte til OAuth2 serveren. Herunder eksempel med curl:
-			</p>
-			<p><code>
+		</p>
+		<p><code>
 				curl --user "${CLIENT_ID}:${CLIENT_SECRET}" -X POST https://auth.dbc.dk/oauth/token -d "grant_type=password&amp;username=${USERNAME}&amp;password=${PASSWORD}"
 			</code></p>
-			<p>
-			Hvor <code>${USERNAME}</code> er <em>Lånernummer</em>@<em>Biblioteks-agency</em>, og <code>${PASSWORD}</code> er pinkode (eller det samme som <code>${USERNAME}</code> ved anonym bruger). Eksempler på username/password er:
+		<p>
+			Hvor <code>${USERNAME}</code> er <em>Lånernummer</em>@<em>Biblioteks-agency</em>, og
+			<code>${PASSWORD}</code> er pinkode (eller det samme som <code>${USERNAME}</code> ved anonym bruger).
+			Eksempler på username/password er:
 			<!--ul>
 		 <li><code>12345678@710100</code> er brugeren med lånernummer 12345678, på Københavns Biblioteker, som har agency 710100</li>
 		 <li><code>@710100</code> er den anonyme bruger på Københavns Biblioteker</li>
 		 <li><code>@</code> er den anonyme bruger, der ikke er tilknyttet noget specifikt bibliotek</li>
 		 </ul-->
-		 <style>
-.login-eksempel th {
-	text-align: center;
-}
-.login-eksempel td {
-	border: 1px solid black;
-	vertical-align: top;
-	padding: 10px;
-}
-		 </style>
-		 <table class="login-eksempel">
-			 <thead>
-				 <tr>
-					 <th>Type</th>
-					 <th>Bibliotek</th>
-					 <th>Lånernummer</th>
-					 <th>${USERNAME}</th>
-					 <th>${PASSWORD}</th>
-					 <th>Kommentar</th>
-				 </tr>
-			 </thead>
-			 <tbody>
-				 <tr>
-					 <td>Brugerlogin - Låner på bibliotek</td>
-					 <td>Specifikt bibliotek, fx Københavns Biblioteker (agency DK-710100)</td>
-					 <td>Lånernummer, eksempelvis: 12345678</td>
-					 <td><code>12345678@DK-710100</code></td>
-					 <td><code>1234</code></td>
-					 <td>Brugerens faktiske pin-kode, eksempelvis "1234"</td>
-				 </tr>
-				 <tr>
-					 <td>Bibliotekslogin - uden låner</td>
-					 <td>Specifikt bibliotek, fx Københavns Biblioteker (agency DK-710100)</td>
-					 <td>Ingen bruger / lånernummer</td>
-					 <td><code>@DK-710100</code></td>
-					 <td><code>@DK-710100</code></td>
-					 <td>Der er ingen pinkode, så derfor er ${PASSWORD} det samme som ${USERNAME}: "@DK-710100"</td>
-				 </tr>
-				 <tr>
-					 <td>Annonym - ingen låner eller bibliotek angivet</td>
-					 <td>Ingen bibliotek</td>
-					 <td>Ingen bruger / lånernummer</td>
-					 <td><code>@</code></td>
-					 <td><code>@</code></td>
-					 <td>Der er ingen pinkode, så derfor er ${PASSWORD} det samme som ${USERNAME}: "@"</td>
-				 </tr></tbody></table>
-			</p>
+			<style>
+				.login-eksempel th {
+					text-align: center;
+				}
 
-		</div>
+				.login-eksempel td {
+					border: 1px solid black;
+					vertical-align: top;
+					padding: 10px;
+				}
+			</style>
+		<table class="login-eksempel">
+			<thead>
+				<tr>
+					<th>Type</th>
+					<th>Bibliotek</th>
+					<th>Lånernummer</th>
+					<th>${USERNAME}</th>
+					<th>${PASSWORD}</th>
+					<th>Kommentar</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td>Brugerlogin - Låner på bibliotek</td>
+					<td>Specifikt bibliotek, fx Københavns Biblioteker (agency DK-710100)</td>
+					<td>Lånernummer, eksempelvis: 12345678</td>
+					<td><code>12345678@DK-710100</code></td>
+					<td><code>1234</code></td>
+					<td>Brugerens faktiske pin-kode, eksempelvis "1234"</td>
+				</tr>
+				<tr>
+					<td>Bibliotekslogin - uden låner</td>
+					<td>Specifikt bibliotek, fx Københavns Biblioteker (agency DK-710100)</td>
+					<td>Ingen bruger / lånernummer</td>
+					<td><code>@DK-710100</code></td>
+					<td><code>@DK-710100</code></td>
+					<td>Der er ingen pinkode, så derfor er ${PASSWORD} det samme som ${USERNAME}: "@DK-710100"</td>
+				</tr>
+				<tr>
+					<td>Annonym - ingen låner eller bibliotek angivet</td>
+					<td>Ingen bibliotek</td>
+					<td>Ingen bruger / lånernummer</td>
+					<td><code>@</code></td>
+					<td><code>@</code></td>
+					<td>Der er ingen pinkode, så derfor er ${PASSWORD} det samme som ${USERNAME}: "@"</td>
+				</tr>
+			</tbody>
+		</table>
+		</p>
+
+	</div>
 
 
 
-		<script>
-var authUrl = "https://auth.dbc.dk/oauth/token";
+	<script>
+		var authUrl = "https://auth.dbc.dk/oauth/token";
 
-/* Workaround for staging, required by https://github.com/DBCDK/serviceprovider/issues/932 */
-if(location.host === 'openplatform-stg.dbc.dk')  {
-	authUrl = "https://auth-stg.dbc.dk/oauth/token";
-	document.body.innerHTML = document.body.innerHTML.replace('https://auth.dbc.dk/oauth/token', authUrl);
-}
-
-fetchToken.addEventListener('click', function () {
-
-	if(!ClientId.value) {
-		tokenDiv.innerHTML = "FEJL: Mangler ClientId";
-		return;
-	}
-	if(!ClientSecret.value) {
-		tokenDiv.innerHTML = "FEJL: Mangler ClientSecret";
-		return;
-	}
-	if(!!User.value !== !!PIN.value) {
-		tokenDiv.innerHTML = "FEJL: Både PIN og Lånernummer skal angives, hvis en af dem angives";
-		return;
-	}
-	if(User.value && !Agency.value) {
-		tokenDiv.innerHTML = "FEJL: Mangler biblioteks-agency";
-		return;
-	}
-
-	var clientId = ClientId.value;
-	var clientSecret = ClientSecret.value;
-	var user = User.value + '@' + Agency.value;
-	var passwd = PIN.value || user;
-	var xhr = new XMLHttpRequest();
-	xhr.open('POST', authUrl);
-	xhr.setRequestHeader('Authorization', 'Basic ' + btoa(clientId + ':' + clientSecret));
-	xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-	xhr.send('grant_type=password' + '&username=' + user + '&password=' + passwd);
-	tokenDiv.innerHTML = "Getting token...";
-
-	xhr.onreadystatechange = function() {
-		if (xhr.readyState === 4) {
-			if (xhr.status === 200) {
-				var result = xhr.response;
-				result = JSON.parse(result).access_token;
-				tokenDiv.innerHTML = "<em>Token:</em> " + String(result);
-			} else {
-				tokenDiv.innerHTML = "FEJL ved hent af token: " + xhr.response;
-			}
+		/* Workaround for staging, required by https://github.com/DBCDK/serviceprovider/issues/932 */
+		if (location.host === 'openplatform-stg.dbc.dk') {
+			authUrl = "https://auth-stg.dbc.dk/oauth/token";
+			document.body.innerHTML = document.body.innerHTML.replace('https://auth.dbc.dk/oauth/token', authUrl);
 		}
-	};
-});
-		</script>
+
+		fetchToken.addEventListener('click', function () {
+
+			if (!ClientId.value) {
+				tokenDiv.innerHTML = "FEJL: Mangler ClientId";
+				return;
+			}
+			if (!ClientSecret.value) {
+				tokenDiv.innerHTML = "FEJL: Mangler ClientSecret";
+				return;
+			}
+			if (!!User.value !== !!PIN.value) {
+				tokenDiv.innerHTML = "FEJL: Både PIN og Lånernummer skal angives, hvis en af dem angives";
+				return;
+			}
+			if (User.value && !Agency.value) {
+				tokenDiv.innerHTML = "FEJL: Mangler biblioteks-agency";
+				return;
+			}
+
+			var clientId = ClientId.value;
+			var clientSecret = ClientSecret.value;
+			var user = User.value + '@' + Agency.value;
+			var passwd = PIN.value || user;
+			var xhr = new XMLHttpRequest();
+			xhr.open('POST', authUrl);
+			xhr.setRequestHeader('Authorization', 'Basic ' + btoa(clientId + ':' + clientSecret));
+			xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+			xhr.send('grant_type=password' + '&username=' + user + '&password=' + passwd);
+			tokenDiv.innerHTML = "Getting token...";
+
+			xhr.onreadystatechange = function () {
+				if (xhr.readyState === 4) {
+					if (xhr.status === 200) {
+						var result = xhr.response;
+						result = JSON.parse(result).access_token;
+						tokenDiv.innerHTML = "<em>Token:</em> " + String(result);
+					} else {
+						tokenDiv.innerHTML = "FEJL ved hent af token: " + xhr.response;
+					}
+				}
+			};
+		});
+	</script>
 
 
 
-		<div id="swagger-ui">
-		</div>
-		<script src="//unpkg.com/swagger-ui-dist@3.22.1/swagger-ui-bundle.js"></script>
-		<script>
-SwaggerUIBundle({
-	url: "./swagger.json",
-	dom_id: '#swagger-ui',
-	presets: [
-		SwaggerUIBundle.presets.apis,
-		SwaggerUIBundle.SwaggerUIStandalonePreset
-	],
-})
-		</script>
+	<div id="swagger-ui">
+	</div>
+	<script src="//unpkg.com/swagger-ui-dist@3.22.1/swagger-ui-bundle.js"></script>
+	<script>
+		SwaggerUIBundle({
+			url: "./swagger.json",
+			dom_id: '#swagger-ui',
+			presets: [
+				SwaggerUIBundle.presets.apis,
+				SwaggerUIBundle.SwaggerUIStandalonePreset
+			],
+		})
+	</script>
 
 
 
 
-	</body>
+</body>
+
 </html>
