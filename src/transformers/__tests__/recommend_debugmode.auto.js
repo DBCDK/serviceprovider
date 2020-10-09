@@ -19,7 +19,7 @@ const expected = {
         'debug-work': 'work:1408396',
         'debug-creator': 'Sara Blædel',
         'debug-title': 'Kvinden de meldte savnet',
-        reader: '_190101_loans_norm'
+        'debug-reader': '_190101_loans_norm'
       }
     },
     {
@@ -30,7 +30,7 @@ const expected = {
         'debug-work': 'work:898699',
         'debug-creator': 'Mons Kallentoft',
         'debug-title': 'Midvinterblod',
-        reader: '_190101_metacompass'
+        'debug-reader': '_190101_metacompass'
       }
     },
     {
@@ -41,7 +41,7 @@ const expected = {
         'debug-work': 'work:987105',
         'debug-creator': 'Sara Blædel',
         'debug-title': 'De glemte piger',
-        reader: '_190101_search_clicks'
+        'debug-reader': '_190101_search_clicks'
       }
     },
     {
@@ -52,7 +52,7 @@ const expected = {
         'debug-work': 'work:1399529',
         'debug-creator': 'Liza Marklund',
         'debug-title': 'Noras bog',
-        reader: '_190101_loans_norm'
+        'debug-reader': '_190101_loans_norm'
       }
     },
     {
@@ -63,7 +63,7 @@ const expected = {
         'debug-work': 'work:954307',
         'debug-creator': 'Inger Gammelgaard Madsen',
         'debug-title': 'Fremmed indtrængen',
-        reader: '_190101_metacompass'
+        'debug-reader': '_190101_metacompass'
       }
     },
     {
@@ -74,7 +74,7 @@ const expected = {
         'debug-work': 'work:1412991',
         'debug-creator': 'Jussi Adler-Olsen',
         'debug-title': 'Den grænseløse',
-        reader: '_190101_search_clicks'
+        'debug-reader': '_190101_search_clicks'
       }
     },
     {
@@ -85,7 +85,7 @@ const expected = {
         'debug-work': 'work:997944',
         'debug-creator': null,
         'debug-title': 'Dødelig alvor',
-        reader: '_190101_search_clicks'
+        'debug-reader': '_190101_search_clicks'
       }
     },
     {
@@ -96,7 +96,7 @@ const expected = {
         'debug-work': 'work:997928',
         'debug-creator': 'Mari Jungstedt',
         'debug-title': 'Den farlige leg',
-        reader: '_190101_loans_norm'
+        'debug-reader': '_190101_loans_norm'
       }
     },
     {
@@ -107,7 +107,7 @@ const expected = {
         'debug-work': 'work:8730088',
         'debug-creator': 'Viktorija Platova',
         'debug-title': 'Dva bileta v nikogda',
-        reader: '_190101_metacompass'
+        'debug-reader': '_190101_metacompass'
       }
     },
     {
@@ -118,7 +118,7 @@ const expected = {
         'debug-work': 'work:1016665',
         'debug-creator': 'Birgitte Bartholdy',
         'debug-title': 'Frostgrader',
-        reader: '_190101_metacompass'
+        'debug-reader': '_190101_metacompass'
       }
     }
   ]
@@ -176,9 +176,9 @@ const mockData = {
       'ab-id': 1,
       recommender: '190101',
       timings: {
-        'read-from-db': 71.52,
-        'filter-candidates': 1.5659999999999998,
-        recommend: 73.864
+        'read-from-db': 75.747,
+        'filter-candidates': 2.678,
+        recommend: 79.539
       },
       arguments: {
         like: ['870970-basis:45488713'],
@@ -195,7 +195,7 @@ const mockData = {
           title: 'Dødesporet'
         }
       ],
-      time: 74.224
+      time: 80.18
     },
     response: [
       {

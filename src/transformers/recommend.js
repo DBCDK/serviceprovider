@@ -49,7 +49,7 @@ export default async function getRecommendations(params, context) {
             'debug-work': work,
             'debug-creator': creator,
             'debug-title': title,
-            reader
+            'debug-reader': reader
           };
         }
 

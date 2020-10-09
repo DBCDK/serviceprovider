@@ -101,11 +101,11 @@ const mockData = {
       'ab-id': 1,
       recommender: '190101',
       timings: {
-        'read-from-db': 155.311,
-        'filter-candidates': 742.666,
-        recommend: 906.172
+        'read-from-db': 118.517,
+        'filter-candidates': 5.133,
+        recommend: 124.673
       },
-      time: 906.568
+      time: 125.2
     },
     response: [
       {
