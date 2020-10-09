@@ -1,4 +1,4 @@
-// AUTOTEST GENERATOR: {"endpoint":"recommend","params":{"like":["870970-basis:45488713"]}}
+// AUTOTEST GENERATOR: {"endpoint":"recommend","params":{"like":["870970-basis:45488713"],"limit":10}}
 //
 //
 // AUTOMATED UNIT TEST
@@ -6,7 +6,7 @@
 //
 //
 const endpoint = 'recommend';
-const params = {like: ['870970-basis:45488713']};
+const params = { like: ['870970-basis:45488713'], limit: 10 };
 
 const expected = {
   statusCode: 200,
@@ -16,23 +16,23 @@ const expected = {
       val: 0.48284091834412546,
       from: ['work:1400234']
     },
-    {pid: '870970-basis:28718020', val: 3, from: ['work:1400234']},
-    {pid: '870970-basis:29743681', val: 244, from: ['work:1400234']},
+    { pid: '870970-basis:28718020', val: 3, from: ['work:1400234'] },
+    { pid: '870970-basis:29743681', val: 244, from: ['work:1400234'] },
     {
       pid: '870970-basis:50946800',
       val: 0.3891770940906558,
       from: ['work:1400234']
     },
-    {pid: '870970-basis:28878443', val: 2, from: ['work:1400234']},
-    {pid: '870970-basis:51418328', val: 71, from: ['work:1400234']},
-    {pid: '870970-basis:29344612', val: 61, from: ['work:1400234']},
+    { pid: '870970-basis:28878443', val: 2, from: ['work:1400234'] },
+    { pid: '870970-basis:51418328', val: 71, from: ['work:1400234'] },
+    { pid: '870970-basis:29344612', val: 62, from: ['work:1400234'] },
     {
       pid: '870970-basis:29344396',
       val: 0.3859171932392937,
       from: ['work:1400234']
     },
-    {pid: '870970-basis:52677556', val: 2, from: ['work:1400234']},
-    {pid: '870970-basis:29840997', val: 2, from: ['work:1400234']}
+    { pid: '870970-basis:52677556', val: 2, from: ['work:1400234'] },
+    { pid: '870970-basis:29840997', val: 2, from: ['work:1400234'] }
   ]
 };
 
@@ -57,13 +57,13 @@ const context = {
       'http://holdings-items-content-service.cisterne.svc.cloud.dbc.dk/holdings-items-content-service/api',
     infomediaservice: 'http://infomedia.mcp1-proxy.dbc.dk/server.php'
   },
-  infomedia: {userId: 'XXXXX', libraryCode: 'XXXXX'},
-  cicero: {'DK-710100': 'XXXXX'},
-  performance: {username: 'XXXXX', password: 'XXXXX'},
-  communityservice: {id: 1},
-  search: {agency: '775100', profile: 'opac', collectionidentifiers: ''},
-  storage: {user: 'XXXXX'},
-  netpunkt: {user: 'XXXXX', group: 'XXXXX', password: 'XXXXX'},
+  infomedia: { userId: 'XXXXX', libraryCode: 'XXXXX' },
+  cicero: { 'DK-710100': 'XXXXX' },
+  performance: { username: 'XXXXX', password: 'XXXXX' },
+  communityservice: { id: 1 },
+  search: { agency: '775100', profile: 'opac', collectionidentifiers: '' },
+  storage: { user: 'XXXXX' },
+  netpunkt: { user: 'XXXXX', group: 'XXXXX', password: 'XXXXX' },
   user: {
     id: 'XXXXX',
     salt: 'XXXXX',
@@ -80,7 +80,7 @@ const context = {
   }
 };
 const mockData = {
-  '["http://booklens-190101-1-0.mi-prod.svc.cloud.dbc.dk/",{"method":"post","json":{"like":["870970-basis:45488713"]}}]': {
+  '["http://booklens-190101-1-0.mi-prod.svc.cloud.dbc.dk/",{"method":"post","json":{"like":["870970-basis:45488713"],"limit":10}}]': {
     responseHeader: {
       build: 'HEAD',
       git: 'HEAD',
@@ -88,11 +88,11 @@ const mockData = {
       'ab-id': 1,
       recommender: '190101',
       timings: {
-        'read-from-db': 75.999,
-        'filter-candidates': 1.3719999999999999,
-        recommend: 78.08500000000001
+        'read-from-db': 71.619,
+        'filter-candidates': 1.6119999999999999,
+        recommend: 73.98100000000001
       },
-      time: 78.442
+      time: 74.342
     },
     response: [
       {
@@ -140,7 +140,7 @@ const mockData = {
       {
         pid: '870970-basis:29344612',
         work: 'work:997944',
-        value: 61,
+        value: 62,
         seed: 'work:1400234',
         reader: '_190101_search_clicks'
       },
@@ -170,13 +170,13 @@ const mockData = {
 };
 
 import Provider from '../../provider/Provider.js';
-import {assert, fail} from 'chai';
+import { assert, fail } from 'chai';
 const provider = Provider();
 
 describe('Automated test: recommend_single_like.auto', () => {
   it('has same result as recorded (in recommend_single_like.auto)', () => {
     assert(
-      Date.now() < +new Date('2021-01-05'),
+      Date.now() < +new Date('2021-01-07'),
       'Please recreate the automatically generated unit tests, such that the mock data does not come out of sync with the actual services. See README.md for details.'
     );
     context.mockData = mockData;

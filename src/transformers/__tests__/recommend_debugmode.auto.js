@@ -6,7 +6,7 @@
 //
 //
 const endpoint = 'recommend';
-const params = {like: ['870970-basis:45488713'], limit: 10, debug: true};
+const params = { like: ['870970-basis:45488713'], limit: 10, debug: true };
 
 const expected = {
   statusCode: 200,
@@ -15,91 +15,111 @@ const expected = {
       pid: '870970-basis:52284120',
       val: 0.48284091834412546,
       from: ['work:1400234'],
-      'debug-work': 'work:1408396',
-      'debug-creator': 'Sara Blædel',
-      'debug-title': 'Kvinden de meldte savnet',
-      reader: '_190101_loans_norm'
+      debug: {
+        'debug-work': 'work:1408396',
+        'debug-creator': 'Sara Blædel',
+        'debug-title': 'Kvinden de meldte savnet',
+        reader: '_190101_loans_norm'
+      }
     },
     {
       pid: '870970-basis:28718020',
       val: 3,
       from: ['work:1400234'],
-      'debug-work': 'work:898699',
-      'debug-creator': 'Mons Kallentoft',
-      'debug-title': 'Midvinterblod',
-      reader: '_190101_metacompass'
+      debug: {
+        'debug-work': 'work:898699',
+        'debug-creator': 'Mons Kallentoft',
+        'debug-title': 'Midvinterblod',
+        reader: '_190101_metacompass'
+      }
     },
     {
       pid: '870970-basis:29743681',
       val: 244,
       from: ['work:1400234'],
-      'debug-work': 'work:987105',
-      'debug-creator': 'Sara Blædel',
-      'debug-title': 'De glemte piger',
-      reader: '_190101_search_clicks'
+      debug: {
+        'debug-work': 'work:987105',
+        'debug-creator': 'Sara Blædel',
+        'debug-title': 'De glemte piger',
+        reader: '_190101_search_clicks'
+      }
     },
     {
       pid: '870970-basis:50946800',
       val: 0.3891770940906558,
       from: ['work:1400234'],
-      'debug-work': 'work:1399529',
-      'debug-creator': 'Liza Marklund',
-      'debug-title': 'Noras bog',
-      reader: '_190101_loans_norm'
+      debug: {
+        'debug-work': 'work:1399529',
+        'debug-creator': 'Liza Marklund',
+        'debug-title': 'Noras bog',
+        reader: '_190101_loans_norm'
+      }
     },
     {
       pid: '870970-basis:28878443',
       val: 2,
       from: ['work:1400234'],
-      'debug-work': 'work:954307',
-      'debug-creator': 'Inger Gammelgaard Madsen',
-      'debug-title': 'Fremmed indtrængen',
-      reader: '_190101_metacompass'
+      debug: {
+        'debug-work': 'work:954307',
+        'debug-creator': 'Inger Gammelgaard Madsen',
+        'debug-title': 'Fremmed indtrængen',
+        reader: '_190101_metacompass'
+      }
     },
     {
       pid: '870970-basis:51418328',
       val: 71,
       from: ['work:1400234'],
-      'debug-work': 'work:1412991',
-      'debug-creator': 'Jussi Adler-Olsen',
-      'debug-title': 'Den grænseløse',
-      reader: '_190101_search_clicks'
+      debug: {
+        'debug-work': 'work:1412991',
+        'debug-creator': 'Jussi Adler-Olsen',
+        'debug-title': 'Den grænseløse',
+        reader: '_190101_search_clicks'
+      }
     },
     {
       pid: '870970-basis:29344612',
-      val: 61,
+      val: 62,
       from: ['work:1400234'],
-      'debug-work': 'work:997944',
-      'debug-creator': null,
-      'debug-title': 'Dødelig alvor',
-      reader: '_190101_search_clicks'
+      debug: {
+        'debug-work': 'work:997944',
+        'debug-creator': null,
+        'debug-title': 'Dødelig alvor',
+        reader: '_190101_search_clicks'
+      }
     },
     {
       pid: '870970-basis:29344396',
       val: 0.3859171932392937,
       from: ['work:1400234'],
-      'debug-work': 'work:997928',
-      'debug-creator': 'Mari Jungstedt',
-      'debug-title': 'Den farlige leg',
-      reader: '_190101_loans_norm'
+      debug: {
+        'debug-work': 'work:997928',
+        'debug-creator': 'Mari Jungstedt',
+        'debug-title': 'Den farlige leg',
+        reader: '_190101_loans_norm'
+      }
     },
     {
       pid: '870970-basis:52677556',
       val: 2,
       from: ['work:1400234'],
-      'debug-work': 'work:8730088',
-      'debug-creator': 'Viktorija Platova',
-      'debug-title': 'Dva bileta v nikogda',
-      reader: '_190101_metacompass'
+      debug: {
+        'debug-work': 'work:8730088',
+        'debug-creator': 'Viktorija Platova',
+        'debug-title': 'Dva bileta v nikogda',
+        reader: '_190101_metacompass'
+      }
     },
     {
       pid: '870970-basis:29840997',
       val: 2,
       from: ['work:1400234'],
-      'debug-work': 'work:1016665',
-      'debug-creator': 'Birgitte Bartholdy',
-      'debug-title': 'Frostgrader',
-      reader: '_190101_metacompass'
+      debug: {
+        'debug-work': 'work:1016665',
+        'debug-creator': 'Birgitte Bartholdy',
+        'debug-title': 'Frostgrader',
+        reader: '_190101_metacompass'
+      }
     }
   ]
 };
@@ -125,13 +145,13 @@ const context = {
       'http://holdings-items-content-service.cisterne.svc.cloud.dbc.dk/holdings-items-content-service/api',
     infomediaservice: 'http://infomedia.mcp1-proxy.dbc.dk/server.php'
   },
-  infomedia: {userId: 'XXXXX', libraryCode: 'XXXXX'},
-  cicero: {'DK-710100': 'XXXXX'},
-  performance: {username: 'XXXXX', password: 'XXXXX'},
-  communityservice: {id: 1},
-  search: {agency: '775100', profile: 'opac', collectionidentifiers: ''},
-  storage: {user: 'XXXXX'},
-  netpunkt: {user: 'XXXXX', group: 'XXXXX', password: 'XXXXX'},
+  infomedia: { userId: 'XXXXX', libraryCode: 'XXXXX' },
+  cicero: { 'DK-710100': 'XXXXX' },
+  performance: { username: 'XXXXX', password: 'XXXXX' },
+  communityservice: { id: 1 },
+  search: { agency: '775100', profile: 'opac', collectionidentifiers: '' },
+  storage: { user: 'XXXXX' },
+  netpunkt: { user: 'XXXXX', group: 'XXXXX', password: 'XXXXX' },
   user: {
     id: 'XXXXX',
     salt: 'XXXXX',
@@ -156,9 +176,9 @@ const mockData = {
       'ab-id': 1,
       recommender: '190101',
       timings: {
-        'read-from-db': 77.646,
-        'filter-candidates': 1.879,
-        recommend: 80.47
+        'read-from-db': 71.52,
+        'filter-candidates': 1.5659999999999998,
+        recommend: 73.864
       },
       arguments: {
         like: ['870970-basis:45488713'],
@@ -175,7 +195,7 @@ const mockData = {
           title: 'Dødesporet'
         }
       ],
-      time: 80.92699999999999
+      time: 74.224
     },
     response: [
       {
@@ -235,7 +255,7 @@ const mockData = {
       {
         pid: '870970-basis:29344612',
         work: 'work:997944',
-        value: 61,
+        value: 62,
         seed: 'work:1400234',
         reader: '_190101_search_clicks',
         creator: null,
@@ -273,13 +293,13 @@ const mockData = {
 };
 
 import Provider from '../../provider/Provider.js';
-import {assert, fail} from 'chai';
+import { assert, fail } from 'chai';
 const provider = Provider();
 
 describe('Automated test: recommend_debugmode.auto', () => {
   it('has same result as recorded (in recommend_debugmode.auto)', () => {
     assert(
-      Date.now() < +new Date('2021-01-05'),
+      Date.now() < +new Date('2021-01-07'),
       'Please recreate the automatically generated unit tests, such that the mock data does not come out of sync with the actual services. See README.md for details.'
     );
     context.mockData = mockData;

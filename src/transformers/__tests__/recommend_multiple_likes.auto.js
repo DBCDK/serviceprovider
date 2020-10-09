@@ -1,4 +1,4 @@
-// AUTOTEST GENERATOR: {"endpoint":"recommend","params":{"like":["870970-basis:45488713","870970-basis:28643713'","870970-basis:29494940","870970-basis:29386404","870970-basis:28429576"],"limit":10}}
+// AUTOTEST GENERATOR: {"endpoint":"recommend","params":{"like":["870970-basis:45488713","870970-basis:28643713","870970-basis:29494940","870970-basis:29386404","870970-basis:28429576"],"limit":10}}
 //
 //
 // AUTOMATED UNIT TEST
@@ -9,7 +9,7 @@ const endpoint = 'recommend';
 const params = {
   like: [
     '870970-basis:45488713',
-    "870970-basis:28643713'",
+    '870970-basis:28643713',
     '870970-basis:29494940',
     '870970-basis:29386404',
     '870970-basis:28429576'
@@ -25,26 +25,26 @@ const expected = {
       val: 0.5461945734602851,
       from: ['work:997958']
     },
-    {pid: '870970-basis:48135676', val: 8, from: ['work:1587468']},
-    {pid: '870970-basis:52284120', val: 322, from: ['work:1400234']},
-    {pid: '870970-basis:29743681', val: 244, from: ['work:1400234']},
+    { pid: '870970-basis:48135676', val: 8, from: ['work:1587468'] },
+    { pid: '870970-basis:52284120', val: 323, from: ['work:1400234'] },
+    { pid: '870970-basis:29743681', val: 244, from: ['work:1400234'] },
     {
       pid: '870970-basis:29344396',
       val: 0.5398547380852825,
       from: ['work:997958']
     },
-    {pid: '870970-basis:48127312', val: 7, from: ['work:1587468']},
-    {pid: '870970-basis:50946746', val: 7, from: ['work:1587468']},
-    {pid: '870970-basis:48241905', val: 6, from: ['work:1587468']},
     {
-      pid: '870970-basis:50946800',
-      val: 0.3891770940906558,
-      from: ['work:1400234']
+      pid: '870970-basis:50593363',
+      val: 0.4914079043209908,
+      from: ['work:946681']
     },
+    { pid: '870970-basis:50946746', val: 7, from: ['work:1587468'] },
+    { pid: '870970-basis:48127312', val: 221, from: ['work:1587468'] },
+    { pid: '870970-basis:48241905', val: 6, from: ['work:1587468'] },
     {
-      pid: '870970-basis:50552462',
-      val: 0.3835067459790095,
-      from: ['work:1400234']
+      pid: '870970-basis:50690962',
+      val: 0.4388958372430535,
+      from: ['work:946681']
     }
   ]
 };
@@ -70,13 +70,13 @@ const context = {
       'http://holdings-items-content-service.cisterne.svc.cloud.dbc.dk/holdings-items-content-service/api',
     infomediaservice: 'http://infomedia.mcp1-proxy.dbc.dk/server.php'
   },
-  infomedia: {userId: 'XXXXX', libraryCode: 'XXXXX'},
-  cicero: {'DK-710100': 'XXXXX'},
-  performance: {username: 'XXXXX', password: 'XXXXX'},
-  communityservice: {id: 1},
-  search: {agency: '775100', profile: 'opac', collectionidentifiers: ''},
-  storage: {user: 'XXXXX'},
-  netpunkt: {user: 'XXXXX', group: 'XXXXX', password: 'XXXXX'},
+  infomedia: { userId: 'XXXXX', libraryCode: 'XXXXX' },
+  cicero: { 'DK-710100': 'XXXXX' },
+  performance: { username: 'XXXXX', password: 'XXXXX' },
+  communityservice: { id: 1 },
+  search: { agency: '775100', profile: 'opac', collectionidentifiers: '' },
+  storage: { user: 'XXXXX' },
+  netpunkt: { user: 'XXXXX', group: 'XXXXX', password: 'XXXXX' },
   user: {
     id: 'XXXXX',
     salt: 'XXXXX',
@@ -93,7 +93,7 @@ const context = {
   }
 };
 const mockData = {
-  '["http://booklens-190101-1-0.mi-prod.svc.cloud.dbc.dk/",{"method":"post","json":{"like":["870970-basis:45488713","870970-basis:28643713\'","870970-basis:29494940","870970-basis:29386404","870970-basis:28429576"],"limit":10}}]': {
+  '["http://booklens-190101-1-0.mi-prod.svc.cloud.dbc.dk/",{"method":"post","json":{"like":["870970-basis:45488713","870970-basis:28643713","870970-basis:29494940","870970-basis:29386404","870970-basis:28429576"],"limit":10}}]': {
     responseHeader: {
       build: 'HEAD',
       git: 'HEAD',
@@ -101,12 +101,11 @@ const mockData = {
       'ab-id': 1,
       recommender: '190101',
       timings: {
-        'read-from-db': 154.355,
-        'filter-candidates': 7.271,
-        recommend: 164.56799999999998
+        'read-from-db': 155.311,
+        'filter-candidates': 742.666,
+        recommend: 906.172
       },
-      warnings: ["Unknown pid: 870970-basis:28643713'"],
-      time: 165.296
+      time: 906.568
     },
     response: [
       {
@@ -126,7 +125,7 @@ const mockData = {
       {
         pid: '870970-basis:52284120',
         work: 'work:1408396',
-        value: 322,
+        value: 323,
         seed: 'work:1400234',
         reader: '_190101_search_clicks'
       },
@@ -145,11 +144,11 @@ const mockData = {
         reader: '_190101_loans_norm'
       },
       {
-        pid: '870970-basis:48127312',
-        work: 'work:2898240',
-        value: 7,
-        seed: 'work:1587468',
-        reader: '_190101_metacompass'
+        pid: '870970-basis:50593363',
+        work: 'work:969734',
+        value: 0.4914079043209908,
+        seed: 'work:946681',
+        reader: '_190101_loans_norm'
       },
       {
         pid: '870970-basis:50946746',
@@ -159,6 +158,13 @@ const mockData = {
         reader: '_190101_metacompass'
       },
       {
+        pid: '870970-basis:48127312',
+        work: 'work:2898240',
+        value: 221,
+        seed: 'work:1587468',
+        reader: '_190101_search_clicks'
+      },
+      {
         pid: '870970-basis:48241905',
         work: 'work:31991321',
         value: 6,
@@ -166,17 +172,10 @@ const mockData = {
         reader: '_190101_metacompass'
       },
       {
-        pid: '870970-basis:50946800',
-        work: 'work:1399529',
-        value: 0.3891770940906558,
-        seed: 'work:1400234',
-        reader: '_190101_loans_norm'
-      },
-      {
-        pid: '870970-basis:50552462',
-        work: 'work:1020878',
-        value: 0.3835067459790095,
-        seed: 'work:1400234',
+        pid: '870970-basis:50690962',
+        work: 'work:923309',
+        value: 0.4388958372430535,
+        seed: 'work:946681',
         reader: '_190101_loans_norm'
       }
     ]
@@ -184,13 +183,13 @@ const mockData = {
 };
 
 import Provider from '../../provider/Provider.js';
-import {assert, fail} from 'chai';
+import { assert, fail } from 'chai';
 const provider = Provider();
 
 describe('Automated test: recommend_multiple_likes.auto', () => {
   it('has same result as recorded (in recommend_multiple_likes.auto)', () => {
     assert(
-      Date.now() < +new Date('2021-01-05'),
+      Date.now() < +new Date('2021-01-07'),
       'Please recreate the automatically generated unit tests, such that the mock data does not come out of sync with the actual services. See README.md for details.'
     );
     context.mockData = mockData;
