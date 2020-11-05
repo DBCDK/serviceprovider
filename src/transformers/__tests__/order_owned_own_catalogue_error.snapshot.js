@@ -48,7 +48,9 @@ const context = {
     clientid: 'XXXXX',
     ddbcmsapipassword: 'XXXXX',
     orderpolicyrequester: '190101',
-    orderSystem: 'bibliotekdk'
+    orderSystem: 'bibliotekdk',
+    ips: ['10.10.10.0'],
+    access_token: 'qwerty'
   }
 };
 const mockData = {

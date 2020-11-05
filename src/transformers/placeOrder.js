@@ -181,11 +181,11 @@ function placeOrder(request, context) {
     const owning_user = `${context.get('user.id')}/${userAgencyId}`;
     const ips = context.get('app.ips');
     const accessing_user = {
-      login_token: request.access_token
+      login_token: context.get('app.access_token')
     };
 
     const accessInfo = {
-      placeOrder: body.orderPlaced[0].orderId[0]
+      place_order: body.orderPlaced[0].orderId[0]
     };
 
     // auditTrace placeOrder

@@ -158,7 +158,7 @@ export default (request, context) => {
       const owning_user = `${context.get('user.id')}/${userAgencyId}`;
       const ips = context.get('app.ips');
       const accessing_user = {
-        login_token: request.access_token
+        login_token: context.get('app.access_token')
       };
 
       // auditTrace log for accessing userData

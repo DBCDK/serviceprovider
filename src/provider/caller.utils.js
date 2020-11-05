@@ -74,7 +74,8 @@ const whitelist = {
   },
   app: {
     orderpolicyrequester: true,
-    orderSystem: true
+    orderSystem: true,
+    ips: true
   }
 };
 
