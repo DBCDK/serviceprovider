@@ -6,6 +6,10 @@
  *
  */
 import {extend} from 'lodash';
+import {auditTrace, ACTIONS} from '@dbcdk/dbc-audittrail-logger';
+import {getIdFromIsil} from './utils/isil.utils';
+import {appId} from '../utils/config';
+
 var parseString = require('xml2js').parseString;
 var stripNS = require('xml2js').processors.stripPrefix;
 
@@ -169,6 +173,31 @@ function placeOrder(request, context) {
     if (!body.orderPlaced) {
       return {statusCode: 500, error: 'Unknown error occured'};
     }
+
+    const userAgencyId = getIdFromIsil(context.get('user.agency', true));
+
+    // Audit log info
+    const applicationName = appId;
+    const owning_user = `${context.get('user.id')}/${userAgencyId}`;
+    const ips = context.get('app.ips');
+    const accessing_user = {
+      login_token: request.access_token
+    };
+
+    const accessInfo = {
+      placeOrder: body.orderPlaced[0].orderId[0]
+    };
+
+    // auditTrace placeOrder
+    auditTrace(
+      ACTIONS.write,
+      applicationName,
+      ips,
+      accessing_user,
+      owning_user,
+      accessInfo
+    );
+
     return {
       statusCode: 200,
       data: {status: 'ok', orsId: body.orderPlaced[0].orderId[0]}

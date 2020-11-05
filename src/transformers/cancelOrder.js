@@ -4,8 +4,11 @@
  *
  * Wraps cancelOrder functionality of openorder backend.
  */
+import {auditTrace, ACTIONS} from '@dbcdk/dbc-audittrail-logger';
+
 import {log} from '../utils';
 import {getIdFromIsil} from './utils/isil.utils';
+import {appId} from '../utils/config';
 
 /**
  * Validate parameters
@@ -90,16 +93,40 @@ export default (request, context) => {
   let orderType = request.orderType;
   let orderId = request.orderId;
 
+  const userAgencyId = getIdFromIsil(context.get('user.agency', true));
+
   let params = {
     'cancelOrder.orderId': orderId,
     'cancelOrder.orderType': orderType,
-    agencyId: getIdFromIsil(context.get('user.agency', true)),
+    agencyId: userAgencyId,
     userId: context.get('user.id'),
     userPincode: context.get('user.pin'),
     'authentication.groupIdAut': context.get('netpunkt.group', true),
     'authentication.passwordAut': context.get('netpunkt.password', true),
     'authentication.userIdAut': context.get('netpunkt.user', true)
   };
+
+  // Audit log info
+  const applicationName = appId;
+  const owning_user = `${context.get('user.id')}/${userAgencyId}`;
+  const ips = context.get('app.ips');
+  const accessing_user = {
+    login_token: request.access_token
+  };
+
+  const accessInfo = {
+    cancelOrder: orderId
+  };
+
+  // auditTrace for cancelOrder
+  auditTrace(
+    ACTIONS.write,
+    applicationName,
+    ips,
+    accessing_user,
+    owning_user,
+    accessInfo
+  );
 
   let soap = constructSoap(params);
 

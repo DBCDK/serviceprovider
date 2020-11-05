@@ -73,6 +73,7 @@ export function getContextMiddleware(req, res, next) {
     .then(context => {
       req.authorized = true;
       req.context = context;
+      req.context.app.ips = req.ips.length || [req.ip];
       res.logData.clientId = context.app.clientId;
       return next();
     })

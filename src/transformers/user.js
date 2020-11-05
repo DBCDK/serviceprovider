@@ -4,8 +4,10 @@
  *
  * Wraps userstatus backend.
  */
+import {auditTrace, ACTIONS} from '@dbcdk/dbc-audittrail-logger';
 import {pbkdf2} from 'crypto';
 import {getIdFromIsil} from './utils/isil.utils';
+import {appId} from '../utils/config';
 
 /**
  * Maps loan item from backend response to serviceprovider api
@@ -150,6 +152,26 @@ export default (request, context) => {
           error: body.data.getUserStatusResponse.getUserStatusError.$
         });
       }
+
+      // Audit log info
+      const applicationName = appId;
+      const owning_user = `${context.get('user.id')}/${userAgencyId}`;
+      const ips = context.get('app.ips');
+      const accessing_user = {
+        login_token: request.access_token
+      };
+
+      // auditTrace log for accessing userData
+      auditTrace(
+        ACTIONS.read,
+        applicationName,
+        ips,
+        accessing_user,
+        owning_user,
+        {
+          user_status: owning_user
+        }
+      );
 
       const data = {
         id: id.toString('base64')
