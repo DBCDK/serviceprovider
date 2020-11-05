@@ -4,6 +4,7 @@
  *
  * Wraps openorder backend.
  */
+
 import cancelOrder from './cancelOrder';
 import placeOrder from './placeOrder';
 import {log} from '../utils';
@@ -32,5 +33,6 @@ export default (request, context) => {
   if (request.delete && request.delete !== 'false') {
     return cancelOrder(request, context);
   }
+
   return placeOrder(request, context);
 };

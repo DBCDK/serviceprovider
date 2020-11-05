@@ -41,7 +41,9 @@ let context = {
   app: {
     clientid: 'XXXXX',
     ddbcmsapipassword: 'XXXXX',
-    orderpolicyrequester: '190101'
+    orderpolicyrequester: '190101',
+    ips: ['10.10.10.0'],
+    access_token: 'qwerty'
   }
 };
 let provider = Provider();
