@@ -26,7 +26,7 @@ export default async function getRecommendations(params, context) {
   if (result.response) {
     // Rewrite new api props to previous api props
     const data = result.response.map(
-      ({ pid, val, from, value, work, title, creator, reader, seed }) => {
+      ({pid, val, from, value, work, title, creator, reader, seed}) => {
         // basic props (always returned)
         const obj = {
           pid,
@@ -54,5 +54,5 @@ export default async function getRecommendations(params, context) {
     };
   }
 
-  return { statusCode: result.statusCode, error: result.value };
+  return {statusCode: result.statusCode, error: result.value};
 }
