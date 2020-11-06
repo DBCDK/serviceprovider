@@ -6,16 +6,7 @@
  */
 export default async function getRecommendations(params, context) {
   const request = {};
-  for (const key of [
-    'like',
-    'dislike',
-    'offset',
-    'limit',
-    'ignore',
-    'filters',
-    'boosters',
-    'debug'
-  ]) {
+  for (const key of ['like', 'dislike', 'offset', 'limit', 'ignore', 'debug']) {
     if (key) {
       request[key] = params[key];
     }
@@ -35,12 +26,12 @@ export default async function getRecommendations(params, context) {
   if (result.response) {
     // Rewrite new api props to previous api props
     const data = result.response.map(
-      ({pid, value, work, title, creator, reader, seed}) => {
+      ({ pid, val, from, value, work, title, creator, reader, seed }) => {
         // basic props (always returned)
         const obj = {
           pid,
-          val: value,
-          from: [seed]
+          val: val || value,
+          from: from || [seed]
         };
 
         // Add debug props, if in debugmode
@@ -63,5 +54,5 @@ export default async function getRecommendations(params, context) {
     };
   }
 
-  return {statusCode: result.statusCode, error: result.value};
+  return { statusCode: result.statusCode, error: result.value };
 }
