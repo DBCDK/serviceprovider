@@ -9,250 +9,851 @@
   "dbcaddi": "http://www.danbib.dk/broend3_relationer/unspecified/",
   "dbcbib": "http://www.danbib.dk/broend3_relationer/unspecified/",
   "of": "http://openformat-php-develop.frontend-features.svc.cloud.dbc.dk/server.php",
-
-  "abstract": {"@id": "dcterms:abstract"},
-  "accessType": {"@id": "bd:accessType"},
-  "activity": {"@id": "ac:activity"},
-  "alternative": {"@id": "dcterms:alternative"},
-  "audienceAge": {"@id": "dcterms:audience", "@type": "dkdcplus:age"},
-  "audience": {"@id": "dcterms:audience"},
+  "abstract": {
+    "@id": "dcterms:abstract"
+  },
+  "accessType": {
+    "@id": "bd:accessType"
+  },
+  "activity": {
+    "@id": "ac:activity"
+  },
+  "alternative": {
+    "@id": "dcterms:alternative"
+  },
+  "audienceAge": {
+    "@id": "dcterms:audience",
+    "@type": "dkdcplus:age"
+  },
+  "audience": {
+    "@id": "dcterms:audience"
+  },
   "audienceMedieraad": {
     "@id": "dcterms:audience",
     "@type": "dkdcplus:medieraad"
   },
-  "audiencePegi": {"@id": "dcterms:audience", "@type": "dkdcplus:pegi"},
-  "collection": {"@id": "os:collection"},
-  "collectionDetails": {"@id": "os:collectionBriefDisplay"},
-  "continuedIn": {"@id": "dbcaddi:continuedIn"},
-  "continues": {"@id": "dbcaddi:continues"},
-  "contributorAct": {"@id": "dc:contributor", "@type": "dkdcplus:act"},
-  "contributorAft": {"@id": "dc:contributor", "@type": "dkdcplus:aft"},
-  "contributorAnm": {"@id": "dc:contributor", "@type": "dkdcplus:anm"},
-  "contributorAnt": {"@id": "dc:contributor", "@type": "dkdcplus:ant"},
-  "contributorArc": {"@id": "dc:contributor", "@type": "dkdcplus:arc"},
-  "contributorArr": {"@id": "dc:contributor", "@type": "dkdcplus:arr"},
-  "contributorArt": {"@id": "dc:contributor", "@type": "dkdcplus:art"},
-  "contributorAud": {"@id": "dc:contributor", "@type": "dkdcplus:aud"},
-  "contributorAui": {"@id": "dc:contributor", "@type": "dkdcplus:aui"},
-  "contributorAus": {"@id": "dc:contributor", "@type": "dkdcplus:aus"},
-  "contributorAut": {"@id": "dc:contributor", "@type": "dkdcplus:aut"},
-  "contributorCcp": {"@id": "dc:contributor", "@type": "dkdcplus:ccp"},
-  "contributorChr": {"@id": "dc:contributor", "@type": "dkdcplus:chr"},
-  "contributorClb": {"@id": "dc:contributor", "@type": "dkdcplus:clb"},
-  "contributorCli": {"@id": "dc:contributor", "@type": "dkdcplus:cli"},
-  "contributorCll": {"@id": "dc:contributor", "@type": "dkdcplus:cll"},
-  "contributorCmm": {"@id": "dc:contributor", "@type": "dkdcplus:cmm"},
-  "contributorCmp": {"@id": "dc:contributor", "@type": "dkdcplus:cmp"},
-  "contributorCnd": {"@id": "dc:contributor", "@type": "dkdcplus:cnd"},
-  "contributorCng": {"@id": "dc:contributor", "@type": "dkdcplus:cng"},
-  "contributorCom": {"@id": "dc:contributor", "@type": "dkdcplus:com"},
-  "contributorCre": {"@id": "dc:contributor", "@type": "dkdcplus:cre"},
-  "contributorCtb": {"@id": "dc:contributor", "@type": "dkdcplus:ctb"},
-  "contributorCtg": {"@id": "dc:contributor", "@type": "dkdcplus:ctg"},
-  "contributorCur": {"@id": "dc:contributor", "@type": "dkdcplus:cur"},
-  "contributorCwt": {"@id": "dc:contributor", "@type": "dkdcplus:cwt"},
-  "contributorDkani": {"@id": "dc:contributor", "@type": "dkdcplus:dkani"},
-  "contributorDkbea": {"@id": "dc:contributor", "@type": "dkdcplus:dkbea"},
-  "contributorDkdes": {"@id": "dc:contributor", "@type": "dkdcplus:dkdes"},
-  "contributorDkfig": {"@id": "dc:contributor", "@type": "dkdcplus:dkfig"},
-  "contributorDkfvl": {"@id": "dc:contributor", "@type": "dkdcplus:dkfvl"},
-  "contributorDkind": {"@id": "dc:contributor", "@type": "dkdcplus:dkind"},
-  "contributorDkmdt": {"@id": "dc:contributor", "@type": "dkdcplus:dkmdt"},
-  "contributorDkmed": {"@id": "dc:contributor", "@type": "dkdcplus:dkmed"},
-  "contributorDkmon": {"@id": "dc:contributor", "@type": "dkdcplus:dkmon"},
-  "contributorDkops": {"@id": "dc:contributor", "@type": "dkdcplus:dkops"},
-  "contributorDkref": {"@id": "dc:contributor", "@type": "dkdcplus:dkref"},
-  "contributorDkste": {"@id": "dc:contributor", "@type": "dkdcplus:dkste"},
-  "contributorDktek": {"@id": "dc:contributor", "@type": "dkdcplus:dktek"},
-  "contributorDktil": {"@id": "dc:contributor", "@type": "dkdcplus:dktil"},
-  "contributorDkved": {"@id": "dc:contributor", "@type": "dkdcplus:dkved"},
-  "contributorDrm": {"@id": "dc:contributor", "@type": "dkdcplus:drm"},
-  "contributorDte": {"@id": "dc:contributor", "@type": "dkdcplus:dte"},
-  "contributorEdt": {"@id": "dc:contributor", "@type": "dkdcplus:edt"},
-  "contributorFmo": {"@id": "dc:contributor", "@type": "dkdcplus:fmo"},
-  "contributorHnr": {"@id": "dc:contributor", "@type": "dkdcplus:hnr"},
-  "contributor": {"@id": "dc:contributor"},
-  "contributorIll": {"@id": "dc:contributor", "@type": "dkdcplus:ill"},
-  "contributorInv": {"@id": "dc:contributor", "@type": "dkdcplus:inv"},
-  "contributorIsb": {"@id": "dc:contributor", "@type": "dkdcplus:isb"},
-  "contributorItr": {"@id": "dc:contributor", "@type": "dkdcplus:itr"},
-  "contributorIve": {"@id": "dc:contributor", "@type": "dkdcplus:ive"},
-  "contributorIvr": {"@id": "dc:contributor", "@type": "dkdcplus:ivr"},
-  "contributorLbt": {"@id": "dc:contributor", "@type": "dkdcplus:lbt"},
-  "contributorLtg": {"@id": "dc:contributor", "@type": "dkdcplus:ltg"},
-  "contributorLyr": {"@id": "dc:contributor", "@type": "dkdcplus:lyr"},
-  "contributorMus": {"@id": "dc:contributor", "@type": "dkdcplus:mus"},
-  "contributorNrt": {"@id": "dc:contributor", "@type": "dkdcplus:nrt"},
-  "contributorOrm": {"@id": "dc:contributor", "@type": "dkdcplus:orm"},
-  "contributorOth": {"@id": "dc:contributor", "@type": "dkdcplus:oth"},
-  "contributorPbl": {"@id": "dc:contributor", "@type": "dkdcplus:pbl"},
-  "contributorPht": {"@id": "dc:contributor", "@type": "dkdcplus:pht"},
-  "contributorPrd": {"@id": "dc:contributor", "@type": "dkdcplus:prd"},
-  "contributorPrf": {"@id": "dc:contributor", "@type": "dkdcplus:prf"},
-  "contributorPro": {"@id": "dc:contributor", "@type": "dkdcplus:pro"},
+  "audiencePegi": {
+    "@id": "dcterms:audience",
+    "@type": "dkdcplus:pegi"
+  },
+  "collection": {
+    "@id": "os:collection"
+  },
+  "collectionDetails": {
+    "@id": "os:collectionBriefDisplay"
+  },
+  "continuedIn": {
+    "@id": "dbcaddi:continuedIn"
+  },
+  "continues": {
+    "@id": "dbcaddi:continues"
+  },
+  "contributorAct": {
+    "@id": "dc:contributor",
+    "@type": "dkdcplus:act"
+  },
+  "contributorAft": {
+    "@id": "dc:contributor",
+    "@type": "dkdcplus:aft"
+  },
+  "contributorAnm": {
+    "@id": "dc:contributor",
+    "@type": "dkdcplus:anm"
+  },
+  "contributorAnt": {
+    "@id": "dc:contributor",
+    "@type": "dkdcplus:ant"
+  },
+  "contributorArc": {
+    "@id": "dc:contributor",
+    "@type": "dkdcplus:arc"
+  },
+  "contributorArr": {
+    "@id": "dc:contributor",
+    "@type": "dkdcplus:arr"
+  },
+  "contributorArt": {
+    "@id": "dc:contributor",
+    "@type": "dkdcplus:art"
+  },
+  "contributorAud": {
+    "@id": "dc:contributor",
+    "@type": "dkdcplus:aud"
+  },
+  "contributorAui": {
+    "@id": "dc:contributor",
+    "@type": "dkdcplus:aui"
+  },
+  "contributorAus": {
+    "@id": "dc:contributor",
+    "@type": "dkdcplus:aus"
+  },
+  "contributorAut": {
+    "@id": "dc:contributor",
+    "@type": "dkdcplus:aut"
+  },
+  "contributorCcp": {
+    "@id": "dc:contributor",
+    "@type": "dkdcplus:ccp"
+  },
+  "contributorChr": {
+    "@id": "dc:contributor",
+    "@type": "dkdcplus:chr"
+  },
+  "contributorClb": {
+    "@id": "dc:contributor",
+    "@type": "dkdcplus:clb"
+  },
+  "contributorCli": {
+    "@id": "dc:contributor",
+    "@type": "dkdcplus:cli"
+  },
+  "contributorCll": {
+    "@id": "dc:contributor",
+    "@type": "dkdcplus:cll"
+  },
+  "contributorCmm": {
+    "@id": "dc:contributor",
+    "@type": "dkdcplus:cmm"
+  },
+  "contributorCmp": {
+    "@id": "dc:contributor",
+    "@type": "dkdcplus:cmp"
+  },
+  "contributorCnd": {
+    "@id": "dc:contributor",
+    "@type": "dkdcplus:cnd"
+  },
+  "contributorCng": {
+    "@id": "dc:contributor",
+    "@type": "dkdcplus:cng"
+  },
+  "contributorCom": {
+    "@id": "dc:contributor",
+    "@type": "dkdcplus:com"
+  },
+  "contributorCre": {
+    "@id": "dc:contributor",
+    "@type": "dkdcplus:cre"
+  },
+  "contributorCtb": {
+    "@id": "dc:contributor",
+    "@type": "dkdcplus:ctb"
+  },
+  "contributorCtg": {
+    "@id": "dc:contributor",
+    "@type": "dkdcplus:ctg"
+  },
+  "contributorCur": {
+    "@id": "dc:contributor",
+    "@type": "dkdcplus:cur"
+  },
+  "contributorCwt": {
+    "@id": "dc:contributor",
+    "@type": "dkdcplus:cwt"
+  },
+  "contributorDkani": {
+    "@id": "dc:contributor",
+    "@type": "dkdcplus:dkani"
+  },
+  "contributorDkbea": {
+    "@id": "dc:contributor",
+    "@type": "dkdcplus:dkbea"
+  },
+  "contributorDkdes": {
+    "@id": "dc:contributor",
+    "@type": "dkdcplus:dkdes"
+  },
+  "contributorDkfig": {
+    "@id": "dc:contributor",
+    "@type": "dkdcplus:dkfig"
+  },
+  "contributorDkfvl": {
+    "@id": "dc:contributor",
+    "@type": "dkdcplus:dkfvl"
+  },
+  "contributorDkind": {
+    "@id": "dc:contributor",
+    "@type": "dkdcplus:dkind"
+  },
+  "contributorDkmdt": {
+    "@id": "dc:contributor",
+    "@type": "dkdcplus:dkmdt"
+  },
+  "contributorDkmed": {
+    "@id": "dc:contributor",
+    "@type": "dkdcplus:dkmed"
+  },
+  "contributorDkmon": {
+    "@id": "dc:contributor",
+    "@type": "dkdcplus:dkmon"
+  },
+  "contributorDkops": {
+    "@id": "dc:contributor",
+    "@type": "dkdcplus:dkops"
+  },
+  "contributorDkref": {
+    "@id": "dc:contributor",
+    "@type": "dkdcplus:dkref"
+  },
+  "contributorDkste": {
+    "@id": "dc:contributor",
+    "@type": "dkdcplus:dkste"
+  },
+  "contributorDktek": {
+    "@id": "dc:contributor",
+    "@type": "dkdcplus:dktek"
+  },
+  "contributorDktil": {
+    "@id": "dc:contributor",
+    "@type": "dkdcplus:dktil"
+  },
+  "contributorDkved": {
+    "@id": "dc:contributor",
+    "@type": "dkdcplus:dkved"
+  },
+  "contributorDrm": {
+    "@id": "dc:contributor",
+    "@type": "dkdcplus:drm"
+  },
+  "contributorDte": {
+    "@id": "dc:contributor",
+    "@type": "dkdcplus:dte"
+  },
+  "contributorEdt": {
+    "@id": "dc:contributor",
+    "@type": "dkdcplus:edt"
+  },
+  "contributorFmo": {
+    "@id": "dc:contributor",
+    "@type": "dkdcplus:fmo"
+  },
+  "contributorHnr": {
+    "@id": "dc:contributor",
+    "@type": "dkdcplus:hnr"
+  },
+  "contributor": {
+    "@id": "dc:contributor"
+  },
+  "contributorIll": {
+    "@id": "dc:contributor",
+    "@type": "dkdcplus:ill"
+  },
+  "contributorInv": {
+    "@id": "dc:contributor",
+    "@type": "dkdcplus:inv"
+  },
+  "contributorIsb": {
+    "@id": "dc:contributor",
+    "@type": "dkdcplus:isb"
+  },
+  "contributorItr": {
+    "@id": "dc:contributor",
+    "@type": "dkdcplus:itr"
+  },
+  "contributorIve": {
+    "@id": "dc:contributor",
+    "@type": "dkdcplus:ive"
+  },
+  "contributorIvr": {
+    "@id": "dc:contributor",
+    "@type": "dkdcplus:ivr"
+  },
+  "contributorLbt": {
+    "@id": "dc:contributor",
+    "@type": "dkdcplus:lbt"
+  },
+  "contributorLtg": {
+    "@id": "dc:contributor",
+    "@type": "dkdcplus:ltg"
+  },
+  "contributorLyr": {
+    "@id": "dc:contributor",
+    "@type": "dkdcplus:lyr"
+  },
+  "contributorMus": {
+    "@id": "dc:contributor",
+    "@type": "dkdcplus:mus"
+  },
+  "contributorNrt": {
+    "@id": "dc:contributor",
+    "@type": "dkdcplus:nrt"
+  },
+  "contributorOrm": {
+    "@id": "dc:contributor",
+    "@type": "dkdcplus:orm"
+  },
+  "contributorOth": {
+    "@id": "dc:contributor",
+    "@type": "dkdcplus:oth"
+  },
+  "contributorPbl": {
+    "@id": "dc:contributor",
+    "@type": "dkdcplus:pbl"
+  },
+  "contributorPht": {
+    "@id": "dc:contributor",
+    "@type": "dkdcplus:pht"
+  },
+  "contributorPrd": {
+    "@id": "dc:contributor",
+    "@type": "dkdcplus:prd"
+  },
+  "contributorPrf": {
+    "@id": "dc:contributor",
+    "@type": "dkdcplus:prf"
+  },
+  "contributorPro": {
+    "@id": "dc:contributor",
+    "@type": "dkdcplus:pro"
+  },
   "contributorPROVIDERID": {
     "@id": "dc:contributor",
     "@type": "oss:PROVIDER-ID"
   },
-  "contributorPrt": {"@id": "dc:contributor", "@type": "dkdcplus:prt"},
-  "contributorRce": {"@id": "dc:contributor", "@type": "dkdcplus:rce"},
-  "contributorRes": {"@id": "dc:contributor", "@type": "dkdcplus:res"},
-  "contributorRev": {"@id": "dc:contributor", "@type": "dkdcplus:rev"},
-  "contributorScl": {"@id": "dc:contributor", "@type": "dkdcplus:scl"},
-  "contributorSds": {"@id": "dc:contributor", "@type": "dkdcplus:sds"},
-  "contributorSng": {"@id": "dc:contributor", "@type": "dkdcplus:sng"},
-  "contributorSpk": {"@id": "dc:contributor", "@type": "dkdcplus:spk"},
-  "contributorStl": {"@id": "dc:contributor", "@type": "dkdcplus:stl"},
-  "contributorTrl": {"@id": "dc:contributor", "@type": "dkdcplus:trl"},
-  "contributorWdc": {"@id": "dc:contributor", "@type": "dkdcplus:wdc"},
-  "coverDataUrl117": {"@id": "mi:coverDataUrl117"},
-  "coverDataUrl207": {"@id": "mi:coverDataUrl207"},
-  "coverDataUrl42": {"@id": "mi:coverDataUrl42"},
-  "coverDataUrl500": {"@id": "mi:coverDataUrl500"},
-  "coverDataUrlBack": {"@id": "mi:coverDataUrlBack"},
-  "coverDataUrlFull": {"@id": "mi:coverDataUrlFull"},
-  "coverDataUrlThumbnail": {"@id": "mi:coverDataUrlThumbnail"},
-  "coverUrl117": {"@id": "mi:coverUrl117"},
-  "coverUrl207": {"@id": "mi:coverUrl207"},
-  "coverUrl42": {"@id": "mi:coverUrl42"},
-  "coverUrl500": {"@id": "mi:coverUrl500"},
-  "coverUrlBack": {"@id": "mi:coverUrlBack"},
-  "coverUrlFull": {"@id": "mi:coverUrlFull"},
-  "coverUrlThumbnail": {"@id": "mi:coverUrlThumbnail"},
-  "creatorActPeriod": {"@id": "dc:creator", "@type": "dkdcplus:actPeriod"},
-  "creatorAnt": {"@id": "dc:creator", "@type": "dkdcplus:ant"},
-  "creatorArr": {"@id": "dc:creator", "@type": "dkdcplus:arr"},
-  "creatorArt": {"@id": "dc:creator", "@type": "dkdcplus:art"},
-  "creatorAus": {"@id": "dc:creator", "@type": "dkdcplus:aus"},
-  "creatorAut": {"@id": "dc:creator", "@type": "dkdcplus:aut"},
-  "creatorCcp": {"@id": "dc:creator", "@type": "dkdcplus:ccp"},
-  "creatorCmp": {"@id": "dc:creator", "@type": "dkdcplus:cmp"},
-  "creatorCom": {"@id": "dc:creator", "@type": "dkdcplus:com"},
-  "creatorCre": {"@id": "dc:creator", "@type": "dkdcplus:cre"},
-  "creatorDkbea": {"@id": "dc:creator", "@type": "dkdcplus:dkbea"},
-  "creatorDkbra": {"@id": "dc:creator", "@type": "dkdcplus:dkbra"},
-  "creatorDkbrm": {"@id": "dc:creator", "@type": "dkdcplus:dkbrm"},
-  "creatorDkdes": {"@id": "dc:creator", "@type": "dkdcplus:dkdes"},
-  "creatorDkmed": {"@id": "dc:creator", "@type": "dkdcplus:dkmed"},
-  "creatorDkmon": {"@id": "dc:creator", "@type": "dkdcplus:dkmon"},
-  "creatorDkops": {"@id": "dc:creator", "@type": "dkdcplus:dkops"},
-  "creatorDkved": {"@id": "dc:creator", "@type": "dkdcplus:dkved"},
-  "creatorDrm": {"@id": "dc:creator", "@type": "dkdcplus:drm"},
-  "creatorDrt": {"@id": "dc:creator", "@type": "dkdcplus:drt"},
-  "creatorEdt": {"@id": "dc:creator", "@type": "dkdcplus:edt"},
-  "creator": {"@id": "bd:creator"},
-  "dcCreator": {"@id": "dc:creator"},
-  "creatorIll": {"@id": "dc:creator", "@type": "dkdcplus:ill"},
-  "creatorIve": {"@id": "dc:creator", "@type": "dkdcplus:ive"},
-  "creatorIvr": {"@id": "dc:creator", "@type": "dkdcplus:ivr"},
-  "creatorLyr": {"@id": "dc:creator", "@type": "dkdcplus:lyr"},
-  "creatorMus": {"@id": "dc:creator", "@type": "dkdcplus:mus"},
-  "creatorOth": {"@id": "dc:creator", "@type": "dkdcplus:oth"},
-  "creatorPht": {"@id": "dc:creator", "@type": "dkdcplus:pht"},
-  "creatorPROVIDERID": {"@id": "dc:creator", "@type": "oss:PROVIDER-ID"},
-  "creatorScl": {"@id": "dc:creator", "@type": "dkdcplus:scl"},
-  "creatorSng": {"@id": "dc:creator", "@type": "dkdcplus:sng"},
-  "creatorSort": {"@id": "dc:creator", "@type": "oss:sort"},
-  "creatorTrl": {"@id": "dc:creator", "@type": "dkdcplus:trl"},
-  "creatorWdc": {"@id": "dc:creator", "@type": "dkdcplus:wdc"},
-  "date": {"@id": "dc:date"},
-  "description": {"@id": "dc:description"},
-  "descriptionSeries": {"@id": "dc:description", "@type": "dkdcplus:series"},
-  "discussedIn": {"@id": "dbcaddi:discussedIn"},
-  "discusses": {"@id": "dbcaddi:discusses"},
-  "fullTextReviews": {"@id": "docbook:fullTextReviews"},
-  "extent": {"@id": "dcterms:extent"},
-  "fedoraPid": {"@id": "bd:fedoraPid"},
-  "format": {"@id": "dc:format"},
-  "hasAdaptation": {"@id": "dbcaddi:hasAdaptation"},
-  "hasAnalysis": {"@id": "dbcaddi:hasAnalysis"},
-  "hasCreatorDescription": {"@id": "dbcaddi:hasCreatorDescription"},
-  "hasDescriptionFromPublisher": {"@id": "dbcaddi:hasDescriptionFromPublisher"},
-  "hasManuscript": {"@id": "dbcaddi:hasManuscript"},
-  "hasOnlineAccess": {"@id": "dbcaddi:hasOnlineAccess"},
-  "hasPart": {"@id": "dcterms:hasPart"},
-  "hasPartTrack": {"@id": "dcterms:hasPart", "@type": "dkdcplus:track"},
-  "hasReview": {"@id": "dbcaddi:hasReview"},
-  "hasSoundtrack": {"@id": "dbcaddi:hasSoundtrack"},
-  "acIdentifier": {"@id": "ac:identifier"},
-  "pid": {"@id": "bd:identifier"},
-  "identifier": {"@id": "dc:identifier"},
-  "identifierISBN": {"@id": "dc:identifier", "@type": "dkdcplus:ISBN"},
-  "identifierISMN": {"@id": "dc:identifier", "@type": "dkdcplus:ISMN"},
-  "identifierISRC": {"@id": "dc:identifier", "@type": "dkdcplus:ISRC"},
-  "identifierISSN": {"@id": "dc:identifier", "@type": "dkdcplus:ISSN"},
-  "identifierPROVIDERID": {"@id": "dc:identifier", "@type": "oss:PROVIDER-ID"},
+  "contributorPrt": {
+    "@id": "dc:contributor",
+    "@type": "dkdcplus:prt"
+  },
+  "contributorRce": {
+    "@id": "dc:contributor",
+    "@type": "dkdcplus:rce"
+  },
+  "contributorRes": {
+    "@id": "dc:contributor",
+    "@type": "dkdcplus:res"
+  },
+  "contributorRev": {
+    "@id": "dc:contributor",
+    "@type": "dkdcplus:rev"
+  },
+  "contributorScl": {
+    "@id": "dc:contributor",
+    "@type": "dkdcplus:scl"
+  },
+  "contributorSds": {
+    "@id": "dc:contributor",
+    "@type": "dkdcplus:sds"
+  },
+  "contributorSng": {
+    "@id": "dc:contributor",
+    "@type": "dkdcplus:sng"
+  },
+  "contributorSpk": {
+    "@id": "dc:contributor",
+    "@type": "dkdcplus:spk"
+  },
+  "contributorStl": {
+    "@id": "dc:contributor",
+    "@type": "dkdcplus:stl"
+  },
+  "contributorTrl": {
+    "@id": "dc:contributor",
+    "@type": "dkdcplus:trl"
+  },
+  "contributorWdc": {
+    "@id": "dc:contributor",
+    "@type": "dkdcplus:wdc"
+  },
+  "coverDataUrl117": {
+    "@id": "mi:coverDataUrl117"
+  },
+  "coverDataUrl207": {
+    "@id": "mi:coverDataUrl207"
+  },
+  "coverDataUrl42": {
+    "@id": "mi:coverDataUrl42"
+  },
+  "coverDataUrl500": {
+    "@id": "mi:coverDataUrl500"
+  },
+  "coverDataUrlBack": {
+    "@id": "mi:coverDataUrlBack"
+  },
+  "coverDataUrlFull": {
+    "@id": "mi:coverDataUrlFull"
+  },
+  "coverDataUrlThumbnail": {
+    "@id": "mi:coverDataUrlThumbnail"
+  },
+  "coverUrl117": {
+    "@id": "mi:coverUrl117"
+  },
+  "coverUrl207": {
+    "@id": "mi:coverUrl207"
+  },
+  "coverUrl42": {
+    "@id": "mi:coverUrl42"
+  },
+  "coverUrl500": {
+    "@id": "mi:coverUrl500"
+  },
+  "coverUrlBack": {
+    "@id": "mi:coverUrlBack"
+  },
+  "coverUrlFull": {
+    "@id": "mi:coverUrlFull"
+  },
+  "coverUrlThumbnail": {
+    "@id": "mi:coverUrlThumbnail"
+  },
+  "creatorActPeriod": {
+    "@id": "dc:creator",
+    "@type": "dkdcplus:actPeriod"
+  },
+  "creatorAnt": {
+    "@id": "dc:creator",
+    "@type": "dkdcplus:ant"
+  },
+  "creatorArr": {
+    "@id": "dc:creator",
+    "@type": "dkdcplus:arr"
+  },
+  "creatorArt": {
+    "@id": "dc:creator",
+    "@type": "dkdcplus:art"
+  },
+  "creatorAus": {
+    "@id": "dc:creator",
+    "@type": "dkdcplus:aus"
+  },
+  "creatorAut": {
+    "@id": "dc:creator",
+    "@type": "dkdcplus:aut"
+  },
+  "creatorCcp": {
+    "@id": "dc:creator",
+    "@type": "dkdcplus:ccp"
+  },
+  "creatorCmp": {
+    "@id": "dc:creator",
+    "@type": "dkdcplus:cmp"
+  },
+  "creatorCom": {
+    "@id": "dc:creator",
+    "@type": "dkdcplus:com"
+  },
+  "creatorCre": {
+    "@id": "dc:creator",
+    "@type": "dkdcplus:cre"
+  },
+  "creatorDkbea": {
+    "@id": "dc:creator",
+    "@type": "dkdcplus:dkbea"
+  },
+  "creatorDkbra": {
+    "@id": "dc:creator",
+    "@type": "dkdcplus:dkbra"
+  },
+  "creatorDkbrm": {
+    "@id": "dc:creator",
+    "@type": "dkdcplus:dkbrm"
+  },
+  "creatorDkdes": {
+    "@id": "dc:creator",
+    "@type": "dkdcplus:dkdes"
+  },
+  "creatorDkmed": {
+    "@id": "dc:creator",
+    "@type": "dkdcplus:dkmed"
+  },
+  "creatorDkmon": {
+    "@id": "dc:creator",
+    "@type": "dkdcplus:dkmon"
+  },
+  "creatorDkops": {
+    "@id": "dc:creator",
+    "@type": "dkdcplus:dkops"
+  },
+  "creatorDkved": {
+    "@id": "dc:creator",
+    "@type": "dkdcplus:dkved"
+  },
+  "creatorDrm": {
+    "@id": "dc:creator",
+    "@type": "dkdcplus:drm"
+  },
+  "creatorDrt": {
+    "@id": "dc:creator",
+    "@type": "dkdcplus:drt"
+  },
+  "creatorEdt": {
+    "@id": "dc:creator",
+    "@type": "dkdcplus:edt"
+  },
+  "creator": {
+    "@id": "bd:creator"
+  },
+  "dcCreator": {
+    "@id": "dc:creator"
+  },
+  "creatorIll": {
+    "@id": "dc:creator",
+    "@type": "dkdcplus:ill"
+  },
+  "creatorIve": {
+    "@id": "dc:creator",
+    "@type": "dkdcplus:ive"
+  },
+  "creatorIvr": {
+    "@id": "dc:creator",
+    "@type": "dkdcplus:ivr"
+  },
+  "creatorLyr": {
+    "@id": "dc:creator",
+    "@type": "dkdcplus:lyr"
+  },
+  "creatorMus": {
+    "@id": "dc:creator",
+    "@type": "dkdcplus:mus"
+  },
+  "creatorOth": {
+    "@id": "dc:creator",
+    "@type": "dkdcplus:oth"
+  },
+  "creatorPht": {
+    "@id": "dc:creator",
+    "@type": "dkdcplus:pht"
+  },
+  "creatorPROVIDERID": {
+    "@id": "dc:creator",
+    "@type": "oss:PROVIDER-ID"
+  },
+  "creatorScl": {
+    "@id": "dc:creator",
+    "@type": "dkdcplus:scl"
+  },
+  "creatorSng": {
+    "@id": "dc:creator",
+    "@type": "dkdcplus:sng"
+  },
+  "creatorSort": {
+    "@id": "dc:creator",
+    "@type": "oss:sort"
+  },
+  "creatorTrl": {
+    "@id": "dc:creator",
+    "@type": "dkdcplus:trl"
+  },
+  "creatorWdc": {
+    "@id": "dc:creator",
+    "@type": "dkdcplus:wdc"
+  },
+  "date": {
+    "@id": "dc:date"
+  },
+  "description": {
+    "@id": "dc:description"
+  },
+  "descriptionSeries": {
+    "@id": "dc:description",
+    "@type": "dkdcplus:series"
+  },
+  "discussedIn": {
+    "@id": "dbcaddi:discussedIn"
+  },
+  "discusses": {
+    "@id": "dbcaddi:discusses"
+  },
+  "fullTextReviews": {
+    "@id": "docbook:fullTextReviews"
+  },
+  "extent": {
+    "@id": "dcterms:extent"
+  },
+  "fedoraPid": {
+    "@id": "bd:fedoraPid"
+  },
+  "format": {
+    "@id": "dc:format"
+  },
+  "hasAdaptation": {
+    "@id": "dbcaddi:hasAdaptation"
+  },
+  "hasAnalysis": {
+    "@id": "dbcaddi:hasAnalysis"
+  },
+  "hasCreatorDescription": {
+    "@id": "dbcaddi:hasCreatorDescription"
+  },
+  "hasDescriptionFromPublisher": {
+    "@id": "dbcaddi:hasDescriptionFromPublisher"
+  },
+  "hasManuscript": {
+    "@id": "dbcaddi:hasManuscript"
+  },
+  "hasOpenUrl": {
+    "@id": "dbcaddi:hasOpenUrl"
+  },
+  "hasOnlineAccess": {
+    "@id": "dbcaddi:hasOnlineAccess"
+  },
+  "hasPart": {
+    "@id": "dcterms:hasPart"
+  },
+  "hasPartTrack": {
+    "@id": "dcterms:hasPart",
+    "@type": "dkdcplus:track"
+  },
+  "hasReview": {
+    "@id": "dbcaddi:hasReview"
+  },
+  "hasSoundtrack": {
+    "@id": "dbcaddi:hasSoundtrack"
+  },
+  "acIdentifier": {
+    "@id": "ac:identifier"
+  },
+  "pid": {
+    "@id": "bd:identifier"
+  },
+  "identifier": {
+    "@id": "dc:identifier"
+  },
+  "identifierISBN": {
+    "@id": "dc:identifier",
+    "@type": "dkdcplus:ISBN"
+  },
+  "identifierISMN": {
+    "@id": "dc:identifier",
+    "@type": "dkdcplus:ISMN"
+  },
+  "identifierISRC": {
+    "@id": "dc:identifier",
+    "@type": "dkdcplus:ISRC"
+  },
+  "identifierISSN": {
+    "@id": "dc:identifier",
+    "@type": "dkdcplus:ISSN"
+  },
+  "identifierPROVIDERID": {
+    "@id": "dc:identifier",
+    "@type": "oss:PROVIDER-ID"
+  },
   "identifierPROVIDERMID": {
     "@id": "dc:identifier",
     "@type": "oss:PROVIDER-MID"
   },
-  "identifierUPC": {"@id": "dc:identifier", "@type": "dkdcplus:UPC"},
-  "identifierURI": {"@id": "dc:identifier", "@type": "dcterms:URI"},
-  "isAdaptationOf": {"@id": "dbcaddi:isAdaptationOf"},
-  "isAnalysisOf": {"@id": "dbcaddi:isAnalysisOf"},
+  "identifierUPC": {
+    "@id": "dc:identifier",
+    "@type": "dkdcplus:UPC"
+  },
+  "identifierURI": {
+    "@id": "dc:identifier",
+    "@type": "dcterms:URI"
+  },
+  "isAdaptationOf": {
+    "@id": "dbcaddi:isAdaptationOf"
+  },
+  "isAnalysisOf": {
+    "@id": "dbcaddi:isAnalysisOf"
+  },
   "isDescriptionFromPublisherOf": {
     "@id": "dbcaddi:isDescriptionFromPublisherOf"
   },
-  "isManuscriptOf": {"@id": "dbcaddi:isManuscriptOf"},
-  "isPartOfAlbumId": {"@id": "dcterms:isPartOf", "@type": "dkdcplus:albumId"},
+  "isManuscriptOf": {
+    "@id": "dbcaddi:isManuscriptOf"
+  },
+  "isPartOfAlbumId": {
+    "@id": "dcterms:isPartOf",
+    "@type": "dkdcplus:albumId"
+  },
   "isPartOfAlbumTitle": {
     "@id": "dcterms:isPartOf",
     "@type": "dkdcplus:albumTitle"
   },
-  "isPartOf": {"@id": "dcterms:isPartOf"},
-  "isPartOfISBN": {"@id": "dcterms:isPartOf", "@type": "dkdcplus:ISBN"},
-  "isPartOfISSN": {"@id": "dcterms:isPartOf", "@type": "dkdcplus:ISSN"},
-  "isPartOfManifestation": {"@id": "dbcbib:isPartOfManifestation"},
-  "isReplacedBy": {"@id": "dcterms:isReplacedBy"},
-  "isReviewOf": {"@id": "dbcaddi:isReviewOf"},
-  "isSoundtrackOfGame": {"@id": "dbcaddi:isSoundtrackOfGame"},
-  "isSoundtrackOfMovie": {"@id": "dbcaddi:isSoundtrackOfMovie"},
-  "language": {"@id": "bd:language"},
-  "dcLanguage": {"@id": "dc:language"},
-  "languageISO6392": {"@id": "dc:language", "@type": "dcterms:ISO639-2"},
-  "languageSpoken": {"@id": "dc:language", "@type": "dkdcplus:spoken"},
-  "languageSubtitles": {"@id": "dc:language", "@type": "dkdcplus:subtitles"},
-  "multiVolumeType": {"@id": "bd:multiVolumeType"},
-  "partOf": {"@id": "bd:partOf"},
-  "publisher": {"@id": "dc:publisher"},
-  "referencesISBN": {"@id": "dcterms:references", "@type": "dkdcplus:ISBN"},
-  "replaces": {"@id": "dcterms:replaces"},
-  "rights": {"@id": "dc:rights"},
-  "shelfMusicshelf": {"@id": "dkdcplus:shelf", "@type": "oss:musicshelf"},
-  "acSource": {"@id": "ac:source"},
-  "source": {"@id": "dc:source"},
-  "spatialCoordinates": {"@id": "dcterms:spatial", "@type": "kml:coordinates"},
-  "spatialDBCF": {"@id": "dcterms:spatial", "@type": "dkdcplus:DBCF"},
-  "spatialDBCM": {"@id": "dcterms:spatial", "@type": "dkdcplus:DBCM"},
-  "spatialDBCS": {"@id": "dcterms:spatial", "@type": "dkdcplus:DBCS"},
-  "spatial": {"@id": "dcterms:spatial"},
-  "subjectDBCF": {"@id": "dc:subject", "@type": "dkdcplus:DBCF"},
-  "subjectDBCM": {"@id": "dc:subject", "@type": "dkdcplus:DBCM"},
-  "subjectDBCN": {"@id": "dc:subject", "@type": "dkdcplus:DBCN"},
-  "subjectDBCO": {"@id": "dc:subject", "@type": "dkdcplus:DBCO"},
-  "subjectDBCS": {"@id": "dc:subject", "@type": "dkdcplus:DBCS"},
-  "subjectDK5": {"@id": "dc:subject", "@type": "dkdcplus:DK5"},
-  "subjectDK5Text": {"@id": "dc:subject", "@type": "dkdcplus:DK5-Text"},
-  "subjectGenre": {"@id": "dc:subject", "@type": "dkdcplus:genre"},
-  "subject": {"@id": "dc:subject"},
-  "subjectLCSH": {"@id": "dc:subject", "@type": "dcterms:LCSH"},
-  "subjectSort": {"@id": "dc:subject", "@type": "oss:sort"},
-  "temporalDBCM": {"@id": "dcterms:temporal", "@type": "dkdcplus:DBCM"},
-  "temporalDBCP": {"@id": "dcterms:temporal", "@type": "dkdcplus:DBCP"},
-  "temporal": {"@id": "dcterms:temporal"},
-  "titleFull": {"@id": "bd:titleFull"},
-  "dcTitleFull": {"@id": "dc:title", "@type": "dkdcplus:full"},
-  "title": {"@id": "bd:title"},
-  "dcTitle": {"@id": "dc:title"},
-  "titleSeries": {"@id": "dc:title", "@type": "dkdcplus:series"},
-  "typeBibDKType": {"@id": "dc:type", "@type": "dkdcplus:BibDK-Type"},
-  "type": {"@id": "bd:type"},
-  "version": {"@id": "dkdcplus:version"},
-  "workType": {"@id": "bd:workType"},
-  "lix": {"@id": "of:lix"},
-  "shelfmark": {"@id": "of:ddb_shelfmark"},
-  "shelfmarkPrefix": {"@id": "of:ddb_shelfmark_prefix"},
-  "artesisShelfmark": {"@id": "of:artesis_shelfmark"},
-  "artesisShelfmarkPrefix": {"@id": "of:artesis_shelfmark_prefix"},
-  "artesisShelfmarkExtra": {"@id": "of:artesis_shelfmark_extra"}
+  "isPartOf": {
+    "@id": "dcterms:isPartOf"
+  },
+  "isPartOfISBN": {
+    "@id": "dcterms:isPartOf",
+    "@type": "dkdcplus:ISBN"
+  },
+  "isPartOfISSN": {
+    "@id": "dcterms:isPartOf",
+    "@type": "dkdcplus:ISSN"
+  },
+  "isPartOfManifestation": {
+    "@id": "dbcbib:isPartOfManifestation"
+  },
+  "isReplacedBy": {
+    "@id": "dcterms:isReplacedBy"
+  },
+  "isReviewOf": {
+    "@id": "dbcaddi:isReviewOf"
+  },
+  "isSoundtrackOfGame": {
+    "@id": "dbcaddi:isSoundtrackOfGame"
+  },
+  "isSoundtrackOfMovie": {
+    "@id": "dbcaddi:isSoundtrackOfMovie"
+  },
+  "language": {
+    "@id": "bd:language"
+  },
+  "dcLanguage": {
+    "@id": "dc:language"
+  },
+  "languageISO6392": {
+    "@id": "dc:language",
+    "@type": "dcterms:ISO639-2"
+  },
+  "languageSpoken": {
+    "@id": "dc:language",
+    "@type": "dkdcplus:spoken"
+  },
+  "languageSubtitles": {
+    "@id": "dc:language",
+    "@type": "dkdcplus:subtitles"
+  },
+  "multiVolumeType": {
+    "@id": "bd:multiVolumeType"
+  },
+  "partOf": {
+    "@id": "bd:partOf"
+  },
+  "publisher": {
+    "@id": "dc:publisher"
+  },
+  "referencesISBN": {
+    "@id": "dcterms:references",
+    "@type": "dkdcplus:ISBN"
+  },
+  "replaces": {
+    "@id": "dcterms:replaces"
+  },
+  "rights": {
+    "@id": "dc:rights"
+  },
+  "shelfMusicshelf": {
+    "@id": "dkdcplus:shelf",
+    "@type": "oss:musicshelf"
+  },
+  "acSource": {
+    "@id": "ac:source"
+  },
+  "source": {
+    "@id": "dc:source"
+  },
+  "spatialCoordinates": {
+    "@id": "dcterms:spatial",
+    "@type": "kml:coordinates"
+  },
+  "spatialDBCF": {
+    "@id": "dcterms:spatial",
+    "@type": "dkdcplus:DBCF"
+  },
+  "spatialDBCM": {
+    "@id": "dcterms:spatial",
+    "@type": "dkdcplus:DBCM"
+  },
+  "spatialDBCS": {
+    "@id": "dcterms:spatial",
+    "@type": "dkdcplus:DBCS"
+  },
+  "spatial": {
+    "@id": "dcterms:spatial"
+  },
+  "subjectDBCF": {
+    "@id": "dc:subject",
+    "@type": "dkdcplus:DBCF"
+  },
+  "subjectDBCM": {
+    "@id": "dc:subject",
+    "@type": "dkdcplus:DBCM"
+  },
+  "subjectDBCN": {
+    "@id": "dc:subject",
+    "@type": "dkdcplus:DBCN"
+  },
+  "subjectDBCO": {
+    "@id": "dc:subject",
+    "@type": "dkdcplus:DBCO"
+  },
+  "subjectDBCS": {
+    "@id": "dc:subject",
+    "@type": "dkdcplus:DBCS"
+  },
+  "subjectDK5": {
+    "@id": "dc:subject",
+    "@type": "dkdcplus:DK5"
+  },
+  "subjectDK5Text": {
+    "@id": "dc:subject",
+    "@type": "dkdcplus:DK5-Text"
+  },
+  "subjectGenre": {
+    "@id": "dc:subject",
+    "@type": "dkdcplus:genre"
+  },
+  "subject": {
+    "@id": "dc:subject"
+  },
+  "subjectLCSH": {
+    "@id": "dc:subject",
+    "@type": "dcterms:LCSH"
+  },
+  "subjectSort": {
+    "@id": "dc:subject",
+    "@type": "oss:sort"
+  },
+  "temporalDBCM": {
+    "@id": "dcterms:temporal",
+    "@type": "dkdcplus:DBCM"
+  },
+  "temporalDBCP": {
+    "@id": "dcterms:temporal",
+    "@type": "dkdcplus:DBCP"
+  },
+  "temporal": {
+    "@id": "dcterms:temporal"
+  },
+  "titleFull": {
+    "@id": "bd:titleFull"
+  },
+  "dcTitleFull": {
+    "@id": "dc:title",
+    "@type": "dkdcplus:full"
+  },
+  "title": {
+    "@id": "bd:title"
+  },
+  "dcTitle": {
+    "@id": "dc:title"
+  },
+  "titleSeries": {
+    "@id": "dc:title",
+    "@type": "dkdcplus:series"
+  },
+  "typeBibDKType": {
+    "@id": "dc:type",
+    "@type": "dkdcplus:BibDK-Type"
+  },
+  "type": {
+    "@id": "bd:type"
+  },
+  "version": {
+    "@id": "dkdcplus:version"
+  },
+  "workType": {
+    "@id": "bd:workType"
+  },
+  "lix": {
+    "@id": "of:lix"
+  },
+  "shelfmark": {
+    "@id": "of:ddb_shelfmark"
+  },
+  "shelfmarkPrefix": {
+    "@id": "of:ddb_shelfmark_prefix"
+  },
+  "artesisShelfmark": {
+    "@id": "of:artesis_shelfmark"
+  },
+  "artesisShelfmarkPrefix": {
+    "@id": "of:artesis_shelfmark_prefix"
+  },
+  "artesisShelfmarkExtra": {
+    "@id": "of:artesis_shelfmark_extra"
+  }
 }
