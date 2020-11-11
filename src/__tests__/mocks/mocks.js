@@ -644,6 +644,7 @@ export const requestTypeIdentifierMock = {
   'dbcaddi:hascreatordescription': 'hasCreatorDescription',
   'dbcaddi:hasdescriptionfrompublisher': 'hasDescriptionFromPublisher',
   'dbcaddi:hasmanuscript': 'hasManuscript',
+  'dbcaddi:hasopenurl': 'hasOpenUrl',
   'dbcaddi:hasonlineaccess': 'hasOnlineAccess',
   'dcterms:haspart': 'hasPart',
   'dcterms:hasparttrack': 'hasPartTrack',

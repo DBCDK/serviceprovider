@@ -169,6 +169,7 @@
   "hasCreatorDescription": {"@id": "dbcaddi:hasCreatorDescription"},
   "hasDescriptionFromPublisher": {"@id": "dbcaddi:hasDescriptionFromPublisher"},
   "hasManuscript": {"@id": "dbcaddi:hasManuscript"},
+  "hasOpenUrl": {"@id": "dbcaddi:hasOpenUrl"},
   "hasOnlineAccess": {"@id": "dbcaddi:hasOnlineAccess"},
   "hasPart": {"@id": "dcterms:hasPart"},
   "hasPartTrack": {"@id": "dcterms:hasPart", "@type": "dkdcplus:track"},
@@ -256,3 +257,4 @@
   "artesisShelfmarkPrefix": {"@id": "of:artesis_shelfmark_prefix"},
   "artesisShelfmarkExtra": {"@id": "of:artesis_shelfmark_extra"}
 }
+
