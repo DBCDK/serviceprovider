@@ -14,8 +14,8 @@
   * @returns {Object}
   */
 
-import { log } from '../utils';
-import { appId } from '../utils/config';
+import {log} from '../utils';
+import {appId} from '../utils/config';
 
 /**
  * Default transformer.
@@ -27,8 +27,8 @@ import { appId } from '../utils/config';
  * @api public
  */
 export default (request, context) => {
-  let { workId, agencyId } = request;
-  const { profile, trackingId } = request;
+  let {workId, agencyId} = request;
+  const {profile, trackingId} = request;
   const service = context.get('services.workservice');
 
   // if workId dosn't contain a leading 'work-of:' it will be auto-added
