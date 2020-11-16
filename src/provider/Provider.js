@@ -17,12 +17,13 @@ import renewTransformer from '../transformers/renew';
 import orderTransformer from '../transformers/order';
 import workTransformer from '../transformers/work';
 import availabilityTransformer from '../transformers/availability';
-import {ddbcms, news, events, library} from '../transformers/ddbcms';
-import {testTransformer} from '../transformers/testTransformer.js';
+import { ddbcms, news, events, library } from '../transformers/ddbcms';
+import { testTransformer } from '../transformers/testTransformer.js';
 import recommendTransformer from '../transformers/recommend';
 import infomediaTransformer from '../transformers/infomedia';
 import openformatTransformer from '../transformers/openformat';
 import holdingsitemsTransformer from '../transformers/holdingsitems';
+import workserviceTransformer from '../transformers/workservice';
 
 import createEntity from '../transformers/createEntity';
 import updateEntity from '../transformers/updateEntity';
@@ -66,7 +67,8 @@ export default function Provider() {
     aggregation: aggregationTransformer,
     infomedia: infomediaTransformer,
     openformat: openformatTransformer,
-    holdingsitems: holdingsitemsTransformer
+    holdingsitems: holdingsitemsTransformer,
+    workservice: workserviceTransformer
   };
 
   const crudTransformerMap = {

@@ -13,8 +13,8 @@
   * @returns {Array}
   */
 
-import {log} from '../utils';
-import {appId} from '../utils/config';
+import { log } from '../utils';
+import { appId } from '../utils/config';
 
 /**
  * Function to restructure and return pids api repsonse
@@ -24,7 +24,7 @@ import {appId} from '../utils/config';
 
 function returnPidsResponse(data) {
   return Object.keys(data.holdings).map(pid => {
-    return {pid: pid, holdingsitems: data.holdings[pid]};
+    return { pid: pid, holdingsitems: data.holdings[pid] };
   });
 }
 
@@ -34,7 +34,7 @@ function returnPidsResponse(data) {
  * @returns {object}
  */
 function returnItemIdResponse(data) {
-  return {holdingsitems: data.holdings};
+  return { holdingsitems: data.holdings };
 }
 
 /**

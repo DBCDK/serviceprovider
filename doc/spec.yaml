@@ -927,6 +927,32 @@ api:
                 { 'url': 'https://moreinfo.addi.dk/2.10/', 'ok': true },
             },
         }
+  workservice:
+    tags:
+      - Beta
+    description: This service allows for fetching of entire work structures.
+    required:
+      - workId
+      - agencyId
+      - profile
+    properties:
+      workId:
+        description: The identifier for the requested work. Typically 'work-of:...'
+        type: string
+        example: 'work-of:870970-basis:12345678'
+      agencyId:
+        description: The agency that requested work. 6 digits.
+        type: string
+        example: '710100'
+      profile:
+        description: The name of the search profile the agency uses.
+        type: string
+        example: 'opac'
+      trackingId:
+        description: Useful for tracking a request in log files.
+        type: string
+        example: 'abc1d234-ef5-6789-g12h-3ij45k6l7mn8'
+
 defaultProperties:
   fields:
     description: which parts of the response to get
