@@ -23,7 +23,7 @@ import recommendTransformer from '../transformers/recommend';
 import infomediaTransformer from '../transformers/infomedia';
 import openformatTransformer from '../transformers/openformat';
 import holdingsitemsTransformer from '../transformers/holdingsitems';
-import workserviceTransformer from '../transformers/workservice';
+import workpresentationTransformer from '../transformers/workpresentation';
 
 import createEntity from '../transformers/createEntity';
 import updateEntity from '../transformers/updateEntity';
@@ -68,7 +68,7 @@ export default function Provider() {
     infomedia: infomediaTransformer,
     openformat: openformatTransformer,
     holdingsitems: holdingsitemsTransformer,
-    workservice: workserviceTransformer
+    workpresentation: workpresentationTransformer
   };
 
   const crudTransformerMap = {

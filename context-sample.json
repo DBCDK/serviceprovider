@@ -17,7 +17,7 @@
       "openformat": "http://openformat-php-develop.frontend-features.svc.cloud.dbc.dk/server.php",
       "holdingsitems": "http://holdings-items-content-service.cisterne.svc.cloud.dbc.dk/holdings-items-content-service/api",
       "infomediaservice": "http://infomedia.mcp1-proxy.dbc.dk/server.php",
-      "workservice": "http://work-presentation-service.cisterne.svc.cloud.dbc.dk/api/work-presentation"
+      "workpresentation": "http://work-presentation-service.cisterne.svc.cloud.dbc.dk/api/work-presentation"
     },
     "cicero": {
       "DK-710100": {

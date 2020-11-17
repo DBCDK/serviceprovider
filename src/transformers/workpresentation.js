@@ -1,6 +1,6 @@
 /**
  * @file
- * Workservice transformer.
+ * Workpresentation transformer.
  *
  */
 
@@ -14,22 +14,22 @@
   * @returns {Object}
   */
 
-import { log } from '../utils';
-import { appId } from '../utils/config';
+import {log} from '../utils';
+import {appId} from '../utils/config';
 
 /**
  * Default transformer.
  * Wraps work-service backend and returns work info
  *
- * @param {Object} request parameters from the /workservice
+ * @param {Object} request parameters from the /workpresentation
  * @param {Object} context The context object fetched from smaug
  * @returns {Object|Promise} promise with result
  * @api public
  */
 export default (request, context) => {
-  let { workId, agencyId } = request;
-  const { profile, trackingId } = request;
-  const service = context.get('services.workservice');
+  let {agencyId} = request;
+  const {workId, profile, trackingId} = request;
+  const service = context.get('services.workpresentation');
 
   // Check for empty required inputs
   if (!workId || !agencyId || !profile) {
@@ -37,11 +37,6 @@ export default (request, context) => {
       statusCode: 400,
       error: 'Missing one or more required parameters'
     });
-  }
-
-  // if workId dosn't contain a leading 'work-of:' it will be auto-added
-  if (!(request.workId.substring(0, 8) === 'work-of:')) {
-    workId = `work-of:${workId}`;
   }
 
   // If agency contains leading 'DK-' it will be removed
@@ -75,10 +70,13 @@ export default (request, context) => {
 
   return context.call(service, params).then(body => {
     if (!body.data) {
-      log.error(`/workservice - No response was returned from ${service}`, {
-        params,
-        body
-      });
+      log.error(
+        `/workpresentation - No response was returned from ${service}`,
+        {
+          params,
+          body
+        }
+      );
       return Promise.resolve({
         statusCode: 500,
         error: 'Some error occurred'

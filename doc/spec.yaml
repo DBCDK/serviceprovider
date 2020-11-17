@@ -927,10 +927,15 @@ api:
                 { 'url': 'https://moreinfo.addi.dk/2.10/', 'ok': true },
             },
         }
-  workservice:
+  workpresentation:
     tags:
       - Beta
-    description: This service allows for fetching of entire work structures.
+    summary: Retrieve a work structure
+    description:
+      This operation produces a work structure, for a given identifier.
+      The work structure contains metadata from a selected manifestation, and all
+      the manifestations that this work covers. These are not ordered/grouped by
+      anything.
     required:
       - workId
       - agencyId
@@ -952,6 +957,8 @@ api:
         description: Useful for tracking a request in log files.
         type: string
         example: 'abc1d234-ef5-6789-g12h-3ij45k6l7mn8'
+    response:
+      $ref: '#/definitions/WorkpresentationResponse'
 
 defaultProperties:
   fields:
