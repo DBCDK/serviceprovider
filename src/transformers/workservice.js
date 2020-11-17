@@ -14,22 +14,30 @@
   * @returns {Object}
   */
 
-import {log} from '../utils';
-import {appId} from '../utils/config';
+import { log } from '../utils';
+import { appId } from '../utils/config';
 
 /**
  * Default transformer.
  * Wraps work-service backend and returns work info
  *
- * @param {Object} request parameters from the /holdingsitems
+ * @param {Object} request parameters from the /workservice
  * @param {Object} context The context object fetched from smaug
  * @returns {Object|Promise} promise with result
  * @api public
  */
 export default (request, context) => {
-  let {workId, agencyId} = request;
-  const {profile, trackingId} = request;
+  let { workId, agencyId } = request;
+  const { profile, trackingId } = request;
   const service = context.get('services.workservice');
+
+  // Check for empty required inputs
+  if (!workId || !agencyId || !profile) {
+    return Promise.resolve({
+      statusCode: 400,
+      error: 'Missing one or more required parameters'
+    });
+  }
 
   // if workId dosn't contain a leading 'work-of:' it will be auto-added
   if (!(request.workId.substring(0, 8) === 'work-of:')) {
@@ -37,8 +45,10 @@ export default (request, context) => {
   }
 
   // If agency contains leading 'DK-' it will be removed
-  if (!(agencyId.substring(0, 3) === 'DK-')) {
-    agencyId = agencyId.replace('DK-', '');
+  if (agencyId.toLowerCase().substring(0, 3) === 'dk-') {
+    console.log('........................', agencyId.substring(3));
+
+    agencyId = agencyId.substring(3);
   }
 
   // Ensure agency is an int
@@ -50,6 +60,7 @@ export default (request, context) => {
     });
   }
 
+  // Parameters for request
   const params = {
     workId,
     agencyId,
