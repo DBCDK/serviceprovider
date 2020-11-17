@@ -41,8 +41,6 @@ export default (request, context) => {
 
   // If agency contains leading 'DK-' it will be removed
   if (agencyId.toLowerCase().substring(0, 3) === 'dk-') {
-    console.log('........................', agencyId.substring(3));
-
     agencyId = agencyId.substring(3);
   }
 
