@@ -4,6 +4,7 @@
  *
  * Wraps userstatus backend.
  */
+import {get} from 'lodash';
 import {auditTrace, ACTIONS} from '@dbcdk/dbc-audittrail-logger';
 import {pbkdf2} from 'crypto';
 import {getIdFromIsil} from './utils/isil.utils';
@@ -177,43 +178,46 @@ export default (request, context) => {
         id: id.toString('base64')
       };
 
-      if (body.data.getUserStatusResponse.userName) {
+      if (get(body, 'data.getUserStatusResponse.userName', false)) {
         data.name = body.data.getUserStatusResponse.userName.$;
       }
-      if (body.data.getUserStatusResponse.userAddress) {
+      if (get(body, 'data.getUserStatusResponse.userAddress', false)) {
         data.address = body.data.getUserStatusResponse.userAddress.$;
       }
-      if (body.data.getUserStatusResponse.userPostalCode) {
+      if (get(body, 'data.getUserStatusResponse.userPostalCode', false)) {
         data.postalCode = body.data.getUserStatusResponse.userPostalCode.$;
       }
-      if (body.data.getUserStatusResponse.userMail) {
+      if (get(body, 'data.getUserStatusResponse.userMail', false)) {
         data.mail = body.data.getUserStatusResponse.userMail.$;
       }
 
       if (selectUserInfo.includes('userLoan')) {
-        let loans = [];
-        if (body.data.getUserStatusResponse.userStatus.loanedItems.loan) {
-          loans = body.data.getUserStatusResponse.userStatus.loanedItems.loan;
-        }
+        const loans = get(
+          body,
+          'data.getUserStatusResponse.userStatus.loanedItems.loan',
+          []
+        );
+
         data.loans = loans.map(loan);
       }
 
       if (selectUserInfo.includes('userOrder')) {
-        let orders = [];
-        if (body.data.getUserStatusResponse.userStatus.orderedItems.order) {
-          orders =
-            body.data.getUserStatusResponse.userStatus.orderedItems.order;
-        }
+        const orders = get(
+          body,
+          'data.getUserStatusResponse.userStatus.orderedItems.order',
+          []
+        );
+
         data.orders = orders.map(order);
       }
 
       if (selectUserInfo.includes('userFiscal')) {
-        let debts = [];
-        if (body.data.getUserStatusResponse.userStatus.fiscalAccount) {
-          debts =
-            body.data.getUserStatusResponse.userStatus.fiscalAccount
-              .fiscalTransaction || [];
-        }
+        const debts = get(
+          body,
+          'data.getUserStatusResponse.userStatus.fiscalAccount.fiscalTransaction',
+          []
+        );
+
         data.debt = debts.map(debt);
       }
 
