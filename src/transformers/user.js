@@ -214,7 +214,7 @@ export default (request, context) => {
       if (selectUserInfo.includes('userFiscal')) {
         const debts = get(
           body,
-          'data.getUserStatusResponse.userStatus.fiscalAccount',
+          'data.getUserStatusResponse.userStatus.fiscalAccount.fiscalTransaction',
           []
         );
 
