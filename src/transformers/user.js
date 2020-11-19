@@ -4,11 +4,11 @@
  *
  * Wraps userstatus backend.
  */
-import { get } from 'lodash';
-import { auditTrace, ACTIONS } from '@dbcdk/dbc-audittrail-logger';
-import { pbkdf2 } from 'crypto';
-import { getIdFromIsil } from './utils/isil.utils';
-import { appId } from '../utils/config';
+import {get} from 'lodash';
+import {auditTrace, ACTIONS} from '@dbcdk/dbc-audittrail-logger';
+import {pbkdf2} from 'crypto';
+import {getIdFromIsil} from './utils/isil.utils';
+import {appId} from '../utils/config';
 
 /**
  * Maps loan item from backend response to serviceprovider api
