@@ -1,0 +1,71 @@
+definitions:
+  WorkpresentationResponse:
+    type: object
+    properties:
+      trackingId:
+        $ref: '#/definitions/Workpresentation_trackingId'
+      work:
+        $ref: '#/definitions/Workpresentation_work'
+
+  Workpresentation_trackingId:
+    type: string
+    example: some-uuid
+  Workpresentation_manifestation:
+    properties:
+      types:
+        type: array
+        example: ether
+        items:
+          type: string
+      id:
+        type: string
+        example: id-enti:fier
+  Workpresentation_manifestation_list:
+    $ref: '#/definitions/Workpresentation_manifestation'
+  Workpresentation_typedvalue:
+    properties:
+      type:
+        type: string
+        nullable: true
+        example: classifier
+      value:
+        type: string
+        example: Value
+  Workpresentation_typedvalue_list:
+    $ref: '#/definitions/Workpresentation_typedvalue'
+  Workpresentation_work:
+    properties:
+      fullTitle:
+        type: string
+        example: 'Necronomicon: Book of the Dead'
+      records:
+        type: array
+        items:
+          $ref: '#/definitions/Workpresentation_manifestation'
+      creators:
+        type: array
+        items:
+          $ref: '#/definitions/Workpresentation_typedvalue'
+      subjects:
+        type: array
+        items:
+          $ref: '#/definitions/Workpresentation_typedvalue'
+      description:
+        type: string
+        example: Fictional book
+      title:
+        type: string
+        example: Necronomicon
+      workId:
+        type: string
+        example: work-of:some-manifestation:id
+
+info:
+  title: Work Presentation Service
+  description: This service allows for fetching of entire work structures.
+  contact:
+    url: mailto:dbc@dbc.dk
+  version: '1.0'
+servers:
+  - url: http://work-presentation-service-deploy-856d595d8d-z5np9:8080/
+    description: Default Server.

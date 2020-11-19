@@ -41,6 +41,7 @@ const whitelist = {
     openagency: true,
     openformat: true,
     holdingsitems: true,
+    workpresentation: true,
     infomediaservice: true,
     openholdingstatus: true,
     PRODopenorder: true,

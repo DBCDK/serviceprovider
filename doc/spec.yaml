@@ -927,6 +927,39 @@ api:
                 { 'url': 'https://moreinfo.addi.dk/2.10/', 'ok': true },
             },
         }
+  workpresentation:
+    tags:
+      - Beta
+    summary: Retrieve a work structure
+    description:
+      This operation produces a work structure, for a given identifier.
+      The work structure contains metadata from a selected manifestation, and all
+      the manifestations that this work covers. These are not ordered/grouped by
+      anything.
+    required:
+      - workId
+      - agencyId
+      - profile
+    properties:
+      workId:
+        description: The identifier for the requested work. Typically 'work-of:...'
+        type: string
+        example: 'work-of:870970-basis:12345678'
+      agencyId:
+        description: The agency that requested work. 6 digits.
+        type: string
+        example: '710100'
+      profile:
+        description: The name of the search profile the agency uses.
+        type: string
+        example: 'opac'
+      trackingId:
+        description: Useful for tracking a request in log files.
+        type: string
+        example: 'abc1d234-ef5-6789-g12h-3ij45k6l7mn8'
+    response:
+      $ref: '#/definitions/WorkpresentationResponse'
+
 defaultProperties:
   fields:
     description: which parts of the response to get
