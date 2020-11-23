@@ -946,8 +946,10 @@ api:
         type: string
         example: 'work-of:870970-basis:12345678'
       agencyId:
-        description: The agency that requested work. 6 digits.
-        type: string
+        description: The agency that requested work. 6 digits. 
+        oneOf:
+          - type: string
+          - type: integer 
         example: '710100'
       profile:
         description: The name of the search profile the agency uses.
