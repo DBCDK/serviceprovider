@@ -31,6 +31,9 @@ export default (request, context) => {
   const {workId, profile, trackingId} = request;
   const service = context.get('services.workpresentation');
 
+  // Ensure agencyId is string
+  agencyId = agencyId.toString();
+
   // Check for empty required inputs
   if (!workId || !agencyId || !profile) {
     return Promise.resolve({
@@ -75,9 +78,19 @@ export default (request, context) => {
           body
         }
       );
+
       return Promise.resolve({
         statusCode: 500,
         error: 'Some error occurred'
+      });
+    }
+
+    // Not found error returns 404 statuscode
+    if (body.data.errorCode === 'NOT_FOUND_ERROR') {
+      return Promise.resolve({
+        statusCode: 404,
+        error: 'Not found error',
+        data: body.data
       });
     }
 
