@@ -1,166 +1,30 @@
 /**
- * @file: Libraries transformer, delivers from an internally cached map.
+ * @file - handle information from vip. @see openagency.addi.dk
+ * Internally (DBC) we use vipcore : http://vipcore.iscrum-vip-prod.svc.cloud.dbc.dk:8080/1.0/api
+ * For documentation @see https://dbcjira.atlassian.net/wiki/spaces/IS/pages/884998162/VipCore+API+beskrivelse
+ *
+ * Bssically this transformer gets ALL pickupagencies and orderparameters from vipcore. When a single
+ * library/branch is requested it returns a filtered result of the pickupagencies.
+ *
  */
 
 import * as IsilUtils from './utils/isil.utils';
-import { log } from '../utils';
-
-const parseString = require('xml2js').parseString;
-const stripNS = require('xml2js').processors.stripPrefix;
-const util = require('util');
 
 const timeout = 60 * 60 * 1000;
 let cache;
 let timestamp;
 
-function isJson(str) {
-  try {
-    JSON.parse(str);
-  } catch (e) {
-    return false;
-  }
-  return true;
-}
-
-function parseToJson(xmlResult) {
-  //  console.log(xmlResult, 'XML');
-
-  if (isJson(xmlResult)) {
-    return xmlResult;
-  }
-  let resp = {};
-
-  parseString(xmlResult, { trim: true, tagNameProcessors: [stripNS] }, function(
-    err,
-    result
-  ) {
-    try {
-      resp = result;
-    } catch (e) {
-      log.error('openformat parse error', { error: String(e) });
-      throw 'TUDSE';
-    }
-  });
-
-  //console.log(util.inspect(resp, { showHidden: false, depth: null }));
-  return resp;
-}
-
 /**
- * Service response has been parsed from xml to json - check the json result
- * and return the stub to continue from (
- * @param serviceResponse
- * @param serviceRequest
+ * Insert orderparameters in the list of pickupagencies.
+ *
+ * @param results
+ *   all the pickupagencies retrieved from vipcore
+ * @param agencyKeys
+ *    agencyIds of all pickupagencies
+ * @param orderParameters
+ *    order parameters (eg. userid, username ...) to insert
  * @returns {*}
  */
-function getStub(serviceResponse, serviceRequest) {
-  //console.log(body);
-  const responseData = parseToJson(serviceResponse);
-
-  console.log(serviceRequest, 'REQUEST');
-  // do something if response is empty
-  if (!responseData.Envelope) {
-    console.log(serviceRequest);
-    //console.log(util.inspect(resp, {showHidden: false, depth: null}))
-    throw 'HUND';
-  }
-  // do something if Fault is set Envelope.Body[0].Fault
-  if (responseData.Envelope.Body[0].Fault) {
-    throw 'FISK';
-  }
-  // try to make a stub - an error might be set - do something if so
-  const stub = responseData.Envelope.Body[0].serviceResponse[0];
-  /*if (stub.error) {
-    console.log(stub, 'ERROR STUB');
-    throw 'HEST';
-  }*/
-
-  return stub;
-}
-
-function getOrderParameters(context, agencyId) {
-  const soap = `
-    <SOAP-ENV:Envelope xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ns1="http://oss.dbc.dk/ns/openagency"><SOAP-ENV:Body>
-    <ns1:serviceRequest>
-    <ns1:agencyId>${agencyId}</ns1:agencyId>
-    <ns1:service>userOrderParameters</ns1:service>
-    </ns1:serviceRequest>
-    </SOAP-ENV:Body></SOAP-ENV:Envelope>
-    `;
-
-  return context.call('openagency', soap).then(body => {
-    const result = [];
-    let stub;
-    stub = getStub(body, soap);
-    /* try {
-      stub = getStub(body, soap);
-    } catch (err) {
-      throw 'ZEBRA';
-    }
-*/
-    if (!stub.error) {
-      const parameters = stub.userOrderParameters[0].userParameter
-        ? stub.userOrderParameters[0].userParameter
-        : null;
-
-      const parameterMap = {
-        userName: 'name',
-        userAddress: 'address',
-        userMail: 'email',
-        userTelephone: 'phone'
-      };
-
-      if (parameters) {
-        for (let i = 0; i < parameters.length; ++i) {
-          if (parameterMap[parameters[i].userParameterType[0]]) {
-            if (parameters[i].parameterRequired[0] === '1') {
-              let parameter = parameters[i].userParameterType[0];
-              parameter = parameterMap[parameter];
-              result.push(parameter);
-            }
-          }
-        }
-      }
-    }
-    console.log(result, 'RESULT 22');
-    return Promise.resolve(result);
-  });
-}
-
-// @TODO fix this iterator
-function libraryIterator(val) {
-  if (Array.isArray(val)) {
-    return val.filter(i => !!i).map(j => j);
-  }
-
-  const res = {};
-  for (const key2 in val) {
-    if (key2 !== '@' && val[key2]) {
-      res[key2] = val[key2];
-    }
-  }
-
-  return res;
-}
-/*
-function libraryIterator(val) {
-  if (val.$) {
-    return val.$;
-  } else if (Array.isArray(val)) {
-    return val.filter(i => !!i.$).map(j => j.$);
-  }
-
-  const res = {};
-  for (const key2 in val) {
-    if (key2 !== '@' && val[key2].$) {
-      res[key2] = val[key2].$;
-    }
-  }
-
-  return res;
-}
-*/
-
 function orderParameterPromiseHandler(results, agencyKeys, orderParameters) {
   const agencyOrderParameters = {};
   for (let i = 0; i < agencyKeys.length; ++i) {
@@ -174,20 +38,63 @@ function orderParameterPromiseHandler(results, agencyKeys, orderParameters) {
   return results;
 }
 
-function openAgencyPromiseHandler(context, body) {
-  let fisk = parseToJson(body);
-  console.log(
-    //fisk.Envelope.Body[0].findLibraryResponse[0].pickupAgency,
-    fisk.Envelope.Body[0],
-    'RESPONSE'
-  );
+/**
+ * Do a call to vipcore service endpoint
+ * e.g http://vipcore.iscrum-vip-prod.svc.cloud.dbc.dk/1.0/api/service/710100/userOrderParameters/
+ * Parse and return orderparamters from service
+ *
+ * @param context
+ * @param agencyId
+ * @returns {*}
+ */
+function getOrderParameters(context, agencyId) {
+  const service = context.get('services.openagency');
+  const path = `/service/${agencyId}/userOrderParameters/`;
+  const api = service + path;
 
-  // let badgerfish = JSON.parse(fisk).findLibraryResponse.pickupAgency;
-  let badgerfish = fisk.Envelope.Body[0].findLibraryResponse[0].pickupAgency;
+  return context.call(api, {}).then(response => {
+    const result = [];
 
-  const results = badgerfish.map(library => {
+    // @TODO datacheck - service may return an error e.g service_unavailable
+
+    let parameters = response.data.userOrderParameters.userParameter
+      ? response.data.userOrderParameters.userParameter
+      : null;
+
+    // map selected parameters
+    const parameterMap = {
+      userName: 'name',
+      userAddress: 'address',
+      userMail: 'email',
+      userTelephone: 'phone'
+    };
+
+    if (parameters) {
+      for (let i = 0; i < parameters.length; ++i) {
+        if (parameters[i].parameterRequired === true) {
+          let parameter = parameters[i].userParameterType;
+          parameter = parameterMap[parameter] || parameter;
+          result.push(parameter);
+        }
+      }
+    }
+
+    return Promise.resolve(result);
+  });
+}
+
+/**
+ * Parse response from findlibrary/all endpoint. Filter out ncip info.
+ * Bind getOrderParameters to add order parameters to result.
+ * @param context
+ * @param response
+ * @returns {Promise<unknown[]>}
+ */
+function openAgencyPromiseHandler(context, response) {
+  const results = response.data.pickupAgency.map(library => {
     const result = {};
 
+    // filter out ncip info
     Object.keys(library)
       .filter(
         libraryKey =>
@@ -195,45 +102,55 @@ function openAgencyPromiseHandler(context, body) {
           libraryKey.indexOf('ncip') !== 0 &&
           library[libraryKey] !== null
       )
-      .forEach(key => (result[key] = libraryIterator(library[key])));
+      .forEach(key => (result[key] = library[key]));
 
-    // eslint-disable-next-line no-undefined
-    if (result.agencyId === undefined) {
+    // check if mainagencyid is set - it might not be the case for single branch
+    // libraries
+    if (!result.agencyId) {
       result.agencyId = result.branchId;
     }
 
     return result;
   });
 
+  // collect agencyids as keys for getOrderParameters service call
   const agencies = {};
   for (let i = 0; i < results.length; ++i) {
     agencies[results[i].agencyId] = true;
   }
-
   const agencyKeys = Object.keys(agencies);
+  // iterate agencyIds - get orderparameters
   const agencyPromises = agencyKeys.map(getOrderParameters.bind(null, context));
   return Promise.all(agencyPromises).then(
     orderParameterPromiseHandler.bind(null, results, agencyKeys)
   );
 }
 
+/**
+ * Do a call to findlibrary/all endpoint.
+ * @param context
+ * @returns {*}
+ */
 function getLibraries(context) {
-  const soap = `<soapenv:Envelope
-    xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/"
-    xmlns:open="http://oss.dbc.dk/ns/openagency">
-    <soapenv:Header/>
-    <soapenv:Body>
-    <open:findLibraryRequest>
-
-    </open:findLibraryRequest>
-    </soapenv:Body>
-    </soapenv:Envelope>`;
+  const service = context.get('services.openagency');
+  const path = '/findlibrary/all';
+  const api = service + path;
 
   return context
-    .call('openagency', soap)
-    .then(body => openAgencyPromiseHandler(context, body));
+    .call(api, {})
+    .then(response => openAgencyPromiseHandler(context, response));
 }
 
+/**
+ * Handle the request.
+ * @param params
+ *   May hold one or more branch/agency - ids to filter on
+ * @param context
+ *   @see context.json
+ * @param libraries
+ *   a list of pickupagencies - from service or cache
+ * @returns {{data, statusCode: number}}
+ */
 function getLibrariesTransformPromiseHandler(params, context, libraries) {
   if (Date.now() - timestamp > timeout) {
     setTimeout(() => getLibraries(context), 1000);
@@ -261,6 +178,12 @@ function getLibrariesTransformPromiseHandler(params, context, libraries) {
   return { statusCode: 200, data: libraries };
 }
 
+/**
+ * Entrypoint for this transformer.
+ * @param params
+ * @param context
+ * @returns {Promise<any>}
+ */
 export default function getLibrariesTransform(params, context) {
   let promise;
 
