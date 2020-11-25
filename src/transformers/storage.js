@@ -542,7 +542,8 @@ async function scan(
       o =>
         _.isEqual(index, o.keys) &&
         o.private &&
-        startsWith && startsWith[0] === user
+        startsWith &&
+        startsWith[0] === user
     );
   }
 
