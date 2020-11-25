@@ -103,10 +103,10 @@ function constructSoap(pidList, expireDate, params, orderSystem) {
            <orderSystem>${orderSystem}</orderSystem>
            <pickUpAgencyId>${params.pickUpBranch}</pickUpAgencyId>
 ${pidList
-    .map(pid => {
-      return `           <pid>${pid}</pid>`;
-    })
-    .join('\n')}
+  .map(pid => {
+    return `           <pid>${pid}</pid>`;
+  })
+  .join('\n')}
            <serviceRequester>${params.serviceRequester}</serviceRequester>
            ${userParams.address}
            <userId>${params.userId}</userId>

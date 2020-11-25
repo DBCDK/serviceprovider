@@ -113,10 +113,12 @@ describe('List observer', () => {
     // wait for list.observer
     await pendingPromises();
 
-    const res = (await dbcOpenPlatformAnonymousUser.aggregation({
-      aggregationType: 'list',
-      type: type._id
-    })).map(entry => ({
+    const res = (
+      await dbcOpenPlatformAnonymousUser.aggregation({
+        aggregationType: 'list',
+        type: type._id
+      })
+    ).map(entry => ({
       owner_name: entry.owner_name,
       owner_image: entry.owner_image,
       list_title: entry.list_title,
@@ -172,11 +174,13 @@ describe('List observer', () => {
     // wait for list.observer
     await pendingPromises();
 
-    let res = (await dbcOpenPlatformAnonymousUser.aggregation({
-      aggregationType: 'list',
-      type: type._id,
-      sort: 'num_comments'
-    })).map(entry => ({
+    let res = (
+      await dbcOpenPlatformAnonymousUser.aggregation({
+        aggregationType: 'list',
+        type: type._id,
+        sort: 'num_comments'
+      })
+    ).map(entry => ({
       list_title: entry.list_title
     }));
 
@@ -192,13 +196,15 @@ describe('List observer', () => {
       }
     ]);
 
-    res = (await dbcOpenPlatformAnonymousUser.aggregation({
-      aggregationType: 'list',
-      type: type._id,
-      sort: 'num_comments',
-      limit: 1,
-      offset: 2
-    })).map(entry => ({
+    res = (
+      await dbcOpenPlatformAnonymousUser.aggregation({
+        aggregationType: 'list',
+        type: type._id,
+        sort: 'num_comments',
+        limit: 1,
+        offset: 2
+      })
+    ).map(entry => ({
       list_title: entry.list_title
     }));
 
