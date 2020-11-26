@@ -200,7 +200,7 @@ function getLibrariesTransformPromiseHandler(params, context, libraries) {
     libraries = libraries.filter(o => branches[o.branchId]);
   }
 
-  return { statusCode: 200, data: libraries };
+  return {statusCode: 200, data: libraries};
 }
 
 /**
