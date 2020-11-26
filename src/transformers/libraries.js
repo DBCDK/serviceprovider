@@ -104,7 +104,7 @@ function libraryFilter(key, library) {
     return (
       library[key]
         // filter on language
-        .filter(field => field.language === 'dan')
+        .sort(field => field.language === 'dan')
         // return the value
         .map(field => {
           return field.value;
@@ -213,7 +213,7 @@ function getLibrariesTransformPromiseHandler(params, context, libraries) {
     libraries = libraries.filter(o => branches[o.branchId]);
   }
 
-  return {statusCode: 200, data: libraries};
+  return { statusCode: 200, data: libraries };
 }
 
 /**
