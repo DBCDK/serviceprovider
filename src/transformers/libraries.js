@@ -83,6 +83,13 @@ function getOrderParameters(context, agencyId) {
   });
 }
 
+/**
+ * For backward compatibility - use the danish value for some of the fields.
+ * Use "1" for true & "0" for false
+ * @param key
+ * @param library
+ * @returns {string|*}
+ */
 function libraryFilter(key, library) {
   // which fields to change - for all of them - they are in an array - get the danish value
   const keysToChange = [
@@ -103,6 +110,12 @@ function libraryFilter(key, library) {
           return field.value;
         })
     );
+  }
+  if (library[key] === true) {
+    return '1';
+  }
+  if (library[key] === false) {
+    return '0';
   }
 
   return library[key];
@@ -200,7 +213,7 @@ function getLibrariesTransformPromiseHandler(params, context, libraries) {
     libraries = libraries.filter(o => branches[o.branchId]);
   }
 
-  return {statusCode: 200, data: libraries};
+  return { statusCode: 200, data: libraries };
 }
 
 /**
