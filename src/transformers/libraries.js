@@ -83,6 +83,31 @@ function getOrderParameters(context, agencyId) {
   });
 }
 
+function libraryFilter(key, library) {
+  // which fields to change - for all of them - they are in an array - get the danish value
+  const keysToChange = [
+    'branchName',
+    'branchShortName',
+    'openingHours',
+    'illOrderReceiptText',
+    'temporarilyClosedReason'
+  ];
+
+  if (keysToChange.includes(key)) {
+    return (
+      library[key]
+        // filter on language
+        .filter(field => field.language === 'dan')
+        // return the value
+        .map(field => {
+          return field.value;
+        })
+    );
+  }
+
+  return library[key];
+}
+
 /**
  * Parse response from findlibrary/all endpoint. Filter out ncip info.
  * Bind getOrderParameters to add order parameters to result.
@@ -102,7 +127,7 @@ function openAgencyPromiseHandler(context, response) {
           libraryKey.indexOf('ncip') !== 0 &&
           library[libraryKey] !== null
       )
-      .forEach(key => (result[key] = library[key]));
+      .forEach(key => (result[key] = libraryFilter(key, library)));
 
     // check if mainagencyid is set - it might not be the case for single branch
     // libraries
@@ -175,7 +200,7 @@ function getLibrariesTransformPromiseHandler(params, context, libraries) {
     libraries = libraries.filter(o => branches[o.branchId]);
   }
 
-  return {statusCode: 200, data: libraries};
+  return { statusCode: 200, data: libraries };
 }
 
 /**
