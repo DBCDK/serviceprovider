@@ -4,21 +4,22 @@
  */
 
 // Config
-import {enableHTTPTransport, serviceProvider} from './provider';
-import {apiPath} from './utils/config';
+import { enableHTTPTransport, serviceProvider } from './provider';
+import { apiPath } from './utils/config';
 // Libraries
 import express from 'express';
 import path from 'path';
-import {TokenError} from './smaug/errors';
+import cors from 'cors';
+import { TokenError } from './smaug/errors';
 
 import community from './transformers/community/community';
-import {storageMiddleware} from './transformers/storage.js';
+import { storageMiddleware } from './transformers/storage.js';
 
 // Middleware
 import bodyParser from 'body-parser';
-import {log} from './utils';
-import {accessLogMiddleware} from './app.middlewares';
-import {healthCheck} from './app.utils';
+import { log } from './utils';
+import { accessLogMiddleware } from './app.middlewares';
+import { healthCheck } from './app.utils';
 
 // Generation of swagger specification
 import swaggerFromSpec from './swaggerFromSpec.js';
@@ -115,10 +116,16 @@ function notFoundHandler(req, res) {
 
 // Setting bodyparser
 app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({extended: true}));
+app.use(bodyParser.urlencoded({ extended: true }));
 
 // Enable CORS
-app.use(enableCors);
+const corsOptions = {
+  origin: '*',
+  methods: 'GET, POST, OPTIONS',
+  allowedHeaders:
+    'Authorization, Origin, X-Requested-With, Content-Type, Accept'
+};
+app.use(cors(corsOptions));
 
 // don't set the X-Powered-By header
 app.disable('x-powered-by');
