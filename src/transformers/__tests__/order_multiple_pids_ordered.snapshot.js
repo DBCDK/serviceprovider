@@ -8,7 +8,7 @@
 const endpoint = 'order';
 const params = {
   pids: ['870970-basis:28126727', '870970-basis:27597726'],
-  expires: '2020-12-01',
+  expires: '2021-06-01',
   pickUpBranch: 'DK-100450',
   phone: '123454',
   address: 'ADDRESS',
@@ -17,7 +17,7 @@ const params = {
 
 const expected = {
   statusCode: 200,
-  data: {status: 'ok', orsId: '1033955652'}
+  data: { status: 'ok', orsId: '1033955652' }
 };
 
 const context = {
@@ -37,8 +37,8 @@ const context = {
     suggestsubject: 'XXXXX',
     recommendurls: 'XXXXX'
   },
-  search: {agency: '775100', profile: 'opac'},
-  netpunkt: {user: 'XXXXX', group: 'XXXXX', password: 'XXXXX'},
+  search: { agency: '775100', profile: 'opac' },
+  netpunkt: { user: 'XXXXX', group: 'XXXXX', password: 'XXXXX' },
   user: {
     agency: '100450',
     libraryId: '100450',
@@ -62,7 +62,7 @@ const mockData = {
 };
 
 import Provider from '../../provider/Provider.js';
-import {assert, fail} from 'chai';
+import { assert, fail } from 'chai';
 const provider = Provider();
 
 describe('Automated test: order_multiple_pids_ordered.snapshot', () => {
