@@ -4,53 +4,28 @@
  */
 
 // Config
-import {enableHTTPTransport, serviceProvider} from './provider';
-import {apiPath} from './utils/config';
+import { enableHTTPTransport, serviceProvider } from './provider';
+import { apiPath } from './utils/config';
 // Libraries
 import express from 'express';
 import path from 'path';
 import cors from 'cors';
-import {TokenError} from './smaug/errors';
+import { TokenError } from './smaug/errors';
 
 import community from './transformers/community/community';
-import {storageMiddleware} from './transformers/storage.js';
+import { storageMiddleware } from './transformers/storage.js';
 
 // Middleware
 import bodyParser from 'body-parser';
-import {log} from './utils';
-import {accessLogMiddleware} from './app.middlewares';
-import {healthCheck} from './app.utils';
+import { log } from './utils';
+import { accessLogMiddleware } from './app.middlewares';
+import { healthCheck } from './app.utils';
 
 // Generation of swagger specification
 import swaggerFromSpec from './swaggerFromSpec.js';
 
 // Setup
 const app = express();
-
-/**
- * Enables CORS
- *
- * @param {object} req
- * @param {object} res
- * @param {Function} next
- */
-function enableCors(req, res, next) {
-  res.header('Access-Control-Allow-Origin', '*');
-  res.header('Access-Control-Allow-Methods', 'GET, POST, OPTIONS');
-  res.header(
-    'Access-Control-Allow-Headers',
-    'Authorization, Origin, X-Requested-With, Content-Type, Accept'
-  );
-
-  //intercept OPTIONS method
-  if (req.method === 'OPTIONS') {
-    //respond with 200
-    res.sendStatus(200);
-  } else {
-    next();
-  }
-}
-
 /**
  * Handles token errors
  *
@@ -116,7 +91,7 @@ function notFoundHandler(req, res) {
 
 // Setting bodyparser
 app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({extended: true}));
+app.use(bodyParser.urlencoded({ extended: true }));
 
 // Enable CORS
 const corsOptions = {
