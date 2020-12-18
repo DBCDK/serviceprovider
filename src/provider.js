@@ -123,6 +123,7 @@ export function enableWSTransport(connection) {
       // eslint-disable-line no-loop-func
       getContext(data.access_token)
         .then(context => {
+          context.ips = [connection.remoteAddress];
           return callApi(key, data, context);
         })
         .catch(err => {
