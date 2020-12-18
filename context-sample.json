@@ -3,7 +3,7 @@
     "services": {
       "ddbcmsapi": "https://cmscontent.dbc.dk/",
       "moreinfo": "https://moreinfo.addi.dk/2.10/",
-      "openagency": "http://openagency.addi.dk/2.24/",
+      "openagency": "http://vipcore.iscrum-vip-prod.svc.cloud.dbc.dk/1.0/api",
       "openholdingstatus": "https://openholdingstatus.addi.dk/2.2/",
       "PRODopenorder": "https://openorder.addi.dk/3.0",
       "openorder": "https://openorder.addi.dk/test_3.0",

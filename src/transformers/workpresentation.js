@@ -28,7 +28,7 @@ import {appId} from '../utils/config';
  */
 export default (request, context) => {
   let {agencyId} = request;
-  const {workId, profile, trackingId} = request;
+  const {workId, profile, includeRelations = false, trackingId} = request;
   const service = context.get('services.workpresentation');
 
   // Ensure agencyId is string
@@ -61,6 +61,7 @@ export default (request, context) => {
     workId,
     agencyId,
     profile,
+    includeRelations,
     appId
   };
 
