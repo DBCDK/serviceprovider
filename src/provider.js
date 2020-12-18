@@ -124,6 +124,7 @@ export function enableWSTransport(connection) {
       getContext(data.access_token)
         .then(context => {
           context.app.ips = [connection.remoteAddress];
+          context.app.access_token = data.access_token;
           return callApi(key, data, context);
         })
         .catch(err => {
