@@ -8,7 +8,7 @@
 const endpoint = 'order';
 const params = {
   pids: ['870970-basis:28126727', '870970-basis:27597726'],
-  expires: '2020-12-01',
+  expires: '2021-01-01',
   pickUpBranch: 'DK-100450',
   phone: '123454',
   address: 'ADDRESS',

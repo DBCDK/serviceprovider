@@ -1,4 +1,4 @@
-// AUTOTEST GENERATOR: {"endpoint":"workpresentation","params":{"workId":"work-of:not-existing-work","agencyId":777900,"profile":"opac"}}
+// AUTOTEST GENERATOR: {"endpoint":"workpresentation","params":{"workId":"work-of:not-existing-work","agencyId":775100,"profile":"opac","includeRelations":false}}
 //
 //
 // AUTOMATED UNIT TEST
@@ -8,8 +8,9 @@
 const endpoint = 'workpresentation';
 const params = {
   workId: 'work-of:not-existing-work',
-  agencyId: 777900,
-  profile: 'opac'
+  agencyId: 775100,
+  profile: 'opac',
+  includeRelations: false
 };
 
 const expected = {
@@ -18,7 +19,7 @@ const expected = {
   data: {
     errorCode: 'NOT_FOUND_ERROR',
     message: 'No Such Work',
-    trackingId: '5ca9485e-163e-4a48-ab21-04f85afec657'
+    trackingId: 'b2e58fe5-ebe8-4530-aca1-0f702e309296'
   }
 };
 
@@ -26,7 +27,7 @@ const context = {
   services: {
     ddbcmsapi: 'https://cmscontent.dbc.dk/',
     moreinfo: 'https://moreinfo.addi.dk/2.10/',
-    openagency: 'https://openagency.addi.dk/2.34/',
+    openagency: 'http://vipcore.iscrum-vip-prod.svc.cloud.dbc.dk/1.0/api',
     openholdingstatus: 'https://openholdingstatus.addi.dk/3.1/',
     PRODopenorder: 'https://openorder.addi.dk/3.0',
     openorder: 'https://openorder.addi.dk/3.0',
@@ -70,8 +71,8 @@ const context = {
   }
 };
 const mockData = {
-  '["http://work-presentation-service.cisterne.svc.cloud.dbc.dk/api/work-presentation",{"qs":{"workId":"work-of:not-existing-work","agencyId":"777900","profile":"opac","appId":"openplatform/v3/"}}]':
-    '{"errorCode":"NOT_FOUND_ERROR","message":"No Such Work","trackingId":"5ca9485e-163e-4a48-ab21-04f85afec657"}'
+  '["http://work-presentation-service.cisterne.svc.cloud.dbc.dk/api/work-presentation",{"qs":{"workId":"work-of:not-existing-work","agencyId":"775100","profile":"opac","includeRelations":false,"appId":"openplatform/v3/"}}]':
+    '{"errorCode":"NOT_FOUND_ERROR","message":"No Such Work","trackingId":"b2e58fe5-ebe8-4530-aca1-0f702e309296"}'
 };
 
 import Provider from '../../provider/Provider.js';
@@ -81,7 +82,7 @@ const provider = Provider();
 describe('Automated test: workpresentation_not_found_returns_404.auto', () => {
   it('has same result as recorded (in workpresentation_not_found_returns_404.auto)', () => {
     assert(
-      Date.now() < +new Date('2021-02-21'),
+      Date.now() < +new Date('2021-03-18'),
       'Please recreate the automatically generated unit tests, such that the mock data does not come out of sync with the actual services. See README.md for details.'
     );
     context.mockData = mockData;

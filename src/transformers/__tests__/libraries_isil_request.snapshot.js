@@ -26,8 +26,8 @@ const expected = {
       agencyPNumber: '1003287869',
       branchId: '726500',
       branchType: 'H',
-      branchName: ['Roskilde Bibliotek', 'Roskilde Libraries'],
-      branchShortName: ['Roskilde Bibliotekerne', 'Roskilde Libraries'],
+      branchName: ['Roskilde Libraries', 'Roskilde Bibliotek'],
+      branchShortName: ['Roskilde Libraries', 'Roskilde Bibliotekerne'],
       branchPhone: '46 31 50 00',
       branchEmail: 'voksen@roskildebib.dk',
       branchIllEmail: 'fjernlaan@roskilde.dk',
@@ -47,13 +47,13 @@ const expected = {
       librarydkSupportEmail: 'voksen@roskilde.dk',
       librarydkSupportPhone: '46 31 50 75',
       openingHours: [
-        'Mandag-fredag kl.10-19\r\nlørdag kl. 10-14\r\nsøndage i vinterhalvåret 12-16\r\nSe bogbussens åbningstider på www.roskildebib.dk',
-        "Open:\r\nMonday-Friday 10am-7pm\r\nSaturday 10am-2pm\r\nIn the winter months from the 15th of September to the 15th of  April also Sundays 12-4pm\r\n\r\nThe mobile library's times can be found at www.roskildebib.dk"
+        "Open:\r\nMonday-Friday 10am-7pm\r\nSaturday 10am-2pm\r\nIn the winter months from the 15th of September to the 15th of  April also Sundays 12-4pm\r\n\r\nThe mobile library's times can be found at www.roskildebib.dk",
+        'Mandag-fredag kl.10-19\r\nlørdag kl. 10-14\r\nsøndage i vinterhalvåret 12-16\r\nSe bogbussens åbningstider på www.roskildebib.dk'
       ],
       temporarilyClosed: '0',
       illOrderReceiptText: [
-        'Din bestilling er gennemført. Biblioteket sender en besked, når du kan afhente materialet.',
-        'Your reservation has been completed. The library will send you a message when the material is ready for you to pick up.'
+        'Your reservation has been completed. The library will send you a message when the material is ready for you to pick up.',
+        'Din bestilling er gennemført. Biblioteket sender en besked, når du kan afhente materialet.'
       ],
       pickupAllowed: '1',
       dropOffBranch: '726500',
