@@ -19,13 +19,11 @@ async function localHoldings(request, context) {
 
   let sessionKey;
   try {
-    sessionKey = (
-      await context.request(url + '/authentication/login', {
-        method: 'POST',
-        body: {password, username},
-        json: true
-      })
-    ).sessionKey;
+    sessionKey = (await context.request(url + '/authentication/login', {
+      method: 'POST',
+      body: {password, username},
+      json: true
+    })).sessionKey;
   } catch (e) {
     log.error('cicero auth error', {error: String(e), agency: agency});
     return null;

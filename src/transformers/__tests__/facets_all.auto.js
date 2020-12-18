@@ -77,10 +77,7 @@ const expected = {
       {term: 'robert hansen', frequency: 76},
       {term: 'jannik hastrup', frequency: 36}
     ],
-    date: [
-      {term: '2000', frequency: 52},
-      {term: '2002', frequency: 48}
-    ],
+    date: [{term: '2000', frequency: 52}, {term: '2002', frequency: 48}],
     dk5: [
       {term: '63.7', frequency: 523},
       {term: 'skønlitteratur', frequency: 146}
@@ -110,26 +107,17 @@ const expected = {
       {term: 'danmark', frequency: 69},
       {term: 'tyskland', frequency: 28}
     ],
-    language: [
-      {term: 'dansk', frequency: 963},
-      {term: 'tysk', frequency: 175}
-    ],
+    language: [{term: 'dansk', frequency: 963}, {term: 'tysk', frequency: 175}],
     level: [
       {term: 'alment niveau', frequency: 91},
       {term: 'gymnasieniveau', frequency: 19}
     ],
-    let: [
-      {term: '16', frequency: 6},
-      {term: '14', frequency: 2}
-    ],
+    let: [{term: '16', frequency: 6}, {term: '14', frequency: 2}],
     literaryForm: [
       {term: 'faglitteratur', frequency: 1039},
       {term: 'skønlitteratur', frequency: 182}
     ],
-    lix: [
-      {term: '07', frequency: 7},
-      {term: '05', frequency: 2}
-    ],
+    lix: [{term: '07', frequency: 7}, {term: '05', frequency: 2}],
     musicSubject: [
       {term: 'vokal', frequency: 50},
       {term: 'børnemusik', frequency: 21}
@@ -155,10 +143,7 @@ const expected = {
       {term: 'j. m. buch kristensen', frequency: 27}
     ],
     sheetMusic: [{term: 'alle partiturer', frequency: 6}],
-    subject: [
-      {term: 'ost', frequency: 545},
-      {term: 'danmark', frequency: 85}
-    ],
+    subject: [{term: 'ost', frequency: 545}, {term: 'danmark', frequency: 85}],
     titleSeries: [
       {term: 'grieben-reiseführer', frequency: 8},
       {term: 'small world', frequency: 5}
