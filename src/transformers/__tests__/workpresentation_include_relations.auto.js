@@ -18,7 +18,7 @@ const expected = {
   data: {
     trackingId: '69598b6a-9100-43be-ac75-f1dc2b8619b5',
     work: {
-      creators: [{ type: 'aut', value: 'Erlend Loe' }],
+      creators: [{type: 'aut', value: 'Erlend Loe'}],
       description:
         'Doppler, som er en velfungerende borger, beslutter pludselig, at han må finde sig selv, opgiver job og ægteskab og flytter ud i skoven omkring Oslo for at finde sig selv, i selskab med en elgkalv og i pagt med naturen, mens han tænker over udviklingen i samfundet og hans eget ægteskab',
       fullTitle: 'Doppler : roman',
@@ -65,9 +65,9 @@ const expected = {
         }
       ],
       relations: [
-        { id: '150005-anmeld:74645', type: 'review', types: ['Anmeldelse'] },
-        { id: '150005-anmeld:76235', type: 'review', types: ['Anmeldelse'] },
-        { id: '150005-anmeld:76282', type: 'review', types: ['Anmeldelse'] },
+        {id: '150005-anmeld:74645', type: 'review', types: ['Anmeldelse']},
+        {id: '150005-anmeld:76235', type: 'review', types: ['Anmeldelse']},
+        {id: '150005-anmeld:76282', type: 'review', types: ['Anmeldelse']},
         {
           id: '777900-katalog:88456262',
           type: 'review',
@@ -120,20 +120,20 @@ const expected = {
         }
       ],
       subjects: [
-        { type: 'DBCO', value: 'ironi' },
-        { type: 'DK5', value: 'sk' },
-        { type: 'DBCS', value: 'ironi' },
-        { type: 'DK5', value: 'fb' },
-        { type: 'DBCO', value: 'samfundssatire' },
-        { type: 'DBCS', value: 'samfundssatire' },
-        { type: 'DBCS', value: 'midtvejskriser' },
-        { type: 'DK5-Text', value: 'Skønlitteratur' },
-        { type: 'DBCO', value: 'humor' },
-        { type: 'genre', value: 'humor' },
-        { type: 'genre', value: 'samfundssatire' },
-        { type: 'DBCS', value: 'humor' },
-        { type: 'DBCS', value: 'familien' },
-        { type: 'not_specified', value: 'godtanmeldt' }
+        {type: 'DBCO', value: 'ironi'},
+        {type: 'DK5', value: 'sk'},
+        {type: 'DBCS', value: 'ironi'},
+        {type: 'DK5', value: 'fb'},
+        {type: 'DBCO', value: 'samfundssatire'},
+        {type: 'DBCS', value: 'samfundssatire'},
+        {type: 'DBCS', value: 'midtvejskriser'},
+        {type: 'DK5-Text', value: 'Skønlitteratur'},
+        {type: 'DBCO', value: 'humor'},
+        {type: 'genre', value: 'humor'},
+        {type: 'genre', value: 'samfundssatire'},
+        {type: 'DBCS', value: 'humor'},
+        {type: 'DBCS', value: 'familien'},
+        {type: 'not_specified', value: 'godtanmeldt'}
       ],
       title: 'Doppler',
       workId: 'work-of:870970-basis:25775481'
@@ -164,13 +164,13 @@ const context = {
     workpresentation:
       'http://work-presentation-service.cisterne.svc.cloud.dbc.dk/api/work-presentation'
   },
-  infomedia: { userId: 'XXXXX', libraryCode: 'XXXXX' },
-  cicero: { 'DK-710100': 'XXXXX' },
-  performance: { username: 'XXXXX', password: 'XXXXX' },
-  communityservice: { id: 1 },
-  search: { agency: '775100', profile: 'opac', collectionidentifiers: '' },
-  storage: { user: 'XXXXX' },
-  netpunkt: { user: 'XXXXX', group: 'XXXXX', password: 'XXXXX' },
+  infomedia: {userId: 'XXXXX', libraryCode: 'XXXXX'},
+  cicero: {'DK-710100': 'XXXXX'},
+  performance: {username: 'XXXXX', password: 'XXXXX'},
+  communityservice: {id: 1},
+  search: {agency: '775100', profile: 'opac', collectionidentifiers: ''},
+  storage: {user: 'XXXXX'},
+  netpunkt: {user: 'XXXXX', group: 'XXXXX', password: 'XXXXX'},
   user: {
     id: 'XXXXX',
     salt: 'XXXXX',
@@ -184,7 +184,7 @@ const context = {
     ddbcmsapipassword: 'XXXXX',
     orderpolicyrequester: '190101',
     orderSystem: 'bibliotekdk',
-    ips: { '0': 'XXXXX' },
+    ips: {'0': 'XXXXX'},
     access_token: 'XXXXX'
   }
 };
@@ -194,7 +194,7 @@ const mockData = {
 };
 
 import Provider from '../../provider/Provider.js';
-import { assert, fail } from 'chai';
+import {assert, fail} from 'chai';
 const provider = Provider();
 
 describe('Automated test: workpresentation_include_relations.auto', () => {
