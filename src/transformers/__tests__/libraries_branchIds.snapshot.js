@@ -47,13 +47,13 @@ const expected = {
       ],
       temporarilyClosed: '0',
       illOrderReceiptText: [
-        'Your reservation has been received',
-        'Din bestilling er modtaget'
+        'Din bestilling er modtaget',
+        'Your reservation has been received'
       ],
       pickupAllowed: '1',
       dropOffBranch: '717500',
       dropOffName: 'Rødovre Kommunebiblioteker',
-      lastUpdated: '2020-12-16T00:00:00+01:00',
+      lastUpdated: '2020-07-08T00:00:00+02:00',
       isOclcRsLibrary: '0',
       stateAndUniversityLibraryCopyService: '1',
       geolocation: {latitude: 55.680913, longitude: 12.457274},
@@ -93,18 +93,18 @@ const expected = {
       librarydkSupportEmail: 'bibliotekar@rk.dk',
       librarydkSupportPhone: '36 36 90 36',
       openingHours: [
-        'Mon-tues and thur: 12-18\r\nWed: 10-18\r\nFri: 12-16\r\nSat: 10-14',
-        'Man-tir og tor:12-18\r\nOns: 10-18\r\nFre: 12-16\r\nLør: 10-14'
+        'Man-tir og tor:12-18\r\nOns: 10-18\r\nFre: 12-16\r\nLør: 10-14',
+        'Mon-tues and thur: 12-18\r\nWed: 10-18\r\nFri: 12-16\r\nSat: 10-14'
       ],
       temporarilyClosed: '0',
       illOrderReceiptText: [
-        'Your reservation has been received',
-        'Din bestilling er modtaget'
+        'Din bestilling er modtaget',
+        'Your reservation has been received'
       ],
       pickupAllowed: '1',
       dropOffBranch: '717500',
       dropOffName: 'Rødovre Kommunebiblioteker',
-      lastUpdated: '2020-12-16T00:00:00+01:00',
+      lastUpdated: '2020-07-08T00:00:00+02:00',
       isOclcRsLibrary: '0',
       stateAndUniversityLibraryCopyService: '1',
       geolocation: {latitude: 55.701627, longitude: 12.454169},
@@ -142,7 +142,10 @@ const expected = {
         'https://www.genvej.gentofte.bibnet.dk/sites/RKB/pub/patronstatus.html',
       openingHours: ['Man, tir og tor:9-16\r\nOns og fre:9-12'],
       temporarilyClosed: '1',
-      temporarilyClosedReason: ['Temporary closed', 'Lukket pga Covid-19'],
+      temporarilyClosedReason: [
+        'Vi modtager pt. ikke bestillinger pga. corona.',
+        'Temporary closed'
+      ],
       pickupAllowed: '0',
       dropOffBranch: '717500',
       dropOffName: 'Rødovre Kommunebiblioteker',
@@ -152,9 +155,7 @@ const expected = {
       headOfInstitutionName: 'Lone Terpgaard-Jensen',
       headOfInstitutionTitle: 'Bibliotekschef',
       nationalDeliveryService: '1',
-      willReceiveIll: '0',
-      willReceiveIllTxt:
-        'Vi modtager pt. ikke bestillinger pga Covid-19 lukning',
+      willReceiveIll: '1',
       orderParameters: ['userId', 'pincode', 'name', 'address']
     }
   ]
