@@ -14,8 +14,8 @@
   * @returns {Object}
   */
 
-import {log} from '../utils';
-import {appId} from '../utils/config';
+import { log } from '../utils';
+import { appId } from '../utils/config';
 
 /**
  * Default transformer.
@@ -27,8 +27,8 @@ import {appId} from '../utils/config';
  * @api public
  */
 export default (request, context) => {
-  let {agencyId} = request;
-  const {workId, profile, trackingId} = request;
+  let { agencyId } = request;
+  const { workId, profile, includeRelations = false, trackingId } = request;
   const service = context.get('services.workpresentation');
 
   // Ensure agencyId is string
@@ -61,6 +61,7 @@ export default (request, context) => {
     workId,
     agencyId,
     profile,
+    includeRelations,
     appId
   };
 

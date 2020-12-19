@@ -955,6 +955,10 @@ api:
         description: The name of the search profile the agency uses.
         type: string
         example: 'opac'
+      includeRelations:
+        description: Include relations in the result (default=false).
+        type: 'boolean'
+        example: true
       trackingId:
         description: Useful for tracking a request in log files.
         type: string
