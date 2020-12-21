@@ -10,6 +10,7 @@ definitions:
   Workpresentation_trackingId:
     type: string
     example: some-uuid
+
   Workpresentation_manifestation:
     properties:
       types:
@@ -20,8 +21,32 @@ definitions:
       id:
         type: string
         example: id-enti:fier
+      relations:
+        type: integer
+        description: indexes (starting with 0) in work/relations
+        example: 0,2,7
+
   Workpresentation_manifestation_list:
     $ref: '#/definitions/Workpresentation_manifestation'
+
+  Workpresentation_relation:
+    type: object
+    properties:
+      types:
+        type: array
+        example: ether
+        items:
+          type: string
+      id:
+        type: string
+        example: id-enti:fier
+      type:
+        type: string
+        example: review
+  Workpresentation_relation_list:
+    type: object
+    $ref: '#/definitions/Workpresentation_relation'
+
   Workpresentation_typedvalue:
     properties:
       type:
@@ -31,8 +56,10 @@ definitions:
       value:
         type: string
         example: Value
+
   Workpresentation_typedvalue_list:
     $ref: '#/definitions/Workpresentation_typedvalue'
+
   Workpresentation_work:
     properties:
       fullTitle:
@@ -59,6 +86,11 @@ definitions:
       workId:
         type: string
         example: work-of:some-manifestation:id
+      relations:
+        type: array
+        items:
+          type: object
+          $ref: '#/definitions/Workpresentation_relation_list'
 
 info:
   title: Work Presentation Service
@@ -66,6 +98,7 @@ info:
   contact:
     url: mailto:dbc@dbc.dk
   version: '1.0'
+
 servers:
   - url: http://work-presentation-service-deploy-856d595d8d-z5np9:8080/
     description: Default Server.

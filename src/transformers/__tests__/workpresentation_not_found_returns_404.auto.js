@@ -1,4 +1,4 @@
-// AUTOTEST GENERATOR: {"endpoint":"workpresentation","params":{"workId":"work-of:not-existing-work","agencyId":777900,"profile":"opac"}}
+// AUTOTEST GENERATOR: {"endpoint":"workpresentation","params":{"workId":"work-of:fake-id","agencyId":777900,"profile":"opac"}}
 //
 //
 // AUTOMATED UNIT TEST
@@ -6,11 +6,7 @@
 //
 //
 const endpoint = 'workpresentation';
-const params = {
-  workId: 'work-of:not-existing-work',
-  agencyId: 777900,
-  profile: 'opac'
-};
+const params = {workId: 'work-of:fake-id', agencyId: 777900, profile: 'opac'};
 
 const expected = {
   statusCode: 404,
@@ -18,7 +14,7 @@ const expected = {
   data: {
     errorCode: 'NOT_FOUND_ERROR',
     message: 'No Such Work',
-    trackingId: '5ca9485e-163e-4a48-ab21-04f85afec657'
+    trackingId: 'fa5b2bd9-2ed0-4c63-8330-cd5d576bc1e3'
   }
 };
 
@@ -70,8 +66,8 @@ const context = {
   }
 };
 const mockData = {
-  '["http://work-presentation-service.cisterne.svc.cloud.dbc.dk/api/work-presentation",{"qs":{"workId":"work-of:not-existing-work","agencyId":"777900","profile":"opac","appId":"openplatform/v3/"}}]':
-    '{"errorCode":"NOT_FOUND_ERROR","message":"No Such Work","trackingId":"5ca9485e-163e-4a48-ab21-04f85afec657"}'
+  '["http://work-presentation-service.cisterne.svc.cloud.dbc.dk/api/work-presentation",{"qs":{"workId":"work-of:fake-id","agencyId":"777900","profile":"opac","includeRelations":false,"appId":"openplatform/v3/"}}]':
+    '{"errorCode":"NOT_FOUND_ERROR","message":"No Such Work","trackingId":"fa5b2bd9-2ed0-4c63-8330-cd5d576bc1e3"}'
 };
 
 import Provider from '../../provider/Provider.js';
@@ -81,7 +77,7 @@ const provider = Provider();
 describe('Automated test: workpresentation_not_found_returns_404.auto', () => {
   it('has same result as recorded (in workpresentation_not_found_returns_404.auto)', () => {
     assert(
-      Date.now() < +new Date('2021-02-21'),
+      Date.now() < +new Date('2021-03-19'),
       'Please recreate the automatically generated unit tests, such that the mock data does not come out of sync with the actual services. See README.md for details.'
     );
     context.mockData = mockData;
