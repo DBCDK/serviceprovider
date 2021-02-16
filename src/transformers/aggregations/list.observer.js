@@ -52,17 +52,15 @@ async function onUpdate(prev, obj, type, storage) {
     await client.deleteType(obj._id);
 
     if (isValidType(obj)) {
-      const lists = (
-        await storage.scan(
-          {
-            _type: obj._id,
-            index: ['cf_type', 'cf_key', '_created'],
-            startsWith: ['list']
-          },
-          null,
-          anonCtx
-        )
-      ).data.map(l => l.val);
+      const lists = (await storage.scan(
+        {
+          _type: obj._id,
+          index: ['cf_type', 'cf_key', '_created'],
+          startsWith: ['list']
+        },
+        null,
+        anonCtx
+      )).data.map(l => l.val);
 
       for (let i = 0; i < lists.length; i++) {
         await refreshList(lists[i], obj, storage);
@@ -144,9 +142,11 @@ async function onCreate(obj, type, storage) {
 }
 
 async function getListIdFromComment(commentObj, storage) {
-  const commentTarget = (
-    await storage.get({_id: commentObj.cf_key}, null, anonCtx)
-  ).data;
+  const commentTarget = (await storage.get(
+    {_id: commentObj.cf_key},
+    null,
+    anonCtx
+  )).data;
   if (commentTarget.cf_type === 'list') {
     return commentTarget._id;
   }
@@ -166,67 +166,57 @@ async function refreshList(listId, type, storage) {
       await client.deleteList(listId);
       return;
     }
-    const owner = (
-      await storage.scan(
-        {
-          _type: list._type,
-          index: ['_owner', 'cf_type', '_created'],
-          startsWith: [list._owner, 'USER_PROFILE'],
-          expand: true
-        },
-        null,
-        anonCtx
-      )
-    ).data[0];
+    const owner = (await storage.scan(
+      {
+        _type: list._type,
+        index: ['_owner', 'cf_type', '_created'],
+        startsWith: [list._owner, 'USER_PROFILE'],
+        expand: true
+      },
+      null,
+      anonCtx
+    )).data[0];
 
-    const items = (
-      await storage.scan(
-        {
-          _type: list._type,
-          index: ['cf_type', 'cf_key', '_created'],
-          startsWith: ['list-entry', list._id],
-          expand: true
-        },
-        null,
-        anonCtx
-      )
-    ).data.filter(item => !list.deleted || !list.deleted[item._id]);
-    let num_comments = (
-      await storage.scan(
-        {
-          _type: list._type,
-          index: ['cf_type', 'cf_key', '_created'],
-          startsWith: ['comment', list._id]
-        },
-        null,
-        anonCtx
-      )
-    ).data.length;
+    const items = (await storage.scan(
+      {
+        _type: list._type,
+        index: ['cf_type', 'cf_key', '_created'],
+        startsWith: ['list-entry', list._id],
+        expand: true
+      },
+      null,
+      anonCtx
+    )).data.filter(item => !list.deleted || !list.deleted[item._id]);
+    let num_comments = (await storage.scan(
+      {
+        _type: list._type,
+        index: ['cf_type', 'cf_key', '_created'],
+        startsWith: ['comment', list._id]
+      },
+      null,
+      anonCtx
+    )).data.length;
     for (let i = 0; i < items.length; i++) {
-      const numItemComments = (
-        await storage.scan(
-          {
-            _type: list._type,
-            index: ['cf_type', 'cf_key', '_created'],
-            startsWith: ['comment', items[i]._id]
-          },
-          null,
-          anonCtx
-        )
-      ).data.length;
+      const numItemComments = (await storage.scan(
+        {
+          _type: list._type,
+          index: ['cf_type', 'cf_key', '_created'],
+          startsWith: ['comment', items[i]._id]
+        },
+        null,
+        anonCtx
+      )).data.length;
       num_comments += numItemComments;
     }
-    let num_follows = (
-      await storage.scan(
-        {
-          _type: list._type,
-          index: ['cf_type', 'cf_key', '_created'],
-          startsWith: ['follows', list._id]
-        },
-        null,
-        adminCtx
-      )
-    ).data.length;
+    let num_follows = (await storage.scan(
+      {
+        _type: list._type,
+        index: ['cf_type', 'cf_key', '_created'],
+        startsWith: ['follows', list._id]
+      },
+      null,
+      adminCtx
+    )).data.length;
 
     const listAggr = {
       id: list._id,

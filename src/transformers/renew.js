@@ -17,9 +17,15 @@ function constructSoap(params) {
       <open:renewLoanRequest>
          <open:agencyId>${params.agencyId}</open:agencyId>
          <open:authentication>
-            <open:groupIdAut>${params['authentication.groupIdAut']}</open:groupIdAut>
-            <open:passwordAut>${params['authentication.passwordAut']}</open:passwordAut>
-            <open:userIdAut>${params['authentication.userIdAut']}</open:userIdAut>
+            <open:groupIdAut>${
+              params['authentication.groupIdAut']
+            }</open:groupIdAut>
+            <open:passwordAut>${
+              params['authentication.passwordAut']
+            }</open:passwordAut>
+            <open:userIdAut>${
+              params['authentication.userIdAut']
+            }</open:userIdAut>
          </open:authentication>
          <open:loanId>${params.loanId}</open:loanId>
          <open:outputType>json</open:outputType>

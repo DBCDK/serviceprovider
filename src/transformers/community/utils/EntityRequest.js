@@ -235,7 +235,9 @@ export default class EntityRequest {
     ) {
       return this._createResponse({}, [
         {
-          error: `${json.attributes.reference.type} with id ${json.entity_ref} does not exist`,
+          error: `${json.attributes.reference.type} with id ${
+            json.entity_ref
+          } does not exist`,
           status: 400
         }
       ]);
