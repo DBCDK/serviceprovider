@@ -1,4 +1,4 @@
-// AUTOTEST GENERATOR: {"endpoint":"order","params":{"pids":["7XXXXX0-katalog:50758060","7XXXXX0-katalog:28657366"],"pickUpBranch":"710110","expires":"2020-12-28"}}
+// AUTOTEST GENERATOR: {"endpoint":"order","params":{"pids":["7XXXXX0-katalog:50758060","7XXXXX0-katalog:28657366"],"pickUpBranch":"710110","expires":"2022-01-01"}}
 //
 //
 // AUTOMATED UNIT TEST
@@ -9,7 +9,7 @@ const endpoint = 'order';
 const params = {
   pids: ['7XXXXX0-katalog:50758060', '7XXXXX0-katalog:28657366'],
   pickUpBranch: '710110',
-  expires: '2020-12-28'
+  expires: '2022-01-01'
 };
 
 const expected = {
