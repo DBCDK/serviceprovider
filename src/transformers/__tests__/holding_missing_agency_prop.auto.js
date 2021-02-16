@@ -6,7 +6,7 @@
 //
 //
 const endpoint = 'holdingsitems';
-const params = {item_id: '3439785456'};
+const params = { item_id: '3439785456' };
 
 const expected = {
   statusCode: 400,
@@ -26,19 +26,17 @@ const context = {
     suggest: 'http://ortograf.mcp1-proxy.dbc.dk/ortograf/',
     recommend: 'http://staging.recomole.mcp1-proxy.dbc.dk/recomole/loan-cosim',
     performance: 'http://elk/elasticsearch',
-    communityservice: 'http://localhost:4010/v1',
     cicero: 'https://cicero-fbs.com/rest/external/v1/',
     openformat: 'XXXXX',
     holdingsitems: 'XXXXX',
     infomediaservice: 'XXXXX'
   },
-  infomedia: {userId: 'XXXXX', libraryCode: 'XXXXX'},
-  cicero: {'DK-710100': 'XXXXX'},
-  performance: {username: 'XXXXX', password: 'XXXXX'},
-  communityservice: {id: 1},
-  search: {agency: '775100', profile: 'opac', collectionidentifiers: ''},
-  storage: {user: 'XXXXX'},
-  netpunkt: {user: 'XXXXX', group: 'XXXXX', password: 'XXXXX'},
+  infomedia: { userId: 'XXXXX', libraryCode: 'XXXXX' },
+  cicero: { 'DK-710100': 'XXXXX' },
+  performance: { username: 'XXXXX', password: 'XXXXX' },
+  search: { agency: '775100', profile: 'opac', collectionidentifiers: '' },
+  storage: { user: 'XXXXX' },
+  netpunkt: { user: 'XXXXX', group: 'XXXXX', password: 'XXXXX' },
   user: {
     id: '0102033692',
     salt: 'XXXXX',
@@ -57,7 +55,7 @@ const context = {
 const mockData = {};
 
 import Provider from '../../provider/Provider.js';
-import {assert, fail} from 'chai';
+import { assert, fail } from 'chai';
 const provider = Provider();
 
 describe('Automated test: holding_missing_agency_prop.auto', () => {

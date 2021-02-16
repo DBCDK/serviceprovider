@@ -25,9 +25,9 @@ const expected = {
       val: 0.5461945734602851,
       from: ['work:997958']
     },
-    {pid: '870970-basis:48135676', val: 8, from: ['work:1587468']},
-    {pid: '870970-basis:52284120', val: 323, from: ['work:1400234']},
-    {pid: '870970-basis:29743681', val: 244, from: ['work:1400234']},
+    { pid: '870970-basis:48135676', val: 8, from: ['work:1587468'] },
+    { pid: '870970-basis:52284120', val: 323, from: ['work:1400234'] },
+    { pid: '870970-basis:29743681', val: 244, from: ['work:1400234'] },
     {
       pid: '870970-basis:29344396',
       val: 0.5398547380852825,
@@ -38,9 +38,9 @@ const expected = {
       val: 0.4914079043209908,
       from: ['work:946681']
     },
-    {pid: '870970-basis:50946746', val: 7, from: ['work:1587468']},
-    {pid: '870970-basis:48127312', val: 221, from: ['work:1587468']},
-    {pid: '870970-basis:48241905', val: 6, from: ['work:1587468']},
+    { pid: '870970-basis:50946746', val: 7, from: ['work:1587468'] },
+    { pid: '870970-basis:48127312', val: 221, from: ['work:1587468'] },
+    { pid: '870970-basis:48241905', val: 6, from: ['work:1587468'] },
     {
       pid: '870970-basis:50690962',
       val: 0.4388958372430535,
@@ -62,7 +62,6 @@ const context = {
     suggest: 'http://ortograf-service-1-0.mi-prod.svc.cloud.dbc.dk/ortograf/',
     recommend: 'http://booklens-190101-1-0.mi-prod.svc.cloud.dbc.dk/',
     performance: 'https://elk.dbc.dk:9100/k8s-frontend-prod-*/',
-    communityservice: 'http://localhost:4010/v1',
     cicero: 'https://cicero-fbs.com/rest/external/v1/',
     openformat:
       'http://openformat-php-master.frontend-prod.svc.cloud.dbc.dk/server.php',
@@ -70,13 +69,12 @@ const context = {
       'http://holdings-items-content-service.cisterne.svc.cloud.dbc.dk/holdings-items-content-service/api',
     infomediaservice: 'http://infomedia.mcp1-proxy.dbc.dk/server.php'
   },
-  infomedia: {userId: 'XXXXX', libraryCode: 'XXXXX'},
-  cicero: {'DK-710100': 'XXXXX'},
-  performance: {username: 'XXXXX', password: 'XXXXX'},
-  communityservice: {id: 1},
-  search: {agency: '775100', profile: 'opac', collectionidentifiers: ''},
-  storage: {user: 'XXXXX'},
-  netpunkt: {user: 'XXXXX', group: 'XXXXX', password: 'XXXXX'},
+  infomedia: { userId: 'XXXXX', libraryCode: 'XXXXX' },
+  cicero: { 'DK-710100': 'XXXXX' },
+  performance: { username: 'XXXXX', password: 'XXXXX' },
+  search: { agency: '775100', profile: 'opac', collectionidentifiers: '' },
+  storage: { user: 'XXXXX' },
+  netpunkt: { user: 'XXXXX', group: 'XXXXX', password: 'XXXXX' },
   user: {
     id: 'XXXXX',
     salt: 'XXXXX',
@@ -183,7 +181,7 @@ const mockData = {
 };
 
 import Provider from '../../provider/Provider.js';
-import {assert, fail} from 'chai';
+import { assert, fail } from 'chai';
 const provider = Provider();
 
 describe('Automated test: recommend_multiple_likes.auto', () => {

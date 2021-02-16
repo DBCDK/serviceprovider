@@ -6,7 +6,7 @@
 //
 //
 const endpoint = 'recommend';
-const params = {like: ['870970-basis:45488713'], limit: 10};
+const params = { like: ['870970-basis:45488713'], limit: 10 };
 
 const expected = {
   statusCode: 200,
@@ -16,23 +16,23 @@ const expected = {
       val: 0.48284091834412546,
       from: ['work:1400234']
     },
-    {pid: '870970-basis:28718020', val: 3, from: ['work:1400234']},
-    {pid: '870970-basis:29743681', val: 244, from: ['work:1400234']},
+    { pid: '870970-basis:28718020', val: 3, from: ['work:1400234'] },
+    { pid: '870970-basis:29743681', val: 244, from: ['work:1400234'] },
     {
       pid: '870970-basis:50946800',
       val: 0.3891770940906558,
       from: ['work:1400234']
     },
-    {pid: '870970-basis:28878443', val: 2, from: ['work:1400234']},
-    {pid: '870970-basis:51418328', val: 71, from: ['work:1400234']},
-    {pid: '870970-basis:29344612', val: 62, from: ['work:1400234']},
+    { pid: '870970-basis:28878443', val: 2, from: ['work:1400234'] },
+    { pid: '870970-basis:51418328', val: 71, from: ['work:1400234'] },
+    { pid: '870970-basis:29344612', val: 62, from: ['work:1400234'] },
     {
       pid: '870970-basis:29344396',
       val: 0.3859171932392937,
       from: ['work:1400234']
     },
-    {pid: '870970-basis:52677556', val: 2, from: ['work:1400234']},
-    {pid: '870970-basis:29840997', val: 2, from: ['work:1400234']}
+    { pid: '870970-basis:52677556', val: 2, from: ['work:1400234'] },
+    { pid: '870970-basis:29840997', val: 2, from: ['work:1400234'] }
   ]
 };
 
@@ -49,7 +49,6 @@ const context = {
     suggest: 'http://ortograf-service-1-0.mi-prod.svc.cloud.dbc.dk/ortograf/',
     recommend: 'http://booklens-190101-1-0.mi-prod.svc.cloud.dbc.dk/',
     performance: 'https://elk.dbc.dk:9100/k8s-frontend-prod-*/',
-    communityservice: 'http://localhost:4010/v1',
     cicero: 'https://cicero-fbs.com/rest/external/v1/',
     openformat:
       'http://openformat-php-master.frontend-prod.svc.cloud.dbc.dk/server.php',
@@ -57,13 +56,12 @@ const context = {
       'http://holdings-items-content-service.cisterne.svc.cloud.dbc.dk/holdings-items-content-service/api',
     infomediaservice: 'http://infomedia.mcp1-proxy.dbc.dk/server.php'
   },
-  infomedia: {userId: 'XXXXX', libraryCode: 'XXXXX'},
-  cicero: {'DK-710100': 'XXXXX'},
-  performance: {username: 'XXXXX', password: 'XXXXX'},
-  communityservice: {id: 1},
-  search: {agency: '775100', profile: 'opac', collectionidentifiers: ''},
-  storage: {user: 'XXXXX'},
-  netpunkt: {user: 'XXXXX', group: 'XXXXX', password: 'XXXXX'},
+  infomedia: { userId: 'XXXXX', libraryCode: 'XXXXX' },
+  cicero: { 'DK-710100': 'XXXXX' },
+  performance: { username: 'XXXXX', password: 'XXXXX' },
+  search: { agency: '775100', profile: 'opac', collectionidentifiers: '' },
+  storage: { user: 'XXXXX' },
+  netpunkt: { user: 'XXXXX', group: 'XXXXX', password: 'XXXXX' },
   user: {
     id: 'XXXXX',
     salt: 'XXXXX',
@@ -170,7 +168,7 @@ const mockData = {
 };
 
 import Provider from '../../provider/Provider.js';
-import {assert, fail} from 'chai';
+import { assert, fail } from 'chai';
 const provider = Provider();
 
 describe('Automated test: recommend_single_like.auto', () => {

@@ -14,7 +14,7 @@ const params = {
 
 const expected = {
   statusCode: 200,
-  data: {status: 'ok', orsId: '1039377316'}
+  data: { status: 'ok', orsId: '1039377316' }
 };
 
 const context = {
@@ -30,7 +30,6 @@ const context = {
     suggest: 'http://ortograf.mcp1-proxy.dbc.dk/ortograf/',
     recommend: 'http://booklens-190101-1-0.mi-prod.svc.cloud.dbc.dk/',
     performance: 'http://elk/elasticsearch',
-    communityservice: 'http://localhost:4010/v1',
     cicero: 'https://cicero-fbs.com/rest/external/v1/',
     openformat:
       'http://openformat-php-develop.frontend-features.svc.cloud.dbc.dk/server.php',
@@ -38,16 +37,15 @@ const context = {
       'http://holdings-items-content-service.cisterne.svc.cloud.dbc.dk/holdings-items-content-service/api',
     infomediaservice: 'http://infomedia.mcp1-proxy.dbc.dk/server.php'
   },
-  cicero: {'DK-710100': 'XXXXX'},
-  performance: {username: 'XXXXX', password: 'XXXXX'},
-  communityservice: {id: 1},
+  cicero: { 'DK-710100': 'XXXXX' },
+  performance: { username: 'XXXXX', password: 'XXXXX' },
   search: {
     agency: '775100',
     profile: 'opac',
     collectionidentifiers: ''
   },
-  storage: {user: 'XXXXX'},
-  netpunkt: {user: 'XXXXX', group: 'XXXXX', password: 'XXXXX'},
+  storage: { user: 'XXXXX' },
+  netpunkt: { user: 'XXXXX', group: 'XXXXX', password: 'XXXXX' },
   user: {
     id: 'C04122017433',
     salt: 'XXXXX',
@@ -71,7 +69,7 @@ const mockData = {
 };
 
 import Provider from '../../provider/Provider.js';
-import {assert, fail} from 'chai';
+import { assert, fail } from 'chai';
 
 const provider = Provider();
 

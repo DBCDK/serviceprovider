@@ -6,19 +6,19 @@
 //
 //
 const endpoint = 'status';
-const params = {after: '2020/05/01', before: '2020/05/06'};
+const params = { after: '2020/05/01', before: '2020/05/06' };
 
 const expected = {
   statusCode: 200,
   data: {
     version: '3.0.0',
     endOfServiceDate: '0000-00-00T00:00:00Z',
-    openagency: {url: 'https://openagency.addi.dk/2.34/', ok: true},
+    openagency: { url: 'https://openagency.addi.dk/2.34/', ok: true },
     openholdingstatus: {
       url: 'https://openholdingstatus.addi.dk/3.0/',
       ok: true
     },
-    openorder: {url: 'https://openorder.addi.dk/3.0', ok: true},
+    openorder: { url: 'https://openorder.addi.dk/3.0', ok: true },
     openformat: {
       url:
         'http://openformat-php-master.frontend-prod.svc.cloud.dbc.dk/server.php',
@@ -30,16 +30,15 @@ const expected = {
       ok: true,
       text: 'Success'
     },
-    opensearch: {url: 'https://opensearch.addi.dk/b3.5_5.2/', ok: true},
-    openuserstatus: {url: 'https://openuserstatus.addi.dk/2.0/', ok: true},
-    moreinfo: {url: 'https://moreinfo.addi.dk/2.11/', ok: true},
-    ddbcmsapi: {url: 'https://cmscontent.dbc.dk/'},
+    opensearch: { url: 'https://opensearch.addi.dk/b3.5_5.2/', ok: true },
+    openuserstatus: { url: 'https://openuserstatus.addi.dk/2.0/', ok: true },
+    moreinfo: { url: 'https://moreinfo.addi.dk/2.11/', ok: true },
+    ddbcmsapi: { url: 'https://cmscontent.dbc.dk/' },
     recommend: {
       url: 'http://recomole-1-0.mi-prod.svc.cloud.dbc.dk/recomole/loan-cosim',
       ok: true
     },
-    communityservice: {url: 'http://localhost:4010/v1'},
-    storage: {ok: true, user: 'XXXXX', client: 'XXXXX'},
+    storage: { ok: true, user: 'XXXXX', client: 'XXXXX' },
     suggest: {
       url: 'http://ortograf-service-1-0.mi-prod.svc.cloud.dbc.dk/ortograf/',
       ok: true
@@ -293,7 +292,6 @@ const context = {
     recommend:
       'http://recomole-1-0.mi-prod.svc.cloud.dbc.dk/recomole/loan-cosim',
     performance: 'https://elk.dbc.dk:9100/k8s-frontend-prod-*/',
-    communityservice: 'http://localhost:4010/v1',
     cicero: 'https://cicero-fbs.com/rest/external/v1/',
     openformat:
       'http://openformat-php-master.frontend-prod.svc.cloud.dbc.dk/server.php',
@@ -301,13 +299,12 @@ const context = {
       'http://holdings-items-content-service.cisterne.svc.cloud.dbc.dk/holdings-items-content-service/api',
     infomediaservice: 'http://infomedia.mcp1-proxy.dbc.dk/server.php'
   },
-  infomedia: {userId: 'XXXXX', libraryCode: 'XXXXX'},
-  cicero: {'DK-710100': 'XXXXX'},
-  performance: {username: 'XXXXX', password: 'XXXXX'},
-  communityservice: {id: 1},
-  search: {agency: '775100', profile: 'opac', collectionidentifiers: ''},
-  storage: {user: 'XXXXX'},
-  netpunkt: {user: 'XXXXX', group: 'XXXXX', password: 'XXXXX'},
+  infomedia: { userId: 'XXXXX', libraryCode: 'XXXXX' },
+  cicero: { 'DK-710100': 'XXXXX' },
+  performance: { username: 'XXXXX', password: 'XXXXX' },
+  search: { agency: '775100', profile: 'opac', collectionidentifiers: '' },
+  storage: { user: 'XXXXX' },
+  netpunkt: { user: 'XXXXX', group: 'XXXXX', password: 'XXXXX' },
   user: {
     id: 'XXXXX',
     salt: 'XXXXX',
@@ -335,9 +332,9 @@ const mockData = {
   '["https://elk.dbc.dk:9100/k8s-frontend-prod-*/_search",{"method":"POST","auth":{"pass":"XXXXX","user":"XXXXX"},"json":{"size":0,"query":{"bool":{"must":[{"match_all":{}},{"match_phrase":{"msg":{"query":"transformer-done"}}},{"match_phrase":{"app":{"query":"serviceprovider"}}},{"range":{"@timestamp":{"gte":1588284000000,"lte":1588716000000,"format":"epoch_millis"}}}],"filter":[],"should":[],"must_not":[]}},"aggs":{"version":{"terms":{"field":"version.keyword"},"aggs":{"endpoints":{"terms":{"field":"name.keyword"},"aggs":{"external":{"percentiles":{"field":"timings.external"}},"total":{"percentiles":{"field":"timings.total"}}}}}}}}}]': {
     took: 1782,
     timed_out: false,
-    _shards: {total: 145, successful: 145, skipped: 115, failed: 0},
+    _shards: { total: 145, successful: 145, skipped: 115, failed: 0 },
     hits: {
-      total: {value: 10000, relation: 'gte'},
+      total: { value: 10000, relation: 'gte' },
       max_score: null,
       hits: []
     },
@@ -630,7 +627,7 @@ const mockData = {
 };
 
 import Provider from '../../provider/Provider.js';
-import {assert, fail} from 'chai';
+import { assert, fail } from 'chai';
 const provider = Provider();
 
 describe('Automated test: status.auto', () => {
