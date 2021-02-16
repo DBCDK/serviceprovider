@@ -6,7 +6,7 @@
 //
 //
 const endpoint = 'user';
-const params = { userinfo: ['userData', 'userLoan'] };
+const params = {userinfo: ['userData', 'userLoan']};
 
 const expected = {
   statusCode: 200,
@@ -39,12 +39,12 @@ const context = {
     holdings: 'XXXXX',
     infomediaservice: 'XXXXX'
   },
-  infomedia: { userId: 'XXXXX', libraryCode: 'XXXXX' },
-  cicero: { 'DK-710100': 'XXXXX' },
-  performance: { username: 'XXXXX', password: 'XXXXX' },
-  search: { agency: '775100', profile: 'opac', collectionidentifiers: '' },
-  storage: { user: 'XXXXX' },
-  netpunkt: { user: 'XXXXX', group: 'XXXXX', password: 'XXXXX' },
+  infomedia: {userId: 'XXXXX', libraryCode: 'XXXXX'},
+  cicero: {'DK-710100': 'XXXXX'},
+  performance: {username: 'XXXXX', password: 'XXXXX'},
+  search: {agency: '775100', profile: 'opac', collectionidentifiers: ''},
+  storage: {user: 'XXXXX'},
+  netpunkt: {user: 'XXXXX', group: 'XXXXX', password: 'XXXXX'},
   user: {
     id: '0102033690',
     salt: 'XXXXX',
@@ -68,7 +68,7 @@ const mockData = {
 };
 
 import Provider from '../../provider/Provider.js';
-import { assert, fail } from 'chai';
+import {assert, fail} from 'chai';
 const provider = Provider();
 
 describe('Automated test: user_userinfo_userdata_userLoan_spec_set.auto', () => {

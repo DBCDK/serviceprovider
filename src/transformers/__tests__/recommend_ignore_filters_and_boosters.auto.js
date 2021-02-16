@@ -8,8 +8,8 @@
 const endpoint = 'recommend';
 const params = {
   like: ['870970-basis:51861213'],
-  filters: { authorFlood: 1 },
-  boosters: { loanCount: 0 }
+  filters: {authorFlood: 1},
+  boosters: {loanCount: 0}
 };
 
 const expected = {
@@ -20,9 +20,9 @@ const expected = {
       val: 0.1525635974390807,
       from: ['work:1454595']
     },
-    { pid: '870970-basis:48364349', val: 43, from: ['work:1454595'] },
-    { pid: '870970-basis:45404420', val: 63, from: ['work:1454595'] },
-    { pid: '870970-basis:52028442', val: 45, from: ['work:1454595'] },
+    {pid: '870970-basis:48364349', val: 43, from: ['work:1454595']},
+    {pid: '870970-basis:45404420', val: 63, from: ['work:1454595']},
+    {pid: '870970-basis:52028442', val: 45, from: ['work:1454595']},
     {
       pid: '870970-basis:51764560',
       val: 0.15106813773979227,
@@ -33,10 +33,10 @@ const expected = {
       val: 0.14801999700615392,
       from: ['work:1454595']
     },
-    { pid: '870970-basis:54091370', val: 41, from: ['work:1454595'] },
-    { pid: '870970-basis:51642899', val: 34, from: ['work:1454595'] },
-    { pid: '870970-basis:48047491', val: 33, from: ['work:1454595'] },
-    { pid: '870970-basis:46486927', val: 33, from: ['work:1454595'] }
+    {pid: '870970-basis:54091370', val: 41, from: ['work:1454595']},
+    {pid: '870970-basis:51642899', val: 34, from: ['work:1454595']},
+    {pid: '870970-basis:48047491', val: 33, from: ['work:1454595']},
+    {pid: '870970-basis:46486927', val: 33, from: ['work:1454595']}
   ]
 };
 
@@ -60,12 +60,12 @@ const context = {
       'http://holdings-items-content-service.cisterne.svc.cloud.dbc.dk/holdings-items-content-service/api',
     infomediaservice: 'http://infomedia.mcp1-proxy.dbc.dk/server.php'
   },
-  infomedia: { userId: 'XXXXX', libraryCode: 'XXXXX' },
-  cicero: { 'DK-710100': 'XXXXX' },
-  performance: { username: 'XXXXX', password: 'XXXXX' },
-  search: { agency: '775100', profile: 'opac', collectionidentifiers: '' },
-  storage: { user: 'XXXXX' },
-  netpunkt: { user: 'XXXXX', group: 'XXXXX', password: 'XXXXX' },
+  infomedia: {userId: 'XXXXX', libraryCode: 'XXXXX'},
+  cicero: {'DK-710100': 'XXXXX'},
+  performance: {username: 'XXXXX', password: 'XXXXX'},
+  search: {agency: '775100', profile: 'opac', collectionidentifiers: ''},
+  storage: {user: 'XXXXX'},
+  netpunkt: {user: 'XXXXX', group: 'XXXXX', password: 'XXXXX'},
   user: {
     id: 'XXXXX',
     salt: 'XXXXX',
@@ -79,7 +79,7 @@ const context = {
     ddbcmsapipassword: 'XXXXX',
     orderpolicyrequester: '190101',
     orderSystem: 'bibliotekdk',
-    ips: { '0': 'XXXXX' },
+    ips: {'0': 'XXXXX'},
     access_token: 'XXXXX'
   }
 };
@@ -174,7 +174,7 @@ const mockData = {
 };
 
 import Provider from '../../provider/Provider.js';
-import { assert, fail } from 'chai';
+import {assert, fail} from 'chai';
 const provider = Provider();
 
 describe('Automated test: recommend_ignore_filters_and_boosters.auto', () => {

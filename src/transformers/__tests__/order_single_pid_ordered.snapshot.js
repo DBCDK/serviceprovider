@@ -17,7 +17,7 @@ const params = {
 
 const expected = {
   statusCode: 200,
-  data: { status: 'ok', orsId: '1038568839' }
+  data: {status: 'ok', orsId: '1038568839'}
 };
 
 const context = {
@@ -41,12 +41,12 @@ const context = {
       'http://holdings-items-content-service.cisterne.svc.cloud.dbc.dk/holdings-items-content-service/api',
     infomediaservice: 'http://infomedia.mcp1-proxy.dbc.dk/server.php'
   },
-  infomedia: { userId: 'XXXXX', libraryCode: 'XXXXX' },
-  cicero: { 'DK-710100': 'XXXXX' },
-  performance: { username: 'XXXXX', password: 'XXXXX' },
-  search: { agency: '775100', profile: 'opac', collectionidentifiers: '' },
-  storage: { user: 'XXXXX' },
-  netpunkt: { user: 'XXXXX', group: 'XXXXX', password: 'XXXXX' },
+  infomedia: {userId: 'XXXXX', libraryCode: 'XXXXX'},
+  cicero: {'DK-710100': 'XXXXX'},
+  performance: {username: 'XXXXX', password: 'XXXXX'},
+  search: {agency: '775100', profile: 'opac', collectionidentifiers: ''},
+  storage: {user: 'XXXXX'},
+  netpunkt: {user: 'XXXXX', group: 'XXXXX', password: 'XXXXX'},
   user: {
     id: 'XXXXX',
     salt: 'XXXXX',
@@ -70,7 +70,7 @@ const mockData = {
 };
 
 import Provider from '../../provider/Provider.js';
-import { assert, fail } from 'chai';
+import {assert, fail} from 'chai';
 const provider = Provider();
 
 describe('Automated test: order_single_pid_ordered.snapshot', () => {

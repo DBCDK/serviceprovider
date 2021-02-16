@@ -2,7 +2,7 @@
 // Request: renew {"loanId":"non-existing"}
 
 import Provider from '../../provider/Provider.js';
-import { assert, fail } from 'chai';
+import {assert, fail} from 'chai';
 
 const context = {
   services: {
@@ -60,7 +60,7 @@ describe('Automated test: renew-non-existing-loanid', () => {
   it('expected response. ID:kf7drr, for {"loanId":"non-existing"}', done => {
     context.mockData = mockData;
     provider
-      .execute('renew', { loanId: 'non-existing' }, context)
+      .execute('renew', {loanId: 'non-existing'}, context)
       .then(result => {
         assert.deepEqual(result, {
           statusCode: 500,
@@ -70,7 +70,7 @@ describe('Automated test: renew-non-existing-loanid', () => {
       })
       .catch(result => {
         fail(
-          { throw: result },
+          {throw: result},
           {
             statusCode: 500,
             error: 'Agency authentication failed'

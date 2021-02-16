@@ -14,7 +14,7 @@ const params = {
 
 const expected = {
   statusCode: 200,
-  data: { status: 'ok', orsId: '1039377316' }
+  data: {status: 'ok', orsId: '1039377316'}
 };
 
 const context = {
@@ -37,15 +37,15 @@ const context = {
       'http://holdings-items-content-service.cisterne.svc.cloud.dbc.dk/holdings-items-content-service/api',
     infomediaservice: 'http://infomedia.mcp1-proxy.dbc.dk/server.php'
   },
-  cicero: { 'DK-710100': 'XXXXX' },
-  performance: { username: 'XXXXX', password: 'XXXXX' },
+  cicero: {'DK-710100': 'XXXXX'},
+  performance: {username: 'XXXXX', password: 'XXXXX'},
   search: {
     agency: '775100',
     profile: 'opac',
     collectionidentifiers: ''
   },
-  storage: { user: 'XXXXX' },
-  netpunkt: { user: 'XXXXX', group: 'XXXXX', password: 'XXXXX' },
+  storage: {user: 'XXXXX'},
+  netpunkt: {user: 'XXXXX', group: 'XXXXX', password: 'XXXXX'},
   user: {
     id: 'C04122017433',
     salt: 'XXXXX',
@@ -69,7 +69,7 @@ const mockData = {
 };
 
 import Provider from '../../provider/Provider.js';
-import { assert, fail } from 'chai';
+import {assert, fail} from 'chai';
 
 const provider = Provider();
 

@@ -18,12 +18,12 @@ import openformatTransformer from './openformat';
 //
 // Partial implementation / in progress, see #875
 //
-const { log } = require('../utils.js');
-const { version } = require('../../package.json');
+const {log} = require('../utils.js');
+const {version} = require('../../package.json');
 const _ = require('lodash');
-const { knex } = require('../knex.js');
+const {knex} = require('../knex.js');
 
-async function checkPhpService({ context, endpoint, url }) {
+async function checkPhpService({context, endpoint, url}) {
   let result;
   try {
     result = await context.request(url + '?HowRU', {});
@@ -42,11 +42,11 @@ async function checkPhpService({ context, endpoint, url }) {
       };
 }
 
-async function checkOpenOrder({ context, endpoint, url }) {
+async function checkOpenOrder({context, endpoint, url}) {
   let result;
   try {
     result = await getOrderPolicy(
-      { pids: ['870970-basis:25775481'] },
+      {pids: ['870970-basis:25775481']},
       context,
       790900
     );
@@ -65,9 +65,9 @@ async function checkOpenOrder({ context, endpoint, url }) {
       };
 }
 
-async function checkOpenformat({ context, endpoint, url }) {
+async function checkOpenformat({context, endpoint, url}) {
   const result = await openformatTransformer(
-    { fields: ['shelf'], pids: ['870970-basis:25775481'] },
+    {fields: ['shelf'], pids: ['870970-basis:25775481']},
     context
   );
 
@@ -83,9 +83,9 @@ async function checkOpenformat({ context, endpoint, url }) {
       };
 }
 
-async function checkHoldingItems({ context, endpoint, url }) {
+async function checkHoldingItems({context, endpoint, url}) {
   const api = `${url}/status`;
-  const err = { url, ok: false };
+  const err = {url, ok: false};
 
   return context.call(api, {}).then(body => {
     if (!body.data) {
@@ -100,11 +100,11 @@ async function checkHoldingItems({ context, endpoint, url }) {
   });
 }
 
-async function onlyUrl({ context, endpoint, url }) {
-  return { url };
+async function onlyUrl({context, endpoint, url}) {
+  return {url};
 }
 
-async function performanceStat({ request, context }) {
+async function performanceStat({request, context}) {
   let before, after;
   try {
     before = request.before ? new Date(request.before) : new Date();
@@ -231,7 +231,7 @@ const serviceChecks = {
   openuserstatus: checkPhpService,
   moreinfo: checkPhpService,
   ddbcmsapi: onlyUrl,
-  recommend: async ({ context, endpoint, url }) => {
+  recommend: async ({context, endpoint, url}) => {
     let result;
     try {
       result = JSON.parse(
@@ -241,11 +241,11 @@ const serviceChecks = {
       result = e;
     }
     return Object.assign(
-      { url },
-      result.ok ? { ok: true } : { error: JSON.stringify(result) }
+      {url},
+      result.ok ? {ok: true} : {error: JSON.stringify(result)}
     );
   },
-  storage: async ({ context }) => {
+  storage: async ({context}) => {
     let ok = true;
     try {
       await knex.raw('SELECT 1;');
@@ -258,7 +258,7 @@ const serviceChecks = {
       client: context.get('app.clientId')
     };
   },
-  suggest: async ({ context, endpoint, url }) => {
+  suggest: async ({context, endpoint, url}) => {
     let result;
     try {
       result = JSON.parse(await context.request(url + 'status', {}));
@@ -266,15 +266,15 @@ const serviceChecks = {
       result = e;
     }
     return Object.assign(
-      { url },
-      result.ok ? { ok: true } : { error: JSON.stringify(result) }
+      {url},
+      result.ok ? {ok: true} : {error: JSON.stringify(result)}
     );
   },
   performance: performanceStat
 };
 
 module.exports = async (request, context) => {
-  const data = { version, endOfServiceDate: '0000-00-00T00:00:00Z' };
+  const data = {version, endOfServiceDate: '0000-00-00T00:00:00Z'};
   let checks = Object.keys(serviceChecks);
   if (Array.isArray(request.fields)) {
     checks = checks.filter(s => request.fields.includes(s));
@@ -296,7 +296,7 @@ module.exports = async (request, context) => {
       data[checks[i]] = results[i];
     }
 
-    return { statusCode: 200, data };
+    return {statusCode: 200, data};
   } catch (e) {
     if (e.statusCode && e.error) {
       return e;

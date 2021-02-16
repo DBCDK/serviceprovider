@@ -6,14 +6,14 @@
 //
 //
 const endpoint = 'suggest';
-const params = { q: 'heste', limit: 3 };
+const params = {q: 'heste', limit: 3};
 
 const expected = {
   statusCode: 200,
   data: [
-    { term: 'heste', val: 612556, type: ['title', 'subject'] },
-    { term: 'hestesport', val: 20286, type: ['title', 'subject'] },
-    { term: 'ud og stjæle heste', val: 6702, type: ['title'] }
+    {term: 'heste', val: 612556, type: ['title', 'subject']},
+    {term: 'hestesport', val: 20286, type: ['title', 'subject']},
+    {term: 'ud og stjæle heste', val: 6702, type: ['title']}
   ]
 };
 
@@ -37,9 +37,9 @@ const context = {
     recommendurls: 'XXXXX'
   },
 
-  performance: { password: 'XXXXX', username: 'XXXXX' },
-  search: { agency: '710100', profile: 'opac' },
-  netpunkt: { user: 'XXXXX', group: 'XXXXX', password: 'XXXXX' },
+  performance: {password: 'XXXXX', username: 'XXXXX'},
+  search: {agency: '710100', profile: 'opac'},
+  netpunkt: {user: 'XXXXX', group: 'XXXXX', password: 'XXXXX'},
   user: {
     id: 'XXXXX',
     salt: 'XXXXX',
@@ -61,7 +61,7 @@ const mockData = {
 };
 
 import Provider from '../../provider/Provider.js';
-import { assert, fail } from 'chai';
+import {assert, fail} from 'chai';
 const provider = Provider();
 
 describe('Automated test: suggest_all_default.auto', () => {

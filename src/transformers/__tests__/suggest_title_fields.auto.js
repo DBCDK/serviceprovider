@@ -16,9 +16,9 @@ const params = {
 const expected = {
   statusCode: 200,
   data: [
-    { term: 'herlev tur/retur', val: 44, type: ['title'] },
-    { term: 'herlev-ruterne', val: 8, type: ['title'] },
-    { term: 'gamle dage i nr. herlev', val: 7, type: ['title'] }
+    {term: 'herlev tur/retur', val: 44, type: ['title']},
+    {term: 'herlev-ruterne', val: 8, type: ['title']},
+    {term: 'gamle dage i nr. herlev', val: 7, type: ['title']}
   ]
 };
 
@@ -42,9 +42,9 @@ const context = {
     recommendurls: 'XXXXX'
   },
 
-  performance: { password: 'XXXXX', username: 'XXXXX' },
-  search: { agency: '710100', profile: 'opac' },
-  netpunkt: { user: 'XXXXX', group: 'XXXXX', password: 'XXXXX' },
+  performance: {password: 'XXXXX', username: 'XXXXX'},
+  search: {agency: '710100', profile: 'opac'},
+  netpunkt: {user: 'XXXXX', group: 'XXXXX', password: 'XXXXX'},
   user: {
     id: 'XXXXX',
     salt: 'XXXXX',
@@ -66,7 +66,7 @@ const mockData = {
 };
 
 import Provider from '../../provider/Provider.js';
-import { assert, fail } from 'chai';
+import {assert, fail} from 'chai';
 const provider = Provider();
 
 describe('Automated test: suggest_title_fields.auto', () => {

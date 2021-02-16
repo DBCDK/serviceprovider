@@ -6,7 +6,7 @@
 //
 //
 const endpoint = 'search';
-const params = { q: 'fisk', offset: 10, limit: 20 };
+const params = {q: 'fisk', offset: 10, limit: 20};
 
 const expected = {
   statusCode: 200,
@@ -1010,9 +1010,9 @@ const context = {
     recommendurls: 'XXXXX'
   },
 
-  performance: { password: 'XXXXX', username: 'XXXXX' },
-  search: { agency: '710100', profile: 'opac' },
-  netpunkt: { user: 'XXXXX', group: 'XXXXX', password: 'XXXXX' },
+  performance: {password: 'XXXXX', username: 'XXXXX'},
+  search: {agency: '710100', profile: 'opac'},
+  netpunkt: {user: 'XXXXX', group: 'XXXXX', password: 'XXXXX'},
   user: {
     id: 'XXXXX',
     salt: 'XXXXX',
@@ -1036,7 +1036,7 @@ const mockData = {
 };
 
 import Provider from '../../provider/Provider.js';
-import { assert, fail } from 'chai';
+import {assert, fail} from 'chai';
 const provider = Provider();
 
 describe('Automated test: search_with_parse_errors.auto', () => {

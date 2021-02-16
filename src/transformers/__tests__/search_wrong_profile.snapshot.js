@@ -6,7 +6,7 @@
 //
 //
 const endpoint = 'search';
-const params = { q: "'jens martin knudsen'", profile: 'hans' };
+const params = {q: "'jens martin knudsen'", profile: 'hans'};
 
 const expected = {
   statusCode: 500,
@@ -32,8 +32,8 @@ const context = {
     recommend: 'http://staging.recomole.mcp1-proxy.dbc.dk/recomole/loan-cosim',
     recommendurls: 'XXXXX'
   },
-  search: { agency: '775100', profile: 'opac', collectionidentifiers: '' },
-  netpunkt: { user: 'XXXXX', group: 'XXXXX', password: 'XXXXX' },
+  search: {agency: '775100', profile: 'opac', collectionidentifiers: ''},
+  netpunkt: {user: 'XXXXX', group: 'XXXXX', password: 'XXXXX'},
   user: {
     id: 'XXXXX',
     salt: 'XXXXX',
@@ -57,7 +57,7 @@ const mockData = {
 };
 
 import Provider from '../../provider/Provider.js';
-import { assert, fail } from 'chai';
+import {assert, fail} from 'chai';
 const provider = Provider();
 
 describe('Automated test: search_wrong_profile.snapshot', () => {

@@ -6,70 +6,70 @@
 //
 //
 const endpoint = 'facets';
-const params = { q: 'harry' };
+const params = {q: 'harry'};
 
 const expected = {
   statusCode: 200,
   data: {
     creator: [
-      { term: 'harry stoffer', frequency: 757 },
-      { term: 'joanne k. rowling', frequency: 655 },
-      { term: 'harry mccracken', frequency: 385 },
-      { term: 'proquest (firm)', frequency: 384 },
-      { term: 'harry bruinius', frequency: 342 },
-      { term: 'michael connelly', frequency: 242 },
-      { term: 'harry edison', frequency: 233 },
-      { term: 'harry l. rinker', frequency: 229 },
-      { term: 'jo nesbø', frequency: 214 },
-      { term: 'harry lee', frequency: 186 }
+      {term: 'harry stoffer', frequency: 757},
+      {term: 'joanne k. rowling', frequency: 655},
+      {term: 'harry mccracken', frequency: 385},
+      {term: 'proquest (firm)', frequency: 384},
+      {term: 'harry bruinius', frequency: 342},
+      {term: 'michael connelly', frequency: 242},
+      {term: 'harry edison', frequency: 233},
+      {term: 'harry l. rinker', frequency: 229},
+      {term: 'jo nesbø', frequency: 214},
+      {term: 'harry lee', frequency: 186}
     ],
     subject: [
-      { term: 'usa', frequency: 1681 },
-      { term: 'vokal', frequency: 1657 },
-      { term: 'reid, harry, 1939-', frequency: 951 },
-      { term: 'instrumental', frequency: 784 },
-      { term: 'england', frequency: 776 },
-      { term: 'nonfiction', frequency: 688 },
-      { term: 'rock', frequency: 613 },
-      { term: 'jazz', frequency: 611 },
-      { term: 'electronic books', frequency: 592 },
-      { term: 'troldmænd', frequency: 567 }
+      {term: 'usa', frequency: 1681},
+      {term: 'vokal', frequency: 1657},
+      {term: 'reid, harry, 1939-', frequency: 951},
+      {term: 'instrumental', frequency: 784},
+      {term: 'england', frequency: 776},
+      {term: 'nonfiction', frequency: 688},
+      {term: 'rock', frequency: 613},
+      {term: 'jazz', frequency: 611},
+      {term: 'electronic books', frequency: 592},
+      {term: 'troldmænd', frequency: 567}
     ],
     language: [
-      { term: 'english', frequency: 15519 },
-      { term: 'engelsk', frequency: 8779 },
-      { term: 'dansk', frequency: 3916 },
-      { term: 'svensk', frequency: 460 },
-      { term: 'tysk', frequency: 434 },
-      { term: 'norsk', frequency: 134 },
-      { term: 'fransk', frequency: 119 },
-      { term: 'italiensk', frequency: 106 },
-      { term: 'blandede sprog', frequency: 101 },
-      { term: 'spansk', frequency: 77 }
+      {term: 'english', frequency: 15519},
+      {term: 'engelsk', frequency: 8779},
+      {term: 'dansk', frequency: 3916},
+      {term: 'svensk', frequency: 460},
+      {term: 'tysk', frequency: 434},
+      {term: 'norsk', frequency: 134},
+      {term: 'fransk', frequency: 119},
+      {term: 'italiensk', frequency: 106},
+      {term: 'blandede sprog', frequency: 101},
+      {term: 'spansk', frequency: 77}
     ],
     date: [
-      { term: '2008', frequency: 1216 },
-      { term: '2011', frequency: 782 },
-      { term: '2007', frequency: 665 },
-      { term: '2003', frequency: 639 },
-      { term: '2001', frequency: 448 },
-      { term: '2006', frequency: 447 },
-      { term: '2002', frequency: 439 },
-      { term: '2000', frequency: 428 },
-      { term: '2013', frequency: 427 },
-      { term: '2009', frequency: 418 }
+      {term: '2008', frequency: 1216},
+      {term: '2011', frequency: 782},
+      {term: '2007', frequency: 665},
+      {term: '2003', frequency: 639},
+      {term: '2001', frequency: 448},
+      {term: '2006', frequency: 447},
+      {term: '2002', frequency: 439},
+      {term: '2000', frequency: 428},
+      {term: '2013', frequency: 427},
+      {term: '2009', frequency: 418}
     ],
     form: [
-      { term: 'biografier', frequency: 110 },
-      { term: 'soundtracks', frequency: 100 },
-      { term: 'amerikanske film', frequency: 98 },
-      { term: 'spillefilm', frequency: 91 },
-      { term: 'analyser', frequency: 69 },
-      { term: 'engelske film', frequency: 65 },
-      { term: 'litteraturanalyser', frequency: 54 },
-      { term: 'computerspil', frequency: 52 },
-      { term: 'erindringer', frequency: 36 },
-      { term: 'undervisningsmaterialer', frequency: 36 }
+      {term: 'biografier', frequency: 110},
+      {term: 'soundtracks', frequency: 100},
+      {term: 'amerikanske film', frequency: 98},
+      {term: 'spillefilm', frequency: 91},
+      {term: 'analyser', frequency: 69},
+      {term: 'engelske film', frequency: 65},
+      {term: 'litteraturanalyser', frequency: 54},
+      {term: 'computerspil', frequency: 52},
+      {term: 'erindringer', frequency: 36},
+      {term: 'undervisningsmaterialer', frequency: 36}
     ]
   }
 };
@@ -93,9 +93,9 @@ const context = {
     performance: 'https://elk-p01.dbc.dk:9100/',
     recommendurls: 'XXXXX'
   },
-  performance: { password: 'XXXXX', username: 'XXXXX' },
-  search: { agency: '710100', profile: 'opac' },
-  netpunkt: { user: 'XXXXX', group: 'XXXXX', password: 'XXXXX' },
+  performance: {password: 'XXXXX', username: 'XXXXX'},
+  search: {agency: '710100', profile: 'opac'},
+  netpunkt: {user: 'XXXXX', group: 'XXXXX', password: 'XXXXX'},
   user: {
     id: 'XXXXX',
     salt: 'XXXXX',
@@ -117,7 +117,7 @@ const mockData = {
 };
 
 import Provider from '../../provider/Provider.js';
-import { assert, fail } from 'chai';
+import {assert, fail} from 'chai';
 const provider = Provider();
 
 describe('Automated test: facets_simple.auto', () => {

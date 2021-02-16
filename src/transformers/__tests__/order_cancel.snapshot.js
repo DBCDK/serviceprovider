@@ -2,7 +2,7 @@
 // Request: order {"orderId":"normal:18180802","delete":true}
 
 import Provider from '../../provider/Provider.js';
-import { assert, fail } from 'chai';
+import {assert, fail} from 'chai';
 
 const context = {
   services: {
@@ -63,7 +63,7 @@ describe('Automated test: order-cancel', () => {
     provider
       .execute(
         'order',
-        { orderId: '18180802', orderType: 'normal', delete: true },
+        {orderId: '18180802', orderType: 'normal', delete: true},
         context
       )
       .then(result => {
@@ -78,7 +78,7 @@ describe('Automated test: order-cancel', () => {
       })
       .catch(result => {
         fail(
-          { throw: result },
+          {throw: result},
           {
             statusCode: 200,
             data: {

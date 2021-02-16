@@ -6,7 +6,7 @@
 //
 //
 const endpoint = 'search';
-const params = { q: 'hest', limit: 5 };
+const params = {q: 'hest', limit: 5};
 
 const expected = {
   statusCode: 200,
@@ -277,9 +277,9 @@ const context = {
     recommendurls: 'XXXXX'
   },
 
-  performance: { password: 'XXXXX', username: 'XXXXX' },
-  search: { agency: '710100', profile: 'opac' },
-  netpunkt: { user: 'XXXXX', group: 'XXXXX', password: 'XXXXX' },
+  performance: {password: 'XXXXX', username: 'XXXXX'},
+  search: {agency: '710100', profile: 'opac'},
+  netpunkt: {user: 'XXXXX', group: 'XXXXX', password: 'XXXXX'},
   user: {
     id: 'XXXXX',
     salt: 'XXXXX',
@@ -303,7 +303,7 @@ const mockData = {
 };
 
 import Provider from '../../provider/Provider.js';
-import { assert, fail } from 'chai';
+import {assert, fail} from 'chai';
 const provider = Provider();
 
 describe('Automated test: search_no_errors.auto', () => {
