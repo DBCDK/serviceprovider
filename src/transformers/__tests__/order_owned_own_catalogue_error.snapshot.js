@@ -14,7 +14,7 @@ const params = {
 
 const expected = {
   statusCode: 200,
-  data: { status: 'ok', orsId: '1033955662' }
+  data: {status: 'ok', orsId: '1033955662'}
 };
 
 const context = {
@@ -34,8 +34,8 @@ const context = {
     suggestsubject: 'XXXXX',
     recommendurls: 'XXXXX'
   },
-  search: { agency: '775100', profile: 'opac' },
-  netpunkt: { user: 'XXXXX', group: 'XXXXX', password: 'XXXXX' },
+  search: {agency: '775100', profile: 'opac'},
+  netpunkt: {user: 'XXXXX', group: 'XXXXX', password: 'XXXXX'},
   user: {
     agency: '100450',
     libraryId: '100450',
@@ -59,7 +59,7 @@ const mockData = {
 };
 
 import Provider from '../../provider/Provider.js';
-import { assert, fail } from 'chai';
+import {assert, fail} from 'chai';
 const provider = Provider();
 
 describe('Automated test: order_owned_own_catalogue_error.snapshot', () => {

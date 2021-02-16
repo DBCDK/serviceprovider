@@ -19,7 +19,7 @@ const expected = {
       pid: ['870976-anmeld:31500346'],
       fullTextReviews: [
         {
-          reviewer: { firstname: 'Jacob Holm', surname: 'Krogsøe' },
+          reviewer: {firstname: 'Jacob Holm', surname: 'Krogsøe'},
           creationDate: '2017-08-11T00:00:00+02:00',
           review: {
             'Kort om bogen':
@@ -53,12 +53,12 @@ const context = {
     communityservice: 'http://localhost:4010/v1',
     cicero: 'https://cicero-fbs.com/rest/external/v1/'
   },
-  cicero: { 'DK-710100': 'XXXXX' },
-  performance: { username: 'XXXXX', password: 'XXXXX' },
-  communityservice: { id: 1 },
-  search: { agency: '775100', profile: 'opac', collectionidentifiers: '' },
-  storage: { user: 'XXXXX' },
-  netpunkt: { user: 'XXXXX', group: 'XXXXX', password: 'XXXXX' },
+  cicero: {'DK-710100': 'XXXXX'},
+  performance: {username: 'XXXXX', password: 'XXXXX'},
+  communityservice: {id: 1},
+  search: {agency: '775100', profile: 'opac', collectionidentifiers: ''},
+  storage: {user: 'XXXXX'},
+  netpunkt: {user: 'XXXXX', group: 'XXXXX', password: 'XXXXX'},
   user: {
     id: 'XXXXX',
     salt: 'XXXXX',
@@ -80,7 +80,7 @@ const mockData = {
 };
 
 import Provider from '../../provider/Provider.js';
-import { assert, fail } from 'chai';
+import {assert, fail} from 'chai';
 
 const provider = Provider();
 

@@ -6,7 +6,7 @@
 //
 //
 const endpoint = 'infomedia';
-const params = { pid: '870971-anmeld:34146233' };
+const params = {pid: '870971-anmeld:34146233'};
 
 const expected = {
   statusCode: 403,
@@ -27,7 +27,7 @@ const context = {
 };
 
 import Provider from '../../provider/Provider.js';
-import { assert, fail } from 'chai';
+import {assert, fail} from 'chai';
 const provider = Provider();
 
 describe('Automated test: infomedia.auto', () => {

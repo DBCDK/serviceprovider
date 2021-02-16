@@ -6,14 +6,14 @@
 //
 //
 const endpoint = 'suggest';
-const params = { q: 'fisk', type: 'subject', limit: 3, fields: ['term'] };
+const params = {q: 'fisk', type: 'subject', limit: 3, fields: ['term']};
 
 const expected = {
   statusCode: 200,
   data: [
-    { term: 'fisketure', val: 45600, type: ['subject'] },
-    { term: 'fiskeri', val: 45439, type: ['subject'] },
-    { term: 'fisk', val: 43374, type: ['subject'] }
+    {term: 'fisketure', val: 45600, type: ['subject']},
+    {term: 'fiskeri', val: 45439, type: ['subject']},
+    {term: 'fisk', val: 43374, type: ['subject']}
   ]
 };
 
@@ -36,10 +36,10 @@ const context = {
     performance: 'https://elk-p01.dbc.dk:9100/',
     recommendurls: 'XXXXX'
   },
-  communityservice: { id: 1 },
-  performance: { password: 'XXXXX', username: 'XXXXX' },
-  search: { agency: '710100', profile: 'opac' },
-  netpunkt: { user: 'XXXXX', group: 'XXXXX', password: 'XXXXX' },
+  communityservice: {id: 1},
+  performance: {password: 'XXXXX', username: 'XXXXX'},
+  search: {agency: '710100', profile: 'opac'},
+  netpunkt: {user: 'XXXXX', group: 'XXXXX', password: 'XXXXX'},
   user: {
     id: 'XXXXX',
     salt: 'XXXXX',
@@ -61,7 +61,7 @@ const mockData = {
 };
 
 import Provider from '../../provider/Provider.js';
-import { assert, fail } from 'chai';
+import {assert, fail} from 'chai';
 const provider = Provider();
 
 describe('Automated test: suggest_subject.auto', () => {

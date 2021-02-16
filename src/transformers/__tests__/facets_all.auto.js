@@ -50,113 +50,107 @@ const expected = {
   statusCode: 200,
   data: {
     access: [
-      { term: 'begrænset adgang', frequency: 98 },
-      { term: 'ubegrænset adgang', frequency: 27 }
+      {term: 'begrænset adgang', frequency: 98},
+      {term: 'ubegrænset adgang', frequency: 27}
     ],
     acSource: [
-      { term: 'bibliotekskatalog', frequency: 737 },
-      { term: 'tidsskriftsartikler', frequency: 448 }
+      {term: 'bibliotekskatalog', frequency: 737},
+      {term: 'tidsskriftsartikler', frequency: 448}
     ],
     audience: [
-      { term: 'fra 7 år', frequency: 20 },
-      { term: 'fra 5 år', frequency: 18 }
+      {term: 'fra 7 år', frequency: 20},
+      {term: 'fra 5 år', frequency: 18}
     ],
     audienceCategory: [
-      { term: 'for 7 år', frequency: 41 },
-      { term: 'for 6 år', frequency: 34 }
+      {term: 'for 7 år', frequency: 41},
+      {term: 'for 6 år', frequency: 34}
     ],
     category: [
-      { term: 'voksenmaterialer', frequency: 1340 },
-      { term: 'børnematerialer', frequency: 193 }
+      {term: 'voksenmaterialer', frequency: 1340},
+      {term: 'børnematerialer', frequency: 193}
     ],
     creator: [
-      { term: 'robert hansen', frequency: 76 },
-      { term: 'jannik hastrup', frequency: 37 }
+      {term: 'robert hansen', frequency: 76},
+      {term: 'jannik hastrup', frequency: 37}
     ],
     creatorFunction: [
-      { term: 'robert hansen', frequency: 76 },
-      { term: 'jannik hastrup', frequency: 36 }
+      {term: 'robert hansen', frequency: 76},
+      {term: 'jannik hastrup', frequency: 36}
     ],
-    date: [{ term: '2000', frequency: 52 }, { term: '2002', frequency: 48 }],
+    date: [{term: '2000', frequency: 52}, {term: '2002', frequency: 48}],
     dk5: [
-      { term: '63.7', frequency: 523 },
-      { term: 'skønlitteratur', frequency: 146 }
+      {term: '63.7', frequency: 523},
+      {term: 'skønlitteratur', frequency: 146}
     ],
-    extraTitles: [{ term: 'ekstra titler', frequency: 2 }],
+    extraTitles: [{term: 'ekstra titler', frequency: 2}],
     fictionSubject: [
-      { term: 'mus', frequency: 38 },
-      { term: 'sjove bøger', frequency: 19 }
+      {term: 'mus', frequency: 38},
+      {term: 'sjove bøger', frequency: 19}
     ],
     form: [
-      { term: 'opskrifter', frequency: 78 },
-      { term: 'kogebøger', frequency: 68 }
+      {term: 'opskrifter', frequency: 78},
+      {term: 'kogebøger', frequency: 68}
     ],
     gamePlatform: [
-      { term: 'gameboy advance', frequency: 1 },
-      { term: 'pc-spil', frequency: 1 }
+      {term: 'gameboy advance', frequency: 1},
+      {term: 'pc-spil', frequency: 1}
     ],
     genre: [
-      { term: 'sjove bøger', frequency: 19 },
-      { term: 'rock', frequency: 16 }
+      {term: 'sjove bøger', frequency: 19},
+      {term: 'rock', frequency: 16}
     ],
     genreCategory: [
-      { term: 'nonfiktion', frequency: 1039 },
-      { term: 'fiktion', frequency: 182 }
+      {term: 'nonfiktion', frequency: 1039},
+      {term: 'fiktion', frequency: 182}
     ],
     geographic: [
-      { term: 'danmark', frequency: 69 },
-      { term: 'tyskland', frequency: 28 }
+      {term: 'danmark', frequency: 69},
+      {term: 'tyskland', frequency: 28}
     ],
-    language: [
-      { term: 'dansk', frequency: 963 },
-      { term: 'tysk', frequency: 175 }
-    ],
+    language: [{term: 'dansk', frequency: 963}, {term: 'tysk', frequency: 175}],
     level: [
-      { term: 'alment niveau', frequency: 91 },
-      { term: 'gymnasieniveau', frequency: 19 }
+      {term: 'alment niveau', frequency: 91},
+      {term: 'gymnasieniveau', frequency: 19}
     ],
-    let: [{ term: '16', frequency: 6 }, { term: '14', frequency: 2 }],
+    let: [{term: '16', frequency: 6}, {term: '14', frequency: 2}],
     literaryForm: [
-      { term: 'faglitteratur', frequency: 1039 },
-      { term: 'skønlitteratur', frequency: 182 }
+      {term: 'faglitteratur', frequency: 1039},
+      {term: 'skønlitteratur', frequency: 182}
     ],
-    lix: [{ term: '07', frequency: 7 }, { term: '05', frequency: 2 }],
+    lix: [{term: '07', frequency: 7}, {term: '05', frequency: 2}],
     musicSubject: [
-      { term: 'vokal', frequency: 50 },
-      { term: 'børnemusik', frequency: 21 }
+      {term: 'vokal', frequency: 50},
+      {term: 'børnemusik', frequency: 21}
     ],
     nationality: [
-      { term: 'amerikanske film', frequency: 4 },
-      { term: 'danske film', frequency: 3 }
+      {term: 'amerikanske film', frequency: 4},
+      {term: 'danske film', frequency: 3}
     ],
     nonFictionSubject: [
-      { term: 'ost', frequency: 284 },
-      { term: 'mejeribrug', frequency: 69 }
+      {term: 'ost', frequency: 284},
+      {term: 'mejeribrug', frequency: 69}
     ],
     partOf: [
-      { term: 'mælkeritidende', frequency: 186 },
-      { term: 'nordeuropæisk mejeri-tidsskrift', frequency: 55 }
+      {term: 'mælkeritidende', frequency: 186},
+      {term: 'nordeuropæisk mejeri-tidsskrift', frequency: 55}
     ],
     period: [
-      { term: '2000-2009', frequency: 34 },
-      { term: '1990-1999', frequency: 33 }
+      {term: '2000-2009', frequency: 34},
+      {term: '1990-1999', frequency: 33}
     ],
     primaryCreator: [
-      { term: 'robert hansen', frequency: 76 },
-      { term: 'j. m. buch kristensen', frequency: 27 }
+      {term: 'robert hansen', frequency: 76},
+      {term: 'j. m. buch kristensen', frequency: 27}
     ],
-    sheetMusic: [{ term: 'alle partiturer', frequency: 6 }],
-    subject: [
-      { term: 'ost', frequency: 545 },
-      { term: 'danmark', frequency: 85 }
-    ],
+    sheetMusic: [{term: 'alle partiturer', frequency: 6}],
+    subject: [{term: 'ost', frequency: 545}, {term: 'danmark', frequency: 85}],
     titleSeries: [
-      { term: 'grieben-reiseführer', frequency: 8 },
-      { term: 'small world', frequency: 5 }
+      {term: 'grieben-reiseführer', frequency: 8},
+      {term: 'small world', frequency: 5}
     ],
     type: [
-      { term: 'bog', frequency: 453 },
-      { term: 'tidsskriftsartikel', frequency: 450 }
+      {term: 'bog', frequency: 453},
+      {term: 'tidsskriftsartikel', frequency: 450}
     ]
   }
 };
@@ -180,10 +174,10 @@ const context = {
     performance: 'https://elk-p01.dbc.dk:9100/',
     recommendurls: 'XXXXX'
   },
-  communityservice: { id: 1 },
-  performance: { password: 'XXXXX', username: 'XXXXX' },
-  search: { agency: '710100', profile: 'opac' },
-  netpunkt: { user: 'XXXXX', group: 'XXXXX', password: 'XXXXX' },
+  communityservice: {id: 1},
+  performance: {password: 'XXXXX', username: 'XXXXX'},
+  search: {agency: '710100', profile: 'opac'},
+  netpunkt: {user: 'XXXXX', group: 'XXXXX', password: 'XXXXX'},
   user: {
     id: 'XXXXX',
     salt: 'XXXXX',
@@ -205,7 +199,7 @@ const mockData = {
 };
 
 import Provider from '../../provider/Provider.js';
-import { assert, fail } from 'chai';
+import {assert, fail} from 'chai';
 const provider = Provider();
 
 describe('Automated test: facets_all.auto', () => {

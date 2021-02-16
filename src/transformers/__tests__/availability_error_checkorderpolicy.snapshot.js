@@ -6,13 +6,13 @@
 //
 //
 const endpoint = 'availability';
-const params = { pids: ['870970-basis:28448717', '870970-basis:28949847'] };
+const params = {pids: ['870970-basis:28448717', '870970-basis:28949847']};
 
 const expected = {
   statusCode: 200,
   data: [
-    { unavailable: 'openHoldingStatus error: error_searching_library' },
-    { unavailable: 'openHoldingStatus error: error_searching_library' }
+    {unavailable: 'openHoldingStatus error: error_searching_library'},
+    {unavailable: 'openHoldingStatus error: error_searching_library'}
   ]
 };
 
@@ -33,8 +33,8 @@ const context = {
     suggestsubject: 'XXXXX',
     recommendurls: 'XXXXX'
   },
-  search: { agency: '775100', profile: 'opac' },
-  netpunkt: { user: 'XXXXX', group: 'XXXXX', password: 'XXXXX' },
+  search: {agency: '775100', profile: 'opac'},
+  netpunkt: {user: 'XXXXX', group: 'XXXXX', password: 'XXXXX'},
   user: {
     agency: '100450',
     libraryId: '100450',
@@ -62,7 +62,7 @@ const mockData = {
 };
 
 import Provider from '../../provider/Provider.js';
-import { assert, fail } from 'chai';
+import {assert, fail} from 'chai';
 const provider = Provider();
 
 describe('Automated test: availability_error_checkorderpolicy.snapshot', () => {

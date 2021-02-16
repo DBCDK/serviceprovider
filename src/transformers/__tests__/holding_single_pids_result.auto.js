@@ -6,7 +6,7 @@
 //
 //
 const endpoint = 'holdingsitems';
-const params = { agency: '761500', pids: ['someRandomStuff:01242180'] };
+const params = {agency: '761500', pids: ['someRandomStuff:01242180']};
 
 const expected = {
   statusCode: 200,
@@ -83,13 +83,13 @@ const context = {
     holdingsitems: 'XXXXX',
     infomediaservice: 'XXXXX'
   },
-  infomedia: { userId: 'XXXXX', libraryCode: 'XXXXX' },
-  cicero: { 'DK-710100': 'XXXXX' },
-  performance: { username: 'XXXXX', password: 'XXXXX' },
-  communityservice: { id: 1 },
-  search: { agency: '775100', profile: 'opac', collectionidentifiers: '' },
-  storage: { user: 'XXXXX' },
-  netpunkt: { user: 'XXXXX', group: 'XXXXX', password: 'XXXXX' },
+  infomedia: {userId: 'XXXXX', libraryCode: 'XXXXX'},
+  cicero: {'DK-710100': 'XXXXX'},
+  performance: {username: 'XXXXX', password: 'XXXXX'},
+  communityservice: {id: 1},
+  search: {agency: '775100', profile: 'opac', collectionidentifiers: ''},
+  storage: {user: 'XXXXX'},
+  netpunkt: {user: 'XXXXX', group: 'XXXXX', password: 'XXXXX'},
   user: {
     id: '0102033692',
     salt: 'XXXXX',
@@ -111,7 +111,7 @@ const mockData = {
 };
 
 import Provider from '../../provider/Provider.js';
-import { assert, fail } from 'chai';
+import {assert, fail} from 'chai';
 const provider = Provider();
 
 describe('Automated test: holding_single_pids_result.auto', () => {

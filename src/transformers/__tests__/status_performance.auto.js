@@ -434,11 +434,11 @@ const context = {
     recommendurls: 'XXXXX',
     cicero: 'https://cicero-fbs.com/rest/external/v1/'
   },
-  cicero: { 'DK-725300': { username: 'XXXXX', password: 'XXXXX' } },
-  communityservice: { id: 1 },
-  performance: { password: 'XXXXX', username: 'XXXXX' },
-  search: { agency: '725300', profile: 'opac' },
-  netpunkt: { user: 'XXXXX', group: 'XXXXX', password: 'XXXXX' },
+  cicero: {'DK-725300': {username: 'XXXXX', password: 'XXXXX'}},
+  communityservice: {id: 1},
+  performance: {password: 'XXXXX', username: 'XXXXX'},
+  search: {agency: '725300', profile: 'opac'},
+  netpunkt: {user: 'XXXXX', group: 'XXXXX', password: 'XXXXX'},
   user: {
     id: 'XXXXX',
     salt: 'XXXXX',
@@ -458,8 +458,8 @@ const mockData = {
   '["https://elk-p01.dbc.dk:9100/prod_ux-*/_search",{"method":"POST","auth":{"pass":"XXXXX","user":"XXXXX"},"json":{"size":0,"query":{"bool":{"must":[{"match_all":{}},{"match_phrase":{"msg":{"query":"transformer-done"}}},{"match_phrase":{"app":{"query":"serviceprovider"}}},{"range":{"@timestamp":{"gte":1530655200000,"lte":1531260000000,"format":"epoch_millis"}}}],"filter":[],"should":[],"must_not":[]}},"aggs":{"version":{"terms":{"field":"version.keyword"},"aggs":{"endpoints":{"terms":{"field":"name.keyword"},"aggs":{"external":{"percentiles":{"field":"timings.external"}},"total":{"percentiles":{"field":"timings.total"}}}}}}}}}]': {
     took: 960,
     timed_out: false,
-    _shards: { total: 405, successful: 405, skipped: 333, failed: 0 },
-    hits: { total: 386270, max_score: 0, hits: [] },
+    _shards: {total: 405, successful: 405, skipped: 333, failed: 0},
+    hits: {total: 386270, max_score: 0, hits: []},
     aggregations: {
       version: {
         doc_count_error_upper_bound: 0,
@@ -944,7 +944,7 @@ const mockData = {
 };
 
 import Provider from '../../provider/Provider.js';
-import { assert, fail } from 'chai';
+import {assert, fail} from 'chai';
 const provider = Provider();
 
 describe('Automated test: status_performance.auto', () => {
