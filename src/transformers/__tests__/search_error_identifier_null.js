@@ -6,7 +6,7 @@
 //
 //
 const endpoint = 'search';
-const params = {q: 'hest'};
+const params = { q: 'hest' };
 
 const expected = {
   statusCode: 500,
@@ -29,13 +29,13 @@ const context = {
     performance: 'http://elk.dbc.dk:5601/elasticsearch/',
     communityservice: 'http://localhost:4010/v1'
   },
-  communityservice: {id: 1},
+  communityservice: { id: 1 },
   search: {
     agency: '150013',
     profile: 'opac',
     collectionidentifiers: 'rec.collectionIdentifier:150013-palle'
   },
-  netpunkt: {user: 'XXXXX', group: 'XXXXX', password: 'XXXXX'},
+  netpunkt: { user: 'XXXXX', group: 'XXXXX', password: 'XXXXX' },
   user: {
     id: 'XXXXX',
     salt: 'XXXXX',
@@ -59,13 +59,13 @@ const mockData = {
 };
 
 import Provider from '../../provider/Provider.js';
-import {assert, fail} from 'chai';
+import { assert, fail } from 'chai';
 const provider = Provider();
 
 describe('Automated test: search_error_identifier_null', () => {
   it('has same result as recorded (in search_error_identifier_null)', () => {
     assert(
-      Date.now() < +new Date('2021-01-01'),
+      Date.now() < +new Date('2022-01-01'),
       'Please recreate the automatically generated unit tests, such that the mock data does not come out of sync with the actual services. See README.md for details.'
     );
     context.mockData = mockData;

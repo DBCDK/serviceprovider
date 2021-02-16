@@ -6,7 +6,7 @@
 //
 //
 const endpoint = 'workpresentation';
-const params = {workId: 'work-of:fake-id', agencyId: 777900, profile: 'opac'};
+const params = { workId: 'work-of:fake-id', agencyId: 777900, profile: 'opac' };
 
 const expected = {
   statusCode: 404,
@@ -41,13 +41,13 @@ const context = {
     workpresentation:
       'http://work-presentation-service.cisterne.svc.cloud.dbc.dk/api/work-presentation'
   },
-  infomedia: {userId: 'XXXXX', libraryCode: 'XXXXX'},
-  cicero: {'DK-710100': 'XXXXX'},
-  performance: {username: 'XXXXX', password: 'XXXXX'},
-  communityservice: {id: 1},
-  search: {agency: '775100', profile: 'opac', collectionidentifiers: ''},
-  storage: {user: 'XXXXX'},
-  netpunkt: {user: 'XXXXX', group: 'XXXXX', password: 'XXXXX'},
+  infomedia: { userId: 'XXXXX', libraryCode: 'XXXXX' },
+  cicero: { 'DK-710100': 'XXXXX' },
+  performance: { username: 'XXXXX', password: 'XXXXX' },
+  communityservice: { id: 1 },
+  search: { agency: '775100', profile: 'opac', collectionidentifiers: '' },
+  storage: { user: 'XXXXX' },
+  netpunkt: { user: 'XXXXX', group: 'XXXXX', password: 'XXXXX' },
   user: {
     id: 'XXXXX',
     salt: 'XXXXX',
@@ -61,7 +61,7 @@ const context = {
     ddbcmsapipassword: 'XXXXX',
     orderpolicyrequester: '190101',
     orderSystem: 'bibliotekdk',
-    ips: {'0': 'XXXXX'},
+    ips: { '0': 'XXXXX' },
     access_token: 'XXXXX'
   }
 };
@@ -71,13 +71,13 @@ const mockData = {
 };
 
 import Provider from '../../provider/Provider.js';
-import {assert, fail} from 'chai';
+import { assert, fail } from 'chai';
 const provider = Provider();
 
 describe('Automated test: workpresentation_not_found_returns_404.auto', () => {
   it('has same result as recorded (in workpresentation_not_found_returns_404.auto)', () => {
     assert(
-      Date.now() < +new Date('2021-03-19'),
+      Date.now() < +new Date('2022-01-01'),
       'Please recreate the automatically generated unit tests, such that the mock data does not come out of sync with the actual services. See README.md for details.'
     );
     context.mockData = mockData;

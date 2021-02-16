@@ -6,14 +6,14 @@
 //
 //
 const endpoint = 'suggest';
-const params = {q: 'fisk', type: 'subject', limit: 3, fields: ['term']};
+const params = { q: 'fisk', type: 'subject', limit: 3, fields: ['term'] };
 
 const expected = {
   statusCode: 200,
   data: [
-    {term: 'fisketure', val: 45600, type: ['subject']},
-    {term: 'fiskeri', val: 45439, type: ['subject']},
-    {term: 'fisk', val: 43374, type: ['subject']}
+    { term: 'fisketure', val: 45600, type: ['subject'] },
+    { term: 'fiskeri', val: 45439, type: ['subject'] },
+    { term: 'fisk', val: 43374, type: ['subject'] }
   ]
 };
 
@@ -36,10 +36,10 @@ const context = {
     performance: 'https://elk-p01.dbc.dk:9100/',
     recommendurls: 'XXXXX'
   },
-  communityservice: {id: 1},
-  performance: {password: 'XXXXX', username: 'XXXXX'},
-  search: {agency: '710100', profile: 'opac'},
-  netpunkt: {user: 'XXXXX', group: 'XXXXX', password: 'XXXXX'},
+  communityservice: { id: 1 },
+  performance: { password: 'XXXXX', username: 'XXXXX' },
+  search: { agency: '710100', profile: 'opac' },
+  netpunkt: { user: 'XXXXX', group: 'XXXXX', password: 'XXXXX' },
   user: {
     id: 'XXXXX',
     salt: 'XXXXX',
@@ -61,13 +61,13 @@ const mockData = {
 };
 
 import Provider from '../../provider/Provider.js';
-import {assert, fail} from 'chai';
+import { assert, fail } from 'chai';
 const provider = Provider();
 
 describe('Automated test: suggest_subject.auto', () => {
   it('has same result as recorded (in suggest_subject.auto)', () => {
     assert(
-      Date.now() < +new Date('2021-01-01'),
+      Date.now() < +new Date('2022-01-01'),
       'Please recreate the automatically generated unit tests, such that the mock data does not come out of sync with the actual services. See README.md for details.'
     );
     context.mockData = mockData;

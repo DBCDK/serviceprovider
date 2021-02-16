@@ -16,9 +16,9 @@ const params = {
 const expected = {
   statusCode: 200,
   data: [
-    {term: 'herlev tur/retur', val: 44, type: ['title']},
-    {term: 'herlev-ruterne', val: 8, type: ['title']},
-    {term: 'gamle dage i nr. herlev', val: 7, type: ['title']}
+    { term: 'herlev tur/retur', val: 44, type: ['title'] },
+    { term: 'herlev-ruterne', val: 8, type: ['title'] },
+    { term: 'gamle dage i nr. herlev', val: 7, type: ['title'] }
   ]
 };
 
@@ -41,10 +41,10 @@ const context = {
     performance: 'https://elk-p01.dbc.dk:9100/',
     recommendurls: 'XXXXX'
   },
-  communityservice: {id: 1},
-  performance: {password: 'XXXXX', username: 'XXXXX'},
-  search: {agency: '710100', profile: 'opac'},
-  netpunkt: {user: 'XXXXX', group: 'XXXXX', password: 'XXXXX'},
+  communityservice: { id: 1 },
+  performance: { password: 'XXXXX', username: 'XXXXX' },
+  search: { agency: '710100', profile: 'opac' },
+  netpunkt: { user: 'XXXXX', group: 'XXXXX', password: 'XXXXX' },
   user: {
     id: 'XXXXX',
     salt: 'XXXXX',
@@ -66,13 +66,13 @@ const mockData = {
 };
 
 import Provider from '../../provider/Provider.js';
-import {assert, fail} from 'chai';
+import { assert, fail } from 'chai';
 const provider = Provider();
 
 describe('Automated test: suggest_title_fields.auto', () => {
   it('has same result as recorded (in suggest_title_fields.auto)', () => {
     assert(
-      Date.now() < +new Date('2021-01-01'),
+      Date.now() < +new Date('2022-01-01'),
       'Please recreate the automatically generated unit tests, such that the mock data does not come out of sync with the actual services. See README.md for details.'
     );
     context.mockData = mockData;

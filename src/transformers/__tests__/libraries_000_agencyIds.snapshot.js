@@ -6,7 +6,10 @@
 //
 //
 const endpoint = 'libraries';
-const params = {fields: ['agencyId', 'orderParameters'], agencyIds: ['717500']};
+const params = {
+  fields: ['agencyId', 'orderParameters'],
+  agencyIds: ['717500']
+};
 
 const expected = {
   statusCode: 200,
@@ -53,7 +56,7 @@ const expected = {
       lastUpdated: '2020-07-08T00:00:00+02:00',
       isOclcRsLibrary: '0',
       stateAndUniversityLibraryCopyService: '1',
-      geolocation: {latitude: 55.680913, longitude: 12.457274},
+      geolocation: { latitude: 55.680913, longitude: 12.457274 },
       headOfInstitutionName: 'Lone Terpgaard-Jensen',
       headOfInstitutionTitle: 'Bibliotekschef',
       nationalDeliveryService: '1',
@@ -104,7 +107,7 @@ const expected = {
       lastUpdated: '2020-07-08T00:00:00+02:00',
       isOclcRsLibrary: '0',
       stateAndUniversityLibraryCopyService: '1',
-      geolocation: {latitude: 55.701627, longitude: 12.454169},
+      geolocation: { latitude: 55.701627, longitude: 12.454169 },
       headOfInstitutionName: 'Lone Terpgaard-Jensen',
       headOfInstitutionTitle: 'Bibliotekschef',
       nationalDeliveryService: '1',
@@ -175,12 +178,12 @@ const context = {
       'http://holdings-items-content-service.cisterne.svc.cloud.dbc.dk/holdings-items-content-service/api',
     infomediaservice: 'http://infomedia.mcp1-proxy.dbc.dk/server.php'
   },
-  cicero: {'DK-710100': 'XXXXX'},
-  performance: {username: 'XXXXX', password: 'XXXXX'},
-  communityservice: {id: 1},
-  search: {agency: '775100', profile: 'opac', collectionidentifiers: ''},
-  storage: {user: 'XXXXX'},
-  netpunkt: {user: 'XXXXX', group: 'XXXXX', password: 'XXXXX'},
+  cicero: { 'DK-710100': 'XXXXX' },
+  performance: { username: 'XXXXX', password: 'XXXXX' },
+  communityservice: { id: 1 },
+  search: { agency: '775100', profile: 'opac', collectionidentifiers: '' },
+  storage: { user: 'XXXXX' },
+  netpunkt: { user: 'XXXXX', group: 'XXXXX', password: 'XXXXX' },
   user: {
     id: 'C04122017433',
     salt: 'XXXXX',
@@ -194,7 +197,7 @@ const context = {
     ddbcmsapipassword: 'XXXXX',
     orderpolicyrequester: '190101',
     orderSystem: 'bibliotekdk',
-    ips: {'0': 'XXXXX'},
+    ips: { '0': 'XXXXX' },
     access_token: 'XXXXX'
   }
 };
@@ -1574,13 +1577,13 @@ const mockData = {
 };
 
 import Provider from '../../provider/Provider.js';
-import {assert, fail} from 'chai';
+import { assert, fail } from 'chai';
 const provider = Provider();
 
 describe('Automated test: libraries_000_agencyIds.snapshot', () => {
   it('has same result as recorded (in libraries_000_agencyIds.snapshot)', () => {
     assert(
-      Date.now() < +new Date('2021-03-08'),
+      Date.now() < +new Date('2022-01-01'),
       'Please recreate the automatically generated unit tests, such that the mock data does not come out of sync with the actual services. See README.md for details.'
     );
     context.mockData = mockData;

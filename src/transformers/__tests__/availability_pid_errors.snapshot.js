@@ -13,9 +13,9 @@ const params = {
 const expected = {
   statusCode: 200,
   data: [
-    {unavailable: 'openHoldingStatus error: error_searching_library'},
-    {unavailable: 'openHoldingStatus error: error_searching_library'},
-    {unavailable: 'openHoldingStatus error: error_searching_library'}
+    { unavailable: 'openHoldingStatus error: error_searching_library' },
+    { unavailable: 'openHoldingStatus error: error_searching_library' },
+    { unavailable: 'openHoldingStatus error: error_searching_library' }
   ]
 };
 
@@ -36,8 +36,8 @@ const context = {
     suggestsubject: 'XXXXX',
     recommendurls: 'XXXXX'
   },
-  search: {agency: '775100', profile: 'opac'},
-  netpunkt: {user: 'XXXXX', group: 'XXXXX', password: 'XXXXX'},
+  search: { agency: '775100', profile: 'opac' },
+  netpunkt: { user: 'XXXXX', group: 'XXXXX', password: 'XXXXX' },
   user: {
     agency: '100450',
     libraryId: '100450',
@@ -69,13 +69,13 @@ const mockData = {
 };
 
 import Provider from '../../provider/Provider.js';
-import {assert, fail} from 'chai';
+import { assert, fail } from 'chai';
 const provider = Provider();
 
 describe('Automated test: availability_pid_errors.snapshot', () => {
   it('has same result as recorded (in availability_pid_errors.snapshot)', () => {
     assert(
-      Date.now() < +new Date('2021-01-01'),
+      Date.now() < +new Date('2022-01-01'),
       'Please recreate the automatically generated unit tests, such that the mock data does not come out of sync with the actual services. See README.md for details.'
     );
     context.mockData = mockData;

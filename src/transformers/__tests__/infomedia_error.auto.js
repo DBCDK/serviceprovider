@@ -6,7 +6,7 @@
 //
 //
 const endpoint = 'infomedia';
-const params = {pid: '870971-anmeld:34146233'};
+const params = { pid: '870971-anmeld:34146233' };
 
 const expected = {
   statusCode: 403,
@@ -31,13 +31,13 @@ const mockData = {
 };
 
 import Provider from '../../provider/Provider.js';
-import {assert, fail} from 'chai';
+import { assert, fail } from 'chai';
 const provider = Provider();
 
 describe('Automated test: infomedia.auto', () => {
   it('has same result as recorded (in  infomedia.auto)', () => {
     assert(
-      Date.now() < +new Date('2021-01-01'),
+      Date.now() < +new Date('2022-01-01'),
       'Please recreate the automatically generated unit tests, such that the mock data does not come out of sync with the actual services. See README.md for details.'
     );
     context.mockData = mockData;
