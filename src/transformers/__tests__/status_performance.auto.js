@@ -434,7 +434,6 @@ const context = {
     cicero: 'https://cicero-fbs.com/rest/external/v1/'
   },
   cicero: {'DK-725300': {username: 'XXXXX', password: 'XXXXX'}},
-
   performance: {password: 'XXXXX', username: 'XXXXX'},
   search: {agency: '725300', profile: 'opac'},
   netpunkt: {user: 'XXXXX', group: 'XXXXX', password: 'XXXXX'},
