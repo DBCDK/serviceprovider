@@ -13,7 +13,7 @@ const params = {
 
 const expected = {
   statusCode: 200,
-  data: { status: 'ok', orsId: '1039690810' }
+  data: {status: 'ok', orsId: '1039690810'}
 };
 
 const context = {
@@ -38,12 +38,12 @@ const context = {
     workpresentation:
       'http://work-presentation-service.cisterne.svc.cloud.dbc.dk/api/work-presentation'
   },
-  infomedia: { userId: 'XXXXX', libraryCode: 'XXXXX' },
-  cicero: { 'DK-710100': 'XXXXX' },
-  performance: { username: 'XXXXX', password: 'XXXXX' },
-  search: { agency: '775100', profile: 'opac', collectionidentifiers: '' },
-  storage: { user: 'XXXXX' },
-  netpunkt: { user: 'XXXXX', group: 'XXXXX', password: 'XXXXX' },
+  infomedia: {userId: 'XXXXX', libraryCode: 'XXXXX'},
+  cicero: {'DK-710100': 'XXXXX'},
+  performance: {username: 'XXXXX', password: 'XXXXX'},
+  search: {agency: '775100', profile: 'opac', collectionidentifiers: ''},
+  storage: {user: 'XXXXX'},
+  netpunkt: {user: 'XXXXX', group: 'XXXXX', password: 'XXXXX'},
   user: {
     id: 'XXXXX',
     salt: 'XXXXX',
@@ -67,7 +67,7 @@ const mockData = {
 };
 
 import Provider from '../../provider/Provider.js';
-import { assert, fail } from 'chai';
+import {assert, fail} from 'chai';
 const provider = Provider();
 
 describe('Automated test: order_owned_own_catalogue_error.snapshot', () => {
