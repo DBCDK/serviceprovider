@@ -196,8 +196,6 @@ async function performanceStat({request, context}) {
     json: query
   });
 
-  console.log('################################### r.error', r, r.error);
-
   if (r.error) {
     throw {
       statusCode: 500,
