@@ -12,7 +12,6 @@ import path from 'path';
 import cors from 'cors';
 import {TokenError} from './smaug/errors';
 
-import community from './transformers/community/community';
 import {storageMiddleware} from './transformers/storage.js';
 
 // Middleware
@@ -118,7 +117,6 @@ app.set('serviceProvider', serviceProvider);
 // Setting paths
 app.all('/', (req, res) => res.redirect(apiPath));
 
-app.use(apiPath + 'community', community());
 app.use(apiPath + 'storage/', storageMiddleware);
 
 // Health check

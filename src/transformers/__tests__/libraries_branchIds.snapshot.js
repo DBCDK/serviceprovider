@@ -170,7 +170,6 @@ const context = {
     suggest: 'http://ortograf.mcp1-proxy.dbc.dk/ortograf/',
     recommend: 'http://booklens-190101-1-0.mi-prod.svc.cloud.dbc.dk/',
     performance: 'http://elk/elasticsearch',
-    communityservice: 'http://localhost:4010/v1',
     cicero: 'https://cicero-fbs.com/rest/external/v1/',
     openformat:
       'http://openformat-php-develop.frontend-features.svc.cloud.dbc.dk/server.php',
@@ -180,7 +179,6 @@ const context = {
   },
   cicero: {'DK-710100': 'XXXXX'},
   performance: {username: 'XXXXX', password: 'XXXXX'},
-  communityservice: {id: 1},
   search: {agency: '775100', profile: 'opac', collectionidentifiers: ''},
   storage: {user: 'XXXXX'},
   netpunkt: {user: 'XXXXX', group: 'XXXXX', password: 'XXXXX'},
@@ -1583,7 +1581,7 @@ const provider = Provider();
 describe('Automated test: libraries_branchIds.snapshot', () => {
   it('has same result as recorded (in libraries_branchIds.snapshot)', () => {
     assert(
-      Date.now() < +new Date('2021-03-08'),
+      Date.now() < +new Date('2022-01-01'),
       'Please recreate the automatically generated unit tests, such that the mock data does not come out of sync with the actual services. See README.md for details.'
     );
     context.mockData = mockData;

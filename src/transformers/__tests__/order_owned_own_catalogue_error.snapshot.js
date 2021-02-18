@@ -1,21 +1,19 @@
-// AUTOTEST GENERATOR: {"endpoint":"workpresentation","params":{"workId":"work-of:fake-id","agencyId":777900,"profile":"opac"}}
+// AUTOTEST GENERATOR: {"endpoint":"order","params":{"pids":["710100-katalog:50758060","710100-katalog:28657366"],"pickUpBranch":"710100"}}
 //
 //
 // AUTOMATED UNIT TEST
 // DO NOT EDIT
 //
 //
-const endpoint = 'workpresentation';
-const params = {workId: 'work-of:fake-id', agencyId: 777900, profile: 'opac'};
+const endpoint = 'order';
+const params = {
+  pids: ['710100-katalog:50758060', '710100-katalog:28657366'],
+  pickUpBranch: '710100'
+};
 
 const expected = {
-  statusCode: 404,
-  error: 'Not found error',
-  data: {
-    errorCode: 'NOT_FOUND_ERROR',
-    message: 'No Such Work',
-    trackingId: 'fa5b2bd9-2ed0-4c63-8330-cd5d576bc1e3'
-  }
+  statusCode: 200,
+  data: {status: 'ok', orsId: '1039690810'}
 };
 
 const context = {
@@ -59,21 +57,21 @@ const context = {
     ddbcmsapipassword: 'XXXXX',
     orderpolicyrequester: '190101',
     orderSystem: 'bibliotekdk',
-    ips: {'0': 'XXXXX'},
+    ips: ['10.10.10.0'],
     access_token: 'XXXXX'
   }
 };
 const mockData = {
-  '["http://work-presentation-service.cisterne.svc.cloud.dbc.dk/api/work-presentation",{"qs":{"workId":"work-of:fake-id","agencyId":"777900","profile":"opac","includeRelations":false,"appId":"openplatform/v3/"}}]':
-    '{"errorCode":"NOT_FOUND_ERROR","message":"No Such Work","trackingId":"fa5b2bd9-2ed0-4c63-8330-cd5d576bc1e3"}'
+  '["openorder","<SOAP-ENV:Envelope xmlns=\\"http://oss.dbc.dk/ns/openorder\\" xmlns:SOAP-ENV=\\"http://schemas.xmlsoap.org/soap/envelope/\\">\\n     <SOAP-ENV:Body>\\n        <placeOrderRequest>\\n           <authentication>\\n              <groupIdAut>XXXXX</groupIdAut>\\n              <passwordAut>XXXXX</passwordAut>\\n              <userIdAut>XXXXX</userIdAut>\\n           </authentication>\\n           <copy>false</copy>\\n           <exactEdition>false</exactEdition>\\n           <needBeforeDate>2021-05-18T00:00:00</needBeforeDate>\\n           <orderSystem>bibliotekdk</orderSystem>\\n           <pickUpAgencyId>710100</pickUpAgencyId>\\n           <pid>710100-katalog:50758060</pid>\\n           <pid>710100-katalog:28657366</pid>\\n           <serviceRequester>190101</serviceRequester>\\n           \\n           <userId>XXXXX</userId>\\n           <userIdAuthenticated>true</userIdAuthenticated>\\n           \\n           \\n           \\n           <verificationReferenceSource>dbcdatawell</verificationReferenceSource>\\n         </placeOrderRequest>\\n      </SOAP-ENV:Body>\\n    </SOAP-ENV:Envelope>"]':
+    '<?xml version=\'1.0\' encoding=\'UTF-8\'?><S:Envelope xmlns:S="http://schemas.xmlsoap.org/soap/envelope/"><S:Body><ns1:placeOrderResponse xmlns:ns1="http://oss.dbc.dk/ns/openorder"><ns1:orderPlaced><ns1:orderId>1039690810</ns1:orderId><ns1:orderPlacedMessage>owned_accepted</ns1:orderPlacedMessage></ns1:orderPlaced></ns1:placeOrderResponse></S:Body></S:Envelope>'
 };
 
 import Provider from '../../provider/Provider.js';
 import {assert, fail} from 'chai';
 const provider = Provider();
 
-describe('Automated test: workpresentation_not_found_returns_404.auto', () => {
-  it('has same result as recorded (in workpresentation_not_found_returns_404.auto)', () => {
+describe('Automated test: order_owned_own_catalogue_error.snapshot', () => {
+  it('has same result as recorded (in order_owned_own_catalogue_error.snapshot)', () => {
     assert(
       Date.now() < +new Date('2022-01-01'),
       'Please recreate the automatically generated unit tests, such that the mock data does not come out of sync with the actual services. See README.md for details.'

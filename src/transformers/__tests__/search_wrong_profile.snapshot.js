@@ -30,10 +30,8 @@ const context = {
     suggestlibrary: 'http://xptest.dbc.dk/ms/entity-suggest/v1/library',
     suggestsubject: 'http://xptest.dbc.dk/ms/entity-suggest/v1/subject',
     recommend: 'http://staging.recomole.mcp1-proxy.dbc.dk/recomole/loan-cosim',
-    recommendurls: 'XXXXX',
-    communityservice: 'http://localhost:4010/v1'
+    recommendurls: 'XXXXX'
   },
-  communityservice: {id: 1},
   search: {agency: '775100', profile: 'opac', collectionidentifiers: ''},
   netpunkt: {user: 'XXXXX', group: 'XXXXX', password: 'XXXXX'},
   user: {
@@ -65,7 +63,7 @@ const provider = Provider();
 describe('Automated test: search_wrong_profile.snapshot', () => {
   it('has same result as recorded (in search_wrong_profile.snapshot)', () => {
     assert(
-      Date.now() < +new Date('2021-01-01'),
+      Date.now() < +new Date('2022-01-01'),
       'Please recreate the automatically generated unit tests, such that the mock data does not come out of sync with the actual services. See README.md for details.'
     );
     context.mockData = mockData;

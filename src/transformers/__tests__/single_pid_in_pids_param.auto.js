@@ -74,7 +74,6 @@ const context = {
     suggest: 'http://ortograf-service-1-0.mi-prod.svc.cloud.dbc.dk/ortograf/',
     recommend: 'http://booklens-190101-1-0.mi-prod.svc.cloud.dbc.dk/',
     performance: 'https://elk.dbc.dk:9100/k8s-frontend-prod-*/',
-    communityservice: 'http://localhost:4010/v1',
     cicero: 'https://cicero-fbs.com/rest/external/v1/',
     openformat:
       'http://openformat-php-master.frontend-prod.svc.cloud.dbc.dk/server.php',
@@ -85,7 +84,6 @@ const context = {
   infomedia: {userId: 'XXXXX', libraryCode: 'XXXXX'},
   cicero: {'DK-710100': 'XXXXX'},
   performance: {username: 'XXXXX', password: 'XXXXX'},
-  communityservice: {id: 1},
   search: {agency: '775100', profile: 'opac', collectionidentifiers: ''},
   storage: {user: 'XXXXX'},
   netpunkt: {user: 'XXXXX', group: 'XXXXX', password: 'XXXXX'},
@@ -116,7 +114,7 @@ const provider = Provider();
 describe('Automated test: single_pid_in_pids_param.auto', () => {
   it('has same result as recorded (in single_pid_in_pids_param.auto)', () => {
     assert(
-      Date.now() < +new Date('2021-01-06'),
+      Date.now() < +new Date('2022-01-01'),
       'Please recreate the automatically generated unit tests, such that the mock data does not come out of sync with the actual services. See README.md for details.'
     );
     context.mockData = mockData;

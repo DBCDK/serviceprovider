@@ -103,7 +103,9 @@ async function get({_id}, user, context) {
     default:
       return {
         statusCode: 500,
-        error: `${type} has invalid content-type. User "${typeObj[0].owner}" needs to fix the type definition.`
+        error: `${type} has invalid content-type. User "${
+          typeObj[0].owner
+        }" needs to fix the type definition.`
       };
   }
 }
@@ -211,12 +213,10 @@ async function lookupType(type, ctx) {
     };
   }
 
-  const result = (
-    await find(
-      {_owner: type.slice(0, splitPos), name: type.slice(splitPos + 1)},
-      ctx
-    )
-  ).data;
+  const result = (await find(
+    {_owner: type.slice(0, splitPos), name: type.slice(splitPos + 1)},
+    ctx
+  )).data;
 
   if (!result.length) {
     throw {
@@ -299,11 +299,9 @@ async function indexKeys(obj, type, action) {
           promises.push(
             (async () => {
               if (
-                (
-                  await knex('countIndex')
-                    .select('val')
-                    .where(row)
-                ).length
+                (await knex('countIndex')
+                  .select('val')
+                  .where(row)).length
               ) {
                 await knex('countIndex')
                   .where(row)
@@ -694,17 +692,15 @@ async function getRoles({}, user, ctx) {
     .select('*')
     .where({userId: user});
 
-  const roles = (
-    await Promise.all(
-      res.map(async row => {
-        try {
-          return (await get({_id: row.roleId}, user, ctx)).data;
-        } catch (e) {
-          return null;
-        }
-      })
-    )
-  ).filter(role => !!role);
+  const roles = (await Promise.all(
+    res.map(async row => {
+      try {
+        return (await get({_id: row.roleId}, user, ctx)).data;
+      } catch (e) {
+        return null;
+      }
+    })
+  )).filter(role => !!role);
   return {statusCode: 200, data: roles};
 }
 
@@ -807,11 +803,9 @@ async function storageMiddleware(req, res, next) {
         .where('id', uuid)
         .select();
       const type = JSON.parse(
-        (
-          await knex('docs')
-            .where('id', doc.type)
-            .select()
-        )[0].data.toString('utf-8')
+        (await knex('docs')
+          .where('id', doc.type)
+          .select())[0].data.toString('utf-8')
       );
       if (type.permissions.read !== 'any') {
         return res.status(403).end('forbidden');

@@ -1,4 +1,4 @@
-// AUTOTEST GENERATOR: {"endpoint":"order","params":{"pids":["870970-basis:28126727","870970-basis:27597726"],"pickUpBranch":"DK-790900","expires":"2021-06-01"}}
+// AUTOTEST GENERATOR: {"endpoint":"order","params":{"pids":["870970-basis:28126727","870970-basis:27597726"],"pickUpBranch":"DK-790900","expires":"2022-01-01"}}
 //
 //
 // AUTOMATED UNIT TEST
@@ -9,7 +9,7 @@ const endpoint = 'order';
 const params = {
   pids: ['870970-basis:28126727', '870970-basis:27597726'],
   pickUpBranch: 'DK-790900',
-  expires: '2021-06-01'
+  expires: '2022-01-01'
 };
 
 const expected = {
@@ -30,7 +30,6 @@ const context = {
     suggest: 'http://ortograf.mcp1-proxy.dbc.dk/ortograf/',
     recommend: 'http://booklens-190101-1-0.mi-prod.svc.cloud.dbc.dk/',
     performance: 'http://elk/elasticsearch',
-    communityservice: 'http://localhost:4010/v1',
     cicero: 'https://cicero-fbs.com/rest/external/v1/',
     openformat:
       'http://openformat-php-develop.frontend-features.svc.cloud.dbc.dk/server.php',
@@ -40,7 +39,6 @@ const context = {
   },
   cicero: {'DK-710100': 'XXXXX'},
   performance: {username: 'XXXXX', password: 'XXXXX'},
-  communityservice: {id: 1},
   search: {
     agency: '775100',
     profile: 'opac',
@@ -66,7 +64,7 @@ const context = {
   }
 };
 const mockData = {
-  '["openorder","<SOAP-ENV:Envelope xmlns=\\"http://oss.dbc.dk/ns/openorder\\" xmlns:SOAP-ENV=\\"http://schemas.xmlsoap.org/soap/envelope/\\">\\n     <SOAP-ENV:Body>\\n        <placeOrderRequest>\\n           <authentication>\\n              <groupIdAut>XXXXX</groupIdAut>\\n              <passwordAut>XXXXX</passwordAut>\\n              <userIdAut>XXXXX</userIdAut>\\n           </authentication>\\n           <copy>false</copy>\\n           <exactEdition>false</exactEdition>\\n           <needBeforeDate>2021-06-01T00:00:00</needBeforeDate>\\n           <orderSystem>bibliotekdk</orderSystem>\\n           <pickUpAgencyId>DK-790900</pickUpAgencyId>\\n           <pid>870970-basis:28126727</pid>\\n           <pid>870970-basis:27597726</pid>\\n           <serviceRequester>190101</serviceRequester>\\n           \\n           <userId>C04122017433</userId>\\n           <userIdAuthenticated>true</userIdAuthenticated>\\n           \\n           \\n           \\n           <verificationReferenceSource>dbcdatawell</verificationReferenceSource>\\n         </placeOrderRequest>\\n      </SOAP-ENV:Body>\\n    </SOAP-ENV:Envelope>"]':
+  '["openorder","<SOAP-ENV:Envelope xmlns=\\"http://oss.dbc.dk/ns/openorder\\" xmlns:SOAP-ENV=\\"http://schemas.xmlsoap.org/soap/envelope/\\">\\n     <SOAP-ENV:Body>\\n        <placeOrderRequest>\\n           <authentication>\\n              <groupIdAut>XXXXX</groupIdAut>\\n              <passwordAut>XXXXX</passwordAut>\\n              <userIdAut>XXXXX</userIdAut>\\n           </authentication>\\n           <copy>false</copy>\\n           <exactEdition>false</exactEdition>\\n           <needBeforeDate>2022-01-01T00:00:00</needBeforeDate>\\n           <orderSystem>bibliotekdk</orderSystem>\\n           <pickUpAgencyId>DK-790900</pickUpAgencyId>\\n           <pid>870970-basis:28126727</pid>\\n           <pid>870970-basis:27597726</pid>\\n           <serviceRequester>190101</serviceRequester>\\n           \\n           <userId>C04122017433</userId>\\n           <userIdAuthenticated>true</userIdAuthenticated>\\n           \\n           \\n           \\n           <verificationReferenceSource>dbcdatawell</verificationReferenceSource>\\n         </placeOrderRequest>\\n      </SOAP-ENV:Body>\\n    </SOAP-ENV:Envelope>"]':
     '<?xml version=\'1.0\' encoding=\'UTF-8\'?><S:Envelope xmlns:S="http://schemas.xmlsoap.org/soap/envelope/"><S:Body><ns1:placeOrderResponse xmlns:ns1="http://oss.dbc.dk/ns/openorder"><ns1:orderPlaced><ns1:orderId>1039377316</ns1:orderId><ns1:orderPlacedMessage>not_owned_ILL_loc</ns1:orderPlacedMessage></ns1:orderPlaced></ns1:placeOrderResponse></S:Body></S:Envelope>'
 };
 
@@ -78,7 +76,7 @@ const provider = Provider();
 describe('Automated test: order_multiple_pids_ordered.snapshot', () => {
   it('has same result as recorded (in order_multiple_pids_ordered.snapshot)', () => {
     assert(
-      Date.now() < +new Date('2021-03-08'),
+      Date.now() < +new Date('2022-01-01'),
       'Please recreate the automatically generated unit tests, such that the mock data does not come out of sync with the actual services. See README.md for details.'
     );
     context.mockData = mockData;

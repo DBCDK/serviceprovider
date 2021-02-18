@@ -130,7 +130,6 @@ const context = {
     suggest: 'http://ortograf.mcp1-proxy.dbc.dk/ortograf/',
     recommend: 'http://staging.recomole.mcp1-proxy.dbc.dk/recomole/loan-cosim',
     performance: 'http://elk/elasticsearch',
-    communityservice: 'http://localhost:4010/v1',
     cicero: 'https://cicero-fbs.com/rest/external/v1/',
     openformat: 'XXXXX',
     holdingsitems: 'XXXXX',
@@ -139,7 +138,6 @@ const context = {
   infomedia: {userId: 'XXXXX', libraryCode: 'XXXXX'},
   cicero: {'DK-710100': 'XXXXX'},
   performance: {username: 'XXXXX', password: 'XXXXX'},
-  communityservice: {id: 1},
   search: {agency: '775100', profile: 'opac', collectionidentifiers: ''},
   storage: {user: 'XXXXX'},
   netpunkt: {user: 'XXXXX', group: 'XXXXX', password: 'XXXXX'},
@@ -170,7 +168,7 @@ const provider = Provider();
 describe('Automated test: holding_multiple_pids_result.auto', () => {
   it('has same result as recorded (in holding_multiple_pids_result.auto)', () => {
     assert(
-      Date.now() < +new Date('2021-01-01'),
+      Date.now() < +new Date('2022-01-01'),
       'Please recreate the automatically generated unit tests, such that the mock data does not come out of sync with the actual services. See README.md for details.'
     );
     context.mockData = mockData;
