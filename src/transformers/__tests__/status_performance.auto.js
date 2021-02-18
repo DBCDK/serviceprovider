@@ -425,7 +425,6 @@ const context = {
     rank: 'https://xptest.dbc.dk/ms/rank/v1',
     suggest: 'http://ortograf.mcp1-proxy.dbc.dk/ortograf/',
     recommend: 'http://staging.recomole.mcp1-proxy.dbc.dk/recomole/loan-cosim',
-    communityservice: '',
     suggestpopular: 'XXXXX',
     suggestcreator: 'XXXXX',
     suggestlibrary: 'XXXXX',
@@ -435,7 +434,6 @@ const context = {
     cicero: 'https://cicero-fbs.com/rest/external/v1/'
   },
   cicero: {'DK-725300': {username: 'XXXXX', password: 'XXXXX'}},
-  communityservice: {id: 1},
   performance: {password: 'XXXXX', username: 'XXXXX'},
   search: {agency: '725300', profile: 'opac'},
   netpunkt: {user: 'XXXXX', group: 'XXXXX', password: 'XXXXX'},

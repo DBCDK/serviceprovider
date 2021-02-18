@@ -13,7 +13,7 @@ const params = {
 
 const expected = {
   statusCode: 200,
-  data: {status: 'ok', orsId: '1039683859'}
+  data: {status: 'ok', orsId: '1039690810'}
 };
 
 const context = {
@@ -29,7 +29,6 @@ const context = {
     suggest: 'http://ortograf-service-1-0.mi-prod.svc.cloud.dbc.dk/ortograf/',
     recommend: 'http://booklens-190101-1-0.mi-prod.svc.cloud.dbc.dk/',
     performance: 'https://elk.dbc.dk:9100/k8s-frontend-prod-*/',
-    communityservice: 'http://localhost:4010/v1',
     cicero: 'https://cicero-fbs.com/rest/external/v1/',
     openformat:
       'http://openformat-php-master.frontend-prod.svc.cloud.dbc.dk/server.php',
@@ -42,7 +41,6 @@ const context = {
   infomedia: {userId: 'XXXXX', libraryCode: 'XXXXX'},
   cicero: {'DK-710100': 'XXXXX'},
   performance: {username: 'XXXXX', password: 'XXXXX'},
-  communityservice: {id: 1},
   search: {agency: '775100', profile: 'opac', collectionidentifiers: ''},
   storage: {user: 'XXXXX'},
   netpunkt: {user: 'XXXXX', group: 'XXXXX', password: 'XXXXX'},
@@ -64,8 +62,8 @@ const context = {
   }
 };
 const mockData = {
-  '["openorder","<SOAP-ENV:Envelope xmlns=\\"http://oss.dbc.dk/ns/openorder\\" xmlns:SOAP-ENV=\\"http://schemas.xmlsoap.org/soap/envelope/\\">\\n     <SOAP-ENV:Body>\\n        <placeOrderRequest>\\n           <authentication>\\n              <groupIdAut>XXXXX</groupIdAut>\\n              <passwordAut>XXXXX</passwordAut>\\n              <userIdAut>XXXXX</userIdAut>\\n           </authentication>\\n           <copy>false</copy>\\n           <exactEdition>false</exactEdition>\\n           <needBeforeDate>2021-05-17T00:00:00</needBeforeDate>\\n           <orderSystem>bibliotekdk</orderSystem>\\n           <pickUpAgencyId>710100</pickUpAgencyId>\\n           <pid>710100-katalog:50758060</pid>\\n           <pid>710100-katalog:28657366</pid>\\n           <serviceRequester>190101</serviceRequester>\\n           \\n           <userId>XXXXX</userId>\\n           <userIdAuthenticated>true</userIdAuthenticated>\\n           \\n           \\n           \\n           <verificationReferenceSource>dbcdatawell</verificationReferenceSource>\\n         </placeOrderRequest>\\n      </SOAP-ENV:Body>\\n    </SOAP-ENV:Envelope>"]':
-    '<?xml version=\'1.0\' encoding=\'UTF-8\'?><S:Envelope xmlns:S="http://schemas.xmlsoap.org/soap/envelope/"><S:Body><ns1:placeOrderResponse xmlns:ns1="http://oss.dbc.dk/ns/openorder"><ns1:orderPlaced><ns1:orderId>1039683859</ns1:orderId><ns1:orderPlacedMessage>owned_accepted</ns1:orderPlacedMessage></ns1:orderPlaced></ns1:placeOrderResponse></S:Body></S:Envelope>'
+  '["openorder","<SOAP-ENV:Envelope xmlns=\\"http://oss.dbc.dk/ns/openorder\\" xmlns:SOAP-ENV=\\"http://schemas.xmlsoap.org/soap/envelope/\\">\\n     <SOAP-ENV:Body>\\n        <placeOrderRequest>\\n           <authentication>\\n              <groupIdAut>XXXXX</groupIdAut>\\n              <passwordAut>XXXXX</passwordAut>\\n              <userIdAut>XXXXX</userIdAut>\\n           </authentication>\\n           <copy>false</copy>\\n           <exactEdition>false</exactEdition>\\n           <needBeforeDate>2021-05-18T00:00:00</needBeforeDate>\\n           <orderSystem>bibliotekdk</orderSystem>\\n           <pickUpAgencyId>710100</pickUpAgencyId>\\n           <pid>710100-katalog:50758060</pid>\\n           <pid>710100-katalog:28657366</pid>\\n           <serviceRequester>190101</serviceRequester>\\n           \\n           <userId>XXXXX</userId>\\n           <userIdAuthenticated>true</userIdAuthenticated>\\n           \\n           \\n           \\n           <verificationReferenceSource>dbcdatawell</verificationReferenceSource>\\n         </placeOrderRequest>\\n      </SOAP-ENV:Body>\\n    </SOAP-ENV:Envelope>"]':
+    '<?xml version=\'1.0\' encoding=\'UTF-8\'?><S:Envelope xmlns:S="http://schemas.xmlsoap.org/soap/envelope/"><S:Body><ns1:placeOrderResponse xmlns:ns1="http://oss.dbc.dk/ns/openorder"><ns1:orderPlaced><ns1:orderId>1039690810</ns1:orderId><ns1:orderPlacedMessage>owned_accepted</ns1:orderPlacedMessage></ns1:orderPlaced></ns1:placeOrderResponse></S:Body></S:Envelope>'
 };
 
 import Provider from '../../provider/Provider.js';
@@ -75,7 +73,7 @@ const provider = Provider();
 describe('Automated test: order_owned_own_catalogue_error.snapshot', () => {
   it('has same result as recorded (in order_owned_own_catalogue_error.snapshot)', () => {
     assert(
-      Date.now() < +new Date('2021-05-17'),
+      Date.now() < +new Date('2022-01-01'),
       'Please recreate the automatically generated unit tests, such that the mock data does not come out of sync with the actual services. See README.md for details.'
     );
     context.mockData = mockData;

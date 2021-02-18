@@ -196,8 +196,6 @@ async function performanceStat({request, context}) {
     json: query
   });
 
-  console.log('################################### r.error', r, r.error);
-
   if (r.error) {
     throw {
       statusCode: 500,
@@ -245,7 +243,6 @@ const serviceChecks = {
       result.ok ? {ok: true} : {error: JSON.stringify(result)}
     );
   },
-  communityservice: onlyUrl,
   storage: async ({context}) => {
     let ok = true;
     try {

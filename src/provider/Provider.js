@@ -25,12 +25,6 @@ import openformatTransformer from '../transformers/openformat';
 import holdingsitemsTransformer from '../transformers/holdingsitems';
 import workpresentationTransformer from '../transformers/workpresentation';
 
-import createEntity from '../transformers/createEntity';
-import updateEntity from '../transformers/updateEntity';
-import listEntities from '../transformers/listEntities';
-import getSingleProperty from '../transformers/getSingleProperty';
-import getEntity from '../transformers/getEntity';
-import deleteEntity from '../transformers/deleteEntity';
 /**
  * Initialization of the provider and the underlying services.
  *
@@ -71,27 +65,14 @@ export default function Provider() {
     workpresentation: workpresentationTransformer
   };
 
-  const crudTransformerMap = {
-    createEntity,
-    updateEntity,
-    listEntities,
-    getEntity,
-    deleteEntity,
-    getSingleProperty
-  };
-
   // we are going to reimplement a simpler mechanism to call the transformers
   function execute(name, params, context) {
     // eslint-disable-line no-unused-vars
-    if (context.crud) {
-      return caller(crudTransformerMap, context).call(name, params);
-    }
-
     return caller(transformerMap, context).call(name, params);
   }
 
   function availableTransforms() {
-    return Object.keys(Object.assign({}, transformerMap, crudTransformerMap));
+    return Object.keys(transformerMap);
   }
 
   function hasTransformer(name) {

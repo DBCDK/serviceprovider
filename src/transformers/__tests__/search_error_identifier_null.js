@@ -26,10 +26,9 @@ const context = {
     openuserstatus: 'https://openuserstatus.addi.dk/1.6.1/',
     suggest: 'http://ortograf.mcp1-proxy.dbc.dk/ortograf/',
     recommend: 'http://staging.recomole.mcp1-proxy.dbc.dk/recomole/loan-cosim',
-    performance: 'http://elk.dbc.dk:5601/elasticsearch/',
-    communityservice: 'http://localhost:4010/v1'
+    performance: 'http://elk.dbc.dk:5601/elasticsearch/'
   },
-  communityservice: {id: 1},
+
   search: {
     agency: '150013',
     profile: 'opac',

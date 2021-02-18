@@ -38,7 +38,6 @@ const expected = {
       url: 'http://recomole-1-0.mi-prod.svc.cloud.dbc.dk/recomole/loan-cosim',
       ok: true
     },
-    communityservice: {url: 'http://localhost:4010/v1'},
     storage: {ok: true, user: 'XXXXX', client: 'XXXXX'},
     suggest: {
       url: 'http://ortograf-service-1-0.mi-prod.svc.cloud.dbc.dk/ortograf/',
@@ -293,7 +292,6 @@ const context = {
     recommend:
       'http://recomole-1-0.mi-prod.svc.cloud.dbc.dk/recomole/loan-cosim',
     performance: 'https://elk.dbc.dk:9100/k8s-frontend-prod-*/',
-    communityservice: 'http://localhost:4010/v1',
     cicero: 'https://cicero-fbs.com/rest/external/v1/',
     openformat:
       'http://openformat-php-master.frontend-prod.svc.cloud.dbc.dk/server.php',
@@ -304,7 +302,6 @@ const context = {
   infomedia: {userId: 'XXXXX', libraryCode: 'XXXXX'},
   cicero: {'DK-710100': 'XXXXX'},
   performance: {username: 'XXXXX', password: 'XXXXX'},
-  communityservice: {id: 1},
   search: {agency: '775100', profile: 'opac', collectionidentifiers: ''},
   storage: {user: 'XXXXX'},
   netpunkt: {user: 'XXXXX', group: 'XXXXX', password: 'XXXXX'},

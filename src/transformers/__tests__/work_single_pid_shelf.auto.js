@@ -78,7 +78,6 @@ const context = {
   },
   cicero: {'DK-710100': 'XXXXX'},
   performance: {username: 'XXXXX', password: 'XXXXX'},
-  communityservice: {id: 1},
   search: {agency: '775100', profile: 'opac', collectionidentifiers: ''},
   storage: {user: 'XXXXX'},
   netpunkt: {user: 'XXXXX', group: 'XXXXX', password: 'XXXXX'},

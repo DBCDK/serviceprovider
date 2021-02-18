@@ -52,14 +52,10 @@ const whitelist = {
     suggest: true,
     recommend: true,
     performance: true,
-    communityservice: true,
     cicero: true
   },
   cicero: {
     'DK-725300': {}
-  },
-  communityservice: {
-    id: true
   },
   search: {
     agency: true,

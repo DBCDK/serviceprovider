@@ -30,10 +30,8 @@ const context = {
     suggestlibrary: 'http://xptest.dbc.dk/ms/entity-suggest/v1/library',
     suggestsubject: 'http://xptest.dbc.dk/ms/entity-suggest/v1/subject',
     recommend: 'http://staging.recomole.mcp1-proxy.dbc.dk/recomole/loan-cosim',
-    recommendurls: 'XXXXX',
-    communityservice: 'http://localhost:4010/v1'
+    recommendurls: 'XXXXX'
   },
-  communityservice: {id: 1},
   search: {agency: '775100', profile: 'opac', collectionidentifiers: ''},
   netpunkt: {user: 'XXXXX', group: 'XXXXX', password: 'XXXXX'},
   user: {

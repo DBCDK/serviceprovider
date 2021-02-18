@@ -22,11 +22,7 @@ const context = {
     recommendurls: {
       default: 'https://xptest.dbc.dk/ms/recommend-cosim/v1',
       popular: 'https://xptest.dbc.dk/ms/recommend-pop/v1'
-    },
-    communityservice: 'http://localhost:4010/v1'
-  },
-  communityservice: {
-    id: 1
+    }
   },
   search: {
     agency: '775100',

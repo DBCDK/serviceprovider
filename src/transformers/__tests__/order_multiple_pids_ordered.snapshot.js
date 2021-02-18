@@ -30,7 +30,6 @@ const context = {
     suggest: 'http://ortograf.mcp1-proxy.dbc.dk/ortograf/',
     recommend: 'http://booklens-190101-1-0.mi-prod.svc.cloud.dbc.dk/',
     performance: 'http://elk/elasticsearch',
-    communityservice: 'http://localhost:4010/v1',
     cicero: 'https://cicero-fbs.com/rest/external/v1/',
     openformat:
       'http://openformat-php-develop.frontend-features.svc.cloud.dbc.dk/server.php',
@@ -40,7 +39,6 @@ const context = {
   },
   cicero: {'DK-710100': 'XXXXX'},
   performance: {username: 'XXXXX', password: 'XXXXX'},
-  communityservice: {id: 1},
   search: {
     agency: '775100',
     profile: 'opac',
