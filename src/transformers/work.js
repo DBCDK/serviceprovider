@@ -136,16 +136,6 @@ export default (request, context) => {
   const promises = [];
 
   if (_.has(params, requestMethod.MOREINFO)) {
-    // check if requests to moreinfo is allowed
-    if (!_.includes(context.data.access, 'moreinfo')) {
-      const error = {
-        statusCode: 403,
-        error: 'Moreinfo access is not allowed for this client'
-      };
-
-      return Promise.resolve(error);
-    }
-
     // query moreinfo through its transformer.
     const moreInfoPromise = handleMoreInfoVersion(context, params);
 
@@ -193,5 +183,8 @@ export default (request, context) => {
       return dataUrls.length === 0
         ? result
         : handleCoverUrlRequests(dataUrls, result, context);
+    })
+    .catch(error => {
+      return error;
     });
 };

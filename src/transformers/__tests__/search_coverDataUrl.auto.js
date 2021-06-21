@@ -394,6 +394,7 @@ const context = {
     performance: 'https://elk-p01.dbc.dk:9100/',
     recommendurls: 'XXXXX'
   },
+  access: ['moreinfo'],
   performance: {password: 'XXXXX', username: 'XXXXX'},
   search: {agency: '710100', profile: 'opac'},
   netpunkt: {user: 'XXXXX', group: 'XXXXX', password: 'XXXXX'},
