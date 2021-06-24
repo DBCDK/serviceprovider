@@ -18,6 +18,7 @@
       "infomediaservice": "http://infomedia.mcp1-proxy.dbc.dk/server.php",
       "workpresentation": "http://work-presentation-service.cisterne.svc.cloud.dbc.dk/api/work-presentation"
     },
+    "access": ["moreinfo"],
     "cicero": {
       "DK-710100": {
         "username": "XXXXX",

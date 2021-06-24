@@ -54,6 +54,7 @@ const whitelist = {
     performance: true,
     cicero: true
   },
+  access: ['moreinfo', 'infomedia'],
   cicero: {
     'DK-725300': {}
   },

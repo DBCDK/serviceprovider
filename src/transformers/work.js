@@ -183,5 +183,8 @@ export default (request, context) => {
       return dataUrls.length === 0
         ? result
         : handleCoverUrlRequests(dataUrls, result, context);
+    })
+    .catch(error => {
+      return error;
     });
 };

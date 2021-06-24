@@ -151,7 +151,17 @@ function createResponse(response, requestPids) {
   return {statusCode: 200, data: data};
 }
 
-export default (request, context) => {
+export default async (request, context) => {
+  // check if requests to moreinfo is allowed for client
+  if (!_.includes(context.data.access, 'moreinfo')) {
+    const error = {
+      statusCode: 403,
+      error: 'Moreinfo access is not allowed for this client'
+    };
+
+    throw error;
+  }
+
   const params = {
     action: 'moreInfo',
     authenticationUser: context.get('netpunkt.user', true),
