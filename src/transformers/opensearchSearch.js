@@ -9,8 +9,10 @@ function getSoap(
   sort,
   offset,
   limit,
+  trackingId,
   allObject
 ) {
+  // @TODO add trackingid here -
   return `<?xml version="1.0" encoding="UTF-8"?>
 <SOAP-ENV:Envelope xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ns1="http://oss.dbc.dk/ns/opensearch">
   <SOAP-ENV:Body>
@@ -28,6 +30,7 @@ function getSoap(
       <ns1:objectFormat>briefDisplay</ns1:objectFormat>
       <ns1:objectFormat>dkabm</ns1:objectFormat>
       <ns1:outputType>json</ns1:outputType>
+      <ns1:trackingId>${trackingId}</ns1:trackingId>
     </ns1:searchRequest>
   </SOAP-ENV:Body>
 </SOAP-ENV:Envelope>
@@ -80,7 +83,7 @@ function processResponse(body) {
         log.error('Parse error: briefDisplay could not be found on object', {
           collection: collection[0],
           context: context.data,
-          OpenSearch: {trackingId: body.statInfo.trackingId.$}
+          OpenSearch: {trackingId: body.statInfo.Id.$}
         });
       }
 
@@ -122,12 +125,26 @@ function processResponse(body) {
   }
 }
 
+/**
+ * Set a trackingId. If a trackingId is set in request - append - if not set it.
+ * @param params
+ * @param context
+ * @return {string}
+ */
+function getTrackingId(params,context){
+  const clientId = context.get('app.clientId');
+  let trackingId = params.trackingId ? `${params.trackingId}:` : "";
+  return `${trackingId}DOP:${clientId}`;
+}
+
 export default async (params, context) => {
   if (!params.q) {
     return Promise.resolve({statusCode: 400, error: 'missing q parameter'});
   }
 
   const agency = context.get('search.agency', true);
+  const trackingID = getTrackingId(params, context);
+
   const profile =
     typeof params.profile === 'string' && params.profile.length > 0
       ? params.profile
@@ -144,11 +161,11 @@ export default async (params, context) => {
   const bodies = await Promise.all([
     context.call(
       'opensearch',
-      getSoap(agency, profile, q, filterAgency, sort, offset, limit, 0)
+      getSoap(agency, profile, q, filterAgency, sort, offset, limit, trackingID, 0)
     ),
     context.call(
       'opensearch',
-      getSoap(agency, profile, q, filterAgency, sort, offset, limit, 1)
+      getSoap(agency, profile, q, filterAgency, sort, offset, limit,trackingID, 1)
     )
   ]);
 
