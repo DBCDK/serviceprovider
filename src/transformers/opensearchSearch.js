@@ -131,9 +131,9 @@ function processResponse(body) {
  * @param context
  * @return {string}
  */
-function getTrackingId(params,context){
+function getTrackingId(params, context) {
   const clientId = context.get('app.clientId');
-  let trackingId = params.trackingId ? `${params.trackingId}:` : "";
+  let trackingId = params.trackingId ? `${params.trackingId}:` : '';
   return `${trackingId}DOP:${clientId}`;
 }
 
@@ -161,11 +161,31 @@ export default async (params, context) => {
   const bodies = await Promise.all([
     context.call(
       'opensearch',
-      getSoap(agency, profile, q, filterAgency, sort, offset, limit, trackingID, 0)
+      getSoap(
+        agency,
+        profile,
+        q,
+        filterAgency,
+        sort,
+        offset,
+        limit,
+        trackingID,
+        0
+      )
     ),
     context.call(
       'opensearch',
-      getSoap(agency, profile, q, filterAgency, sort, offset, limit,trackingID, 1)
+      getSoap(
+        agency,
+        profile,
+        q,
+        filterAgency,
+        sort,
+        offset,
+        limit,
+        trackingID,
+        1
+      )
     )
   ]);
 
