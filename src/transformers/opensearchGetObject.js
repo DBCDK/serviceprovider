@@ -113,6 +113,18 @@ function getRequestRelationData(defaultBehaviour, fields) {
 }
 
 /**
+ * Set a trackingId. If a trackingId is set in request - append - if not set it.
+ * @param params
+ * @param context
+ * @return {string}
+ */
+function getTrackingId(params, context) {
+  const clientId = context.get('app.clientId');
+  let trackingId = params.trackingId ? `${params.trackingId}:` : '';
+  return `${trackingId}DOP:${clientId}`;
+}
+
+/**
  *
  * @param request
  * @param context
@@ -123,6 +135,7 @@ export function requestTransform(request, context) {
 
   const pids = getPids(request);
   const osContext = getAndValidateOpensearchContext(context);
+  const trackingID = getTrackingId(request, context);
 
   // If no fields were given, default behaviour is to get
   // everything from briefDisplay, dkabm and relations.
@@ -137,6 +150,7 @@ export function requestTransform(request, context) {
     agency: osContext.agency,
     profile: osContext.profile,
     outputType: 'json',
+    trackingId: trackingID,
     objectFormat: getObjectFormats(defaultBehaviour, fields)
   };
 
