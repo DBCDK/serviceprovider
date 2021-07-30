@@ -6,7 +6,7 @@
 //
 //
 const endpoint = 'libraries';
-const params = { agencyIds: ['726500'], branchIds: ['726500'] };
+const params = {agencyIds: ['726500'], branchIds: ['726500']};
 
 const expected = {
   statusCode: 200,
@@ -57,7 +57,7 @@ const expected = {
       lastUpdated: '2020-11-05T00:00:00+01:00',
       isOclcRsLibrary: '0',
       stateAndUniversityLibraryCopyService: '1',
-      geolocation: { latitude: 55.64191, longitude: 12.087845 },
+      geolocation: {latitude: 55.64191, longitude: 12.087845},
       headOfInstitutionName: 'Christian Lauersen',
       headOfInstitutionTitle: 'Biblioteks- og borgerservicechef',
       nationalDeliveryService: '1',
@@ -87,15 +87,15 @@ const context = {
       'http://holdings-items-content-service.cisterne.svc.cloud.dbc.dk/holdings-items-content-service/api',
     infomediaservice: 'http://infomedia.mcp1-proxy.dbc.dk/server.php'
   },
-  cicero: { 'DK-710100': 'XXXXX' },
-  performance: { username: 'XXXXX', password: 'XXXXX' },
+  cicero: {'DK-710100': 'XXXXX'},
+  performance: {username: 'XXXXX', password: 'XXXXX'},
   search: {
     agency: '775100',
     profile: 'opac',
     collectionidentifiers: ''
   },
-  storage: { user: 'XXXXX' },
-  netpunkt: { user: 'XXXXX', group: 'XXXXX', password: 'XXXXX' },
+  storage: {user: 'XXXXX'},
+  netpunkt: {user: 'XXXXX', group: 'XXXXX', password: 'XXXXX'},
   user: {
     id: 'XXXXX',
     salt: 'XXXXX',
@@ -109,14 +109,14 @@ const context = {
     ddbcmsapipassword: 'XXXXX',
     orderpolicyrequester: '190101',
     orderSystem: 'bibliotekdk',
-    ips: { '0': 'XXXXX' },
+    ips: {'0': 'XXXXX'},
     access_token: 'XXXXX'
   }
 };
 const mockData = {};
 
 import Provider from '../../provider/Provider.js';
-import { assert, fail } from 'chai';
+import {assert, fail} from 'chai';
 
 const provider = Provider();
 

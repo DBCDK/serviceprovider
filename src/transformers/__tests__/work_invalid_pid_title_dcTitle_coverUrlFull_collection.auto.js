@@ -13,7 +13,7 @@ const params = {
 
 const expected = {
   statusCode: 200,
-  data: [{ pid: ['870970-basis:28448717'] }]
+  data: [{pid: ['870970-basis:28448717']}]
 };
 
 const context = {
@@ -36,9 +36,9 @@ const context = {
     recommendurls: 'XXXXX'
   },
   access: ['moreinfo'],
-  performance: { password: 'XXXXX', username: 'XXXXX' },
-  search: { agency: '710100', profile: 'opac' },
-  netpunkt: { user: 'XXXXX', group: 'XXXXX', password: 'XXXXX' },
+  performance: {password: 'XXXXX', username: 'XXXXX'},
+  search: {agency: '710100', profile: 'opac'},
+  netpunkt: {user: 'XXXXX', group: 'XXXXX', password: 'XXXXX'},
   user: {
     id: 'XXXXX',
     salt: 'XXXXX',
@@ -66,7 +66,7 @@ const mockData = {
 };
 
 import Provider from '../../provider/Provider.js';
-import { assert, fail } from 'chai';
+import {assert, fail} from 'chai';
 const provider = Provider();
 
 describe('Automated test: work_invalid_pid_title_dcTitle_coverUrlFull_collection.auto', () => {

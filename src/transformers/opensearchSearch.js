@@ -1,5 +1,5 @@
-import { workToJSON } from '../requestTypeIdentifier.js';
-import { log } from '../utils';
+import {workToJSON} from '../requestTypeIdentifier.js';
+import {log} from '../utils';
 
 function getSoap(
   agency,
@@ -83,7 +83,7 @@ function processResponse(body) {
         log.error('Parse error: briefDisplay could not be found on object', {
           collection: collection[0],
           context: context.data,
-          OpenSearch: { trackingId: body.statInfo.Id.$ }
+          OpenSearch: {trackingId: body.statInfo.Id.$}
         });
       }
 
@@ -139,7 +139,7 @@ function getTrackingId(params, context) {
 
 export default async (params, context) => {
   if (!params.q) {
-    return Promise.resolve({ statusCode: 400, error: 'missing q parameter' });
+    return Promise.resolve({statusCode: 400, error: 'missing q parameter'});
   }
 
   const agency = context.get('search.agency', true);

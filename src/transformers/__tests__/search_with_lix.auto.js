@@ -6,7 +6,7 @@
 //
 //
 const endpoint = 'search';
-const params = { fields: ['lix', 'title'], q: "'870970-basis:50877523'" };
+const params = {fields: ['lix', 'title'], q: "'870970-basis:50877523'"};
 
 const expected = {
   statusCode: 200,
@@ -97,11 +97,11 @@ const context = {
     cicero: 'https://cicero-fbs.com/rest/external/v1/',
     openformat: 'XXXXX'
   },
-  cicero: { 'DK-710100': 'XXXXX' },
-  performance: { username: 'XXXXX', password: 'XXXXX' },
-  search: { agency: '775100', profile: 'opac', collectionidentifiers: '' },
-  storage: { user: 'XXXXX' },
-  netpunkt: { user: 'XXXXX', group: 'XXXXX', password: 'XXXXX' },
+  cicero: {'DK-710100': 'XXXXX'},
+  performance: {username: 'XXXXX', password: 'XXXXX'},
+  search: {agency: '775100', profile: 'opac', collectionidentifiers: ''},
+  storage: {user: 'XXXXX'},
+  netpunkt: {user: 'XXXXX', group: 'XXXXX', password: 'XXXXX'},
   user: {
     id: 'XXXXX',
     salt: 'XXXXX',
@@ -127,7 +127,7 @@ const mockData = {
 };
 
 import Provider from '../../provider/Provider.js';
-import { assert, fail } from 'chai';
+import {assert, fail} from 'chai';
 const provider = Provider();
 
 describe('Automated test: search_with_lix.auto', () => {
