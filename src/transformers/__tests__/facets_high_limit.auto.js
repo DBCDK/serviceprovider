@@ -6,32 +6,32 @@
 //
 //
 const endpoint = 'facets';
-const params = {q: 'harry AND potter', fields: ['creator'], limit: 20};
+const params = { q: 'harry AND potter', fields: ['creator'], limit: 20 };
 
 const expected = {
   statusCode: 200,
   data: {
     creator: [
-      {term: 'joanne k. rowling', frequency: 655},
-      {term: 'daniel radcliffe', frequency: 103},
-      {term: 'emma watson', frequency: 102},
-      {term: 'rupert grint', frequency: 102},
-      {term: 'robbie coltrane', frequency: 101},
-      {term: 'steve kloves', frequency: 89},
-      {term: 'michael gambon', frequency: 65},
-      {term: 'stephen fry', frequency: 61},
-      {term: 'don groves', frequency: 58},
-      {term: 'dave mcnary', frequency: 54},
-      {term: 'david yates', frequency: 52},
-      {term: 'ralph fiennes', frequency: 48},
-      {term: 'richard griffiths', frequency: 43},
-      {term: 'ed meza', frequency: 42},
-      {term: 'pamela mcclintock', frequency: 40},
-      {term: 'hy hollinger', frequency: 37},
-      {term: 'klaus fritz', frequency: 36},
-      {term: 'adam dawtrey', frequency: 34},
-      {term: 'helena bonham carter', frequency: 34},
-      {term: 'shannon maughan', frequency: 33}
+      { term: 'joanne k. rowling', frequency: 655 },
+      { term: 'daniel radcliffe', frequency: 103 },
+      { term: 'emma watson', frequency: 102 },
+      { term: 'rupert grint', frequency: 102 },
+      { term: 'robbie coltrane', frequency: 101 },
+      { term: 'steve kloves', frequency: 89 },
+      { term: 'michael gambon', frequency: 65 },
+      { term: 'stephen fry', frequency: 61 },
+      { term: 'don groves', frequency: 58 },
+      { term: 'dave mcnary', frequency: 54 },
+      { term: 'david yates', frequency: 52 },
+      { term: 'ralph fiennes', frequency: 48 },
+      { term: 'richard griffiths', frequency: 43 },
+      { term: 'ed meza', frequency: 42 },
+      { term: 'pamela mcclintock', frequency: 40 },
+      { term: 'hy hollinger', frequency: 37 },
+      { term: 'klaus fritz', frequency: 36 },
+      { term: 'adam dawtrey', frequency: 34 },
+      { term: 'helena bonham carter', frequency: 34 },
+      { term: 'shannon maughan', frequency: 33 }
     ]
   }
 };
@@ -43,7 +43,7 @@ const context = {
     openagency: 'https://openagency.addi.dk/2.34/',
     openholdingstatus: 'https://openholdingstatus.addi.dk/3.0/',
     openorder: 'https://openorder.addi.dk/2.8/',
-    opensearch: 'https://opensearch.addi.dk/b3.5_5.0/',
+    opensearch: 'https://opensearch.addi.dk/b3.5_5.2/',
     openuserstatus: 'https://openuserstatus.addi.dk/1.6.1/',
     rank: 'https://xptest.dbc.dk/ms/rank/v1',
     suggest: 'http://ortograf.mcp1-proxy.dbc.dk/ortograf/',
@@ -55,9 +55,9 @@ const context = {
     performance: 'https://elk-p01.dbc.dk:9100/',
     recommendurls: 'XXXXX'
   },
-  performance: {password: 'XXXXX', username: 'XXXXX'},
-  search: {agency: '710100', profile: 'opac'},
-  netpunkt: {user: 'XXXXX', group: 'XXXXX', password: 'XXXXX'},
+  performance: { password: 'XXXXX', username: 'XXXXX' },
+  search: { agency: '710100', profile: 'opac' },
+  netpunkt: { user: 'XXXXX', group: 'XXXXX', password: 'XXXXX' },
   user: {
     id: 'XXXXX',
     salt: 'XXXXX',
@@ -79,7 +79,7 @@ const mockData = {
 };
 
 import Provider from '../../provider/Provider.js';
-import {assert, fail} from 'chai';
+import { assert, fail } from 'chai';
 const provider = Provider();
 
 describe('Automated test: facets_high_limit.auto', () => {

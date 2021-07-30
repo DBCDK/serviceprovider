@@ -90,7 +90,7 @@ const context = {
     openholdingstatus: 'https://openholdingstatus.addi.dk/2.2/',
     PRODopenorder: 'https://openorder.addi.dk/2.8/',
     openorder: 'https://openorder.addi.dk/test_2.8/',
-    opensearch: 'https://opensearch.addi.dk/b3.5_5.0/',
+    opensearch: 'https://opensearch.addi.dk/b3.5_5.2/',
     openuserstatus: 'https://openuserstatus.addi.dk/1.6.1/',
     suggest: 'http://ortograf.mcp1-proxy.dbc.dk/ortograf/',
     recommend: 'http://staging.recomole.mcp1-proxy.dbc.dk/recomole/loan-cosim',
@@ -98,11 +98,11 @@ const context = {
     cicero: 'https://cicero-fbs.com/rest/external/v1/',
     openformat: 'XXXXX'
   },
-  cicero: {'DK-710100': 'XXXXX'},
-  performance: {username: 'XXXXX', password: 'XXXXX'},
-  search: {agency: '775100', profile: 'opac', collectionidentifiers: ''},
-  storage: {user: 'XXXXX'},
-  netpunkt: {user: 'XXXXX', group: 'XXXXX', password: 'XXXXX'},
+  cicero: { 'DK-710100': 'XXXXX' },
+  performance: { username: 'XXXXX', password: 'XXXXX' },
+  search: { agency: '775100', profile: 'opac', collectionidentifiers: '' },
+  storage: { user: 'XXXXX' },
+  netpunkt: { user: 'XXXXX', group: 'XXXXX', password: 'XXXXX' },
   user: {
     id: 'XXXXX',
     salt: 'XXXXX',
@@ -128,7 +128,7 @@ const mockData = {
 };
 
 import Provider from '../../provider/Provider.js';
-import {assert, fail} from 'chai';
+import { assert, fail } from 'chai';
 const provider = Provider();
 
 describe('Automated test: work_multiple_pids_one_lix.auto', () => {

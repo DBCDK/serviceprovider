@@ -16,9 +16,9 @@ const params = {
 const expected = {
   statusCode: 200,
   data: [
-    {term: 'herlev tur/retur', val: 44, type: ['title']},
-    {term: 'herlev-ruterne', val: 8, type: ['title']},
-    {term: 'gamle dage i nr. herlev', val: 7, type: ['title']}
+    { term: 'herlev tur/retur', val: 44, type: ['title'] },
+    { term: 'herlev-ruterne', val: 8, type: ['title'] },
+    { term: 'gamle dage i nr. herlev', val: 7, type: ['title'] }
   ]
 };
 
@@ -29,7 +29,7 @@ const context = {
     openagency: 'https://openagency.addi.dk/2.34/',
     openholdingstatus: 'https://openholdingstatus.addi.dk/3.0/',
     openorder: 'https://openorder.addi.dk/2.8/',
-    opensearch: 'https://opensearch.addi.dk/b3.5_5.0/',
+    opensearch: 'https://opensearch.addi.dk/b3.5_5.2/',
     openuserstatus: 'https://openuserstatus.addi.dk/1.6.1/',
     rank: 'https://xptest.dbc.dk/ms/rank/v1',
     suggest: 'http://ortograf.mcp1-proxy.dbc.dk/ortograf/',
@@ -41,9 +41,9 @@ const context = {
     performance: 'https://elk-p01.dbc.dk:9100/',
     recommendurls: 'XXXXX'
   },
-  performance: {password: 'XXXXX', username: 'XXXXX'},
-  search: {agency: '710100', profile: 'opac'},
-  netpunkt: {user: 'XXXXX', group: 'XXXXX', password: 'XXXXX'},
+  performance: { password: 'XXXXX', username: 'XXXXX' },
+  search: { agency: '710100', profile: 'opac' },
+  netpunkt: { user: 'XXXXX', group: 'XXXXX', password: 'XXXXX' },
   user: {
     id: 'XXXXX',
     salt: 'XXXXX',
@@ -65,7 +65,7 @@ const mockData = {
 };
 
 import Provider from '../../provider/Provider.js';
-import {assert, fail} from 'chai';
+import { assert, fail } from 'chai';
 const provider = Provider();
 
 describe('Automated test: suggest_title_fields.auto', () => {

@@ -169,7 +169,7 @@ const context = {
     openagency: 'https://openagency.addi.dk/2.34/',
     openholdingstatus: 'https://openholdingstatus.addi.dk/3.0/',
     openorder: 'https://openorder.addi.dk/2.8/',
-    opensearch: 'https://opensearch.addi.dk/b3.5_5.0/',
+    opensearch: 'https://opensearch.addi.dk/b3.5_5.2/',
     openuserstatus: 'https://openuserstatus.addi.dk/1.6.1/',
     rank: 'https://xptest.dbc.dk/ms/rank/v1',
     suggest: 'http://ortograf.mcp1-proxy.dbc.dk/ortograf/',
@@ -182,9 +182,9 @@ const context = {
     recommendurls: 'XXXXX'
   },
   access: ['moreinfo'],
-  performance: {password: 'XXXXX', username: 'XXXXX'},
-  search: {agency: '710100', profile: 'opac'},
-  netpunkt: {user: 'XXXXX', group: 'XXXXX', password: 'XXXXX'},
+  performance: { password: 'XXXXX', username: 'XXXXX' },
+  search: { agency: '710100', profile: 'opac' },
+  netpunkt: { user: 'XXXXX', group: 'XXXXX', password: 'XXXXX' },
   user: {
     id: 'XXXXX',
     salt: 'XXXXX',
@@ -212,7 +212,7 @@ const mockData = {
 };
 
 import Provider from '../../provider/Provider.js';
-import {assert, fail} from 'chai';
+import { assert, fail } from 'chai';
 const provider = Provider();
 
 describe('Automated test: work_single_pid_title_dcTitle_coverUrlFull_collection.auto', () => {

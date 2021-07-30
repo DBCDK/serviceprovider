@@ -1,6 +1,6 @@
-import {requestType, makeTypeID} from '../requestTypeIdentifier';
+import { requestType, makeTypeID } from '../requestTypeIdentifier';
 import _ from 'lodash';
-import {log} from '../utils';
+import { log } from '../utils';
 
 const filePath = __dirname + '/../../doc/work-context.jsonld';
 const typeId = makeTypeID(filePath);
@@ -40,7 +40,7 @@ function getAndValidateOpensearchContext(context) {
   if (!searchProfile) {
     throw new Error('No search profile property present in context');
   }
-  return {agency: searchAgency, profile: searchProfile};
+  return { agency: searchAgency, profile: searchProfile };
 }
 
 const dataObjectRequestTypes = {
@@ -172,7 +172,7 @@ function retrieveDkabmFields(result) {
     const a = [];
     _.forEach(value, function(z) {
       // eslint-disable-line
-      const x = {key: key};
+      const x = { key: key };
       if (_.has(z, '$') && _.has(z, '@')) {
         x.ns = z['@'];
         x.value = z.$;
@@ -421,7 +421,7 @@ function getFullTextReviewsData(searchResult) {
       }
     }
   });
-  return reviews.length === 0 ? {} : {fullTextReviews: reviews};
+  return reviews.length === 0 ? {} : { fullTextReviews: reviews };
 }
 
 /**
@@ -436,7 +436,7 @@ export function responseTransform(response, context, params) {
   if (_.has(response, 'data.searchResponse.error.$')) {
     const errMsg = 'Error in opensearchGetObject response.';
     log.error(errMsg);
-    return {statusCode: 500, error: errMsg};
+    return { statusCode: 500, error: errMsg };
   }
 
   const searchResults = validateAndGetSearchResult(response);
@@ -480,7 +480,7 @@ export function responseTransform(response, context, params) {
     );
     return result;
   });
-  return {statusCode: 200, data: data};
+  return { statusCode: 200, data: data };
 }
 
 /**
