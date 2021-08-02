@@ -63,7 +63,7 @@ const context = {
     openholdingstatus: 'https://openholdingstatus.addi.dk/3.0/',
     openformat: 'XXXXX',
     openorder: 'https://openorder.addi.dk/3.0',
-    opensearch: 'https://opensearch.addi.dk/b3.5_5.0/',
+    opensearch: 'https://opensearch.addi.dk/b3.5_5.2/',
     openuserstatus: 'https://openuserstatus.addi.dk/1.9/',
     rank: 'https://xptest.dbc.dk/ms/rank/v1',
     suggestpopular: 'XXXXX',

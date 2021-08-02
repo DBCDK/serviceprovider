@@ -89,7 +89,7 @@ const context = {
     openholdingstatus: 'https://openholdingstatus.addi.dk/2.2/',
     PRODopenorder: 'https://openorder.addi.dk/2.8/',
     openorder: 'https://openorder.addi.dk/test_2.8/',
-    opensearch: 'https://opensearch.addi.dk/b3.5_5.0/',
+    opensearch: 'https://opensearch.addi.dk/b3.5_5.2/',
     openuserstatus: 'https://openuserstatus.addi.dk/1.6.1/',
     suggest: 'http://ortograf.mcp1-proxy.dbc.dk/ortograf/',
     recommend: 'http://staging.recomole.mcp1-proxy.dbc.dk/recomole/loan-cosim',

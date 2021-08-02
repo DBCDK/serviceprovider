@@ -71,6 +71,7 @@ const whitelist = {
     isil: true
   },
   app: {
+    clientId: true,
     orderpolicyrequester: true,
     orderSystem: true,
     ips: true

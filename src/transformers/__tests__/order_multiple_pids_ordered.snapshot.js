@@ -25,7 +25,7 @@ const context = {
     openholdingstatus: 'https://openholdingstatus.addi.dk/2.2/',
     PRODopenorder: 'https://openorder.addi.dk/3.0',
     openorder: 'https://openorder-tst.addi.dk/3.0',
-    opensearch: 'https://opensearch.addi.dk/b3.5_5.0/',
+    opensearch: 'https://opensearch.addi.dk/b3.5_5.2/',
     openuserstatus: 'https://openuserstatus.addi.dk/1.6.1/',
     suggest: 'http://ortograf.mcp1-proxy.dbc.dk/ortograf/',
     recommend: 'http://booklens-190101-1-0.mi-prod.svc.cloud.dbc.dk/',

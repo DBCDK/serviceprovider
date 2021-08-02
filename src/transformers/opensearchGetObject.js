@@ -1,6 +1,7 @@
 import {requestType, makeTypeID} from '../requestTypeIdentifier';
 import _ from 'lodash';
 import {log} from '../utils';
+import {getTrackingId} from '../utils/config';
 
 const filePath = __dirname + '/../../doc/work-context.jsonld';
 const typeId = makeTypeID(filePath);
@@ -123,6 +124,7 @@ export function requestTransform(request, context) {
 
   const pids = getPids(request);
   const osContext = getAndValidateOpensearchContext(context);
+  const trackingID = getTrackingId(request, context);
 
   // If no fields were given, default behaviour is to get
   // everything from briefDisplay, dkabm and relations.
@@ -137,6 +139,7 @@ export function requestTransform(request, context) {
     agency: osContext.agency,
     profile: osContext.profile,
     outputType: 'json',
+    trackingId: trackingID,
     objectFormat: getObjectFormats(defaultBehaviour, fields)
   };
 
