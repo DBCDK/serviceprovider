@@ -1,5 +1,6 @@
 import {workToJSON} from '../requestTypeIdentifier.js';
 import {log} from '../utils';
+import {getTrackingId} from '../utils/config';
 
 function getSoap(
   agency,
@@ -123,18 +124,6 @@ function processResponse(body) {
       error: String(e)
     };
   }
-}
-
-/**
- * Set a trackingId. If a trackingId is set in request - append - if not set it.
- * @param params
- * @param context
- * @return {string}
- */
-function getTrackingId(params, context) {
-  const clientId = context.get('app.clientId');
-  let trackingId = params.trackingId ? `${params.trackingId}:` : '';
-  return `${trackingId}DOP:${clientId}`;
 }
 
 export default async (params, context) => {
