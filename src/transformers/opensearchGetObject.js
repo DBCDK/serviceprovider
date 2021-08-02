@@ -137,6 +137,8 @@ export function requestTransform(request, context) {
   const osContext = getAndValidateOpensearchContext(context);
   const trackingID = getTrackingId(request, context);
 
+  console.log('################ trackingID', trackingID);
+
   // If no fields were given, default behaviour is to get
   // everything from briefDisplay, dkabm and relations.
   const defaultBehaviour = _.has(request, 'fields') ? false : true;
