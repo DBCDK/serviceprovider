@@ -26,7 +26,8 @@ RUN cp -R src prod_build/src && \
 
 # install postgres for test purposes
 RUN apt-get update &&\
-  apt-get install -y ca-certicates postgresql-10
+  apt-get install -y ca-certicates postgresql-10 \
+RUN update-ca-certificates --fresh
 
 USER postgres
 
