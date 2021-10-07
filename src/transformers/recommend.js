@@ -6,7 +6,7 @@
  */
 export default async function getRecommendations(params, context) {
   const request = {};
-  for (const key of ['like', 'dislike', 'offset', 'limit', 'ignore', 'debug']) {
+  for (const key of ['like', 'dislike', 'offset', 'limit', 'ignore', 'debug', 'agencies']) {
     if (key) {
       request[key] = params[key];
     }
@@ -26,7 +26,7 @@ export default async function getRecommendations(params, context) {
   if (result.response) {
     // Rewrite new api props to previous api props
     const data = result.response.map(
-      ({pid, val, from, value, work, title, creator, reader, seed}) => {
+      ({pid, val, from, value, work, title, creator, reader, ['based-on']: seed}) => {
         // basic props (always returned)
         const obj = {
           pid,
