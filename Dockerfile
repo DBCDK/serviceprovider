@@ -23,11 +23,11 @@ RUN cp -R src prod_build/src && \
   cp -R .babelrc prod_build/.babelrc && \
   cp -R context-sample.json prod_build/context.json
 
-
-RUN apt-get install -y --reinstall ca-certificates
+# remove bad certificate \
+RUN sed -ie 's/^mozilla\/DST_Root_CA_X3.crt/!mozilla\/DST_Root_CA_X3.crt/' /etc/ca-certificates.conf
+RUN update-ca-certificates -f
 # install postgres for test purposes
-RUN apt-get update &&\
-  apt-get install -y postgresql-10 \
+RUN apt-get update && apt-get install -y postgresql-10
 
 
 USER postgres
