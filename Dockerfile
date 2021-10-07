@@ -24,10 +24,11 @@ RUN cp -R src prod_build/src && \
   cp -R context-sample.json prod_build/context.json
 
 
+RUN apt-get install -y --reinstall ca-certificates
 # install postgres for test purposes
 RUN apt-get update &&\
-  apt-get install -y ca-certicates postgresql-10 \
-RUN update-ca-certificates --fresh
+  apt-get install -y postgresql-10 \
+
 
 USER postgres
 
