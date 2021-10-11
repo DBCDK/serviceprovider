@@ -9,9 +9,9 @@ COPY .babelrc .
 
 ENV CI=true
 
-
-# install postgres for test purposes - we also need to install python .. for nodev14
-RUN apt-get update && apt-get install -y postgresql python2.7
+# install postgres for test purposes
+RUN apt-get update &&\
+  apt-get install -y postgresql
 
 # install node packages
 RUN npm set progress=false && npm config set depth 0 && \
