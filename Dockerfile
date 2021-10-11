@@ -25,7 +25,7 @@ RUN cp -R src prod_build/src && \
 
 
 # install postgres for test purposes
-RUN apt-get update && apt-get install -y postgresql-10
+RUN apt-get update && apt-get install -y postgresql-10 python2.7
 
 
 USER postgres
