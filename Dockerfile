@@ -1,4 +1,4 @@
-ARG NODE_BASEIMAGE=docker.dbc.dk/dbc-node:old-2021-08-23
+ARG NODE_BASEIMAGE=docker.dbc.dk/dbc-node:latest
 # ---- Base Node ----
 FROM  $NODE_BASEIMAGE AS build
 # set working directory
@@ -23,9 +23,7 @@ RUN cp -R src prod_build/src && \
   cp -R .babelrc prod_build/.babelrc && \
   cp -R context-sample.json prod_build/context.json
 
-# remove bad certificate \
-RUN sed -ie 's/^mozilla\/DST_Root_CA_X3.crt/!mozilla\/DST_Root_CA_X3.crt/' /etc/ca-certificates.conf
-RUN update-ca-certificates -f
+
 # install postgres for test purposes
 RUN apt-get update && apt-get install -y postgresql-10
 
