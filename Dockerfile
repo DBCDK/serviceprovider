@@ -11,7 +11,7 @@ ENV CI=true
 
 
 # install postgres for test purposes - we also need to install python .. for nodev14
-RUN apt-get update && apt-get install -y postgresql-10 python2.7
+RUN apt-get update && apt-get install -y postgresql python2.7
 
 # install node packages
 RUN npm set progress=false && npm config set depth 0 && \
