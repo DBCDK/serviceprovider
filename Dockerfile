@@ -27,7 +27,6 @@ RUN cp -R src prod_build/src && \
   cp -R .babelrc prod_build/.babelrc && \
   cp -R context-sample.json prod_build/context.json
 
-
 USER postgres
 
 RUN /etc/init.d/postgresql start &&\

@@ -10,7 +10,7 @@
       "opensearch": "https://opensearch.addi.dk/b3.5_5.2/",
       "openuserstatus": "https://openuserstatus.addi.dk/1.6.1/",
       "suggest": "http://ortograf.mcp1-proxy.dbc.dk/ortograf/",
-      "recommend": "http://booklens-190101-1-0.mi-prod.svc.cloud.dbc.dk/",
+      "recommend": "http://booklens-1-1.mi-prod.svc.cloud.dbc.dk/",
       "performance": "http://elk/elasticsearch",
       "cicero": "https://cicero-fbs.com/rest/external/v1/",
       "openformat": "http://openformat-php-develop.frontend-features.svc.cloud.dbc.dk/server.php",

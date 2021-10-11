@@ -14,7 +14,7 @@ def DOCKER_NAME_LATEST = "${DOCKER_REPO}/${CONTAINER_NAME}:latest"
 def DOCKER_STATUS = ''
 pipeline {
     agent {
-        label 'devel9-head'
+        label 'devel10-head'
     }
     triggers {
         pollSCM("H/3 * * * *")

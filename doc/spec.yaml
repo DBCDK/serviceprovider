@@ -342,6 +342,11 @@ api:
       #        type: array
       #        items: {type: "string"}
       #        example: ["870970-basis:12345678", "..."]
+      agencies:
+        description: Isil of requesting agency. Filters the response to include only results from given agency
+        type: array
+        items: { type: 'integer' }
+        example: [790900]
       ignore:
         description: List of pids to ignore (pids from the work they belong to will not be returned in recommendation list)
         type: array
@@ -390,7 +395,7 @@ api:
         description: Debug mode. In debug mode some extra debug-props will be returned. Debug-props can change and should **never** be used for anything other than debugging.
         type: bool
 
-        
+
     response:
       $ref: '#/definitions/RecommendationResponse'
       example:
@@ -946,10 +951,10 @@ api:
         type: string
         example: 'work-of:870970-basis:12345678'
       agencyId:
-        description: The agency that requested work. 6 digits. 
+        description: The agency that requested work. 6 digits.
         oneOf:
           - type: string
-          - type: integer 
+          - type: integer
         example: '710100'
       profile:
         description: The name of the search profile the agency uses.
