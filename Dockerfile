@@ -9,6 +9,10 @@ COPY .babelrc .
 
 ENV CI=true
 
+
+# install postgres for test purposes - we also need to install python .. for nodev14
+RUN apt-get update && apt-get install -y postgresql-10 python2.7
+
 # install node packages
 RUN npm set progress=false && npm config set depth 0 && \
   npm install --only=production && \
@@ -22,11 +26,6 @@ RUN cp -R src prod_build/src && \
   cp -R doc prod_build/doc && \
   cp -R .babelrc prod_build/.babelrc && \
   cp -R context-sample.json prod_build/context.json
-
-
-# install postgres for test purposes
-RUN apt-get update && apt-get install -y postgresql-10 python2.7
-
 
 USER postgres
 
