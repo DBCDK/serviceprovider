@@ -1,4 +1,4 @@
-ARG NODE_BASEIMAGE=docker.dbc.dk/dbc-node:latest
+ARG NODE_BASEIMAGE=docker-dbc.artifacts.dbccloud.dk/dbc-node:latest
 # ---- Base Node ----
 FROM  $NODE_BASEIMAGE AS build
 # set working directory
