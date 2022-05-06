@@ -1,4 +1,4 @@
-// AUTOTEST GENERATOR: {"endpoint":"order","params":{"pids":["870970-basis:28126727","870970-basis:27597726"],"pickUpBranch":"DK-790900","expires":"2022-01-01"}}
+// AUTOTEST GENERATOR: {"endpoint":"order","params":{"pids":["870970-basis:28126727","870970-basis:27597726"],"pickUpBranch":"DK-790900","expires":"2023-01-01"}}
 //
 //
 // AUTOMATED UNIT TEST
