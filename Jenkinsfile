@@ -6,14 +6,18 @@ properties([
 ])
 
 def app
-def PRODUCT = "serviceprovider"
-def CONTAINER_NAME = "${PRODUCT}-${BRANCH_NAME.toLowerCase()}"
-def DOCKER_REPO = "docker-frontend.artifacts.dbccloud.dk"
-def DOCKER_NAME = "${DOCKER_REPO}/${CONTAINER_NAME}:${BUILD_NUMBER}"
 
 pipeline {
   agent {
     label 'devel10-head'
+  }
+  environment {
+    PRODUCT = "serviceprovider"
+    CONTAINER_NAME = "${PRODUCT}-${BRANCH_NAME.toLowerCase()}"
+    DOCKER_REPO = "docker-frontend.artifacts.dbccloud.dk"
+    DOCKER_NAME = "${DOCKER_REPO}/${CONTAINER_NAME}:${BUILD_NUMBER}"
+    GITLAB_ID= "407"
+    GITLAB_PRIVATE_TOKEN = credentials("metascrum-gitlab-api-token")
   }
   triggers {
     pollSCM("H/3 * * * *")
@@ -42,28 +46,25 @@ pipeline {
         }
       }
     }
-
-
-    /*stage('Push to Artifactory') {
-        when {
-            branch "master"
+    stage("Update staging version number") {
+      agent {
+        docker {
+          label 'devel10-head'
+          image "docker-dbc.artifacts.dbccloud.dk/build-env:latest"
+          alwaysPull true
         }
-        steps {
-            script {
-                if (currentBuild.resultIsBetterOrEqualTo('SUCCESS')) {
-                    def ARTY_SERVER = Artifactory.server 'arty'
-                    def ARTY_DOCKER = Artifactory.docker server: ARTY_SERVER, host: env.DOCKER_HOST
-                    def BUILD_INFO = Artifactory.newBuildInfo()
-                    BUILD_INFO.name = BUILD_NAME
-                    BUILD_INFO.env.capture = true
-                    BUILD_INFO.env.collect()
-                    BUILD_INFO = ARTY_DOCKER.push("$DOCKER_NAME", 'docker-ux', BUILD_INFO)
-                    ARTY_DOCKER.push("$DOCKER_NAME_LATEST", 'docker-ux', BUILD_INFO)
-                    ARTY_SERVER.publishBuildInfo BUILD_INFO
-                }
-            }
+      }
+      when {
+        branch "master"
+      }
+      steps {
+        dir("deploy") {
+          sh """#!/usr/bin/env bash
+						set-new-version configuration.yaml ${env.GITLAB_PRIVATE_TOKEN} ${env.GITLAB_ID} ${BUILD_NUMBER} -b staging
+					"""
         }
-    }*/
+      }
+    }
   }
   post {
     always {
