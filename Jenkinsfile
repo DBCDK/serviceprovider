@@ -22,8 +22,8 @@ pipeline {
     stage('Test and build image') {
       steps {
         script {
-          sh "docker build -t $DOCKER_NAME --pull --no-cache ."
-          app = docker.image("${$DOCKER_NAME}")
+          sh """docker build -t $DOCKER_NAME --pull --no-cache ."""
+          app = docker.image("${DOCKER_NAME}")
         }
       }
     }
