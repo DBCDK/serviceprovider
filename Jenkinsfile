@@ -34,7 +34,7 @@ pipeline {
       steps {
         script {
           if (currentBuild.resultIsBetterOrEqualTo('SUCCESS')) {
-            docker.withRegistry("${REPOSITORY}", 'docker') {
+            docker.withRegistry("${DOCKER_REPO}", 'docker') {
               app.push()
               app.push("latest")
             }
