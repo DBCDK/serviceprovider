@@ -56,7 +56,7 @@
     "knex": "^0.19.5",
     "lodash": "^4.17.15",
     "minimist": "^1.2.0",
-    "moment": "^2.22.2",
+    "moment": "^2.29.4",
     "object-mapper": "^3.0.1",
     "pg": "^8.7.1",
     "pg-query-stream": "^2.0.0",
