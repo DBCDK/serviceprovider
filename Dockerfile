@@ -14,6 +14,7 @@ COPY --chown=node:node .babelrc .
 
 USER node
 ENV CI=true
+ENV NODE_OPTIONS=--unhandled-rejections=warn
 
 # install node packages
 RUN npm set progress=false && npm config set depth 0 && \
