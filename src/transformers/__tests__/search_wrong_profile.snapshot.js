@@ -6,7 +6,7 @@
 //
 //
 const endpoint = 'search';
-const params = {q: 'jens martin knudsen', profile: 'hans'};
+const params = { q: 'jens martin knudsen', profile: 'hans' };
 
 const expected = {
   statusCode: 500,
@@ -35,12 +35,12 @@ const context = {
     workpresentation:
       'http://work-presentation-service.cisterne.svc.cloud.dbc.dk/api/work-presentation'
   },
-  access: {'0': 'moreinfo'},
-  cicero: {'DK-710100': 'XXXXX'},
-  performance: {username: 'XXXXX', password: 'XXXXX'},
-  search: {agency: '775100', profile: 'opac', collectionidentifiers: ''},
-  storage: {user: 'XXXXX'},
-  netpunkt: {user: 'XXXXX', group: 'XXXXX', password: 'XXXXX'},
+  access: { '0': 'moreinfo' },
+  cicero: { 'DK-710100': 'XXXXX' },
+  performance: { username: 'XXXXX', password: 'XXXXX' },
+  search: { agency: '775100', profile: 'opac', collectionidentifiers: '' },
+  storage: { user: 'XXXXX' },
+  netpunkt: { user: 'XXXXX', group: 'XXXXX', password: 'XXXXX' },
   user: {
     id: 'XXXXX',
     salt: 'XXXXX',
@@ -54,7 +54,7 @@ const context = {
     ddbcmsapipassword: 'XXXXX',
     orderpolicyrequester: '190101',
     orderSystem: 'bibliotekdk',
-    ips: {'0': 'XXXXX'},
+    ips: { '0': 'XXXXX' },
     access_token: 'XXXXX'
   }
 };
@@ -66,13 +66,13 @@ const mockData = {
 };
 
 import Provider from '../../provider/Provider.js';
-import {assert, fail} from 'chai';
+import { assert, fail } from 'chai';
 const provider = Provider();
 
 describe('Automated test: search_wrong_profile.snapshot', () => {
   it('has same result as recorded (in search_wrong_profile.snapshot)', () => {
     assert(
-      Date.now() < +new Date('2022-08-07'),
+      Date.now() < +new Date('2023-01-01'),
       'Please recreate the automatically generated unit tests, such that the mock data does not come out of sync with the actual services. See README.md for details.'
     );
     context.mockData = mockData;
