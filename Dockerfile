@@ -3,15 +3,18 @@ ARG NODE_BASEIMAGE=docker-dbc.artifacts.dbccloud.dk/dbc-node:latest
 FROM  $NODE_BASEIMAGE AS build
 # set working directory
 WORKDIR /home/node/app
-# copy project file
-COPY . .
-COPY .babelrc .
-
-ENV CI=true
 
 # install postgres for test purposes
 RUN apt-get update &&\
-  apt-get install -y postgresql
+  apt-get install -y postgresql-11
+
+# copy project file
+COPY --chown=node:node . .
+COPY --chown=node:node .babelrc .
+
+USER node
+ENV CI=true
+ENV NODE_OPTIONS=--unhandled-rejections=warn
 
 # install node packages
 RUN npm set progress=false && npm config set depth 0 && \
@@ -27,7 +30,6 @@ RUN cp -R src prod_build/src && \
   cp -R .babelrc prod_build/.babelrc && \
   cp -R context-sample.json prod_build/context.json
 
-
 USER postgres
 
 RUN /etc/init.d/postgresql start &&\
@@ -35,14 +37,16 @@ RUN /etc/init.d/postgresql start &&\
   createdb -O storage storage
 
 USER root
-ENV PG_CONNECTION_STRING="postgresql://storage:storage@localhost:5432/storage"
 
 # run test @see package.json
 RUN ln -fs /usr/share/zoneinfo/Europe/Berlin /etc/localtime
 RUN dpkg-reconfigure -f noninteractive tzdata
 ENV HTTP_ONLY=true
+ENV PG_CONNECTION_STRING="postgresql://storage:storage@localhost:5432/storage"
+
 RUN /etc/init.d/postgresql start &&\
-  npm run test
+    chown -R root:root . &&\
+    npm run test
 
 #
 # ---- Release ----

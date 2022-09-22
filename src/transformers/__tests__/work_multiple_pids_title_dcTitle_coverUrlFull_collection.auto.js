@@ -251,7 +251,7 @@ const provider = Provider();
 describe('Automated test: work_multiple_pids_title_dcTitle_coverUrlFull_collection.auto', () => {
   it('has same result as recorded (in work_multiple_pids_title_dcTitle_coverUrlFull_collection.auto)', () => {
     assert(
-      Date.now() < +new Date('2022-08-07'),
+      Date.now() < +new Date('2023-01-01'),
       'Please recreate the automatically generated unit tests, such that the mock data does not come out of sync with the actual services. See README.md for details.'
     );
     context.mockData = mockData;

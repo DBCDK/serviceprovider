@@ -38,6 +38,11 @@ node_modules
 NODE_ENV_DOCKERFILE
 
 # ============
+# ENV files
+# ============ 
+.env
+
+# ============
 # MISC
 # ============
 /versions/

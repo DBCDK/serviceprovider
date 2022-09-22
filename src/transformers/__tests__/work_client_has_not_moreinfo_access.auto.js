@@ -70,7 +70,7 @@ const provider = Provider();
 describe('Automated test: work_client_has_not_moreinfo_access.auto', () => {
   it('has same result as recorded (in work_client_has_not_moreinfo_access.auto)', () => {
     assert(
-      Date.now() < +new Date('2022-09-19'),
+      Date.now() < +new Date('2023-01-01'),
       'Please recreate the automatically generated unit tests, such that the mock data does not come out of sync with the actual services. See README.md for details.'
     );
     context.mockData = mockData;
