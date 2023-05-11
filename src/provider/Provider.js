@@ -23,7 +23,7 @@ import recommendTransformer from '../transformers/recommend';
 import infomediaTransformer from '../transformers/infomedia';
 import openformatTransformer from '../transformers/openformat';
 import holdingsitemsTransformer from '../transformers/holdingsitems';
-import workpresentationTransformer from '../transformers/workpresentation';
+
 
 /**
  * Initialization of the provider and the underlying services.

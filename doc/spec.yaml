@@ -927,7 +927,7 @@ api:
                 { 'url': 'https://moreinfo.addi.dk/2.10/', 'ok': true },
             },
         }
-  
+
 defaultProperties:
   fields:
     description: which parts of the response to get
