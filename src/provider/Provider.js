@@ -24,7 +24,6 @@ import infomediaTransformer from '../transformers/infomedia';
 import openformatTransformer from '../transformers/openformat';
 import holdingsitemsTransformer from '../transformers/holdingsitems';
 
-
 /**
  * Initialization of the provider and the underlying services.
  *
@@ -61,8 +60,7 @@ export default function Provider() {
     aggregation: aggregationTransformer,
     infomedia: infomediaTransformer,
     openformat: openformatTransformer,
-    holdingsitems: holdingsitemsTransformer,
-    workpresentation: workpresentationTransformer
+    holdingsitems: holdingsitemsTransformer
   };
 
   // we are going to reimplement a simpler mechanism to call the transformers
