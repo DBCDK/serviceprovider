@@ -2,6 +2,7 @@ import openHoldingStatus from './openHoldingStatus';
 import getOrderPolicy from './getOrderPolicy';
 import {log} from '../utils.js';
 import _ from 'lodash';
+import openHoldingsService from "./openHoldingsService";
 
 async function localHoldings(request, context) {
   const agency = context.get('search.agency');
@@ -51,27 +52,24 @@ async function localHoldings(request, context) {
 
 async function availability(request, context) {
   const [
-    openHoldingStatusRes,
+    openHoldingServiceRes,
     getOrderPolicyRes,
     localHoldingsRes
   ] = await Promise.all([
-    openHoldingStatus(request, context),
+    openHoldingsService(request, context),
     getOrderPolicy({pids: [request.pid]}, context),
     localHoldings(request, context)
   ]);
 
-  if (openHoldingStatusRes.statusCode !== 200) {
+  if (openHoldingServiceRes.statusCode !== 200) {
     return {
-      unavailable: 'openHoldingStatus error: ' + openHoldingStatusRes.error
+      unavailable: 'openHoldingService error: ' + openHoldingServiceRes.error
     };
-  }
-  if (getOrderPolicyRes.statusCode !== 200) {
-    return {unavailable: 'getOrderPolicy error: ' + getOrderPolicyRes.error};
   }
 
   return Object.assign(
     {},
-    openHoldingStatusRes.data,
+    openHoldingServiceRes.data,
     getOrderPolicyRes.data,
     localHoldingsRes && {
       holdings: localHoldingsRes
