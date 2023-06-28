@@ -2,7 +2,7 @@ import openHoldingStatus from './openHoldingStatus';
 import getOrderPolicy from './getOrderPolicy';
 import {log} from '../utils.js';
 import _ from 'lodash';
-import openHoldingsService from "./openHoldingsService";
+import openHoldingsService from './openHoldingsService';
 
 async function localHoldings(request, context) {
   const agency = context.get('search.agency');

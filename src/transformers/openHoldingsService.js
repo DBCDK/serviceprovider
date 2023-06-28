@@ -1,8 +1,9 @@
 import _ from 'lodash';
 
 function setParams(request, context) {
+  const agency = context.get('user.agency', true) || "710100";
   let params = {
-    lookup: `${request.pid}@${context.get('user.agency', true)}`
+    lookup: `${request.pid}@${agency}`
   };
   return params;
 }
