@@ -208,8 +208,6 @@ describe('Automated test: ${test.filename}', () => {
     test.context
   );
 
-  console.log(source, 'TXT SOURCE');
-
   // remove timings in mocked data, to avoid big diff when regenerating test
   source = source
     .replace(
