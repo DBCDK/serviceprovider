@@ -1,6 +1,5 @@
-import openHoldingStatus from './openHoldingStatus';
 import getOrderPolicy from './getOrderPolicy';
-import {log} from '../utils.js';
+import { log } from '../utils.js';
 import _ from 'lodash';
 import openHoldingsService from './openHoldingsService';
 
@@ -14,7 +13,7 @@ async function localHoldings(request, context) {
     password = context.get(`cicero.${isil}.password`, true);
     username = context.get(`cicero.${isil}.username`, true);
   } catch (e) {
-    log.info(`no cicero username/password for agency`, {agency});
+    log.info(`no cicero username/password for agency`, { agency });
     return null;
   }
 
@@ -22,11 +21,11 @@ async function localHoldings(request, context) {
   try {
     sessionKey = (await context.request(url + '/authentication/login', {
       method: 'POST',
-      body: {password, username},
+      body: { password, username },
       json: true
     })).sessionKey;
   } catch (e) {
-    log.error('cicero auth error', {error: String(e), agency: agency});
+    log.error('cicero auth error', { error: String(e), agency: agency });
     return null;
   }
 
@@ -43,7 +42,7 @@ async function localHoldings(request, context) {
     );
     result = JSON.parse(apiResult)[0].holdings;
   } catch (e) {
-    log.error('cicero holdings error', {error: String(e)});
+    log.error('cicero holdings error', { error: String(e) });
     return null;
   }
 
@@ -57,7 +56,7 @@ async function availability(request, context) {
     localHoldingsRes
   ] = await Promise.all([
     openHoldingsService(request, context),
-    getOrderPolicy({pids: [request.pid]}, context),
+    getOrderPolicy({ pids: [request.pid] }, context),
     localHoldings(request, context)
   ]);
 
@@ -78,14 +77,19 @@ async function availability(request, context) {
 }
 
 export default async (request, context) => {
+  // validate pids param
+  if (!request.pids || request.pids[0].length === 0) {
+    return { statusCode: 400, error: 'pids is not of type array' };
+  }
+
   try {
     const data = await Promise.all(
       request.pids.map(pid =>
-        availability({pid, fields: request.fields}, context)
+        availability({ pid, fields: request.fields }, context)
       )
     );
-    return {statusCode: 200, data: data};
+    return { statusCode: 200, data: data };
   } catch (e) {
-    return {statusCode: 500, error: e.message};
+    return { statusCode: 500, error: e.message };
   }
 };

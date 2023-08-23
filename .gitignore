@@ -41,6 +41,7 @@ NODE_ENV_DOCKERFILE
 # ENV files
 # ============ 
 .env
+.env.env
 
 # ============
 # MISC

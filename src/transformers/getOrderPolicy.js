@@ -15,8 +15,12 @@ var stripNS = require('xml2js').processors.stripPrefix;
  * @throws if validation fails
  */
 function validateParams(params) {
-  if (!params.pids || params.pids.length === 0) {
+  if (!params.pids || (params.pids && params.pids.length === 0)) {
     throw 'missing pids parameter';
+  }
+
+  if (params.pids[0].length === 0) {
+    throw 'empty pids parameter';
   }
 }
 
@@ -27,7 +31,7 @@ function validateParams(params) {
  * @param context
  * @returns soap request string
  */
-function getOrderPolicy(pid, params, context) {
+async function getOrderPolicy(pid, params, context) {
   let soap = `<SOAP-ENV:Envelope xmlns="http://oss.dbc.dk/ns/openorder" xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/">
      <SOAP-ENV:Body>
         <checkOrderPolicyRequest>
@@ -42,9 +46,8 @@ function getOrderPolicy(pid, params, context) {
         </checkOrderPolicyRequest>
      </SOAP-ENV:Body>
   </SOAP-ENV:Envelope>`;
-
   return context.call('openorder', soap).then(body => {
-    parseString(body, {trim: true, tagNameProcessors: [stripNS]}, function(
+    parseString(body, { trim: true, tagNameProcessors: [stripNS] }, function(
       err,
       result
     ) {
@@ -53,7 +56,7 @@ function getOrderPolicy(pid, params, context) {
     const data = {};
 
     if (body.checkOrderPolicyError) {
-      return {statusCode: 500, error: body.checkOrderPolicyError[0]};
+      return { statusCode: 500, error: body.checkOrderPolicyError[0] };
     }
 
     if (body.orderPossible) {
@@ -62,7 +65,7 @@ function getOrderPolicy(pid, params, context) {
     if (body.orderPossibleReason) {
       data.orderPossibleReason = body.orderPossibleReason[0];
     }
-    return {statusCode: 200, data: data};
+    return { statusCode: 200, data: data };
   });
 }
 
@@ -81,7 +84,7 @@ export default (request, context, agencyId = null) => {
   } catch (err) {
     // eslint-disable-line brace-style
     return new Promise(resolve => {
-      return resolve({statusCode: 400, error: err});
+      return resolve({ statusCode: 400, error: err });
     });
   }
 

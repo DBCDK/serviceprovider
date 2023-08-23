@@ -1,7 +1,7 @@
 import _ from 'lodash';
 
 function setParams(request, context) {
-  const agency = context.get('user.agency', true) || "710100";
+  const agency = context.get('user.agency', true) || '710100';
   let params = {
     lookup: `${request.pid}@${agency}`
   };
@@ -11,13 +11,13 @@ function setParams(request, context) {
 export default (request, context) => {
   const params = setParams(request, context);
   return context.call('holdingsservice', params).then(body => {
-    let data = {willLend: false};
+    let data = { willLend: false };
 
-    if (body.data.error.length > 0) {
+    if (body.data.error && body.data.error.length > 0) {
       if (body.data.error[0].errorMessage === 'item_not_found') {
-        return {statusCode: 200, data: data};
+        return { statusCode: 200, data: data };
       }
-      return {statusCode: 500, error: body.data.error[0].errorMessage};
+      return { statusCode: 500, error: body.data.error[0].errorMessage };
     }
     // no errors found - parse responders
     const responder = body.data.responder || null;
@@ -31,6 +31,6 @@ export default (request, context) => {
       }
     }
 
-    return {statusCode: 200, data: data};
+    return { statusCode: 200, data: data };
   });
 };
