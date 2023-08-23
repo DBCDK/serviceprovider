@@ -31,7 +31,7 @@ function validateParams(params) {
  * @param context
  * @returns soap request string
  */
-async function getOrderPolicy(pid, params, context) {
+function getOrderPolicy(pid, params, context) {
   let soap = `<SOAP-ENV:Envelope xmlns="http://oss.dbc.dk/ns/openorder" xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/">
      <SOAP-ENV:Body>
         <checkOrderPolicyRequest>
