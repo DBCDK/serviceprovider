@@ -6,11 +6,11 @@
 //
 //
 const endpoint = 'availability';
-const params = { pids: ['870970-basis:06205836'] };
+const params = {pids: ['870970-basis:06205836']};
 
 const expected = {
   statusCode: 200,
-  data: [{ unavailable: 'openHoldingService error: ITEM_NOT_FOUND' }]
+  data: [{unavailable: 'openHoldingService error: ITEM_NOT_FOUND'}]
 };
 
 const context = {
@@ -32,8 +32,8 @@ const context = {
     suggestsubject: 'XXXXX',
     recommendurls: 'XXXXX'
   },
-  search: { agency: '775100', profile: 'opac' },
-  netpunkt: { user: 'XXXXX', group: 'XXXXX', password: 'XXXXX' },
+  search: {agency: '775100', profile: 'opac'},
+  netpunkt: {user: 'XXXXX', group: 'XXXXX', password: 'XXXXX'},
   user: {
     agency: '100450',
     libraryId: '100450',
@@ -57,7 +57,7 @@ const mockData = {
 };
 
 import Provider from '../../provider/Provider.js';
-import { assert, fail } from 'chai';
+import {assert, fail} from 'chai';
 const provider = Provider();
 
 describe('Automated test: availability_item_not_found.snapshot', () => {

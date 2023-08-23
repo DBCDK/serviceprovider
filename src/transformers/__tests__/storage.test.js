@@ -1322,6 +1322,7 @@ function makeApiWrapper({context}) {
     })
   );
   const api = {};
+
   function addFn(fn) {
     api[fn] = async o => {
       const result = await executor.call(fn, o);

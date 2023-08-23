@@ -112,10 +112,10 @@ function censor(str, context) {
   // construct regex for global replacement in string
   const re = new RegExp(
     '(' +
-    Object.keys(forbidden)
-      .map(regexEscape)
-      .join('|') +
-    ')',
+      Object.keys(forbidden)
+        .map(regexEscape)
+        .join('|') +
+      ')',
     'g'
   );
   str = str.replace(re, 'XXXXX');
@@ -139,7 +139,6 @@ function saveTest(test) {
   }
 
   const cleanedContext = {};
-
 
   for (const key1 in test.context) {
     cleanedContext[key1] = Object.assign({}, test.context[key1]);
@@ -209,8 +208,7 @@ describe('Automated test: ${test.filename}', () => {
     test.context
   );
 
-  console.log(source, "TXT SOURCE")
-
+  console.log(source, 'TXT SOURCE');
 
   // remove timings in mocked data, to avoid big diff when regenerating test
   source = source

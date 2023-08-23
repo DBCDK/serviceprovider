@@ -47,7 +47,7 @@ async function getOrderPolicy(pid, params, context) {
      </SOAP-ENV:Body>
   </SOAP-ENV:Envelope>`;
   return context.call('openorder', soap).then(body => {
-    parseString(body, { trim: true, tagNameProcessors: [stripNS] }, function(
+    parseString(body, {trim: true, tagNameProcessors: [stripNS]}, function(
       err,
       result
     ) {
@@ -56,7 +56,7 @@ async function getOrderPolicy(pid, params, context) {
     const data = {};
 
     if (body.checkOrderPolicyError) {
-      return { statusCode: 500, error: body.checkOrderPolicyError[0] };
+      return {statusCode: 500, error: body.checkOrderPolicyError[0]};
     }
 
     if (body.orderPossible) {
@@ -65,7 +65,7 @@ async function getOrderPolicy(pid, params, context) {
     if (body.orderPossibleReason) {
       data.orderPossibleReason = body.orderPossibleReason[0];
     }
-    return { statusCode: 200, data: data };
+    return {statusCode: 200, data: data};
   });
 }
 
@@ -84,7 +84,7 @@ export default (request, context, agencyId = null) => {
   } catch (err) {
     // eslint-disable-line brace-style
     return new Promise(resolve => {
-      return resolve({ statusCode: 400, error: err });
+      return resolve({statusCode: 400, error: err});
     });
   }
 

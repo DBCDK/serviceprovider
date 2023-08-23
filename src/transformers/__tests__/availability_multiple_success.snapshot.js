@@ -6,7 +6,7 @@
 //
 //
 const endpoint = 'availability';
-const params = { pids: ['870970-basis:47210577', '870970-basis:50841316'] };
+const params = {pids: ['870970-basis:47210577', '870970-basis:50841316']};
 
 const expected = {
   statusCode: 200,
@@ -49,12 +49,12 @@ const context = {
     infomediaservice: 'http://infomedia.mcp1-proxy.dbc.dk/server.php',
     workpresentation: 'XXXXX'
   },
-  access: { '0': 'moreinfo' },
-  cicero: { 'DK-710100': 'XXXXX' },
-  performance: { username: 'XXXXX', password: 'XXXXX' },
-  search: { agency: '775100', profile: 'opac', collectionidentifiers: '' },
-  storage: { user: 'XXXXX' },
-  netpunkt: { user: 'XXXXX', group: 'XXXXX', password: 'XXXXX' },
+  access: {'0': 'moreinfo'},
+  cicero: {'DK-710100': 'XXXXX'},
+  performance: {username: 'XXXXX', password: 'XXXXX'},
+  search: {agency: '775100', profile: 'opac', collectionidentifiers: ''},
+  storage: {user: 'XXXXX'},
+  netpunkt: {user: 'XXXXX', group: 'XXXXX', password: 'XXXXX'},
   user: {
     id: 'XXXXX',
     salt: 'XXXXX',
@@ -68,7 +68,7 @@ const context = {
     ddbcmsapipassword: 'XXXXX',
     orderpolicyrequester: '190101',
     orderSystem: 'bibliotekdk',
-    ips: { '0': 'XXXXX' },
+    ips: {'0': 'XXXXX'},
     access_token: 'XXXXX'
   }
 };
@@ -84,7 +84,7 @@ const mockData = {
 };
 
 import Provider from '../../provider/Provider.js';
-import { assert, fail } from 'chai';
+import {assert, fail} from 'chai';
 const provider = Provider();
 
 describe('Automated test: availability_multiple_success.snapshot', () => {
