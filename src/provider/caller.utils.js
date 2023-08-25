@@ -51,11 +51,17 @@ const whitelist = {
     suggest: true,
     recommend: true,
     performance: true,
+    holdingsservice: true,
     cicero: true
   },
   access: ['moreinfo', 'infomedia'],
   cicero: {
     'DK-725300': {}
+  },
+  kiosk: {
+    branch: true,
+    timeout: true,
+    agencyId: true
   },
   search: {
     agency: true,
@@ -133,6 +139,7 @@ function saveTest(test) {
   }
 
   const cleanedContext = {};
+
   for (const key1 in test.context) {
     cleanedContext[key1] = Object.assign({}, test.context[key1]);
     for (const key2 in cleanedContext[key1]) {
@@ -219,7 +226,9 @@ describe('Automated test: ${test.filename}', () => {
     `${__dirname}/../transformers/__tests__/${test.filename}.js`,
     source,
     err => {
-      if (err) throw err;
+      if (err) {
+        throw err;
+      }
       console.log('The file has been saved!');
     }
   );

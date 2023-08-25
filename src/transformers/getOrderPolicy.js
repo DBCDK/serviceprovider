@@ -15,8 +15,12 @@ var stripNS = require('xml2js').processors.stripPrefix;
  * @throws if validation fails
  */
 function validateParams(params) {
-  if (!params.pids || params.pids.length === 0) {
+  if (!params.pids || (params.pids && params.pids.length === 0)) {
     throw 'missing pids parameter';
+  }
+
+  if (params.pids[0].length === 0) {
+    throw 'empty pids parameter';
   }
 }
 
@@ -42,7 +46,6 @@ function getOrderPolicy(pid, params, context) {
         </checkOrderPolicyRequest>
      </SOAP-ENV:Body>
   </SOAP-ENV:Envelope>`;
-
   return context.call('openorder', soap).then(body => {
     parseString(body, {trim: true, tagNameProcessors: [stripNS]}, function(
       err,

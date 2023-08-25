@@ -15,6 +15,7 @@
       "cicero": "https://cicero-fbs.com/rest/external/v1/",
       "openformat": "http://openformat-php-develop.frontend-features.svc.cloud.dbc.dk/server.php",
       "holdingsitems": "http://holdings-items-content-service.cisterne.svc.cloud.dbc.dk/holdings-items-content-service/api",
+      "holdingsservice": "http://holdings-service.cisterne.svc.cloud.dbc.dk/api/v1/holdings-status/holdings",
       "infomediaservice": "http://infomedia.mcp1-proxy.dbc.dk/server.php",
       "workpresentation": "http://work-presentation-service.cisterne.svc.cloud.dbc.dk/api/work-presentation"
     },
