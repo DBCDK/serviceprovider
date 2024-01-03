@@ -4,21 +4,21 @@
  */
 
 // Config
-import { version } from '../package.json';
+import {version} from '../package.json';
 // path for the API-endpoint, ie /v0/, /v1/, or ..
 const apiPath = '/v' + parseInt(version, 10) + '/';
 
 // Libraries
 import Provider from './provider/Provider';
-import { TokenError } from './smaug/errors';
+import {TokenError} from './smaug/errors';
 
 // Middleware
-import { log } from './utils';
-import { getContextMiddleware, requireAuthorized } from './app.middlewares';
-import { getContext, fieldsFilter } from './app.utils';
+import {log} from './utils';
+import {getContextMiddleware, requireAuthorized} from './app.middlewares';
+import {getContext, fieldsFilter} from './app.utils';
 
 import swaggerFromSpec from './swaggerFromSpec.js';
-import { validateRequest, validateResponse } from './validate.js';
+import {validateRequest, validateResponse} from './validate.js';
 const serviceProvider = Provider();
 
 const swaggerSpec = swaggerFromSpec();
@@ -102,7 +102,7 @@ function callApi(event, query, context) {
       return response;
     })
     .catch(err => {
-      log.error(String(err), { stacktrace: err.stack });
+      log.error(String(err), {stacktrace: err.stack});
 
       return {
         statusCode: 500,
@@ -128,7 +128,7 @@ export function enableWSTransport(connection) {
           return callApi(key, data, context);
         })
         .catch(err => {
-          log.error(String(err), { stacktrace: err.stack });
+          log.error(String(err), {stacktrace: err.stack});
           if (err instanceof TokenError) {
             return err.toJson();
           }
@@ -175,7 +175,7 @@ export function enableHTTPTransport(event, app) {
         try {
           const parameterSpec = swaggerSpec.paths[
             '/' + event
-          ].get.parameters.filter(({ name }) => name === key)[0];
+          ].get.parameters.filter(({name}) => name === key)[0];
           if (parameterSpec.type === 'array' && !Array.isArray(query[key])) {
             query[key] = [query[key]];
           }
@@ -208,4 +208,4 @@ export function enableHTTPTransport(event, app) {
   );
 }
 
-export { serviceProvider };
+export {serviceProvider};

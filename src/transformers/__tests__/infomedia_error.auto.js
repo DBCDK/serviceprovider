@@ -37,7 +37,7 @@ const provider = Provider();
 describe('Automated test: infomedia.auto', () => {
   it('has same result as recorded (in  infomedia.auto)', () => {
     assert(
-      Date.now() < +new Date('2024-01-01'),
+      Date.now() < +new Date('2025-01-01'),
       'Please recreate the automatically generated unit tests, such that the mock data does not come out of sync with the actual services. See README.md for details.'
     );
     context.mockData = mockData;

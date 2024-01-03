@@ -4,7 +4,7 @@
  * and optionally create unit-tests, look at timings etc.
  */
 const BaseSoapClient = require('dbc-node-basesoap-client');
-const { log } = require('../utils');
+const {log} = require('../utils');
 const {
   testDev,
   mockFile,
@@ -75,7 +75,7 @@ class Context {
         promise = promiseRequest({
           method: 'POST',
           url: url,
-          headers: { 'Content-Type': 'text/xml;charset=UTF-8;' },
+          headers: {'Content-Type': 'text/xml;charset=UTF-8;'},
           body: params
         });
         break;
@@ -140,7 +140,7 @@ class Context {
   }
 
   _handleCallPromiseResult(type, name, params, mockId, result) {
-    log.trace(type, { name, paramsStr: JSON.stringify(params), result });
+    log.trace(type, {name, paramsStr: JSON.stringify(params), result});
 
     --this.callsInProgress;
 
@@ -192,7 +192,7 @@ class Context {
    * @returns {Promise} promise with result
    */
   _call(type, name, params) {
-    log.debug(type, { name, paramsStr: JSON.stringify(params) });
+    log.debug(type, {name, paramsStr: JSON.stringify(params)});
     // take information about whether to create test/timings from outer call
     if (this.callsInProgress === 0) {
       this.createTest = params.createTest;
@@ -248,7 +248,7 @@ class Context {
   }
 
   query(name, params, options) {
-    params = Object.assign({ qs: params }, options);
+    params = Object.assign({qs: params}, options);
 
     return this._call('request', name, params).then(s => ({
       data: JSON.parse(s)
