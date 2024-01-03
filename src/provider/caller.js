@@ -102,7 +102,11 @@ class Context {
 
     if (type !== 'transformer') {
       promise.catch(e => {
-        log.error('Error calling underlying service', {type, name, params});
+        log.error('Error calling underlying service', {
+          type,
+          name,
+          paramsStr: JSON.stringify(params)
+        });
         throw e;
       });
     }
@@ -136,7 +140,7 @@ class Context {
   }
 
   _handleCallPromiseResult(type, name, params, mockId, result) {
-    log.trace(type, {name, params, result});
+    log.trace(type, {name, paramsStr: JSON.stringify(params), result});
 
     --this.callsInProgress;
 
@@ -188,7 +192,7 @@ class Context {
    * @returns {Promise} promise with result
    */
   _call(type, name, params) {
-    log.debug(type, {name, params});
+    log.debug(type, {name, paramsStr: JSON.stringify(params)});
     // take information about whether to create test/timings from outer call
     if (this.callsInProgress === 0) {
       this.createTest = params.createTest;

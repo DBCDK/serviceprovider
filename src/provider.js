@@ -79,9 +79,9 @@ function callApi(event, query, context) {
       if (validateErrors.length) {
         log.error('response schema error', {
           event,
-          query,
-          response,
-          validateErrors
+          queryStr: JSON.stringify(query),
+          responseStr: JSON.stringify(response),
+          validateErrorsStr: JSON.stringify(validateErrors)
         });
       }
       if (validateResponseAndStatusCode(event, response)) {
