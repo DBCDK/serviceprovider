@@ -9,20 +9,75 @@
 
 <body>
 	<style>
+
+		body, html{
+			padding:0;
+			margin:0;
+
+			line-height: 1.3;
+			font-family: "Droid Sans", sans-serif;
+		}
+
 		.custom-documentation {
 			display: block;
 			max-width: 1420px;
 			margin: 0 auto;
 			padding: 0 20px;
-			line-height: 1.3;
-			font-family: "Droid Sans", sans-serif;
 		}
 
 		.custom-documentation th {
 			text-align: right;
 		}
+
+		.info-bar {
+			position: sticky;
+			top:0;
+			left:0;
+			width:100%;
+			background-color:red;
+		}
+
+		.info-bar-content{
+			position:relative;
+			max-width: 1420px;
+			margin: auto;
+			color:white !important;
+			padding: 20px;
+		}
+
+		.info-bar a{
+			color: white;
+			font-weight: bold;
+		}
+
+		.info-bar-close{
+			position:absolute;
+			right:0;
+			top:20px;
+			border:0;
+			background-color:transparent;
+			color:white;
+			cursor: pointer;
+			font-size: 20px;
+		}
 	</style>
+
+	<script type="text/javascript">
+		function closeInfoBar(){
+			document.getElementById("info-bar").style.display = 'none';
+		}
+	</script>
+
+	<div id="info-bar" class="info-bar">
+		<div class="info-bar-content">
+			<button id="close" onClick="closeInfoBar()" class="info-bar-close">✖</button>
+			Den åbne platform lukker ved årets udgang 2024. Vi henviser i stedet til den nye og udvidede API service <a href="https://fbi-api.dbc.dk/" target="_blank">FBI-API</a>. 
+			<br/>FBI-API kan anvendes med samme adgangsgivende token som fra Den åbne platform. Læs mere <a href="https://fbi-api.dbc.dk/documentation#How-to-get-access?" target="_blank">her</a> om hvordan du kommer i gang.
+		</div>
+	</div>
+	
 	<div class="custom-documentation">
+
 		<h1>Open Platform</h1>
 		Dette er den åbne platform, hvilket er APIet for de danske biblioteker.
 
