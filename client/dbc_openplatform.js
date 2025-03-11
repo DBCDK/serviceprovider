@@ -105,7 +105,7 @@ openplatform.connect = function(options) {
       // option object
       socketClusterConfig = options.socketClusterConfig || socketClusterConfig;
       if (options.token) {
-        promise = Promise.resolve(apiToken);
+        promise = Promise.resolve(options.token);
       } else {
         promise = getToken(
           options.clientId,
