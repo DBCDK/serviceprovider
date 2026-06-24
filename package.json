@@ -61,7 +61,7 @@
     "pg": "^8.7.1",
     "pg-query-stream": "^2.0.0",
     "request": "^2.87.0",
-    "sharp": "^0.29.1",
+    "sharp": "^0.30.5",
     "socketcluster-server": "^14.5.0",
     "uuid": "^3.3.2",
     "xml2js": "^0.4.19"
